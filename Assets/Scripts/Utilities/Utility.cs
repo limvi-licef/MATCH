@@ -98,15 +98,18 @@ namespace MATCH
              * */
             public static void AnimateDisappearInPlace(GameObject gameObject, Vector3 scalingOriginal, EventHandler eventHandler)
             {
-                gameObject.AddComponent<Animation>().animateDiseappearInPlace(new EventHandler(delegate (System.Object o, EventArgs e)
+                if (gameObject.activeSelf)
                 {
-                    UnityEngine.Object.Destroy(gameObject.GetComponent<Animation>());
+                    gameObject.AddComponent<Animation>().animateDiseappearInPlace(new EventHandler(delegate (System.Object o, EventArgs e)
+                    {
+                        UnityEngine.Object.Destroy(gameObject.GetComponent<Animation>());
 
-                    gameObject.SetActive(false);
-                    gameObject.transform.localScale = scalingOriginal;
+                        gameObject.SetActive(false);
+                        gameObject.transform.localScale = scalingOriginal;
 
-                    eventHandler?.Invoke(gameObject, EventArgs.Empty);
-                }));
+                        eventHandler?.Invoke(gameObject, EventArgs.Empty);
+                    }));
+                }
             }
             public static void AnimateDisappearInPlace(GameObject gameObject, Vector3 scalingOriginal)
             {
