@@ -25,12 +25,10 @@ namespace MATCH
 {
     namespace Assistances
     {
-        public interface IAssistance
+        public interface IHelp
         {
-            /**
-             * Way to make it mandatory to have every class using this interface to inherit from the abstract class Assistance
-             * */
-            public Assistance GetAssistance();
+            public event EventHandler EventButtonClicked;
         }
     }
 }
+

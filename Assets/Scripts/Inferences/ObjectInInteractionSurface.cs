@@ -77,7 +77,7 @@ namespace MATCH
 
             public void callbackObjectDetection(System.Object o, EventArgs e)
             {
-                Utilities.EventHandlerArgObject objectInfo = (Utilities.EventHandlerArgObject)e;
+                Utilities.EventHandlerArgs.EventHandlerArgObject objectInfo = (Utilities.EventHandlerArgs.EventHandlerArgObject)e;
 
                 m_objectdetected = new Utilities.PhysicalObjectInformation();
                 m_objectdetected = objectInfo.ObjectDetected;

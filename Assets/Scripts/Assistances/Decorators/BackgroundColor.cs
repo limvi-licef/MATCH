@@ -9,12 +9,12 @@ namespace MATCH
     {
         namespace Decorators
         {
-            public class BackgroundColor : IAssistancePanel
+            public class BackgroundColor : IPanel
             {
-                IAssistancePanel PanelToDecorate;
+                IPanel PanelToDecorate;
                 string BackgroundColorDecorated;
 
-                public BackgroundColor(IAssistancePanel panelToDecorate, string backgroundColor)
+                public BackgroundColor(IPanel panelToDecorate, string backgroundColor)
                 {
                     PanelToDecorate = panelToDecorate;
                     BackgroundColorDecorated = backgroundColor;
@@ -22,18 +22,18 @@ namespace MATCH
 
                 public void Hide(EventHandler callback)
                 {
-                    PanelToDecorate.Hide(callback);
+                    PanelToDecorate.GetAssistance().Hide(callback);
                 }
 
                 public void Show(EventHandler callback)
                 {
                     PanelToDecorate.SetBackgroundColor(BackgroundColorDecorated);
-                    PanelToDecorate.Show(callback);
+                    PanelToDecorate.GetAssistance().Show(callback);
                 }
 
                 public void ShowHelp(bool show)
                 {
-                    PanelToDecorate.ShowHelp(show);
+                    PanelToDecorate.GetAssistance().ShowHelp(show);
                 }
 
                 public void SetBackgroundColor(string colorName)
@@ -58,7 +58,12 @@ namespace MATCH
 
                 public Transform GetTransform()
                 {
-                    return PanelToDecorate.GetTransform();
+                    return PanelToDecorate.GetAssistance().GetTransform();
+                }
+
+                public Assistance GetAssistance()
+                {
+                    return PanelToDecorate.GetAssistance();
                 }
             }
         }

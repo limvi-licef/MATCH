@@ -28,7 +28,7 @@ namespace MATCH
         /**
  * Used as an "escape" where the user can ask to be reminded later about the challenge
  * */
-        public class ReminderOneClockMoving : MonoBehaviour, IAssistance
+        public class ReminderOneClockMoving : Assistance
         {
 
 
@@ -80,12 +80,12 @@ namespace MATCH
                 m_dialogController = m_hologramWindowReminderView.GetComponent<Dialog>();
                 m_dialogController.SetDescription("Très bien! J'apparaitrai de nouveau demain à la même heure. Est-ce que cela vous convient?", 0.15f);
                 m_dialogController.AddButton("Parfait!", true);
-                m_dialogController.ButtonsController[0].s_buttonClicked += new EventHandler(delegate (System.Object o, EventArgs e)
+                m_dialogController.ButtonsController[0].EventButtonClicked += new EventHandler(delegate (System.Object o, EventArgs e)
                 {
                     EventHologramWindowButtonOkTouched?.Invoke(this, EventArgs.Empty);
                 });
                 m_dialogController.AddButton("Je me suis trompé de bouton! Revenir en arrière...", true);
-                m_dialogController.ButtonsController[1].s_buttonClicked += delegate
+                m_dialogController.ButtonsController[1].EventButtonClicked += delegate
                 {
                     EventHologramWindowButtonBackTouched?.Invoke(this, EventArgs.Empty);
                 };
@@ -124,7 +124,7 @@ namespace MATCH
                 interactions.EventFocusOn += CallbackOnObjectFocus;
             }
 
-            public Transform GetTransform()
+            public override Transform GetTransform()
             {
                 return transform;
             }
@@ -173,7 +173,7 @@ namespace MATCH
             }*/
 
             bool m_mutexHide = false;
-            public void Hide(EventHandler e)
+            public override void Hide(EventHandler e)
             {
                 DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Called");
 
@@ -209,7 +209,7 @@ namespace MATCH
 
             bool m_mutexShow = false;
             bool m_showFirstTime = false;
-            public void Show(EventHandler eventHandler)
+            public override void Show(EventHandler eventHandler)
             {
                 m_clockScalingOriginal = new Vector3(0.1f, 0.1f, 0.1f);
                 DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Clock is going to appear to scaling: " + m_clockScalingOriginal);
@@ -247,7 +247,7 @@ namespace MATCH
                 }
             }
 
-            public void ShowHelp(bool show)
+            public override void ShowHelp(bool show)
             {
                 // Todo
             }
@@ -264,6 +264,11 @@ namespace MATCH
                 DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Changing position");
 
                 transform.localPosition = m_positionLocalOrigin;
+            }
+
+            public override bool IsDecorator()
+            {
+                return false;
             }
         }
 

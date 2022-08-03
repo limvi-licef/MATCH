@@ -69,9 +69,9 @@ namespace MATCH
 
             public void callbackObjectDetection(System.Object o, EventArgs e)
             {
-                Utilities.EventHandlerArgObject objectInfo = (Utilities.EventHandlerArgObject)e;
+                Utilities.EventHandlerArgs.EventHandlerArgObject objectInfo = (Utilities.EventHandlerArgs.EventHandlerArgObject)e;
                 Objectdetected = objectInfo.ObjectDetected;
-                CallbackArgs = new Utilities.EventHandlerArgObject(Objectdetected);
+                CallbackArgs = new Utilities.EventHandlerArgs.EventHandlerArgObject(Objectdetected);
             }
 
             public override void Unregistered()

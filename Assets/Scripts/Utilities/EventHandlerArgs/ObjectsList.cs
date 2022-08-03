@@ -30,49 +30,49 @@ namespace MATCH
 {
     namespace Utilities
     {
-        public class EventHandlerArgObjectsList : EventArgs
+        namespace EventHandlerArgs
         {
-            public List<PhysicalObjectInformation> m_objectList;
-
-            public EventHandlerArgObjectsList(List<PhysicalObjectInformation> listofobjects)
+            public class ObjectsList : EventArgs
             {
-                m_objectList = listofobjects;
+                public List<PhysicalObjectInformation> m_objectList;
+
+                public ObjectsList(List<PhysicalObjectInformation> listofobjects)
+                {
+                    m_objectList = listofobjects;
+                }
+
+                void Start()
+                {
+
+                }
+
+                // Update is called once per frame
+                void Update()
+                {
+
+                }
             }
 
-            void Start()
+            public class EventHandlerArgObject : EventArgs
             {
+                public PhysicalObjectInformation ObjectDetected;
 
+                public EventHandlerArgObject(PhysicalObjectInformation obj)
+                {
+                    ObjectDetected = obj;
+                }
+
+                void Start()
+                {
+
+                }
+
+                // Update is called once per frame
+                void Update()
+                {
+
+                }
             }
-
-            // Update is called once per frame
-            void Update()
-            {
-
-            }
-        }
-
-        public class EventHandlerArgObject : EventArgs
-        {
-            public PhysicalObjectInformation ObjectDetected;
-
-            public EventHandlerArgObject(PhysicalObjectInformation obj)
-            {
-                ObjectDetected = obj;
-            }
-
-            void Start()
-            {
-
-            }
-
-            // Update is called once per frame
-            void Update()
-            {
-
-            }
-
-
-
         }
     }
 }

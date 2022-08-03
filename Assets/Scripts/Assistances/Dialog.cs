@@ -28,7 +28,7 @@ namespace MATCH
 {
     namespace Assistances
     {
-        public class Dialog : MonoBehaviour, IAssistance
+        public class Dialog : Assistance
         {
             Transform ButtonsParentView;
             Transform RefButtonView;
@@ -143,7 +143,7 @@ namespace MATCH
             }
 
             bool m_mutexHide = false;
-            public void Hide(EventHandler eventHandler)
+            public override void Hide(EventHandler eventHandler)
             {
                 if (m_mutexHide == false)
                 {
@@ -164,9 +164,9 @@ namespace MATCH
             }
 
             bool m_mutexShow = false;
-            public void Show(EventHandler eventHandler)
+            public override void Show(EventHandler eventHandler)
             {
-                //MouseDebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, MouseDebugMessagesManager.MessageLevel.Info, "Called");
+                DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Called for object " + name);
 
                 if (m_mutexShow == false)
                 {
@@ -177,9 +177,10 @@ namespace MATCH
                         Utilities.Utility.AdjustObjectHeightToHeadHeight(transform);
                     }
 
+                    DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Going to show the background");
 
                     Utilities.Utility.AnimateAppearInPlace(BackgroundView.gameObject, BackgoundScalingOriginal, delegate {
-                        //MouseDebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, MouseDebugMessagesManager.MessageLevel.Info, "Background shown");
+                        DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Background shown");
 
                         Utilities.Utility.AnimateAppearInPlace(TitleView.gameObject);
                         Utilities.Utility.AnimateAppearInPlace(ButtonsParentView.gameObject);
@@ -196,12 +197,12 @@ namespace MATCH
                 }
             }
 
-            public void ShowHelp(bool show)
+            public override void ShowHelp(bool show)
             {
                 // Todo
             }
 
-            public Transform GetTransform()
+            public override Transform GetTransform()
             {
                 return transform;
             }
@@ -212,12 +213,17 @@ namespace MATCH
             public void CheckButton(Buttons.Basic button, bool check)
             {
                 //m_states[currentState.m_currentState.getId()].transform.Find("BackPlate").Find("Quad").GetComponent<Renderer>().material = Resources.Load("Mouse_Cyan_Glowing", typeof(Material)) as Material;
-                button.checkButton(check);
+                button.CheckButton(check);
             }
 
             public void EnableBillboard(bool enable)
             {
                 gameObject.GetComponent<Billboard>().enabled = enable;
+            }
+
+            public override bool IsDecorator()
+            {
+                return false;
             }
         }
 

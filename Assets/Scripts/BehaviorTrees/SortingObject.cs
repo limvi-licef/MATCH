@@ -223,11 +223,15 @@ namespace MATCH
 
                 //Assistances.Basic cube = ;
                 Assistances.AssistanceGradationAttention exclamationMark = new Assistances.AssistanceGradationAttention();
+
                 Assistances.Basic cube = Assistances.Factory.Instance.CreateCube("Mouse_Purple_Glowing", AssistancesAlphaInteractionSurface.transform);
                 //exclamationMark.AddAssistance(cube);
                 /*Assistances.IAssistance exclamationMarkPale = */exclamationMark.AddAssistance(new Assistances.Decorators.Material(cube, "Mouse_Exclamation"));
                 //exclamationMark.AddAssistance(Assistances.Decorators.)
                 exclamationMark.AddAssistance(new Assistances.Decorators.Material(cube, "Mouse_Exclamation_Red"));
+
+                Assistances.AssistanceGradationAttention end = new Assistances.AssistanceGradationAttention();
+                end.AddAssistance(Assistances.Factory.Instance.CreateDialogNoButton("", "Ok! We let you do.", AssistancesAlphaInteractionSurface.transform));
 
                 Assistances.AssistanceGradationAttention yesNo1 = new Assistances.AssistanceGradationAttention();
                 yesNo1.AddAssistance(Assistances.Factory.Instance.CreateDialogNoButton("", "Don't you think there is something to do here?", AssistancesAlphaInteractionSurface.transform));
@@ -235,8 +239,9 @@ namespace MATCH
                 AssistancesAlphaGradation = Assistances.Factory.Instance.CreateAssistanceGradationExplicit();
                 AssistancesAlphaGradation.InfManager = InferenceManager;
 
-                AssistancesAlphaGradation.AddAssistance(exclamationMark);
-                AssistancesAlphaGradation.AddAssistance(yesNo1);
+                AssistancesAlphaGradation.AddButton(exclamationMark, Assistances.Buttons.Button.ButtonType.Yes, yesNo1);
+                AssistancesAlphaGradation.AddButton(exclamationMark, Assistances.Buttons.Button.ButtonType.No, end);
+                //AssistancesAlphaGradation.AddButton(yesNo1, Assistances.Buttons.Button.ButtonType.Undefined, null);
             }
 
             void RegisterInferenceComing()
@@ -255,7 +260,7 @@ namespace MATCH
             {
                 //InferenceManager.UnregisterInference(InferenceObjectDetected);
                 ObjectDetected = true;
-                ObjectDetectedInformation = ((Utilities.EventHandlerArgObject)e).ObjectDetected;
+                ObjectDetectedInformation = ((Utilities.EventHandlerArgs.EventHandlerArgObject)e).ObjectDetected;
             }
 
             void CallbackGameObjectDetectedInStorage(System.Object o, EventArgs e)

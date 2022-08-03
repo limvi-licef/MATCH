@@ -70,7 +70,7 @@ namespace MATCH
                         Vector3 fakeObjectTopLeft = fakeObjectCenter - fakeObjectScaling /2.0f;
                         Vector3 fakeObjectBottomRight = fakeObjectCenter + fakeObjectScaling / 2.0f;
                         temp.SetObjectParams("FakeObject", fakeObjectCenter, fakeObjectTopLeft, fakeObjectBottomRight);
-                        CallbackArgs = new Utilities.EventHandlerArgObject(temp);
+                        CallbackArgs = new Utilities.EventHandlerArgs.EventHandlerArgObject(temp);
                         toReturn = true;
                     }
                 }
@@ -80,9 +80,9 @@ namespace MATCH
 
             public void CallbackObjectDetected(System.Object o, EventArgs e)
             {
-                Utilities.EventHandlerArgObject objectInfo = (Utilities.EventHandlerArgObject)e;
+                Utilities.EventHandlerArgs.EventHandlerArgObject objectInfo = (Utilities.EventHandlerArgs.EventHandlerArgObject)e;
                 Objectdetected = objectInfo.ObjectDetected;
-                CallbackArgs = new Utilities.EventHandlerArgObject(Objectdetected);
+                CallbackArgs = new Utilities.EventHandlerArgs.EventHandlerArgObject(Objectdetected);
             }
 
             public void EnableFakeObjectDetection(GameObject fakeObject)

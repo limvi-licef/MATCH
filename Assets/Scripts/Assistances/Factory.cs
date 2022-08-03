@@ -81,15 +81,16 @@ namespace MATCH
                 return controller;
             }
 
-            private void AddButton(ref Dialog dialog, EventHandler callback, string text, bool autoScaling, float fontSize = -1)
+            private void AddButton(ref Dialog dialog, EventHandler callback, string text, Assistances.Buttons.Button.ButtonType type, bool autoScaling, float fontSize = -1)
             {
                 dialog.AddButton(text, autoScaling, fontSize);
-                dialog.ButtonsController.Last().s_buttonClicked += callback;
+                dialog.ButtonsController.Last().EventButtonClicked += callback;
+                dialog.ButtonsController.Last().Type = type;
             }
 
-            private void AddButton(ref Dialog dialog, EventHandler callback, string text, bool autoScaling, float fontSizeCoeffA, float fontSizeCoeffB)
+            private void AddButton(ref Dialog dialog, EventHandler callback, string text, Assistances.Buttons.Button.ButtonType type, bool autoScaling, float fontSizeCoeffA, float fontSizeCoeffB)
             {
-                AddButton(ref dialog, callback, text, autoScaling, fontSizeCoeffA * text.Length + fontSizeCoeffB);
+                AddButton(ref dialog, callback, text, type, autoScaling, fontSizeCoeffA * text.Length + fontSizeCoeffB);
             }
 
             public Dialog CreateDialogNoButton(string title, string description, Transform parent)
@@ -124,7 +125,7 @@ namespace MATCH
                 return controller; //dialogController;
             }
 
-            public Dialog CreateDialogTwoButtons(string title, string description, string textButton1, EventHandler callbackButton1, string textButton2, EventHandler callbackButton2, Transform parent)
+            public Dialog CreateDialogTwoButtons(string title, string description, string textButton1, EventHandler callbackButton1, Assistances.Buttons.Button.ButtonType type1, string textButton2, EventHandler callbackButton2, Assistances.Buttons.Button.ButtonType type2, Transform parent)
             {
                 //Transform dialogView = Instantiate(m_refDialogAssistance.transform, parent);
                 //MouseAssistanceDialog dialogController = dialogView.GetComponent<MouseAssistanceDialog>();
@@ -137,8 +138,8 @@ namespace MATCH
                 float fontSizeCoeffA = -0.017f;
                 float fontSizeCoeffB = 0.37f;
 
-                AddButton(ref controller, callbackButton1, textButton1, true, fontSizeCoeffA, fontSizeCoeffB);
-                AddButton(ref controller, callbackButton2, textButton2, true, fontSizeCoeffA, fontSizeCoeffB);
+                AddButton(ref controller, callbackButton1, textButton1, type1, true, fontSizeCoeffA, fontSizeCoeffB);
+                AddButton(ref controller, callbackButton2, textButton2, type2, true, fontSizeCoeffA, fontSizeCoeffB);
 
                 //float sizeDescriptionText = -0.017f * textButton1.Length + 0.37f;
                 //controller.AddButton(textButton1, true, sizeDescriptionText);
@@ -150,13 +151,13 @@ namespace MATCH
                 return controller;
             }
 
-            public Dialog CreateDialogThreeButtons(string title, string description, string textButton1, EventHandler callbackButton1, string textButton2, EventHandler callbackButton2, string textButton3, EventHandler callbackButton3, Transform parent)
+            public Dialog CreateDialogThreeButtons(string title, string description, string textButton1, EventHandler callbackButton1, Assistances.Buttons.Button.ButtonType type1, string textButton2, EventHandler callbackButton2, Assistances.Buttons.Button.ButtonType type2, string textButton3, EventHandler callbackButton3, Assistances.Buttons.Button.ButtonType type3, Transform parent)
             {
                 Dialog controller = CreateDialogNoButton(title, description, parent);
 
-                AddButton(ref controller, callbackButton1, textButton1, true);
-                AddButton(ref controller, callbackButton2, textButton2, true);
-                AddButton(ref controller, callbackButton3, textButton3, true);
+                AddButton(ref controller, callbackButton1, textButton1, type1, true);
+                AddButton(ref controller, callbackButton2, textButton2, type2, true);
+                AddButton(ref controller, callbackButton3, textButton3, type3, true);
 
                 /*controller.AddButton(textButton1, true);
                 controller.AddButton(textButton2, true);
@@ -235,12 +236,12 @@ namespace MATCH
                 return controller;
             }
 
-            public Dialog CreateButtons(string title, string description, List<string> buttonsText, List<EventHandler> buttonsCallback, Transform parent)
+            public Dialog CreateButtons(string title, string description, List<string> buttonsText, List<EventHandler> buttonsCallback, List<Assistances.Buttons.Button.ButtonType> buttonTypes, Transform parent)
             {
                 Dialog controller = InitializeDialog(DialogsTypes.Buttons, title, description, parent);
                 for (int i = 0; i < buttonsText.Count; i ++)
                 {
-                    AddButton(ref controller, buttonsCallback[i], buttonsText[i], true);
+                    AddButton(ref controller, buttonsCallback[i], buttonsText[i], buttonTypes[i], true);
                 }
 
                 return controller;

@@ -36,12 +36,12 @@ namespace MATCH
             {
                 bool m_checked = false;
 
-                public override void hide(EventHandler e)
+                public override void Hide(EventHandler e)
                 {
                     throw new NotImplementedException();
                 }
 
-                public override void show(EventHandler e)
+                public override void Show(EventHandler e)
                 {
                     throw new NotImplementedException();
                 }
@@ -50,23 +50,11 @@ namespace MATCH
                 {
                     Interactable interactions = gameObject.GetComponent<Interactable>();
                     interactions.AddReceiver<InteractableOnTouchReceiver>().OnTouchStart.AddListener(delegate () {
-                        onButtonClicked();
+                        OnButtonClicked();
                     });
                 }
 
-                // Start is called before the first frame update
-                void Start()
-                {
-
-                }
-
-                // Update is called once per frame
-                void Update()
-                {
-
-                }
-
-                public void checkButton(bool check)
+                public void CheckButton(bool check)
                 {
                     m_checked = check;
 
@@ -80,17 +68,17 @@ namespace MATCH
                     }
                 }
 
-                public bool isChecked()
+                public bool IsChecked()
                 {
                     return m_checked;
                 }
 
-                public void callbackSetButtonBackgroundCyan(System.Object o, EventArgs e)
+                public void CallbackSetButtonBackgroundCyan(System.Object o, EventArgs e)
                 {
                     transform.Find("BackPlate").Find("Quad").GetComponent<Renderer>().material = Resources.Load("Mouse_Cyan_Glowing", typeof(Material)) as Material;
                 }
 
-                public void callbackSetButtonBackgroundGreen(System.Object o, EventArgs e)
+                public void CallbackSetButtonBackgroundGreen(System.Object o, EventArgs e)
                 {
                     transform.Find("BackPlate").Find("Quad").GetComponent<Renderer>().material = Resources.Load("Mouse_Green_Glowing", typeof(Material)) as Material;
                 }

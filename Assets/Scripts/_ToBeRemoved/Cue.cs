@@ -58,13 +58,13 @@ namespace MATCH
                 void callbackButtonHelpClicked()
                 {
                     //s_buttonClicked?.Invoke(this, EventArgs.Empty);
-                    onButtonClicked();
+                    OnButtonClicked();
 
                     DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Clicked");
                 }
 
                 bool m_mutexShow = false;
-                public override void show(EventHandler eventHandler)
+                public override void Show(EventHandler eventHandler)
                 {
                     if (m_mutexShow == false)
                     {
@@ -87,7 +87,7 @@ namespace MATCH
 
                 // With animation, compatible with the gradation manager
                 bool m_mutexHide = false;
-                public override void hide(EventHandler eventHandler)
+                public override void Hide(EventHandler eventHandler)
                 {
                     if (m_mutexHide == false)
                     {

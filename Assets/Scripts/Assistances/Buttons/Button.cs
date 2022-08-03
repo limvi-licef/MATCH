@@ -32,16 +32,34 @@ namespace MATCH
         {
             public abstract class Button : MonoBehaviour
             {
-                public event EventHandler s_buttonClicked;
-
-                protected void onButtonClicked()
+                public enum ButtonType
                 {
-                    s_buttonClicked?.Invoke(this, EventArgs.Empty);
+                    Undefined = -1,
+                    Yes = 0,
+                    No = 1,
+                    QuestionMark = 2,
+                    CustomChoice1 = 3,
+                    CustomChoice2 = 4,
+                    CustomChoice3 = 5,
+                    CustomChoice4 = 6
+
                 }
 
-                public abstract void show(EventHandler e);
+                public ButtonType Type { get; set; }
 
-                public abstract void hide(EventHandler e);
+                public event EventHandler EventButtonClicked;
+
+                protected void OnButtonClicked()
+                {
+                    MATCH.Utilities.EventHandlerArgs.Button args = new Utilities.EventHandlerArgs.Button();
+                    args.ButtonType = Type;
+
+                    EventButtonClicked?.Invoke(this, args);
+                }
+
+                public abstract void Show(EventHandler e);
+
+                public abstract void Hide(EventHandler e);
             }
 
         }

@@ -47,19 +47,19 @@ namespace MATCH
 
             protected void onChallengeStandBy()
             {
-                Utilities.EventHandlerArgString arg = new Utilities.EventHandlerArgString(m_scenarioId);
+                Utilities.EventHandlerArgs.String arg = new Utilities.EventHandlerArgs.String(m_scenarioId);
                 s_challengeOnStandBy?.Invoke(this, arg);
             }
 
             protected void onChallengeSuccess()
             {
-                Utilities.EventHandlerArgString arg = new Utilities.EventHandlerArgString(m_scenarioId);
+                Utilities.EventHandlerArgs.String arg = new Utilities.EventHandlerArgs.String(m_scenarioId);
                 s_challengeOnSuccess?.Invoke(this, arg);
             }
 
             protected void onChallengeStart()
             {
-                Utilities.EventHandlerArgString arg = new Utilities.EventHandlerArgString(m_scenarioId);
+                Utilities.EventHandlerArgs.String arg = new Utilities.EventHandlerArgs.String(m_scenarioId);
                 s_challengeOnStart?.Invoke(this, arg);
             }
 

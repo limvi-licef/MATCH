@@ -13,25 +13,25 @@ namespace MATCH
     {
         namespace Decorators
         {
-            public class Material : IAssistanceBasic
+            public class Material : Assistance, IBasic
             {
-                IAssistanceBasic AssistanceToDecorate;
+                IBasic AssistanceToDecorate;
                 String MaterialName;
 
-                public Material(IAssistanceBasic assistanceToDecorate, string materialName): base()
+                public Material(IBasic assistanceToDecorate, string materialName): base()
                 {
                     AssistanceToDecorate = assistanceToDecorate;
                     MaterialName = materialName;
                 }
 
-                public Transform GetTransform()
+                public override Transform GetTransform()
                 {
-                    return AssistanceToDecorate.GetTransform();
+                    return AssistanceToDecorate.GetAssistance().GetTransform();
                 }
 
-                public void Hide(EventHandler callback)
+                public override void Hide(EventHandler callback)
                 {
-                    AssistanceToDecorate.Hide(callback);
+                    AssistanceToDecorate.GetAssistance().Hide(callback);
                 }
 
                 public void SetMaterial(string materialName)
@@ -39,28 +39,38 @@ namespace MATCH
                     AssistanceToDecorate.SetMaterial(materialName);
                 }
 
-                public void Show(EventHandler callback)
+                public override void Show(EventHandler callback)
                 {
                     DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Decorated assistance is going to be shown");
 
-                    if (AssistanceToDecorate.GetTransform().gameObject.activeSelf == false)
+                    if (AssistanceToDecorate.GetAssistance().GetTransform().gameObject.activeSelf == false)
                     {
                         AssistanceToDecorate.SetMaterial(MaterialName);
-                        AssistanceToDecorate.Show(callback);
+                        AssistanceToDecorate.GetAssistance().Show(callback);
                     }
                     else
                     {
-                        AssistanceToDecorate.Hide(delegate (System.Object o, EventArgs e)
+                        AssistanceToDecorate.GetAssistance().Hide(delegate (System.Object o, EventArgs e)
                         {
                             AssistanceToDecorate.SetMaterial(MaterialName);
-                            AssistanceToDecorate.Show(callback);
+                            AssistanceToDecorate.GetAssistance().Show(callback);
                         });
                     }
                 }
 
-                public void ShowHelp(bool show)
+                public override void ShowHelp(bool show)
                 {
-                    AssistanceToDecorate.ShowHelp(show);
+                    AssistanceToDecorate.GetAssistance().ShowHelp(show);
+                }
+
+                public Assistance GetAssistance()
+                {
+                    return AssistanceToDecorate.GetAssistance();
+                }
+
+                public override bool IsDecorator()
+                {
+                    return true;
                 }
             }
         }

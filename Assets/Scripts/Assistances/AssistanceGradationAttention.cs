@@ -25,15 +25,17 @@ namespace MATCH
     {
         public class AssistanceGradationAttention
         {
-            List<IAssistance> Gradation;
+            List<Assistance> Gradation;
             int GradationCurrent = -1;
+
+            public event EventHandler EventHelpClicked; // contains an argument which is an enum with the type of buttons clicked
 
             public AssistanceGradationAttention()
             {
-                Gradation = new List<IAssistance>();
+                Gradation = new List<Assistance>();
             }
 
-            public IAssistance AddAssistance(IAssistance assistance)
+            public Assistance AddAssistance(Assistance assistance)
             {
                 Gradation.Add(assistance);
                 if (GradationCurrent == -1)
@@ -41,7 +43,21 @@ namespace MATCH
                     GradationCurrent = 0;
                 }
 
+                if (assistance.IsDecorator() == false)
+                {
+                    assistance.EventHelpButtonClicked += CHelpButtonClicked;
+                }
+
                 return assistance;
+            }
+
+            private void CHelpButtonClicked (System.Object o, EventArgs e)
+            {
+                MATCH.Utilities.EventHandlerArgs.Button args = (Utilities.EventHandlerArgs.Button)e;
+
+                DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Help button " + args.ButtonType.ToString() +  " clicked for assistance " + GetCurrentAssistance().name);
+
+                EventHelpClicked?.Invoke(this, e);
             }
 
             /**
@@ -112,9 +128,9 @@ namespace MATCH
             /**
              * Returns null if no assistances have been added yet
              * */
-            public IAssistance GetCurrentAssistance()
+            public Assistance GetCurrentAssistance()
             {
-                IAssistance toReturn = null;
+                Assistance toReturn = null;
 
                 if (GradationCurrent > -1)
                 {

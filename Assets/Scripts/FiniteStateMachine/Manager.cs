@@ -385,7 +385,7 @@ namespace MATCH
                 m_functionsShowEventHandlers.Add(handler);
             }
 
-            public void addFunctionShow(Assistances.IAssistance assistance, EventHandler callback)
+            public void addFunctionShow(Assistances.Assistance assistance, EventHandler callback)
             {
                 addFunctionShow(assistance.Show, callback);
             }
@@ -393,7 +393,7 @@ namespace MATCH
             /**
              * Then no callback trigerred when processed finished
              * */
-            public void addFunctionShow(Assistances.IAssistance assistance)
+            public void addFunctionShow(Assistances.Assistance assistance)
             {
                 addFunctionShow(assistance.Show, Utilities.Utility.GetEventHandlerEmpty());
             }
@@ -414,17 +414,17 @@ namespace MATCH
                 m_functionHideEventHandler = handler;
             }
 
-            public void setFunctionHide(Assistances.IAssistance assistance, EventHandler callback)
+            public void setFunctionHide(Assistances.Assistance assistance, EventHandler callback)
             {
                 setFunctionHide(assistance.Hide, callback);
             }
 
-            public void setFunctionHide(Assistances.IAssistance assistance)
+            public void setFunctionHide(Assistances.Assistance assistance)
             {
                 setFunctionHide(assistance.Hide, Utilities.Utility.GetEventHandlerEmpty());
             }
 
-            public void setFunctionHideAndShow(Assistances.IAssistance assistance)
+            public void setFunctionHideAndShow(Assistances.Assistance assistance)
             {
                 setFunctionHide(assistance);
                 addFunctionShow(assistance);

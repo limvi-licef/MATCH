@@ -174,7 +174,7 @@ namespace MATCH
             void CallbackDetectedOutStorage(System.Object o, EventArgs e) //Callback emitted when the object is out of the storage
             {
                 m_inferenceManager.UnregisterInference(m_inferenceObjectOutStorage);
-                m_objectdetected = ((Utilities.EventHandlerArgObject)e).ObjectDetected;
+                m_objectdetected = ((Utilities.EventHandlerArgs.EventHandlerArgObject)e).ObjectDetected;
                 s_inferenceObjectDetectedOutStorage?.Invoke(this, EventArgs.Empty);
             }
 

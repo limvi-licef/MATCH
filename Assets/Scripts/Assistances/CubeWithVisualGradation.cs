@@ -29,7 +29,7 @@ namespace MATCH
 {
     namespace Assistances
     {
-        public class CubeWithVisualGradation : MonoBehaviour, IAssistance
+        public class CubeWithVisualGradation : Assistance
         {
             public Transform m_hologramView;
             CubeOpening m_hologramController;
@@ -127,7 +127,7 @@ namespace MATCH
             }
 
             bool m_mutexShow = false;
-            public void Show(EventHandler eventHandler)
+            public override void Show(EventHandler eventHandler)
             {
                 if (m_mutexShow == false)
                 {
@@ -166,7 +166,7 @@ namespace MATCH
                 m_hologramView.localPosition = m_hologramOriginalLocalPos;
             }
 
-            public void Hide(EventHandler eventHandler)
+            public override void Hide(EventHandler eventHandler)
             {
                 SetGradationToMinimum();
 
@@ -203,12 +203,12 @@ namespace MATCH
                 }
             }
 
-            public Transform GetTransform()
+            public override Transform GetTransform()
             {
                 return m_hologramView;
             }
 
-            public void ShowHelp(bool show)
+            public override void ShowHelp(bool show)
             {
                 //
             }
@@ -306,6 +306,11 @@ namespace MATCH
                 m_materialBottomVivid = bottom;
                 m_materialTopLeftVivid = topLeft;
                 m_materialTopRightVivid = topRight;
+            }
+
+            public override bool IsDecorator()
+            {
+                return false;
             }
         }
     }

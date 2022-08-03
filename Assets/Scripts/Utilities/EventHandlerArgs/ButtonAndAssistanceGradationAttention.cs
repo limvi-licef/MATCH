@@ -12,25 +12,29 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.*/
 
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 using Microsoft.MixedReality.Toolkit.UI;
 using Microsoft.MixedReality.Toolkit.UI.BoundsControl;
 using Microsoft.MixedReality.Toolkit.Utilities.Solvers;
-using System.Reflection;
 using System;
+using System.Collections.Generic;
+using UnityEngine;
+using System.Timers;
+using System.Reflection;
+using System.Linq;
+using Newtonsoft.Json.Linq;
 
 namespace MATCH
 {
-    namespace Assistances
+    namespace Utilities
     {
-        public interface IAssistance
+        namespace EventHandlerArgs
         {
-            /**
-             * Way to make it mandatory to have every class using this interface to inherit from the abstract class Assistance
-             * */
-            public Assistance GetAssistance();
+            public class ButtonAndAssistanceGradationAttention : EventArgs
+            {
+                public MATCH.Assistances.Buttons.Button.ButtonType ButtonType { get; set; }
+                public MATCH.Assistances.AssistanceGradationAttention AssistanceCurrent { get; set; }
+                public MATCH.Assistances.AssistanceGradationAttention AssistanceNext { get; set; }
+            }
         }
     }
 }

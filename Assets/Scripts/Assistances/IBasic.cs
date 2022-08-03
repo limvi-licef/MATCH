@@ -25,7 +25,7 @@ namespace MATCH
 {
     namespace Assistances
     {
-        public interface IAssistanceBasic : IAssistance
+        public interface IBasic: IAssistance
         {
             public void SetMaterial(string materialName);
         }

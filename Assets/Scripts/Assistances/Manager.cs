@@ -27,12 +27,12 @@ namespace MATCH
     {
         public class Manager
         {
-            Dictionary<String, IAssistance> AssistancesStorage;
+            Dictionary<String, Assistance> AssistancesStorage;
 
             // Start is called before the first frame update
             public Manager()
             {
-                AssistancesStorage = new Dictionary<string, IAssistance>();
+                AssistancesStorage = new Dictionary<string, Assistance>();
             }
 
             void Start()
@@ -40,7 +40,7 @@ namespace MATCH
                 
             }
 
-            public bool AddAssistance(String id, IAssistance assistance)
+            public bool AddAssistance(String id, Assistance assistance)
             {
                 bool toReturn = true;
 
@@ -58,7 +58,7 @@ namespace MATCH
 
             public void HideAllBut(string id)
             {
-                foreach (KeyValuePair<string, IAssistance> pair in AssistancesStorage)
+                foreach (KeyValuePair<string, Assistance> pair in AssistancesStorage)
                 {
                     if (pair.Key == id)
                     {

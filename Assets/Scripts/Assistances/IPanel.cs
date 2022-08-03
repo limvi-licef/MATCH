@@ -12,42 +12,25 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.*/
 
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
 using Microsoft.MixedReality.Toolkit.UI;
 using Microsoft.MixedReality.Toolkit.UI.BoundsControl;
 using Microsoft.MixedReality.Toolkit.Utilities.Solvers;
-using System;
-using System.Collections.Generic;
-using UnityEngine;
-using System.Timers;
 using System.Reflection;
-using System.Linq;
+using System;
 
-/**
- * Used to have a lighting object to point to a provided gameobject, from the same direction than the user's gaze
- * */
 namespace MATCH
 {
-    namespace Utilities
+    namespace Assistances
     {
-        public class EventHandlerArgString : EventArgs
+        public interface IPanel: IAssistance
         {
-            public string m_text;
-
-            public EventHandlerArgString(string text)
-            {
-                m_text = text;
-            }
-
-            void Start()
-            {
-
-            }
-
-            // Update is called once per frame
-            void Update()
-            {
-
-            }
+            public void SetBackgroundColor(string colorName);
+            public void SetEdgeColor(string colorName);
+            public void SetEdgeThickness(float thickness);
+            public void EnableWeavingHand(bool enable);
         }
     }
 }

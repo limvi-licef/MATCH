@@ -124,9 +124,9 @@ namespace MATCH
 
                 // Add plant to the GUI
                 m_dialogAssistanceWaterHelp.AddButton("Plante " + (plantId + 1), false);
-                m_dialogAssistanceWaterHelp.ButtonsController.Last().s_buttonClicked += delegate (System.Object o, EventArgs e)
+                m_dialogAssistanceWaterHelp.ButtonsController.Last().EventButtonClicked += delegate (System.Object o, EventArgs e)
                 {
-                    if (m_dialogAssistanceWaterHelp.ButtonsController[plantId].isChecked() == false)
+                    if (m_dialogAssistanceWaterHelp.ButtonsController[plantId].IsChecked() == false)
                     {
                         DrawLineForPlant(plantId);
                     }
@@ -203,7 +203,7 @@ namespace MATCH
                 Assistances.Dialog dialogThird = Assistances.Factory.Instance.CreateDialogNoButton("", "Il est temps d'arroser vos plantes", m_pointOfReferenceForPaths);
 
                 // Dialog to provide assistance to water the plants
-                Assistances.Dialog dialogAssistanceWaterProposeHelp = Assistances.Factory.Instance.CreateDialogTwoButtons("", "Besoin d'aide?", "Oui", delegate (System.Object o, EventArgs e) { s_assistanceWaterNeedHelp?.Invoke(o, e); }, "Non", delegate (System.Object o, EventArgs e) { s_assistanceWaterNoNeedForHelp?.Invoke(o, e); }, m_pointOfReferenceForPaths);
+                Assistances.Dialog dialogAssistanceWaterProposeHelp = Assistances.Factory.Instance.CreateDialogTwoButtons("", "Besoin d'aide?", "Oui", delegate (System.Object o, EventArgs e) { s_assistanceWaterNeedHelp?.Invoke(o, e); }, Assistances.Buttons.Button.ButtonType.Yes, "Non", delegate (System.Object o, EventArgs e) { s_assistanceWaterNoNeedForHelp?.Invoke(o, e); }, Assistances.Buttons.Button.ButtonType.No, m_pointOfReferenceForPaths);
 
                 //// Inferences
                 DateTime tempTime = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 19, 0, 0);
@@ -300,7 +300,7 @@ namespace MATCH
 
                         bool plantAlreadyWatered = m_sIntermediateWateringPlants.checkStateCalled(plant.GetState());
 
-                        plantButton.checkButton(plantAlreadyWatered);
+                        plantButton.CheckButton(plantAlreadyWatered);
 
                         //plant.getInteractionSurface().m_eventInteractionSurfaceTableTouched += plant.gotoStateHighlightWatered();
 
@@ -315,7 +315,7 @@ namespace MATCH
                             //MouseDebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, MouseDebugMessagesManager.MessageLevel.Info, "Called for plant index " + indexPlant);
 
                             line.positionCount = 0;
-                            plantButton.checkButton(true);
+                            plantButton.CheckButton(true);
                         };
                     }
                 };

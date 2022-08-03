@@ -226,7 +226,7 @@ namespace MATCH
                 // States changing
                 interactionTableController.EventInteractionSurfaceTableTouched += sStandBy.goToState(sCubeRagTable);
                 m_assistancePicturalController.m_eventHologramStimulateLevel1Gradation1Or2Touched += sCubeRagTable.goToState(sMessageCue);
-                initialCueingController.ButtonsController[0].s_buttonClicked += sMessageCue.goToState(sArchToRag);
+                initialCueingController.ButtonsController[0].EventButtonClicked += sMessageCue.goToState(sArchToRag);
                 m_assistanceConnectWithArchController.m_eventHologramHelpTouched += sArchToRag.goToState(sSolution);
                 interactionRagController.EventInteractionSurfaceTableTouched += sCubeRagTable.goToState(sSurfaceToClean);
                 interactionRagController.EventInteractionSurfaceTableTouched += sMessageCue.goToState(sSurfaceToClean);
@@ -278,7 +278,7 @@ namespace MATCH
                 Assistances.Dialog firstDialog = Assistances.Factory.Instance.CreateDialogNoButton("", firstMessage, interactionSurfaceTable.transform);
 
                 // Second dialog
-                Assistances.Dialog secondDialog = Assistances.Factory.Instance.CreateDialogThreeButtons("", firstMessage, "Je sais!", delegate (System.Object o, EventArgs e) { s_dialogSecondButtonOk?.Invoke(this, e); }, "Je ne sais pas", delegate (System.Object o, EventArgs e) { s_dialogSecondButtonNok?.Invoke(this, e); }, "Cela ne m'intéresse pas", delegate (System.Object o, EventArgs e) { s_dialogSecondButtonLeave?.Invoke(this, e); }, interactionSurfaceTable.transform);
+                Assistances.Dialog secondDialog = Assistances.Factory.Instance.CreateDialogThreeButtons("", firstMessage, "Je sais!", delegate (System.Object o, EventArgs e) { s_dialogSecondButtonOk?.Invoke(this, e); }, Assistances.Buttons.Button.ButtonType.CustomChoice1, "Je ne sais pas", delegate (System.Object o, EventArgs e) { s_dialogSecondButtonNok?.Invoke(this, e); }, Assistances.Buttons.Button.ButtonType.CustomChoice2, "Cela ne m'intéresse pas", delegate (System.Object o, EventArgs e) { s_dialogSecondButtonLeave?.Invoke(this, e); }, Assistances.Buttons.Button.ButtonType.CustomChoice3, interactionSurfaceTable.transform);
 
                 // Surface to clean
                 Assistances.ProcessingSurface surfaceToProcess = Assistances.Factory.Instance.CreateSurfaceToProcess(interactionSurfaceTable.transform);
@@ -295,7 +295,7 @@ namespace MATCH
                 // To do later
 
                 // Calling the caregiver
-                Assistances.Dialog dialogCallCaregiver = Assistances.Factory.Instance.CreateDialogTwoButtons("", "Est-ce que j'appelle votre aidant?", "Oui", delegate (System.Object o, EventArgs e) { s_caregiverCall?.Invoke(this, e); }, "Non", delegate (System.Object o, EventArgs e) { s_caregiverCall?.Invoke(this, e); }, interactionSurfaceTable.transform);
+                Assistances.Dialog dialogCallCaregiver = Assistances.Factory.Instance.CreateDialogTwoButtons("", "Est-ce que j'appelle votre aidant?", "Oui", delegate (System.Object o, EventArgs e) { s_caregiverCall?.Invoke(this, e); }, Assistances.Buttons.Button.ButtonType.Yes, "Non", delegate (System.Object o, EventArgs e) { s_caregiverCall?.Invoke(this, e); }, Assistances.Buttons.Button.ButtonType.No, interactionSurfaceTable.transform);
 
                 // Success
                 Assistances.Basic success = Assistances.Factory.Instance.CreateCube("Mouse_Congratulation", interactionSurfaceTable.transform);

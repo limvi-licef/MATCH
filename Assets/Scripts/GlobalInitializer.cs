@@ -86,8 +86,8 @@ namespace MATCH
         void addScenarioToGUI(MATCH.Scenarios.Scenario scenario)
         {
             MATCH.Assistances.Buttons.Basic button = TodoList.AddButton(scenario.getId(), true); //add button
-            scenario.s_challengeOnStart += button.callbackSetButtonBackgroundCyan; //m_todo.callbackStartButton;
-            scenario.s_challengeOnSuccess += button.callbackSetButtonBackgroundGreen; //m_todo.callbackCheckButton;
+            scenario.s_challengeOnStart += button.CallbackSetButtonBackgroundCyan; //m_todo.callbackStartButton;
+            scenario.s_challengeOnSuccess += button.CallbackSetButtonBackgroundGreen; //m_todo.callbackCheckButton;
         }
 
         // Update is called once per frame

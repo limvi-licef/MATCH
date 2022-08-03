@@ -31,7 +31,7 @@ namespace MATCH
 {
     namespace Assistances
     {
-        public class Basic : MonoBehaviour, IAssistanceBasic
+        public class Basic : Assistance, IBasic
         {
             public Transform ChildView;
 
@@ -48,8 +48,6 @@ namespace MATCH
 
             private void Awake()
             {
-                DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Awake called for object " + gameObject.name);
-
                 // Initialize variables
 
                 // Children
@@ -72,22 +70,38 @@ namespace MATCH
 
                 AdjustHeightOnShow = true;
 
+               
+            }
+
+            private void Start()
+            {
                 // Help buttons
-                if (transform.Find("ExclamationMarkButtons"))
-                {
-                    List<string> buttonsText = new List<string>();
-                    buttonsText.Add("?");
-                    List<EventHandler> buttonsCallback = new List<EventHandler>();
-                    buttonsCallback.Add(CButtonHelp);
-                    Help = Assistances.Factory.Instance.CreateButtons("", "", buttonsText, buttonsCallback, transform);
-                    Help.gameObject.name = "ExclamationMarkButtons";
-                    Help.GetTransform().localPosition = new Vector3(ChildView.localPosition.x, ChildView.localPosition.y - 0.3f, ChildView.localPosition.z);
-                    Help.Hide(Utilities.Utility.GetEventHandlerEmpty());
-                }
+                //if (!transform.Find("ExclamationMarkButtons"))
+                //{
+                DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Help buttons instanciated for " + gameObject.name);
+
+                List<string> buttonsText = new List<string>();
+                buttonsText.Add("Oui");
+                buttonsText.Add("Non");
+                List<EventHandler> buttonsCallback = new List<EventHandler>();
+                buttonsCallback.Add(CButtonHelp);
+                buttonsCallback.Add(CButtonHelp);
+                List<Assistances.Buttons.Button.ButtonType> buttonsType = new List<Buttons.Button.ButtonType>();
+                buttonsType.Add(Buttons.Button.ButtonType.Yes);
+                buttonsType.Add(Buttons.Button.ButtonType.No);
+                Help = Assistances.Factory.Instance.CreateButtons("", "Besoin d'aide?", buttonsText, buttonsCallback, buttonsType, transform);
+                Help.AdjustToHeight = false;
+                Help.gameObject.name = "ExclamationMarkButtons";
+                //Help.GetTransform().localPosition = new Vector3(ChildView.localPosition.x, ChildView.localPosition.y - 0.3f, ChildView.localPosition.z);
+                Help.GetTransform().localPosition = new Vector3(0, -0.2f, 0);
+                //Help.Hide(Utilities.Utility.GetEventHandlerEmpty());
+                //}
+
+
             }
 
             bool m_mutexShow = false;
-            public void Show(EventHandler eventHandler)
+            public override void Show(EventHandler eventHandler)
             {
                 if (m_mutexShow == false)
                 {
@@ -102,12 +116,13 @@ namespace MATCH
                     {
                         m_mutexShow = false;
                         eventHandler?.Invoke(this, EventArgs.Empty);
+                        //Help.Show(Utilities.Utility.GetEventHandlerEmpty());
                     });
                 }
             }
 
             bool m_mutexHide = false;
-            public void Hide(EventHandler eventHandler)
+            public override void Hide(EventHandler eventHandler)
             {
                 if (m_mutexHide == false)
                 {
@@ -122,20 +137,31 @@ namespace MATCH
                 }
             }
 
-            public void ShowHelp(bool show)
+            public override void ShowHelp(bool show)
             {
-                //DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Displaying the help buttons");
+                DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "ShowHelp function called for " + Help.name);
                 if (show)
                 {
-                    Help.Show(Utilities.Utility.GetEventHandlerEmpty());
+                    //Help.GetTransform().localPosition = new Vector3(ChildView.localPosition.x, ChildView.localPosition.y - 0.3f, ChildView.localPosition.z);
+                    DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Help is going to be shown");
+
+                    Help.Show(delegate(System.Object o, EventArgs e)
+                    {
+                        //Help.GetTransform().localPosition = new Vector3(0, 0.3f, 0);
+                        DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Help should be visible now");
+                        //Help.EventHelpButtonClicked += CButtonHelp;
+
+                    });
                 }
                 else
                 {
+                    DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Help is going to be hidden");
+
                     Help.Hide(Utilities.Utility.GetEventHandlerEmpty());
                 }
             }
 
-            public Transform GetTransform()
+            public override Transform GetTransform()
             {
                 return ChildView;
             }
@@ -208,12 +234,15 @@ namespace MATCH
                 return ChildView.transform;
             }
 
-            private void CButtonHelp(System.Object o, EventArgs e)
+            public Assistance GetAssistance()
             {
+                return this;
+            }
 
+            public override bool IsDecorator()
+            {
+                return false;
             }
         }
-
     }
 }
-

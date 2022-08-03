@@ -37,21 +37,21 @@ namespace MATCH
                 Theta = 7
             }
 
-            Dictionary<Gradation, IAssistance> AssistancesStorage;
+            Dictionary<Gradation, Assistance> AssistancesStorage;
 
             // Start is called before the first frame update
             public QandDAssistances() {
-                AssistancesStorage = new Dictionary<Gradation, IAssistance>();
+                AssistancesStorage = new Dictionary<Gradation, Assistance>();
             }
 
-            void AddAssistance(Gradation gradation, IAssistance assistance)
+            void AddAssistance(Gradation gradation, Assistance assistance)
             {
                 AssistancesStorage.Add(gradation, assistance);
             }
 
             void ShowOneHideOthers(Gradation gradationToShow, EventHandler callback)
             {
-                foreach (KeyValuePair<Gradation, IAssistance> assistance in AssistancesStorage)
+                foreach (KeyValuePair<Gradation, Assistance> assistance in AssistancesStorage)
                 {
                     if (assistance.Key == gradationToShow)
                     {

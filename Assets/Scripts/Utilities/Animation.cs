@@ -194,6 +194,8 @@ namespace MATCH
 
             public void animateAppearInPlaceToScaling(Vector3 targetScaling, EventHandler[] eventHandlers)
             {
+                DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Called for object " + gameObject.name);
+
                 gameObject.transform.localScale = new Vector3(0, 0, 0);
                 m_positionEnd = gameObject.transform.position;
                 m_scalingEnd = targetScaling;
