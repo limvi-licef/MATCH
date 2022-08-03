@@ -84,15 +84,7 @@ namespace MATCH
                 //AreaObjectPosition.GetInteractionSurface().transform.position = new Vector3(1000, 1000, 1000);
                 AreaObjectPosition.transform.position = new Vector3(1000, 1000, 1000);
                 
-
-                
-                //Assistances.Basic exclamationMark = Assistances.Factory.Instance.CreateCube("Mouse_Exclamation_Red", true, new Vector3(0.1f, 0.1f, 0.1f), new Vector3(0, 0, 0), true, m_object.GetInteractionSurface().transform);
-                
-
-                
-
                 AdminMenu.Instance.addButton("Sorting Object - See boolean states", CallbackSeeStates);
-                //AdminMenu.Instance.addButton("Sorting Object - Reset boolean states", CallbackResetStates);
 
                 InitializeScenario();
             }
@@ -262,110 +254,7 @@ namespace MATCH
                     srObjectIsNotStored
                     );
 
-                /**
-                 * What is commented below corresponds to the BT presented in the iteration-8 of the diagram file. It does not seem to work.
-                 * */
-                /*Sequence seObjectDroppedOutsideStorageArea = new Sequence(
-                    new NPBehave.Action(() => Debug.Log("Assistances Delta")),
-                    new WaitUntilStopped());
-
-                BlackboardCondition cObjectDroppedOutsideStorageArea = new BlackboardCondition("PersonDroppedObjectOutsideStoringArea",
-                    Operator.IS_EQUAL, true, Stops.IMMEDIATE_RESTART, seObjectDroppedOutsideStorageArea);
-
-                Selector srPersonTakeObject = new Selector(
-                    cObjectDroppedOutsideStorageArea,
-                    new Sequence(
-                        new NPBehave.Action(() => Debug.Log("Hide all assistances")),
-                        new WaitUntilStopped()));
-
-                BlackboardCondition cDidPersonTakeObject = new BlackboardCondition("PersonGrabbedObject", Operator.IS_EQUAL, true, Stops.IMMEDIATE_RESTART, new Sequence(srPersonTakeObject));
-
-                Sequence sePersonMovedAwayFromObject = new Sequence(
-                    new NPBehave.Action(() => Debug.Log("Assistances Alpha")),
-                    new WaitUntilStopped());
-
-                BlackboardCondition cDidPersonMoveAwayFromObject = new BlackboardCondition("PersonMovedAwayFromObject", Operator.IS_EQUAL, true, Stops.IMMEDIATE_RESTART, sePersonMovedAwayFromObject);
-
-                Selector srPersonApproachedObject = new Selector(
-                    cDidPersonTakeObject,
-                    cDidPersonMoveAwayFromObject
-                    );
-
-                BlackboardCondition cDidPersonApproachObject = new BlackboardCondition("PersonCloseToObject", Operator.IS_EQUAL, true, Stops.IMMEDIATE_RESTART, new Sequence(srPersonApproachedObject));
-
-                Sequence sePersonLookedAtObject = new Sequence(
-                    new NPBehave.Action(() => Debug.Log("Assistances Beta")),
-                    new WaitUntilStopped());
-
-                BlackboardCondition cDidPersonLookAtObject = new BlackboardCondition("PersonWatchedObject", Operator.IS_EQUAL, true, Stops.IMMEDIATE_RESTART, sePersonLookedAtObject);
-
-                Sequence sePersonDidNotCameToObjectSinceAWhile = new Sequence(
-                    new NPBehave.Action(() => Debug.Log("Assistances Gamma")),
-                    new WaitUntilStopped());
-
-                BlackboardCondition cDidPersonDidNotComeToTheObjectSinceAWhile = new BlackboardCondition("PersonDidNotComeToObject", Operator.IS_EQUAL, true, Stops.IMMEDIATE_RESTART, sePersonDidNotCameToObjectSinceAWhile);
-
-                Selector srDidPersonLookAtObject = new Selector(
-                    cDidPersonLookAtObject,
-                    cDidPersonDidNotComeToTheObjectSinceAWhile);
-
-                Selector srPersonApproachObject = new Selector(
-                    cDidPersonApproachObject,
-                    srDidPersonLookAtObject
-                    );
-
-                Sequence seObjectIsStored = new Sequence(
-                    new NPBehave.Action(() => AssistancesManager.HideAllBut("Success")),
-                    new WaitUntilStopped()
-                 );
-
-                BlackboardCondition cIsObjectStored = new BlackboardCondition("ObjectStored", Operator.IS_EQUAL, true, Stops.IMMEDIATE_RESTART, seObjectIsStored);
-
-                Selector srBegin = new Selector(
-                    cIsObjectStored,
-                    srPersonApproachObject
-                    );*/
-
                 Tree = new Root(Conditions, srBegin);
-
-                /*Tree = new Root(Conditions,
-                    new Selector(
-                        new BlackboardCondition("ObjectStored", Operator.IS_EQUAL, true, Stops.IMMEDIATE_RESTART,
-                            new Sequence(
-                                new NPBehave.Action(() => AssistancesManager.HideAllBut("Success")),
-                                new WaitUntilStopped())),
-                        new Selector(
-                            new BlackboardCondition("PersonCloseToObject", Operator.IS_EQUAL, true, Stops.IMMEDIATE_RESTART,
-                                new Sequence(
-                                    new Selector(
-                                        new BlackboardCondition("PersonGrabbedObject", Operator.IS_EQUAL, true, Stops.IMMEDIATE_RESTART,
-                                            new Selector(
-                                                new BlackboardCondition("PersonDroppedObjectOutsideStoringArea", Operator.IS_EQUAL, true, Stops.IMMEDIATE_RESTART, new Sequence(
-                                                    new NPBehave.Action(() => Debug.Log("Assistances Delta")),
-                                                    new WaitUntilStopped())),
-                                                new Sequence(
-                                                    new NPBehave.Action(() => Debug.Log("Hide all assistances")),
-                                                    new WaitUntilStopped())
-                                                )),
-                                        new BlackboardCondition("PersonGrabbedObject", Operator.IS_EQUAL, false, Stops.IMMEDIATE_RESTART,
-                                                new BlackboardCondition("PersonMovedAwayFromObject", Operator.IS_EQUAL, true, Stops.IMMEDIATE_RESTART, 
-                                                new Sequence(
-                                                    new NPBehave.Action(() => Debug.Log("Assistances Alpha")),
-                                                    new WaitUntilStopped())))),
-                                    //new BlackboardCondition("PersonGrabbedObject", Operator.IS_EQUAL, true, Stops.IMMEDIATE_RESTART, 
-                                    new BlackboardCondition("PersonDroppedObjectOutsideStoringArea", Operator.IS_EQUAL, true, Stops.IMMEDIATE_RESTART, new Sequence(
-                                        new NPBehave.Action(() => Debug.Log("Assistances Delta")),
-                                        new WaitUntilStopped()))))),
-                            new Selector(
-                                new BlackboardCondition("PersonWatchedObject", Operator.IS_EQUAL, true, Stops.IMMEDIATE_RESTART,
-                                    new Sequence(
-                                        new NPBehave.Action(() => Debug.Log("Assistances Beta")),
-                                        new WaitUntilStopped())),
-                               new BlackboardCondition("PersonWatchedObject", Operator.IS_EQUAL, false, Stops.IMMEDIATE_RESTART,
-                                    new BlackboardCondition("PersonDidNotComeToObject", Operator.IS_EQUAL, true, Stops.IMMEDIATE_RESTART,
-                                        new Sequence(
-                                            new NPBehave.Action(() => Debug.Log("Assistances Gamma")),
-                                            new WaitUntilStopped()))))));*/
 
                 //#if UNITY_EDITOR
                 NPBehave.Debugger debugger = (Debugger)this.gameObject.AddComponent(typeof(Debugger));
@@ -564,41 +453,6 @@ namespace MATCH
                 DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "PersonDroppedObjectOutsideStoringArea - " + Conditions["PersonDroppedObjectOutsideStoringArea"]);
                 DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "PersonDidNotComeToObject - " + Conditions["PersonDidNotComeToObject"]);
              }
-
-            /*
-            void CallbackResetStates()
-            {
-                Conditions["ObjectStored"] = false;
-                Conditions["PersonMovedAwayFromObject"] = false;
-                Conditions["PersonCloseToObject"] = false;
-                Conditions["PersonGrabbedObject"] = false;
-                Conditions["PersonWatchedObject"] = false;
-                Conditions["PersonDroppedObjectOutsideStoringArea"] = false;
-                Conditions["PersonDidNotComeToObject"] = false;
-
-                InferenceManager.UnregisterInference(InferenceObjectDetected);
-                InferenceManager.RegisterInference(InferenceObjectDetected); // !!! add a new callback to the dictionnary so dont abuse
-
-                InferenceManager.UnregisterInference(InferenceGameObjectInStorage);
-                InferenceManager.RegisterInference(InferenceGameObjectInStorage); // !!! add a new callback to the dictionnary so dont abuse
-
-                InferenceManager.UnregisterInference(InferenceObjectOutAreaObject);
-                InferenceManager.RegisterInference(InferenceObjectOutAreaObject); // !!! add a new callback to the dictionnary so dont abuse
-
-                //InferenceManager.UnregisterInference(InferenceReleasedObject);
-                //InferenceManager.RegisterInference(InferenceReleasedObject);
-                InferenceManager.UnregisterInference(InferenceFocusedOnObject);
-                InferenceManager.RegisterInference(InferenceFocusedOnObject);
-                InferenceManager.UnregisterInference(InferenceTimeDidNotComeToObject);
-                InferenceManager.RegisterInference(InferenceTimeDidNotComeToObject);
-
-                ObjectDetected = false;
-                ObjectSet = false;
-                ObjectDetectedInformation = null;
-
-                RegisterInferenceComing();
-                RegisterInferenceComingAndLeaving();
-            }*/
 
             void CallBackSetAreaObject()
             {
