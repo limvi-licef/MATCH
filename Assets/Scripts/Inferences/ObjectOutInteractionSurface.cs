@@ -40,7 +40,7 @@ namespace MATCH
                 Surface = surface;
                 LastObject = null;
                 Objectdetected = null;
-                ObjectRecognition.ObjectInformation.Instance.UnregisterCallbackToObject(objectName);
+                //ObjectRecognition.ObjectInformation.Instance.UnregisterCallbackToObject(objectName);
                 ObjectRecognition.ObjectInformation.Instance.RegisterCallbackToObject(objectName, callbackObjectDetection);
             }
 

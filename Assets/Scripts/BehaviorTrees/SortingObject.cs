@@ -31,51 +31,62 @@ namespace MATCH
 
             Assistances.InteractionSurface AreaStorage;
             Assistances.InteractionSurface AreaObject;
+            Assistances.InteractionSurface AreaObjectPosition;
 
             Assistances.Manager AssistancesManager;
 
+            Assistances.Basic successController;
+
             readonly string ObjectOfInterestName = "cup";
 
-            //Inferences.ObjectInInteractionSurface InferenceObjectInStorage;
+            Inferences.ObjectInInteractionSurface InferenceObjectInStorage;
+            Inferences.ObjectOutInteractionSurface InferenceObjectOutAreaObject;
             Inferences.GameObjectInInteractionSurface InferenceGameObjectInStorage;
             Inferences.ObjectDetected InferenceObjectDetected;
             Inferences.GameObjectGrabbed InferenceGrabbedObject;
             Inferences.GameObjectReleased InferenceReleasedObject;
             Inferences.ObjectFocused InferenceFocusedOnObject;
             Inferences.TimeDidNotComeToObject InferenceTimeDidNotComeToObject;
+            
 
-            bool ObjectDetected;
+
+            bool ObjectDetected = false;
+            bool ObjectSet = false;
             Utilities.PhysicalObjectInformation ObjectDetectedInformation;
 
             GameObject FakeObject;
 
-            Assistances.InteractionSurface AssistancesAlphaInteractionSurface;
-            Assistances.AssistanceGradationExplicit AssistancesAlphaGradation;
-            //GameObject AssistancesAlphaGo;
-
+			Assistances.InteractionSurface AssistancesAlphaInteractionSurface;
+            Assistances.AssistanceGradationExplicit AssistancesAlphaGradation;																  
             // Start is called before the first frame update
             void Start()
             {
-                /*AssistancesAlphaGo = new GameObject("Assistances alpha");
-                AssistancesAlphaGo.transform.parent = transform;
-                AssistancesAlphaGo.name = "Assistances Alpha - interaction surface";*/
-
                 FakeObject = transform.Find("FakeObject").gameObject;
 
                 ObjectDetectedInformation = null;
                 AssistancesManager = new Assistances.Manager();
 
                 AreaStorage = Assistances.Factory.Instance.CreateInteractionSurface("Storage", default, new Vector3(0.2f, 0.8f, 0.3f), "Mouse_Green_Glowing", true, true, Utilities.Utility.GetEventHandlerEmpty(), transform);
-                AreaStorage.GetInteractionSurface().position = new Vector3(3.38f, 0.22f, 3.19f); 
-                AreaObject = Assistances.Factory.Instance.CreateInteractionSurface("Object", default, new Vector3(0.1f, 0.1f, 0.1f), "Mouse_Yellow_Glowing", true, true, Utilities.Utility.GetEventHandlerEmpty(), transform);
-                AreaObject.GetInteractionSurface().gameObject.layer = LayerMask.NameToLayer("Ignore Raycast");
-                AreaObject.GetInteractionSurface().position = new Vector3(1000, 1000, 1000);//new Vector3(-0.61f, 0.46f, 5.18f);
+                if (Utilities.Utility.IsEditorSimulator() || Utilities.Utility.IsEditorGameView())
+                {
+                    AreaStorage.transform.position = new Vector3(3.38f, 0.22f, 3.19f);
+                }
+                else
+                {
+                    AreaStorage.SetLocalPosition(new Vector3(0f, 0f, 0.2f));
+                }
 
-                Assistances.Basic successController = Assistances.Factory.Instance.CreateCube("Mouse_Congratulation", AreaStorage.transform);
-                //Assistances.Basic exclamationMark = Assistances.Factory.Instance.CreateCube("Mouse_Exclamation_Red", true, new Vector3(0.1f, 0.1f, 0.1f), new Vector3(0, 0, 0), true, m_object.GetInteractionSurface().transform);
-                successController.Show(Utilities.Utility.GetEventHandlerEmpty());
+                AreaObject = Assistances.Factory.Instance.CreateInteractionSurface("Object", default, new Vector3(0.4f, 0.4f, 0.4f), "Mouse_Yellow_Glowing", true, true, Utilities.Utility.GetEventHandlerEmpty(), transform);       
+                //AreaObject.GetInteractionSurface().gameObject.layer = LayerMask.NameToLayer("Ignore Raycast");
+                AreaObject.transform.position = new Vector3(1000, 1000, 1000);//new Vector3(-0.61f, 0.46f, 5.18f);
+                //AreaObject.GetInteractionSurface().transform.position = new Vector3(1000, 1000, 1000);
 
-                AssistancesManager.AddAssistance("Success", successController);
+                AreaObjectPosition = Assistances.Factory.Instance.CreateInteractionSurface("Object_Position", default, new Vector3(0.05f, 0.05f, 0.05f), "Mouse_Yellow_Glowing", true, true, Utilities.Utility.GetEventHandlerEmpty(), transform);
+                AreaObjectPosition.GetInteractionSurface().gameObject.layer = LayerMask.NameToLayer("Ignore Raycast");
+                //AreaObjectPosition.GetInteractionSurface().transform.position = new Vector3(1000, 1000, 1000);
+                AreaObjectPosition.transform.position = new Vector3(1000, 1000, 1000);
+                
+                AdminMenu.Instance.addButton("Sorting Object - See boolean states", CallbackSeeStates);
 
                 InitializeScenario();
             }
@@ -98,7 +109,10 @@ namespace MATCH
                 Conditions["PersonDidNotComeToObject"] = false;
 
                 InferenceObjectDetected = new Inferences.ObjectDetected("SortingObjectDetectionObject", CallbackObjectDetected, ObjectOfInterestName);
-                InferenceObjectDetected.EnableFakeObjectDetection(FakeObject);
+                if (Utilities.Utility.IsEditorSimulator() || Utilities.Utility.IsEditorGameView())
+                {
+                    InferenceObjectDetected.EnableFakeObjectDetection(FakeObject);
+                }
                 InferenceManager.RegisterInference(InferenceObjectDetected);
 
                 //MATCH.Inferences.Time inferenceObjectStored = new Inferences.Time("Object sorted",
@@ -108,43 +122,92 @@ namespace MATCH
                 //InferenceManager.RegisterInference(InferenceObjectInStorage);
                 InferenceGameObjectInStorage = new Inferences.GameObjectInInteractionSurface("GameObjectStorage", CallbackGameObjectDetectedInStorage, FakeObject, AreaStorage);
                 InferenceManager.RegisterInference(InferenceGameObjectInStorage);
+                InferenceObjectInStorage = new Inferences.ObjectInInteractionSurface("ObjectStorage", CallbackGameObjectDetectedInStorage, ObjectOfInterestName, AreaStorage);
+                InferenceManager.RegisterInference(InferenceObjectInStorage);
+
+
+                //AreaObject.GetComponent<Interactable>().GetReceiver<InteractableOnTouchReceiver>().OnTouchStart.AddListener.CallbackPersonGrabbedObject;
+                AreaObject.TriggerTouchEvent();
+                AreaObject.EventInteractionSurfaceTableTouched += CallbackPersonGrabbedObject;
 
                 RegisterInferenceComing();
-
+                //RegisterInferenceLeaving();
                 RegisterInferenceComingAndLeaving();
 
-                InferenceGrabbedObject = new Inferences.GameObjectGrabbed("ObjectGrabbed", CallbackPersonGrabbedObject, FakeObject);
-                InferenceManager.RegisterInference(InferenceGrabbedObject);
+                if (Utilities.Utility.IsEditorSimulator() || Utilities.Utility.IsEditorGameView())
+                {
+                    InferenceGrabbedObject = new Inferences.GameObjectGrabbed("ObjectGrabbed", CallbackPersonGrabbedObject, FakeObject);
+                    InferenceManager.RegisterInference(InferenceGrabbedObject);
 
-                InferenceReleasedObject = new Inferences.GameObjectReleased("ObjectReleased", CallbackPersonReleasedObject, FakeObject);
-                InferenceManager.RegisterInference(InferenceReleasedObject);
+                    InferenceReleasedObject = new Inferences.GameObjectReleased("ObjectReleased", CallbackPersonReleasedObject, FakeObject);
+                    InferenceManager.RegisterInference(InferenceReleasedObject);
 
-                InferenceFocusedOnObject = new Inferences.ObjectFocused("FocusedOnObject", CallbackPersonWatchedObject, FakeObject, 3);
-                InferenceManager.RegisterInference(InferenceFocusedOnObject);
+                    InferenceFocusedOnObject = new Inferences.ObjectFocused("FocusedOnObject", CallbackPersonWatchedObject, FakeObject, 3);
+                    InferenceManager.RegisterInference(InferenceFocusedOnObject);
 
-                InferenceTimeDidNotComeToObject = new Inferences.TimeDidNotComeToObject("DidNotComeToObject", CallbackPersonDidNotComeToObject, FakeObject, 15);
-                InferenceManager.RegisterInference(InferenceTimeDidNotComeToObject);
+                    InferenceTimeDidNotComeToObject = new Inferences.TimeDidNotComeToObject("DidNotComeToObject", CallbackPersonDidNotComeToObject, FakeObject, 15);
+                    InferenceManager.RegisterInference(InferenceTimeDidNotComeToObject);
+                }
+                else
+                {
+                    //InferenceObjectOutAreaObject = new Inferences.ObjectOutInteractionSurface("ObjectGrabbed", CallbackPersonGrabbedObject, ObjectOfInterestName, AreaObject);
+                    //InferenceManager.RegisterInference(InferenceObjectOutAreaObject);
+
+                    //InferenceReleasedObject = new Inferences.GameObjectReleased("ObjectReleased", CallbackPersonReleasedObject, FakeObject); //CHANGE THIS INFERENCE
+                    //InferenceManager.RegisterInference(InferenceReleasedObject);
+
+                    InferenceFocusedOnObject = new Inferences.ObjectFocused("FocusedOnObject", CallbackPersonWatchedObject, AreaObject.GetInteractionSurface().gameObject, 3);
+                    InferenceManager.RegisterInference(InferenceFocusedOnObject);
+
+                    InferenceTimeDidNotComeToObject = new Inferences.TimeDidNotComeToObject("DidNotComeToObject", CallbackPersonDidNotComeToObject, AreaObject.GetInteractionSurface().gameObject, 15);
+                    //InferenceManager.RegisterInference(InferenceTimeDidNotComeToObject);
+                }
+
+                /*
+                 * Assistances
+                 */
+                Assistances.QandDAssistances AssistancesGradation = new Assistances.QandDAssistances();
+
+                Assistances.Basic AssistancesAlpha = Assistances.Factory.Instance.CreateCube("Mouse_Congratulation", AreaStorage.transform);
+                //Assistances.QandDAssistances AssistancesAlphaGradation = new Assistances.QandDAssistances();
+                AssistancesGradation.AddAssistance(Assistances.QandDAssistances.Gradation.Alpha, AssistancesAlpha);
+
+                Assistances.Dialog AssistancesBeta = Assistances.Factory.Instance.CreateDialogNoButton("Information", "Cet objet doit être rangé.", AreaObject.transform);
+                //Assistances.QandDAssistances AssistancesBetaGradation = new Assistances.QandDAssistances();
+                AssistancesGradation.AddAssistance(Assistances.QandDAssistances.Gradation.Beta, AssistancesBeta);
+
+                Assistances.Basic AssistancesGamma = Assistances.Factory.Instance.CreateCube("Mouse_Exclamation", AreaObject.transform);
+                //Assistances.QandDAssistances AssistancesGammaGradation = new Assistances.QandDAssistances();
+                AssistancesGradation.AddAssistance(Assistances.QandDAssistances.Gradation.Gamma, AssistancesGamma);
+
+                Assistances.Dialog AssistancesDelta = Assistances.Factory.Instance.CreateDialogNoButton("Information","L'objet n'est pas rangé au bon endroit.", AreaObject.transform);
+                //Assistances.QandDAssistances AssistancesDeltaGradation = new Assistances.QandDAssistances();
+                AssistancesGradation.AddAssistance(Assistances.QandDAssistances.Gradation.Delta, AssistancesDelta);
+
+                Assistances.Basic AssistancesEpsilon = Assistances.Factory.Instance.CreateCube("Mouse_Exclamation_Red", AreaObject.transform);
+                //Assistances.QandDAssistances AssistancesEpsilonGradation = new Assistances.QandDAssistances();
+                AssistancesGradation.AddAssistance(Assistances.QandDAssistances.Gradation.Epsilon, AssistancesEpsilon);
 
                 /**
                  * The BT below corresponds to the iteration-9 of the BT in the diagram file
                  * */
                 Sequence seObjectDroppedOutsideStorageArea = new Sequence(
-                    new NPBehave.Action(() => Debug.Log("Assistances Delta")),
+                    new NPBehave.Action(() => AssistancesGradation.ShowOneHideOthers(Assistances.QandDAssistances.Gradation.Delta, Utilities.Utility.GetEventHandlerEmpty())),
                     new WaitUntilStopped());
 
                 BlackboardCondition cObjectDroppedOutsideStorageArea = new BlackboardCondition("PersonDroppedObjectOutsideStoringArea",
                     Operator.IS_EQUAL, true, Stops.IMMEDIATE_RESTART, seObjectDroppedOutsideStorageArea);
 
                 Sequence sePersonTakeObject = new Sequence(
-                    //cObjectDroppedOutsideStorageArea,
-                    //new Sequence(
-                        new NPBehave.Action(() => Debug.Log("Hide all assistances")),
+                        //cObjectDroppedOutsideStorageArea,
+                        //new Sequence(
+                        new NPBehave.Action(() => AssistancesGradation.HideAll()),
                         new WaitUntilStopped());
 
                 BlackboardCondition cDidPersonTakeObject = new BlackboardCondition("PersonGrabbedObject", Operator.IS_EQUAL, true, Stops.IMMEDIATE_RESTART, sePersonTakeObject);
 
                 Sequence sePersonMovedAwayFromObject = new Sequence(
-                    /*new NPBehave.Action(() => Debug.Log("Assistances Alpha")*/ new NPBehave.Action(()=>RunAssistancesAlpha()),
+                    new NPBehave.Action(() => AssistancesGradation.ShowOneHideOthers(Assistances.QandDAssistances.Gradation.Epsilon, Utilities.Utility.GetEventHandlerEmpty())),
                     new WaitUntilStopped());
 
                 BlackboardCondition cDidPersonMoveAwayFromObject = new BlackboardCondition("PersonMovedAwayFromObject", Operator.IS_EQUAL, true, Stops.IMMEDIATE_RESTART, sePersonMovedAwayFromObject);
@@ -157,13 +220,13 @@ namespace MATCH
                 BlackboardCondition cDidPersonApproachObject = new BlackboardCondition("PersonCloseToObject", Operator.IS_EQUAL, true, Stops.IMMEDIATE_RESTART, new Sequence(sePersonApproachedObject));
 
                 Sequence sePersonLookedAtObject = new Sequence(
-                    new NPBehave.Action(() => Debug.Log("Assistances Beta")),
+                    new NPBehave.Action(() => AssistancesGradation.ShowOneHideOthers(Assistances.QandDAssistances.Gradation.Beta, Utilities.Utility.GetEventHandlerEmpty())),
                     new WaitUntilStopped());
 
                 BlackboardCondition cDidPersonLookAtObject = new BlackboardCondition("PersonWatchedObject", Operator.IS_EQUAL, true, Stops.IMMEDIATE_RESTART, sePersonLookedAtObject);
 
                 Sequence sePersonDidNotCameToObjectSinceAWhile = new Sequence(
-                    new NPBehave.Action(() => Debug.Log("Assistances Gamma")),
+                    new NPBehave.Action(() => AssistancesGradation.ShowOneHideOthers(Assistances.QandDAssistances.Gradation.Gamma, Utilities.Utility.GetEventHandlerEmpty())),
                     new WaitUntilStopped());
 
                 BlackboardCondition cDidPersonDidNotComeToTheObjectSinceAWhile = new BlackboardCondition("PersonDidNotComeToObject", Operator.IS_EQUAL, true, Stops.IMMEDIATE_RESTART, sePersonDidNotCameToObjectSinceAWhile);
@@ -182,7 +245,7 @@ namespace MATCH
                     );
 
                 Sequence seObjectIsStored = new Sequence(
-                    new NPBehave.Action(() => AssistancesManager.HideAllBut("Success")),
+                    new NPBehave.Action(() => AssistancesGradation.ShowOneHideOthers(Assistances.QandDAssistances.Gradation.Alpha, Utilities.Utility.GetEventHandlerEmpty())),
                     new WaitUntilStopped()
                  );
 
@@ -193,10 +256,9 @@ namespace MATCH
                     srObjectIsNotStored
                     );
 
-                // Set assistances
-                InitializeAssistancesAlpha();
-
-                // Run tree
+				// Set assistances
+				// For now we use the assistances from the QandDAssistances class. Uncomment the following line when going to the BT to manage the assistances
+                //InitializeAssistancesAlpha();
                 Tree = new Root(Conditions, srBegin);
 
                 //#if UNITY_EDITOR
@@ -207,14 +269,15 @@ namespace MATCH
                 Tree.Start();
             }
 
-            void RunAssistancesAlpha()
+			void RunAssistancesAlpha()
             {
                 //DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Assistances alpha");
 
                 AssistancesAlphaGradation.RunAssistance(Utilities.Utility.GetEventHandlerEmpty());
             }
 
-            void InitializeAssistancesAlpha()
+            
+			void InitializeAssistancesAlpha()
             {
                 AssistancesAlphaInteractionSurface = Assistances.Factory.Instance.CreateInteractionSurface("AssistancesAlpha", AdminMenu.Panels.Obstacles, new Vector3(0.5f, 0.05f, 0.5f), "Mouse_Orange_Glowing", true, true, Utilities.Utility.GetEventHandlerEmpty(), transform);
                 AssistancesAlphaInteractionSurface.transform.localPosition = new Vector3(0, 0.464f, 1.632f); //new Vector3(0.85f, 0.46f, 2.18f);
@@ -242,47 +305,103 @@ namespace MATCH
                 AssistancesAlphaGradation.AddButton(exclamationMark, Assistances.Buttons.Button.ButtonType.Yes, yesNo1);
                 AssistancesAlphaGradation.AddButton(exclamationMark, Assistances.Buttons.Button.ButtonType.No, end);
                 //AssistancesAlphaGradation.AddButton(yesNo1, Assistances.Buttons.Button.ButtonType.Undefined, null);
-            }
+		}
 
-            void RegisterInferenceComing()
+			void RegisterInferenceComing()
             {
                 //Conditions["PersonCloseToObject"] = false;
-                Inferences.Factory.Instance.CreateDistanceComingInferenceOneShot(InferenceManager, "CloseToObject", CallbackPersonCloseToObject, FakeObject);
+                if (Utilities.Utility.IsEditorSimulator() || Utilities.Utility.IsEditorGameView())
+                {
+                    Inferences.Factory.Instance.CreateDistanceComingInferenceOneShot(InferenceManager, "CloseToObject", CallbackPersonCloseToObject, FakeObject);
+                }
+                else
+                {
+                    Inferences.Factory.Instance.CreateDistanceComingInferenceOneShot(InferenceManager, "CloseToObject", CallbackPersonCloseToObject, AreaObject.GetInteractionSurface().gameObject);
+                }
+            }
+
+
+
+            void RegisterInferenceLeaving()
+            {
+                //Conditions["PersonGrabbedObject"] = false;
+                if (!Utilities.Utility.IsEditorSimulator() && !Utilities.Utility.IsEditorGameView())
+                {
+                    Inferences.Factory.Instance.CreateDistanceLeavingInferenceOneShot(InferenceManager, "DistantToObject", CallbackPersonReleasedObject, AreaObjectPosition.GetInteractionSurface().gameObject);
+                }
             }
 
             void RegisterInferenceComingAndLeaving()
             {
                 Conditions["PersonMovedAwayFromObject"] = false;
-                Inferences.Factory.Instance.CreateDistanceComingAndLeavingInferenceOneShot(InferenceManager, "PassingByObject", CallbackPersonMovedAwayFromObject, FakeObject);
+                if (Utilities.Utility.IsEditorSimulator() || Utilities.Utility.IsEditorGameView())
+                {
+                    Inferences.Factory.Instance.CreateDistanceComingAndLeavingInferenceOneShot(InferenceManager, "PassingByObject", CallbackPersonMovedAwayFromObject, FakeObject);
+                }
+                else
+                {
+                    Inferences.Factory.Instance.CreateDistanceComingAndLeavingInferenceOneShot(InferenceManager, "PassingByObject", CallbackPersonMovedAwayFromObject, AreaObject.GetInteractionSurface().gameObject);
+                }
             }
 
             void CallbackObjectDetected(System.Object o, EventArgs e)
             {
                 //InferenceManager.UnregisterInference(InferenceObjectDetected);
+                
+                ObjectDetectedInformation = ((Utilities.EventHandlerArgObject)e).ObjectDetected;
+                DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Object detected : " + ObjectDetectedInformation.GetObjectName());
+
+                if (!Utilities.Utility.IsEditorSimulator() && !Utilities.Utility.IsEditorGameView())
+                {
+                    AreaObjectPosition.transform.position = ObjectDetectedInformation.GetCenter();
+                }
+
+                if (ObjectSet == false)
+                {
+                    DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Object detected and set!");
+                    ObjectSet = true;
+                    CallBackSetAreaObject();
+                    InferenceManager.RegisterInference(InferenceTimeDidNotComeToObject);
+                }
                 ObjectDetected = true;
-                ObjectDetectedInformation = ((Utilities.EventHandlerArgs.EventHandlerArgObject)e).ObjectDetected;
+              //AreaObject.SetLocalPosition(ObjectDetectedInformation.GetCenter());
             }
 
             void CallbackGameObjectDetectedInStorage(System.Object o, EventArgs e)
             {
-                //DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "FakeObject stored!");
+                DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Object stored!");
+                if (Utilities.Utility.IsEditorSimulator() || Utilities.Utility.IsEditorGameView())
+                {
+                    InferenceManager.UnregisterInference(InferenceGameObjectInStorage);
+                }
+                else
+                {
+                    InferenceManager.UnregisterInference(InferenceObjectInStorage);
+                    //ObjectDetectedInformation = ((Utilities.EventHandlerArgObject)e).ObjectDetected;
+                }
+                InferenceManager.UnregisterInference(InferenceObjectDetected);
+                Conditions["ObjectStored"] = true;// !(bool)Conditions["ObjectStored"];
+				Conditions["PersonDroppedObjectOutsideStoringArea"] = false;
 
-                InferenceManager.UnregisterInference(InferenceGameObjectInStorage);
-                Conditions["ObjectStored"] = true;
-                Conditions["PersonDroppedObjectOutsideStoringArea"] = false;
+                CallBackRemoveAreaObject();
+                AreaObjectPosition.transform.position = new Vector3(1000, 1000, 1000);
+                
+
+                //successController.Show(Utilities.Utility.GetEventHandlerEmpty());//Move in assitance epsilon
+                //AssistancesManager.AddAssistance("Success", successController);
             }
 
             void CallbackObjectStored(System.Object o, EventArgs e)
             {
-                //DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Called");
+                DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Object stored");
                 Conditions["ObjectStored"] = !(bool)Conditions["ObjectStored"];
             }
 
             void CallbackPersonCloseToObject(System.Object o, EventArgs e)
             {
-                //DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Person close to object");
+                DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Person close to object");
                 Conditions["PersonCloseToObject"] = true;
-                Conditions["PersonDidNotComeToObject"] = false;
+				Conditions["PersonDidNotComeToObject"] = false;
                 Conditions["PersonMovedAwayFromObject"] = false;
                 RegisterInferenceComingAndLeaving();
             }
@@ -292,52 +411,107 @@ namespace MATCH
                 if (ObjectDetected)
                 {
                     RegisterInferenceComing();
-                    //DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "User passed by object");
+                    DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "User passed by object");
                     Conditions["PersonMovedAwayFromObject"] = true;
-                    Conditions["PersonCloseToObject"] = false;
-                    Conditions["PersonDroppedObjectOutsideStoringArea"] = false;
+					Conditions["PersonCloseToObject"] = false;
+
+                    ObjectDetected = false;
+                    //Conditions["PersonGrabbedObject"] = false;
                 }
             }
 
             void CallbackPersonGrabbedObject(System.Object o, EventArgs e)
             {
-                InferenceManager.UnregisterInference(InferenceGrabbedObject);
-                InferenceManager.RegisterInference(InferenceReleasedObject);
-                //DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Object grabbed");
+                if (Utilities.Utility.IsEditorSimulator() || Utilities.Utility.IsEditorGameView())
+                {
+                    InferenceManager.UnregisterInference(InferenceGrabbedObject);
+                    InferenceManager.RegisterInference(InferenceReleasedObject);
+                }
+                else
+                {
+                    CallBackRemoveAreaObject();
+                    RegisterInferenceLeaving();
+                    //InferenceManager.UnregisterInference(InferenceObjectOutAreaObject);
+                }
+               
+                DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Object grabbed");
                 Conditions["PersonGrabbedObject"] = true;
+
             }
 
             void CallbackPersonReleasedObject(System.Object o, EventArgs e)
             {
-                InferenceManager.UnregisterInference(InferenceReleasedObject);
-                InferenceManager.RegisterInference(InferenceGrabbedObject);
-                //DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Object released");
+                if (Utilities.Utility.IsEditorSimulator() || Utilities.Utility.IsEditorGameView())
+                {
+                    InferenceManager.UnregisterInference(InferenceReleasedObject);
+                    InferenceManager.RegisterInference(InferenceGrabbedObject);
+                }
+                
+                if (ObjectDetected)
+                {
+                    DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Object released");
+                    CallBackSetAreaObject();
+                }
+                else
+                { 
+                    RegisterInferenceLeaving();
+                }
                 Conditions["PersonDroppedObjectOutsideStoringArea"] = true;
-                Conditions["PersonGrabbedObject"] = false;
+				Conditions["PersonGrabbedObject"] = false;
+                ObjectDetected = false;
             }
 
             void CallbackPersonWatchedObject(System.Object o, EventArgs e)
             {
                 InferenceManager.UnregisterInference(InferenceFocusedOnObject);
-                //DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Person focused on object for at 3 seconds");
+                DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Person focused on object for at 3 seconds");
                 Conditions["PersonWatchedObject"] = true;
             }
 
             void CallbackPersonDidNotComeToObject(System.Object o, EventArgs e)
             {
                 InferenceManager.UnregisterInference(InferenceTimeDidNotComeToObject);
-                //DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Called");
+                DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Person didn't come to the object");
                 Conditions["PersonDidNotComeToObject"] = true;//!(bool)Conditions["PersonDidNotComeToObject"];
-                Conditions["PersonCloseToObject"] = false;
+				Conditions["PersonCloseToObject"] = false;
             }
 
             void CallbackPersonDroppedObjectOutsideStoringArea(System.Object o, EventArgs e)
             {
-                //DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Called");
+                DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Person drop object outside storing area");
                 Conditions["PersonDroppedObjectOutsideStoringArea"] = !(bool)Conditions["PersonDroppedObjectOutsideStoringArea"];
             }
-        }
 
-        
+
+
+            void CallbackSeeStates()
+            {
+                DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "List of booleans :");
+                DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "ObjectStored - " + Conditions["ObjectStored"]);
+                DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "PersonMovedAwayFromObject - " + Conditions["PersonMovedAwayFromObject"]);
+                DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "PersonCloseToObject - " + Conditions["PersonCloseToObject"]);
+                DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "PersonGrabbedObject - " + Conditions["PersonGrabbedObject"]);
+                DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "PersonWatchedObject - " + Conditions["PersonWatchedObject"]);
+                DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "PersonDroppedObjectOutsideStoringArea - " + Conditions["PersonDroppedObjectOutsideStoringArea"]);
+                DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "PersonDidNotComeToObject - " + Conditions["PersonDidNotComeToObject"]);
+             }
+
+            void CallBackSetAreaObject()
+            {
+                if (!Utilities.Utility.IsEditorSimulator() && !Utilities.Utility.IsEditorGameView())
+                {
+                    AreaObject.transform.position = AreaObjectPosition.transform.position;//ObjectDetectedInformation.GetCenter();
+                    //AreaObject.GetInteractionSurface().transform.position = ObjectDetectedInformation.GetCenter();
+                }
+            }
+
+            void CallBackRemoveAreaObject()
+            {
+                if (!Utilities.Utility.IsEditorSimulator() && !Utilities.Utility.IsEditorGameView())
+                {
+                    AreaObject.transform.position = new Vector3(1000, 1000, 1000);
+                }
+            }
+        }
     }
 }

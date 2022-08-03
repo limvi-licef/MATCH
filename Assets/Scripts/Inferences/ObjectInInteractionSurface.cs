@@ -44,7 +44,7 @@ namespace MATCH
                 //m_objectdetected.setObjectParams("TEst", new Vector3(0, 0, 0), new Vector3(0, 0, 0), new Vector3(0, 0, 0)); //FOR TEST
 
                 DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Inference Object Launched");
-                ObjectRecognition.ObjectInformation.Instance.UnregisterCallbackToObject(objectName);
+                //ObjectRecognition.ObjectInformation.Instance.UnregisterCallbackToObject(objectName);
                 ObjectRecognition.ObjectInformation.Instance.RegisterCallbackToObject(objectName, callbackObjectDetection);
             }
 

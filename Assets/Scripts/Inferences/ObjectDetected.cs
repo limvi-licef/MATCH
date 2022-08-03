@@ -39,7 +39,6 @@ namespace MATCH
                 ObjectName = objectName;
 
                 Objectdetected = null;
-                ObjectRecognition.ObjectInformation.Instance.UnregisterCallbackToObject(objectName);
                 ObjectRecognition.ObjectInformation.Instance.RegisterCallbackToObject(objectName, CallbackObjectDetected);
 
                 FakeObjectStatus = false;
@@ -48,10 +47,10 @@ namespace MATCH
             public override bool Evaluate()
             {
                 bool toReturn = false;
-
                 if (Objectdetected != null)
                 {
                     toReturn = true;
+                    Objectdetected = null;
                 }
 
                 if (FakeObjectStatus)
@@ -74,7 +73,7 @@ namespace MATCH
                         toReturn = true;
                     }
                 }
-
+                //DebugMessagesManager.Instance.displayMessage("ObjectDetected", "Evaluate", DebugMessagesManager.MessageLevel.Info, "Object not detected");
                 return toReturn;
             }
 
@@ -90,10 +89,10 @@ namespace MATCH
                 FakeObject = fakeObject;
                 FakeObjectStatus = true;
             }
-
+            
             public override void Unregistered()
             {
-
+             
             }
         }
     }

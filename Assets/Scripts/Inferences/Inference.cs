@@ -60,13 +60,13 @@ namespace MATCH
             //public string getId() => m_id;
             public void TriggerCallback() => Callbacks?.Invoke(this, CallbackArgs);
 
-            ~Inference()
+            /*~Inference()
             {
                 for (int i = 0; i < Callbacks.GetInvocationList().Length; i++)
                 {
                     Callbacks -= (EventHandler)Callbacks.GetInvocationList()[i];
                 }
-            }
+            }*/
         }
     }
 }

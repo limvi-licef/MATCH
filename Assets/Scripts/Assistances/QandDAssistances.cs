@@ -25,7 +25,7 @@ namespace MATCH
     {
         public class QandDAssistances
         {
-            enum Gradation
+            public enum Gradation
             {
                 Alpha = 0,
                 Beta = 1,
@@ -44,23 +44,36 @@ namespace MATCH
                 AssistancesStorage = new Dictionary<Gradation, Assistance>();
             }
 
-            void AddAssistance(Gradation gradation, Assistance assistance)
+
+            public void AddAssistance(Gradation gradation, Assistance assistance)
             {
                 AssistancesStorage.Add(gradation, assistance);
             }
 
-            void ShowOneHideOthers(Gradation gradationToShow, EventHandler callback)
+            public void ShowOneHideOthers(Gradation gradationToShow, EventHandler callback)
             {
                 foreach (KeyValuePair<Gradation, Assistance> assistance in AssistancesStorage)
                 {
+                    DebugMessagesManager.Instance.displayMessage("ShowOneHideOthers", "Evaluate", DebugMessagesManager.MessageLevel.Info, "Storage " + assistance.Value.GetTransform().name);
                     if (assistance.Key == gradationToShow)
                     {
-                        assistance.Value.Show(callback);
+                            assistance.Value.Show(callback);
+                        DebugMessagesManager.Instance.displayMessage("ShowOneHideOthers", "Evaluate", DebugMessagesManager.MessageLevel.Info, "Show " + assistance.Value.GetTransform().name); // Class and method names are hard coded for performance reasons.
                     }
                     else
                     {
-                        assistance.Value.Hide(Utilities.Utility.GetEventHandlerEmpty());
+                        DebugMessagesManager.Instance.displayMessage("ShowOneHideOthers", "Evaluate", DebugMessagesManager.MessageLevel.Info, "Hide"); // Class and method names are hard coded for performance reasons.
+                            assistance.Value.Hide(Utilities.Utility.GetEventHandlerEmpty());
                     }
+                }
+            }
+
+            public void HideAll()
+            {
+                DebugMessagesManager.Instance.displayMessage("ShowOneHideOthers", "Evaluate", DebugMessagesManager.MessageLevel.Info, "Hide All");
+                foreach (KeyValuePair<Gradation, IAssistance> assistance in AssistancesStorage)
+                {
+                        assistance.Value.Hide(Utilities.Utility.GetEventHandlerEmpty());     
                 }
             }
         }
