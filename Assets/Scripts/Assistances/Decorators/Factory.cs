@@ -44,7 +44,7 @@ namespace MATCH
                     }
                 }
 
-                GameObject CreateBackgroundColor (MATCH.Assistances.Assistance assistance)
+                GameObject CreateBackgroundColor (MATCH.Assistances.IPanel panelToDecorate)
                 {
 
                     return null;

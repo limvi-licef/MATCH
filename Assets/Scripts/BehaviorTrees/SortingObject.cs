@@ -30,8 +30,14 @@ namespace MATCH
             public Inferences.Manager InferenceManager;
 
             Assistances.InteractionSurface AreaStorage;         // Place where the object is supposed to be stored.
-            Assistances.InteractionSurface AreaObject;          // This area is mainly used to detect when the object is grabbed, i.e. when the hand of the user crosses this area. It is also used for display fixed assistances.
-            Assistances.InteractionSurface AreaObjectPosition;  // This area is used to know where the object is detected and set the AreaObject position
+
+            /**
+             * Comment to explain the purpose of the two variables below
+             * AreaObject is mainly used to detect when the object is grabbed, i.e. when the hand of the user crosses this area. It is also used to display fixed assistances.
+             * The AreaObjectPosition area is used to know where the object is detected and set the AreaObject position. Two area are used (i.e. AreaObject and AreaObjectPosition) instead of one, because AreaObjectPosition will move every time the object is detected, and due to some inacurracies, the position of the object changes even if the object did not move. And if the assistances would belong to AreaObjectPosition, then their position would continuously be changing. To deal with this, the AreaObject interaction surface is dedicated to the display of the assistances. AreaObject moves only when the obejct is grabbed and the first time the object is detected.
+             * */
+            Assistances.InteractionSurface AreaObject;
+            Assistances.InteractionSurface AreaObjectPosition;   
 
             Assistances.Manager AssistancesManager;
 
@@ -48,8 +54,6 @@ namespace MATCH
             Inferences.ObjectFocused InferenceFocusedOnObject;
             Inferences.TimeDidNotComeToObject InferenceTimeDidNotComeToObject;
             
-
-
             bool ObjectDetected = false;
             bool ObjectSet = false; // Used for the first time the object is detected, to add an interaction surface around it.
             Utilities.PhysicalObjectInformation ObjectDetectedInformation;
@@ -99,12 +103,6 @@ namespace MATCH
                 InitializeScenario();
             }
 
-            void ActionDisplaySuccess()
-            {
-                Debug.Log("Assistances Epsilon / Object stored");
-                
-            }
-
             void InitializeScenario()
             {
                 Conditions = new Blackboard(UnityContext.GetClock());
@@ -123,25 +121,20 @@ namespace MATCH
                 }
                 InferenceManager.RegisterInference(InferenceObjectDetected);
 
-                //MATCH.Inferences.Time inferenceObjectStored = new Inferences.Time("Object sorted",
-                //    new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 19, 35, 0));
-                //inferenceObjectStored.AddCallback(CallbackObjectStored);
-                //InferenceObjectInStorage = new Inferences.ObjectInInteractionSurface("Transport", CallbackDetectedInStorage, ObjectOfInterestName, AreaStorage);
-                //InferenceManager.RegisterInference(InferenceObjectInStorage);
                 InferenceGameObjectInStorage = new Inferences.GameObjectInInteractionSurface("GameObjectStorage", CallbackGameObjectDetectedInStorage, FakeObject, AreaStorage);
                 InferenceManager.RegisterInference(InferenceGameObjectInStorage);
                 InferenceObjectInStorage = new Inferences.ObjectInInteractionSurface("ObjectStorage", CallbackGameObjectDetectedInStorage, ObjectOfInterestName, AreaStorage);
                 InferenceManager.RegisterInference(InferenceObjectInStorage);
 
-
-                //AreaObject.GetComponent<Interactable>().GetReceiver<InteractableOnTouchReceiver>().OnTouchStart.AddListener.CallbackPersonGrabbedObject;
                 AreaObject.TriggerTouchEvent();
                 AreaObject.EventInteractionSurfaceTableTouched += CallbackPersonGrabbedObject;
 
                 RegisterInferenceComing();
-                //RegisterInferenceLeaving();
                 RegisterInferenceComingAndLeaving();
 
+                /**
+                 * Be careful when testing: some inferences are available only in the editor and others only in the hololens. Thus, some situations can only be tested in the hololens.
+                 **/
                 if (Utilities.Utility.IsEditorSimulator() || Utilities.Utility.IsEditorGameView())
                 {
                     InferenceGrabbedObject = new Inferences.GameObjectGrabbed("ObjectGrabbed", CallbackPersonGrabbedObject, FakeObject);
@@ -159,9 +152,8 @@ namespace MATCH
                 else
                 {
                     //Inference ObjectGrabbed is replaced by the detection of the hand in the AreaObject
-
                     //Inference ObjectReleased is created and registered in CallbackPersonGrabbedObject
-                    
+
                     InferenceFocusedOnObject = new Inferences.ObjectFocused("FocusedOnObject", CallbackPersonWatchedObject, AreaObject.GetInteractionSurface().gameObject, 3);
                     InferenceManager.RegisterInference(InferenceFocusedOnObject);
 
@@ -171,6 +163,7 @@ namespace MATCH
 
                 /*
                  * Temporary assistances built with QandDAssistances
+                 * To be removed when the behavior tree handling the assistances is reliable.
                  */
                 Assistances.QandDAssistances AssistancesGradation = new Assistances.QandDAssistances();
 
@@ -202,13 +195,13 @@ namespace MATCH
                 Sequence sePersonTakeObject = new Sequence(
                         //cObjectDroppedOutsideStorageArea,
                         //new Sequence(
-                        new NPBehave.Action(() => AssistancesGradation.HideAll()),
+                        new NPBehave.Action(() => AssistancesGradation.HideAll()), // When the object is grabbed, no assistances should be displayed, so they are all hidden.
                         new WaitUntilStopped());
 
                 BlackboardCondition cDidPersonTakeObject = new BlackboardCondition("PersonGrabbedObject", Operator.IS_EQUAL, true, Stops.IMMEDIATE_RESTART, sePersonTakeObject);
 
                 Sequence sePersonMovedAwayFromObject = new Sequence(
-                    new NPBehave.Action(() => AssistancesAlphaGradation.RunAssistance(Utilities.Utility.GetEventHandlerEmpty()) /*AssistancesGradation.ShowOneHideOthers(Assistances.QandDAssistances.Gradation.Epsilon, Utilities.Utility.GetEventHandlerEmpty())*/),
+                    new NPBehave.Action(() => /*AssistancesAlphaGradation.RunAssistance(Utilities.Utility.GetEventHandlerEmpty())*/ AssistancesGradation.ShowOneHideOthers(Assistances.QandDAssistances.Gradation.Epsilon, Utilities.Utility.GetEventHandlerEmpty())),
                     new WaitUntilStopped());
 
                 BlackboardCondition cDidPersonMoveAwayFromObject = new BlackboardCondition("PersonMovedAwayFromObject", Operator.IS_EQUAL, true, Stops.IMMEDIATE_RESTART, sePersonMovedAwayFromObject);
@@ -269,14 +262,6 @@ namespace MATCH
 
                 Tree.Start();
             }
-
-			void RunAssistancesAlpha()
-            {
-                //DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Assistances alpha");
-
-                AssistancesAlphaGradation.RunAssistance(Utilities.Utility.GetEventHandlerEmpty());
-            }
-
             
 			void InitializeAssistancesAlpha()
             {
@@ -310,7 +295,9 @@ namespace MATCH
 
 			void RegisterInferenceComing()
             {
-                //Conditions["PersonCloseToObject"] = false;
+                /**
+                 * If the code runs in the editor, then the fake object is used as reference instead of the "real" object
+                 **/
                 if (Utilities.Utility.IsEditorSimulator() || Utilities.Utility.IsEditorGameView())
                 {
                     Inferences.Factory.Instance.CreateDistanceComingInferenceOneShot(InferenceManager, "CloseToObject", CallbackPersonCloseToObject, FakeObject);
@@ -323,6 +310,9 @@ namespace MATCH
 
             void RegisterInferenceLeaving()
             {
+                /**
+                 * Only used in the Hololens, because used when the "real" object is realeased, which is not necessary in the editor. Indeed, in the editor (see the inference InferenceReleasedObject) the "release" of the fake object is detected when the "fake hand" releases it, which is not possible in the case of the detection of the real object.
+                 * */
                 if (!Utilities.Utility.IsEditorSimulator() && !Utilities.Utility.IsEditorGameView())
                 {
                     Inferences.Factory.Instance.CreateDistanceLeavingInferenceOneShot(InferenceManager, "DistantToObject", CallbackPersonReleasedObject, AreaObjectPosition.GetInteractionSurface().gameObject);
@@ -332,6 +322,10 @@ namespace MATCH
             void RegisterInferenceComingAndLeaving()
             {
                 Conditions["PersonMovedAwayFromObject"] = false;
+
+                /**
+                 * Difference process when the code runs in the editor and in the hololens
+                 * */
                 if (Utilities.Utility.IsEditorSimulator() || Utilities.Utility.IsEditorGameView())
                 {
                     Inferences.Factory.Instance.CreateDistanceComingAndLeavingInferenceOneShot(InferenceManager, "PassingByObject", CallbackPersonMovedAwayFromObject, FakeObject);
@@ -347,24 +341,35 @@ namespace MATCH
                 //InferenceManager.UnregisterInference(InferenceObjectDetected);
                 ObjectDetectedInformation = ((Utilities.EventHandlerArgs.PhysicalObject)e).ObjectDetected;
                
+                /**
+                 * If the code runs in the hololens, this is the place where the AreaObjectPosition is moved when the real object is detected.
+                 * */
                 if (!Utilities.Utility.IsEditorSimulator() && !Utilities.Utility.IsEditorGameView())
                 {
                     AreaObjectPosition.transform.position = ObjectDetectedInformation.GetCenter();
+
+                    /**
+                    * If the code runs in the Hololens, then the AreaObject is moved to the position of the real object the first time and only the first time the object is detected
+                    */
+                    if (ObjectSet == false) //If the AreaObject is not placed on the object
+                    {
+                        DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Object detected and set!");
+                        ObjectSet = true;
+                        CallBackSetAreaObject();
+                        InferenceManager.RegisterInference(InferenceTimeDidNotComeToObject);
+                    }
                 }
 
-                if (ObjectSet == false) //If the AreaObject is not placed on the object
-                {
-                    DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Object detected and set!");
-                    ObjectSet = true;
-                    CallBackSetAreaObject();
-                    InferenceManager.RegisterInference(InferenceTimeDidNotComeToObject);
-                }
                 ObjectDetected = true;
             }
 
             void CallbackGameObjectDetectedInStorage(System.Object o, EventArgs e)
             {
                 DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Object stored!");
+                
+                /**
+                 * Different code following if executed on the hololens or the editor
+                 */
                 if (Utilities.Utility.IsEditorSimulator() || Utilities.Utility.IsEditorGameView())
                 {
                     InferenceManager.UnregisterInference(InferenceGameObjectInStorage);
@@ -372,20 +377,14 @@ namespace MATCH
                 else
                 {
                     InferenceManager.UnregisterInference(InferenceObjectInStorage);
-                    //ObjectDetectedInformation = ((Utilities.EventHandlerArgObject)e).ObjectDetected;
                 }
+
                 InferenceManager.UnregisterInference(InferenceObjectDetected);
                 Conditions["ObjectStored"] = true;// !(bool)Conditions["ObjectStored"];
 				Conditions["PersonDroppedObjectOutsideStoringArea"] = false;
 
-                CallBackRemoveAreaObject(); //If the object is stored, the both areas are "removed"
-                AreaObjectPosition.transform.position = new Vector3(1000, 1000, 1000);
-            }
-
-            void CallbackObjectStored(System.Object o, EventArgs e)
-            {
-                DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Object stored");
-                Conditions["ObjectStored"] = !(bool)Conditions["ObjectStored"];
+                CallBackRemoveAreaObject(); //If the object is stored, the both areas are "removed", by being moved back in (1000, 1000, 1000)
+                AreaObjectPosition.transform.position = new Vector3(1000, 1000, 1000); // Same here, the area is moved back in (1000, 1000, 1000)
             }
 
             void CallbackPersonCloseToObject(System.Object o, EventArgs e)
@@ -413,6 +412,9 @@ namespace MATCH
 
             void CallbackPersonGrabbedObject(System.Object o, EventArgs e)
             {
+                /**
+                 * Different code between the hololens and the editor
+                 */
                 if (Utilities.Utility.IsEditorSimulator() || Utilities.Utility.IsEditorGameView())
                 {
                     InferenceManager.UnregisterInference(InferenceGrabbedObject);
@@ -420,8 +422,8 @@ namespace MATCH
                 }
                 else
                 {
-                    CallBackRemoveAreaObject();
-                    ObjectDetected = false; //set to false for detected in the callback CallbackPersonReleasedObject if the object is away from the user and after, if the object is detected
+                    CallBackRemoveAreaObject(); // When the person has grabbed the object, there will never be an assistance displayed. This is maybe a bit overkill, but the AreaObject is moved to (1000, 1000, 1000).
+                    ObjectDetected = false; //set to false to detect in the callback CallbackPersonReleasedObject if the object is away from the user and after, if the object is detected
                     RegisterInferenceLeaving();
                     //InferenceManager.UnregisterInference(InferenceObjectOutAreaObject);
                 }
@@ -433,22 +435,27 @@ namespace MATCH
 
             void CallbackPersonReleasedObject(System.Object o, EventArgs e)
             {
+                /**
+                 * Code different between the hololens and the editor
+                 */
                 if (Utilities.Utility.IsEditorSimulator() || Utilities.Utility.IsEditorGameView())
                 {
                     InferenceManager.UnregisterInference(InferenceReleasedObject);
                     InferenceManager.RegisterInference(InferenceGrabbedObject);
                 }
-                
-                if (ObjectDetected)
-                {
-                    DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Object released");
-                    CallBackSetAreaObject();
-                }
                 else
-                { 
-                    RegisterInferenceLeaving();
+                {
+                    if (ObjectDetected)
+                    {
+                        DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Object released");
+                        CallBackSetAreaObject(); // If this point is reached, that means the person released the object AND that the object has been detected, so the AreaObject is brought to the object's position.
+                    }
+                    else
+                    {
+                        RegisterInferenceLeaving(); // Yes this is the correct inference to register here: in fact we cannot detect when the real object is actually released. This is deduced when the following conditions are met: (1) the person is "far" from the AreaObjectPosition (which will call this callback); (2) the object is detected (which is known by the ObjectDetected boolean, which is updated thanks to the CallbackObjectDetected function); 
+                    }
                 }
-
+                
                 Conditions["PersonDroppedObjectOutsideStoringArea"] = true;
 				Conditions["PersonGrabbedObject"] = false;
             }
@@ -466,12 +473,6 @@ namespace MATCH
                 DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Person didn't come to the object");
                 Conditions["PersonDidNotComeToObject"] = true;//!(bool)Conditions["PersonDidNotComeToObject"];
 				Conditions["PersonCloseToObject"] = false;
-            }
-
-            void CallbackPersonDroppedObjectOutsideStoringArea(System.Object o, EventArgs e)
-            {
-                DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Person drop object outside storing area");
-                Conditions["PersonDroppedObjectOutsideStoringArea"] = !(bool)Conditions["PersonDroppedObjectOutsideStoringArea"];
             }
 
             void CallbackSeeStates() //A callback to see the state of the booleans of the BT
