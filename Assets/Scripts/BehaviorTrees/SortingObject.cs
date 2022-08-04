@@ -30,8 +30,8 @@ namespace MATCH
             public Inferences.Manager InferenceManager;
 
             Assistances.InteractionSurface AreaStorage;         // Place where the object is supposed to be stored.
-            Assistances.InteractionSurface AreaObject;          // This area is mainly used to detect when the object is grabbed, i.e. when the hand of the user crosses this area.
-            Assistances.InteractionSurface AreaObjectPosition;  // 
+            Assistances.InteractionSurface AreaObject;          // This area is mainly used to detect when the object is grabbed, i.e. when the hand of the user crosses this area. It is also used for display fixed assistances.
+            Assistances.InteractionSurface AreaObjectPosition;  // This area is used to know where the object is detected and set the AreaObject position
 
             Assistances.Manager AssistancesManager;
 
@@ -158,42 +158,35 @@ namespace MATCH
                 }
                 else
                 {
-                    //InferenceObjectOutAreaObject = new Inferences.ObjectOutInteractionSurface("ObjectGrabbed", CallbackPersonGrabbedObject, ObjectOfInterestName, AreaObject);
-                    //InferenceManager.RegisterInference(InferenceObjectOutAreaObject);
+                    //Inference ObjectGrabbed is replaced by the detection of the hand in the AreaObject
 
-                    //InferenceReleasedObject = new Inferences.GameObjectReleased("ObjectReleased", CallbackPersonReleasedObject, FakeObject); //CHANGE THIS INFERENCE
-                    //InferenceManager.RegisterInference(InferenceReleasedObject);
-
+                    //Inference ObjectReleased is created and registered in CallbackPersonGrabbedObject
+                    
                     InferenceFocusedOnObject = new Inferences.ObjectFocused("FocusedOnObject", CallbackPersonWatchedObject, AreaObject.GetInteractionSurface().gameObject, 3);
                     InferenceManager.RegisterInference(InferenceFocusedOnObject);
 
                     InferenceTimeDidNotComeToObject = new Inferences.TimeDidNotComeToObject("DidNotComeToObject", CallbackPersonDidNotComeToObject, AreaObject.GetInteractionSurface().gameObject, 15);
-                    //InferenceManager.RegisterInference(InferenceTimeDidNotComeToObject);
+                    //Inference DidNotComeToObject is register in CallbackObjectDetected
                 }
 
                 /*
-                 * Assistances
+                 * Temporary assistances built with QandDAssistances
                  */
                 Assistances.QandDAssistances AssistancesGradation = new Assistances.QandDAssistances();
 
                 Assistances.Basic AssistancesAlpha = Assistances.Factory.Instance.CreateCube("Mouse_Congratulation", AreaStorage.transform);
-                //Assistances.QandDAssistances AssistancesAlphaGradation = new Assistances.QandDAssistances();
                 AssistancesGradation.AddAssistance(Assistances.QandDAssistances.Gradation.Alpha, AssistancesAlpha);
 
                 Assistances.Dialog AssistancesBeta = Assistances.Factory.Instance.CreateDialogNoButton("Information", "Cet objet doit être rangé.", AreaObject.transform);
-                //Assistances.QandDAssistances AssistancesBetaGradation = new Assistances.QandDAssistances();
                 AssistancesGradation.AddAssistance(Assistances.QandDAssistances.Gradation.Beta, AssistancesBeta);
 
                 Assistances.Basic AssistancesGamma = Assistances.Factory.Instance.CreateCube("Mouse_Exclamation", AreaObject.transform);
-                //Assistances.QandDAssistances AssistancesGammaGradation = new Assistances.QandDAssistances();
                 AssistancesGradation.AddAssistance(Assistances.QandDAssistances.Gradation.Gamma, AssistancesGamma);
 
                 Assistances.Dialog AssistancesDelta = Assistances.Factory.Instance.CreateDialogNoButton("Information","L'objet n'est pas rangé au bon endroit.", AreaObject.transform);
-                //Assistances.QandDAssistances AssistancesDeltaGradation = new Assistances.QandDAssistances();
                 AssistancesGradation.AddAssistance(Assistances.QandDAssistances.Gradation.Delta, AssistancesDelta);
 
                 Assistances.Basic AssistancesEpsilon = Assistances.Factory.Instance.CreateCube("Mouse_Exclamation_Red", AreaObject.transform);
-                //Assistances.QandDAssistances AssistancesEpsilonGradation = new Assistances.QandDAssistances();
                 AssistancesGradation.AddAssistance(Assistances.QandDAssistances.Gradation.Epsilon, AssistancesEpsilon);
 
                 /**
@@ -266,7 +259,7 @@ namespace MATCH
 
 				// Set assistances
 				// For now we use the assistances from the QandDAssistances class. Uncomment the following line when going to the BT to manage the assistances
-                InitializeAssistancesAlpha();
+                //InitializeAssistancesAlpha();
                 Tree = new Root(Conditions, srBegin);
 
                 //#if UNITY_EDITOR
@@ -313,7 +306,7 @@ namespace MATCH
                 AssistancesAlphaGradation.AddButton(exclamationMark, Assistances.Buttons.Button.ButtonType.Yes, yesNo1);
                 AssistancesAlphaGradation.AddButton(exclamationMark, Assistances.Buttons.Button.ButtonType.No, end);
                 //AssistancesAlphaGradation.AddButton(yesNo1, Assistances.Buttons.Button.ButtonType.Undefined, null);
-		}
+		    }
 
 			void RegisterInferenceComing()
             {
@@ -328,11 +321,8 @@ namespace MATCH
                 }
             }
 
-
-
             void RegisterInferenceLeaving()
             {
-                //Conditions["PersonGrabbedObject"] = false;
                 if (!Utilities.Utility.IsEditorSimulator() && !Utilities.Utility.IsEditorGameView())
                 {
                     Inferences.Factory.Instance.CreateDistanceLeavingInferenceOneShot(InferenceManager, "DistantToObject", CallbackPersonReleasedObject, AreaObjectPosition.GetInteractionSurface().gameObject);
@@ -355,16 +345,14 @@ namespace MATCH
             void CallbackObjectDetected(System.Object o, EventArgs e)
             {
                 //InferenceManager.UnregisterInference(InferenceObjectDetected);
-                
                 ObjectDetectedInformation = ((Utilities.EventHandlerArgs.PhysicalObject)e).ObjectDetected;
-                //DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Object detected : " + ObjectDetectedInformation.GetObjectName());
-
+               
                 if (!Utilities.Utility.IsEditorSimulator() && !Utilities.Utility.IsEditorGameView())
                 {
                     AreaObjectPosition.transform.position = ObjectDetectedInformation.GetCenter();
                 }
 
-                if (ObjectSet == false)
+                if (ObjectSet == false) //If the AreaObject is not placed on the object
                 {
                     DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Object detected and set!");
                     ObjectSet = true;
@@ -372,7 +360,6 @@ namespace MATCH
                     InferenceManager.RegisterInference(InferenceTimeDidNotComeToObject);
                 }
                 ObjectDetected = true;
-              //AreaObject.SetLocalPosition(ObjectDetectedInformation.GetCenter());
             }
 
             void CallbackGameObjectDetectedInStorage(System.Object o, EventArgs e)
@@ -391,12 +378,8 @@ namespace MATCH
                 Conditions["ObjectStored"] = true;// !(bool)Conditions["ObjectStored"];
 				Conditions["PersonDroppedObjectOutsideStoringArea"] = false;
 
-                CallBackRemoveAreaObject();
+                CallBackRemoveAreaObject(); //If the object is stored, the both areas are "removed"
                 AreaObjectPosition.transform.position = new Vector3(1000, 1000, 1000);
-                
-
-                //successController.Show(Utilities.Utility.GetEventHandlerEmpty());//Move in assitance epsilon
-                //AssistancesManager.AddAssistance("Success", successController);
             }
 
             void CallbackObjectStored(System.Object o, EventArgs e)
@@ -438,6 +421,7 @@ namespace MATCH
                 else
                 {
                     CallBackRemoveAreaObject();
+                    ObjectDetected = false; //set to false for detected in the callback CallbackPersonReleasedObject if the object is away from the user and after, if the object is detected
                     RegisterInferenceLeaving();
                     //InferenceManager.UnregisterInference(InferenceObjectOutAreaObject);
                 }
@@ -464,9 +448,9 @@ namespace MATCH
                 { 
                     RegisterInferenceLeaving();
                 }
+
                 Conditions["PersonDroppedObjectOutsideStoringArea"] = true;
 				Conditions["PersonGrabbedObject"] = false;
-                ObjectDetected = false;
             }
 
             void CallbackPersonWatchedObject(System.Object o, EventArgs e)
@@ -490,9 +474,7 @@ namespace MATCH
                 Conditions["PersonDroppedObjectOutsideStoringArea"] = !(bool)Conditions["PersonDroppedObjectOutsideStoringArea"];
             }
 
-
-
-            void CallbackSeeStates()
+            void CallbackSeeStates() //A callback to see the state of the booleans of the BT
             {
                 DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "List of booleans :");
                 DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "ObjectStored - " + Conditions["ObjectStored"]);
@@ -509,7 +491,6 @@ namespace MATCH
                 if (!Utilities.Utility.IsEditorSimulator() && !Utilities.Utility.IsEditorGameView())
                 {
                     AreaObject.transform.position = AreaObjectPosition.transform.position;//ObjectDetectedInformation.GetCenter();
-                    //AreaObject.GetInteractionSurface().transform.position = ObjectDetectedInformation.GetCenter();
                 }
             }
 
