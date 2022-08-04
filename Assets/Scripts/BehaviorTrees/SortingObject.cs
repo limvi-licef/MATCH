@@ -1,4 +1,4 @@
-/*Copyright 2022 Guillaume Spalla
+/*Copyright 2022 Louis Marquet, Guillaume Spalla
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -29,9 +29,9 @@ namespace MATCH
             private Blackboard Conditions;
             public Inferences.Manager InferenceManager;
 
-            Assistances.InteractionSurface AreaStorage;
-            Assistances.InteractionSurface AreaObject;
-            Assistances.InteractionSurface AreaObjectPosition;
+            Assistances.InteractionSurface AreaStorage;         // Place where the object is supposed to be stored.
+            Assistances.InteractionSurface AreaObject;          // This area is mainly used to detect when the object is grabbed, i.e. when the hand of the user crosses this area.
+            Assistances.InteractionSurface AreaObjectPosition;  // 
 
             Assistances.Manager AssistancesManager;
 
@@ -51,13 +51,18 @@ namespace MATCH
 
 
             bool ObjectDetected = false;
-            bool ObjectSet = false;
+            bool ObjectSet = false; // Used for the first time the object is detected, to add an interaction surface around it.
             Utilities.PhysicalObjectInformation ObjectDetectedInformation;
 
             GameObject FakeObject;
 
+            /**
+             * The next two lines are to be used with the assistance behavior tree.
+             * Currently, in order to test the code, the class QandDAssistances is used. This is meant to be a temporary solution, i.e. all assistances should in the end be based on the behavior tree.
+             * */
 			Assistances.InteractionSurface AssistancesAlphaInteractionSurface;
-            Assistances.AssistanceGradationExplicit AssistancesAlphaGradation;																  
+            Assistances.AssistanceGradationExplicit AssistancesAlphaGradation;
+            
             // Start is called before the first frame update
             void Start()
             {
@@ -67,23 +72,26 @@ namespace MATCH
                 AssistancesManager = new Assistances.Manager();
 
                 AreaStorage = Assistances.Factory.Instance.CreateInteractionSurface("Storage", default, new Vector3(0.2f, 0.8f, 0.3f), "Mouse_Green_Glowing", true, true, Utilities.Utility.GetEventHandlerEmpty(), transform);
-                if (Utilities.Utility.IsEditorSimulator() || Utilities.Utility.IsEditorGameView())
-                {
+                
+                /*if (Utilities.Utility.IsEditorSimulator() || Utilities.Utility.IsEditorGameView())
+                {*/
                     AreaStorage.transform.position = new Vector3(3.38f, 0.22f, 3.19f);
-                }
+                /*}
                 else
                 {
                     AreaStorage.SetLocalPosition(new Vector3(0f, 0f, 0.2f));
-                }
+                }*/
 
+                /* 
+                 * AreaObject is the interaction surface that is meant to be around the detected object. 
+                 * However, it is worth noticing that some inferences are based on the distance between the user and this interaction surface. Hence, to avoid that those inferences are triggered at the beginning of the scenario, the position of the area is set to (1000, 1000, 1000) on purpose.
+                */
                 AreaObject = Assistances.Factory.Instance.CreateInteractionSurface("Object", default, new Vector3(0.4f, 0.4f, 0.4f), "Mouse_Yellow_Glowing", true, true, Utilities.Utility.GetEventHandlerEmpty(), transform);       
-                //AreaObject.GetInteractionSurface().gameObject.layer = LayerMask.NameToLayer("Ignore Raycast");
-                AreaObject.transform.position = new Vector3(1000, 1000, 1000);//new Vector3(-0.61f, 0.46f, 5.18f);
-                //AreaObject.GetInteractionSurface().transform.position = new Vector3(1000, 1000, 1000);
+                AreaObject.transform.position = new Vector3(1000, 1000, 1000);
+
 
                 AreaObjectPosition = Assistances.Factory.Instance.CreateInteractionSurface("Object_Position", default, new Vector3(0.05f, 0.05f, 0.05f), "Mouse_Yellow_Glowing", true, true, Utilities.Utility.GetEventHandlerEmpty(), transform);
                 AreaObjectPosition.GetInteractionSurface().gameObject.layer = LayerMask.NameToLayer("Ignore Raycast");
-                //AreaObjectPosition.GetInteractionSurface().transform.position = new Vector3(1000, 1000, 1000);
                 AreaObjectPosition.transform.position = new Vector3(1000, 1000, 1000);
                 
                 AdminMenu.Instance.addButton("Sorting Object - See boolean states", CallbackSeeStates);
@@ -207,7 +215,7 @@ namespace MATCH
                 BlackboardCondition cDidPersonTakeObject = new BlackboardCondition("PersonGrabbedObject", Operator.IS_EQUAL, true, Stops.IMMEDIATE_RESTART, sePersonTakeObject);
 
                 Sequence sePersonMovedAwayFromObject = new Sequence(
-                    new NPBehave.Action(() => AssistancesGradation.ShowOneHideOthers(Assistances.QandDAssistances.Gradation.Epsilon, Utilities.Utility.GetEventHandlerEmpty())),
+                    new NPBehave.Action(() => AssistancesAlphaGradation.RunAssistance(Utilities.Utility.GetEventHandlerEmpty()) /*AssistancesGradation.ShowOneHideOthers(Assistances.QandDAssistances.Gradation.Epsilon, Utilities.Utility.GetEventHandlerEmpty())*/),
                     new WaitUntilStopped());
 
                 BlackboardCondition cDidPersonMoveAwayFromObject = new BlackboardCondition("PersonMovedAwayFromObject", Operator.IS_EQUAL, true, Stops.IMMEDIATE_RESTART, sePersonMovedAwayFromObject);
@@ -258,7 +266,7 @@ namespace MATCH
 
 				// Set assistances
 				// For now we use the assistances from the QandDAssistances class. Uncomment the following line when going to the BT to manage the assistances
-                //InitializeAssistancesAlpha();
+                InitializeAssistancesAlpha();
                 Tree = new Root(Conditions, srBegin);
 
                 //#if UNITY_EDITOR
@@ -348,8 +356,8 @@ namespace MATCH
             {
                 //InferenceManager.UnregisterInference(InferenceObjectDetected);
                 
-                ObjectDetectedInformation = ((Utilities.EventHandlerArgObject)e).ObjectDetected;
-                DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Object detected : " + ObjectDetectedInformation.GetObjectName());
+                ObjectDetectedInformation = ((Utilities.EventHandlerArgs.PhysicalObject)e).ObjectDetected;
+                //DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Object detected : " + ObjectDetectedInformation.GetObjectName());
 
                 if (!Utilities.Utility.IsEditorSimulator() && !Utilities.Utility.IsEditorGameView())
                 {

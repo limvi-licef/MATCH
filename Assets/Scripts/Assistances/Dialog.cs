@@ -210,11 +210,11 @@ namespace MATCH
             /**
              * This function changes the color - you still have the responsibility to disable the callback if required
              * */
-            public void CheckButton(Buttons.Basic button, bool check)
+            /*public void CheckButton(Buttons.Basic button, bool check)
             {
                 //m_states[currentState.m_currentState.getId()].transform.Find("BackPlate").Find("Quad").GetComponent<Renderer>().material = Resources.Load("Mouse_Cyan_Glowing", typeof(Material)) as Material;
                 button.CheckButton(check);
-            }
+            }*/
 
             public void EnableBillboard(bool enable)
             {

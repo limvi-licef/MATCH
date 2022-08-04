@@ -1,4 +1,4 @@
-/*Copyright 2022 Guillaume Spalla
+/*Copyright 2022 Guillaume Spalla, Louis Marquet
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -224,15 +224,7 @@ namespace MATCH
             public Dialog CreateToDoList(string title, string description)
             {
                 Dialog controller = InitializeDialog(DialogsTypes.TodoList, title, description, null);
-
-                //Transform dialogView = Instantiate(RefToDoListAssistance.transform);
-                //Dialog dialogController = dialogView.GetComponent<Dialog>();
-                //dialogController.SetTitle(title, 0.15f);
-                //float sizeDescriptionText = -0.0005f * description.Length + 0.206f;
-                //dialogController.SetDescription(description, sizeDescriptionText);
                 controller.EnableBillboard(false);
-                //dialogController.EnableBillboard(false);
-
                 return controller;
             }
 

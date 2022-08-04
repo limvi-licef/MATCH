@@ -1,4 +1,4 @@
-/*Copyright 2022 Guillaume Spalla
+/*Copyright 2022 Louis Marquet
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -32,52 +32,42 @@ namespace MATCH
             Utilities.PhysicalObjectInformation m_objectdetected;
             BoxCollider m_Collider;
 
-            string lastObject;
-
+            /**
+             * id: name of the inference
+             * callback: function called when the inference is realized
+             * objectName: name of the object to detect. Must be written as the name returned by the code performing the object recognition.
+             * surface: surface where the presence of the object will be checked
+             * */
             public ObjectInInteractionSurface(string id, EventHandler callback, string objectName, Assistances.InteractionSurface surface) : base(id, callback)
             {
                 m_surface = surface;
 
-                //m_objectdetected = null;
-                lastObject = null;
                 m_objectdetected = null;
-                //m_objectdetected.setObjectParams("TEst", new Vector3(0, 0, 0), new Vector3(0, 0, 0), new Vector3(0, 0, 0)); //FOR TEST
 
                 DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Inference Object Launched");
-                //ObjectRecognition.ObjectInformation.Instance.UnregisterCallbackToObject(objectName);
                 ObjectRecognition.ObjectInformation.Instance.RegisterCallbackToObject(objectName, callbackObjectDetection);
+
+                m_Collider = m_surface.GetInteractionSurface().gameObject.GetComponent<BoxCollider>(); // Can't this be in the constructor?
             }
 
             //In the evaluate, the last object is saved for avoid spam when an object is in a surface. The return true is sent just one time (the first time that the object is detected in the surface).
             public override bool Evaluate()
             {
                 bool toReturn = false;
-                m_Collider = m_surface.GetInteractionSurface().gameObject.GetComponent<BoxCollider>();
-                //MouseDebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, MouseDebugMessagesManager.MessageLevel.Info, "Evaluate ok");
-                if (m_objectdetected != null)
+                
+                if (m_objectdetected != null && m_Collider.bounds.Contains(m_objectdetected.GetCenter()))
                 {
-                    //MouseDebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, MouseDebugMessagesManager.MessageLevel.Info, "Object name ok");
-                    if (m_Collider.bounds.Contains(m_objectdetected.GetCenter())) //check if the center of the object is in the surface area
-                    {
-                        //MouseDebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, MouseDebugMessagesManager.MessageLevel.Info, "In collider");
-                        if (m_objectdetected.GetObjectName() != lastObject) //last object for avoid spam when an object is in a surface
-                        {
-                            toReturn = true;
-                            lastObject = m_objectdetected.GetObjectName();
-                            //MouseDebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, MouseDebugMessagesManager.MessageLevel.Info, "Finally, object detected : " + m_objectdetected.getObjectName() + " with the center " + m_objectdetected.getCenter() + ". Center of storage : " + m_Collider.bounds.center);
-                        }
-                    }
-                    else // the object isn't in the surface
-                    {
-                        lastObject = null;
-                    }
+                    toReturn = true;
                 }
                 return toReturn;
             }
 
+            /**
+             * Callback supposed to be called when the object is detected
+             * */
             public void callbackObjectDetection(System.Object o, EventArgs e)
             {
-                Utilities.EventHandlerArgs.EventHandlerArgObject objectInfo = (Utilities.EventHandlerArgs.EventHandlerArgObject)e;
+                Utilities.EventHandlerArgs.PhysicalObject objectInfo = (Utilities.EventHandlerArgs.PhysicalObject)e;
 
                 m_objectdetected = new Utilities.PhysicalObjectInformation();
                 m_objectdetected = objectInfo.ObjectDetected;

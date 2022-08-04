@@ -15,38 +15,32 @@ limitations under the License.*/
 using Microsoft.MixedReality.Toolkit.UI;
 using Microsoft.MixedReality.Toolkit.UI.BoundsControl;
 using Microsoft.MixedReality.Toolkit.Utilities.Solvers;
-using Microsoft.MixedReality.Toolkit.Utilities;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Timers;
 using System.Reflection;
 using System.Linq;
-using TMPro;
+using Newtonsoft.Json.Linq;
 
+/**
+ * Used to have a lighting object to point to a provided gameobject, from the same direction than the user's gaze
+ * */
 namespace MATCH
 {
-    namespace Assistances
+    namespace Utilities
     {
-        public class ToDoList : MonoBehaviour
+        namespace EventHandlerArgs
         {
-            // Start is called before the first frame update
-            void Start()
+           public class PhysicalObject : EventArgs
             {
-                AdminMenu.Instance.addButton("Bring ToDo List window", callbackBringAgenda);
+                public PhysicalObjectInformation ObjectDetected;
 
+                public PhysicalObject(PhysicalObjectInformation obj)
+                {
+                    ObjectDetected = obj;
+                }
             }
-
-            public void callbackBringAgenda()
-            {
-                gameObject.transform.position = new Vector3(Camera.main.transform.position.x + 0.5f, Camera.main.transform.position.y, Camera.main.transform.position.z);
-                gameObject.transform.LookAt(Camera.main.transform);
-                gameObject.transform.Rotate(new Vector3(0, 1, 0), 180);
-            }
-
-
         }
-
     }
 }
-

@@ -1,4 +1,4 @@
-/*Copyright 2022 Guillaume Spalla
+/*Copyright 2022 Louis Marquet
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -26,6 +26,9 @@ namespace MATCH
 {
     namespace Utilities
     {
+        /**
+         * Container to host the details about a detected object
+         * */
         public class PhysicalObjectInformation
         {
             string Name; //object name
@@ -37,14 +40,7 @@ namespace MATCH
             {
                 return Name;
             }
-            /*
-            public PhysicalObjectVectors getObjectBoundaries()
-            {
-                PhysicalObjectVectors vectors = new PhysicalObjectVectors();
-                vectors.setVectors(m_coord, m_firstCorner, m_secondCorner);
-                return vectors;
-            }
-            */
+
             public void SetObjectParams(string name, Vector3 center, Vector3 firstBoundary, Vector3 secondBoundary)
             {
                 Name = name;
@@ -67,28 +63,6 @@ namespace MATCH
             {
                 return SecondCorner;
             }
-
         }
-        /*
-        public class PhysicalObjectVectors
-        {
-            Vector3 m_coord; //coordinates
-            Vector3 m_firstCorner; //boundingboxcorner
-            Vector3 m_secondCorner; //boundingboxcorner
-
-            public void setVectors(Vector3 center, Vector3 firstBoundary, Vector3 secondBoundary)
-            {
-                m_coord = center;
-                m_firstCorner = firstBoundary;
-                m_secondCorner = secondBoundary;
-            }
-
-            public void getVectors(out Vector3 center,out Vector3 firstBoundary,out Vector3 secondBoundary)
-            {
-                center = m_coord;
-                firstBoundary = m_firstCorner;
-                secondBoundary = m_secondCorner;
-            }
-        }*/
     }
 }

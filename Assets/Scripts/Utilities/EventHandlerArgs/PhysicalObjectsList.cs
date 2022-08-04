@@ -1,4 +1,4 @@
-/*Copyright 2022 Guillaume Spalla
+/*Copyright 2022 Louis Marquet
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -32,45 +32,13 @@ namespace MATCH
     {
         namespace EventHandlerArgs
         {
-            public class ObjectsList : EventArgs
+            public class PhysicalObjectsList : EventArgs
             {
                 public List<PhysicalObjectInformation> m_objectList;
 
-                public ObjectsList(List<PhysicalObjectInformation> listofobjects)
+                public PhysicalObjectsList(List<PhysicalObjectInformation> listofobjects)
                 {
                     m_objectList = listofobjects;
-                }
-
-                void Start()
-                {
-
-                }
-
-                // Update is called once per frame
-                void Update()
-                {
-
-                }
-            }
-
-            public class EventHandlerArgObject : EventArgs
-            {
-                public PhysicalObjectInformation ObjectDetected;
-
-                public EventHandlerArgObject(PhysicalObjectInformation obj)
-                {
-                    ObjectDetected = obj;
-                }
-
-                void Start()
-                {
-
-                }
-
-                // Update is called once per frame
-                void Update()
-                {
-
                 }
             }
         }

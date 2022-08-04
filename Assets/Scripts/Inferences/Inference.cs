@@ -31,7 +31,7 @@ namespace MATCH
         {
             public string Id { get; private set; }
             public event EventHandler Callbacks;
-            protected EventArgs CallbackArgs;
+            protected EventArgs CallbackArgs; // Sent as argument of the callback. So if you want to send specific arguments, this is the variable to set.
 
             protected Inference(string id, EventHandler callback)
             {

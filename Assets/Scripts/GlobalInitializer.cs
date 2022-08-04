@@ -58,6 +58,10 @@ namespace MATCH
                 AdministrationMenu.m_menuStatic = false;
                 VirtualRoom.SetActive(false); // In the editor, the user does what he wants, but in the hololens, this should surely be disabled.
             }
+
+            /**
+             * There is one and only one todo list to 
+             * */
             AdminMenu.Instance.addButton("Bring to do list window", delegate () { Utilities.Utility.bringObject(TodoList.transform); }); //add button to the admin menu
             AdminMenu.Instance.addSwitchButton("Lock To Do List", callbackLockToDo);
             initializeTodoList();
@@ -83,6 +87,9 @@ namespace MATCH
             addScenarioToGUI(MATCH.Scenarios.Manager.Instance.getScenarios().Last());
         }
 
+        /**
+         * Thi function adds a button to the todolist GUI, and connects this button to the EventHandler of the scenario given an input parameter, so that the button background reflect the status of the scenario
+         * */
         void addScenarioToGUI(MATCH.Scenarios.Scenario scenario)
         {
             MATCH.Assistances.Buttons.Basic button = TodoList.AddButton(scenario.getId(), true); //add button
@@ -111,6 +118,9 @@ namespace MATCH
             else return "Automne";
         }
 
+        /**
+         * To switch between a movable object or not
+         * */
         void callbackLockToDo()
         {
             if (TodoList.GetComponent<ObjectManipulator>().enabled)

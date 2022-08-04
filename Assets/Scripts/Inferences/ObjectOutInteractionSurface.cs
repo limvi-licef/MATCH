@@ -1,4 +1,4 @@
-/*Copyright 2022 Guillaume Spalla
+/*Copyright 2022 Louis Marquet
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -33,45 +33,30 @@ namespace MATCH
             Utilities.PhysicalObjectInformation Objectdetected;
             BoxCollider Collider;
 
-            string LastObject;
-
             public ObjectOutInteractionSurface(string id, EventHandler callback, string objectName, Assistances.InteractionSurface surface) : base(id, callback)
             {
                 Surface = surface;
-                LastObject = null;
                 Objectdetected = null;
-                //ObjectRecognition.ObjectInformation.Instance.UnregisterCallbackToObject(objectName);
                 ObjectRecognition.ObjectInformation.Instance.RegisterCallbackToObject(objectName, callbackObjectDetection);
+                Collider = Surface.GetInteractionSurface().gameObject.GetComponent<BoxCollider>();
             }
 
             public override bool Evaluate()
             {
                 bool toReturn = false;
-                Collider = Surface.GetInteractionSurface().gameObject.GetComponent<BoxCollider>();
                 
-                if (Objectdetected != null)
+                if (Objectdetected != null && !Collider.bounds.Contains(Objectdetected.GetCenter()))
                 {
-                    if (!Collider.bounds.Contains(Objectdetected.GetCenter()))
-                    {
-                        if (Objectdetected.GetObjectName() != LastObject) //last object for avoid spam when an object is out of a surface
-                        {
-                            toReturn = true;
-                            LastObject = Objectdetected.GetObjectName();
-                        }
-                    }
-                    else // the object is in the surface
-                    {
-                        LastObject = null;
-                    }
+                    toReturn = true;
                 }
                 return toReturn;
             }
 
             public void callbackObjectDetection(System.Object o, EventArgs e)
             {
-                Utilities.EventHandlerArgs.EventHandlerArgObject objectInfo = (Utilities.EventHandlerArgs.EventHandlerArgObject)e;
+                Utilities.EventHandlerArgs.PhysicalObject objectInfo = (Utilities.EventHandlerArgs.PhysicalObject)e;
                 Objectdetected = objectInfo.ObjectDetected;
-                CallbackArgs = new Utilities.EventHandlerArgs.EventHandlerArgObject(Objectdetected);
+                CallbackArgs = new Utilities.EventHandlerArgs.PhysicalObject(Objectdetected);
             }
 
             public override void Unregistered()

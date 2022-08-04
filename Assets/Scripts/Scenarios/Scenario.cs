@@ -1,4 +1,4 @@
-/*Copyright 2022 Guillaume Spalla
+/*Copyright 2022 Guillaume Spalla, Louis Marquet
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -31,9 +31,9 @@ namespace MATCH
 
             string m_scenarioId;
 
-            public event EventHandler s_challengeOnStandBy;
-            public event EventHandler s_challengeOnSuccess;
-            public event EventHandler s_challengeOnStart;
+            public event EventHandler s_challengeOnStandBy; // Contains as EventArg a String object, which contains the id of the scenario
+            public event EventHandler s_challengeOnSuccess; // Contains as EventArg a String object, which contains the id of the scenario
+            public event EventHandler s_challengeOnStart;   // Contains as EventArg a String object, which contains the id of the scenario
 
             public string getId()
             {
@@ -45,34 +45,31 @@ namespace MATCH
                 this.m_scenarioId = id;
             }
 
+            /**
+             * Function to be called when the scenario enters the stand by mode
+             * */
             protected void onChallengeStandBy()
             {
                 Utilities.EventHandlerArgs.String arg = new Utilities.EventHandlerArgs.String(m_scenarioId);
                 s_challengeOnStandBy?.Invoke(this, arg);
             }
 
+            /**
+             * Function to be called when the scenario enters the success mode
+             * */
             protected void onChallengeSuccess()
             {
                 Utilities.EventHandlerArgs.String arg = new Utilities.EventHandlerArgs.String(m_scenarioId);
                 s_challengeOnSuccess?.Invoke(this, arg);
             }
 
+            /**
+             * Function to be called when the scenario begins, wherever it is, i.e. this function might be called at several places of the scenario
+             * */
             protected void onChallengeStart()
             {
                 Utilities.EventHandlerArgs.String arg = new Utilities.EventHandlerArgs.String(m_scenarioId);
                 s_challengeOnStart?.Invoke(this, arg);
-            }
-
-            // Start is called before the first frame update
-            void Start()
-            {
-
-            }
-
-            // Update is called once per frame
-            void Update()
-            {
-
             }
         }
     }

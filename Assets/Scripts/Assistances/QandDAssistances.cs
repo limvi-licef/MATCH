@@ -54,15 +54,15 @@ namespace MATCH
             {
                 foreach (KeyValuePair<Gradation, Assistance> assistance in AssistancesStorage)
                 {
-                    DebugMessagesManager.Instance.displayMessage("ShowOneHideOthers", "Evaluate", DebugMessagesManager.MessageLevel.Info, "Storage " + assistance.Value.GetTransform().name);
+                    //DebugMessagesManager.Instance.displayMessage("ShowOneHideOthers", "Evaluate", DebugMessagesManager.MessageLevel.Info, "Storage " + assistance.Value.GetTransform().name);
                     if (assistance.Key == gradationToShow)
                     {
                             assistance.Value.Show(callback);
-                        DebugMessagesManager.Instance.displayMessage("ShowOneHideOthers", "Evaluate", DebugMessagesManager.MessageLevel.Info, "Show " + assistance.Value.GetTransform().name); // Class and method names are hard coded for performance reasons.
+                        //DebugMessagesManager.Instance.displayMessage("ShowOneHideOthers", "Evaluate", DebugMessagesManager.MessageLevel.Info, "Show " + assistance.Value.GetTransform().name); // Class and method names are hard coded for performance reasons.
                     }
                     else
                     {
-                        DebugMessagesManager.Instance.displayMessage("ShowOneHideOthers", "Evaluate", DebugMessagesManager.MessageLevel.Info, "Hide"); // Class and method names are hard coded for performance reasons.
+                        //DebugMessagesManager.Instance.displayMessage("ShowOneHideOthers", "Evaluate", DebugMessagesManager.MessageLevel.Info, "Hide"); // Class and method names are hard coded for performance reasons.
                             assistance.Value.Hide(Utilities.Utility.GetEventHandlerEmpty());
                     }
                 }
@@ -70,8 +70,8 @@ namespace MATCH
 
             public void HideAll()
             {
-                DebugMessagesManager.Instance.displayMessage("ShowOneHideOthers", "Evaluate", DebugMessagesManager.MessageLevel.Info, "Hide All");
-                foreach (KeyValuePair<Gradation, IAssistance> assistance in AssistancesStorage)
+                //DebugMessagesManager.Instance.displayMessage("ShowOneHideOthers", "Evaluate", DebugMessagesManager.MessageLevel.Info, "Hide All");
+                foreach (KeyValuePair<Gradation, Assistance> assistance in AssistancesStorage)
                 {
                         assistance.Value.Hide(Utilities.Utility.GetEventHandlerEmpty());     
                 }
