@@ -78,7 +78,7 @@ namespace MATCH
                 // Help buttons
                 //if (!transform.Find("ExclamationMarkButtons"))
                 //{
-                DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Help buttons instanciated for " + gameObject.name);
+                //DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Help buttons instanciated for " + gameObject.name);
 
                 List<string> buttonsText = new List<string>();
                 buttonsText.Add("Oui");

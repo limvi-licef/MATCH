@@ -50,6 +50,7 @@ namespace MATCH
                 {
                     Interactable interactions = gameObject.GetComponent<Interactable>();
                     interactions.AddReceiver<InteractableOnTouchReceiver>().OnTouchStart.AddListener(delegate () {
+                        //DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Button clicked");
                         OnButtonClicked();
                     });
                 }

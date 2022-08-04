@@ -46,7 +46,7 @@ namespace MATCH
             // Tuning parameters following if the software runs on the Unity editor or the Hololens
             if (Utilities.Utility.IsEditorSimulator() || Utilities.Utility.IsEditorGameView())
             {
-                DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Editor simulator");
+                //DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Editor simulator");
                 if (ObjectRecognition != null)
                 {
                     ObjectRecognition.SetActive(false);

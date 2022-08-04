@@ -51,6 +51,7 @@ namespace MATCH
 
                 protected void OnButtonClicked()
                 {
+                    //DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Button clicked");
                     MATCH.Utilities.EventHandlerArgs.Button args = new Utilities.EventHandlerArgs.Button();
                     args.ButtonType = Type;
 

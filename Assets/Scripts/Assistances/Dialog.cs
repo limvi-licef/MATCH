@@ -166,7 +166,7 @@ namespace MATCH
             bool m_mutexShow = false;
             public override void Show(EventHandler eventHandler)
             {
-                DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Called for object " + name);
+                //DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Called for object " + name);
 
                 if (m_mutexShow == false)
                 {
@@ -177,10 +177,10 @@ namespace MATCH
                         Utilities.Utility.AdjustObjectHeightToHeadHeight(transform);
                     }
 
-                    DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Going to show the background");
+                    //DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Going to show the background");
 
                     Utilities.Utility.AnimateAppearInPlace(BackgroundView.gameObject, BackgoundScalingOriginal, delegate {
-                        DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Background shown");
+                        //DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Background shown");
 
                         Utilities.Utility.AnimateAppearInPlace(TitleView.gameObject);
                         Utilities.Utility.AnimateAppearInPlace(ButtonsParentView.gameObject);

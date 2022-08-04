@@ -45,6 +45,8 @@ namespace MATCH
 
                 if (assistance.IsDecorator() == false)
                 {
+                    DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Going to subscribe to the EventHelpButtonClicked event of the assistance " + assistance.GetTransform().name);
+
                     assistance.EventHelpButtonClicked += CHelpButtonClicked;
                 }
 
