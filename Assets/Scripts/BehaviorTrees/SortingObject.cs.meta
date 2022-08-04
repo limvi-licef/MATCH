@@ -1,9 +1,5 @@
 fileFormatVersion: 2
-<<<<<<<< HEAD:Assets/Scripts/Scenarios/TidyUp.cs.meta
 guid: a8c63670fc825e940aced82e2aadf1e7
-========
-guid: 2863e32eaeed93c4386c65b8bd920c87
->>>>>>>> origin/BehaviorTrees:Assets/SortingObject.cs.meta
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
