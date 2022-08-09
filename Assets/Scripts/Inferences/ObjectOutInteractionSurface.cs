@@ -29,15 +29,15 @@ namespace MATCH
 
         public class ObjectOutInteractionSurface : Inferences.Inference
         {
-            Assistances.InteractionSurface Surface;
+            readonly Assistances.InteractionSurface Surface;
             Utilities.PhysicalObjectInformation Objectdetected;
-            BoxCollider Collider;
+            readonly BoxCollider Collider;
 
             public ObjectOutInteractionSurface(string id, EventHandler callback, string objectName, Assistances.InteractionSurface surface) : base(id, callback)
             {
                 Surface = surface;
                 Objectdetected = null;
-                ObjectRecognition.ObjectInformation.Instance.RegisterCallbackToObject(objectName, callbackObjectDetection);
+                ObjectRecognition.ObjectInformation.Instance.RegisterCallbackToObject(objectName, CallbackObjectDetection);
                 Collider = Surface.GetInteractionSurface().gameObject.GetComponent<BoxCollider>();
             }
 
@@ -52,7 +52,7 @@ namespace MATCH
                 return toReturn;
             }
 
-            public void callbackObjectDetection(System.Object o, EventArgs e)
+            public void CallbackObjectDetection(System.Object o, EventArgs e)
             {
                 Utilities.EventHandlerArgs.PhysicalObject objectInfo = (Utilities.EventHandlerArgs.PhysicalObject)e;
                 Objectdetected = objectInfo.ObjectDetected;

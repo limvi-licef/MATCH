@@ -18,46 +18,67 @@ using UnityEngine;
 using NPBehave;
 using System;
 using System.Reflection;
+using System.Linq;
 
 namespace MATCH
 {
     namespace Assistances
     {
-        public class AssistanceGradationAttention
+        public class AssistanceGradationAttention: MonoBehaviour
         {
             List<Assistance> Gradation;
             int GradationCurrent = -1;
 
             public event EventHandler EventHelpClicked; // contains an argument which is an enum with the type of buttons clicked
 
-            public AssistanceGradationAttention()
+            /*public AssistanceGradationAttention()
+            {
+                
+            }*/
+
+            private void Awake()
             {
                 Gradation = new List<Assistance>();
             }
 
+            private void Start()
+            {
+                //DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Called");
+            }
+
             public Assistance AddAssistance(Assistance assistance)
             {
+                DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Called for assistance " + assistance.name);
+
+                /*assistance.EventHelpButtonClicked += delegate (System.Object o, EventArgs e)
+                {
+                    DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Called 2");
+                };*/
+
                 Gradation.Add(assistance);
                 if (GradationCurrent == -1)
                 {
                     GradationCurrent = 0;
                 }
 
-                if (assistance.IsDecorator() == false)
+                /*if (assistance.IsDecorator() == false)
                 {
                     DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Going to subscribe to the EventHelpButtonClicked event of the assistance " + assistance.GetTransform().name);
 
-                    assistance.EventHelpButtonClicked += CHelpButtonClicked;
-                }
+                    Gradation.Last().EventHelpButtonClicked += CHelpButtonClicked;
+                }*/
+                Gradation.Last().EventHelpButtonClicked += CHelpButtonClicked;
+
+                
 
                 return assistance;
             }
 
             private void CHelpButtonClicked (System.Object o, EventArgs e)
             {
-                MATCH.Utilities.EventHandlerArgs.Button args = (Utilities.EventHandlerArgs.Button)e;
+                DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Help button clicked for assistance " + GetCurrentAssistance().name);
 
-                DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Help button " + args.ButtonType.ToString() +  " clicked for assistance " + GetCurrentAssistance().name);
+                MATCH.Utilities.EventHandlerArgs.Button args = (Utilities.EventHandlerArgs.Button)e;
 
                 EventHelpClicked?.Invoke(this, e);
             }

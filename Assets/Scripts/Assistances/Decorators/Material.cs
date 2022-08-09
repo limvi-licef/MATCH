@@ -32,10 +32,20 @@ namespace MATCH
                 IBasic AssistanceToDecorate;
                 String MaterialName;
 
-                public Material(IBasic assistanceToDecorate, string materialName): base()
+                public void SetAssistanceToDecorate(IBasic toDecorate)
                 {
-                    AssistanceToDecorate = assistanceToDecorate;
-                    MaterialName = materialName;
+                    AssistanceToDecorate = toDecorate;
+
+                    // Relaying the eventhandler
+                    Assistance temp = (Assistance)AssistanceToDecorate;
+                    temp.EventHelpButtonClicked += delegate (System.Object o, EventArgs e)
+                    {
+                        MATCH.Utilities.EventHandlerArgs.Button args = (MATCH.Utilities.EventHandlerArgs.Button)e;
+
+                        //DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "EventHelpButtonClicked caught by decorated object. Relaying the event ...");
+
+                        OnHelpButtonClicked(args.ButtonType);
+                    };
                 }
 
                 public override Transform GetTransform()
@@ -50,12 +60,13 @@ namespace MATCH
 
                 public void SetMaterial(string materialName)
                 {
-                    AssistanceToDecorate.SetMaterial(materialName);
+                    MaterialName = materialName;
+                    //AssistanceToDecorate.SetMaterial(materialName);
                 }
 
                 public override void Show(EventHandler callback)
                 {
-                    DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Decorated assistance is going to be shown");
+                    //DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Decorated assistance is going to be shown");
 
                     if (AssistanceToDecorate.GetAssistance().GetTransform().gameObject.activeSelf == false)
                     {

@@ -50,11 +50,15 @@ namespace MATCH
 
             AssistanceStatus Status;
 
+            Utilities.EventHandlerArgs.ButtonAndAssistanceGradationAttention ArgsOnHelpButtonClicked;
+
             private void Awake()
             {
                 AssistancesGradation = null;
                 //AssistancesGradation = new List<AssistanceGradationAttention>();
                 InfTimer2Minutes = new Inferences.Timer("AssistanceGradationExplicitTimer", 10, CallbackInterenceTimer);
+
+                ArgsOnHelpButtonClicked = null;
             }
 
             void Start()
@@ -122,7 +126,7 @@ namespace MATCH
                 // seIsHelpClicked - begin
                 Sequence seIsHelpClicked = new Sequence(
                     //cIsHelpClicked,
-                    new NPBehave.Action(() => /*IncreaseGradation(CAssistanceDisplayed)*/ ShowCurrentAssistanceMinimalGradation(AssistancesGradation.AssistanceCurrent, COnHelpButtonClicked)),
+                    new NPBehave.Action(() => /*IncreaseGradation(CAssistanceDisplayed)*/ /*ShowAssistanceMinimalGradation(AssistancesGradation.AssistanceCurrentArgsOnHelpButtonClicked.AssistanceNext, CAssistanceDisplayed))*/ HideCurrentAndShowNext(ArgsOnHelpButtonClicked.AssistanceCurrent, ArgsOnHelpButtonClicked.AssistanceNext)),
                     new NPBehave.WaitUntilStopped()
                     );
                 BlackboardCondition cIsHelpClicked = new BlackboardCondition("HelpClicked", Operator.IS_EQUAL, true, Stops.IMMEDIATE_RESTART, seIsHelpClicked/*new NPBehave.Action(()=>Debug.Log("Help clicked"))*/);
@@ -141,7 +145,7 @@ namespace MATCH
 
                 // srFocused - begin
                 Sequence seFocusedInternal = new Sequence(
-                    new NPBehave.Action(() => ShowCurrentAssistanceMinimalGradation(AssistancesGradation.AssistanceCurrent, CAssistanceDisplayed)/*AssistancesGradation[CurrentAssistanceIndex].ShowMinimalGradation(CAssistanceDisplayed)*/),
+                    new NPBehave.Action(() => ShowAssistanceMinimalGradation(AssistancesGradation.AssistanceCurrent, CAssistanceDisplayed)/*AssistancesGradation[CurrentAssistanceIndex].ShowMinimalGradation(CAssistanceDisplayed)*/),
                     new NPBehave.WaitUntilStopped()
                     );
 
@@ -210,7 +214,9 @@ namespace MATCH
                 debugger.BehaviorTree = Tree;
             }
 
-            private void ShowCurrentAssistanceMinimalGradation(AssistanceGradationAttention assistance, EventHandler callback)
+            //private 
+
+            private void ShowAssistanceMinimalGradation(AssistanceGradationAttention assistance, EventHandler callback)
             {
                 //AssistancesGradation[CurrentAssistanceIndex].ShowMinimalGradation(callback);
                 //AssistancesGradation.AssistanceCurrent.ShowMinimalGradation(callback);
@@ -221,10 +227,18 @@ namespace MATCH
                 //AssistancesGradation
             }
 
+            private void HideCurrentAndShowNext(AssistanceGradationAttention current, AssistanceGradationAttention next)
+            {
+                current.HideCurrentGradation(delegate (System.Object o, EventArgs e)
+                {
+                    next.ShowMinimalGradation(Utilities.Utility.GetEventHandlerEmpty());
+                });
+            }
+
             private void ShowFirstAssistance()
             {
                 CurrentAssistanceIndex = 0;
-                ShowCurrentAssistanceMinimalGradation(AssistancesGradation.AssistanceCurrent, CAssistanceDisplayed);
+                ShowAssistanceMinimalGradation(AssistancesGradation.AssistanceCurrent, CAssistanceDisplayed);
                 Conditions["IsDisplayed"] = true;
 
                 //DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Display first assistance");
@@ -286,9 +300,11 @@ namespace MATCH
 
             private void COnHelpButtonClicked(System.Object o, EventArgs e)
             {
-                Utilities.EventHandlerArgs.ButtonAndAssistanceGradationAttention args = (Utilities.EventHandlerArgs.ButtonAndAssistanceGradationAttention)e;
+                DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Button clicked");
 
-                if (args.AssistanceNext != null)
+                ArgsOnHelpButtonClicked = (Utilities.EventHandlerArgs.ButtonAndAssistanceGradationAttention)e;
+
+                if (ArgsOnHelpButtonClicked.AssistanceNext != null)
                 {
                     Conditions["HelpClicked"] = true;
                 }

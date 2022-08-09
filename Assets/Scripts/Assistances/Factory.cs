@@ -39,6 +39,7 @@ namespace MATCH
             public Assistances.Dialog RefToDoListAssistance;
             public AssistanceGradationExplicit RefAssistanceGradationExplicit;
             public Assistances.Dialog RefButtons;
+            public AssistanceGradationAttention RefAssistanceGradationAttention;
 
             enum DialogsTypes
             {
@@ -85,6 +86,10 @@ namespace MATCH
             {
                 dialog.AddButton(text, autoScaling, fontSize);
                 dialog.ButtonsController.Last().EventButtonClicked += callback;
+                /*dialog.EventHelpButtonClicked += delegate (System.Object o, EventArgs e)
+                {
+                    
+                };*/
                 dialog.ButtonsController.Last().Type = type;
             }
 
@@ -245,6 +250,13 @@ namespace MATCH
                 AssistanceGradationExplicit controller = view.GetComponent<AssistanceGradationExplicit>();
                 return controller;
             }
+
+            public AssistanceGradationAttention CreateAssistanceGradationAttention()
+            {
+                Transform view = Instantiate(RefAssistanceGradationAttention.transform);
+                AssistanceGradationAttention controller = view.GetComponent<AssistanceGradationAttention>();
+                return controller;
+            }    
         }
 
     }

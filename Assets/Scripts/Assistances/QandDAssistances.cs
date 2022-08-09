@@ -37,7 +37,7 @@ namespace MATCH
                 Theta = 7
             }
 
-            Dictionary<Gradation, Assistance> AssistancesStorage;
+            readonly Dictionary<Gradation, Assistance> AssistancesStorage;
 
             // Start is called before the first frame update
             public QandDAssistances() {

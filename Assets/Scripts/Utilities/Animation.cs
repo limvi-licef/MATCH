@@ -28,16 +28,16 @@ namespace MATCH
         public class Animation : MonoBehaviour
         {
 
-            public Vector3 m_positionEnd;
-            public Vector3 m_scalingEnd;
-            public float m_animationSpeed = 4.0f;
-            public Vector3 m_scalingstep;
+            public Vector3 PositionEnd;
+            public Vector3 ScalingEnd;
+            public float AnimationSpeed = 4.0f;
+            public Vector3 Scalingstep;
 
-            event EventHandler m_eventAnimationFinished;
+            event EventHandler EventAnimationFinished;
 
-            bool m_startAnimation = false;
+            bool StartAnimationStatus = false;
 
-            bool m_scalingGrow;
+            bool ScalingGrow;
 
             public enum ConditionStopAnimation
             {
@@ -46,77 +46,77 @@ namespace MATCH
                 OnScaling = 1
             }
 
-            public ConditionStopAnimation m_triggerStopAnimation = ConditionStopAnimation.OnPositioning;
+            public ConditionStopAnimation TriggerStopAnimation = ConditionStopAnimation.OnPositioning;
 
-            BitArray m_scalingFinished;
+            BitArray ScalingFinished;
 
             private void Awake()
             {
                 // Initialization of the variables
-                m_scalingFinished = new BitArray(3);
+                ScalingFinished = new BitArray(3);
 
-                m_scalingstep.x = 0.05f;
-                m_scalingstep.y = 0.05f;
-                m_scalingstep.z = 0.05f;
+                Scalingstep.x = 0.05f;
+                Scalingstep.y = 0.05f;
+                Scalingstep.z = 0.05f;
             }
 
             // Start is called before the first frame update
             void Start()
             {
                 // To decide if the animation should scale up or down. By default, scaling down.
-                if (gameObject.transform.localScale.x < m_scalingEnd.x)
+                if (gameObject.transform.localScale.x < ScalingEnd.x)
                 {
-                    m_scalingGrow = true;
+                    ScalingGrow = true;
                 }
                 else
                 {
-                    m_scalingGrow = false;
+                    ScalingGrow = false;
                 }
             }
 
             // Update is called once per frame
             void Update()
             {
-                if (m_startAnimation)
+                if (StartAnimationStatus)
                 {
-                    float step = m_animationSpeed * Time.deltaTime;
+                    float step = AnimationSpeed * Time.deltaTime;
 
-                    if (Vector3.Distance(gameObject.transform.position, m_positionEnd) > 0.001f)
+                    if (Vector3.Distance(gameObject.transform.position, PositionEnd) > 0.001f)
                     {
-                        gameObject.transform.position = Vector3.MoveTowards(gameObject.transform.position, m_positionEnd, step);
+                        gameObject.transform.position = Vector3.MoveTowards(gameObject.transform.position, PositionEnd, step);
                     }
 
-                    if (m_scalingGrow && Utility.ConvertBitArrayToInt(m_scalingFinished) < 7) // < 7 because if the value is 7, that means the three bits (corresponding to x, y, z respectively) are set to 1, i.e. scaling is finished in the 3 directions.
+                    if (ScalingGrow && Utility.ConvertBitArrayToInt(ScalingFinished) < 7) // < 7 because if the value is 7, that means the three bits (corresponding to x, y, z respectively) are set to 1, i.e. scaling is finished in the 3 directions.
                     {
                         Vector3 newScaling = gameObject.transform.localScale; // current value by default, and changed below if necessary
 
                         for (int i = 0; i < 3; i++)
                         {
-                            if (gameObject.transform.localScale[i] < m_scalingEnd[i])
+                            if (gameObject.transform.localScale[i] < ScalingEnd[i])
                             {
-                                newScaling[i] = gameObject.transform.localScale[i] + m_scalingstep[i];
+                                newScaling[i] = gameObject.transform.localScale[i] + Scalingstep[i];
                             }
-                            else if (m_scalingFinished[i] == false)
+                            else if (ScalingFinished[i] == false)
                             {
-                                m_scalingFinished[i] = true;
+                                ScalingFinished[i] = true;
                             }
                         }
 
                         gameObject.transform.localScale = newScaling;
                     }
-                    else if (m_scalingGrow == false && Utility.ConvertBitArrayToInt(m_scalingFinished) < 7)
+                    else if (ScalingGrow == false && Utility.ConvertBitArrayToInt(ScalingFinished) < 7)
                     {
                         Vector3 newScaling = gameObject.transform.localScale; // current value by default, and changed below if necessary
 
                         for (int i = 0; i < 3; i++)
                         {
-                            if (gameObject.transform.localScale[i] < m_scalingEnd[i])
+                            if (gameObject.transform.localScale[i] < ScalingEnd[i])
                             {
-                                newScaling[i] = gameObject.transform.localScale[i] - m_scalingstep[i];
+                                newScaling[i] = gameObject.transform.localScale[i] - Scalingstep[i];
                             }
-                            else if (m_scalingFinished[i] == false)
+                            else if (ScalingFinished[i] == false)
                             {
-                                m_scalingFinished[i] = true;
+                                ScalingFinished[i] = true;
                             }
                         }
 
@@ -124,146 +124,146 @@ namespace MATCH
 
                     }
 
-                    if (m_triggerStopAnimation == ConditionStopAnimation.OnPositioning)
+                    if (TriggerStopAnimation == ConditionStopAnimation.OnPositioning)
                     {
-                        if (Vector3.Distance(gameObject.transform.position, m_positionEnd) < 0.001f)
+                        if (Vector3.Distance(gameObject.transform.position, PositionEnd) < 0.001f)
                         {
                             // Animation is finished: trigger event
-                            m_eventAnimationFinished?.Invoke(this, EventArgs.Empty);
+                            EventAnimationFinished?.Invoke(this, EventArgs.Empty);
 
-                            m_startAnimation = false;
+                            StartAnimationStatus = false;
                         }
                     }
-                    else if (m_triggerStopAnimation == ConditionStopAnimation.OnScaling)
+                    else if (TriggerStopAnimation == ConditionStopAnimation.OnScaling)
                     {
-                        if (Utility.ConvertBitArrayToInt(m_scalingFinished) == 7)
+                        if (Utility.ConvertBitArrayToInt(ScalingFinished) == 7)
                         {
                             // Animation is finished: trigger event
-                            m_eventAnimationFinished?.Invoke(this, EventArgs.Empty);
+                            EventAnimationFinished?.Invoke(this, EventArgs.Empty);
 
-                            m_startAnimation = false;
+                            StartAnimationStatus = false;
                         }
                     }
                 }
             }
 
-            public void startAnimation()
+            public void StartAnimation()
             {
-                m_startAnimation = true;
+                StartAnimationStatus = true;
             }
 
-            public void animateDiseappearInPlace(EventHandler eventHandler)
+            public void AnimateDiseappearInPlace(EventHandler eventHandler)
             {
                 EventHandler[] temp = new EventHandler[1];
 
                 temp[0] = eventHandler;
 
-                animateDiseappearInPlace(temp);
+                AnimateDiseappearInPlace(temp);
             }
 
-            public void animateDiseappearInPlace(EventHandler[] eventHandlers)
+            public void AnimateDiseappearInPlace(EventHandler[] eventHandlers)
             {
-                m_positionEnd = gameObject.transform.position;
-                m_scalingEnd = new Vector3(0f, 0f, 0f);
-                m_triggerStopAnimation = Animation.ConditionStopAnimation.OnScaling;
+                PositionEnd = gameObject.transform.position;
+                ScalingEnd = new Vector3(0f, 0f, 0f);
+                TriggerStopAnimation = Animation.ConditionStopAnimation.OnScaling;
 
                 foreach (EventHandler e in eventHandlers)
                 {
-                    m_eventAnimationFinished += e;
+                    EventAnimationFinished += e;
                 }
 
-                startAnimation();
+                StartAnimation();
             }
 
-            public void animateAppearInPlace(EventHandler e)
+            public void AnimateAppearInPlace(EventHandler e)
             {
                 EventHandler[] eventHandlers = new EventHandler[] { e };
 
-                animateAppearInPlace(eventHandlers);
+                AnimateAppearInPlace(eventHandlers);
             }
 
-            public void animateAppearInPlace(EventHandler[] e)
+            public void AnimateAppearInPlace(EventHandler[] e)
             {
-                animateAppearInPlaceToScaling(new Vector3(1.0f, 1.0f, 1.0f), e);
+                AnimateAppearInPlaceToScaling(new Vector3(1.0f, 1.0f, 1.0f), e);
             }
 
-            public void animateAppearInPlaceToScaling(Vector3 targetScaling, EventHandler eventHandler)
+            public void AnimateAppearInPlaceToScaling(Vector3 targetScaling, EventHandler eventHandler)
             {
-                animateAppearInPlaceToScaling(targetScaling, new EventHandler[] { eventHandler });
+                AnimateAppearInPlaceToScaling(targetScaling, new EventHandler[] { eventHandler });
             }
 
-            public void animateAppearInPlaceToScaling(Vector3 targetScaling, EventHandler[] eventHandlers)
+            public void AnimateAppearInPlaceToScaling(Vector3 targetScaling, EventHandler[] eventHandlers)
             {
                 //DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Called for object " + gameObject.name);
 
                 gameObject.transform.localScale = new Vector3(0, 0, 0);
-                m_positionEnd = gameObject.transform.position;
-                m_scalingEnd = targetScaling;
-                m_triggerStopAnimation = Animation.ConditionStopAnimation.OnScaling;
+                PositionEnd = gameObject.transform.position;
+                ScalingEnd = targetScaling;
+                TriggerStopAnimation = Animation.ConditionStopAnimation.OnScaling;
                 foreach (EventHandler e in eventHandlers)
                 {
-                    m_eventAnimationFinished += e;
+                    EventAnimationFinished += e;
                 }
 
                 gameObject.SetActive(true);
 
-                startAnimation();
+                StartAnimation();
             }
 
             /**
              * In this function, the animation will start from a given position, and will bring it to its current position
              **/
-            public void animateAppearFromPosition(Vector3 pos, EventHandler e)
+            public void AnimateAppearFromPosition(Vector3 pos, EventHandler e)
             {
-                m_positionEnd = gameObject.transform.position;
-                m_scalingEnd = new Vector3(1.0f, 1.0f, 1.0f);
-                m_triggerStopAnimation = Animation.ConditionStopAnimation.OnScaling;
-                m_eventAnimationFinished += e;
+                PositionEnd = gameObject.transform.position;
+                ScalingEnd = new Vector3(1.0f, 1.0f, 1.0f);
+                TriggerStopAnimation = Animation.ConditionStopAnimation.OnScaling;
+                EventAnimationFinished += e;
 
                 gameObject.transform.position = pos; // Moving the object to the starting position
                 gameObject.transform.localScale = new Vector3(0.0f, 0.0f, 0.0f); // Set scaling to 0 before starting
 
                 gameObject.SetActive(true);
 
-                startAnimation();
+                StartAnimation();
             }
 
             /**
          * In this function, the animation will start from the object's current position, and will diseppear gradually to the target position given as input parameter
          **/
-            public void animateDiseappearToPosition(Vector3 pos, EventHandler e)
+            public void AnimateDiseappearToPosition(Vector3 pos, EventHandler e)
             {
                 EventHandler[] ee = new EventHandler[] { e };
-                animateDiseappearToPosition(pos, ee);
+                AnimateDiseappearToPosition(pos, ee);
             }
 
-            public void animateDiseappearToPosition(Vector3 pos, EventHandler[] eventHandlers)
+            public void AnimateDiseappearToPosition(Vector3 pos, EventHandler[] eventHandlers)
             {
-                m_positionEnd = pos;
-                m_scalingEnd = new Vector3(0f, 0f, 0f);
-                m_triggerStopAnimation = Animation.ConditionStopAnimation.OnScaling;
+                PositionEnd = pos;
+                ScalingEnd = new Vector3(0f, 0f, 0f);
+                TriggerStopAnimation = Animation.ConditionStopAnimation.OnScaling;
 
                 foreach (EventHandler e in eventHandlers)
                 {
-                    m_eventAnimationFinished += e;
+                    EventAnimationFinished += e;
                 }
 
-                startAnimation();
+                StartAnimation();
             }
 
             /**
             * In this function, the animation will start from the current position, and will bring it to the given position
             **/
-            public void animateMoveToPosition(Vector3 posDest, EventHandler e)
+            public void AnimateMoveToPosition(Vector3 posDest, EventHandler e)
             {
-                m_positionEnd = posDest;
-                m_scalingEnd = gameObject.transform.localScale;
-                m_triggerStopAnimation = Animation.ConditionStopAnimation.OnPositioning;
-                m_eventAnimationFinished += e;
+                PositionEnd = posDest;
+                ScalingEnd = gameObject.transform.localScale;
+                TriggerStopAnimation = Animation.ConditionStopAnimation.OnPositioning;
+                EventAnimationFinished += e;
 
                 gameObject.SetActive(true);
 
-                startAnimation();
+                StartAnimation();
             }
         }
 

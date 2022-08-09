@@ -187,7 +187,7 @@ namespace MATCH
 
                     m_hologramController.closeCube(new EventHandler(delegate (System.Object o, EventArgs e)
                     {
-                        m_hologramView.gameObject.AddComponent<MATCH.Utilities.Animation>().animateDiseappearInPlace(eventHandlers);
+                        m_hologramView.gameObject.AddComponent<MATCH.Utilities.Animation>().AnimateDiseappearInPlace(eventHandlers);
                     }));
                     m_lightView.gameObject.SetActive(false);
                 }

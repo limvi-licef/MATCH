@@ -108,14 +108,14 @@ public class MouseChallengeCleanTableReminderSeveralClocksFixed : MonoBehaviour
             if (clock != (Transform)sender)
             { // We want to hide only the clocks that have not been touched by the sender
                 MATCH.Utilities.Animation animator = clock.gameObject.AddComponent<MATCH.Utilities.Animation>();
-                animator.animateDiseappearInPlace(new EventHandler(delegate (System.Object o, EventArgs ee)
+                animator.AnimateDiseappearInPlace(new EventHandler(delegate (System.Object o, EventArgs ee)
                 {
                     clock.gameObject.SetActive(false);
 
                     // When the clock has diseappeared, make the text appearing, after moving it to the place of the hidden clock
                     m_hologramWindowReminderView.position = clock.position;
                     MATCH.Utilities.Animation animatorText = m_hologramWindowReminderView.gameObject.AddComponent<MATCH.Utilities.Animation>();
-                    animatorText.animateAppearInPlace(MATCH.Utilities.Utility.GetEventHandlerEmpty());
+                    animatorText.AnimateAppearInPlace(MATCH.Utilities.Utility.GetEventHandlerEmpty());
 
                     Destroy(clock.GetComponent<Animation>());
                 }));
@@ -154,7 +154,7 @@ public class MouseChallengeCleanTableReminderSeveralClocksFixed : MonoBehaviour
                 if ( clock.gameObject.activeSelf)
                 {
                     MATCH.Utilities.Animation animator = clock.gameObject.AddComponent<MATCH.Utilities.Animation>();
-                    animator.animateDiseappearInPlace(new EventHandler(delegate (System.Object oo, EventArgs ee)
+                    animator.AnimateDiseappearInPlace(new EventHandler(delegate (System.Object oo, EventArgs ee)
                     {
                         clock.gameObject.SetActive(false);
                         Destroy(clock.GetComponent<Animation>());
@@ -182,7 +182,7 @@ public class MouseChallengeCleanTableReminderSeveralClocksFixed : MonoBehaviour
             }), e };
 
                 MATCH.Utilities.Animation animator = temp.AddComponent<MATCH.Utilities.Animation>();
-                animator.animateDiseappearInPlace(eventHandlers);
+                animator.AnimateDiseappearInPlace(eventHandlers);
             }
             else
             {
@@ -229,7 +229,7 @@ public class MouseChallengeCleanTableReminderSeveralClocksFixed : MonoBehaviour
                     }), eventHandler };
 
                     MATCH.Utilities.Animation anim = clock.gameObject.AddComponent<MATCH.Utilities.Animation>();
-                    anim.animateAppearInPlaceToScaling(clock.gameObject.transform.localScale, eventHandlers);
+                    anim.AnimateAppearInPlaceToScaling(clock.gameObject.transform.localScale, eventHandlers);
                 }
                 i++;
             }
@@ -266,14 +266,14 @@ public class MouseChallengeCleanTableReminderSeveralClocksFixed : MonoBehaviour
             if (clock != clockFollower)
             { // We want to hide only the clocks that have not been touched by the sender
                 MATCH.Utilities.Animation animator = clock.gameObject.AddComponent<MATCH.Utilities.Animation>();
-                animator.animateDiseappearInPlace(new EventHandler(delegate (System.Object oo, EventArgs ee)
+                animator.AnimateDiseappearInPlace(new EventHandler(delegate (System.Object oo, EventArgs ee)
                 {
                     clock.gameObject.SetActive(false);
 
                     // When the clock has diseappeared, make the text appearing, after moving it to the place of the hidden clock
                     m_hologramWindowReminderView.position = clock.position;
                     MATCH.Utilities.Animation animatorText = m_hologramWindowReminderView.gameObject.AddComponent<MATCH.Utilities.Animation>();
-                    animatorText.animateAppearInPlace(MATCH.Utilities.Utility.GetEventHandlerEmpty());
+                    animatorText.AnimateAppearInPlace(MATCH.Utilities.Utility.GetEventHandlerEmpty());
 
                     Destroy(clock.GetComponent<Animation>());
                 }));

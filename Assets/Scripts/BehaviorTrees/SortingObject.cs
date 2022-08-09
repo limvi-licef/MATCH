@@ -66,7 +66,8 @@ namespace MATCH
              * */
 			Assistances.InteractionSurface AssistancesAlphaInteractionSurface;
             Assistances.AssistanceGradationExplicit AssistancesAlphaGradation;
-            
+            Assistances.AssistanceGradationAttention ExclamationMark;
+
             // Start is called before the first frame update
             void Start()
             {
@@ -201,7 +202,7 @@ namespace MATCH
                 BlackboardCondition cDidPersonTakeObject = new BlackboardCondition("PersonGrabbedObject", Operator.IS_EQUAL, true, Stops.IMMEDIATE_RESTART, sePersonTakeObject);
 
                 Sequence sePersonMovedAwayFromObject = new Sequence(
-                    new NPBehave.Action(() => /*AssistancesAlphaGradation.RunAssistance(Utilities.Utility.GetEventHandlerEmpty())*/ AssistancesGradation.ShowOneHideOthers(Assistances.QandDAssistances.Gradation.Epsilon, Utilities.Utility.GetEventHandlerEmpty())),
+                    new NPBehave.Action(() => AssistancesAlphaGradation.RunAssistance(Utilities.Utility.GetEventHandlerEmpty()) /*AssistancesGradation.ShowOneHideOthers(Assistances.QandDAssistances.Gradation.Epsilon, Utilities.Utility.GetEventHandlerEmpty())*/),
                     new WaitUntilStopped());
 
                 BlackboardCondition cDidPersonMoveAwayFromObject = new BlackboardCondition("PersonMovedAwayFromObject", Operator.IS_EQUAL, true, Stops.IMMEDIATE_RESTART, sePersonMovedAwayFromObject);
@@ -252,7 +253,7 @@ namespace MATCH
 
 				// Set assistances
 				// For now we use the assistances from the QandDAssistances class. Uncomment the following line when going to the BT to manage the assistances
-                //InitializeAssistancesAlpha();
+                InitializeAssistancesAlpha();
                 Tree = new Root(Conditions, srBegin);
 
                 //#if UNITY_EDITOR
@@ -271,27 +272,71 @@ namespace MATCH
 
 
                 //Assistances.Basic cube = ;
-                Assistances.AssistanceGradationAttention exclamationMark = new Assistances.AssistanceGradationAttention();
+                //Assistances.AssistanceGradationAttention exclamationMark = new Assistances.AssistanceGradationAttention();
+                /*Assistances.AssistanceGradationAttention exclamationMark*/ ExclamationMark = Assistances.Factory.Instance.CreateAssistanceGradationAttention();
+                //exclamationMark.gameObject.SetActive(true);
 
                 Assistances.Basic cube = Assistances.Factory.Instance.CreateCube("Mouse_Purple_Glowing", AssistancesAlphaInteractionSurface.transform);
+                cube.name = "Alpha_Cube";
                 //exclamationMark.AddAssistance(cube);
-                /*Assistances.IAssistance exclamationMarkPale = */exclamationMark.AddAssistance(new Assistances.Decorators.Material(cube, "Mouse_Exclamation"));
+                /*Assistances.IAssistance exclamationMarkPale = */
+                //ExclamationMark.AddAssistance(new Assistances.Decorators.Material(cube, "Mouse_Exclamation"));
                 //exclamationMark.AddAssistance(Assistances.Decorators.)
-                exclamationMark.AddAssistance(new Assistances.Decorators.Material(cube, "Mouse_Exclamation_Red"));
+                //ExclamationMark.AddAssistance(new Assistances.Decorators.Material(cube, "Mouse_Exclamation_Red"));
+                ExclamationMark.AddAssistance(Assistances.Decorators.Factory.Instance.CreateMaterial(cube, "Mouse_Exclamation"));
 
-                Assistances.AssistanceGradationAttention end = new Assistances.AssistanceGradationAttention();
+                /*cube.EventHelpButtonClicked += delegate (System.Object o, EventArgs e)
+                {
+                    DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Called 1");
+                };*/
+
+                //Assistances.AssistanceGradationAttention end = new Assistances.AssistanceGradationAttention();
+                Assistances.AssistanceGradationAttention end = Assistances.Factory.Instance.CreateAssistanceGradationAttention();
                 end.AddAssistance(Assistances.Factory.Instance.CreateDialogNoButton("", "Ok! We let you do.", AssistancesAlphaInteractionSurface.transform));
 
-                Assistances.AssistanceGradationAttention yesNo1 = new Assistances.AssistanceGradationAttention();
+                //Assistances.AssistanceGradationAttention yesNo1 = new Assistances.AssistanceGradationAttention();
+                Assistances.AssistanceGradationAttention yesNo1 =  Assistances.Factory.Instance.CreateAssistanceGradationAttention();
                 yesNo1.AddAssistance(Assistances.Factory.Instance.CreateDialogNoButton("", "Don't you think there is something to do here?", AssistancesAlphaInteractionSurface.transform));
 
                 AssistancesAlphaGradation = Assistances.Factory.Instance.CreateAssistanceGradationExplicit();
                 AssistancesAlphaGradation.InfManager = InferenceManager;
 
-                AssistancesAlphaGradation.AddButton(exclamationMark, Assistances.Buttons.Button.ButtonType.Yes, yesNo1);
-                AssistancesAlphaGradation.AddButton(exclamationMark, Assistances.Buttons.Button.ButtonType.No, end);
+                AssistancesAlphaGradation.AddButton(ExclamationMark, Assistances.Buttons.Button.ButtonType.Yes, yesNo1);
+                AssistancesAlphaGradation.AddButton(ExclamationMark, Assistances.Buttons.Button.ButtonType.No, end);
                 //AssistancesAlphaGradation.AddButton(yesNo1, Assistances.Buttons.Button.ButtonType.Undefined, null);
-		    }
+
+                // Callbacks to have the state machine working
+                /*cube.EventHelpButtonClicked += delegate (System.Object o, EventArgs e)
+                {
+                    MATCH.Utilities.EventHandlerArgs.Button args = (MATCH.Utilities.EventHandlerArgs.Button)e;
+                    DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Button " + args.ButtonType.ToString() + " Clicked");
+
+                    if (args.ButtonType == Assistances.Buttons.Button.ButtonType.No)
+                    {
+                        cube.Hide(delegate (System.Object oo, EventArgs ee)
+                        {
+                            end.ShowMinimalGradation(MATCH.Utilities.Utility.GetEventHandlerEmpty());
+                        });
+                    }
+                    else
+                    {
+                        cube.Hide(delegate (System.Object oo, EventArgs ee)
+                        {
+                            yesNo1.ShowMinimalGradation(MATCH.Utilities.Utility.GetEventHandlerEmpty());
+                        });
+
+                    }
+                };*/
+
+                /*if (exclamationMark.gameObject.activeSelf)
+                {
+                    DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Exclamation mark object active");
+                }
+                else
+                {
+                    DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Exclamation mark object NOT active");
+                }*/
+            }
 
 			void RegisterInferenceComing()
             {
@@ -389,7 +434,7 @@ namespace MATCH
 
             void CallbackPersonCloseToObject(System.Object o, EventArgs e)
             {
-                DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Person close to object");
+                //DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Person close to object");
                 Conditions["PersonCloseToObject"] = true;
 				Conditions["PersonDidNotComeToObject"] = false;
                 Conditions["PersonMovedAwayFromObject"] = false;
@@ -401,7 +446,7 @@ namespace MATCH
                 if (ObjectDetected)
                 {
                     RegisterInferenceComing();
-                    DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "User passed by object");
+                    //DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "User passed by object");
                     Conditions["PersonMovedAwayFromObject"] = true;
 					Conditions["PersonCloseToObject"] = false;
 

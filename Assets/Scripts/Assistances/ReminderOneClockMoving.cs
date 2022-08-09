@@ -224,7 +224,7 @@ namespace MATCH
 
                     MATCH.Utilities.Animation animator = m_clockView.gameObject.AddComponent<MATCH.Utilities.Animation>();
 
-                    animator.animateAppearInPlaceToScaling(m_clockScalingOriginal, new EventHandler(delegate (System.Object oo, EventArgs ee)
+                    animator.AnimateAppearInPlaceToScaling(m_clockScalingOriginal, new EventHandler(delegate (System.Object oo, EventArgs ee)
                     {
                         eventHandler?.Invoke(this, EventArgs.Empty);
 

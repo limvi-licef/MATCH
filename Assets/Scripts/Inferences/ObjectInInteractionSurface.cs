@@ -28,9 +28,9 @@ namespace MATCH
     {
         public class ObjectInInteractionSurface : Inference
         {
-            Assistances.InteractionSurface m_surface;
+            readonly Assistances.InteractionSurface m_surface;
             Utilities.PhysicalObjectInformation m_objectdetected;
-            BoxCollider m_Collider;
+            readonly BoxCollider m_Collider;
 
             /**
              * id: name of the inference

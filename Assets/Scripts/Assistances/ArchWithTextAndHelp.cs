@@ -113,7 +113,7 @@ namespace MATCH
 
                         MATCH.Utilities.Utility.AdjustObjectHeightToHeadHeight(m_hologramHelp);
 
-                        m_hologramHelp.gameObject.AddComponent<MATCH.Utilities.Animation>().animateAppearInPlaceToScaling(new Vector3(0.1f, 0.1f, 0.1f), temp);
+                        m_hologramHelp.gameObject.AddComponent<MATCH.Utilities.Animation>().AnimateAppearInPlaceToScaling(new Vector3(0.1f, 0.1f, 0.1f), temp);
                     });
                 }
                 else

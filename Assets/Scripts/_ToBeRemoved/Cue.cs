@@ -72,13 +72,13 @@ namespace MATCH
 
                         MATCH.Utilities.Utility.AdjustObjectHeightToHeadHeight(transform);
 
-                        m_text.gameObject.AddComponent<MATCH.Utilities.Animation>().animateAppearInPlace(new EventHandler(delegate (System.Object o, EventArgs e) {
+                        m_text.gameObject.AddComponent<MATCH.Utilities.Animation>().AnimateAppearInPlace(new EventHandler(delegate (System.Object o, EventArgs e) {
                             EventHandler[] temp = new EventHandler[] {new EventHandler(delegate (System.Object oo, EventArgs ee) {
                     Destroy(m_button.gameObject.GetComponent<MATCH.Utilities.Animation>());
                     m_mutexShow = false;
             }), eventHandler };
 
-                            m_button.gameObject.AddComponent<MATCH.Utilities.Animation>().animateAppearInPlace(temp);
+                            m_button.gameObject.AddComponent<MATCH.Utilities.Animation>().AnimateAppearInPlace(temp);
 
                             Destroy(m_text.gameObject.GetComponent<MATCH.Utilities.Animation>());
                         }));
@@ -93,13 +93,13 @@ namespace MATCH
                     {
                         m_mutexHide = true;
 
-                        m_text.gameObject.AddComponent<MATCH.Utilities.Animation>().animateDiseappearInPlace(new EventHandler(delegate (System.Object o, EventArgs e) {
+                        m_text.gameObject.AddComponent<MATCH.Utilities.Animation>().AnimateDiseappearInPlace(new EventHandler(delegate (System.Object o, EventArgs e) {
                             EventHandler[] temp = new EventHandler[] {new EventHandler(delegate (System.Object oo, EventArgs ee) {
                     Destroy(m_button.gameObject.GetComponent<MATCH.Utilities.Animation>());
                     m_mutexHide = false;
             }), eventHandler };
 
-                            m_button.gameObject.AddComponent<MATCH.Utilities.Animation>().animateDiseappearToPosition(m_button.position, temp);
+                            m_button.gameObject.AddComponent<MATCH.Utilities.Animation>().AnimateDiseappearToPosition(m_button.position, temp);
 
                             Destroy(m_text.gameObject.GetComponent<Animation>());
                         }));

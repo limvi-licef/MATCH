@@ -31,8 +31,8 @@ namespace MATCH
 
             protected void OnHelpButtonClicked(Assistances.Buttons.Button.ButtonType type)
             {
-                DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "EventHelpButtonClicked is going to be triggered for assistance " + name);
-                MATCH.Utilities.EventHandlerArgs.Button args = new Utilities.EventHandlerArgs.Button();
+                //DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "EventHelpButtonClicked is going to be triggered for assistance " + name);
+                MATCH.Utilities.EventHandlerArgs.Button args = new MATCH.Utilities.EventHandlerArgs.Button();
                 args.ButtonType = type;
 
                 EventHelpButtonClicked?.Invoke(this, args);
@@ -56,7 +56,7 @@ namespace MATCH
              * */
             protected void CButtonHelp(System.Object o, EventArgs e)
             {
-                //DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Button clicked");
+                DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Button clicked");
                 Utilities.EventHandlerArgs.Button args = (Utilities.EventHandlerArgs.Button)e;
 
                 OnHelpButtonClicked(args.ButtonType);

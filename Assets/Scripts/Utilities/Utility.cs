@@ -100,7 +100,7 @@ namespace MATCH
             {
                 if (gameObject.activeSelf)
                 {
-                    gameObject.AddComponent<Animation>().animateDiseappearInPlace(new EventHandler(delegate (System.Object o, EventArgs e)
+                    gameObject.AddComponent<Animation>().AnimateDiseappearInPlace(new EventHandler(delegate (System.Object o, EventArgs e)
                     {
                         UnityEngine.Object.Destroy(gameObject.GetComponent<Animation>());
 
@@ -119,7 +119,7 @@ namespace MATCH
             public static void AnimateAppearInPlace(GameObject gameObject, EventHandler eventHandler)
             {
                 gameObject.SetActive(true);
-                gameObject.AddComponent<MATCH.Utilities.Animation>().animateAppearInPlace(new EventHandler(delegate (System.Object o, EventArgs e)
+                gameObject.AddComponent<MATCH.Utilities.Animation>().AnimateAppearInPlace(new EventHandler(delegate (System.Object o, EventArgs e)
                 {
                     UnityEngine.Object.Destroy(gameObject.GetComponent<Animation>());
 
@@ -137,11 +137,11 @@ namespace MATCH
 
                 Animation animator = gameObject.AddComponent<Animation>();
 
-                animator.m_scalingstep.x = scaling.x / 50.0f;
-                animator.m_scalingstep.y = scaling.y / 50.0f;
-                animator.m_scalingstep.z = scaling.z / 50.0f;
+                animator.Scalingstep.x = scaling.x / 50.0f;
+                animator.Scalingstep.y = scaling.y / 50.0f;
+                animator.Scalingstep.z = scaling.z / 50.0f;
 
-                animator.animateAppearInPlaceToScaling(scaling, delegate
+                animator.AnimateAppearInPlaceToScaling(scaling, delegate
                 {
                     UnityEngine.Object.Destroy(gameObject.GetComponent<Animation>());
 

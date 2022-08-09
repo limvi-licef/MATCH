@@ -30,7 +30,7 @@ namespace MATCH
                 private static Factory InstanceInternal;
                 public static Factory Instance { get { return InstanceInternal; } }
 
-                
+                public MATCH.Assistances.Decorators.Material RefMaterial;
 
                 private void Awake()
                 {
@@ -48,6 +48,17 @@ namespace MATCH
                 {
 
                     return null;
+                }
+
+                public MATCH.Assistances.Assistance CreateMaterial(MATCH.Assistances.IBasic toDecorate, string material)
+                {
+                    Transform view = Instantiate(RefMaterial.transform);
+
+                    MATCH.Assistances.Decorators.Material controller = view.gameObject.GetComponent<MATCH.Assistances.Decorators.Material>();
+                    controller.SetAssistanceToDecorate(toDecorate);
+                    controller.SetMaterial(material);
+
+                    return controller;
                 }
             }
         }

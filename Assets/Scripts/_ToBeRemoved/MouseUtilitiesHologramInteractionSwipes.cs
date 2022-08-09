@@ -169,8 +169,8 @@ public class MouseUtilitiesHologramInteractionSwipes : MonoBehaviour
 
         // Prepare parent's animator, i.e. connect the callback. For the initialization of the different parameters, will be done when required during the process
         MATCH.Utilities.Animation animatorParent = gameObject.AddComponent<MATCH.Utilities.Animation>();
-        animatorParent.m_animationSpeed = 1.0f;
-        animatorParent.m_triggerStopAnimation = MATCH.Utilities.Animation.ConditionStopAnimation.OnPositioning;
+        animatorParent.AnimationSpeed = 1.0f;
+        animatorParent.TriggerStopAnimation = MATCH.Utilities.Animation.ConditionStopAnimation.OnPositioning;
 
         // Computation of the coefficients for the transparency management
         m_transparencyManagementLinearFunctionCoefficientA = (m_transparencyManagementMin - m_transparencyManagementMax) / (m_distanceToDisplayInteractionsHolograms - m_transparencyManagementDistanceMin);
@@ -277,13 +277,13 @@ public class MouseUtilitiesHologramInteractionSwipes : MonoBehaviour
 
             // Start the animation: be careful, the animation run on another object, so some processes will run on the callback called by the dedicated object when the animation is finished
             MATCH.Utilities.Animation animatorParent = gameObject.GetComponent<MATCH.Utilities.Animation>();
-            animatorParent.m_positionEnd = m_ParentOrigin;
-            animatorParent.m_triggerStopAnimation = MATCH.Utilities.Animation.ConditionStopAnimation.OnPositioning;
-            animatorParent.m_scalingEnd = gameObject.transform.localScale;
+            animatorParent.PositionEnd = m_ParentOrigin;
+            animatorParent.TriggerStopAnimation = MATCH.Utilities.Animation.ConditionStopAnimation.OnPositioning;
+            animatorParent.ScalingEnd = gameObject.transform.localScale;
 
             m_objectStatus = InteractionState.InteractionStateParentAnimationOngoing;
 
-            animatorParent.startAnimation();
+            animatorParent.StartAnimation();
         }
         else if (m_objectStatus == InteractionState.InteractionStateParentAnimationOngoing)
         {
@@ -309,35 +309,35 @@ public class MouseUtilitiesHologramInteractionSwipes : MonoBehaviour
             interactionHologramsAnimations(3.0f, new Vector3(0.001f, 0.001f, 0.001f), 0.01f);
 
             MATCH.Utilities.Animation animatorParent = gameObject.GetComponent<MATCH.Utilities.Animation>();
-            animatorParent.m_triggerStopAnimation = MATCH.Utilities.Animation.ConditionStopAnimation.OnScaling;
-            animatorParent.m_scalingEnd = new Vector3(0.001f, 0.001f, 0.001f);
-            animatorParent.m_animationSpeed = 3.0f;
-            animatorParent.m_scalingstep.x = 0.01f;
-            animatorParent.m_scalingstep.y = 0.01f;
-            animatorParent.m_scalingstep.z = 0.01f;
+            animatorParent.TriggerStopAnimation = MATCH.Utilities.Animation.ConditionStopAnimation.OnScaling;
+            animatorParent.ScalingEnd = new Vector3(0.001f, 0.001f, 0.001f);
+            animatorParent.AnimationSpeed = 3.0f;
+            animatorParent.Scalingstep.x = 0.01f;
+            animatorParent.Scalingstep.y = 0.01f;
+            animatorParent.Scalingstep.z = 0.01f;
 
             // Start the animations
             interactionHologramStartAnimation();
-            animatorParent.startAnimation();
+            animatorParent.StartAnimation();
 
             if (m_objectStatus == InteractionState.InteractionStateParentHitNok)
             {
-                animatorParent.m_positionEnd = m_hologramNok.getPositionWorld();
+                animatorParent.PositionEnd = m_hologramNok.getPositionWorld();
                 m_hologramNok.setTouched(true);
             }
             else if (m_objectStatus == InteractionState.InteractionStateParentHitOk)
             {
-                animatorParent.m_positionEnd = m_hologramOk.getPositionWorld();
+                animatorParent.PositionEnd = m_hologramOk.getPositionWorld();
                 m_hologramOk.setTouched(true);
             }
             else if (m_objectStatus == InteractionState.InteractionStateParentHitHelp)
             {
-                animatorParent.m_positionEnd = m_hologramHelp.getPositionWorld();
+                animatorParent.PositionEnd = m_hologramHelp.getPositionWorld();
                 m_hologramHelp.setTouched(true);
             }
             else if (m_objectStatus == InteractionState.InteractionStateParentHitReminder)
             {
-                animatorParent.m_positionEnd = m_hologramReminder.getPositionWorld();
+                animatorParent.PositionEnd = m_hologramReminder.getPositionWorld();
                 m_hologramReminder.setTouched(true);
             }
 
@@ -845,13 +845,13 @@ public class MouseUtilitiesInteractionHologram
     public void addAnimationComponent(float animationSpeed, Vector3 scalingEnd, float scalingStep)
     {
         MATCH.Utilities.Animation animator = m_hologram.AddComponent<MATCH.Utilities.Animation>();
-        animator.m_triggerStopAnimation = MATCH.Utilities.Animation.ConditionStopAnimation.OnScaling;
-        animator.m_positionEnd = m_hologram.transform.position;
-        animator.m_scalingEnd = scalingEnd;
-        animator.m_animationSpeed = animationSpeed;
-        animator.m_scalingstep.x = scalingStep;
-        animator.m_scalingstep.y = scalingStep;
-        animator.m_scalingstep.z = scalingStep;
+        animator.TriggerStopAnimation = MATCH.Utilities.Animation.ConditionStopAnimation.OnScaling;
+        animator.PositionEnd = m_hologram.transform.position;
+        animator.ScalingEnd = scalingEnd;
+        animator.AnimationSpeed = animationSpeed;
+        animator.Scalingstep.x = scalingStep;
+        animator.Scalingstep.y = scalingStep;
+        animator.Scalingstep.z = scalingStep;
     }
 
     /*
@@ -865,7 +865,7 @@ public class MouseUtilitiesInteractionHologram
 
         if (animator != null)
         {
-            animator.startAnimation();
+            animator.StartAnimation();
             toReturn = true;
         }
         else

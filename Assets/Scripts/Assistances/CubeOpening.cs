@@ -101,13 +101,13 @@ namespace MATCH
                 Vector3 worldDestPosLeftPart = gameObject.transform.TransformPoint(new Vector3(0.75f, 0.5f, 0f));
                 Vector3 worldDestPosRightPart = gameObject.transform.TransformPoint(new Vector3(-0.75f, 0.5f, 0f));
                 MATCH.Utilities.Animation animatorLeftPart = m_cubeTopLeftPartView.gameObject.AddComponent<MATCH.Utilities.Animation>();
-                animatorLeftPart.m_animationSpeed = 0.5f;
+                animatorLeftPart.AnimationSpeed = 0.5f;
                 MATCH.Utilities.Animation animatorRightPart = m_cubeTopRightPartView.gameObject.AddComponent<MATCH.Utilities.Animation>();
-                animatorRightPart.m_animationSpeed = 0.5f;
+                animatorRightPart.AnimationSpeed = 0.5f;
 
 
-                animatorLeftPart.animateMoveToPosition(worldDestPosLeftPart, MATCH.Utilities.Utility.GetEventHandlerEmpty());
-                animatorRightPart.animateMoveToPosition(worldDestPosRightPart, new EventHandler(delegate (System.Object o, EventArgs e) { callback?.Invoke(this, EventArgs.Empty); }));
+                animatorLeftPart.AnimateMoveToPosition(worldDestPosLeftPart, MATCH.Utilities.Utility.GetEventHandlerEmpty());
+                animatorRightPart.AnimateMoveToPosition(worldDestPosRightPart, new EventHandler(delegate (System.Object o, EventArgs e) { callback?.Invoke(this, EventArgs.Empty); }));
             }
 
             public void closeCube(EventHandler callback)
@@ -126,13 +126,13 @@ namespace MATCH
                     Vector3 worldDestPosLeftPart = gameObject.transform.TransformPoint(new Vector3(0.25f, 0.5f, 0f));
                     Vector3 worldDestPosRightPart = gameObject.transform.TransformPoint(new Vector3(-0.25f, 0.5f, 0f));
                     MATCH.Utilities.Animation animatorLeftPart = m_cubeTopLeftPartView.gameObject.AddComponent<MATCH.Utilities.Animation>();
-                    animatorLeftPart.m_animationSpeed = 0.5f;
+                    animatorLeftPart.AnimationSpeed = 0.5f;
                     MATCH.Utilities.Animation animatorRightPart = m_cubeTopRightPartView.gameObject.AddComponent<MATCH.Utilities.Animation>();
-                    animatorRightPart.m_animationSpeed = 0.5f;
+                    animatorRightPart.AnimationSpeed = 0.5f;
 
 
-                    animatorLeftPart.animateMoveToPosition(worldDestPosLeftPart, MATCH.Utilities.Utility.GetEventHandlerEmpty());
-                    animatorRightPart.animateMoveToPosition(worldDestPosRightPart, new EventHandler(delegate (System.Object o, EventArgs e) {
+                    animatorLeftPart.AnimateMoveToPosition(worldDestPosLeftPart, MATCH.Utilities.Utility.GetEventHandlerEmpty());
+                    animatorRightPart.AnimateMoveToPosition(worldDestPosRightPart, new EventHandler(delegate (System.Object o, EventArgs e) {
                         MATCH.DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, MATCH.DebugMessagesManager.MessageLevel.Info, "Cube closed ");
                         callback?.Invoke(this, EventArgs.Empty);
                         m_mutexClosingOngoing = false; // Process finished: unlocking the mutex

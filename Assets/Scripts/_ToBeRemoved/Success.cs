@@ -58,7 +58,7 @@ namespace MATCH
 
                     DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Target scaling: " + transform.localScale.ToString());
 
-                    animator.animateAppearInPlaceToScaling(transform.localScale, eventHandlers);
+                    animator.AnimateAppearInPlaceToScaling(transform.localScale, eventHandlers);
                 }
                 else
                 {
@@ -82,7 +82,7 @@ namespace MATCH
                    Destroy(GetComponent<Animation>());
                }), eventHandler };
 
-                    gameObject.AddComponent<Utilities.Animation>().animateDiseappearInPlace(eventHandlers);
+                    gameObject.AddComponent<Utilities.Animation>().AnimateDiseappearInPlace(eventHandlers);
                 }
                 else
                 {
