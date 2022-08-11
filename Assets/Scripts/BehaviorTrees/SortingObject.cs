@@ -68,6 +68,7 @@ namespace MATCH
             Assistances.AssistanceGradationExplicit AssistancesAlphaGradation;
             Assistances.AssistanceGradationAttention ExclamationMark;
 
+
             // Start is called before the first frame update
             void Start()
             {
@@ -279,16 +280,24 @@ namespace MATCH
 
                 Assistances.AssistanceGradationAttention yesNo1 =  Assistances.Factory.Instance.CreateAssistanceGradationAttention("AssistanceGradationYesNo1");
                 //Assistances.Dialog yesNo1Base = Assistances.Factory.Instance.CreateDialogNoButton("", "Don't you think there is something to do here?", AssistancesAlphaInteractionSurface.transform);
+
+                /*Assistances.Basic cube2 = Assistances.Factory.Instance.CreateCube(Utilities.Materials.Colors.PurpleGlowing, AssistancesAlphaInteractionSurface.transform);
+                cube.name = "Alpha_Cube2";
+                yesNo1.AddAssistance(Assistances.Decorators.Factory.Instance.CreateMaterial(cube2, Utilities.Materials.Textures.Flower));
+                yesNo1.AddAssistance(Assistances.Decorators.Factory.Instance.CreateMaterial(cube2, Utilities.Materials.Textures.FlowerPressed));*/
+
                 Assistances.Dialog yesNo1Base = Assistances.Factory.Instance.CreateDialogTwoButtons("", "Don't you think there is something to do here?", "Yes", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.Yes, "No", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.No, AssistancesAlphaInteractionSurface.transform);
                 yesNo1Base.name = "Alpha_YesNo1";
                 yesNo1.AddAssistance(Assistances.Decorators.Factory.Instance.CreateBackground(yesNo1Base, Utilities.Materials.Colors.CyanGlowing));
                 yesNo1.AddAssistance(Assistances.Decorators.Factory.Instance.CreateBackground(yesNo1Base, Utilities.Materials.Colors.OrangeGlowing));
+                 
 
                 AssistancesAlphaGradation = Assistances.Factory.Instance.CreateAssistanceGradationExplicit("AssistanceGradationExplicitSortingObject");
                 AssistancesAlphaGradation.InfManager = InferenceManager;
 
                 AssistancesAlphaGradation.AddButton(ExclamationMark, Assistances.Buttons.Button.ButtonType.Yes, yesNo1);
                 AssistancesAlphaGradation.AddButton(ExclamationMark, Assistances.Buttons.Button.ButtonType.No, end);
+
                 //AssistancesAlphaGradation.AddButton(yesNo1, Assistances.Buttons.Button.ButtonType.Undefined, null);
 
                 // Callbacks to have the state machine working

@@ -44,7 +44,6 @@ namespace MATCH
                 Pause = 2
             }
 
-            //private List<AssistanceGradationAttention> AssistancesGradation;
             private Assistances.StateMachine AssistancesGradation;
             int CurrentAssistanceIndex; // Index in the list AssistancesGradation
 
@@ -55,7 +54,6 @@ namespace MATCH
             private void Awake()
             {
                 AssistancesGradation = null;
-                //AssistancesGradation = new List<AssistanceGradationAttention>();
                 InfTimer2Minutes = new Inferences.Timer("AssistanceGradationExplicitTimer", 10, CallbackInterenceTimer);
 
                 ArgsOnHelpButtonClicked = null;
@@ -65,7 +63,7 @@ namespace MATCH
             {
 
                 InfManager.RegisterInference(InfTimer2Minutes);
-                InitializeInference30Seconds();
+                //InitializeInference30Seconds();
 
                 Status = AssistanceStatus.Stop;
                 CurrentAssistanceIndex = -1; // Means the process did not started yet
@@ -73,7 +71,6 @@ namespace MATCH
                 InfFocusedOnAssistance = null; // Use InitializeInfereneFocusedAssistance to initialize it
                 InfFocusLost = null;
                 InfIsClose = null;
-                //InfTimer30Seconds = null;
 
                 // Initialize the BT
                 Conditions = new NPBehave.Blackboard(UnityContext.GetClock());
@@ -84,8 +81,7 @@ namespace MATCH
                     new NPBehave.Action(() => DisplayHelpButtons()),
                     new NPBehave.WaitUntilStopped()
                     );
-                BlackboardCondition cIsWaitingSince30sec = new BlackboardCondition("WaitingSince30Seconds", Operator.IS_EQUAL, true, Stops.IMMEDIATE_RESTART, /*new NPBehave.Action(() => Debug.Log("Wait since 30 seconds"))*/ seIsWaitingSince30sec);
-
+                BlackboardCondition cIsWaitingSince30sec = new BlackboardCondition("WaitingSince30Seconds", Operator.IS_EQUAL, true, Stops.IMMEDIATE_RESTART, seIsWaitingSince30sec);
                 // seIsWaitingSince30sec - end
 
                 // seIsHelpClicked - begin
@@ -116,8 +112,8 @@ namespace MATCH
 
                 Selector srFocused = new Selector(
                     cIsHelpClicked,
-                    cIsWaitingSince30sec,
                     cIsNotMininal,
+                    cIsWaitingSince30sec,
                     cIsFar
                     );
                 // srFocused - end
@@ -146,8 +142,8 @@ namespace MATCH
 
                 // seBegin - begin
                 Selector srBegin = new Selector(
-                    cIsDisplayed, //srIsDisplayed,
-                    cIsFocused, //seIsFocused,
+                    cIsDisplayed,
+                    cIsFocused,
                     seIsDisplayedSince2Minutes
                     );
                 // seBegin - end
@@ -164,7 +160,7 @@ namespace MATCH
 
                 Conditions["IsDisplayed"] = false;
                 Conditions["IsFocused"] = false;
-                Conditions["HelpButtonDisplayed"] = false;
+                //Conditions["HelpButtonDisplayed"] = false;
                 Conditions["HelpClicked"] = false;
                 Conditions["DisplayedSince2Minutes"] = false;
                 Conditions["IsFar"] = true; // By default it is supposed the person is far from the object. If this is not the case, an inference will correct this.
@@ -184,7 +180,6 @@ namespace MATCH
                 {
                     //The next assistance will be shown automatically when resetting the conditions
                     ResetConditions();
-                    //next.ShowMinimalGradation(Utilities.Utility.GetEventHandlerEmpty());
                 });
             }
 
@@ -199,19 +194,19 @@ namespace MATCH
                 InitializeInferenceFocusedAssistance(CurrentAssistanceIndex);
 
                 InfTimer2Minutes.StartCounter();
-                //DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Timer 2 minutes started");
             }
 
             private void CallbackInterenceTimer(System.Object o, EventArgs e)
             {
                 Conditions["DisplayedSince2Minutes"] = true;
-                
-                //DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Timer 2 minutes called");
             }
 
             /**
              * Is done for the current assistance
              * */
+
+            //Inferences.ObjectFocused TempInf;
+            Inferences.ObjectFocused TempInf;
             private void IncreaseAttentionGrabbingGradation()
             {
                 Conditions["DisplayedSince2Minutes"] = false; // The timer is going to be restarted, so the condition is not true anymore.
@@ -224,7 +219,8 @@ namespace MATCH
                 }
                 else
                 {
-                    DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Maximum gradation for attention grabbing shown");
+                    Assistance currentAssistance = AssistancesGradation.AssistanceCurrent.GetCurrentAssistance();
+                    DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Maximum gradation for attention grabbing shown for " + currentAssistance.name);
                 }
 
 
@@ -255,14 +251,13 @@ namespace MATCH
                 }
 
                 AssistancesGradation.AddButton(assistance, type, ref assistanceTarget);
-                //AssistancesGradation.Add(assistance);
             }
 
             public void DisplayHelpButtons()
             {
                 DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Assistance focused for 30 seconds");
-                Conditions["IsFocused"] = false;
-                Conditions["WaitingSince30Seconds"] = false;
+                //Conditions["IsFocused"] = false;
+                //Conditions["WaitingSince30Seconds"] = false;
 
                 AssistancesGradation.AssistanceCurrent.ShowHelpCurrentGradation(true, Utilities.Utility.GetEventHandlerEmpty());
             }
@@ -296,15 +291,17 @@ namespace MATCH
 
             private void InitializeInferenceFocusedAssistance(int indexAssistanceToMonitor)
             {
+                GameObject currentAssistance = AssistancesGradation.AssistanceCurrent.GetCurrentAssistance().GetTransform().gameObject;
+
+                DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Going to initialize the focus assistance for " + currentAssistance.name);
+
                 if (InfFocusedOnAssistance != null)
                 {
                     InfManager.UnregisterInference(InfFocusedOnAssistance);
                     InfFocusedOnAssistance = null;
                 }
 
-                //Debug.Log("Object name: " + AssistancesGradation[indexAssistanceToMonitor].GetCurrentAssistance().GetTransform().gameObject.name);
-
-                InfFocusedOnAssistance = new Inferences.ObjectFocused("AssistanceFocus", CallbackAssistanceFocused, AssistancesGradation.AssistanceCurrent.GetCurrentAssistance().GetTransform().gameObject, 3);
+                InfFocusedOnAssistance = new Inferences.ObjectFocused("AssistanceFocus", CallbackAssistanceFocused, currentAssistance, 3);
                 InfManager.RegisterInference(InfFocusedOnAssistance);
             }
 
@@ -320,7 +317,7 @@ namespace MATCH
                 InfManager.RegisterInference(InfFocusLost);
             }
 
-            private void InitializeInfDistance(int indexAssistanceToMonitor)
+            private void InitializeInfIsClose(int indexAssistanceToMonitor)
             {
                 GameObject currentAssistance = AssistancesGradation.AssistanceCurrent.GetCurrentAssistance().GetTransform().gameObject;
 
@@ -332,6 +329,11 @@ namespace MATCH
 
                 InfIsClose = new Inferences.DistanceComing("InferenceCloseToObject", CInfClose, currentAssistance, 1.5f);
                 InfManager.RegisterInference(InfIsClose);
+            }
+
+            private void InitializeInfIsFar(int indexAssistanceToMonitor)
+            {
+                GameObject currentAssistance = AssistancesGradation.AssistanceCurrent.GetCurrentAssistance().GetTransform().gameObject;
 
                 if (InfIsFar != null)
                 {
@@ -353,12 +355,13 @@ namespace MATCH
 
                 InfTimer30Seconds = new Inferences.Timer("Inf30Seconds", 5, CallbackInf30Seconds);
                 InfManager.RegisterInference(InfTimer30Seconds);
+                InfTimer30Seconds.StartCounter();
             }
 
             private void CallbackInf30Seconds(System.Object o, EventArgs e)
             {
+                DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Timer 30 seconds called");
                 Conditions["WaitingSince30Seconds"] = true;
-                //DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Timer 30 seconds called");
             }
 
             private void CInfClose (System.Object o, EventArgs e)
@@ -366,62 +369,57 @@ namespace MATCH
                 Conditions["IsFar"] = false;
 
                 // Means the person is close to the object: consequently, some inferences are not necessary
-                InfManager.UnregisterInference(InfTimer30Seconds);
+                //InfManager.UnregisterInference(InfTimer30Seconds);
+                InfManager.UnregisterInference(InfIsClose);
+                InitializeInfIsFar(CurrentAssistanceIndex);
+                //InitializeInfDistance
+                InitializeInference30Seconds();
             }
 
             private void CInfIsFar(System.Object o, EventArgs e)
             {
                 Conditions["IsFar"] = true;
 
+                InfManager.UnregisterInference(InfIsFar);
+                InitializeInfIsClose(CurrentAssistanceIndex);
+
                 // Far: initializing inferences
-                //if (InfManager.Con)
-                InitializeInference30Seconds();
+                //InitializeInference30Seconds();
             }
 
             private void CallbackInferenceLostFocus(System.Object o, EventArgs e)
             {
-                Conditions["IsFocused"] = false;
+                /*Conditions["IsFocused"] = false;
                 InfTimer2Minutes.StartCounter();
-                //DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Object lost focus");
-                //DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Timer 2 minutes called");
                 InfManager.UnregisterInference(InfFocusLost);
                 InfManager.UnregisterInference(InfIsClose);
-                InfTimer30Seconds.StopCounter();
+                InfTimer30Seconds.StopCounter();*/
             }
 
             private void CallbackAssistanceFocused(System.Object o, EventArgs e)
             {
-                //DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Object focused for 3 seconds");
-
                 Conditions["IsFocused"] = true;
                 Conditions["DisplayedSince2Minutes"] = false;
                 InfTimer2Minutes.StopCounter();
-                //DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Timer 2 minutes stopped");
                 InfManager.UnregisterInference(InfFocusedOnAssistance);
                 InfManager.UnregisterInference(InfFocusLost);
                 InfManager.UnregisterInference(InfIsClose);
-                InfManager.UnregisterInference(InfIsFar);
-                //InitializeInferenceLostFocus(CurrentAssistanceIndex);
-                //InitializeInfDistance(CurrentAssistanceIndex);
-                
-                InfTimer30Seconds.StartCounter();
+                InfManager.UnregisterInference(InfIsFar);                
+                //InfTimer30Seconds.StartCounter();
             }
 
             private void CAssistanceDisplayed(System.Object o, EventArgs e)
             {
                 InitializeInferenceFocusedAssistance(CurrentAssistanceIndex);
                 InitializeInferenceLostFocus(CurrentAssistanceIndex);
-                InitializeInfDistance(CurrentAssistanceIndex);
+                InitializeInfIsClose(CurrentAssistanceIndex);
+                InitializeInfIsFar(CurrentAssistanceIndex);
             }
 
             private void CallbackClickOnButton(System.Object o, EventArgs e)
             {
-                //DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "A button has been clicked");
-
-                Conditions["HelpButtonDisplayed"] = true;
-
+                //Conditions["HelpButtonDisplayed"] = true;
                 InfTimer30Seconds.StopCounter();
-
             }
         }
     }
