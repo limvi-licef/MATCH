@@ -31,6 +31,7 @@ namespace MATCH
                 public static Factory Instance { get { return InstanceInternal; } }
 
                 public MATCH.Assistances.Decorators.Material RefMaterial;
+                public MATCH.Assistances.Decorators.BackgroundColor RefBackgroundColor;
 
                 private void Awake()
                 {
@@ -44,21 +45,34 @@ namespace MATCH
                     }
                 }
 
-                GameObject CreateBackgroundColor (MATCH.Assistances.IPanel panelToDecorate)
+                public MATCH.Assistances.Assistance CreateBackground (MATCH.Assistances.IPanel panelToDecorate, string background)
                 {
+                    Transform view = Instantiate(Utilities.Materials.Prefabs.Load(Utilities.Materials.Prefabs.DecoratorBackgroundColor));
+                    view.name = ((Assistance)panelToDecorate).name;
 
-                    return null;
+                    Assistances.Decorators.BackgroundColor controller = view.gameObject.GetComponent<Assistances.Decorators.BackgroundColor>();
+
+                    controller.SetAssistanceToDecorate(panelToDecorate);
+                    controller.SetBackgroundColor(background);
+
+                    return controller;
                 }
 
                 public MATCH.Assistances.Assistance CreateMaterial(MATCH.Assistances.IBasic toDecorate, string material)
                 {
                     Transform view = Instantiate(RefMaterial.transform);
+                    view.name = ((Assistance)toDecorate).name;
 
                     MATCH.Assistances.Decorators.Material controller = view.gameObject.GetComponent<MATCH.Assistances.Decorators.Material>();
                     controller.SetAssistanceToDecorate(toDecorate);
                     controller.SetMaterial(material);
 
                     return controller;
+                }
+
+                public MATCH.Assistances.Assistance CreateEdge(MATCH.Assistances.IPanel toDecorate, string edgeMaterial)
+                {
+                    return null;
                 }
             }
         }

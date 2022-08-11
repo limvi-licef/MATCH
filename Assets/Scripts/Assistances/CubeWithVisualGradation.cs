@@ -31,129 +31,130 @@ namespace MATCH
     {
         public class CubeWithVisualGradation : Assistance
         {
-            public Transform m_hologramView;
-            CubeOpening m_hologramController;
-            Vector3 m_hologramOriginalLocalPos;
+            public Transform HologramView;
+            CubeOpening HologramController;
+            Vector3 HologramOriginalLocalPos;
 
-            Transform m_lightView;
+            Transform LightView;
             //Light m_lightController;
 
-            FiniteStateMachine.VisualGradationManager m_gradationManager;
+            FiniteStateMachine.VisualGradationManager GradationManager;
 
-            public Transform m_surfaceWithStarsView;
-            public Transform m_surfaceWithStarsViewTarget; // If provided, allows to adjust the size of the stars to the size of this surface
+            public Transform SurfaceWithStarsView;
+            public Transform SurfaceWithStarsViewTarget; // If provided, allows to adjust the size of the stars to the size of this surface
 
-            public Transform m_help;
+            public Transform Help;
 
-            public EventHandler m_eventHologramStimulateLevel1Gradation1Or2Touched;
+            public EventHandler EventHologramStimulateLevel1Gradation1Or2Touched;
 
-            public AudioClip m_audioClipToPlayOnTouchInteractionSurface;
-            public AudioListener m_audioListener;
+            public AudioClip AudioClipToPlayOnTouchInteractionSurface;
+            public AudioListener AudioListener;
 
-            public bool m_hasFocus;
+            public bool HasFocusStatus;
 
-            string m_materialBottomDefault;
-            string m_materialTopLeftDefault;
-            string m_materialTopRightDefault;
+            string MaterialBottomDefault;
+            string MaterialTopLeftDefault;
+            string MaterialTopRightDefault;
 
-            string m_materialBottomVivid;
-            string m_materialTopLeftVivid;
-            string m_materialTopRightVivid;
+            string MaterialBottomVivid;
+            string MaterialTopLeftVivid;
+            string MaterialTopRightVivid;
 
             private void Awake()
             {
                 // Variables
-                m_hasFocus = false;
+                HasFocusStatus = false;
 
                 // Children
-                m_hologramView = transform.Find("CubeOpening");
-                m_hologramController = m_hologramView.GetComponent<CubeOpening>();
-                m_hologramOriginalLocalPos = m_hologramView.localPosition;
+                HologramView = transform.Find("CubeOpening");
+                HologramController = HologramView.GetComponent<CubeOpening>();
+                HologramOriginalLocalPos = HologramView.localPosition;
 
-                m_lightView = transform.Find("Light");
+                LightView = transform.Find("Light");
                 //m_lightController = m_lightView.GetComponent<Light>();
 
-                m_surfaceWithStarsView = transform.Find("SurfaceWithStars");
+                SurfaceWithStarsView = transform.Find("SurfaceWithStars");
 
-                m_help = transform.Find("Help");
+                Help = transform.Find("Help");
 
                 // Default materials
-                m_materialBottomDefault = "Mouse_Cyan_Glowing";
-                m_materialTopLeftDefault = "Mouse_Cyan_Glowing";
-                m_materialTopRightDefault = "Mouse_Cyan_Glowing";
-                m_materialBottomVivid = "Mouse_Orange_Glowing";
-                m_materialTopLeftVivid = "Mouse_Orange_Glowing";
-                m_materialTopRightVivid = "Mouse_Orange_Glowing";
+                MaterialBottomDefault = Utilities.Materials.Colors.CyanGlowing;
+                MaterialTopLeftDefault = Utilities.Materials.Colors.CyanGlowing;
+                MaterialTopRightDefault = Utilities.Materials.Colors.CyanGlowing;
+                MaterialBottomVivid = Utilities.Materials.Colors.OrangeGlowing;
+                MaterialTopLeftVivid = Utilities.Materials.Colors.OrangeGlowing;
+                MaterialTopRightVivid = Utilities.Materials.Colors.OrangeGlowing;
             }
 
             // Start is called before the first frame update
             void Start()
             {
                 // Setting up the gradation manger
-                m_gradationManager = transform.GetComponent<FiniteStateMachine.VisualGradationManager>();
-                m_gradationManager.addNewAssistanceGradation("Default", CallbackGradationDefault);
-                m_gradationManager.addNewAssistanceGradation("LowVivid", CallbackGradationLowVivid);
+                GradationManager = transform.GetComponent<FiniteStateMachine.VisualGradationManager>();
+                GradationManager.addNewAssistanceGradation("Default", CallbackGradationDefault);
+                GradationManager.addNewAssistanceGradation("LowVivid", CallbackGradationLowVivid);
 
                 // Callbacks
-                m_hologramController.m_eventCubetouched += new EventHandler(delegate (System.Object o, EventArgs e)
+                HologramController.m_eventCubetouched += new EventHandler(delegate (System.Object o, EventArgs e)
                 {
-                    m_eventHologramStimulateLevel1Gradation1Or2Touched?.Invoke(this, EventArgs.Empty);
+                    EventHologramStimulateLevel1Gradation1Or2Touched?.Invoke(this, EventArgs.Empty);
 
                 });
 
-                Utilities.HologramInteractions interactions = m_help.GetComponent<Utilities.HologramInteractions>();
+                Utilities.HologramInteractions interactions = Help.GetComponent<Utilities.HologramInteractions>();
                 if (interactions == null)
                 {
-                    interactions = m_help.gameObject.AddComponent<Utilities.HologramInteractions>();
+                    interactions = Help.gameObject.AddComponent<Utilities.HologramInteractions>();
                 }
                 interactions.EventTouched += new EventHandler(delegate (System.Object o, EventArgs e)
                 {
-                    m_eventHologramStimulateLevel1Gradation1Or2Touched?.Invoke(this, EventArgs.Empty);
+                    EventHologramStimulateLevel1Gradation1Or2Touched?.Invoke(this, EventArgs.Empty);
 
                     DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Help touched");
 
                 });
-                SolverHandler solver = m_help.GetComponent<SolverHandler>();
+                SolverHandler solver = Help.GetComponent<SolverHandler>();
                 if (solver == null)
                 {
-                    solver = m_help.gameObject.AddComponent<SolverHandler>();
+                    solver = Help.gameObject.AddComponent<SolverHandler>();
                 }
                 solver.TrackedTargetType = Microsoft.MixedReality.Toolkit.Utilities.TrackedObjectType.Head;
             }
 
             public bool HasFocus()
             {
-                return m_hasFocus;
+                return HasFocusStatus;
             }
 
-            bool m_mutexShow = false;
+            bool MutexShow = false;
             public override void Show(EventHandler eventHandler)
             {
-                if (m_mutexShow == false)
+                if (MutexShow == false)
                 {
-                    m_mutexShow = true;
+                    MutexShow = true;
 
-                    Animation animator = m_hologramView.gameObject.AddComponent<Animation>();
+                    Animation animator = HologramView.gameObject.AddComponent<Animation>();
 
-                    MATCH.Utilities.Utility.AdjustObjectHeightToHeadHeight(m_help);
-                    m_hologramController.backupScaling();
+                    MATCH.Utilities.Utility.AdjustObjectHeightToHeadHeight(Help);
+                    HologramController.backupScaling();
 
-                    if (m_surfaceWithStarsViewTarget != null)
+                    if (SurfaceWithStarsViewTarget != null)
                     { // Then adjusting the size of the stars to the size of this object
-                        Vector3 newScale = new Vector3(m_surfaceWithStarsViewTarget.localScale.x, 
-                            m_surfaceWithStarsView.localScale.y, // Important not to change the height scale
-                            m_surfaceWithStarsViewTarget.localScale.z);
+                        Vector3 newScale = new Vector3(SurfaceWithStarsViewTarget.localScale.x, 
+                            SurfaceWithStarsView.localScale.y, // Important not to change the height scale
+                            SurfaceWithStarsViewTarget.localScale.z);
                         /*newScale.x = m_surfaceWithStarsViewTarget.localScale.x;
                         newScale.y = m_surfaceWithStarsView.localScale.y; // Important not to change the height scale
                         newScale.z = m_surfaceWithStarsViewTarget.localScale.z;*/
 
-                        m_surfaceWithStarsView.localScale = newScale;
+                        SurfaceWithStarsView.localScale = newScale;
                     }
 
-                    m_help.gameObject.SetActive(true);
-                    m_surfaceWithStarsView.gameObject.SetActive(true);
+                    IsDisplayed = true;
+                    Help.gameObject.SetActive(true);
+                    SurfaceWithStarsView.gameObject.SetActive(true);
                     eventHandler?.Invoke(this, EventArgs.Empty);
-                    m_mutexShow = false;
+                    MutexShow = false;
                 }
                 else
                 {
@@ -163,14 +164,14 @@ namespace MATCH
 
             public void SetPositionToOriginalLocation()
             {
-                m_hologramView.localPosition = m_hologramOriginalLocalPos;
+                HologramView.localPosition = HologramOriginalLocalPos;
             }
 
             public override void Hide(EventHandler eventHandler)
             {
                 SetGradationToMinimum();
 
-                if (m_hologramView.gameObject.activeSelf)
+                if (HologramView.gameObject.activeSelf)
                 {
                     DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Cube is going to be hidden");
 
@@ -178,23 +179,24 @@ namespace MATCH
         {
 
 
-            m_hologramView.gameObject.SetActive(false);
-            m_hologramView.localScale = new Vector3(0.2f, 0.2f, 0.2f);
-            Destroy(m_hologramView.GetComponent<Animation>());
+            HologramView.gameObject.SetActive(false);
+            HologramView.localScale = new Vector3(0.2f, 0.2f, 0.2f);
+            Destroy(HologramView.GetComponent<Animation>());
 
-            DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Cube should be hidden now. New local position:" + m_hologramView.localPosition.ToString());
+            DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Cube should be hidden now. New local position:" + HologramView.localPosition.ToString());
+            IsDisplayed = false;
         }), eventHandler };
 
-                    m_hologramController.closeCube(new EventHandler(delegate (System.Object o, EventArgs e)
+                    HologramController.closeCube(new EventHandler(delegate (System.Object o, EventArgs e)
                     {
-                        m_hologramView.gameObject.AddComponent<MATCH.Utilities.Animation>().AnimateDiseappearInPlace(eventHandlers);
+                        HologramView.gameObject.AddComponent<MATCH.Utilities.Animation>().AnimateDiseappearInPlace(eventHandlers);
                     }));
-                    m_lightView.gameObject.SetActive(false);
+                    LightView.gameObject.SetActive(false);
                 }
-                else if (m_surfaceWithStarsView.gameObject.activeSelf)
+                else if (SurfaceWithStarsView.gameObject.activeSelf)
                 {
-                    m_surfaceWithStarsView.gameObject.SetActive(false);
-                    m_help.gameObject.SetActive(false);
+                    SurfaceWithStarsView.gameObject.SetActive(false);
+                    Help.gameObject.SetActive(false);
                     eventHandler?.Invoke(this, EventArgs.Empty);
                 }
                 else
@@ -205,72 +207,72 @@ namespace MATCH
 
             public override Transform GetTransform()
             {
-                return m_hologramView;
+                return HologramView;
             }
 
-            public override void ShowHelp(bool show)
+            public override void ShowHelp(bool show, EventHandler callback)
             {
                 //
             }
 
             public bool IncreaseGradation()
             {
-                return m_gradationManager.increaseGradation();
+                return GradationManager.increaseGradation();
             }
 
             public bool DecreaseGradation()
             {
-                return m_gradationManager.decreaseGradation();
+                return GradationManager.decreaseGradation();
             }
 
             public void SetGradationToMinimum()
             {
                 DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Gradation set to minimum");
 
-                m_gradationManager.setGradationToMinimum();
+                GradationManager.setGradationToMinimum();
             }
 
             void CallbackGradationDefault(System.Object o, EventArgs e)
             {
-                m_surfaceWithStarsView.gameObject.SetActive(true);
-                m_help.gameObject.SetActive(true);
-                MATCH.Utilities.Utility.AdjustObjectHeightToHeadHeight(m_help);
-                m_hologramView.gameObject.SetActive(false);
+                SurfaceWithStarsView.gameObject.SetActive(true);
+                Help.gameObject.SetActive(true);
+                MATCH.Utilities.Utility.AdjustObjectHeightToHeadHeight(Help);
+                HologramView.gameObject.SetActive(false);
 
-                m_lightView.gameObject.SetActive(false);
-                m_hologramController.GetComponent<Billboard>().enabled = true;
+                LightView.gameObject.SetActive(false);
+                HologramController.GetComponent<Billboard>().enabled = true;
                 GetComponent<RadialView>().enabled = false;
-                m_hologramController.setScalingToOriginal();
+                HologramController.setScalingToOriginal();
 
                 DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Showing default gradation");
             }
 
             void CallbackGradationLow(System.Object o, EventArgs e)
             {
-                m_surfaceWithStarsView.gameObject.SetActive(false);
-                m_help.gameObject.SetActive(false);
+                SurfaceWithStarsView.gameObject.SetActive(false);
+                Help.gameObject.SetActive(false);
 
-                MATCH.Utilities.Utility.AdjustObjectHeightToHeadHeight(m_hologramView, m_hologramOriginalLocalPos.y);
-                m_hologramView.gameObject.SetActive(true);
+                MATCH.Utilities.Utility.AdjustObjectHeightToHeadHeight(HologramView, HologramOriginalLocalPos.y);
+                HologramView.gameObject.SetActive(true);
 
-                m_hologramController.updateMaterials(m_materialBottomDefault, m_materialTopLeftDefault, m_materialTopRightDefault);
-                m_lightView.gameObject.SetActive(false);
-                m_hologramController.GetComponent<Billboard>().enabled = true;
+                HologramController.updateMaterials(MaterialBottomDefault, MaterialTopLeftDefault, MaterialTopRightDefault);
+                LightView.gameObject.SetActive(false);
+                HologramController.GetComponent<Billboard>().enabled = true;
                 GetComponent<RadialView>().enabled = false;
-                m_hologramController.setScalingToOriginal();
+                HologramController.setScalingToOriginal();
             }
 
             void CallbackGradationLowVivid(System.Object o, EventArgs e)
             {
-                m_help.gameObject.SetActive(false);
+                Help.gameObject.SetActive(false);
 
-                MATCH.Utilities.Utility.AdjustObjectHeightToHeadHeight(m_hologramView, m_hologramOriginalLocalPos.y);
-                m_hologramView.gameObject.SetActive(true);
-                m_hologramController.updateMaterials(m_materialBottomVivid, m_materialTopLeftVivid, m_materialTopRightVivid);
-                m_lightView.gameObject.SetActive(true);
-                m_hologramController.GetComponent<Billboard>().enabled = true;
+                MATCH.Utilities.Utility.AdjustObjectHeightToHeadHeight(HologramView, HologramOriginalLocalPos.y);
+                HologramView.gameObject.SetActive(true);
+                HologramController.updateMaterials(MaterialBottomVivid, MaterialTopLeftVivid, MaterialTopRightVivid);
+                LightView.gameObject.SetActive(true);
+                HologramController.GetComponent<Billboard>().enabled = true;
                 GetComponent<RadialView>().enabled = false;
-                m_hologramController.setScalingToOriginal(); // setting back the scaling to the original one.
+                HologramController.setScalingToOriginal(); // setting back the scaling to the original one.
 
                 DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Showing low vivid gradation");
             }
@@ -279,33 +281,33 @@ namespace MATCH
             {
                 // Add an offset in y to the cube to avoid that they remain too much "in front" of the user
                 GetComponent<RadialView>().enabled = true;
-                m_hologramView.gameObject.GetComponent<Billboard>().enabled = false; // The billboard is present on the parent object so that the cube can be shifted to avoid that it is too much in front of the user.
-                m_lightView.gameObject.SetActive(false);
+                HologramView.gameObject.GetComponent<Billboard>().enabled = false; // The billboard is present on the parent object so that the cube can be shifted to avoid that it is too much in front of the user.
+                LightView.gameObject.SetActive(false);
 
                 // reducing the scale of the cube to have it less intrusive
-                m_hologramController.setScalingReduced();
-                m_hologramView.transform.localPosition = new Vector3(m_hologramView.localPosition.x, m_hologramOriginalLocalPos.y, m_hologramView.localPosition.z);
+                HologramController.setScalingReduced();
+                HologramView.transform.localPosition = new Vector3(HologramView.localPosition.x, HologramOriginalLocalPos.y, HologramView.localPosition.z);
 
                 DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Showing high gradation");
             }
 
             public void OpeningCube(EventHandler eventHandler)
             {
-                m_hologramController.openCube(eventHandler);
+                HologramController.openCube(eventHandler);
             }
 
             public void SetCubeMaterialDefault(string bottom, string topLeft, string topRight)
             {
-                m_materialBottomDefault = bottom;
-                m_materialTopLeftDefault = topLeft;
-                m_materialTopRightDefault = topRight;
+                MaterialBottomDefault = bottom;
+                MaterialTopLeftDefault = topLeft;
+                MaterialTopRightDefault = topRight;
             }
 
             public void SetCubeMaterialVivid(string bottom, string topLeft, string topRight)
             {
-                m_materialBottomVivid = bottom;
-                m_materialTopLeftVivid = topLeft;
-                m_materialTopRightVivid = topRight;
+                MaterialBottomVivid = bottom;
+                MaterialTopLeftVivid = topLeft;
+                MaterialTopRightVivid = topRight;
             }
 
             public override bool IsDecorator()

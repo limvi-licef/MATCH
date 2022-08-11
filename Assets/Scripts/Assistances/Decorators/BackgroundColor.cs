@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Reflection;
 
 namespace MATCH
 {
@@ -9,36 +10,69 @@ namespace MATCH
     {
         namespace Decorators
         {
-            public class BackgroundColor : IPanel
+            public class BackgroundColor : Assistance, IPanel
             {
                 IPanel PanelToDecorate;
                 string BackgroundColorDecorated;
 
-                public BackgroundColor(IPanel panelToDecorate, string backgroundColor)
+                /*public BackgroundColor(IPanel panelToDecorate, string backgroundColor)
                 {
                     PanelToDecorate = panelToDecorate;
                     BackgroundColorDecorated = backgroundColor;
+                }*/
+
+                public void SetAssistanceToDecorate(IPanel toDecorate)
+                {
+                    PanelToDecorate = toDecorate;
+
+                    // Relaying the eventhandler
+                    Assistance temp = (Assistance)PanelToDecorate;
+                    temp.EventHelpButtonClicked += delegate (System.Object o, EventArgs e)
+                    {
+                        MATCH.Utilities.EventHandlerArgs.Button args = (MATCH.Utilities.EventHandlerArgs.Button)e;
+
+                        //DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "EventHelpButtonClicked caught by decorated object. Relaying the event ...");
+
+                        OnHelpButtonClicked(args.ButtonType);
+                    };
                 }
 
-                public void Hide(EventHandler callback)
+                public override void Hide(EventHandler callback)
                 {
                     PanelToDecorate.GetAssistance().Hide(callback);
                 }
 
-                public void Show(EventHandler callback)
+                public override void Show(EventHandler callback)
                 {
+                    //DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Display assistance " + name);
+
                     PanelToDecorate.SetBackgroundColor(BackgroundColorDecorated);
                     PanelToDecorate.GetAssistance().Show(callback);
+
+                    /*if (PanelToDecorate.GetAssistance().GetTransform().gameObject.activeSelf == false)
+                    {
+                        PanelToDecorate.SetBackgroundColor(BackgroundColorDecorated);
+                        PanelToDecorate.GetAssistance().Show(callback);
+                    }
+                    else
+                    {
+                        PanelToDecorate.GetAssistance().Hide(delegate (System.Object o, EventArgs e)
+                        {
+                            PanelToDecorate.SetBackgroundColor(BackgroundColorDecorated);
+                            PanelToDecorate.GetAssistance().Show(callback);
+                        });
+                    }*/ 
                 }
 
-                public void ShowHelp(bool show)
+                public override void ShowHelp(bool show, EventHandler callback)
                 {
-                    PanelToDecorate.GetAssistance().ShowHelp(show);
+                    PanelToDecorate.GetAssistance().ShowHelp(show, callback);
                 }
 
                 public void SetBackgroundColor(string colorName)
                 {
-                    PanelToDecorate.SetBackgroundColor(colorName);
+                    BackgroundColorDecorated = colorName;
+                    //PanelToDecorate.SetBackgroundColor(colorName);
                 }
 
                 public void SetEdgeColor(string colorName)
@@ -56,7 +90,7 @@ namespace MATCH
                     PanelToDecorate.EnableWeavingHand(enable);
                 }
 
-                public Transform GetTransform()
+                public override Transform GetTransform()
                 {
                     return PanelToDecorate.GetAssistance().GetTransform();
                 }
@@ -64,6 +98,11 @@ namespace MATCH
                 public Assistance GetAssistance()
                 {
                     return PanelToDecorate.GetAssistance();
+                }
+
+                public override bool IsDecorator()
+                {
+                    return true;
                 }
             }
         }

@@ -140,7 +140,7 @@ namespace MATCH
                 GameObject interactionTableView = Instantiate(m_refInteractionSurface, gameObject.transform);
                 Assistances.InteractionSurface interactionTableController = interactionTableView.GetComponent<Assistances.InteractionSurface>();
                 interactionTableController.SetAdminButtons("table");
-                interactionTableController.SetColor("Mouse_Cyan_Glowing");
+                interactionTableController.SetColor(Utilities.Materials.Colors.CyanGlowing);
                 interactionTableView.transform.localPosition = new Vector3(0.949f, -0.017f, 1.117f);
                 interactionTableController.SetScaling(new Vector3(1.1f, 0.02f, 0.7f));
                 interactionTableController.ShowInteractionSurfaceTable(true);
@@ -150,7 +150,7 @@ namespace MATCH
                 // Second interaction surface, i.e. for the rag
                 GameObject interactionRagView = Instantiate(m_refInteractionSurface, gameObject.transform);
                 Assistances.InteractionSurface interactionRagController = interactionRagView.GetComponent<Assistances.InteractionSurface>();
-                interactionRagController.SetColor("Mouse_Orange_Glowing");
+                interactionRagController.SetColor(Utilities.Materials.Colors.OrangeGlowing);
                 interactionRagController.SetAdminButtons("rag");
                 interactionRagView.transform.localPosition = new Vector3(0, -0.008f, 3.843f);
                 interactionRagController.ShowInteractionSurfaceTable(true);
@@ -165,7 +165,7 @@ namespace MATCH
 
 
                 // First stimulate assistance
-                m_assistancePicturalController.SetCubeMaterialVivid("Mouse_Help_Bottom_Vivid", "Mouse_Help_Top-Left_Vivid", "Mouse_Help_Top-Right_Vivid");
+                m_assistancePicturalController.SetCubeMaterialVivid(Utilities.Materials.Textures.HelpBottomVivid, Utilities.Materials.Textures.HelpTopLeftVivid, Utilities.Materials.Textures.HelpTopRightVivid);
 
                 // Cueing for the beginning of the scenario
                 GameObject initialCueingView = Instantiate(m_refAssistanceDialog, interactionTableView.transform);
@@ -186,13 +186,13 @@ namespace MATCH
                 Utilities.Utility.setParentToObject(m_assistanceStimulateLevel2View, interactionRagView.transform);
                 Utilities.Utility.setParentToObject(m_assistanceSurfaceTouchedView, interactionTableView.transform);
 
-                m_assistancePicturalController.m_surfaceWithStarsViewTarget = interactionTableController.GetInteractionSurface();
+                m_assistancePicturalController.SurfaceWithStarsViewTarget = interactionTableController.GetInteractionSurface();
 
                 m_assistanceConnectWithArchController.setArchStartAndEndPoint(initialCueingView.transform, interactionRagView.transform);
                 m_reminderController.AddObjectToBeClose(interactionRagView.transform);
-                m_reminderController.AddObjectToBeClose(m_assistancePicturalController.m_hologramView);
-                m_reminderController.AddObjectToBeClose(m_assistancePicturalController.m_surfaceWithStarsView);
-                m_reminderController.AddObjectToBeClose(m_assistancePicturalController.m_help);
+                m_reminderController.AddObjectToBeClose(m_assistancePicturalController.HologramView);
+                m_reminderController.AddObjectToBeClose(m_assistancePicturalController.SurfaceWithStarsView);
+                m_reminderController.AddObjectToBeClose(m_assistancePicturalController.Help);
                 m_reminderController.AddObjectToBeClose(m_assistanceConnectWithArchController.m_hologramHelp);
                 m_reminderController.AddObjectToBeClose(m_assistanceConnectWithArchController.m_textView);
                 m_reminderController.AddObjectToBeClose(interactionTableController.GetInteractionSurface());
@@ -225,7 +225,7 @@ namespace MATCH
 
                 // States changing
                 interactionTableController.EventInteractionSurfaceTableTouched += sStandBy.goToState(sCubeRagTable);
-                m_assistancePicturalController.m_eventHologramStimulateLevel1Gradation1Or2Touched += sCubeRagTable.goToState(sMessageCue);
+                m_assistancePicturalController.EventHologramStimulateLevel1Gradation1Or2Touched += sCubeRagTable.goToState(sMessageCue);
                 initialCueingController.ButtonsController[0].EventButtonClicked += sMessageCue.goToState(sArchToRag);
                 m_assistanceConnectWithArchController.m_eventHologramHelpTouched += sArchToRag.goToState(sSolution);
                 interactionRagController.EventInteractionSurfaceTableTouched += sCubeRagTable.goToState(sSurfaceToClean);
@@ -246,7 +246,7 @@ namespace MATCH
 
 
                 // Add button to reset scenario
-                AdminMenu.Instance.addButton("Reset clean table challenge", delegate () { m_assistanceGradationManager.goBackToOriginalState(); });
+                AdminMenu.Instance.AddButton("Reset clean table challenge", delegate () { m_assistanceGradationManager.goBackToOriginalState(); });
             }
 
             void InitializeScenariov2()
@@ -254,24 +254,24 @@ namespace MATCH
                 Manager.Instance.addScenario(this);
 
                 // Interaction surface table
-                Assistances.InteractionSurface interactionSurfaceTable = Assistances.Factory.Instance.CreateInteractionSurface("table v2", AdminMenu.Panels.Default, new Vector3(1.1f, 0.02f, 0.7f), "Mouse_Cyan_Glowing", true, true, Utilities.Utility.GetEventHandlerEmpty(), transform);
+                Assistances.InteractionSurface interactionSurfaceTable = Assistances.Factory.Instance.CreateInteractionSurface("table v2", AdminMenu.Panels.Default, new Vector3(1.1f, 0.02f, 0.7f), Utilities.Materials.Colors.CyanGlowing, true, true, Utilities.Utility.GetEventHandlerEmpty(), transform);
                 //interactionSurfaceTable.setLocalPosition(new Vector3(0.949f, -0.017f, 1.117f));
                 interactionSurfaceTable.SetPreventResizeY(true);
                 interactionSurfaceTable.transform.position = new Vector3(0.8258258700370789f, 0.4396502375602722f, 2.451075315475464f);
 
                 // Interaction surface rag
-                Assistances.InteractionSurface interactionSurfaceRag = Assistances.Factory.Instance.CreateInteractionSurface("rag v2", AdminMenu.Panels.Default, new Vector3(0.2f, 0.01f, 0.2f), "Mouse_Orange_Glowing", true, true, Utilities.Utility.GetEventHandlerEmpty(), transform);
+                Assistances.InteractionSurface interactionSurfaceRag = Assistances.Factory.Instance.CreateInteractionSurface("rag v2", AdminMenu.Panels.Default, new Vector3(0.2f, 0.01f, 0.2f), Utilities.Materials.Colors.OrangeGlowing, true, true, Utilities.Utility.GetEventHandlerEmpty(), transform);
                 interactionSurfaceRag.transform.localPosition = new Vector3(0, -0.008f, 3.843f);
                 //interactionSurfaceRag.getInteractionSurface().transform.localPosition = new Vector3(0, -0.008f, 3.843f);
 
 
                 // Red surface on table
-                Assistances.Basic redSurface = Assistances.Factory.Instance.CreateFlatSurface("Mouse_Red_Glowing", new Vector3(interactionSurfaceTable.GetLocalPosition().x, interactionSurfaceTable.GetLocalPosition().y + 0.02f, interactionSurfaceTable.GetLocalPosition().z), interactionSurfaceTable.transform);
+                Assistances.Basic redSurface = Assistances.Factory.Instance.CreateFlatSurface(Utilities.Materials.Colors.RedGlowing, new Vector3(interactionSurfaceTable.GetLocalPosition().x, interactionSurfaceTable.GetLocalPosition().y + 0.02f, interactionSurfaceTable.GetLocalPosition().z), interactionSurfaceTable.transform);
                 redSurface.SetScale(interactionSurfaceTable.GetLocalScale().x, redSurface.GetScale().y, interactionSurfaceTable.GetLocalScale().z);
                 interactionSurfaceTable.EventInteractionSurfaceScaled += delegate { redSurface.SetScale(new Vector3(interactionSurfaceTable.GetInteractionSurface().localScale.x, redSurface.GetScale().y, interactionSurfaceTable.GetInteractionSurface().localScale.z)); };
 
                 // Exclamation mark
-                Assistances.Basic exclamationMark = Assistances.Factory.Instance.CreateCube("Mouse_Exclamation_Red", true, new Vector3(0.1f, 0.1f, 0.1f), new Vector3(0, 0, 0), true, interactionSurfaceTable.transform);
+                Assistances.Basic exclamationMark = Assistances.Factory.Instance.CreateCube(Utilities.Materials.Textures.ExclamationRed, true, new Vector3(0.1f, 0.1f, 0.1f), new Vector3(0, 0, 0), true, interactionSurfaceTable.transform);
 
                 // First message
                 string firstMessage = "Que faites-vous normalement après manger?"; // Used in the first two dialogs
@@ -298,7 +298,7 @@ namespace MATCH
                 Assistances.Dialog dialogCallCaregiver = Assistances.Factory.Instance.CreateDialogTwoButtons("", "Est-ce que j'appelle votre aidant?", "Oui", delegate (System.Object o, EventArgs e) { s_caregiverCall?.Invoke(this, e); }, Assistances.Buttons.Button.ButtonType.Yes, "Non", delegate (System.Object o, EventArgs e) { s_caregiverCall?.Invoke(this, e); }, Assistances.Buttons.Button.ButtonType.No, interactionSurfaceTable.transform);
 
                 // Success
-                Assistances.Basic success = Assistances.Factory.Instance.CreateCube("Mouse_Congratulation", interactionSurfaceTable.transform);
+                Assistances.Basic success = Assistances.Factory.Instance.CreateCube(Utilities.Materials.Textures.Congratulation, interactionSurfaceTable.transform);
 
                 // Inferences
                 //MouseUtilitiesInferenceTime i20h = new MouseUtilitiesInferenceTime("")
@@ -436,7 +436,7 @@ namespace MATCH
 
                 success.s_touched += sSuccess.goToState(sStandBy);
 
-                m_displayGraphController.setManager(m_assistanceGradationManager);
+                m_displayGraphController.SetManager(m_assistanceGradationManager);
             }
 
             void CallbackInferenceDistanceAssistanceStimulateLevel1(System.Object sender, EventArgs args)

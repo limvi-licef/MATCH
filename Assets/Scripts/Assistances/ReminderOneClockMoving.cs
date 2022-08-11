@@ -172,15 +172,15 @@ namespace MATCH
                 EventHologramWindowButtonBackTouched?.Invoke(this, EventArgs.Empty);
             }*/
 
-            bool m_mutexHide = false;
+            bool MutexHide = false;
             public override void Hide(EventHandler e)
             {
                 DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Called");
 
-                if (m_mutexHide == false)
+                if (MutexHide == false)
                 {
                     DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Mutex locked");
-                    m_mutexHide = true;
+                    MutexHide = true;
 
                     //GameObject temp;
 
@@ -189,7 +189,8 @@ namespace MATCH
                         MATCH.Utilities.Utility.AnimateDisappearInPlace(m_clockView.gameObject, new Vector3(0.1f, 0.1f, 0.1f), delegate
                         {
                             DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Mutex unlocked - clock hidden");
-                            m_mutexHide = false;
+                            MutexHide = false;
+                            IsDisplayed = false;
                         });
                     }
                     else
@@ -198,7 +199,7 @@ namespace MATCH
                         {
                             DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Mutex unlocked - dialog hidden");
 
-                            m_mutexHide = false; //.unlockMutex();
+                            MutexHide = false; //.unlockMutex();
                             e?.Invoke(this, EventArgs.Empty);
                         });
                     }
@@ -207,16 +208,16 @@ namespace MATCH
                 }
             }
 
-            bool m_mutexShow = false;
-            bool m_showFirstTime = false;
+            bool MutexShow = false;
+            bool ShowFirstTime = false;
             public override void Show(EventHandler eventHandler)
             {
                 m_clockScalingOriginal = new Vector3(0.1f, 0.1f, 0.1f);
                 DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Clock is going to appear to scaling: " + m_clockScalingOriginal);
 
-                if (m_mutexShow == false)
+                if (MutexShow == false)
                 {
-                    m_mutexShow = true;
+                    MutexShow = true;
 
                     DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Mutex locked");
 
@@ -228,16 +229,17 @@ namespace MATCH
                     {
                         eventHandler?.Invoke(this, EventArgs.Empty);
 
-                        if (m_showFirstTime == false)
+                        if (ShowFirstTime == false)
                         {
                             Utilities.HologramInteractions temp = m_clockView.GetComponent<Utilities.HologramInteractions>();
                             temp.EventTouched += CallbackOnClockTouched;
 
-                            m_showFirstTime = true;
+                            ShowFirstTime = true;
                         }
 
                         Destroy(m_clockView.gameObject.GetComponent<MATCH.Utilities.Animation>());
-                        m_mutexShow = false;
+                        MutexShow = false;
+                        IsDisplayed = true;
                     }
                         ));
                 }
@@ -247,7 +249,7 @@ namespace MATCH
                 }
             }
 
-            public override void ShowHelp(bool show)
+            public override void ShowHelp(bool show, EventHandler callback)
             {
                 // Todo
             }

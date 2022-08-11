@@ -168,11 +168,11 @@ namespace MATCH
 
                 if (status)
                 {
-                    materialName = "Mouse_White_Transparent";
+                    materialName = Utilities.Materials.Colors.WhiteTransparent;
                 }
                 else
                 {
-                    materialName = "Mouse_Cyan_Glowing";
+                    materialName = Utilities.Materials.Colors.CyanGlowing;
                 }
 
                 GetComponent<Renderer>().material = Resources.Load(materialName, typeof(Material)) as Material;

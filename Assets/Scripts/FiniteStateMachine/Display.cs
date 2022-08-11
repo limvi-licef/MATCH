@@ -30,28 +30,28 @@ namespace MATCH
     {
         public class Display : MonoBehaviour
         {
-            Manager m_manager;
-            MouseUtilitiesGradationAssistanceAbstract m_initialState;
-            public GameObject m_refLabel;
+            Manager Manager;
+            MouseUtilitiesGradationAssistanceAbstract InitialState;
+            public GameObject RefLabel;
 
-            Transform m_parentLabelsView;
+            Transform ParentLabelsView;
 
-            Transform m_refConnectorView;
+            Transform RefConnectorView;
 
-            Dictionary<string, GameObject> m_states;
-            Dictionary<(string, string), GameObject> m_connectors;
+            Dictionary<string, GameObject> States;
+            Dictionary<(string, string), GameObject> Connectors;
 
-            MouseUtilitiesGradationAssistanceAbstract m_currentHighlightedState;
+            MouseUtilitiesGradationAssistanceAbstract CurrentHighlightedState;
 
             private void Awake()
             {
-                m_states = new Dictionary<string, GameObject>();
-                m_connectors = new Dictionary<(string, string), GameObject>();
-                m_parentLabelsView = gameObject.transform.Find("ButtonParent");
+                States = new Dictionary<string, GameObject>();
+                Connectors = new Dictionary<(string, string), GameObject>();
+                ParentLabelsView = gameObject.transform.Find("ButtonParent");
 
-                m_refConnectorView = gameObject.transform.Find("Line");
+                RefConnectorView = gameObject.transform.Find("Line");
 
-                m_currentHighlightedState = null;
+                CurrentHighlightedState = null;
 
 
             }
@@ -59,7 +59,7 @@ namespace MATCH
             // Start is called before the first frame update
             void Start()
             {
-                AdminMenu.Instance.addButton("Bring graph window", callbackBringWindow);
+                AdminMenu.Instance.AddButton("Bring graph window", CallbackBringWindow);
             }
 
             // Update is called once per frame
@@ -68,7 +68,7 @@ namespace MATCH
 
             }
 
-            public void callbackBringWindow()
+            public void CallbackBringWindow()
             {
                 gameObject.transform.position = new Vector3(Camera.main.transform.position.x + 0.5f, Camera.main.transform.position.y, Camera.main.transform.position.z);
                 gameObject.transform.LookAt(Camera.main.transform);
@@ -76,44 +76,44 @@ namespace MATCH
             }
 
 
-            public void setManager(Manager manager)
+            public void SetManager(Manager manager)
             {
-                m_manager = manager;
+                Manager = manager;
 
-                m_initialState = m_manager.getInitialAssistance();
+                InitialState = Manager.getInitialAssistance();
 
-                DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Original state: " + m_initialState.getId());
-                displayStates(m_initialState, 0);
+                DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Original state: " + InitialState.getId());
+                DisplayStates(InitialState, 0);
                 //displayStatesV2();
 
                 DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Table surface should be touchable again");
 
                 // Subscribing to the signal
-                m_manager.s_newStateSelected += callbackNewStateSelected;
+                Manager.s_newStateSelected += CallbackNewStateSelected;
             }
 
-            void displayStatesV2()
+            void DisplayStatesV2()
             {
-                foreach (MouseUtilitiesGradationAssistanceAbstract state in m_manager.getListOfStates())
+                foreach (MouseUtilitiesGradationAssistanceAbstract state in Manager.getListOfStates())
                 {
-                    addState(state);
+                    AddState(state);
                 }
 
-                foreach (MouseUtilitiesGradationAssistanceAbstract currentState in m_manager.getListOfStates())
+                foreach (MouseUtilitiesGradationAssistanceAbstract currentState in Manager.getListOfStates())
                 {
                     foreach (MouseUtilitiesGradationAssistanceAbstract nextState in currentState.getNextStates().Values.ToList())
                     {
-                        addConnector(currentState, nextState);
+                        AddConnector(currentState, nextState);
                     }
                 }
             }
 
 
-            void displayStates(MouseUtilitiesGradationAssistanceAbstract currentstate, int nbLevels)
+            void DisplayStates(MouseUtilitiesGradationAssistanceAbstract currentstate, int nbLevels)
             {
                 //m_manager.get
 
-                addState(currentstate);
+                AddState(currentstate);
 
                 foreach (KeyValuePair<string, MouseUtilitiesGradationAssistanceAbstract> nextState in currentstate.getNextStates())
                 {
@@ -125,47 +125,47 @@ namespace MATCH
                     addConnector(currentstate, nextState.Value)
                      */
 
-                    addState(nextState.Value);
+                    AddState(nextState.Value);
 
-                    if (addConnector(currentstate, nextState.Value))
+                    if (AddConnector(currentstate, nextState.Value))
                     {
-                        displayStates(nextState.Value, nbLevels + 1);
+                        DisplayStates(nextState.Value, nbLevels + 1);
                     }
                 }
             }
 
-            void addState(MouseUtilitiesGradationAssistanceAbstract state)
+            void AddState(MouseUtilitiesGradationAssistanceAbstract state)
             {
-                if (m_states.ContainsKey(state.getId()) == false)
+                if (States.ContainsKey(state.getId()) == false)
                 {
-                    GameObject temp = Instantiate(m_refLabel, m_parentLabelsView);
+                    GameObject temp = Instantiate(RefLabel, ParentLabelsView);
                     temp.transform.GetComponent<ButtonConfigHelper>().IconStyle = ButtonIconStyle.None;
 
                     temp.transform.Find("IconAndText").Find("TextMeshPro").GetComponent<TextMeshPro>().SetText(state.getId());
 
-                    m_parentLabelsView.GetComponent<GridObjectCollection>().UpdateCollection();
+                    ParentLabelsView.GetComponent<GridObjectCollection>().UpdateCollection();
 
-                    m_states.Add(state.getId(), temp);
+                    States.Add(state.getId(), temp);
                 }
             }
 
             /**
              * Return true if the connector has been added, false otherwise
              **/
-            bool addConnector(MouseUtilitiesGradationAssistanceAbstract stateStart, MouseUtilitiesGradationAssistanceAbstract stateEnd)
+            bool AddConnector(MouseUtilitiesGradationAssistanceAbstract stateStart, MouseUtilitiesGradationAssistanceAbstract stateEnd)
             {
                 bool toReturn = true;
 
-                if (m_connectors.ContainsKey((stateStart.getId(), stateEnd.getId())) == false)
+                if (Connectors.ContainsKey((stateStart.getId(), stateEnd.getId())) == false)
                 {
-                    Transform temp = Instantiate(m_refConnectorView, gameObject.transform);
+                    Transform temp = Instantiate(RefConnectorView, gameObject.transform);
 
                     Utilities.LineBetweenTwoPoints line = temp.GetComponent<Utilities.LineBetweenTwoPoints>();
 
-                    RectTransform transformGrid = m_parentLabelsView.GetComponent<RectTransform>();
+                    RectTransform transformGrid = ParentLabelsView.GetComponent<RectTransform>();
 
-                    line.drawLineWithArrow(m_states[stateStart.getId()], m_states[stateEnd.getId()]);
-                    m_connectors.Add((stateStart.getId(), stateEnd.getId()), temp.gameObject);
+                    line.DrawLineWithArrow(States[stateStart.getId()], States[stateEnd.getId()]);
+                    Connectors.Add((stateStart.getId(), stateEnd.getId()), temp.gameObject);
                 }
                 else
                 {
@@ -175,31 +175,31 @@ namespace MATCH
                 return toReturn;
             }
 
-            public void callbackNewStateSelected(System.Object o, EventArgs args)
+            public void CallbackNewStateSelected(System.Object o, EventArgs args)
             {
                 MouseUtilisiesGradationAssistanceArgCurrentState currentState = (MouseUtilisiesGradationAssistanceArgCurrentState)args;
 
-                if (m_currentHighlightedState != null)
+                if (CurrentHighlightedState != null)
                 {
-                    m_states[m_currentHighlightedState.getId()].transform.Find("BackPlate").Find("Quad").GetComponent<Renderer>().material = Resources.Load("Mouse_HolographicBackPlate", typeof(Material)) as Material;
+                    States[CurrentHighlightedState.getId()].transform.Find("BackPlate").Find("Quad").GetComponent<Renderer>().material = Resources.Load(Utilities.Materials.Textures.HolographicBackPlate, typeof(Material)) as Material;
                 }
 
-                m_states[currentState.m_currentState.getId()].transform.Find("BackPlate").Find("Quad").GetComponent<Renderer>().material = Resources.Load("Mouse_Cyan_Glowing", typeof(Material)) as Material;
+                States[currentState.m_currentState.getId()].transform.Find("BackPlate").Find("Quad").GetComponent<Renderer>().material = Resources.Load(Utilities.Materials.Colors.CyanGlowing, typeof(Material)) as Material;
 
                 // Brut force to highlight the connectors
-                foreach (KeyValuePair<(string, string), GameObject> connector in m_connectors)
+                foreach (KeyValuePair<(string, string), GameObject> connector in Connectors)
                 {
                     if (connector.Key.Item1 == currentState.m_currentState.getId())
                     {
-                        connector.Value.GetComponent<Utilities.LineBetweenTwoPoints>().highlightConnector(true);
+                        connector.Value.GetComponent<Utilities.LineBetweenTwoPoints>().HighlightConnector(true);
                     }
                     else
                     {
-                        connector.Value.GetComponent<Utilities.LineBetweenTwoPoints>().highlightConnector(false);
+                        connector.Value.GetComponent<Utilities.LineBetweenTwoPoints>().HighlightConnector(false);
                     }
                 }
 
-                m_currentHighlightedState = currentState.m_currentState;
+                CurrentHighlightedState = currentState.m_currentState;
             }
         }
 

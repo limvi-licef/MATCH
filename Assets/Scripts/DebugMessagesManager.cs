@@ -68,9 +68,9 @@ namespace MATCH
         // Start is called before the first frame update
         void Start()
         {
-            AdminMenu.Instance.addButton("Debug window - Bring", callbackDebugBringWindow);
-            AdminMenu.Instance.addButton("Debug window - Clear", callbackDebugClearWindow);
-            AdminMenu.Instance.addSwitchButton("Debug window - display in console", callbackDebugDisplayDebugInWindow);
+            AdminMenu.Instance.AddButton("Debug window - Bring", callbackDebugBringWindow);
+            AdminMenu.Instance.AddButton("Debug window - Clear", callbackDebugClearWindow);
+            AdminMenu.Instance.AddSwitchButton("Debug window - display in console", callbackDebugDisplayDebugInWindow);
 
             if (m_classNameFilter.Count > 0)
             {

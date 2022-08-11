@@ -38,45 +38,45 @@ namespace MATCH
             Obstacles = 1
         };
 
-        bool m_menuShown;
+        bool MenuShown;
 
-        public bool m_menuStatic = false;
+        public bool MenuStatic = false;
 
         //string m_hologramRagInteractionSurfaceMaterialName;
 
-        private static AdminMenu _instance;
+        private static AdminMenu InstanceInternal;
 
-        public static AdminMenu Instance { get { return _instance; } }
+        public static AdminMenu Instance { get { return InstanceInternal; } }
 
-        public GameObject m_refButtonSwitch;
-        public GameObject m_refButton;
+        public GameObject RefButtonSwitch;
+        public GameObject RefButton;
 
-        List<GameObject> m_buttons;
-        Dictionary<Panels, Transform> m_panels;
+        List<GameObject> Buttons;
+        Dictionary<Panels, Transform> PanelsStorage;
 
         private void Awake()
         {
-            if (_instance != null && _instance != this)
+            if (InstanceInternal != null && InstanceInternal != this)
             {
                 Destroy(this.gameObject);
             }
             else
             {
                 // Initialize variables
-                m_buttons = new List<GameObject>();
-                m_panels = new Dictionary<Panels, Transform>();
+                Buttons = new List<GameObject>();
+                PanelsStorage = new Dictionary<Panels, Transform>();
 
                 // Remove the canvas renderer from the buttons, to avoid the warning message from unity
-                DestroyImmediate(m_refButton.transform.Find("IconAndText").Find("TextMeshPro").GetComponent<CanvasRenderer>(), true);
-                DestroyImmediate(m_refButton.transform.Find("SeeItSayItLabel").Find("TextMeshPro").GetComponent<CanvasRenderer>(), true);
-                DestroyImmediate(m_refButtonSwitch.transform.Find("IconAndText").Find("TextMeshPro").GetComponent<CanvasRenderer>(), true);
-                DestroyImmediate(m_refButtonSwitch.transform.Find("SeeItSayItLabel").Find("TextMeshPro").GetComponent<CanvasRenderer>(), true);
+                DestroyImmediate(RefButton.transform.Find("IconAndText").Find("TextMeshPro").GetComponent<CanvasRenderer>(), true);
+                DestroyImmediate(RefButton.transform.Find("SeeItSayItLabel").Find("TextMeshPro").GetComponent<CanvasRenderer>(), true);
+                DestroyImmediate(RefButtonSwitch.transform.Find("IconAndText").Find("TextMeshPro").GetComponent<CanvasRenderer>(), true);
+                DestroyImmediate(RefButtonSwitch.transform.Find("SeeItSayItLabel").Find("TextMeshPro").GetComponent<CanvasRenderer>(), true);
 
                 // Get children
-                m_panels.Add(Panels.Default, gameObject.transform.Find("PanelDefault").Find("ButtonParent").transform);
-                m_panels.Add(Panels.Obstacles, gameObject.transform.Find("PanelObstacles").Find("ButtonParent").transform);
+                PanelsStorage.Add(Panels.Default, gameObject.transform.Find("PanelDefault").Find("ButtonParent").transform);
+                PanelsStorage.Add(Panels.Obstacles, gameObject.transform.Find("PanelObstacles").Find("ButtonParent").transform);
 
-                _instance = this;
+                InstanceInternal = this;
             }
         }
 
@@ -84,73 +84,67 @@ namespace MATCH
         void Start()
         {
             // Variables
-            m_menuShown = false; // By default, the menu is hidden
+            MenuShown = false; // By default, the menu is hidden
 
-            switchStaticOrMovingMenu();
+            SwitchStaticOrMovingMenu();
 
             // Add the buttons to manage this menu
-            addSwitchButton("Static/Mobile menu", callbackSwitchStaticOrMovingMenu);
+            AddSwitchButton("Static/Mobile menu", CallbackSwitchStaticOrMovingMenu);
 
 
         }
 
-        // Update is called once per frame
-        void Update()
+        public void AddSwitchButton(string text, UnityEngine.Events.UnityAction callback, Panels panel = Panels.Default)
         {
-
+            Buttons.Add(Instantiate(RefButtonSwitch, PanelsStorage[panel]));
+            Buttons.Last().GetComponent<Interactable>().GetReceiver<InteractableOnPressReceiver>().OnPress.AddListener(callback);
+            Buttons.Last().GetComponent<Interactable>().GetReceiver<InteractableOnPressReceiver>().InteractionFilter = 0;
+            Buttons.Last().transform.Find("IconAndText").Find("TextMeshPro").GetComponent<TextMeshPro>().SetText(text);
+            PanelsStorage[panel].GetComponent<GridObjectCollection>().UpdateCollection();
         }
 
-        public void addSwitchButton(string text, UnityEngine.Events.UnityAction callback, Panels panel = Panels.Default)
+        public void AddButton(string text, UnityEngine.Events.UnityAction callback, Panels panel = Panels.Default)
         {
-            m_buttons.Add(Instantiate(m_refButtonSwitch, m_panels[panel]));
-            m_buttons.Last().GetComponent<Interactable>().GetReceiver<InteractableOnPressReceiver>().OnPress.AddListener(callback);
-            m_buttons.Last().GetComponent<Interactable>().GetReceiver<InteractableOnPressReceiver>().InteractionFilter = 0;
-            m_buttons.Last().transform.Find("IconAndText").Find("TextMeshPro").GetComponent<TextMeshPro>().SetText(text);
-            m_panels[panel].GetComponent<GridObjectCollection>().UpdateCollection();
+            Buttons.Add(Instantiate(RefButton, PanelsStorage[panel]));
+
+            Buttons.Last().GetComponent<ButtonConfigHelper>().IconStyle = ButtonIconStyle.None;
+            Buttons.Last().GetComponent<ButtonConfigHelper>().SeeItSayItLabelEnabled = false;
+            Buttons.Last().GetComponent<Interactable>().GetReceiver<InteractableOnPressReceiver>().OnPress.AddListener(callback);
+            Buttons.Last().GetComponent<Interactable>().GetReceiver<InteractableOnPressReceiver>().InteractionFilter = 0;
+            Buttons.Last().transform.Find("IconAndText").Find("TextMeshPro").GetComponent<TextMeshPro>().SetText(text);
+            PanelsStorage[panel].GetComponent<GridObjectCollection>().UpdateCollection();
         }
 
-        public void addButton(string text, UnityEngine.Events.UnityAction callback, Panels panel = Panels.Default)
+        public void CallbackCubeTouched()
         {
-            m_buttons.Add(Instantiate(m_refButton, m_panels[panel]));
-
-            m_buttons.Last().GetComponent<ButtonConfigHelper>().IconStyle = ButtonIconStyle.None;
-            m_buttons.Last().GetComponent<ButtonConfigHelper>().SeeItSayItLabelEnabled = false;
-            m_buttons.Last().GetComponent<Interactable>().GetReceiver<InteractableOnPressReceiver>().OnPress.AddListener(callback);
-            m_buttons.Last().GetComponent<Interactable>().GetReceiver<InteractableOnPressReceiver>().InteractionFilter = 0;
-            m_buttons.Last().transform.Find("IconAndText").Find("TextMeshPro").GetComponent<TextMeshPro>().SetText(text);
-            m_panels[panel].GetComponent<GridObjectCollection>().UpdateCollection();
-        }
-
-        public void callbackCubeTouched()
-        {
-            m_menuShown = !m_menuShown;
+            MenuShown = !MenuShown;
 
             for (int i = 0; i < gameObject.transform.childCount; i++)
             {
-                gameObject.transform.GetChild(i).gameObject.SetActive(m_menuShown);
+                gameObject.transform.GetChild(i).gameObject.SetActive(MenuShown);
             }
         }
 
-        public void callbackSwitchStaticOrMovingMenu()
+        public void CallbackSwitchStaticOrMovingMenu()
         {
-            m_menuStatic = !m_menuStatic;
+            MenuStatic = !MenuStatic;
 
-            switchStaticOrMovingMenu();
+            SwitchStaticOrMovingMenu();
         }
 
-        public void switchStaticOrMovingMenu()
+        public void SwitchStaticOrMovingMenu()
         {
             string materialName;
 
-            gameObject.GetComponent<RadialView>().enabled = !m_menuStatic; // Menu static == RadialView must be disabled
+            gameObject.GetComponent<RadialView>().enabled = !MenuStatic; // Menu static == RadialView must be disabled
 
             if (gameObject.GetComponent<RadialView>().enabled)
             {
-                materialName = "Mouse_Orange_Glowing";
+                materialName = Utilities.Materials.Colors.OrangeGlowing;
             }
             else
             {
-                materialName = "Mouse_Purple_Glowing";
+                materialName = Utilities.Materials.Colors.PurpleGlowing;
             }
 
             gameObject.GetComponent<Renderer>().material = Resources.Load(materialName, typeof(Material)) as Material;

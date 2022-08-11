@@ -66,13 +66,13 @@ namespace MATCH
                 Manager.Instance.addScenario(this);
 
                 //Surfaces
-                m_storage = Assistances.Factory.Instance.CreateInteractionSurface("Storage", default, new Vector3(0.4f, 0.4f, 0.4f), "Mouse_Green_Glowing", true, true, Utilities.Utility.GetEventHandlerEmpty(), transform);
+                m_storage = Assistances.Factory.Instance.CreateInteractionSurface("Storage", default, new Vector3(0.4f, 0.4f, 0.4f), Utilities.Materials.Colors.GreenGlowing, true, true, Utilities.Utility.GetEventHandlerEmpty(), transform);
                 m_storage.SetLocalPosition(new Vector3(0f, 0f, 0.5f));
-                m_object = Assistances.Factory.Instance.CreateInteractionSurface("Object", default, new Vector3(0.5f, 0.5f, 0.5f), "Mouse_Yellow_Glowing", true, true, Utilities.Utility.GetEventHandlerEmpty(), transform);
+                m_object = Assistances.Factory.Instance.CreateInteractionSurface("Object", default, new Vector3(0.5f, 0.5f, 0.5f), Utilities.Materials.Colors.YellowGlowing, true, true, Utilities.Utility.GetEventHandlerEmpty(), transform);
                 m_object.GetInteractionSurface().gameObject.layer = LayerMask.NameToLayer("Ignore Raycast");
 
-                Assistances.Basic successController = Assistances.Factory.Instance.CreateCube("Mouse_Congratulation", m_storage.transform);
-                Assistances.Basic exclamationMark = Assistances.Factory.Instance.CreateCube("Mouse_Exclamation_Red", true, new Vector3(0.1f, 0.1f, 0.1f), new Vector3(0, 0, 0), true, m_object.GetInteractionSurface().transform);
+                Assistances.Basic successController = Assistances.Factory.Instance.CreateCube(Utilities.Materials.Textures.Congratulation, m_storage.transform);
+                Assistances.Basic exclamationMark = Assistances.Factory.Instance.CreateCube(Utilities.Materials.Textures.ExclamationRed, true, new Vector3(0.1f, 0.1f, 0.1f), new Vector3(0, 0, 0), true, m_object.GetInteractionSurface().transform);
 
 
                 //Inferences
@@ -161,7 +161,7 @@ namespace MATCH
                 m_gradationManager.setGradationInitial("StandBy");
 
                 //Graph
-                m_graph.setManager(m_gradationManager);
+                m_graph.SetManager(m_gradationManager);
 
             }
 

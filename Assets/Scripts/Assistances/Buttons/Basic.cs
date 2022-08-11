@@ -48,6 +48,8 @@ namespace MATCH
 
                 private void Awake()
                 {
+                    //DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Called for Basic");
+
                     Interactable interactions = gameObject.GetComponent<Interactable>();
                     interactions.AddReceiver<InteractableOnTouchReceiver>().OnTouchStart.AddListener(delegate () {
                         //DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Button clicked");
@@ -61,11 +63,11 @@ namespace MATCH
 
                     if (m_checked)
                     {
-                        transform.Find("BackPlate").Find("Quad").GetComponent<Renderer>().material = Resources.Load("Mouse_green_glowing", typeof(Material)) as Material;
+                        transform.Find("BackPlate").Find("Quad").GetComponent<Renderer>().material = Resources.Load(Utilities.Materials.Colors.GreenGlowing, typeof(Material)) as Material;
                     }
                     else
                     {
-                        transform.Find("BackPlate").Find("Quad").GetComponent<Renderer>().material = Resources.Load("Mouse_HolographicBackPlate", typeof(Material)) as Material;
+                        transform.Find("BackPlate").Find("Quad").GetComponent<Renderer>().material = Resources.Load(Utilities.Materials.Textures.HolographicBackPlate, typeof(Material)) as Material;
                     }
                 }
 
@@ -76,12 +78,12 @@ namespace MATCH
 
                 public void CallbackSetButtonBackgroundCyan(System.Object o, EventArgs e)
                 {
-                    transform.Find("BackPlate").Find("Quad").GetComponent<Renderer>().material = Resources.Load("Mouse_Cyan_Glowing", typeof(Material)) as Material;
+                    transform.Find("BackPlate").Find("Quad").GetComponent<Renderer>().material = Resources.Load(Utilities.Materials.Colors.CyanGlowing, typeof(Material)) as Material;
                 }
 
                 public void CallbackSetButtonBackgroundGreen(System.Object o, EventArgs e)
                 {
-                    transform.Find("BackPlate").Find("Quad").GetComponent<Renderer>().material = Resources.Load("Mouse_Green_Glowing", typeof(Material)) as Material;
+                    transform.Find("BackPlate").Find("Quad").GetComponent<Renderer>().material = Resources.Load(Utilities.Materials.Colors.GreenGlowing, typeof(Material)) as Material;
                 }
             }
 

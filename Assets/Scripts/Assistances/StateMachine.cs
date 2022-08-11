@@ -23,7 +23,7 @@ namespace MATCH
 {
     namespace Assistances
     {
-        public class StateMachine: ScriptableObject
+        public class StateMachine
         {
             Dictionary<AssistanceGradationAttention, Dictionary<Buttons.Button.ButtonType, AssistanceGradationAttention>> AssistanceGradation;
 
@@ -53,6 +53,8 @@ namespace MATCH
                 }
 
                 AssistanceGradation[assistance].Add(type, assistanceTarget);
+
+                //DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Adding button " + type.ToString() + " for assistance " + assistance.name);
             }
 
             /*public AssistanceGradationAttention GetNextAssistance(AssistanceGradationAttention assistance, Buttons.Button.ButtonType button)
@@ -71,12 +73,23 @@ namespace MATCH
             {
                 Utilities.EventHandlerArgs.Button args = (Utilities.EventHandlerArgs.Button)e;
 
+                DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Help button " + args.ButtonType.ToString() + " clicked for assistance " + AssistanceCurrent.name);
+
+                if(AssistanceGradation.ContainsKey(AssistanceCurrent))
+                {
+                    DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "The dictionary contains the assistance");
+                }
+                else
+                {
+                    DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "The dictionary DOES NOT contain the assistance");
+                }
+
                 Utilities.EventHandlerArgs.ButtonAndAssistanceGradationAttention argsToSend = new Utilities.EventHandlerArgs.ButtonAndAssistanceGradationAttention();                
                 argsToSend.AssistanceCurrent = AssistanceCurrent;
                 argsToSend.AssistanceNext = AssistanceGradation[AssistanceCurrent][args.ButtonType];
                 argsToSend.ButtonType = args.ButtonType;
 
-                DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Help button " + args.ButtonType.ToString() + " clicked for assistance " + argsToSend.AssistanceCurrent.GetCurrentAssistance().name + ". Next assistance: " + argsToSend.AssistanceNext.GetCurrentAssistance().name);
+                DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Next assistance: " + argsToSend.AssistanceNext.GetCurrentAssistance().name);
 
                 AssistanceCurrent = argsToSend.AssistanceNext;
 

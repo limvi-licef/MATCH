@@ -11,14 +11,10 @@ using System;
 
 public class MouseUtilitiesSpatialAwareness : MonoBehaviour
 {
-    public SurfaceMeshesToPlanes m_scenePlanes;
+    public SurfaceMeshesToPlanes ScenePlanes;
 
-    DateTime m_time;
-    DateTime m_timeOneMinuteTrigger;
-
-    //string m_wallsColor = "Mouse_Green_Glowing";
-    //string m_ceilingsColor = "Mouse_Orange_Glowing";
-    //string m_floorsColor = "Mouse_Purple_Glowing";
+    DateTime Time;
+    DateTime TimeOneMinuteTrigger;
 
     // Start is called before the first frame update
     void Start()
@@ -35,7 +31,7 @@ public class MouseUtilitiesSpatialAwareness : MonoBehaviour
 
         
 
-        m_timeOneMinuteTrigger = DateTime.Now;
+        TimeOneMinuteTrigger = DateTime.Now;
     }
 
     // Update is called once per frame

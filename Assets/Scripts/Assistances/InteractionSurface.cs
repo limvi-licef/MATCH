@@ -36,14 +36,14 @@ namespace MATCH
             public event EventHandler EventInteractionSurfaceScaled;
             public event EventHandler EventInteractionSurfaceMoved;
 
-            string m_color = "Mouse_Green_Glowing"; // Default color if the user does not set one
+            string Color = Utilities.Materials.Colors.GreenGlowing; // Default color if the user does not set one
 
-            bool m_surfaceInitialized;
+            bool SurfaceInitialized;
 
             private void Awake()
             {
                 // Initialize variables
-                m_surfaceInitialized = false;
+                SurfaceInitialized = false;
 
                 // Children
                 m_interactionSurfaceView = gameObject.transform.Find("InteractionSurfaceChild");
@@ -79,9 +79,9 @@ namespace MATCH
             {
                 //DebugMessagesManager.Instance.displayMessage("MousePopulateSurfaceTableWithCubes", "callbackOnTapToPlaceFinished", DebugMessagesManager.MessageLevel.Info, "Loading color");
 
-                m_color = colorName;
+                Color = colorName;
 
-                m_interactionSurfaceView.GetComponent<Renderer>().material = Resources.Load(m_color, typeof(Material)) as Material;
+                m_interactionSurfaceView.GetComponent<Renderer>().material = Resources.Load(Color, typeof(Material)) as Material;
             }
 
             public void SetScaling(Vector3 scaling)
@@ -124,7 +124,7 @@ namespace MATCH
             {
 
 
-                if (m_surfaceInitialized == false)
+                if (SurfaceInitialized == false)
                 {
                     m_interactionSurfaceView.gameObject.SetActive(true); // If it happens that the surface is not displayed
 
@@ -136,7 +136,7 @@ namespace MATCH
                     }); // Only have to forward the event
 
 
-                    m_surfaceInitialized = true;
+                    SurfaceInitialized = true;
 
                 }
 
@@ -154,8 +154,8 @@ namespace MATCH
 
             public void SetAdminButtons(string interfaceSurfaceId, AdminMenu.Panels panel = AdminMenu.Panels.Default)
             {
-                AdminMenu.Instance.addSwitchButton("Hide " + interfaceSurfaceId + " interaction surface", CallbackShow, panel);
-                AdminMenu.Instance.addButton("Bring " + interfaceSurfaceId + " interaction surface", CallbackBring, panel);
+                AdminMenu.Instance.AddSwitchButton("Hide " + interfaceSurfaceId + " interaction surface", CallbackShow, panel);
+                AdminMenu.Instance.AddButton("Bring " + interfaceSurfaceId + " interaction surface", CallbackBring, panel);
             }
 
             public void SetObjectResizable(bool enable)

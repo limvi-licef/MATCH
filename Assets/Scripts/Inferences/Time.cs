@@ -38,7 +38,7 @@ namespace MATCH
 
                 m_useOneMinuteTrigger = false;
 
-                AdminMenu.Instance.addButton("One minute trigger for " + id, CallbackOneMinuteTrigger);
+                AdminMenu.Instance.AddButton("One minute trigger for " + id, CallbackOneMinuteTrigger);
 
             }
 
@@ -46,7 +46,7 @@ namespace MATCH
             {
                 m_time = time;
 
-                AdminMenu.Instance.addButton("One minute trigger for " + id, CallbackOneMinuteTrigger);
+                AdminMenu.Instance.AddButton("One minute trigger for " + id, CallbackOneMinuteTrigger);
             }
 
             public override bool Evaluate()

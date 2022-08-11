@@ -56,7 +56,7 @@ namespace MATCH
                 }
                 catch (InvalidOperationException)
                 {
-                    DebugMessagesManager.Instance.displayMessage("Manager", "Update", DebugMessagesManager.MessageLevel.Warning, "Inference dictionary has changed, no update performed this frame"); // Class and method names are hard coded for performance reasons.
+                    //DebugMessagesManager.Instance.displayMessage("Manager", "Update", DebugMessagesManager.MessageLevel.Warning, "Inference dictionary has changed, no update performed this frame"); // Class and method names are hard coded for performance reasons.
                 }
             }
 
@@ -69,7 +69,7 @@ namespace MATCH
                 }
                 else
                 {
-                    DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Warning, "Inference already registered - nothing to do");
+                    //DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Warning, "Inference already registered - nothing to do");
                 }
             }
 
@@ -88,7 +88,7 @@ namespace MATCH
                 }
                 else
                 {
-                    DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Warning, "No inference registered - nothing to do");
+                    //DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Warning, "No inference registered - nothing to do");
                 }
             }
 

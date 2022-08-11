@@ -53,8 +53,10 @@ namespace MATCH
 
                 public void Show(EventHandler callback)
                 {
-                    AssistanceToDecorate.GetAssistance().ShowHelp(true);
-                    AssistanceToDecorate.GetAssistance().Show(callback);
+                    AssistanceToDecorate.GetAssistance().Show(delegate(System.Object o, EventArgs e)
+                    {
+                        AssistanceToDecorate.GetAssistance().ShowHelp(true, callback);
+                    });
 
                     /*AssistanceToDecorate.Hide(delegate (System.Object o, EventArgs e)
                     {
@@ -63,9 +65,9 @@ namespace MATCH
                     });*/
                 }
 
-                public void ShowHelp(bool show)
+                public void ShowHelp(bool show, EventHandler callback)
                 {
-                    AssistanceToDecorate.GetAssistance().ShowHelp(show);
+                    AssistanceToDecorate.GetAssistance().ShowHelp(show, callback);
                 }
 
                 public Assistance GetAssistance()

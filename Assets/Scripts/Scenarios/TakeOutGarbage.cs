@@ -79,7 +79,7 @@ namespace MATCH
                 GameObject garbageInteractionSurfaceView = Instantiate(m_refInteractionSurface, gameObject.transform);
                 Assistances.InteractionSurface garbageInteractionSurfaceController = garbageInteractionSurfaceView.GetComponent<Assistances.InteractionSurface>();
                 garbageInteractionSurfaceController.SetAdminButtons("garbage");
-                garbageInteractionSurfaceController.SetColor("Mouse_Purple_Glowing");
+                garbageInteractionSurfaceController.SetColor(Utilities.Materials.Colors.PurpleGlowing);
                 garbageInteractionSurfaceController.ShowInteractionSurfaceTable(true);
                 garbageInteractionSurfaceView.transform.localPosition = new Vector3(-0.92f, 0.383f, 3.881f);
                 garbageInteractionSurfaceController.SetObjectResizable(true);
@@ -88,14 +88,14 @@ namespace MATCH
                 GameObject doorInteractionSurfaceView = Instantiate(m_refInteractionSurface, gameObject.transform);
                 Assistances.InteractionSurface doorInteractionSurfaceController = doorInteractionSurfaceView.GetComponent<Assistances.InteractionSurface>();
                 doorInteractionSurfaceController.SetAdminButtons("door");
-                doorInteractionSurfaceController.SetColor("Mouse_Green_Glowing");
+                doorInteractionSurfaceController.SetColor(Utilities.Materials.Colors.GreenGlowing);
                 doorInteractionSurfaceController.ShowInteractionSurfaceTable(true);
                 doorInteractionSurfaceView.transform.localPosition = new Vector3(-1.032f, 0.544f, 2.617f);
                 doorInteractionSurfaceController.SetObjectResizable(true);
 
                 GameObject exclamationMarkView = Instantiate(m_refCube, garbageInteractionSurfaceView.transform);
                 Assistances.Basic exclamationMarkController = exclamationMarkView.GetComponent<Assistances.Basic>();
-                exclamationMarkController.SetMaterial("Mouse_Exclamation");
+                exclamationMarkController.SetMaterial(Utilities.Materials.Textures.Exclamation);
 
                 GameObject solutionView = Instantiate(m_refDialog, garbageInteractionSurfaceView.transform);
                 Assistances.Dialog solutionController = solutionView.GetComponent<Assistances.Dialog>();
@@ -106,7 +106,7 @@ namespace MATCH
                 Assistances.Basic highlightGarbageController = highlightGarbageView.GetComponent<Assistances.Basic>();
                 //highlightGarbageController.SetAdjustHeightOnShow(false);
                 highlightGarbageController.AdjustHeightOnShow = false;
-                highlightGarbageController.SetMaterial("Mouse_Cyan_Glowing");
+                highlightGarbageController.SetMaterial(Utilities.Materials.Colors.CyanGlowing);
                 highlightGarbageController.SetScale(0.2f, 0.6f, 0.2f);
                 highlightGarbageController.SetLocalPosition(0, -0.35f, 0);
                 highlightGarbageController.SetBillboard(false);
@@ -121,7 +121,7 @@ namespace MATCH
                 Assistances.Basic highlightGarbageVividController = highlightGarbageVividView.GetComponent<Assistances.Basic>();
                 //highlightGarbageVividController.SetAdjustHeightOnShow(false);
                 highlightGarbageVividController.AdjustHeightOnShow = false;
-                highlightGarbageVividController.SetMaterial("Mouse_Orange_Glowing");
+                highlightGarbageVividController.SetMaterial(Utilities.Materials.Colors.OrangeGlowing);
                 highlightGarbageVividController.SetScale(0.2f, 0.6f, 0.2f);
                 highlightGarbageVividController.SetLocalPosition(0, -0.35f, 0);
                 highlightGarbageVividController.SetBillboard(false);
@@ -134,7 +134,7 @@ namespace MATCH
 
                 GameObject successView = Instantiate(m_refCube, garbageInteractionSurfaceView.transform);
                 Assistances.Basic successController = successView.GetComponent<Assistances.Basic>();
-                successController.SetMaterial("Mouse_Congratulation");
+                successController.SetMaterial(Utilities.Materials.Textures.Congratulation);
 
                 // Add inferences
                 m_inferenceManager.RegisterInference(m_inference19h00);
@@ -203,7 +203,7 @@ namespace MATCH
 
 
                 // Display graph
-                m_graph.setManager(m_gradationManager);
+                m_graph.SetManager(m_gradationManager);
             }
 
             void CallbackTime19h00(System.Object o, EventArgs e)

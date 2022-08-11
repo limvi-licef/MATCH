@@ -76,7 +76,7 @@ namespace MATCH
                 ObjectDetectedInformation = null;
                 AssistancesManager = new Assistances.Manager();
 
-                AreaStorage = Assistances.Factory.Instance.CreateInteractionSurface("Storage", default, new Vector3(0.2f, 0.8f, 0.3f), "Mouse_Green_Glowing", true, true, Utilities.Utility.GetEventHandlerEmpty(), transform);
+                AreaStorage = Assistances.Factory.Instance.CreateInteractionSurface("Storage", default, new Vector3(0.2f, 0.8f, 0.3f), Utilities.Materials.Colors.GreenGlowing, true, true, Utilities.Utility.GetEventHandlerEmpty(), transform);
                 
                 /*if (Utilities.Utility.IsEditorSimulator() || Utilities.Utility.IsEditorGameView())
                 {*/
@@ -91,15 +91,15 @@ namespace MATCH
                  * AreaObject is the interaction surface that is meant to be around the detected object. 
                  * However, it is worth noticing that some inferences are based on the distance between the user and this interaction surface. Hence, to avoid that those inferences are triggered at the beginning of the scenario, the position of the area is set to (1000, 1000, 1000) on purpose.
                 */
-                AreaObject = Assistances.Factory.Instance.CreateInteractionSurface("Object", default, new Vector3(0.4f, 0.4f, 0.4f), "Mouse_Yellow_Glowing", true, true, Utilities.Utility.GetEventHandlerEmpty(), transform);       
+                AreaObject = Assistances.Factory.Instance.CreateInteractionSurface("Object", default, new Vector3(0.4f, 0.4f, 0.4f), Utilities.Materials.Colors.YellowGlowing, true, true, Utilities.Utility.GetEventHandlerEmpty(), transform);       
                 AreaObject.transform.position = new Vector3(1000, 1000, 1000);
 
 
-                AreaObjectPosition = Assistances.Factory.Instance.CreateInteractionSurface("Object_Position", default, new Vector3(0.05f, 0.05f, 0.05f), "Mouse_Yellow_Glowing", true, true, Utilities.Utility.GetEventHandlerEmpty(), transform);
+                AreaObjectPosition = Assistances.Factory.Instance.CreateInteractionSurface("Object_Position", default, new Vector3(0.05f, 0.05f, 0.05f), Utilities.Materials.Colors.YellowGlowing, true, true, Utilities.Utility.GetEventHandlerEmpty(), transform);
                 AreaObjectPosition.GetInteractionSurface().gameObject.layer = LayerMask.NameToLayer("Ignore Raycast");
                 AreaObjectPosition.transform.position = new Vector3(1000, 1000, 1000);
                 
-                AdminMenu.Instance.addButton("Sorting Object - See boolean states", CallbackSeeStates);
+                AdminMenu.Instance.AddButton("Sorting Object - See boolean states", CallbackSeeStates);
 
                 InitializeScenario();
             }
@@ -168,19 +168,19 @@ namespace MATCH
                  */
                 Assistances.QandDAssistances AssistancesGradation = new Assistances.QandDAssistances();
 
-                Assistances.Basic AssistancesAlpha = Assistances.Factory.Instance.CreateCube("Mouse_Congratulation", AreaStorage.transform);
+                Assistances.Basic AssistancesAlpha = Assistances.Factory.Instance.CreateCube(Utilities.Materials.Textures.Congratulation, AreaStorage.transform);
                 AssistancesGradation.AddAssistance(Assistances.QandDAssistances.Gradation.Alpha, AssistancesAlpha);
 
                 Assistances.Dialog AssistancesBeta = Assistances.Factory.Instance.CreateDialogNoButton("Information", "Cet objet doit être rangé.", AreaObject.transform);
                 AssistancesGradation.AddAssistance(Assistances.QandDAssistances.Gradation.Beta, AssistancesBeta);
 
-                Assistances.Basic AssistancesGamma = Assistances.Factory.Instance.CreateCube("Mouse_Exclamation", AreaObject.transform);
+                Assistances.Basic AssistancesGamma = Assistances.Factory.Instance.CreateCube(Utilities.Materials.Textures.Exclamation, AreaObject.transform);
                 AssistancesGradation.AddAssistance(Assistances.QandDAssistances.Gradation.Gamma, AssistancesGamma);
 
                 Assistances.Dialog AssistancesDelta = Assistances.Factory.Instance.CreateDialogNoButton("Information","L'objet n'est pas rangé au bon endroit.", AreaObject.transform);
                 AssistancesGradation.AddAssistance(Assistances.QandDAssistances.Gradation.Delta, AssistancesDelta);
 
-                Assistances.Basic AssistancesEpsilon = Assistances.Factory.Instance.CreateCube("Mouse_Exclamation_Red", AreaObject.transform);
+                Assistances.Basic AssistancesEpsilon = Assistances.Factory.Instance.CreateCube(Utilities.Materials.Textures.ExclamationRed, AreaObject.transform);
                 AssistancesGradation.AddAssistance(Assistances.QandDAssistances.Gradation.Epsilon, AssistancesEpsilon);
 
                 /**
@@ -226,10 +226,6 @@ namespace MATCH
 
                 BlackboardCondition cDidPersonDidNotComeToTheObjectSinceAWhile = new BlackboardCondition("PersonDidNotComeToObject", Operator.IS_EQUAL, true, Stops.IMMEDIATE_RESTART, sePersonDidNotCameToObjectSinceAWhile);
 
-                /*Selector srDidPersonLookAtObject = new Selector(
-                    cDidPersonLookAtObject,
-                    cDidPersonDidNotComeToTheObjectSinceAWhile);*/
-
                 Selector srObjectIsNotStored = new Selector(
                     cDidPersonApproachObject,
                     cObjectDroppedOutsideStorageArea,
@@ -266,39 +262,29 @@ namespace MATCH
             
 			void InitializeAssistancesAlpha()
             {
-                AssistancesAlphaInteractionSurface = Assistances.Factory.Instance.CreateInteractionSurface("AssistancesAlpha", AdminMenu.Panels.Obstacles, new Vector3(0.5f, 0.05f, 0.5f), "Mouse_Orange_Glowing", true, true, Utilities.Utility.GetEventHandlerEmpty(), transform);
+                AssistancesAlphaInteractionSurface = Assistances.Factory.Instance.CreateInteractionSurface("AssistancesAlpha", AdminMenu.Panels.Obstacles, new Vector3(0.5f, 0.05f, 0.5f), Utilities.Materials.Colors.OrangeGlowing, true, true, Utilities.Utility.GetEventHandlerEmpty(), transform);
                 AssistancesAlphaInteractionSurface.transform.localPosition = new Vector3(0, 0.464f, 1.632f); //new Vector3(0.85f, 0.46f, 2.18f);
                 AssistancesAlphaInteractionSurface.name = "Assistances Alpha - Interaction surface";
 
 
                 //Assistances.Basic cube = ;
-                //Assistances.AssistanceGradationAttention exclamationMark = new Assistances.AssistanceGradationAttention();
-                /*Assistances.AssistanceGradationAttention exclamationMark*/ ExclamationMark = Assistances.Factory.Instance.CreateAssistanceGradationAttention();
-                //exclamationMark.gameObject.SetActive(true);
-
-                Assistances.Basic cube = Assistances.Factory.Instance.CreateCube("Mouse_Purple_Glowing", AssistancesAlphaInteractionSurface.transform);
+                ExclamationMark = Assistances.Factory.Instance.CreateAssistanceGradationAttention("AssistanceGradationExclamationMark");
+                Assistances.Basic cube = Assistances.Factory.Instance.CreateCube(Utilities.Materials.Colors.PurpleGlowing, AssistancesAlphaInteractionSurface.transform);
                 cube.name = "Alpha_Cube";
-                //exclamationMark.AddAssistance(cube);
-                /*Assistances.IAssistance exclamationMarkPale = */
-                //ExclamationMark.AddAssistance(new Assistances.Decorators.Material(cube, "Mouse_Exclamation"));
-                //exclamationMark.AddAssistance(Assistances.Decorators.)
-                //ExclamationMark.AddAssistance(new Assistances.Decorators.Material(cube, "Mouse_Exclamation_Red"));
-                ExclamationMark.AddAssistance(Assistances.Decorators.Factory.Instance.CreateMaterial(cube, "Mouse_Exclamation"));
+                ExclamationMark.AddAssistance(Assistances.Decorators.Factory.Instance.CreateMaterial(cube, Utilities.Materials.Textures.Exclamation));
+                ExclamationMark.AddAssistance(Assistances.Decorators.Factory.Instance.CreateMaterial(cube, Utilities.Materials.Textures.ExclamationRed));
 
-                /*cube.EventHelpButtonClicked += delegate (System.Object o, EventArgs e)
-                {
-                    DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Called 1");
-                };*/
-
-                //Assistances.AssistanceGradationAttention end = new Assistances.AssistanceGradationAttention();
-                Assistances.AssistanceGradationAttention end = Assistances.Factory.Instance.CreateAssistanceGradationAttention();
+                Assistances.AssistanceGradationAttention end = Assistances.Factory.Instance.CreateAssistanceGradationAttention("AssistanceGradationEnd");
                 end.AddAssistance(Assistances.Factory.Instance.CreateDialogNoButton("", "Ok! We let you do.", AssistancesAlphaInteractionSurface.transform));
 
-                //Assistances.AssistanceGradationAttention yesNo1 = new Assistances.AssistanceGradationAttention();
-                Assistances.AssistanceGradationAttention yesNo1 =  Assistances.Factory.Instance.CreateAssistanceGradationAttention();
-                yesNo1.AddAssistance(Assistances.Factory.Instance.CreateDialogNoButton("", "Don't you think there is something to do here?", AssistancesAlphaInteractionSurface.transform));
+                Assistances.AssistanceGradationAttention yesNo1 =  Assistances.Factory.Instance.CreateAssistanceGradationAttention("AssistanceGradationYesNo1");
+                //Assistances.Dialog yesNo1Base = Assistances.Factory.Instance.CreateDialogNoButton("", "Don't you think there is something to do here?", AssistancesAlphaInteractionSurface.transform);
+                Assistances.Dialog yesNo1Base = Assistances.Factory.Instance.CreateDialogTwoButtons("", "Don't you think there is something to do here?", "Yes", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.Yes, "No", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.No, AssistancesAlphaInteractionSurface.transform);
+                yesNo1Base.name = "Alpha_YesNo1";
+                yesNo1.AddAssistance(Assistances.Decorators.Factory.Instance.CreateBackground(yesNo1Base, Utilities.Materials.Colors.CyanGlowing));
+                yesNo1.AddAssistance(Assistances.Decorators.Factory.Instance.CreateBackground(yesNo1Base, Utilities.Materials.Colors.OrangeGlowing));
 
-                AssistancesAlphaGradation = Assistances.Factory.Instance.CreateAssistanceGradationExplicit();
+                AssistancesAlphaGradation = Assistances.Factory.Instance.CreateAssistanceGradationExplicit("AssistanceGradationExplicitSortingObject");
                 AssistancesAlphaGradation.InfManager = InferenceManager;
 
                 AssistancesAlphaGradation.AddButton(ExclamationMark, Assistances.Buttons.Button.ButtonType.Yes, yesNo1);

@@ -46,15 +46,28 @@ namespace MATCH
                 //DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Called");
             }
 
+            /*
+             * Don't forget to add a non generic name to the assistance, because it will be used to check if it has already been registered to the list. Indeed, as we can use decorators, the same EventHandler can be triggered several times, hence this mechanism.
+             * */
             public Assistance AddAssistance(Assistance assistance)
             {
-                DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Called for assistance " + assistance.name);
-
                 /*assistance.EventHelpButtonClicked += delegate (System.Object o, EventArgs e)
                 {
                     DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Called 2");
                 };*/
 
+                // We first look if the assistance has already been registered. If so, then the EventHandler won't be subscribed again.
+                bool isAlreadyThere = false;
+                foreach (Assistance a in Gradation)
+                {
+                    if (a.name == assistance.name)
+                    {
+                        isAlreadyThere = true;
+                        break;
+                    }
+                }
+
+                // Now we add the assistance to the list
                 Gradation.Add(assistance);
                 if (GradationCurrent == -1)
                 {
@@ -67,10 +80,19 @@ namespace MATCH
 
                     Gradation.Last().EventHelpButtonClicked += CHelpButtonClicked;
                 }*/
-                Gradation.Last().EventHelpButtonClicked += CHelpButtonClicked;
 
+                //If the assistance was not registered yet, then the event handler is subcribed.
+                if (isAlreadyThere == false)
+                {
+                    //DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Adding EventHandler for assistance " + assistance.name);
+
+                    Gradation.Last().EventHelpButtonClicked += CHelpButtonClicked;
+                }
+                else
+                {
+                    //DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Assistance " + assistance.name + " is already there, so no EventHandler will be added");
+                }
                 
-
                 return assistance;
             }
 
@@ -135,12 +157,12 @@ namespace MATCH
                 }
             }
 
-            public void ShowHelpCurrentGradation(bool show)
+            public void ShowHelpCurrentGradation(bool show, EventHandler callback)
             {
                 if (GradationCurrent > -1)
                 {
                     GradationCurrent = 0;
-                    Gradation[GradationCurrent].ShowHelp(show);
+                    Gradation[GradationCurrent].ShowHelp(show, callback);
                 }
                 else
                 {

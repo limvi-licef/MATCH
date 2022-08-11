@@ -75,8 +75,8 @@ namespace MATCH
                 m_plantsManager = new PlantsManager(m_graphPlants, transform);
 
                 // Add buttons to admin menu
-                AdminMenu.Instance.addButton("Add plant", CallbackAddPlant, AdminMenu.Panels.Obstacles);
-                AdminMenu.Instance.addButton("Clear plant paths", delegate ()
+                AdminMenu.Instance.AddButton("Add plant", CallbackAddPlant, AdminMenu.Panels.Obstacles);
+                AdminMenu.Instance.AddButton("Clear plant paths", delegate ()
                 {
                     for (int i = 0; i < m_plantsManager.GetNbPlants(); i++)
                     {
@@ -109,7 +109,7 @@ namespace MATCH
                     p.GetHighlight().Hide(Utilities.Utility.GetEventHandlerEmpty());
 
                     // Setting the color back to unwatered
-                    p.GetHighlight().SetMaterial("Mouse_Yellow_Glowing");
+                    p.GetHighlight().SetMaterial(Utilities.Materials.Colors.YellowGlowing);
 
                     e?.Invoke(this, EventArgs.Empty);
                 }, Utilities.Utility.GetEventHandlerEmpty());
@@ -142,7 +142,7 @@ namespace MATCH
                 // Object required
                 m_pointOfReferenceForPaths = Instantiate(m_refInteractionSurface, transform);
                 Assistances.InteractionSurface interactionSurfaceController = m_pointOfReferenceForPaths.GetComponent<Assistances.InteractionSurface>();
-                interactionSurfaceController.SetColor("Mouse_Purple_Glowing");
+                interactionSurfaceController.SetColor(Utilities.Materials.Colors.PurpleGlowing);
                 interactionSurfaceController.SetScaling(new Vector3(0.6f, 0.01f, 0.4f));
                 m_pointOfReferenceForPaths.position = new Vector3(0.846999645f, 0.542999983f, 5.22099972f);
                 interactionSurfaceController.SetAdminButtons("plants", AdminMenu.Panels.Obstacles);
@@ -150,7 +150,7 @@ namespace MATCH
                 interactionSurfaceController.SetPreventResizeY(true);
                 interactionSurfaceController.SetObjectResizable(true);
 
-                Assistances.Basic successController = Assistances.Factory.Instance.CreateCube("Mouse_Congratulation", m_pointOfReferenceForPaths);
+                Assistances.Basic successController = Assistances.Factory.Instance.CreateCube(Utilities.Materials.Textures.Congratulation, m_pointOfReferenceForPaths);
 
                 FiniteStateMachine.MouseUtilitiesGradationAssistance sSuccess = m_stateMachineMain.addNewAssistanceGradation("Success");
                 sSuccess.setFunctionHideAndShow(successController);
@@ -185,7 +185,7 @@ namespace MATCH
 
                 Transform faucetView = Instantiate(m_refInteractionSurface, transform);
                 Assistances.InteractionSurface faucetController = faucetView.GetComponent<Assistances.InteractionSurface>();
-                faucetController.SetColor("Mouse_Cyan_Glowing");
+                faucetController.SetColor(Utilities.Materials.Colors.CyanGlowing);
                 faucetController.SetScaling(new Vector3(0.1f, 0.1f, 0.1f));
                 faucetView.position = new Vector3(0.948000014f, 0.592000008f, 5.36800003f);
                 faucetController.SetAdminButtons("faucet");
@@ -335,8 +335,8 @@ namespace MATCH
                 m_stateMachineMain.setGradationInitial("StandBy");
 
                 // Display graphs
-                m_graphMain.setManager(m_stateMachineMain);
-                m_graphHelp.setManager(m_stateMachineAssistanceWateringPlants);
+                m_graphMain.SetManager(m_stateMachineMain);
+                m_graphHelp.SetManager(m_stateMachineAssistanceWateringPlants);
                 m_plantsManager.DisplayGraphLastPlant();
 
                 DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Current state: " + m_stateMachineMain.getGradationCurrent());
@@ -348,7 +348,7 @@ namespace MATCH
 
                 Plant p = m_plantsManager.GetPlant(index);
 
-                Vector3[] corners = m_pathFinderEngine.computePath(m_pointOfReferenceForPaths, p.GetInteractionSurface().transform);
+                Vector3[] corners = m_pathFinderEngine.ComputePath(m_pointOfReferenceForPaths, p.GetInteractionSurface().transform);
 
                 LineRenderer lineRenderer = m_plantsManager.GetLineRenderer(index);
                 lineRenderer.positionCount = corners.Length;
@@ -427,7 +427,7 @@ namespace MATCH
                 LineRenderer lineRenderer = gameObjectForLine.AddComponent<LineRenderer>();
                 lineRenderer.startWidth = 0.017f;
                 lineRenderer.endWidth = 0.017f;
-                lineRenderer.material = Resources.Load("Mouse_Green_Glowing", typeof(Material)) as Material;
+                lineRenderer.material = Resources.Load(Utilities.Materials.Colors.GreenGlowing, typeof(Material)) as Material;
                 lineRenderer.positionCount = 0;
 
                 m_plantsLines.Add(lineRenderer);
@@ -501,12 +501,12 @@ namespace MATCH
 
                 Id = id;
 
-                InteractionSurface = Assistances.Factory.Instance.CreateInteractionSurface(id, AdminMenu.Panels.Obstacles, new Vector3(0.1f, 0.1f, 0.1f), "Mouse_Yellow_Glowing", true, true, delegate (System.Object o, EventArgs e)
+                InteractionSurface = Assistances.Factory.Instance.CreateInteractionSurface(id, AdminMenu.Panels.Obstacles, new Vector3(0.1f, 0.1f, 0.1f), Utilities.Materials.Colors.YellowGlowing, true, true, delegate (System.Object o, EventArgs e)
                 {
                     s_moved?.Invoke(this, EventArgs.Empty);
                 }, parent);
 
-                Highlight = Assistances.Factory.Instance.CreateCube("Mouse_Yellow_Glowing", false, new Vector3(InteractionSurface.GetInteractionSurface().localScale.x, 0.6f, InteractionSurface.GetInteractionSurface().localScale.z), new Vector3(0, -0.35f, 0), false, InteractionSurface.transform);
+                Highlight = Assistances.Factory.Instance.CreateCube(Utilities.Materials.Colors.YellowGlowing, false, new Vector3(InteractionSurface.GetInteractionSurface().localScale.x, 0.6f, InteractionSurface.GetInteractionSurface().localScale.z), new Vector3(0, -0.35f, 0), false, InteractionSurface.transform);
 
                 InteractionSurface.EventInteractionSurfaceScaled += delegate
                 {
@@ -543,11 +543,11 @@ namespace MATCH
                 {
                     DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Plant " + Id + " has been watered");
 
-                    Highlight.SetMaterial("Mouse_Green_Glowing");
+                    Highlight.SetMaterial(Utilities.Materials.Colors.GreenGlowing);
                 }, Utilities.Utility.GetEventHandlerEmpty());
                 sHighlightWatered.setFunctionHide(delegate (EventHandler e)
                 {
-                    Highlight.SetMaterial("Mouse_Yellow_Glowing");
+                    Highlight.SetMaterial(Utilities.Materials.Colors.YellowGlowing);
                     Highlight.Hide(Utilities.Utility.GetEventHandlerEmpty());
 
                     e?.Invoke(this, EventArgs.Empty);
@@ -579,21 +579,6 @@ namespace MATCH
             public EventHandler GotoStateHighlightWatered()
             {
                 FiniteStateMachine.MouseUtilitiesGradationAssistance state = GetState("highlightWatered");
-                //state.addFunctionShow(e, MouseUtilities.getEventHandlerEmpty());
-
-                /*state.addFunctionShow(delegate (EventHandler e)
-                {
-                    MouseDebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, MouseDebugMessagesManager.MessageLevel.Info, "Plant " + m_id + " has been watered");
-
-                    m_highlight.setMaterialToChild("Mouse_Green_Glowing");
-                }, callback);
-                state.setFunctionHide(delegate (EventHandler e)
-                {
-                    m_highlight.setMaterialToChild("Mouse_Yellow_Glowing");
-                    m_highlight.hide(MouseUtilities.getEventHandlerEmpty());
-
-                    e?.Invoke(this, EventArgs.Empty);
-                }, MouseUtilities.getEventHandlerEmpty());*/
 
                 return GetState("highlight").goToState(state);
             }
@@ -625,7 +610,7 @@ namespace MATCH
 
             public void DisplayGraph(FiniteStateMachine.Display graph)
             {
-                graph.setManager(m_grabAttentionManager);
+                graph.SetManager(m_grabAttentionManager);
             }
         }
     }

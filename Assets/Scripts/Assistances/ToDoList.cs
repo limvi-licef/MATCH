@@ -33,7 +33,7 @@ namespace MATCH
             // Start is called before the first frame update
             void Start()
             {
-                AdminMenu.Instance.addButton("Bring ToDo List window", callbackBringAgenda);
+                AdminMenu.Instance.AddButton("Bring ToDo List window", callbackBringAgenda);
 
             }
 

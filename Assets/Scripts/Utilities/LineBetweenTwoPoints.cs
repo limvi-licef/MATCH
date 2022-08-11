@@ -31,21 +31,21 @@ namespace MATCH
 
             public class LineBetweenTwoPoints : MonoBehaviour
             {
-                string m_defaultMaterial = "Mouse_Orange_Glowing";
-                string m_highlightMaterial = "Mouse_Cyan_Glowing";
+                string DefaultMaterial = Utilities.Materials.Colors.OrangeGlowing;
+                string HighlightMaterial = Utilities.Materials.Colors.CyanGlowing;
 
-                LineRenderer m_controller;
+                LineRenderer Controller;
 
                 private void Awake()
                 {
-                    m_controller = gameObject.GetComponent<LineRenderer>();
+                    Controller = gameObject.GetComponent<LineRenderer>();
                 }
 
                 // Start is called before the first frame update
                 void Start()
                 {
                     //LineRenderer temp = gameObject.GetComponent<LineRenderer>();
-                    m_controller.useWorldSpace = false;
+                    Controller.useWorldSpace = false;
                 }
 
                 // Update is called once per frame
@@ -54,12 +54,12 @@ namespace MATCH
 
                 }
 
-                public void drawLine(GameObject start, GameObject end)
+                public void DrawLine(GameObject start, GameObject end)
                 {
                     LineRenderer line = gameObject.AddComponent<LineRenderer>();
                     line.startColor = Color.blue;
                     line.endColor = Color.blue;
-                    line.material = new Material(Resources.Load(m_defaultMaterial, typeof(Material)) as Material);
+                    line.material = new Material(Resources.Load(DefaultMaterial, typeof(Material)) as Material);
                     line.startWidth = 0.001f;
                     line.endWidth = 0.001f;
                     line.positionCount = 2;
@@ -69,32 +69,32 @@ namespace MATCH
                     line.SetPosition(1, end.transform.position);
                 }
 
-                public void highlightConnector(bool highlight)
+                public void HighlightConnector(bool highlight)
                 {
                     if (highlight)
                     {
-                        m_controller.material = new Material(Resources.Load(m_highlightMaterial, typeof(Material)) as Material);
+                        Controller.material = new Material(Resources.Load(HighlightMaterial, typeof(Material)) as Material);
                     }
                     else
                     {
-                        m_controller.material = new Material(Resources.Load(m_defaultMaterial, typeof(Material)) as Material);
+                        Controller.material = new Material(Resources.Load(DefaultMaterial, typeof(Material)) as Material);
                     }
                 }
 
                 /**
                  * Be careful: Z is ignored!
                  * */
-                public void drawLineWithArrow(GameObject start, GameObject end, float offsetX = 0.0f, float offsetY = 0.0f)
+                public void DrawLineWithArrow(GameObject start, GameObject end, float offsetX = 0.0f, float offsetY = 0.0f)
                 {
                     // Initializing
 
-                    m_controller.startColor = Color.blue;
-                    m_controller.endColor = Color.blue;
-                    m_controller.material = new Material(Resources.Load(m_defaultMaterial, typeof(Material)) as Material);
-                    m_controller.startWidth = 0.001f;
-                    m_controller.endWidth = 0.001f;
-                    m_controller.positionCount = 5;
-                    m_controller.useWorldSpace = true;
+                    Controller.startColor = Color.blue;
+                    Controller.endColor = Color.blue;
+                    Controller.material = new Material(Resources.Load(DefaultMaterial, typeof(Material)) as Material);
+                    Controller.startWidth = 0.001f;
+                    Controller.endWidth = 0.001f;
+                    Controller.positionCount = 5;
+                    Controller.useWorldSpace = true;
 
                     Vector3 p1 = start.transform.localPosition;//new Vector2(start.transform.localPosition.x, start.transform.localPosition.y);
                     Vector3 p2 = end.transform.localPosition;// new Vector2(end.transform.localPosition.x, end.transform.localPosition.y) ;
@@ -131,11 +131,11 @@ namespace MATCH
                     Vector3 p4r = (Quaternion.AngleAxis(angle, new Vector3(0, 0, 1)) * new Vector3(dir4.x, dir4.y)) + p2;
 
                     // Drawing
-                    m_controller.SetPosition(0, p1);
-                    m_controller.SetPosition(1, p2);
-                    m_controller.SetPosition(2, p3r);
-                    m_controller.SetPosition(3, p4r);
-                    m_controller.SetPosition(4, p2);
+                    Controller.SetPosition(0, p1);
+                    Controller.SetPosition(1, p2);
+                    Controller.SetPosition(2, p3r);
+                    Controller.SetPosition(3, p4r);
+                    Controller.SetPosition(4, p2);
                 }
             }
 

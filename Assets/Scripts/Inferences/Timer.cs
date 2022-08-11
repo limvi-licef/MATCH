@@ -40,7 +40,7 @@ namespace MATCH
                 ImmediateTrigger = false;
                 StartTimer = false;
 
-                AdminMenu.Instance.addButton("Immediate trigger for " + id, CallbackImmediateTrigger);
+                AdminMenu.Instance.AddButton("Immediate trigger for " + id, CallbackImmediateTrigger);
 
             }
 

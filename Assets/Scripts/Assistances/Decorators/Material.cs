@@ -83,9 +83,9 @@ namespace MATCH
                     }
                 }
 
-                public override void ShowHelp(bool show)
+                public override void ShowHelp(bool show, EventHandler callback)
                 {
-                    AssistanceToDecorate.GetAssistance().ShowHelp(show);
+                    AssistanceToDecorate.GetAssistance().ShowHelp(show, callback);
                 }
 
                 public Assistance GetAssistance()

@@ -47,6 +47,7 @@ namespace MATCH
             if (Utilities.Utility.IsEditorSimulator() || Utilities.Utility.IsEditorGameView())
             {
                 //DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Editor simulator");
+                AdminMenu.Instance.MenuStatic = true;
                 if (ObjectRecognition != null)
                 {
                     ObjectRecognition.SetActive(false);
@@ -55,42 +56,43 @@ namespace MATCH
             else
             { // Means running in the Hololens, so adjusting some parameters
                 DebugMessagesManager.Instance.m_displayOnConsole = false;
-                AdministrationMenu.m_menuStatic = false;
+                //AdministrationMenu.MenuStatic = false;
+                AdminMenu.Instance.MenuStatic = false;
                 VirtualRoom.SetActive(false); // In the editor, the user does what he wants, but in the hololens, this should surely be disabled.
             }
 
             /**
              * There is one and only one todo list to 
              * */
-            AdminMenu.Instance.addButton("Bring to do list window", delegate () { Utilities.Utility.bringObject(TodoList.transform); }); //add button to the admin menu
-            AdminMenu.Instance.addSwitchButton("Lock To Do List", callbackLockToDo);
-            initializeTodoList();
+            AdminMenu.Instance.AddButton("Bring to do list window", delegate () { Utilities.Utility.bringObject(TodoList.transform); }); //add button to the admin menu
+            AdminMenu.Instance.AddSwitchButton("Lock To Do List", CallbackLockToDo);
+            InitializeTodoList();
         }
 
-        void initializeTodoList()
+        void InitializeTodoList()
         {
             // First: check if some scenarios have been added, and if yes, add them to the GUI
             List<MATCH.Scenarios.Scenario> scenarios = MATCH.Scenarios.Manager.Instance.getScenarios();
             foreach (MATCH.Scenarios.Scenario scenario in scenarios)
             {
-                addScenarioToGUI(scenario);
+                AddScenarioToGUI(scenario);
             }
 
             // Second: be prepared in case new scenarios are added
-            MATCH.Scenarios.Manager.Instance.s_scenarioAdded += callbackNewScenarioInManager;
+            MATCH.Scenarios.Manager.Instance.s_scenarioAdded += CallbackNewScenarioInManager;
         }
 
-        void callbackNewScenarioInManager(System.Object o, EventArgs e)
+        void CallbackNewScenarioInManager(System.Object o, EventArgs e)
         {
             DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Called");
 
-            addScenarioToGUI(MATCH.Scenarios.Manager.Instance.getScenarios().Last());
+            AddScenarioToGUI(MATCH.Scenarios.Manager.Instance.getScenarios().Last());
         }
 
         /**
          * Thi function adds a button to the todolist GUI, and connects this button to the EventHandler of the scenario given an input parameter, so that the button background reflect the status of the scenario
          * */
-        void addScenarioToGUI(MATCH.Scenarios.Scenario scenario)
+        void AddScenarioToGUI(MATCH.Scenarios.Scenario scenario)
         {
             MATCH.Assistances.Buttons.Basic button = TodoList.AddButton(scenario.getId(), true); //add button
             scenario.s_challengeOnStart += button.CallbackSetButtonBackgroundCyan; //m_todo.callbackStartButton;
@@ -107,9 +109,9 @@ namespace MATCH
         {
             string date = System.DateTime.Now.ToString("D", new System.Globalization.CultureInfo("fr-FR"));
             string hour = System.DateTime.Now.ToString("HH:mm");
-            TodoList.SetDescription("Date : " + date + "                              Heure : " + hour + "\nSaison : " + getSeason(System.DateTime.Now) + "\n\nTâches à réaliser : ", 0.1f);
+            TodoList.SetDescription("Date : " + date + "                              Heure : " + hour + "\nSaison : " + GetSeason(System.DateTime.Now) + "\n\nTâches à réaliser : ", 0.1f);
         }
-        string getSeason(DateTime date)
+        string GetSeason(DateTime date)
         {
             float value = (float)date.Month + date.Day / 100f;
             if (value < 3.21 || value >= 12.22) return "Hiver";
@@ -121,7 +123,7 @@ namespace MATCH
         /**
          * To switch between a movable object or not
          * */
-        void callbackLockToDo()
+        void CallbackLockToDo()
         {
             if (TodoList.GetComponent<ObjectManipulator>().enabled)
                 TodoList.GetComponent<ObjectManipulator>().enabled = false;

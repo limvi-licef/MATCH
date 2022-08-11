@@ -43,11 +43,11 @@ namespace MATCH
                 cube.transform.parent = parent;
 
                 // Add buttons to interface
-                AdminMenu.Instance.addButton("Bring " + name, delegate ()
+                AdminMenu.Instance.AddButton("Bring " + name, delegate ()
                 {
                     MATCH.Utilities.Utility.bringObject(cube.transform);
                 }, AdminMenu.Panels.Obstacles);
-                AdminMenu.Instance.addSwitchButton("Hide " + name, delegate ()
+                AdminMenu.Instance.AddSwitchButton("Hide " + name, delegate ()
                 {
                     MATCH.Utilities.Utility.ShowInteractionSurface(cube.transform, !cube.GetComponent<Renderer>().enabled);
                 }, AdminMenu.Panels.Obstacles);

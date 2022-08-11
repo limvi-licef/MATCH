@@ -244,17 +244,19 @@ namespace MATCH
                 return controller;
             }
 
-            public AssistanceGradationExplicit CreateAssistanceGradationExplicit()
+            public AssistanceGradationExplicit CreateAssistanceGradationExplicit(string name)
             {
                 Transform view = Instantiate(RefAssistanceGradationExplicit.transform);
                 AssistanceGradationExplicit controller = view.GetComponent<AssistanceGradationExplicit>();
+                view.name = name;
                 return controller;
             }
 
-            public AssistanceGradationAttention CreateAssistanceGradationAttention()
+            public AssistanceGradationAttention CreateAssistanceGradationAttention(string name)
             {
                 Transform view = Instantiate(RefAssistanceGradationAttention.transform);
                 AssistanceGradationAttention controller = view.GetComponent<AssistanceGradationAttention>();
+                view.name = name;
                 return controller;
             }    
         }

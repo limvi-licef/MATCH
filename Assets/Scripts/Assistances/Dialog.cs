@@ -28,7 +28,7 @@ namespace MATCH
 {
     namespace Assistances
     {
-        public class Dialog : Assistance
+        public class Dialog : Assistance, IPanel
         {
             Transform ButtonsParentView;
             Transform RefButtonView;
@@ -142,17 +142,18 @@ namespace MATCH
                 return tempButtonController;
             }
 
-            bool m_mutexHide = false;
+            bool MutexHide = false;
             public override void Hide(EventHandler eventHandler)
             {
-                if (m_mutexHide == false)
+                if (MutexHide == false)
                 {
-                    m_mutexHide = true;
+                    MutexHide = true;
 
                     MATCH.Utilities.Utility.AnimateDisappearInPlace(TitleView.gameObject, TitleScalingOriginal, delegate
                     {
-                        m_mutexHide = false;
+                        MutexHide = false;
                         eventHandler?.Invoke(this, EventArgs.Empty);
+                        IsDisplayed = false;
                     });
 
                     Utilities.Utility.AnimateDisappearInPlace(DescriptionView.gameObject, DescriptionScalingOriginal);
@@ -161,16 +162,20 @@ namespace MATCH
 
                     Utilities.Utility.AnimateDisappearInPlace(BackgroundView.gameObject, BackgoundScalingOriginal);
                 }
+                else
+                {
+                    DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Warning, "Mutex locked, nothing will happen");
+                }
             }
 
-            bool m_mutexShow = false;
+            bool MutexShow = false;
             public override void Show(EventHandler eventHandler)
             {
                 //DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Called for object " + name);
 
-                if (m_mutexShow == false)
+                if (MutexShow == false)
                 {
-                    m_mutexShow = true;
+                    MutexShow = true;
 
                     if (AdjustToHeight)
                     {
@@ -183,10 +188,11 @@ namespace MATCH
                         //DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Background shown");
 
                         Utilities.Utility.AnimateAppearInPlace(TitleView.gameObject);
-                        Utilities.Utility.AnimateAppearInPlace(ButtonsParentView.gameObject);
+                        //Utilities.Utility.AnimateAppearInPlace(ButtonsParentView.gameObject);
                         Utilities.Utility.AnimateAppearInPlace(DescriptionView.gameObject);
 
-                        m_mutexShow = false;
+                        MutexShow = false;
+                        IsDisplayed = true;
                         eventHandler?.Invoke(this, EventArgs.Empty);
 
                     });
@@ -197,24 +203,16 @@ namespace MATCH
                 }
             }
 
-            public override void ShowHelp(bool show)
+            public override void ShowHelp(bool show, EventHandler callback)
             {
-                // Todo
+                ButtonsParentView.gameObject.SetActive(show);
+                callback?.Invoke(this, EventArgs.Empty);
             }
 
             public override Transform GetTransform()
             {
                 return transform;
             }
-
-            /**
-             * This function changes the color - you still have the responsibility to disable the callback if required
-             * */
-            /*public void CheckButton(Buttons.Basic button, bool check)
-            {
-                //m_states[currentState.m_currentState.getId()].transform.Find("BackPlate").Find("Quad").GetComponent<Renderer>().material = Resources.Load("Mouse_Cyan_Glowing", typeof(Material)) as Material;
-                button.CheckButton(check);
-            }*/
 
             public void EnableBillboard(bool enable)
             {
@@ -224,6 +222,31 @@ namespace MATCH
             public override bool IsDecorator()
             {
                 return false;
+            }
+
+            void IPanel.SetBackgroundColor(string colorName)
+            {
+                BackgroundView.GetComponent<Renderer>().material = Resources.Load(colorName, typeof(Material)) as Material;
+            }
+
+            void IPanel.SetEdgeColor(string colorName)
+            {
+                throw new NotImplementedException();
+            }
+
+            void IPanel.SetEdgeThickness(float thickness)
+            {
+                throw new NotImplementedException();
+            }
+
+            void IPanel.EnableWeavingHand(bool enable)
+            {
+                throw new NotImplementedException();
+            }
+
+            Assistance IAssistance.GetAssistance()
+            {
+                return this;
             }
         }
 

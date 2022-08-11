@@ -51,13 +51,13 @@ namespace MATCH
 
         void initializeScenario()
         {
-            Assistances.InteractionSurface demo = Assistances.Factory.Instance.CreateInteractionSurface("User Demos", AdminMenu.Panels.Obstacles, new Vector3(1.1f, 0.02f, 0.7f), "Mouse_Purple_Glowing", true, false, Utilities.Utility.GetEventHandlerEmpty(), transform);
+            Assistances.InteractionSurface demo = Assistances.Factory.Instance.CreateInteractionSurface("User Demos", AdminMenu.Panels.Obstacles, new Vector3(1.1f, 0.02f, 0.7f), Utilities.Materials.Colors.PurpleGlowing, true, false, Utilities.Utility.GetEventHandlerEmpty(), transform);
 
-            Assistances.Basic demoSurface = Assistances.Factory.Instance.CreateFlatSurface("Mouse_Cyan_Glowing", new Vector3(demo.GetLocalPosition().x, demo.GetLocalPosition().y + 0.02f, demo.GetLocalPosition().z), demo.transform);
+            Assistances.Basic demoSurface = Assistances.Factory.Instance.CreateFlatSurface(Utilities.Materials.Colors.CyanGlowing, new Vector3(demo.GetLocalPosition().x, demo.GetLocalPosition().y + 0.02f, demo.GetLocalPosition().z), demo.transform);
             demoSurface.SetScale(new Vector3(demo.GetLocalScale().x, demo.GetLocalScale().y, demo.GetLocalScale().z));
             demoSurface.Show(Utilities.Utility.GetEventHandlerEmpty());
 
-            m_triggerGarbage = Assistances.Factory.Instance.CreateCube("Mouse_Garbage_Level1", demo.transform);
+            m_triggerGarbage = Assistances.Factory.Instance.CreateCube(Utilities.Materials.Textures.GarbageLevel1, demo.transform);
             m_triggerGarbage.SetLocalPosition(new Vector3(-0.2f, m_triggerGarbage.GetLocalPosition().y, m_triggerGarbage.GetLocalPosition().z));
             m_triggerGarbage.Show(Utilities.Utility.GetEventHandlerEmpty());
             m_triggerGarbage.s_touched += delegate (System.Object o, EventArgs e)
@@ -66,33 +66,33 @@ namespace MATCH
                 {
                     m_challengeGarbage.GetInference19h().CallbackOneMinuteTrigger();
                     m_challengeGarbageFirstLevelCalled = true;
-                    m_triggerGarbage.SetMaterial("Mouse_Garbage_Level2");
+                    m_triggerGarbage.SetMaterial(Utilities.Materials.Textures.GarbageLevel2);
                 }
                 else
                 {
                     m_challengeGarbage.GetInference19h30().CallbackOneMinuteTrigger();
                     m_challengeGarbageFirstLevelCalled = false;
-                    m_triggerGarbage.SetMaterial("Mouse_Garbage_Level2_Pressed");
+                    m_triggerGarbage.SetMaterial(Utilities.Materials.Textures.GarbageLevel2Pressed);
                 }
             };
 
-            m_triggerWateringPlants = Assistances.Factory.Instance.CreateCube("Mouse_Flower", demo.transform);
+            m_triggerWateringPlants = Assistances.Factory.Instance.CreateCube(Utilities.Materials.Textures.Flower, demo.transform);
             m_triggerWateringPlants.SetLocalPosition(new Vector3(0f, m_triggerWateringPlants.GetLocalPosition().y, m_triggerWateringPlants.GetLocalPosition().z));
             m_triggerWateringPlants.Show(Utilities.Utility.GetEventHandlerEmpty());
             m_triggerWateringPlants.s_touched += delegate (System.Object o, EventArgs e)
             {
                 m_challengeWatering.GetInference().CallbackOneMinuteTrigger();
-                m_triggerWateringPlants.SetMaterial("Mouse_Flower_Pressed");
+                m_triggerWateringPlants.SetMaterial(Utilities.Materials.Textures.FlowerPressed);
             };
 
 
-            m_triggerCleanTable = Assistances.Factory.Instance.CreateCube("Mouse_Clean_Table", demo.transform);
+            m_triggerCleanTable = Assistances.Factory.Instance.CreateCube(Utilities.Materials.Textures.CleanTable, demo.transform);
             m_triggerCleanTable.SetLocalPosition(new Vector3(0.2f, m_triggerCleanTable.GetLocalPosition().y, m_triggerCleanTable.GetLocalPosition().z));
             m_triggerCleanTable.Show(Utilities.Utility.GetEventHandlerEmpty());
             m_triggerCleanTable.s_touched += delegate (System.Object o, EventArgs e)
             {
                 m_challengeTable.GetInference().CallbackOneMinuteTrigger();
-                m_triggerCleanTable.SetMaterial("Mouse_Clean_Table_Pressed");
+                m_triggerCleanTable.SetMaterial(Utilities.Materials.Textures.CleanTablePressed);
             };
 
             Assistances.Dialog dialogInstructions = Assistances.Factory.Instance.CreateDialogNoButton("", "Touchez un des boutons pour commencer un scénario. Le scénario commence 10 secondes après avoir touché le bouton.", demo.transform);
@@ -111,18 +111,18 @@ namespace MATCH
 
         void callbackChallengeGarbageStandBy(System.Object o, EventArgs e)
         {
-            m_triggerGarbage.SetMaterial("Mouse_Garbage_Level1");
+            m_triggerGarbage.SetMaterial(Utilities.Materials.Textures.GarbageLevel1);
             m_challengeGarbageFirstLevelCalled = false;
         }
 
         void callbackChallengeCleanTable(System.Object o, EventArgs e)
         {
-            m_triggerCleanTable.SetMaterial("Mouse_Clean_Table");
+            m_triggerCleanTable.SetMaterial(Utilities.Materials.Textures.CleanTable);
         }
 
         void callbackChallengeWateringPlants(System.Object o, EventArgs e)
         {
-            m_triggerWateringPlants.SetMaterial("Mouse_Flower");
+            m_triggerWateringPlants.SetMaterial(Utilities.Materials.Textures.Flower);
         }
     }
 
