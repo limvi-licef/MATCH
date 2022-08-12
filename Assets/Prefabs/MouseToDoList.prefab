@@ -285,6 +285,7 @@ GameObject:
   - component: {fileID: -2133202657851214484}
   - component: {fileID: 8817966347732426958}
   - component: {fileID: 4872904015616280274}
+  - component: {fileID: 9011939487763809346}
   m_Layer: 0
   m_Name: MouseToDoList
   m_TagString: Untagged
@@ -509,6 +510,19 @@ MonoBehaviour:
   executionOrder: 0
   constraintOnRotation: 5
   useLocalSpaceForConstraint: 0
+--- !u!65 &9011939487763809346
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6768878959026650934}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.6, y: 0.3, z: 0.02}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &6768878959641754251
 GameObject:
   m_ObjectHideFlags: 0

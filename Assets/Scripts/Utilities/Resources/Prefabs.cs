@@ -37,12 +37,13 @@ namespace MATCH
 
                 public static string DecoratorMaterial = Path + "Assistances/Decorators/Material";
                 public static string DecoratorBackgroundColor = Path + "Assistances/Decorators/BackgroundColor";
+                public static string DecoratorEdge = Path + "Assistances/Decorators/Edge";
 
                 public static Transform Load(string prefabPath)
                 {
-                    return Resources.Load<Transform>(prefabPath);
+                    return UnityEngine.Object.Instantiate<Transform>(Resources.Load<Transform>(prefabPath));
                 }
-            }
+            } 
         }
     }
 }

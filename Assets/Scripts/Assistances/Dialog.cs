@@ -46,6 +46,9 @@ namespace MATCH
 
             public bool AdjustToHeight { get; set; } = true;
 
+            Vector3 BoxColliderOriginalCenter;
+            Vector3 BoxColliderOriginalSize;
+
             private void Awake()
             {
                 // Instantiate variables
@@ -66,6 +69,11 @@ namespace MATCH
                 BackgoundScalingOriginal = BackgroundView.localScale;
                 TitleScalingOriginal = TitleView.localScale;
                 DescriptionScalingOriginal = DescriptionView.localScale;
+
+                // Storing the original center and size of the box collider
+                BoxCollider box = transform.GetComponent<BoxCollider>();
+                BoxColliderOriginalCenter = box.center;
+                BoxColliderOriginalSize = box.size;
             }
 
             public void SetTitle(string text, float fontSize = -1.0f)
@@ -98,11 +106,11 @@ namespace MATCH
             public Buttons.Basic AddButton(string text/*, EventHandler eventHandler*/, bool autoScaling, float fontSize = -1.0f)
             {
                 // Instantiate the button
-                Transform newButton = Instantiate(RefButtonView, ButtonsParentView);
-                newButton.name = text;
-                ButtonConfigHelper configHelper = newButton.GetComponent<ButtonConfigHelper>();
+                Transform view = Instantiate(RefButtonView, ButtonsParentView);
+                view.name = text;
+                ButtonConfigHelper configHelper = view.GetComponent<ButtonConfigHelper>();
                 configHelper.MainLabelText = text;
-                TextMeshPro tmp = newButton.Find("IconAndText").Find("TextMeshPro").GetComponent<TextMeshPro>();
+                TextMeshPro tmp = view.Find("IconAndText").Find("TextMeshPro").GetComponent<TextMeshPro>();
 
                 // Get the text mesh pro component to set the fontsize
                 if (fontSize > 0.0f)
@@ -111,9 +119,9 @@ namespace MATCH
                 }
 
                 // Store the button
-                ButtonsView.Add(newButton);
-                Buttons.Basic tempButtonController = newButton.GetComponent<Buttons.Basic>();
-                ButtonsController.Add(tempButtonController); // Only for the ease of use, nothing special here.
+                ButtonsView.Add(view);
+                Buttons.Basic controller = view.GetComponent<Buttons.Basic>();
+                ButtonsController.Add(controller); // Only for the ease of use, nothing special here.
 
                 // Locate button
                 float scalingx = 1.0f;
@@ -139,7 +147,11 @@ namespace MATCH
 
                 ButtonsParentView.GetComponent<GridObjectCollection>().UpdateCollection();
 
-                return tempButtonController;
+                // Calling the assistancecallback
+                controller.EventButtonClicked += CButtonHelp;
+
+                // Return
+                return controller;
             }
 
             bool MutexHide = false;
@@ -177,25 +189,32 @@ namespace MATCH
                 {
                     MutexShow = true;
 
-                    if (AdjustToHeight)
+                    if (IsDisplayed == false)
                     {
-                        Utilities.Utility.AdjustObjectHeightToHeadHeight(transform);
+                        if (AdjustToHeight)
+                        {
+                            Utilities.Utility.AdjustObjectHeightToHeadHeight(transform);
+                        }
+
+                        //DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Going to show the background");
+
+                        Utilities.Utility.AnimateAppearInPlace(BackgroundView.gameObject, BackgoundScalingOriginal, delegate {
+                            //DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Background shown");
+
+                            Utilities.Utility.AnimateAppearInPlace(TitleView.gameObject);
+                            //Utilities.Utility.AnimateAppearInPlace(ButtonsParentView.gameObject);
+                            Utilities.Utility.AnimateAppearInPlace(DescriptionView.gameObject);
+
+                            MutexShow = false;
+                            IsDisplayed = true;
+                            eventHandler?.Invoke(this, EventArgs.Empty);
+
+                        });
                     }
-
-                    //DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Going to show the background");
-
-                    Utilities.Utility.AnimateAppearInPlace(BackgroundView.gameObject, BackgoundScalingOriginal, delegate {
-                        //DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Background shown");
-
-                        Utilities.Utility.AnimateAppearInPlace(TitleView.gameObject);
-                        //Utilities.Utility.AnimateAppearInPlace(ButtonsParentView.gameObject);
-                        Utilities.Utility.AnimateAppearInPlace(DescriptionView.gameObject);
-
-                        MutexShow = false;
-                        IsDisplayed = true;
+                    else
+                    {
                         eventHandler?.Invoke(this, EventArgs.Empty);
-
-                    });
+                    }   
                 }
                 else
                 {
@@ -207,6 +226,20 @@ namespace MATCH
             {
                 ButtonsParentView.gameObject.SetActive(show);
                 callback?.Invoke(this, EventArgs.Empty);
+
+                BoxCollider box = transform.GetComponent<BoxCollider>();
+
+                if (show)
+                { // Modify the box cillider size and position so that the buttons can still be clicked
+                    GridObjectCollection buttonsLayout = ButtonsParentView.GetComponent<GridObjectCollection>();
+                    box.center = new Vector3(BackgroundView.localPosition.x, BackgroundView.localPosition.y + buttonsLayout.CellHeight, BackgroundView.localPosition.z);
+                    box.size = new Vector3(box.size.x, BackgroundView.localScale.y - buttonsLayout.CellHeight, box.size.z);
+                }
+                else
+                { // Set the box collider to it original position and size
+                    box.size = BoxColliderOriginalSize;
+                    box.center = BoxColliderOriginalCenter;
+                }
             }
 
             public override Transform GetTransform()
@@ -224,22 +257,22 @@ namespace MATCH
                 return false;
             }
 
-            void IPanel.SetBackgroundColor(string colorName)
+            public void SetBackgroundColor(string colorName)
             {
                 BackgroundView.GetComponent<Renderer>().material = Resources.Load(colorName, typeof(Material)) as Material;
             }
 
-            void IPanel.SetEdgeColor(string colorName)
+            public void SetEdgeColor(string colorName)
             {
                 throw new NotImplementedException();
             }
 
-            void IPanel.SetEdgeThickness(float thickness)
+            public void SetEdgeThickness(float thickness)
             {
                 throw new NotImplementedException();
             }
 
-            void IPanel.EnableWeavingHand(bool enable)
+            public void EnableWeavingHand(bool enable)
             {
                 throw new NotImplementedException();
             }
@@ -247,6 +280,11 @@ namespace MATCH
             Assistance IAssistance.GetAssistance()
             {
                 return this;
+            }
+
+            public Transform GetBackground()
+            {
+                return BackgroundView;
             }
         }
 

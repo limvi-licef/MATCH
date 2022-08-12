@@ -66,12 +66,25 @@ namespace MATCH
              * */
 			Assistances.InteractionSurface AssistancesAlphaInteractionSurface;
             Assistances.AssistanceGradationExplicit AssistancesAlphaGradation;
-            Assistances.AssistanceGradationAttention ExclamationMark;
+            Assistances.AssistanceGradationAttention Alpha1;
 
 
             // Start is called before the first frame update
             void Start()
             {
+                ///// Test
+                /*Assistances.Assistance test = Assistances.Factory.Instance.CreateDialogNoButton("Test", "", null);
+                Transform decoView = Utilities.Materials.Prefabs.Load(Utilities.Materials.Prefabs.DecoratorEdge);
+                Assistances.Decorators.Edge decoController = decoView.GetComponent<Assistances.Decorators.Edge>();
+
+                decoController.SetAssistanceToDecorate((Assistances.IPanel)test);
+                //decoController.Set
+
+                decoController.Show(Utilities.Utility.GetEventHandlerEmpty());
+                */
+                //// Test
+
+
                 FakeObject = transform.Find("FakeObject").gameObject;
 
                 ObjectDetectedInformation = null;
@@ -269,34 +282,37 @@ namespace MATCH
 
 
                 //Assistances.Basic cube = ;
-                ExclamationMark = Assistances.Factory.Instance.CreateAssistanceGradationAttention("AssistanceGradationExclamationMark");
-                Assistances.Basic cube = Assistances.Factory.Instance.CreateCube(Utilities.Materials.Colors.PurpleGlowing, AssistancesAlphaInteractionSurface.transform);
-                cube.name = "Alpha_Cube";
-                ExclamationMark.AddAssistance(Assistances.Decorators.Factory.Instance.CreateMaterial(cube, Utilities.Materials.Textures.Exclamation));
-                ExclamationMark.AddAssistance(Assistances.Decorators.Factory.Instance.CreateMaterial(cube, Utilities.Materials.Textures.ExclamationRed));
+                Alpha1 = Assistances.Factory.Instance.CreateAssistanceGradationAttention("AssistanceGradationExclamationMark");
+                Assistances.Basic alpha1Base = Assistances.Factory.Instance.CreateCube(Utilities.Materials.Colors.PurpleGlowing, AssistancesAlphaInteractionSurface.transform);
+                alpha1Base.name = "Alpha1";
+                Alpha1.AddAssistance(Assistances.Decorators.Factory.Instance.CreateMaterial(alpha1Base, Utilities.Materials.Textures.Exclamation));
+                Alpha1.AddAssistance(Assistances.Decorators.Factory.Instance.CreateMaterial(alpha1Base, Utilities.Materials.Textures.ExclamationRed));
 
                 Assistances.AssistanceGradationAttention end = Assistances.Factory.Instance.CreateAssistanceGradationAttention("AssistanceGradationEnd");
                 end.AddAssistance(Assistances.Factory.Instance.CreateDialogNoButton("", "Ok! We let you do.", AssistancesAlphaInteractionSurface.transform));
 
-                Assistances.AssistanceGradationAttention yesNo1 =  Assistances.Factory.Instance.CreateAssistanceGradationAttention("AssistanceGradationYesNo1");
-                //Assistances.Dialog yesNo1Base = Assistances.Factory.Instance.CreateDialogNoButton("", "Don't you think there is something to do here?", AssistancesAlphaInteractionSurface.transform);
+                Assistances.AssistanceGradationAttention alpha2 =  Assistances.Factory.Instance.CreateAssistanceGradationAttention("AssistanceGradationYesNo1");
+                Assistances.Dialog alpha2Base = Assistances.Factory.Instance.CreateDialogTwoButtons("", "You can do something here to tidy up your room", "I know what!", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.Yes, "I don't know", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.No, AssistancesAlphaInteractionSurface.transform);
+                alpha2Base.name = "Alpha2";
+                Assistances.Assistance alpha21 = alpha2.AddAssistance(Assistances.Decorators.Factory.Instance.CreateBackground(alpha2Base, Utilities.Materials.Colors.CyanGlowing));
+                //alpha2.
+                Assistances.Assistance alpha22 = alpha2.AddAssistance(Assistances.Decorators.Factory.Instance.CreateEdge((Assistances.IPanel)alpha21, Utilities.Materials.Colors.Red));
+                alpha2.AddAssistance(Assistances.Decorators.Factory.Instance.CreateBackground((Assistances.IPanel)alpha22, Utilities.Materials.Colors.OrangeGlowing));
 
-                /*Assistances.Basic cube2 = Assistances.Factory.Instance.CreateCube(Utilities.Materials.Colors.PurpleGlowing, AssistancesAlphaInteractionSurface.transform);
-                cube.name = "Alpha_Cube2";
-                yesNo1.AddAssistance(Assistances.Decorators.Factory.Instance.CreateMaterial(cube2, Utilities.Materials.Textures.Flower));
-                yesNo1.AddAssistance(Assistances.Decorators.Factory.Instance.CreateMaterial(cube2, Utilities.Materials.Textures.FlowerPressed));*/
-
-                Assistances.Dialog yesNo1Base = Assistances.Factory.Instance.CreateDialogTwoButtons("", "Don't you think there is something to do here?", "Yes", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.Yes, "No", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.No, AssistancesAlphaInteractionSurface.transform);
-                yesNo1Base.name = "Alpha_YesNo1";
-                yesNo1.AddAssistance(Assistances.Decorators.Factory.Instance.CreateBackground(yesNo1Base, Utilities.Materials.Colors.CyanGlowing));
-                yesNo1.AddAssistance(Assistances.Decorators.Factory.Instance.CreateBackground(yesNo1Base, Utilities.Materials.Colors.OrangeGlowing));
-                 
+                Assistances.AssistanceGradationAttention alpha3 = Assistances.Factory.Instance.CreateAssistanceGradationAttention("Alpha3");
+                Assistances.Dialog alpha3Base = Assistances.Factory.Instance.CreateDialogTwoButtons("", "Do you think the cup should be here?", "Yes", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.Yes, "No", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.No, AssistancesAlphaInteractionSurface.transform);
+                alpha3Base.name = "Alpha3";
+                alpha3.AddAssistance(Assistances.Decorators.Factory.Instance.CreateBackground(alpha3Base, Utilities.Materials.Colors.CyanGlowing));
+                alpha3.AddAssistance(Assistances.Decorators.Factory.Instance.CreateBackground(alpha3Base, Utilities.Materials.Colors.OrangeGlowing));
 
                 AssistancesAlphaGradation = Assistances.Factory.Instance.CreateAssistanceGradationExplicit("AssistanceGradationExplicitSortingObject");
                 AssistancesAlphaGradation.InfManager = InferenceManager;
 
-                AssistancesAlphaGradation.AddButton(ExclamationMark, Assistances.Buttons.Button.ButtonType.Yes, yesNo1);
-                AssistancesAlphaGradation.AddButton(ExclamationMark, Assistances.Buttons.Button.ButtonType.No, end);
+                // Connecting the buttons
+                AssistancesAlphaGradation.AddButton(Alpha1, Assistances.Buttons.Button.ButtonType.Yes, alpha2);
+                AssistancesAlphaGradation.AddButton(Alpha1, Assistances.Buttons.Button.ButtonType.No, end);
+                AssistancesAlphaGradation.AddButton(alpha2, Assistances.Buttons.Button.ButtonType.Yes, end);
+                AssistancesAlphaGradation.AddButton(alpha2, Assistances.Buttons.Button.ButtonType.No, alpha3);
 
                 //AssistancesAlphaGradation.AddButton(yesNo1, Assistances.Buttons.Button.ButtonType.Undefined, null);
 

@@ -72,7 +72,15 @@ namespace MATCH
 
                 public MATCH.Assistances.Assistance CreateEdge(MATCH.Assistances.IPanel toDecorate, string edgeMaterial)
                 {
-                    return null;
+                    Transform view = Utilities.Materials.Prefabs.Load(Utilities.Materials.Prefabs.DecoratorEdge);
+                    Assistances.Decorators.Edge controller = view.GetComponent<Assistances.Decorators.Edge>();
+
+                    controller.SetAssistanceToDecorate((Assistances.IPanel)toDecorate);
+                    controller.SetEdgeColor(edgeMaterial);
+
+                    //controller.Show(Utilities.Utility.GetEventHandlerEmpty());
+
+                    return controller;
                 }
             }
         }
