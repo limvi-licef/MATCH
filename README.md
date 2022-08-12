@@ -1,6 +1,6 @@
-# Mouse
+# MATCH
 
-Welcome to the Mouse project!
+Welcome to the MATCH (Mixed reAliTy Cognitive ortHosis) project!
 
 Here are the steps to make the project running:
 - Clone the project
