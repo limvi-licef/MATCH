@@ -28,4 +28,4 @@ Well, good point. I still need to make a tutorial. If you need any help / inform
 
 ## Contact me
 I will be happy to provide you with more information about the software. Also, please do not hesitate to share any feedback you may have about this project.
-You can find my contact information here: (https://domus.recherche.usherbrooke.ca/guillaume-spalla/)[https://domus.recherche.usherbrooke.ca/guillaume-spalla/].
+You can find my contact information here: https://domus.recherche.usherbrooke.ca/guillaume-spalla/.
