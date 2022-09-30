@@ -2,7 +2,7 @@
 
 Welcome to the MATCH (Mixed reAliTy Cognitive ortHosis) project!
 
-Before reading this section, it is worth noticing that the software architecture and the functionalities are not yet stable ...
+Before reading this section, it is worth noticing that the software architecture, the functionalities and this README are not yet stable ...
 
 This readme has two sections:
 - Context
