@@ -27,15 +27,15 @@ I still need to do this. But in the meantime, if you need any information, pleas
 ### Hardware and software requirements
 - Microsoft Hololens 2 to deploy the projet (otherwise, you can test some of the functionalities in the unity editor)
 - Unity 2020.3.37f1, with the following assets:
--- https://assetstore.unity.com/packages/tools/input-management/json-net-for-unity-11347
--- https://assetstore.unity.com/packages/tools/ai/npbehave-event-driven-code-based-behaviour-trees-75884
--- To have textures when running the tool in the Unity editor: https://assetstore.unity.com/packages/2d/textures-materials/wood/high-quality-realistic-wood-textures-mega-pack-75831
+  - https://assetstore.unity.com/packages/tools/input-management/json-net-for-unity-11347
+  - https://assetstore.unity.com/packages/tools/ai/npbehave-event-driven-code-based-behaviour-trees-75884
+  - To have textures when running the tool in the Unity editor: https://assetstore.unity.com/packages/2d/textures-materials/wood/high-quality-realistic-wood-textures-mega-pack-75831
 - Visual Studio 2019, with the following component:
--- C++ desktop development 
--- Unity development
--- Development for the universal platform
--- Latest version of MSVC v142 for ARM
--- Windows development kit SDK 10.0.18362.0
+  - C++ desktop development 
+  - Unity development
+  - Development for the universal platform
+  - Latest version of MSVC v142 for ARM
+  - Windows development kit SDK 10.0.18362.0
 
 ### Run it
 Here are the steps to make the project running:
