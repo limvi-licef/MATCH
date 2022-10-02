@@ -203,13 +203,13 @@ namespace MATCH
 
                 m_assistancePicturalController.SurfaceWithStarsViewTarget = interactionTableController.GetInteractionSurface();
 
-                m_assistanceConnectWithArchController.setArchStartAndEndPoint(initialCueingView.transform, interactionRagView.transform);
+                m_assistanceConnectWithArchController.SetArchStartAndEndPoint(initialCueingView.transform, interactionRagView.transform);
                 m_reminderController.AddObjectToBeClose(interactionRagView.transform);
                 m_reminderController.AddObjectToBeClose(m_assistancePicturalController.HologramView);
                 m_reminderController.AddObjectToBeClose(m_assistancePicturalController.SurfaceWithStarsView);
                 m_reminderController.AddObjectToBeClose(m_assistancePicturalController.Help);
-                m_reminderController.AddObjectToBeClose(m_assistanceConnectWithArchController.m_hologramHelp);
-                m_reminderController.AddObjectToBeClose(m_assistanceConnectWithArchController.m_textView);
+                m_reminderController.AddObjectToBeClose(m_assistanceConnectWithArchController.HelpController);
+                m_reminderController.AddObjectToBeClose(m_assistanceConnectWithArchController.TextView);
                 m_reminderController.AddObjectToBeClose(interactionTableController.GetInteractionSurface());
                 m_reminderController.AddObjectToBeClose(initialCueingView.transform);
                 m_reminderController.AddObjectToBeClose(solutionView.transform);
@@ -246,7 +246,7 @@ namespace MATCH
                 interactionTableController.EventInteractionSurfaceTableTouched += sStandBy.goToState(sCubeRagTable);
                 m_assistancePicturalController.EventHologramStimulateLevel1Gradation1Or2Touched += sCubeRagTable.goToState(sMessageCue);
                 initialCueingController.ButtonsController[0].EventButtonClicked += sMessageCue.goToState(sArchToRag);
-                m_assistanceConnectWithArchController.m_eventHologramHelpTouched += sArchToRag.goToState(sSolution);
+                m_assistanceConnectWithArchController.EventHelpTouched += sArchToRag.goToState(sSolution);
                 interactionRagController.EventInteractionSurfaceTableTouched += sCubeRagTable.goToState(sSurfaceToClean);
                 interactionRagController.EventInteractionSurfaceTableTouched += sMessageCue.goToState(sSurfaceToClean);
                 interactionRagController.EventInteractionSurfaceTableTouched += sArchToRag.goToState(sSurfaceToClean);
@@ -509,10 +509,21 @@ namespace MATCH
 
             void SetConnectWithArchTransitions(FiniteStateMachine.MouseUtilitiesGradationAssistance state)
             {
-                state.addFunctionShow(m_assistanceConnectWithArchController.show, Utilities.Utility.GetEventHandlerEmpty());
+                state.addFunctionShow(m_assistanceConnectWithArchController.Show, Utilities.Utility.GetEventHandlerEmpty());
+                state.addFunctionShow(delegate (EventHandler e)
+                {
+                    m_assistanceConnectWithArchController.ShowHelp(true, Utilities.Utility.GetEventHandlerEmpty());
+                }, Utilities.Utility.GetEventHandlerEmpty());
                 //state.addFunctionShow(m_reminderController.Show, Utilities.Utility.GetEventHandlerEmpty());
 
-                state.setFunctionHide(m_assistanceConnectWithArchController.hide, Utilities.Utility.GetEventHandlerEmpty());
+                state.setFunctionHide(delegate (EventHandler e)
+                {
+                    m_assistanceConnectWithArchController.Hide(Utilities.Utility.GetEventHandlerEmpty());
+                    m_assistanceConnectWithArchController.ShowHelp(false, Utilities.Utility.GetEventHandlerEmpty());
+
+                    e?.Invoke(this, EventArgs.Empty);
+
+                }, Utilities.Utility.GetEventHandlerEmpty());
             }
 
             void SetRagInteractionSurfaceTransitions(FiniteStateMachine.MouseUtilitiesGradationAssistance state)

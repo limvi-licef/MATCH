@@ -61,6 +61,10 @@ namespace MATCH
                 {
                     DebugMessagesManager.Instance.displayMessage("QAndDAssistances", "ShowOneHideOthers", DebugMessagesManager.MessageLevel.Info, "Showing assistance Delta");
                 }
+                if (gradationToShow == Gradation.Zeta)
+                {
+                    DebugMessagesManager.Instance.displayMessage("QAndDAssistances", "ShowOneHideOthers", DebugMessagesManager.MessageLevel.Info, "Showing assistance Zeta");
+                }
 
                 foreach (KeyValuePair<Gradation, Assistance> assistance in AssistancesStorage)
                 {

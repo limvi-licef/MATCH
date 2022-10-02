@@ -76,18 +76,6 @@ namespace MATCH
             // Start is called before the first frame update
             void Start()
             {
-                ///// Test
-                /*Assistances.Assistance test = Assistances.Factory.Instance.CreateDialogNoButton("Test", "", null);
-                Transform decoView = Utilities.Materials.Prefabs.Load(Utilities.Materials.Prefabs.DecoratorEdge);
-                Assistances.Decorators.Edge decoController = decoView.GetComponent<Assistances.Decorators.Edge>();
-
-                decoController.SetAssistanceToDecorate((Assistances.IPanel)test);
-                //decoController.Set
-
-                decoController.Show(Utilities.Utility.GetEventHandlerEmpty());
-                */
-                //// Test
-
                 // Initialize variables
                 InferenceObjectDetected = null;
                 InferenceGameObjectInStorage = null;
@@ -102,8 +90,6 @@ namespace MATCH
                 // Debug object to display the status of the BT conditions
                 BehaviorTreeDebugWindow = Assistances.Factory.Instance.CreateDialogNoButton("BT conditions", "Empty for now", transform);
                 BehaviorTreeDebugWindow.Show(Utilities.Utility.GetEventHandlerEmpty());
-                //BehaviorTreeDebugWindow.Set
-                //BehaviorTreeDebugWindow.EnableBillboard(false);
                 BehaviorTreeDebugWindow.GetTransform().gameObject.AddComponent<ObjectManipulator>();
 
                 FakeObject = transform.Find("FakeObject").gameObject;
@@ -157,6 +143,8 @@ namespace MATCH
                 Conditions["PersonWatchedObject"] = false;
                 Conditions["PersonDroppedObjectOutsideStoringArea"] = false;
                 Conditions["PersonDidNotComeToObject"] = false;
+                Conditions["HelpClicked"] = false;
+                Conditions["HelpRefused"] = false;
 
                 UpdateCondition("ObjectStored", false);
             }
@@ -175,7 +163,8 @@ namespace MATCH
                 textToDisplay += "\nPersonWatchedObject = " + Conditions["PersonWatchedObject"];
                 textToDisplay += "\nPersonDroppedObjectOutsideStoringArea = " + Conditions["PersonDroppedObjectOutsideStoringArea"];
                 textToDisplay += "\nPersonDidNotComeToObject = " + Conditions["PersonDidNotComeToObject"];
-                //Conditions.ToString();
+                textToDisplay += "\nHelpClicked = " + Conditions["HelpClicked"];
+                textToDisplay += "\nHelpRefused = " + Conditions["HelpClicked"];
 
                 // Display the text
                 BehaviorTreeDebugWindow.SetDescription(textToDisplay, 0.08f);
@@ -241,9 +230,38 @@ namespace MATCH
 
                 Assistances.Dialog AssistancesDelta = Assistances.Factory.Instance.CreateDialogTwoButtons("Information", "L'objet n'est pas rangé au bon endroit.", "Ok!", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.Yes, "Aidez-moi!", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.No, /*AreaObject.transform*/parentForAssistances);
                 AssistancesGradation.AddAssistance(Assistances.QandDAssistances.Gradation.Delta, AssistancesDelta);
+                AssistancesDelta.EventHelpButtonClicked += delegate (System.Object o, EventArgs e)
+                {
+                    Utilities.EventHandlerArgs.Button arg = (Utilities.EventHandlerArgs.Button)e;
+                    if (arg.ButtonType == Assistances.Buttons.Button.ButtonType.Yes)
+                    { // Means the person wants additional help
+                        UpdateCondition("HelpClicked", true);
+                        UpdateCondition("HelpRefused", false);
+                        UpdateCondition("PersonWatchedObject", false);
+                        UpdateCondition("PersonDroppedObjectOutsideStoringArea", false);
+                    }
+                    else if (arg.ButtonType == Assistances.Buttons.Button.ButtonType.No)
+                    { // Means the person does not want additional help, so let's hide the assistance
+                        UpdateCondition("HelpClicked", false);
+                        UpdateCondition("HelpRefused", true);
+                    }
+                };
 
                 Assistances.Basic AssistancesEpsilon = Assistances.Factory.Instance.CreateCube(Utilities.Materials.Textures.ExclamationRed, /*AreaObject.transform*/parentForAssistances);
                 AssistancesGradation.AddAssistance(Assistances.QandDAssistances.Gradation.Epsilon, AssistancesEpsilon);
+
+                Transform origin;
+                if (Utilities.Utility.IsEditorSimulator() || Utilities.Utility.IsEditorGameView())
+                { // Running in the editor
+                    origin = FakeObject.transform;
+                }
+                else
+                {
+                    origin = AreaObject.transform;
+                }
+
+                Assistances.ArchWithTextAndHelp AssistanceZeta = Assistances.Factory.Instance.CreateAssistanceArch("Arch", origin, AreaStorage.transform, transform);
+                AssistancesGradation.AddAssistance(Assistances.QandDAssistances.Gradation.Zeta, AssistanceZeta);
 
                 // Behavior tree sequence
                 /**
@@ -289,12 +307,19 @@ namespace MATCH
 
                 BlackboardCondition cDidPersonDidNotComeToTheObjectSinceAWhile = new BlackboardCondition("PersonDidNotComeToObject", Operator.IS_EQUAL, true, Stops.IMMEDIATE_RESTART, sePersonDidNotCameToObjectSinceAWhile);
 
+                Sequence seHelpRequested = new Sequence(
+                    new NPBehave.Action(() => ShowOneHideOthers(Assistances.QandDAssistances.Gradation.Zeta)),
+                    new WaitUntilStopped());
+
+                BlackboardCondition cIsHelpRequested = new BlackboardCondition("HelpClicked", Operator.IS_EQUAL, true, Stops.IMMEDIATE_RESTART, seHelpRequested);
+
                 Selector srObjectIsNotStored = new Selector(
                     cDidPersonApproachObject,
                     cObjectDroppedOutsideStorageArea,
                     cDidPersonMoveAwayFromObject,
                     cDidPersonLookAtObject,
-                    cDidPersonDidNotComeToTheObjectSinceAWhile
+                    cDidPersonDidNotComeToTheObjectSinceAWhile,
+                    cIsHelpRequested
                     //srDidPersonLookAtObject
                     );
 
@@ -386,177 +411,6 @@ namespace MATCH
                     //Inference DidNotComeToObject is register in CallbackObjectDetected
                 }
             } 
-
-            void InitializeScenario()
-            {
-                /*Conditions = new Blackboard(UnityContext.GetClock());
-                Conditions["ObjectStored"] = false;
-                Conditions["PersonMovedAwayFromObject"] = false;
-                Conditions["PersonCloseToObject"] = false;
-                Conditions["PersonGrabbedObject"] = false;
-                Conditions["PersonWatchedObject"] = false;
-                Conditions["PersonDroppedObjectOutsideStoringArea"] = false;
-                Conditions["PersonDidNotComeToObject"] = false;
-
-                InferenceObjectDetected = new Inferences.ObjectDetected("SortingObjectDetectionObject", CallbackObjectDetected, ObjectOfInterestName);
-                if (Utilities.Utility.IsEditorSimulator() || Utilities.Utility.IsEditorGameView())
-                {
-                    InferenceObjectDetected.EnableFakeObjectDetection(FakeObject);
-                }
-                InferenceManager.RegisterInference(InferenceObjectDetected);
-
-                InferenceGameObjectInStorage = new Inferences.GameObjectInInteractionSurface("GameObjectStorage", CallbackGameObjectDetectedInStorage, FakeObject, AreaStorage);
-                InferenceManager.RegisterInference(InferenceGameObjectInStorage);
-
-                InferenceObjectInStorage = new Inferences.ObjectInInteractionSurface("ObjectStorage", CallbackGameObjectDetectedInStorage, ObjectOfInterestName, AreaStorage);
-                InferenceManager.RegisterInference(InferenceObjectInStorage);
-
-                //AreaObject.TriggerTouchEvent(); // Commented, because I wonder what is the purpose of this.
-                //AreaObject.EventInteractionSurfaceTableTouched += CallbackPersonGrabbedObject;
-
-                RegisterInferenceComing();
-                RegisterInferenceComingAndLeaving();*/
-
-                /**
-                 * Be careful when testing: some inferences are available only in the editor and others only in the hololens. Thus, some situations can only be tested in the hololens.
-                 **/
-                /*if (Utilities.Utility.IsEditorSimulator() || Utilities.Utility.IsEditorGameView())
-                {
-                    InferenceGrabbedObject = new Inferences.GameObjectGrabbed("ObjectGrabbed", CallbackPersonGrabbedObject, FakeObject);
-                    InferenceManager.RegisterInference(InferenceGrabbedObject);
-
-                    InferenceReleasedObject = new Inferences.GameObjectReleased("ObjectReleased", CallbackPersonReleasedObject, FakeObject);
-                    InferenceManager.RegisterInference(InferenceReleasedObject);
-
-                    InferenceFocusedOnObject = new Inferences.ObjectFocused("FocusedOnObject", CallbackPersonWatchedObject, FakeObject, 3);
-                    InferenceManager.RegisterInference(InferenceFocusedOnObject);
-
-                    InferenceTimeDidNotComeToObject = new Inferences.TimeDidNotComeToObject("DidNotComeToObject", CallbackPersonDidNotComeToObject, FakeObject, 15);
-                    InferenceManager.RegisterInference(InferenceTimeDidNotComeToObject);
-                }
-                else
-                {
-                    //Inference ObjectGrabbed is replaced by the detection of the hand in the AreaObject
-                    //Inference ObjectReleased is created and registered in CallbackPersonGrabbedObject
-
-                    InferenceFocusedOnObject = new Inferences.ObjectFocused("FocusedOnObject", CallbackPersonWatchedObject, AreaObject.GetInteractionSurface().gameObject, 3);
-                    InferenceManager.RegisterInference(InferenceFocusedOnObject);
-
-                    InferenceTimeDidNotComeToObject = new Inferences.TimeDidNotComeToObject("DidNotComeToObject", CallbackPersonDidNotComeToObject, AreaObject.GetInteractionSurface().gameObject, 15);
-                    //Inference DidNotComeToObject is register in CallbackObjectDetected
-                }*/
-
-                /*
-                 * Temporary assistances built with QandDAssistances
-                 * To be removed when the behavior tree handling the assistances is reliable.
-                 */
-                /*AssistancesGradation = new Assistances.QandDAssistances();
-
-                Assistances.Basic AssistancesAlpha = Assistances.Factory.Instance.CreateCube(Utilities.Materials.Textures.Congratulation, AreaStorage.transform);
-                AssistancesGradation.AddAssistance(Assistances.QandDAssistances.Gradation.Alpha, AssistancesAlpha);
-                AssistancesAlpha.s_touched += delegate
-                {
-                    DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Reset the storing object scenario " + name);
-
-                    AssistancesGradation.HideAll();
-
-                    Conditions["ObjectStored"] = false;
-                    Conditions["PersonMovedAwayFromObject"] = false;
-                    Conditions["PersonCloseToObject"] = false;
-                    Conditions["PersonGrabbedObject"] = false;
-                    Conditions["PersonWatchedObject"] = false;
-                    Conditions["PersonDroppedObjectOutsideStoringArea"] = false;
-                    Conditions["PersonDidNotComeToObject"] = false;
-                };
-
-                Assistances.Dialog AssistancesBeta = Assistances.Factory.Instance.CreateDialogNoButton("Information", "Cet objet doit être rangé.", AreaObject.transform);
-                AssistancesGradation.AddAssistance(Assistances.QandDAssistances.Gradation.Beta, AssistancesBeta);
-
-                Assistances.Basic AssistancesGamma = Assistances.Factory.Instance.CreateCube(Utilities.Materials.Textures.Exclamation, AreaObject.transform);
-                AssistancesGradation.AddAssistance(Assistances.QandDAssistances.Gradation.Gamma, AssistancesGamma);
-
-                Assistances.Dialog AssistancesDelta = Assistances.Factory.Instance.CreateDialogNoButton("Information","L'objet n'est pas rangé au bon endroit.", AreaObject.transform);
-                AssistancesGradation.AddAssistance(Assistances.QandDAssistances.Gradation.Delta, AssistancesDelta);
-
-                Assistances.Basic AssistancesEpsilon = Assistances.Factory.Instance.CreateCube(Utilities.Materials.Textures.ExclamationRed, AreaObject.transform);
-                AssistancesGradation.AddAssistance(Assistances.QandDAssistances.Gradation.Epsilon, AssistancesEpsilon);*/
-
-                /**
-                 * The BT below corresponds to the iteration-9 of the BT in the diagram file
-                 * */
-                /*Sequence seObjectDroppedOutsideStorageArea = new Sequence(
-                    new NPBehave.Action(() => AssistancesGradation.ShowOneHideOthers(Assistances.QandDAssistances.Gradation.Delta, Utilities.Utility.GetEventHandlerEmpty())),
-                    new WaitUntilStopped());
-
-                BlackboardCondition cObjectDroppedOutsideStorageArea = new BlackboardCondition("PersonDroppedObjectOutsideStoringArea",
-                    Operator.IS_EQUAL, true, Stops.IMMEDIATE_RESTART, seObjectDroppedOutsideStorageArea);
-
-                Sequence sePersonTakeObject = new Sequence(
-                        //cObjectDroppedOutsideStorageArea,
-                        //new Sequence(
-                        new NPBehave.Action(() => AssistancesGradation.HideAll()), // When the object is grabbed, no assistances should be displayed, so they are all hidden.
-                        new WaitUntilStopped());
-
-                BlackboardCondition cDidPersonTakeObject = new BlackboardCondition("PersonGrabbedObject", Operator.IS_EQUAL, true, Stops.IMMEDIATE_RESTART, sePersonTakeObject);
-
-                Sequence sePersonMovedAwayFromObject = new Sequence(
-                    new NPBehave.Action(() => AssistancesAlphaGradation.RunAssistance(Utilities.Utility.GetEventHandlerEmpty()) /*AssistancesGradation.ShowOneHideOthers(Assistances.QandDAssistances.Gradation.Epsilon, Utilities.Utility.GetEventHandlerEmpty())*//*),
-                    new WaitUntilStopped());
-
-                BlackboardCondition cDidPersonMoveAwayFromObject = new BlackboardCondition("PersonMovedAwayFromObject", Operator.IS_EQUAL, true, Stops.IMMEDIATE_RESTART, sePersonMovedAwayFromObject);
-
-                Sequence sePersonApproachedObject = new Sequence(
-                    cDidPersonTakeObject
-                    //cDidPersonMoveAwayFromObject
-                    );
-
-                BlackboardCondition cDidPersonApproachObject = new BlackboardCondition("PersonCloseToObject", Operator.IS_EQUAL, true, Stops.IMMEDIATE_RESTART, new Sequence(sePersonApproachedObject));
-
-                Sequence sePersonLookedAtObject = new Sequence(
-                    new NPBehave.Action(() => AssistancesGradation.ShowOneHideOthers(Assistances.QandDAssistances.Gradation.Beta, Utilities.Utility.GetEventHandlerEmpty())),
-                    new WaitUntilStopped());
-
-                BlackboardCondition cDidPersonLookAtObject = new BlackboardCondition("PersonWatchedObject", Operator.IS_EQUAL, true, Stops.IMMEDIATE_RESTART, sePersonLookedAtObject);
-
-                Sequence sePersonDidNotCameToObjectSinceAWhile = new Sequence(
-                    new NPBehave.Action(() => AssistancesGradation.ShowOneHideOthers(Assistances.QandDAssistances.Gradation.Gamma, Utilities.Utility.GetEventHandlerEmpty())),
-                    new WaitUntilStopped());
-
-                BlackboardCondition cDidPersonDidNotComeToTheObjectSinceAWhile = new BlackboardCondition("PersonDidNotComeToObject", Operator.IS_EQUAL, true, Stops.IMMEDIATE_RESTART, sePersonDidNotCameToObjectSinceAWhile);
-
-                Selector srObjectIsNotStored = new Selector(
-                    cDidPersonApproachObject,
-                    cObjectDroppedOutsideStorageArea,
-                    cDidPersonMoveAwayFromObject,
-                    cDidPersonLookAtObject,
-                    cDidPersonDidNotComeToTheObjectSinceAWhile
-                    //srDidPersonLookAtObject
-                    );
-
-                Sequence seObjectIsStored = new Sequence(
-                    new NPBehave.Action(() => AssistancesGradation.ShowOneHideOthers(Assistances.QandDAssistances.Gradation.Alpha, Utilities.Utility.GetEventHandlerEmpty())),
-                    new WaitUntilStopped()
-                 );
-
-                BlackboardCondition cIsObjectStored = new BlackboardCondition("ObjectStored", Operator.IS_EQUAL, true, Stops.IMMEDIATE_RESTART, seObjectIsStored);
-
-                Selector srBegin = new Selector(
-                    cIsObjectStored,
-                    srObjectIsNotStored
-                    );
-
-				// Set assistances
-				// For now we use the assistances from the QandDAssistances class. Uncomment the following line when going to the BT to manage the assistances
-                InitializeAssistancesAlpha();
-                Tree = new Root(Conditions, srBegin);
-
-                //#if UNITY_EDITOR
-                NPBehave.Debugger debugger = (Debugger)this.gameObject.AddComponent(typeof(Debugger));
-                debugger.BehaviorTree = Tree;
-                //#endif
-
-                Tree.Start();*/
-            }
             
 			void InitializeAssistancesAlpha()
             {
@@ -784,6 +638,8 @@ namespace MATCH
                 UpdateCondition("PersonGrabbedObject", true);
                 UpdateCondition("PersonWatchedObject", false);
                 UpdateCondition("PersonDroppedObjectOutsideStoringArea", false);
+                UpdateCondition("HelpClicked", false);
+                UpdateCondition("HelpRefused", false);
 
             }
 
@@ -871,7 +727,12 @@ namespace MATCH
                 if (Utilities.Utility.IsEditorSimulator() || Utilities.Utility.IsEditorGameView())
                 {
                     AssistancesGradation.GetAssistance(gradation).transform.position = FakeObject.transform.position;
-                    Utilities.Utility.AdjustObjectHeightToHeadHeight(AssistancesGradation.GetAssistance(gradation).transform);
+
+
+                    if (gradation == Assistances.QandDAssistances.Gradation.Delta)
+                    {
+                        Utilities.Utility.AdjustObjectHeightToHeadHeight(AssistancesGradation.GetAssistance(gradation).transform);
+                    }
                 }
 
                 AssistancesGradation.ShowOneHideOthers(gradation, Utilities.Utility.GetEventHandlerEmpty());

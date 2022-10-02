@@ -25,96 +25,95 @@ namespace MATCH
 {
     namespace Assistances
     {
-        public class ArchWithTextAndHelp : MonoBehaviour
+        public class ArchWithTextAndHelp : Assistance
         {
-            public event EventHandler m_eventHologramHelpTouched;
+            public event EventHandler EventHelpTouched;
 
-            public Transform m_hologramHelp;
-            Transform m_hologramLineView;
-            public Transform m_textView;
-            MATCH.Assistances.Dialog m_textController;
+            public Transform HelpController;
+            Transform LineView;
+            public Transform TextView;
+            MATCH.Assistances.Dialog TextController;
 
-            LineToObject m_hologramLineController;
+            LineToObject LineController;
 
-            Vector3 m_textOriginalScaling;
+            Vector3 TextOriginalScaling;
 
             void Awake()
             {
                 // Children
-                m_hologramLineView = gameObject.transform.Find("Line");
-                m_hologramLineController = m_hologramLineView.GetComponent<LineToObject>();
-                m_hologramHelp = MATCH.Utilities.Utility.FindChild(gameObject, "Help");
-                m_textView = gameObject.transform.Find("TextNew");
-                m_textController = m_textView.GetComponent<MATCH.Assistances.Dialog>();
+                LineView = gameObject.transform.Find("Line");
+                LineController = LineView.GetComponent<LineToObject>();
+                HelpController = MATCH.Utilities.Utility.FindChild(gameObject, "Help");
+                TextView = gameObject.transform.Find("Text");
+                TextController = TextView.GetComponent<MATCH.Assistances.Dialog>();
 
-                m_textOriginalScaling = m_textView.localScale;
+                TextOriginalScaling = TextView.localScale;
             }
 
             // Start is called before the first frame update
             void Start()
             {
-                if (m_hologramLineView == null)
+                if (LineView == null)
                 {
                     DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Error, "Line hologram not initialized properly");
                 }
 
                 // Callbacks
-                MATCH.Utilities.Utility.AddTouchCallback(m_hologramHelp, callbackHelpTouched);
+                MATCH.Utilities.Utility.AddTouchCallback(HelpController, CallbackHelpTouched);
             }
 
-            // Update is called once per frame
-            void Update()
-            {
-
-            }
-
-            void callbackHelpTouched()
+            void CallbackHelpTouched()
             {
                 DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Called");
 
-                m_eventHologramHelpTouched?.Invoke(this, EventArgs.Empty);
+                EventHelpTouched?.Invoke(this, EventArgs.Empty);
             }
 
-            void resetObject()
+            void ResetObject()
             {
-                m_hologramHelp.localScale = new Vector3(0.1f, 0.1f, 0.1f);
+                HelpController.localScale = new Vector3(0.1f, 0.1f, 0.1f);
 
-                Destroy(m_hologramHelp.GetComponent<Animation>());
+                Destroy(HelpController.GetComponent<Animation>());
             }
 
             bool m_mutexShow = false;
-            public void show(EventHandler eventHandler)
+            public override void Show(EventHandler eventHandler)
             {
                 if (m_mutexShow == false)
                 {
                     m_mutexShow = true;
 
-                    m_textView.position = m_hologramLineController.m_hologramOrigin.transform.position;
-                    MATCH.Utilities.Utility.AdjustObjectHeightToHeadHeight(m_textView);
-                    // Trick to start the line to the text position, i.e. to start at user's head's position
-                    m_hologramLineController.m_hologramOrigin.transform.position = m_textView.position;
+                    TextView.position = new Vector3(LineController.m_hologramOrigin.transform.position.x, LineController.m_hologramOrigin.transform.position.y + 0.5f, LineController.m_hologramOrigin.transform.position.z);
+                    //MATCH.Utilities.Utility.AdjustObjectHeightToHeadHeight(TextView);
 
-                    m_textController.Show(delegate
+                    // Trick to start the line to the text position, i.e. to start at user's head's position
+                    LineController.m_hologramOrigin.transform.position = TextView.position;
+
+                    TextController.Show(delegate
                     {
                         //m_textController.enableBillboard(true);
                         m_mutexShow = false;
                     });
 
                     // Showing line
-                    m_hologramLineView.GetComponent<LineToObject>().show(delegate {
+                    LineView.GetComponent<LineToObject>().show(/*delegate {
                         EventHandler[] temp = new EventHandler[] { delegate
                     {
                         DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Called");
 
-                        Destroy(m_hologramHelp.gameObject.GetComponent<Animation>());
+                        Destroy(HelpController.gameObject.GetComponent<Animation>());
 
                         m_mutexShow = false;
                     }, eventHandler };
 
-                        MATCH.Utilities.Utility.AdjustObjectHeightToHeadHeight(m_hologramHelp);
+                        MATCH.Utilities.Utility.AdjustObjectHeightToHeadHeight(HelpController);
 
-                        m_hologramHelp.gameObject.AddComponent<MATCH.Utilities.Animation>().AnimateAppearInPlaceToScaling(new Vector3(0.1f, 0.1f, 0.1f), temp);
-                    });
+                        HelpController.gameObject.AddComponent<MATCH.Utilities.Animation>().AnimateAppearInPlaceToScaling(new Vector3(0.1f, 0.1f, 0.1f), temp);
+                    }*/delegate
+                       {
+                           eventHandler?.Invoke(this, EventArgs.Empty);
+                           m_mutexShow = false;
+                       });
                 }
                 else
                 {
@@ -123,26 +122,28 @@ namespace MATCH
             }
 
             bool m_mutexHide = false;
-            public void hide(EventHandler eventHandler)
+            public override void Hide(EventHandler eventHandler)
             {
                 if (m_mutexHide == false)
                 {
                     m_mutexHide = true;
 
-                    m_textController.Hide(eventHandler);
-                    MATCH.Utilities.Utility.AnimateDisappearInPlace(m_hologramHelp.gameObject, new Vector3(0.1f, 0.1f, 0.1f), delegate {
+                    TextController.Hide(eventHandler);
+                    /*MATCH.Utilities.Utility.AnimateDisappearInPlace(HelpController.gameObject, new Vector3(0.1f, 0.1f, 0.1f), delegate {
                         DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Mutex unlocked - all elements from the arch should be hidden");
                         m_mutexHide = false;
-                    });
+                    });*/
 
                     // Hiding line
-                    if (m_hologramLineView.gameObject.activeSelf)
+                    if (LineView.gameObject.activeSelf)
                     {
-                        m_hologramLineView.GetComponent<LineToObject>().hide(MATCH.Utilities.Utility.GetEventHandlerEmpty()); // The eventhandler being already called above, we do not want it to be called twice, as this could create strange behaviors.
+                        LineView.GetComponent<LineToObject>().hide(MATCH.Utilities.Utility.GetEventHandlerEmpty()); // The eventhandler being already called above, we do not want it to be called twice, as this could create strange behaviors.
+                        m_mutexHide = false;
                     }
                     else
                     {
                         DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Warning, "Line already hidden: nothing to do");
+                        m_mutexHide = false;
                     }
                 }
                 else
@@ -151,10 +152,48 @@ namespace MATCH
                 }
             }
 
-            public void setArchStartAndEndPoint(Transform origin, Transform target)
+            public void SetArchStartAndEndPoint(Transform origin, Transform target)
             {
-                m_hologramLineController.m_hologramOrigin = origin.gameObject;
-                m_hologramLineController.m_hologramTarget = target.gameObject;
+                LineController.m_hologramOrigin = origin.gameObject;
+                LineController.m_hologramTarget = target.gameObject;
+            }
+
+            public override void ShowHelp(bool show, EventHandler callback)
+            {
+                if (show)
+                {
+                    MATCH.Utilities.Utility.AdjustObjectHeightToHeadHeight(HelpController);
+
+                    HelpController.gameObject.AddComponent<MATCH.Utilities.Animation>().AnimateAppearInPlaceToScaling(new Vector3(0.1f, 0.1f, 0.1f), delegate
+                    {
+                        DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Called");
+
+                        Destroy(HelpController.gameObject.GetComponent<Animation>());
+                        callback?.Invoke(this, EventArgs.Empty);
+                    }
+                    );
+                }
+                else
+                {
+                    MATCH.Utilities.Utility.AnimateDisappearInPlace(HelpController.gameObject, new Vector3(0.1f, 0.1f, 0.1f), callback);
+
+                }
+
+            }
+
+            public override Transform GetTransform()
+            {
+                return transform;
+            }
+
+            public override bool IsActive()
+            {
+                return LineController.gameObject.activeSelf;
+            }
+
+            public override bool IsDecorator()
+            {
+                return false;
             }
         }
 

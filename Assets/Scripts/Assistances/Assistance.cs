@@ -27,7 +27,7 @@ namespace MATCH
     {
         public abstract class Assistance: MonoBehaviour
         {
-            public event EventHandler EventHelpButtonClicked;
+            public event EventHandler EventHelpButtonClicked; // Returns as argument a MATCH.Utilities.EventHandlerArgs.Button object, to inform about which button has been clicked
             public bool IsDisplayed { get; protected set; } = false; // Different from "activeself": in those assistances the parent component is alsways active, so "activeself" is not a good indicator to know if the assistance is shown or not. Use this function instead.
 
             protected void OnHelpButtonClicked(Assistances.Buttons.Button.ButtonType type)

@@ -40,6 +40,7 @@ namespace MATCH
             public AssistanceGradationExplicit RefAssistanceGradationExplicit;
             public Assistances.Dialog RefButtons;
             public GradationVisual.GradationVisual RefAssistanceGradationAttention;
+            public ArchWithTextAndHelp RefArch;
 
             enum DialogsTypes
             {
@@ -259,6 +260,16 @@ namespace MATCH
                 view.name = name;
                 return controller;
             }    
+
+            public ArchWithTextAndHelp CreateAssistanceArch(string name, Transform origin, Transform target, Transform parent)
+            {
+                Transform view = Instantiate(RefArch.transform, parent);
+                ArchWithTextAndHelp controller = view.GetComponent<ArchWithTextAndHelp>();
+                view.name = name;
+                controller.SetArchStartAndEndPoint(origin, target);
+
+                return controller;
+            }
         }
 
     }
