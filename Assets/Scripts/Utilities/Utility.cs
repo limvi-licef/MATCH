@@ -153,7 +153,7 @@ namespace MATCH
                 AnimateAppearInPlace(gameObject, scaling, GetEventHandlerEmpty());
             }
 
-            public static void bringObject(Transform t)
+            public static void BringObject(Transform t)
             {
                 t.position = new Vector3(Camera.main.transform.position.x + 0.5f, Camera.main.transform.position.y, Camera.main.transform.position.z);
                 t.LookAt(Camera.main.transform);

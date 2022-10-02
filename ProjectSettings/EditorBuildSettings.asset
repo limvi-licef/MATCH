@@ -9,7 +9,7 @@ EditorBuildSettings:
     path: Assets/MX_Context_Awareness.unity
     guid: 23dafe5bb908672419b54c75c53f5bff
   - enabled: 1
-    path: Assets/Scenes/Mouse.unity
+    path: Assets/Scenes/MATCH.unity
     guid: fe427dbc86e4d3c408f710505c2344f9
   m_configObjects:
     com.unity.xr.management.loader_settings: {fileID: 11400000, guid: 059a7a3802e1002479b8bb8ef9f20a47, type: 2}

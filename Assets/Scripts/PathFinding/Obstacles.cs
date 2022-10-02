@@ -45,7 +45,7 @@ namespace MATCH
                 // Add buttons to interface
                 AdminMenu.Instance.AddButton("Bring " + name, delegate ()
                 {
-                    MATCH.Utilities.Utility.bringObject(cube.transform);
+                    MATCH.Utilities.Utility.BringObject(cube.transform);
                 }, AdminMenu.Panels.Obstacles);
                 AdminMenu.Instance.AddSwitchButton("Hide " + name, delegate ()
                 {

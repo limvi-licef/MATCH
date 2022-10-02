@@ -31,7 +31,7 @@ namespace MATCH
                 public static Factory Instance { get { return InstanceInternal; } }
 
                 public MATCH.Assistances.Decorators.Material RefMaterial;
-                public MATCH.Assistances.Decorators.BackgroundColor RefBackgroundColor;
+                //public MATCH.Assistances.Decorators.BackgroundColor RefBackgroundColor;
 
                 private void Awake()
                 {

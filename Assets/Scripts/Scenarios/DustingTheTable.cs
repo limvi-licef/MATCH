@@ -28,6 +28,16 @@ namespace MATCH
     {
         public class DustingTheTable : Scenario
         {
+            public enum ScenarioVersion
+            {
+                V1,
+               V2
+            };
+
+            public ScenarioVersion SelectScenarioVersion;
+
+            Dictionary<ScenarioVersion, Delegate> Scenarios;
+
             public int m_numberOfCubesToAddInRow;
             public int m_numberOfCubesToAddInColumn;
 
@@ -82,6 +92,9 @@ namespace MATCH
             void Start()
             {
                 // Variables
+                Scenarios = new Dictionary<ScenarioVersion, Delegate>();
+                Scenarios.Add(ScenarioVersion.V1, new Action(InitializeScenariov1));
+                Scenarios.Add(ScenarioVersion.V2, new Action(InitializeScenariov2));
 
                 // Children
                 m_reminderView = gameObject.transform.Find("Reminder");
@@ -107,7 +120,9 @@ namespace MATCH
                 m_inference20h = new MATCH.Inferences.Time("time 20h", tempTime, CallbackInferenceTime20h);
 
                 // Initialization of the scenario
-                InitializeScenariov2();
+                //InitializeScenariov2();
+                //InitializeScenariov1();
+                Scenarios[SelectScenarioVersion].DynamicInvoke();
 
                 // Drawing the graph
                 //m_displayGraphController.setManager(m_assistanceGradationManager);
@@ -170,14 +185,14 @@ namespace MATCH
                 // Cueing for the beginning of the scenario
                 GameObject initialCueingView = Instantiate(m_refAssistanceDialog, interactionTableView.transform);
                 Assistances.Dialog initialCueingController = initialCueingView.GetComponent<Assistances.Dialog>();
-                initialCueingController.SetDescription("Que faites-vous typiquement après manger?");
+                initialCueingController.SetDescription("Que faites-vous typiquement après manger?", 0.2f);
                 initialCueingController.AddButton("Je ne sais pas", true, 0.2f);
                 initialCueingController.EnableBillboard(true);
 
                 // Cueing for the solution
                 GameObject solutionView = Instantiate(m_refAssistanceDialog, interactionRagView.transform);
                 Assistances.Dialog solutionController = solutionView.GetComponent<Assistances.Dialog>();
-                solutionController.SetDescription("Ne serait-ce pas un bon moment pour nettoyer la table? \n Vous avez pour cela besoin du chiffon ci - dessous.", 0.15f);
+                solutionController.SetDescription("Ne serait-ce pas un bon moment pour nettoyer la table? \n Vous avez pour cela besoin du chiffon ci - dessous.", 0.14f);
                 solutionController.EnableBillboard(true);
 
                 // Setting the parents, the connections for the objects briding other objects etc. (the idea being to leave that to a software dedicated to configure the scenarios)
@@ -209,12 +224,16 @@ namespace MATCH
                 SetReminderTransitions(sReminder);
                 FiniteStateMachine.MouseUtilitiesGradationAssistance sMessageCue = m_assistanceGradationManager.addNewAssistanceGradation("MessageCue");
                 sMessageCue.setFunctionHideAndShow(initialCueingController);
-                sMessageCue.addFunctionShow(m_reminderController);
+                //sMessageCue.addFunctionShow(m_reminderController);
+                sMessageCue.addFunctionShow(delegate
+                {
+                    initialCueingController.ShowHelp(true, Utilities.Utility.GetEventHandlerEmpty());
+                }, Utilities.Utility.GetEventHandlerEmpty());
                 FiniteStateMachine.MouseUtilitiesGradationAssistance sArchToRag = m_assistanceGradationManager.addNewAssistanceGradation("ArchToRag");
                 SetConnectWithArchTransitions(sArchToRag);
                 FiniteStateMachine.MouseUtilitiesGradationAssistance sSolution = m_assistanceGradationManager.addNewAssistanceGradation("Solution");
                 sSolution.setFunctionHideAndShow(solutionController);
-                sSolution.addFunctionShow(m_reminderController);
+                //sSolution.addFunctionShow(m_reminderController);
                 FiniteStateMachine.MouseUtilitiesGradationAssistance sSurfaceToClean = m_assistanceGradationManager.addNewAssistanceGradation("CleaningSurface");
                 SetRagInteractionSurfaceTransitions(sSurfaceToClean);
                 FiniteStateMachine.MouseUtilitiesGradationAssistance sSuccess = m_assistanceGradationManager.addNewAssistanceGradation("Success");
@@ -464,7 +483,7 @@ namespace MATCH
             void SetCubeRagTransitions(FiniteStateMachine.MouseUtilitiesGradationAssistance state)
             {
                 state.addFunctionShow(m_assistancePicturalController);
-                state.addFunctionShow(m_reminderController);
+                //state.addFunctionShow(m_reminderController);
                 state.addFunctionShow(delegate (EventHandler e)
                 {
                     // Set the inference
@@ -491,7 +510,7 @@ namespace MATCH
             void SetConnectWithArchTransitions(FiniteStateMachine.MouseUtilitiesGradationAssistance state)
             {
                 state.addFunctionShow(m_assistanceConnectWithArchController.show, Utilities.Utility.GetEventHandlerEmpty());
-                state.addFunctionShow(m_reminderController.Show, Utilities.Utility.GetEventHandlerEmpty());
+                //state.addFunctionShow(m_reminderController.Show, Utilities.Utility.GetEventHandlerEmpty());
 
                 state.setFunctionHide(m_assistanceConnectWithArchController.hide, Utilities.Utility.GetEventHandlerEmpty());
             }
@@ -504,7 +523,7 @@ namespace MATCH
                 }, Utilities.Utility.GetEventHandlerEmpty());
 
                 state.addFunctionShow(m_assistanceSurfaceTouchedController.ShowInteractionCubesTablePanel, Utilities.Utility.GetEventHandlerEmpty());
-                state.addFunctionShow(m_reminderController.Show, Utilities.Utility.GetEventHandlerEmpty());
+                //state.addFunctionShow(m_reminderController.Show, Utilities.Utility.GetEventHandlerEmpty());
 
                 state.setFunctionHide(m_assistanceSurfaceTouchedController.Hide, Utilities.Utility.GetEventHandlerEmpty());
             }

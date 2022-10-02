@@ -210,6 +210,11 @@ namespace MATCH
                 return HologramView;
             }
 
+            public override bool IsActive()
+            {
+                return HologramView.gameObject.activeSelf;
+            }
+
             public override void ShowHelp(bool show, EventHandler callback)
             {
                 //

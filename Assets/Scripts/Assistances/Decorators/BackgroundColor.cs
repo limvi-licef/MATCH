@@ -123,6 +123,11 @@ namespace MATCH
                     return PanelToDecorate.GetAssistance().GetTransform();
                 }
 
+                public override bool IsActive()
+                {
+                    return PanelToDecorate.GetAssistance().IsActive();
+                }
+
                 public Assistance GetAssistance()
                 {
                     return this;//PanelToDecorate.GetAssistance();

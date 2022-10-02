@@ -32,8 +32,8 @@ namespace MATCH
             public class ButtonAndAssistanceGradationAttention : EventArgs
             {
                 public MATCH.Assistances.Buttons.Button.ButtonType ButtonType { get; set; }
-                public MATCH.Assistances.AssistanceGradationAttention AssistanceCurrent { get; set; }
-                public MATCH.Assistances.AssistanceGradationAttention AssistanceNext { get; set; }
+                public MATCH.Assistances.GradationVisual.GradationVisual AssistanceCurrent { get; set; }
+                public MATCH.Assistances.GradationVisual.GradationVisual AssistanceNext { get; set; }
             }
         }
     }

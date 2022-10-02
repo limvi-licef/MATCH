@@ -50,20 +50,37 @@ namespace MATCH
                 AssistancesStorage.Add(gradation, assistance);
             }
 
+            public Assistance GetAssistance(Gradation gradation)
+            {
+                return AssistancesStorage[gradation];
+            }
+
             public void ShowOneHideOthers(Gradation gradationToShow, EventHandler callback)
             {
+                if (gradationToShow == Gradation.Delta)
+                {
+                    DebugMessagesManager.Instance.displayMessage("QAndDAssistances", "ShowOneHideOthers", DebugMessagesManager.MessageLevel.Info, "Showing assistance Delta");
+                }
+
                 foreach (KeyValuePair<Gradation, Assistance> assistance in AssistancesStorage)
                 {
                     //DebugMessagesManager.Instance.displayMessage("ShowOneHideOthers", "Evaluate", DebugMessagesManager.MessageLevel.Info, "Storage " + assistance.Value.GetTransform().name);
                     if (assistance.Key == gradationToShow)
                     {
+                        if (assistance.Value.IsActive() == false)
+                        {
                             assistance.Value.Show(callback);
+                        }
                         //DebugMessagesManager.Instance.displayMessage("ShowOneHideOthers", "Evaluate", DebugMessagesManager.MessageLevel.Info, "Show " + assistance.Value.GetTransform().name); // Class and method names are hard coded for performance reasons.
                     }
                     else
                     {
                         //DebugMessagesManager.Instance.displayMessage("ShowOneHideOthers", "Evaluate", DebugMessagesManager.MessageLevel.Info, "Hide"); // Class and method names are hard coded for performance reasons.
+                        if (assistance.Value.IsActive())
+                        {
                             assistance.Value.Hide(Utilities.Utility.GetEventHandlerEmpty());
+                        }
+                            
                     }
                 }
             }
@@ -73,7 +90,25 @@ namespace MATCH
                 //DebugMessagesManager.Instance.displayMessage("ShowOneHideOthers", "Evaluate", DebugMessagesManager.MessageLevel.Info, "Hide All");
                 foreach (KeyValuePair<Gradation, Assistance> assistance in AssistancesStorage)
                 {
-                        assistance.Value.Hide(Utilities.Utility.GetEventHandlerEmpty());     
+                    if (assistance.Key == Gradation.Alpha)
+                    {
+                        DebugMessagesManager.Instance.displayMessage("QAndDAssistances", "Hideall", DebugMessagesManager.MessageLevel.Info, "Hiding assistance alpha (congratulation cube)");
+                    }
+                    if (assistance.Key == Gradation.Delta)
+                    {
+                        DebugMessagesManager.Instance.displayMessage("QAndDAssistances", "Hideall", DebugMessagesManager.MessageLevel.Info, "Hiding assistance delta");
+                    }
+
+                    if (assistance.Value.IsActive())
+                    {
+                        assistance.Value.Hide(Utilities.Utility.GetEventHandlerEmpty());
+                    }
+                    else
+                    {
+                        DebugMessagesManager.Instance.displayMessage("QAndDAssistances", "Hideall", DebugMessagesManager.MessageLevel.Info, "The assistance is already hidden: nothing to do");
+                    }
+
+                        
                 }
             }
         }

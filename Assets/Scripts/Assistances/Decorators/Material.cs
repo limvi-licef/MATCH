@@ -53,6 +53,11 @@ namespace MATCH
                     return AssistanceToDecorate.GetAssistance().GetTransform();
                 }
 
+                public override bool IsActive()
+                {
+                    return AssistanceToDecorate.GetAssistance().GetTransform();
+                }
+
                 public override void Hide(EventHandler callback)
                 {
                     AssistanceToDecorate.GetAssistance().Hide(callback);

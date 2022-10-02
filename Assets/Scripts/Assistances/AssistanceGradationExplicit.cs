@@ -168,7 +168,7 @@ namespace MATCH
                 Conditions["MinimalConditionDisplayed"] = true;
             }
 
-            private void ShowAssistanceMinimalGradation(AssistanceGradationAttention assistance, EventHandler callback)
+            private void ShowAssistanceMinimalGradation(GradationVisual.GradationVisual assistance, EventHandler callback)
             {
                 assistance.ShowMinimalGradation(callback);
                 Conditions["MinimalConditionDisplayed"] = true;
@@ -242,7 +242,7 @@ namespace MATCH
             /**
              * The order you add the assistances is important: it determines their order of appearance
              * */
-            public void AddButton(AssistanceGradationAttention assistance, Buttons.Button.ButtonType type, AssistanceGradationAttention assistanceTarget)
+            public void AddButton(GradationVisual.GradationVisual assistance, Buttons.Button.ButtonType type, GradationVisual.GradationVisual assistanceTarget)
             {
                 if (AssistancesGradation == null)
                 {

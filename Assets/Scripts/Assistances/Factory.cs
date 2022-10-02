@@ -39,7 +39,7 @@ namespace MATCH
             public Assistances.Dialog RefToDoListAssistance;
             public AssistanceGradationExplicit RefAssistanceGradationExplicit;
             public Assistances.Dialog RefButtons;
-            public AssistanceGradationAttention RefAssistanceGradationAttention;
+            public GradationVisual.GradationVisual RefAssistanceGradationAttention;
 
             enum DialogsTypes
             {
@@ -252,10 +252,10 @@ namespace MATCH
                 return controller;
             }
 
-            public AssistanceGradationAttention CreateAssistanceGradationAttention(string name)
+            public GradationVisual.GradationVisual CreateAssistanceGradationAttention(string name)
             {
                 Transform view = Instantiate(RefAssistanceGradationAttention.transform);
-                AssistanceGradationAttention controller = view.GetComponent<AssistanceGradationAttention>();
+                GradationVisual.GradationVisual controller = view.GetComponent<GradationVisual.GradationVisual>();
                 view.name = name;
                 return controller;
             }    

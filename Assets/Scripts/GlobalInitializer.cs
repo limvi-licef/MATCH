@@ -64,7 +64,7 @@ namespace MATCH
             /**
              * There is one and only one todo list to 
              * */
-            AdminMenu.Instance.AddButton("Bring to do list window", delegate () { Utilities.Utility.bringObject(TodoList.transform); }); //add button to the admin menu
+            AdminMenu.Instance.AddButton("Bring to do list window", delegate () { Utilities.Utility.BringObject(TodoList.transform); }); //add button to the admin menu
             AdminMenu.Instance.AddSwitchButton("Lock To Do List", CallbackLockToDo);
             InitializeTodoList();
         }

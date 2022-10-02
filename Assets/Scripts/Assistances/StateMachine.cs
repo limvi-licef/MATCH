@@ -25,15 +25,15 @@ namespace MATCH
     {
         public class StateMachine
         {
-            Dictionary<AssistanceGradationAttention, Dictionary<Buttons.Button.ButtonType, AssistanceGradationAttention>> AssistanceGradation;
+            Dictionary<GradationVisual.GradationVisual, Dictionary<Buttons.Button.ButtonType, GradationVisual.GradationVisual>> AssistanceGradation;
 
-            public AssistanceGradationAttention AssistanceCurrent { get; set; }
+            public GradationVisual.GradationVisual AssistanceCurrent { get; set; }
 
-            private AssistanceGradationAttention AssistanceRoot;
+            private GradationVisual.GradationVisual AssistanceRoot;
 
-            public StateMachine(AssistanceGradationAttention root)
+            public StateMachine(GradationVisual.GradationVisual root)
             {
-                AssistanceGradation = new Dictionary<AssistanceGradationAttention, Dictionary<Buttons.Button.ButtonType, AssistanceGradationAttention>>();
+                AssistanceGradation = new Dictionary<GradationVisual.GradationVisual, Dictionary<Buttons.Button.ButtonType, GradationVisual.GradationVisual>>();
                 AssistanceCurrent = null;
                 AssistanceRoot = root;
                 AssistanceCurrent = root;
@@ -44,11 +44,11 @@ namespace MATCH
              * */
             public event EventHandler EventOnButtonClicked;
 
-            public void AddButton (AssistanceGradationAttention assistance, Buttons.Button.ButtonType type, ref AssistanceGradationAttention assistanceTarget)
+            public void AddButton (GradationVisual.GradationVisual assistance, Buttons.Button.ButtonType type, ref GradationVisual.GradationVisual assistanceTarget)
             {
                 if (AssistanceGradation.ContainsKey(assistance) == false)
                 {
-                    AssistanceGradation.Add(assistance, new Dictionary<Buttons.Button.ButtonType, AssistanceGradationAttention>());
+                    AssistanceGradation.Add(assistance, new Dictionary<Buttons.Button.ButtonType, GradationVisual.GradationVisual>());
                     assistance.EventHelpClicked += COnButtonClickedInternal;
                 }
 

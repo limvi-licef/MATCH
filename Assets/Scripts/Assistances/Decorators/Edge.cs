@@ -52,6 +52,11 @@ namespace MATCH
                     return PanelToDecorate.GetAssistance().GetTransform();
                 }
 
+                public override bool IsActive()
+                {
+                    return PanelToDecorate.GetAssistance().IsActive();
+                }
+
                 public override void Hide(EventHandler callback)
                 {
                     PanelToDecorate.GetAssistance().Hide(delegate(System.Object o, EventArgs e)

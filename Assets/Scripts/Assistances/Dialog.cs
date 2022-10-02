@@ -245,6 +245,7 @@ namespace MATCH
             public override Transform GetTransform()
             {
                 return transform;
+                //return DescriptionView;
             }
 
             public void EnableBillboard(bool enable)
@@ -285,6 +286,11 @@ namespace MATCH
             public Transform GetBackground()
             {
                 return BackgroundView;
+            }
+
+            public override bool IsActive()
+            {
+                return DescriptionView.gameObject.activeSelf;
             }
         }
 

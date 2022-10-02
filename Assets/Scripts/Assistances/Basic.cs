@@ -259,6 +259,11 @@ namespace MATCH
             {
                 return false;
             }
+
+            public override bool IsActive()
+            {
+                return ChildView.gameObject.activeSelf;
+            }
         }
     }
 }

@@ -119,6 +119,12 @@ namespace MATCH
                 if (interactions == null)
                 {
                     interactions = o.gameObject.AddComponent<Utilities.HologramInteractions>();
+                    if (interactions == null)
+                    { // Most likely BoxCollider is missing
+                        o.gameObject.AddComponent<BoxCollider>();
+                        // Try to add the interactions component again
+                        interactions = o.gameObject.AddComponent<Utilities.HologramInteractions>();
+                    }
                 }
 
                 interactions.EventFocusOn += CallbackOnObjectFocus;
@@ -127,6 +133,11 @@ namespace MATCH
             public override Transform GetTransform()
             {
                 return transform;
+            }
+
+            public override bool IsActive()
+            {
+                return m_clockView.gameObject.activeSelf;
             }
 
             void CallbackOnClockTouched(System.Object sender, EventArgs e)

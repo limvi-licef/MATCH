@@ -75,7 +75,15 @@ namespace MATCH
 
             public void UnregisterInference(Inference inference)
             {
-                UnregisterInference(inference.Id);
+                if (inference != null )
+                {
+                    UnregisterInference(inference.Id);
+                }
+                else
+                {
+                    DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Warning, "Variable not intialized, nothing to do");
+                }
+                
             }
 
             public void UnregisterInference(string id)
