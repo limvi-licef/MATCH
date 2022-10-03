@@ -233,14 +233,14 @@ namespace MATCH
                 AssistancesDelta.EventHelpButtonClicked += delegate (System.Object o, EventArgs e)
                 {
                     Utilities.EventHandlerArgs.Button arg = (Utilities.EventHandlerArgs.Button)e;
-                    if (arg.ButtonType == Assistances.Buttons.Button.ButtonType.Yes)
+                    UpdateCondition("PersonWatchedObject", false);
+                    UpdateCondition("PersonDroppedObjectOutsideStoringArea", false);
+                    if (arg.ButtonType == Assistances.Buttons.Button.ButtonType.No)
                     { // Means the person wants additional help
                         UpdateCondition("HelpClicked", true);
                         UpdateCondition("HelpRefused", false);
-                        UpdateCondition("PersonWatchedObject", false);
-                        UpdateCondition("PersonDroppedObjectOutsideStoringArea", false);
                     }
-                    else if (arg.ButtonType == Assistances.Buttons.Button.ButtonType.No)
+                    else if (arg.ButtonType == Assistances.Buttons.Button.ButtonType.Yes)
                     { // Means the person does not want additional help, so let's hide the assistance
                         UpdateCondition("HelpClicked", false);
                         UpdateCondition("HelpRefused", true);
@@ -313,13 +313,20 @@ namespace MATCH
 
                 BlackboardCondition cIsHelpRequested = new BlackboardCondition("HelpClicked", Operator.IS_EQUAL, true, Stops.IMMEDIATE_RESTART, seHelpRequested);
 
+                Sequence seHelpRefused = new Sequence(
+                    new NPBehave.Action(() => AssistancesGradation.HideAll()),
+                    new WaitUntilStopped());
+
+                BlackboardCondition cIsHelpRefused = new BlackboardCondition("HelpRefused", Operator.IS_EQUAL, true, Stops.IMMEDIATE_RESTART, seHelpRefused);
+
                 Selector srObjectIsNotStored = new Selector(
                     cDidPersonApproachObject,
                     cObjectDroppedOutsideStorageArea,
                     cDidPersonMoveAwayFromObject,
                     cDidPersonLookAtObject,
                     cDidPersonDidNotComeToTheObjectSinceAWhile,
-                    cIsHelpRequested
+                    cIsHelpRequested,
+                    cIsHelpRefused
                     //srDidPersonLookAtObject
                     );
 
