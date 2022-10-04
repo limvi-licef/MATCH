@@ -87,7 +87,8 @@ namespace MATCH
                     //MATCH.Utilities.Utility.AdjustObjectHeightToHeadHeight(TextView);
 
                     // Trick to start the line to the text position, i.e. to start at user's head's position
-                    LineController.m_hologramOrigin.transform.position = TextView.position;
+                    //LineController.m_hologramOrigin.transform.position = TextView.position;
+                    LineController.m_hologramOrigin = TextView.gameObject;
 
                     TextController.Show(delegate
                     {
@@ -179,6 +180,10 @@ namespace MATCH
 
                 }
 
+            }
+            public void SetDescription(string text, float fontSize = -1.0f)
+            {
+                TextController.SetDescription(text, fontSize);
             }
 
             public override Transform GetTransform()

@@ -90,6 +90,13 @@ namespace MATCH
                 SetTextToTextMeshProComponent(tmp, text, fontSize);
             }
 
+            public string GetDescription()
+            {
+                TextMeshPro tmp = DescriptionView.GetComponent<TextMeshPro>();
+
+                return tmp.text;
+            }
+
             void SetTextToTextMeshProComponent(TextMeshPro component, string text, float fontSize)
             {
                 if (fontSize > 0.0f)

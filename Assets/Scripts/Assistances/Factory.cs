@@ -270,6 +270,17 @@ namespace MATCH
 
                 return controller;
             }
+
+            public ArchWithTextAndHelp CreateAssistanceArch(string name, Transform origin, Transform target, string description, float size, Transform parent)
+            {
+                Transform view = Instantiate(RefArch.transform, parent);
+                view.name = name;
+                ArchWithTextAndHelp controller = view.GetComponent<ArchWithTextAndHelp>();
+                controller.SetArchStartAndEndPoint(origin, target);
+                controller.SetDescription(description, size);
+
+                return controller;
+            }
         }
 
     }

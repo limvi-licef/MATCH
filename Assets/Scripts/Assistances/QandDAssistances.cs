@@ -66,6 +66,9 @@ namespace MATCH
                     DebugMessagesManager.Instance.displayMessage("QAndDAssistances", "ShowOneHideOthers", DebugMessagesManager.MessageLevel.Info, "Showing assistance Zeta");
                 }
 
+                int nbAssistances = AssistancesStorage.Count;
+                int nbAssistancesProcessed = 0;
+
                 foreach (KeyValuePair<Gradation, Assistance> assistance in AssistancesStorage)
                 {
                     //DebugMessagesManager.Instance.displayMessage("ShowOneHideOthers", "Evaluate", DebugMessagesManager.MessageLevel.Info, "Storage " + assistance.Value.GetTransform().name);
@@ -73,18 +76,45 @@ namespace MATCH
                     {
                         if (assistance.Value.IsActive() == false)
                         {
-                            assistance.Value.Show(callback);
+                            assistance.Value.Show(delegate (System.Object o, EventArgs e)
+                            {
+                                nbAssistancesProcessed++;
+
+                                if (nbAssistancesProcessed == nbAssistances)
+                                {
+                                    callback?.Invoke(this, EventArgs.Empty);
+                                    nbAssistancesProcessed ++; // Setting it higher then nbAssistances to avoid the callback to be triggered twice
+                                }
+
+                            });
                         }
-                        //DebugMessagesManager.Instance.displayMessage("ShowOneHideOthers", "Evaluate", DebugMessagesManager.MessageLevel.Info, "Show " + assistance.Value.GetTransform().name); // Class and method names are hard coded for performance reasons.
+                        else
+                        {
+                            nbAssistancesProcessed++;
+                            DebugMessagesManager.Instance.displayMessage("QAndDAssistances", "ShowOneHideOthers", DebugMessagesManager.MessageLevel.Warning, "The assistance that should have been shown is apparently already shown, so nothing has been done");
+                        }
                     }
                     else
                     {
                         //DebugMessagesManager.Instance.displayMessage("ShowOneHideOthers", "Evaluate", DebugMessagesManager.MessageLevel.Info, "Hide"); // Class and method names are hard coded for performance reasons.
                         if (assistance.Value.IsActive())
                         {
-                            assistance.Value.Hide(Utilities.Utility.GetEventHandlerEmpty());
+                            assistance.Value.Hide(delegate (System.Object o, EventArgs e)
+                            {
+                                nbAssistancesProcessed++;
+
+                                if (nbAssistancesProcessed == nbAssistances)
+                                {
+                                    callback?.Invoke(this, EventArgs.Empty);
+                                    nbAssistancesProcessed++; // Setting it higher then nbAssistances to avoid the callback to be triggered twice
+                                }
+                            });
                         }
-                            
+                        else
+                        {
+                            nbAssistancesProcessed++;
+                            DebugMessagesManager.Instance.displayMessage("QAndDAssistances", "ShowOneHideOthers", DebugMessagesManager.MessageLevel.Warning, assistance.Key + " was already hidden so nothing to do");
+                        }
                     }
                 }
             }

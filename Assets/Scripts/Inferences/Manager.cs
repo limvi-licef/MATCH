@@ -35,9 +35,39 @@ namespace MATCH
         {
             Dictionary<string, Inference> InferencesStorage;
 
+            Assistances.Dialog BehaviorTreeDebugWindow;
+
             private void Awake()
             {
                 InferencesStorage = new Dictionary<string, Inference>();
+            }
+
+            private void Start()
+            {
+                // Debug object to display the status of the BT conditions
+                BehaviorTreeDebugWindow = Assistances.Factory.Instance.CreateDialogNoButton("Inferences status", "Empty for now", transform);
+                BehaviorTreeDebugWindow.Show(Utilities.Utility.GetEventHandlerEmpty());
+                BehaviorTreeDebugWindow.GetTransform().gameObject.AddComponent<ObjectManipulator>();
+                MATCH.AdminMenu.Instance.AddButton("Bring inferences status", CallbackBringWindow, AdminMenu.Panels.Obstacles);
+            }
+
+            public void CallbackBringWindow()
+            {
+                BehaviorTreeDebugWindow.transform.position = new Vector3(Camera.main.transform.position.x + 0.5f, Camera.main.transform.position.y, Camera.main.transform.position.z);
+            }
+
+            void UpdateInferencesStatus(List<string> ids, List<bool> evaluations)
+            {
+                // Making the text to display
+                string textToDisplay = "";
+
+                for ( int i = 0; i < ids.Count; i ++)
+                {
+                    textToDisplay += ids[i] + " = " + evaluations[i] + "\n";
+                }
+
+                // Display the text
+                BehaviorTreeDebugWindow.SetDescription(textToDisplay, 0.08f);
             }
 
             // Update is called once per frame
@@ -45,14 +75,32 @@ namespace MATCH
             {
                 try
                 {
+                    List<string> ids = new List<string>();
+                    List<bool> evaluations = new List<bool>();
+
+                    bool atLeastOneEval = false;
+
                     foreach (KeyValuePair<string, Inference> inference in InferencesStorage)
                     {
+                        bool eval = inference.Value.Evaluate();
+
+                        ids.Add(inference.Key);
+                        evaluations.Add(eval);
+
                         // Mettre tout ça dans un thread? Pour pas que ce soit bloquant?
-                        if (inference.Value.Evaluate())
+                        if (eval)
                         {
                             inference.Value.TriggerCallback();
+
+                            atLeastOneEval = true;
                         }
                     }
+
+                    if (atLeastOneEval)
+                    {
+                        UpdateInferencesStatus(ids, evaluations); // Update the display only when an inference becomes true
+                    }
+
                 }
                 catch (InvalidOperationException)
                 {
@@ -66,6 +114,17 @@ namespace MATCH
                 {
                     InferencesStorage.Add(inference.Id, inference);
                     //DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Inference " + inference.Id + " added");
+
+                    List<string> ids = new List<string>();
+                    List<bool> evaluations = new List<bool>();
+
+                    foreach (KeyValuePair<string, Inference> inf in InferencesStorage)
+                    {
+                        ids.Add(inf.Key);
+                        evaluations.Add(false);
+                    }
+
+                    UpdateInferencesStatus(ids, evaluations);
                 }
                 else
                 {
@@ -93,6 +152,17 @@ namespace MATCH
                     InferencesStorage[id].Unregistered();
                     InferencesStorage.Remove(id);
                     //DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Inference " + id + " unregistered");
+
+                    List<string> ids = new List<string>();
+                    List<bool> evaluations = new List<bool>();
+
+                    foreach (KeyValuePair<string, Inference> inf in InferencesStorage)
+                    {
+                        ids.Add(inf.Key);
+                        evaluations.Add(false);
+                    }
+
+                    UpdateInferencesStatus(ids, evaluations);
                 }
                 else
                 {
