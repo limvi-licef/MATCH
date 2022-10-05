@@ -208,8 +208,8 @@ namespace MATCH
                 m_reminderController.AddObjectToBeClose(m_assistancePicturalController.HologramView);
                 m_reminderController.AddObjectToBeClose(m_assistancePicturalController.SurfaceWithStarsView);
                 m_reminderController.AddObjectToBeClose(m_assistancePicturalController.Help);
-                m_reminderController.AddObjectToBeClose(m_assistanceConnectWithArchController.HelpController);
-                m_reminderController.AddObjectToBeClose(m_assistanceConnectWithArchController.TextView);
+                //m_reminderController.AddObjectToBeClose(m_assistanceConnectWithArchController.HelpController);
+                //m_reminderController.AddObjectToBeClose(m_assistanceConnectWithArchController.TextView);
                 m_reminderController.AddObjectToBeClose(interactionTableController.GetInteractionSurface());
                 m_reminderController.AddObjectToBeClose(initialCueingView.transform);
                 m_reminderController.AddObjectToBeClose(solutionView.transform);
@@ -470,6 +470,7 @@ namespace MATCH
                 state.addFunctionShow(delegate (EventHandler e)
                 {
                     m_assistancePicturalController.SetGradationToMinimum();
+                    onChallengeStandBy();
                 }, Utilities.Utility.GetEventHandlerEmpty());
 
                 state.setFunctionHide(delegate (EventHandler e)
@@ -490,6 +491,8 @@ namespace MATCH
                     MATCH.Inferences.DistanceLeaving inferenceAssistancePicturalDistance = new MATCH.Inferences.DistanceLeaving("inferenceAssistancePicturalDistance", CallbackInferenceDistanceAssistanceStimulateLevel1, m_assistancePicturalView.gameObject, 3.0f);
 
                     m_inferenceEngine.RegisterInference(inferenceAssistancePicturalDistance);
+
+                    onChallengeStart();
                 }, Utilities.Utility.GetEventHandlerEmpty());
 
                 state.setFunctionHide(delegate (EventHandler e)
@@ -545,6 +548,7 @@ namespace MATCH
                 {
                     m_audioListener.GetComponent<AudioSource>().PlayOneShot(m_audioClipToPlayOnTouchInteractionSurface);
                     m_reminderController.Hide(Utilities.Utility.GetEventHandlerEmpty());
+                    onChallengeSuccess();
                 }, Utilities.Utility.GetEventHandlerEmpty());
 
                 state.addFunctionShow(m_successController.Show, Utilities.Utility.GetEventHandlerEmpty());

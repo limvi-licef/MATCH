@@ -29,9 +29,9 @@ namespace MATCH
         {
             public event EventHandler EventHelpTouched;
 
-            public Transform HelpController;
+            Transform HelpController;
             Transform LineView;
-            public Transform TextView;
+            Transform TextView;
             MATCH.Assistances.Dialog TextController;
 
             LineToObject LineController;
@@ -46,6 +46,7 @@ namespace MATCH
                 HelpController = MATCH.Utilities.Utility.FindChild(gameObject, "Help");
                 TextView = gameObject.transform.Find("Text");
                 TextController = TextView.GetComponent<MATCH.Assistances.Dialog>();
+                
 
                 TextOriginalScaling = TextView.localScale;
             }
@@ -53,6 +54,8 @@ namespace MATCH
             // Start is called before the first frame update
             void Start()
             {
+                TextController.EnableBillboard(false);
+
                 if (LineView == null)
                 {
                     DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Error, "Line hologram not initialized properly");
@@ -83,12 +86,18 @@ namespace MATCH
                 {
                     m_mutexShow = true;
 
-                    TextView.position = new Vector3(LineController.m_hologramOrigin.transform.position.x, LineController.m_hologramOrigin.transform.position.y + 0.5f, LineController.m_hologramOrigin.transform.position.z);
+                    TextView.position = new Vector3(LineController.PointOrigin.x, /*LineController.m_hologramOrigin.transform.position.y + 0.5f*/Camera.main.transform.position.y, /*TextView.position.z*/ LineController.PointOrigin.z);
+                    TextView.transform.LookAt(Camera.main.transform);
+                    TextView.transform.Rotate(new Vector3(0, 1, 0), 180);
+                    //TextController.EnableBillboard(false, -0.1f);
                     //MATCH.Utilities.Utility.AdjustObjectHeightToHeadHeight(TextView);
 
                     // Trick to start the line to the text position, i.e. to start at user's head's position
                     //LineController.m_hologramOrigin.transform.position = TextView.position;
-                    LineController.m_hologramOrigin = TextView.gameObject;
+                    //LineController.m_hologramOrigin = TextView.gameObject;
+                    LineController.PointOrigin = TextView.position;
+                    TextView.position = Vector3.MoveTowards(TextView.position, Camera.main.transform.position, 0.01f);
+
 
                     TextController.Show(delegate
                     {
@@ -155,8 +164,11 @@ namespace MATCH
 
             public void SetArchStartAndEndPoint(Transform origin, Transform target)
             {
-                LineController.m_hologramOrigin = origin.gameObject;
-                LineController.m_hologramTarget = target.gameObject;
+                /*LineController.m_hologramOrigin = origin.gameObject;
+                LineController.m_hologramTarget = target.gameObject;*/
+
+                LineController.PointOrigin = origin.position;
+                LineController.PointEnd = target.position;
             }
 
             public override void ShowHelp(bool show, EventHandler callback)

@@ -255,8 +255,28 @@ namespace MATCH
                 //return DescriptionView;
             }
 
-            public void EnableBillboard(bool enable)
+            public void EnableBillboard(bool enable, float offsetRotation=0.0f)
             {
+                gameObject.GetComponent<Billboard>().enabled = false;
+
+                gameObject.transform.rotation = new Quaternion(0, 0, 0, 0);
+
+                Vector3 newPos = TitleView.localPosition;
+                newPos.z += offsetRotation;
+                TitleView.localPosition = newPos;
+
+                newPos = DescriptionView.localPosition;
+                newPos.z += offsetRotation;
+                DescriptionView.localPosition = newPos;
+
+                newPos = ButtonsParentView.localPosition;
+                newPos.z += offsetRotation;
+                ButtonsParentView.localPosition = newPos;
+
+                newPos = BackgroundView.localPosition;
+                newPos.z += offsetRotation;
+                BackgroundView.localPosition = newPos;
+
                 gameObject.GetComponent<Billboard>().enabled = enable;
             }
 

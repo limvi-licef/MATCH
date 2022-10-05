@@ -24,7 +24,7 @@ namespace MATCH
 {
     namespace BehaviorTrees
     {
-        public class SortingObject : MonoBehaviour
+        public class SortingObject : Scenarios.Scenario
         {
             private NPBehave.Root Tree;
             private Blackboard Conditions;
@@ -74,9 +74,16 @@ namespace MATCH
 
             Assistances.QandDAssistances AssistancesGradation;
 
+            private void Awake()
+            {
+                setId("Ranger la tasse");
+            }
+
             // Start is called before the first frame update
             void Start()
             {
+                Scenarios.Manager.Instance.addScenario(this);
+
                 // Initialize variables
                 InferenceObjectDetected = null;
                 InferenceGameObjectInStorage = null;
@@ -92,12 +99,20 @@ namespace MATCH
                 BehaviorTreeDebugWindow = Assistances.Factory.Instance.CreateDialogNoButton("BT conditions", "Empty for now", transform);
                 BehaviorTreeDebugWindow.Show(Utilities.Utility.GetEventHandlerEmpty());
                 BehaviorTreeDebugWindow.GetTransform().gameObject.AddComponent<ObjectManipulator>();
-                AdminMenu.Instance.AddButton("Bring BT debug", CallbackBringBTDebugWindow, AdminMenu.Panels.Obstacles);
+                AdminMenu.Instance.AddButton("BT debug - bring", CallbackBringBTDebugWindow, AdminMenu.Panels.Obstacles);
+                AdminMenu.Instance.AddSwitchButton("BT debug - hide", delegate ()
+                {
+                    BehaviorTreeDebugWindow.gameObject.SetActive(!BehaviorTreeDebugWindow.gameObject.activeSelf);
+                }, AdminMenu.Panels.Obstacles);
 
                 AssistancesDebugWindow = Assistances.Factory.Instance.CreateDialogNoButton("Assistances status", "Empty for now", transform);
                 AssistancesDebugWindow.Show(Utilities.Utility.GetEventHandlerEmpty());
                 AssistancesDebugWindow.GetTransform().gameObject.AddComponent<ObjectManipulator>();
-                AdminMenu.Instance.AddButton("Bring assistances debug", CallbackBringAssistancesDebugWindow, AdminMenu.Panels.Obstacles);
+                AdminMenu.Instance.AddButton("Assistances debug - bring", CallbackBringAssistancesDebugWindow, AdminMenu.Panels.Obstacles);
+                AdminMenu.Instance.AddSwitchButton("Assistances debug - hide", delegate ()
+                {
+                    AssistancesDebugWindow.gameObject.SetActive(!AssistancesDebugWindow.gameObject.activeSelf);
+                }, AdminMenu.Panels.Obstacles);
 
                 FakeObject = transform.Find("FakeObject").gameObject;
 
@@ -147,6 +162,8 @@ namespace MATCH
 
             void InitializeBehaviorTreeConditions()
             {
+                onChallengeStandBy();
+
                 // Conditions
                 if (Conditions == null)
                 {
@@ -366,7 +383,7 @@ namespace MATCH
 
                 // Set assistances
                 // For now we use the assistances from the QandDAssistances class. Uncomment the following line when going to the BT to manage the assistances
-                InitializeAssistancesAlpha();
+                //InitializeAssistancesAlpha();
                 Tree = new Root(Conditions, srBegin);
 
                 //#if UNITY_EDITOR
@@ -581,12 +598,15 @@ namespace MATCH
                         ObjectSet = true;
                         CallBackSetAreaObject();
                         InferenceManager.RegisterInference(InferenceTimeDidNotComeToObject);
+                        onChallengeStart();
                     }
+
+                    AssistancesDebugWindow.SetDescription(AssistancesDebugWindow.GetDescription() + "\n\nObject detected");
                 }
 
                 ObjectDetected = true;
 
-                AssistancesDebugWindow.SetDescription(AssistancesDebugWindow.GetDescription() + "\n\nObject detected");
+                
             }
 
             void CallbackGameObjectDetectedInStorage(System.Object o, EventArgs e)
@@ -613,6 +633,8 @@ namespace MATCH
 
                 CallBackRemoveAreaObject(); //If the object is stored, the both areas are "removed", by being moved back in (1000, 1000, 1000)
                 AreaObjectPosition.transform.position = new Vector3(1000, 1000, 1000); // Same here, the area is moved back in (1000, 1000, 1000)
+
+                onChallengeSuccess();
             }
 
             void CallbackPersonCloseToObject(System.Object o, EventArgs e)

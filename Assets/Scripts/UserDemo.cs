@@ -41,6 +41,11 @@ namespace MATCH
         void Start()
         {
             initializeScenario();
+
+            AdminMenu.Instance.AddSwitchButton("User demo - hide", delegate ()
+            {
+                gameObject.SetActive(!gameObject.activeSelf);
+            }, AdminMenu.Panels.Obstacles);
         }
 
         // Update is called once per frame

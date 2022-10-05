@@ -85,6 +85,11 @@ namespace MATCH
                 {
                     transform.Find("BackPlate").Find("Quad").GetComponent<Renderer>().material = Resources.Load(Utilities.Materials.Colors.GreenGlowing, typeof(Material)) as Material;
                 }
+
+                public void CallbackSetButtonBackgroundDefault(System.Object o, EventArgs e)
+                {
+                    transform.Find("BackPlate").Find("Quad").GetComponent<Renderer>().material = Resources.Load(Utilities.Materials.Colors.HolographicBackPlate, typeof(Material)) as Material;
+                }
             }
 
         }

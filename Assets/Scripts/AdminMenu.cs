@@ -91,6 +91,7 @@ namespace MATCH
             // Add the buttons to manage this menu
             AddSwitchButton("Static/Mobile menu", CallbackSwitchStaticOrMovingMenu);
 
+            //gameObject.AddComponent<ObjectManipulator>();
 
         }
 

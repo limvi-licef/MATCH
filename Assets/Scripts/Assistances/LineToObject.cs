@@ -27,8 +27,10 @@ namespace MATCH
     {
         public class LineToObject : MonoBehaviour
         {
-            public GameObject m_hologramTarget;
-            public GameObject m_hologramOrigin;
+            /*public GameObject m_hologramTarget;
+            public GameObject m_hologramOrigin;*/
+            public Vector3 PointOrigin { get; set; }
+            public Vector3 PointEnd { get; set; }
             public int m_numPoints = 1000;
 
             LineRenderer m_line;
@@ -70,23 +72,35 @@ namespace MATCH
                         // Draw a point
                         m_drawWithAnimationT += 1.0f / (float)m_numPoints;
 
-                        m_line.positionCount++;
-                        m_line.SetPosition(m_line.positionCount - 1, calculateQuadraticBezierPoint(m_drawWithAnimationT, m_drawWithAnimationStartingPoint, m_drawWithAnimationMidPoint, m_drawWithAnimationEndPoint));
+                        /*if (m_drawWithAnimationT > (1.0f/(float)m_numPoints)*200.0f)
+                        {*/
+                            m_line.positionCount++;
+                            m_line.SetPosition(m_line.positionCount - 1, calculateQuadraticBezierPoint(m_drawWithAnimationT, m_drawWithAnimationStartingPoint, m_drawWithAnimationMidPoint, m_drawWithAnimationEndPoint));
 
-                        // Remove the recorded 2 seconds.
-                        m_timer = m_timer - m_timerWaitTime;
+                            // Remove the recorded 2 seconds.
+                            m_timer = m_timer - m_timerWaitTime;
 
-                        // Stoping the process when the line is fully drawn
-                        if (m_drawWithAnimationT >= 1.0f)
-                        {
-                            DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Finished drawing the line");
-                            m_drawLine = false;
+                            // Stoping the process when the line is fully drawn
+                            if (m_drawWithAnimationT >= 1.0f)
+                            {
+                                DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Finished drawing the line");
+                                m_drawLine = false;
 
-                            m_eventProcessFinished?.Invoke(this, EventArgs.Empty);
+                                m_eventProcessFinished?.Invoke(this, EventArgs.Empty);
 
-                            m_mutexShow = false;
+                                m_mutexShow = false;
+                           // }
+
+
                         }
+
+                        
                     }
+                    /*while (m_line.positionCount < m_numPoints)
+                    {
+                        m_line.positionCount++;
+                        m_line.SetPosition(m_line.positionCount - 1, m_line.GetPosition(m_line.positionCount - 2));
+                    }*/
                 }
             }
 
@@ -99,21 +113,21 @@ namespace MATCH
 
                     if (gameObject.activeSelf == false)
                     {
-                        Vector3 startPoint = m_hologramOrigin.transform.position;
-                        Vector3 endPoint = m_hologramTarget.transform.position;
-                        Vector3 midPoint = (startPoint + endPoint) / 2;
+                        //Vector3 startPoint = m_hologramOrigin.transform.position;
+                        //Vector3 endPoint = m_hologramTarget.transform.position;
+                        Vector3 midPoint = (PointOrigin + PointEnd) / 2;
                         midPoint.y += 2.0f;
 
                         gameObject.SetActive(true);
 
-                        DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Drawing line with animation - Starting point: " + startPoint.ToString() + " Mid point: " + midPoint.ToString() + " End point: " + endPoint.ToString());
+                        DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Drawing line with animation - Starting point: " + PointOrigin.ToString() + " Mid point: " + midPoint.ToString() + " End point: " + PointEnd.ToString());
 
                         m_drawWithAnimationT = 0.0f;
-                        m_drawWithAnimationStartingPoint = startPoint;
+                        m_drawWithAnimationStartingPoint = PointOrigin;
                         m_drawWithAnimationMidPoint = midPoint;
-                        m_drawWithAnimationEndPoint = endPoint;
+                        m_drawWithAnimationEndPoint = PointEnd;
 
-                        m_line.SetPosition(0, startPoint);
+                        m_line.SetPosition(0, PointOrigin);
 
                         m_eventProcessFinished += eventHandler;
 
