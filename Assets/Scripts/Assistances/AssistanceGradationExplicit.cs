@@ -61,6 +61,7 @@ namespace MATCH
 
             void Start()
             {
+                Tree = null;
 
                 InfManager.RegisterInference(InfTimer2Minutes);
                 //InitializeInference30Seconds();
@@ -72,6 +73,13 @@ namespace MATCH
                 InfFocusLost = null;
                 InfIsClose = null;
 
+                InitializeBT();
+
+                
+            }
+
+            private void InitializeBT()
+            {
                 // Initialize the BT
                 Conditions = new NPBehave.Blackboard(UnityContext.GetClock());
                 ResetConditions(); // Can also be used to initialize them
@@ -132,7 +140,7 @@ namespace MATCH
                 // srIsDisplayed - end
 
                 // seIsDisplayedSince2Minutes - begin
-                BlackboardCondition cIsDisplayedSince2Minutes = new BlackboardCondition("DisplayedSince2Minutes", Operator.IS_EQUAL, true, Stops.IMMEDIATE_RESTART, new NPBehave.Action(()=>Debug.Log("Displayed since 2 minutes")));
+                BlackboardCondition cIsDisplayedSince2Minutes = new BlackboardCondition("DisplayedSince2Minutes", Operator.IS_EQUAL, true, Stops.IMMEDIATE_RESTART, new NPBehave.Action(() => Debug.Log("Displayed since 2 minutes")));
 
                 Sequence seIsDisplayedSince2Minutes = new Sequence(
                     cIsDisplayedSince2Minutes,
@@ -154,9 +162,14 @@ namespace MATCH
                 debugger.BehaviorTree = Tree;
             }
 
-            private void ResetConditions()
+            public void ResetConditions()
             {
                 DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Resetting conditions");
+
+                if (Tree != null && Tree.IsActive)
+                {
+                    Tree.Stop();
+                }
 
                 Conditions["IsDisplayed"] = false;
                 Conditions["IsFocused"] = false;
@@ -271,7 +284,16 @@ namespace MATCH
                 Status = AssistanceStatus.Run;
 
                 // Initialize the BT
-                Tree.Start();
+                if (Tree.IsActive == false)
+                {
+                    InitializeBT();
+                    Tree.Start();
+                }
+                else
+                {
+                    DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Warning, "BT already running, so nothing to do");
+                }
+                
             }
 
             public void PauseAssistance()

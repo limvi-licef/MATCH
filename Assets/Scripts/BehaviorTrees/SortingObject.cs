@@ -18,6 +18,7 @@ using UnityEngine;
 using NPBehave;
 using System;
 using System.Reflection;
+using TMPro;
 using Microsoft.MixedReality.Toolkit.UI;
 
 namespace MATCH
@@ -68,9 +69,9 @@ namespace MATCH
              * The next two lines are to be used with the assistance behavior tree.
              * Currently, in order to test the code, the class QandDAssistances is used. This is meant to be a temporary solution, i.e. all assistances should in the end be based on the behavior tree.
              * */
-            Assistances.InteractionSurface AssistancesAlphaInteractionSurface;
-            Assistances.AssistanceGradationExplicit AssistancesAlphaGradation;
-            Assistances.GradationVisual.GradationVisual Alpha1;
+            Assistances.InteractionSurface AssistancesEpsilonInteractionSurface;
+            Assistances.AssistanceGradationExplicit AssistancesEpsilonGradation;
+            Assistances.GradationVisual.GradationVisual Epsilon1;
 
             Assistances.QandDAssistances AssistancesGradation;
 
@@ -239,7 +240,8 @@ namespace MATCH
                     { // Object is outside the interface surface, safe to reset the scenario
                         DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Reset the storing object scenario " + name);
 
-                        AssistancesGradation.HideAll();
+                        //AssistancesGradation.HideAll();
+                        HideAll();
 
                         InitializeBehaviorTreeConditions();
 
@@ -267,6 +269,9 @@ namespace MATCH
                 AssistancesGradation.AddAssistance(Assistances.QandDAssistances.Gradation.Gamma, AssistancesGamma);       
 
                 Assistances.Dialog AssistancesDelta = Assistances.Factory.Instance.CreateDialogTwoButtons("Information", "L'objet n'est pas rangé au bon endroit.", "Ok!", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.Yes, "Aidez-moi!", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.No, /*AreaObject.transform*/parentForAssistances);
+                TextMeshPro tmp = AssistancesDelta.transform.Find("ButtonParent").Find("Ok!").Find("IconAndText").Find("TextMeshPro").GetComponent<TextMeshPro>();
+                tmp.fontSize = 0.2f;
+
                 AssistancesGradation.AddAssistance(Assistances.QandDAssistances.Gradation.Delta, AssistancesDelta);
                 AssistancesDelta.EventHelpButtonClicked += delegate (System.Object o, EventArgs e)
                 {
@@ -316,13 +321,13 @@ namespace MATCH
                 Sequence sePersonTakeObject = new Sequence(
                         //cObjectDroppedOutsideStorageArea,
                         //new Sequence(
-                        new NPBehave.Action(() => AssistancesGradation.HideAll()), // When the object is grabbed, no assistances should be displayed, so they are all hidden.
+                        new NPBehave.Action(() => HideAll()), // When the object is grabbed, no assistances should be displayed, so they are all hidden.
                         new WaitUntilStopped());
 
                 BlackboardCondition cDidPersonTakeObject = new BlackboardCondition("PersonGrabbedObject", Operator.IS_EQUAL, true, Stops.IMMEDIATE_RESTART, sePersonTakeObject);
 
                 Sequence sePersonMovedAwayFromObject = new Sequence(
-                    new NPBehave.Action(() => AssistancesDebugWindow.SetDescription("Assistance epsilon disabled in code")/*AssistancesAlphaGradation.RunAssistance(Utilities.Utility.GetEventHandlerEmpty())*/),
+                    new NPBehave.Action(() => /*AssistancesDebugWindow.SetDescription("Assistance epsilon disabled in code")*/RunAssistanceEpsilon()),
                     new WaitUntilStopped());
 
                 BlackboardCondition cDidPersonMoveAwayFromObject = new BlackboardCondition("PersonMovedAwayFromObject", Operator.IS_EQUAL, true, Stops.IMMEDIATE_RESTART, sePersonMovedAwayFromObject);
@@ -353,7 +358,7 @@ namespace MATCH
                 BlackboardCondition cIsHelpRequested = new BlackboardCondition("HelpClicked", Operator.IS_EQUAL, true, Stops.IMMEDIATE_RESTART, seHelpRequested);
 
                 Sequence seHelpRefused = new Sequence(
-                    new NPBehave.Action(() => AssistancesGradation.HideAll()),
+                    new NPBehave.Action(() => /*AssistancesGradation.HideAll()*/ HelpRefused()),
                     new WaitUntilStopped());
 
                 BlackboardCondition cIsHelpRefused = new BlackboardCondition("HelpRefused", Operator.IS_EQUAL, true, Stops.IMMEDIATE_RESTART, seHelpRefused);
@@ -383,7 +388,7 @@ namespace MATCH
 
                 // Set assistances
                 // For now we use the assistances from the QandDAssistances class. Uncomment the following line when going to the BT to manage the assistances
-                //InitializeAssistancesAlpha();
+                InitializeAssistancesEpsilon();
                 Tree = new Root(Conditions, srBegin);
 
                 //#if UNITY_EDITOR
@@ -392,6 +397,12 @@ namespace MATCH
                 //#endif
 
                 Tree.Start();
+            }
+
+            void HelpRefused()
+            {
+                UpdateCondition("HelpRefused", false);
+                HideAll();
             }
 
             void InitializeInferences()
@@ -458,25 +469,25 @@ namespace MATCH
                 }
             } 
             
-			void InitializeAssistancesAlpha()
+			void InitializeAssistancesEpsilon()
             {
-                AssistancesAlphaInteractionSurface = Assistances.Factory.Instance.CreateInteractionSurface("AssistancesAlpha", AdminMenu.Panels.Obstacles, new Vector3(0.5f, 0.05f, 0.5f), Utilities.Materials.Colors.OrangeGlowing, true, true, Utilities.Utility.GetEventHandlerEmpty(), transform);
-                AssistancesAlphaInteractionSurface.transform.localPosition = new Vector3(0, 0.464f, 1.632f); //new Vector3(0.85f, 0.46f, 2.18f);
-                AssistancesAlphaInteractionSurface.name = "Assistances Alpha - Interaction surface";
+                AssistancesEpsilonInteractionSurface = Assistances.Factory.Instance.CreateInteractionSurface("AssistancesAlpha", AdminMenu.Panels.Obstacles, new Vector3(0.5f, 0.05f, 0.5f), Utilities.Materials.Colors.OrangeGlowing, true, true, Utilities.Utility.GetEventHandlerEmpty(), transform);
+                AssistancesEpsilonInteractionSurface.transform.localPosition = new Vector3(0, 0.464f, 1.632f); //new Vector3(0.85f, 0.46f, 2.18f);
+                AssistancesEpsilonInteractionSurface.name = "Assistances Alpha - Interaction surface";
 
 
                 //Assistances.Basic cube = ;
-                Alpha1 = Assistances.GradationVisual.Factory.Instance.CreateTypeExclamationMark("Alpha1", AssistancesAlphaInteractionSurface.transform); /*Assistances.Factory.Instance.CreateAssistanceGradationAttention("AssistanceGradationExclamationMark");
+                Epsilon1 = Assistances.GradationVisual.Factory.Instance.CreateTypeExclamationMark("Alpha1", AssistancesEpsilonInteractionSurface.transform); /*Assistances.Factory.Instance.CreateAssistanceGradationAttention("AssistanceGradationExclamationMark");
                 Assistances.Basic alpha1Base = Assistances.Factory.Instance.CreateCube(Utilities.Materials.Colors.PurpleGlowing, AssistancesAlphaInteractionSurface.transform);
                 alpha1Base.name = "Alpha1";
                 Alpha1.AddAssistance(Assistances.Decorators.Factory.Instance.CreateMaterial(alpha1Base, Utilities.Materials.Textures.Exclamation));
                 Alpha1.AddAssistance(Assistances.Decorators.Factory.Instance.CreateMaterial(alpha1Base, Utilities.Materials.Textures.ExclamationRed));*/
 
                 Assistances.GradationVisual.GradationVisual end = Assistances.Factory.Instance.CreateAssistanceGradationAttention("AssistanceGradationEnd");
-                end.AddAssistance(Assistances.Factory.Instance.CreateDialogNoButton("", "Ok! We let you do.", AssistancesAlphaInteractionSurface.transform));
+                end.AddAssistance(Assistances.Factory.Instance.CreateDialogNoButton("", "Ok! We let you do.", AssistancesEpsilonInteractionSurface.transform));
 
                 Assistances.GradationVisual.GradationVisual alpha2 =  Assistances.Factory.Instance.CreateAssistanceGradationAttention("AssistanceGradationYesNo1");
-                Assistances.Dialog alpha2Base = Assistances.Factory.Instance.CreateDialogTwoButtons("", "You can do something here to tidy up your room", "I know what!", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.Yes, "I don't know", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.No, AssistancesAlphaInteractionSurface.transform);
+                Assistances.Dialog alpha2Base = Assistances.Factory.Instance.CreateDialogTwoButtons("", "You can do something here to tidy up your room", "I know what!", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.Yes, "I don't know", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.No, AssistancesEpsilonInteractionSurface.transform);
                 alpha2Base.name = "Alpha2";
                 Assistances.Assistance alpha21 = alpha2.AddAssistance(Assistances.Decorators.Factory.Instance.CreateBackground(alpha2Base, Utilities.Materials.Colors.CyanGlowing));
                 //alpha2.
@@ -484,19 +495,19 @@ namespace MATCH
                 alpha2.AddAssistance(Assistances.Decorators.Factory.Instance.CreateBackground((Assistances.IPanel)alpha22, Utilities.Materials.Colors.OrangeGlowing));
 
                 Assistances.GradationVisual.GradationVisual alpha3 = Assistances.Factory.Instance.CreateAssistanceGradationAttention("Alpha3");
-                Assistances.Dialog alpha3Base = Assistances.Factory.Instance.CreateDialogTwoButtons("", "Do you think the cup should be here?", "Yes", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.Yes, "No", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.No, AssistancesAlphaInteractionSurface.transform);
+                Assistances.Dialog alpha3Base = Assistances.Factory.Instance.CreateDialogTwoButtons("", "Do you think the cup should be here?", "Yes", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.Yes, "No", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.No, AssistancesEpsilonInteractionSurface.transform);
                 alpha3Base.name = "Alpha3";
                 alpha3.AddAssistance(Assistances.Decorators.Factory.Instance.CreateBackground(alpha3Base, Utilities.Materials.Colors.CyanGlowing));
                 alpha3.AddAssistance(Assistances.Decorators.Factory.Instance.CreateBackground(alpha3Base, Utilities.Materials.Colors.OrangeGlowing));
 
-                AssistancesAlphaGradation = Assistances.Factory.Instance.CreateAssistanceGradationExplicit("AssistanceGradationExplicitSortingObject");
-                AssistancesAlphaGradation.InfManager = InferenceManager;
+                AssistancesEpsilonGradation = Assistances.Factory.Instance.CreateAssistanceGradationExplicit("AssistanceGradationExplicitSortingObject");
+                AssistancesEpsilonGradation.InfManager = InferenceManager;
 
                 // Connecting the buttons
-                AssistancesAlphaGradation.AddButton(Alpha1, Assistances.Buttons.Button.ButtonType.Yes, alpha2);
-                AssistancesAlphaGradation.AddButton(Alpha1, Assistances.Buttons.Button.ButtonType.No, end);
-                AssistancesAlphaGradation.AddButton(alpha2, Assistances.Buttons.Button.ButtonType.Yes, end);
-                AssistancesAlphaGradation.AddButton(alpha2, Assistances.Buttons.Button.ButtonType.No, alpha3);
+                AssistancesEpsilonGradation.AddButton(Epsilon1, Assistances.Buttons.Button.ButtonType.Yes, alpha2);
+                AssistancesEpsilonGradation.AddButton(Epsilon1, Assistances.Buttons.Button.ButtonType.No, end);
+                AssistancesEpsilonGradation.AddButton(alpha2, Assistances.Buttons.Button.ButtonType.Yes, end);
+                AssistancesEpsilonGradation.AddButton(alpha2, Assistances.Buttons.Button.ButtonType.No, alpha3);
 
                 //AssistancesAlphaGradation.AddButton(yesNo1, Assistances.Buttons.Button.ButtonType.Undefined, null);
 
@@ -531,6 +542,13 @@ namespace MATCH
                 {
                     DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Exclamation mark object NOT active");
                 }*/
+            }
+
+            void RunAssistanceEpsilon()
+            {
+                AssistancesEpsilonInteractionSurface.gameObject.SetActive(true);
+                AssistancesEpsilonGradation.RunAssistance(Utilities.Utility.GetEventHandlerEmpty());
+                AssistancesGradation.HideAll(); //And not the wrapped function, because otherwise it will also hide epsilon!
             }
 
 			void RegisterInferenceComing()
@@ -599,6 +617,7 @@ namespace MATCH
                         CallBackSetAreaObject();
                         InferenceManager.RegisterInference(InferenceTimeDidNotComeToObject);
                         onChallengeStart();
+                        AssistancesEpsilonInteractionSurface.SetLocalPosition(AreaObjectPosition.transform.position);
                     }
 
                     AssistancesDebugWindow.SetDescription(AssistancesDebugWindow.GetDescription() + "\n\nObject detected");
@@ -693,6 +712,7 @@ namespace MATCH
                 UpdateCondition("PersonDroppedObjectOutsideStoringArea", false);
                 UpdateCondition("HelpClicked", false);
                 UpdateCondition("HelpRefused", false);
+                UpdateCondition("PersonMovedAwayFromObject", false);
 
             }
 
@@ -791,6 +811,13 @@ namespace MATCH
                     }
                 }
 
+
+                if (AssistancesEpsilonInteractionSurface.gameObject.activeSelf)
+                {
+                    AssistancesEpsilonInteractionSurface.gameObject.SetActive(false);
+                    AssistancesEpsilonGradation.ResetConditions();
+                }
+
                 AssistancesGradation.ShowOneHideOthers(gradation, delegate(System.Object o, EventArgs e)
                 {
                     AssistancesDebugWindow.SetDescription(gradation + " shown and the others are hidden");
@@ -800,6 +827,17 @@ namespace MATCH
                         AssistancesGradation.GetAssistance(Assistances.QandDAssistances.Gradation.Delta).ShowHelp(true, Utilities.Utility.GetEventHandlerEmpty());
                     }
                 });
+            }
+
+            void HideAll()
+            {
+                if (AssistancesEpsilonInteractionSurface.gameObject.activeSelf)
+                {
+                    AssistancesEpsilonInteractionSurface.gameObject.SetActive(false);
+                    AssistancesEpsilonGradation.ResetConditions();
+                }
+
+                AssistancesGradation.HideAll();
             }
         }
     }
