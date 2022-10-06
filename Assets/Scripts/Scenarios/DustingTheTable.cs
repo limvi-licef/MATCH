@@ -266,6 +266,17 @@ namespace MATCH
 
                 // Add button to reset scenario
                 AdminMenu.Instance.AddButton("Reset clean table challenge", delegate () { m_assistanceGradationManager.goBackToOriginalState(); });
+
+
+                interactionRagController.EventInteractionSurfaceMoved += delegate (System.Object o, EventArgs e)
+                {
+                    m_assistanceConnectWithArchController.SetArchStartAndEndPoint(initialCueingView.transform, interactionRagView.transform);
+                };
+
+                interactionTableController.EventInteractionSurfaceMoved += delegate (System.Object o, EventArgs e)
+                {
+                    m_assistanceConnectWithArchController.SetArchStartAndEndPoint(initialCueingView.transform, interactionRagView.transform);
+                };
             }
 
             void InitializeScenariov2()

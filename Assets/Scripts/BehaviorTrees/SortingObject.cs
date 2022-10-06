@@ -74,6 +74,7 @@ namespace MATCH
             Assistances.GradationVisual.GradationVisual Epsilon1;
 
             Assistances.QandDAssistances AssistancesGradation;
+            Assistances.ArchWithTextAndHelp AssistanceZeta;
 
             private void Awake()
             {
@@ -304,8 +305,17 @@ namespace MATCH
                     origin = AreaObject.transform;
                 }
 
-                Assistances.ArchWithTextAndHelp AssistanceZeta = Assistances.Factory.Instance.CreateAssistanceArch("Arch", origin, AreaStorage.transform, "L'objet doit être rangé au bout de l'arche bleue", 0.2f,  transform);
+                AssistanceZeta = Assistances.Factory.Instance.CreateAssistanceArch("Arch", origin, AreaStorage.transform, "L'objet doit être rangé au bout de l'arche bleue", 0.2f,  transform);
                 AssistancesGradation.AddAssistance(Assistances.QandDAssistances.Gradation.Zeta, AssistanceZeta);
+                
+                AreaStorage.EventInteractionSurfaceMoved += delegate (System.Object o, EventArgs e)
+                {
+                    AssistanceZeta.SetArchStartAndEndPoint(origin, AreaStorage.transform);
+                };
+                AreaObject.EventInteractionSurfaceMoved += delegate (System.Object o, EventArgs e)
+                {
+                    AssistanceZeta.SetArchStartAndEndPoint(origin, AreaStorage.transform);
+                };
 
                 // Behavior tree sequence
                 /**
@@ -617,7 +627,7 @@ namespace MATCH
                         CallBackSetAreaObject();
                         InferenceManager.RegisterInference(InferenceTimeDidNotComeToObject);
                         onChallengeStart();
-                        AssistancesEpsilonInteractionSurface.SetLocalPosition(AreaObjectPosition.transform.position);
+                        AssistancesEpsilonInteractionSurface.transform.localPosition = AreaObjectPosition.transform.localPosition;
                     }
 
                     AssistancesDebugWindow.SetDescription(AssistancesDebugWindow.GetDescription() + "\n\nObject detected");
@@ -784,6 +794,7 @@ namespace MATCH
                 if (!Utilities.Utility.IsEditorSimulator() && !Utilities.Utility.IsEditorGameView())
                 {
                     AreaObject.transform.position = AreaObjectPosition.transform.position;//ObjectDetectedInformation.GetCenter();
+                    AssistanceZeta.SetArchStartAndEndPoint(AreaObject.transform, AreaStorage.transform);
                 }
             }
 
