@@ -150,6 +150,11 @@ namespace MATCH
                 InitializeInferences();
                 InitializeBehaviorTree();
                 //InitializeScenario();
+
+                if (Utilities.Utility.IsEditorSimulator() || Utilities.Utility.IsEditorGameView())
+                { // Hiding fake object when running on the hololens
+                    FakeObject.SetActive(false);
+                }
             }
 
             public void CallbackBringBTDebugWindow()

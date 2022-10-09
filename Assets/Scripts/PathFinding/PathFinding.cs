@@ -54,8 +54,8 @@ namespace MATCH
                 InteractionSurfaceController.GetInteractionSurface().gameObject.AddComponent<NavMeshSourceTag>();
 
                 // Add callbacks
-                ObstaclesManager.s_moved += CallbackObstacleResizedOrMoved;
-                ObstaclesManager.s_resized += CallbackObstacleResizedOrMoved;
+                ObstaclesManager.EventMoved += CallbackObstacleResizedOrMoved;
+                ObstaclesManager.EventResized += CallbackObstacleResizedOrMoved;
 
                 // Nav mesh computation
                 while (true)
@@ -145,7 +145,7 @@ namespace MATCH
 
                 Vector3 scaling = new Vector3(0.1f, 0.1f, 0.1f);
 
-                ObstaclesManager.addCube("Obstacle " + (ObstaclesManager.getCubes().Count + 1).ToString(), scaling, position, Utilities.Materials.Colors.WhiteTransparent, true, false, transform);
+                ObstaclesManager.AddObstacle("Obstacle " + (ObstaclesManager.GetObstacles().Count + 1).ToString(), scaling, position, Utilities.Materials.Colors.WhiteTransparent, true, false, transform);
             }
 
             void CallbackObstacleResizedOrMoved(System.Object sender, EventArgs e)

@@ -49,6 +49,10 @@ namespace MATCH
                 BehaviorTreeDebugWindow.Show(Utilities.Utility.GetEventHandlerEmpty());
                 BehaviorTreeDebugWindow.GetTransform().gameObject.AddComponent<ObjectManipulator>();
                 MATCH.AdminMenu.Instance.AddButton("Bring inferences status", CallbackBringWindow, AdminMenu.Panels.Obstacles);
+                MATCH.AdminMenu.Instance.AddSwitchButton("Hide inferences statue", delegate
+                {
+                    BehaviorTreeDebugWindow.gameObject.SetActive(!BehaviorTreeDebugWindow.gameObject.activeSelf);
+                });
             }
 
             public void CallbackBringWindow()

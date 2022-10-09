@@ -33,6 +33,7 @@ namespace MATCH
         public GameObject VirtualRoom;
         MATCH.Assistances.Dialog TodoList;
         public GameObject ObjectRecognition;
+        public GameObject ObjectRecognitionInfoPanel;
 
         private void Awake()
         {
@@ -67,6 +68,20 @@ namespace MATCH
             AdminMenu.Instance.AddButton("Bring to do list window", delegate () { Utilities.Utility.BringObject(TodoList.transform); }); //add button to the admin menu
             AdminMenu.Instance.AddSwitchButton("Lock To Do List", CallbackLockToDo);
             InitializeTodoList();
+
+            // Adding buttons to manage the object connecting to the server
+            if (ObjectRecognitionInfoPanel != null)
+            {
+                /*if (ObjectRecognitionInfoPanel.activeSelf)
+                {
+                    ObjectRecognitionInfoPanel.SetActive(false);
+                }*/
+                AdminMenu.Instance.AddSwitchButton("Show connection panel", delegate 
+                {
+                    ObjectRecognitionInfoPanel.SetActive(!ObjectRecognitionInfoPanel.activeSelf);
+                }, AdminMenu.Panels.Default);
+
+            }
         }
 
         void InitializeTodoList()
