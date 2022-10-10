@@ -105,6 +105,38 @@ namespace MATCH
 
             //gameObject.AddComponent<ObjectManipulator>();
 
+            // Hiding spongy
+            AddSwitchButton("Spongy - hide", CallbackHideSpongy, Panels.Obstacles, ButtonType.Hide);
+
+        }
+
+        public void CallbackHideSpongy()
+        {
+            BoxCollider box = transform.GetComponent<BoxCollider>();
+            Transform wltAdjustment = box.transform.root.Find("WLT_Adjustment");
+            Transform spongy = null;
+            Transform f1 = null;
+
+            foreach (GameObject go in UnityEngine.SceneManagement.SceneManager.GetActiveScene().GetRootGameObjects())
+            {
+                if (go.name == "WLT_Adjustment")
+                {
+                    spongy = go.transform.Find("Spongy");
+                }
+                if (go.name == "WorldLockingViz")
+                {
+                    f1 = go.transform.Find("F1");
+                }
+            }
+            //Transform spongy = wltAdjustment.Find("Spongy");
+            if (spongy != null)
+            {
+                spongy.gameObject.SetActive(!spongy.gameObject.activeSelf);
+            }
+            if (f1 != null)
+            {
+                f1.gameObject.SetActive(!f1.gameObject.activeSelf);
+            }
         }
 
         public void CallbackHideShowAll()
