@@ -50,6 +50,7 @@ namespace MATCH
                     foreach(InteractionSurface surface in Surfaces)
                     {
                         //Vector3.Distance(positionDetected, )
+                        //surface.GetD
                     }
                     
 

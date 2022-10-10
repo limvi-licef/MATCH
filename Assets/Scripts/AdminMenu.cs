@@ -38,6 +38,12 @@ namespace MATCH
             Obstacles = 1
         };
 
+        public enum ButtonType
+        {
+            Default = 0,
+            Hide = 1
+        }
+
         bool MenuShown;
 
         public bool MenuStatic = false;
@@ -54,6 +60,8 @@ namespace MATCH
         List<GameObject> Buttons;
         Dictionary<Panels, Transform> PanelsStorage;
 
+        List<UnityEngine.Events.UnityAction> HideAllCallbacks;
+
         private void Awake()
         {
             if (InstanceInternal != null && InstanceInternal != this)
@@ -65,6 +73,7 @@ namespace MATCH
                 // Initialize variables
                 Buttons = new List<GameObject>();
                 PanelsStorage = new Dictionary<Panels, Transform>();
+                HideAllCallbacks = new List<UnityEngine.Events.UnityAction>();
 
                 // Remove the canvas renderer from the buttons, to avoid the warning message from unity
                 DestroyImmediate(RefButton.transform.Find("IconAndText").Find("TextMeshPro").GetComponent<CanvasRenderer>(), true);
@@ -91,17 +100,36 @@ namespace MATCH
             // Add the buttons to manage this menu
             AddSwitchButton("Static/Mobile menu", CallbackSwitchStaticOrMovingMenu);
 
+            // Add button to hide/show all elements that are registered with a button type "hide"
+            AddSwitchButton("Hide/show all", CallbackHideShowAll);
+
             //gameObject.AddComponent<ObjectManipulator>();
 
         }
 
-        public void AddSwitchButton(string text, UnityEngine.Events.UnityAction callback, Panels panel = Panels.Default)
+        public void CallbackHideShowAll()
+        {
+            foreach (UnityEngine.Events.UnityAction e in HideAllCallbacks)
+            {
+                e?.Invoke();
+            }
+        }
+
+        /**
+         * buttonType: used to manager internal functionalities. For instance, if "HideShow" type is selected, then the callback will also be added to a general "hide all" button.
+         * */
+        public void AddSwitchButton(string text, UnityEngine.Events.UnityAction callback, Panels panel = Panels.Default, ButtonType buttonType = ButtonType.Default)
         {
             Buttons.Add(Instantiate(RefButtonSwitch, PanelsStorage[panel]));
             Buttons.Last().GetComponent<Interactable>().GetReceiver<InteractableOnPressReceiver>().OnPress.AddListener(callback);
             Buttons.Last().GetComponent<Interactable>().GetReceiver<InteractableOnPressReceiver>().InteractionFilter = 0;
             Buttons.Last().transform.Find("IconAndText").Find("TextMeshPro").GetComponent<TextMeshPro>().SetText(text);
             PanelsStorage[panel].GetComponent<GridObjectCollection>().UpdateCollection();
+
+            if (buttonType == ButtonType.Hide)
+            {
+                HideAllCallbacks.Add(callback);
+            }
         }
 
         public void AddButton(string text, UnityEngine.Events.UnityAction callback, Panels panel = Panels.Default)

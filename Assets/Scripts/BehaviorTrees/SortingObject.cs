@@ -101,20 +101,20 @@ namespace MATCH
                 BehaviorTreeDebugWindow = Assistances.Factory.Instance.CreateDialogNoButton("BT conditions", "Empty for now", transform);
                 BehaviorTreeDebugWindow.Show(Utilities.Utility.GetEventHandlerEmpty());
                 BehaviorTreeDebugWindow.GetTransform().gameObject.AddComponent<ObjectManipulator>();
-                AdminMenu.Instance.AddButton("BT debug - bring", CallbackBringBTDebugWindow, AdminMenu.Panels.Obstacles);
-                AdminMenu.Instance.AddSwitchButton("BT debug - hide", delegate ()
+                AdminMenu.Instance.AddButton("BT debug - Bring", CallbackBringBTDebugWindow, AdminMenu.Panels.Obstacles);
+                AdminMenu.Instance.AddSwitchButton("BT debug - Hide", delegate ()
                 {
                     BehaviorTreeDebugWindow.gameObject.SetActive(!BehaviorTreeDebugWindow.gameObject.activeSelf);
-                }, AdminMenu.Panels.Obstacles);
+                }, AdminMenu.Panels.Obstacles, AdminMenu.ButtonType.Hide);
 
                 AssistancesDebugWindow = Assistances.Factory.Instance.CreateDialogNoButton("Assistances status", "Empty for now", transform);
                 AssistancesDebugWindow.Show(Utilities.Utility.GetEventHandlerEmpty());
                 AssistancesDebugWindow.GetTransform().gameObject.AddComponent<ObjectManipulator>();
-                AdminMenu.Instance.AddButton("Assistances debug - bring", CallbackBringAssistancesDebugWindow, AdminMenu.Panels.Obstacles);
-                AdminMenu.Instance.AddSwitchButton("Assistances debug - hide", delegate ()
+                AdminMenu.Instance.AddButton("Assistances debug - Bring", CallbackBringAssistancesDebugWindow, AdminMenu.Panels.Obstacles);
+                AdminMenu.Instance.AddSwitchButton("Assistances debug - Hide", delegate ()
                 {
                     AssistancesDebugWindow.gameObject.SetActive(!AssistancesDebugWindow.gameObject.activeSelf);
-                }, AdminMenu.Panels.Obstacles);
+                }, AdminMenu.Panels.Obstacles, AdminMenu.ButtonType.Hide);
 
                 FakeObject = transform.Find("FakeObject").gameObject;
 
@@ -151,7 +151,7 @@ namespace MATCH
                 InitializeBehaviorTree();
                 //InitializeScenario();
 
-                if (Utilities.Utility.IsEditorSimulator() || Utilities.Utility.IsEditorGameView())
+                if (!Utilities.Utility.IsEditorSimulator() && !Utilities.Utility.IsEditorGameView())
                 { // Hiding fake object when running on the hololens
                     FakeObject.SetActive(false);
                 }

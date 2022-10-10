@@ -154,8 +154,8 @@ namespace MATCH
 
             public void SetAdminButtons(string interfaceSurfaceId, AdminMenu.Panels panel = AdminMenu.Panels.Default)
             {
-                AdminMenu.Instance.AddSwitchButton("Hide " + interfaceSurfaceId + " interaction surface", CallbackShow, panel);
-                AdminMenu.Instance.AddButton("Bring " + interfaceSurfaceId + " interaction surface", CallbackBring, panel);
+                AdminMenu.Instance.AddSwitchButton("Interaction surface " + interfaceSurfaceId + " - Hide", CallbackShow, panel, AdminMenu.ButtonType.Hide);
+                AdminMenu.Instance.AddButton("Interaction surface" + interfaceSurfaceId + " - Bring", CallbackBring, panel);
             }
 
             public void SetObjectResizable(bool enable)

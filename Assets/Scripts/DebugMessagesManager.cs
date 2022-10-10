@@ -70,7 +70,7 @@ namespace MATCH
         {
             AdminMenu.Instance.AddButton("Debug window - Bring", callbackDebugBringWindow);
             AdminMenu.Instance.AddButton("Debug window - Clear", callbackDebugClearWindow);
-            AdminMenu.Instance.AddSwitchButton("Debug window - display in console", callbackDebugDisplayDebugInWindow);
+            AdminMenu.Instance.AddSwitchButton("Debug window - Display in console", callbackDebugDisplayDebugInWindow);
 
             if (m_classNameFilter.Count > 0)
             {

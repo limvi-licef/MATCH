@@ -76,10 +76,10 @@ namespace MATCH
                 {
                     ObjectRecognitionInfoPanel.SetActive(false);
                 }*/
-                AdminMenu.Instance.AddSwitchButton("Show connection panel", delegate 
+                AdminMenu.Instance.AddSwitchButton("Connection panel - Hide", delegate 
                 {
                     ObjectRecognitionInfoPanel.SetActive(!ObjectRecognitionInfoPanel.activeSelf);
-                }, AdminMenu.Panels.Default);
+                }, AdminMenu.Panels.Default, AdminMenu.ButtonType.Hide);
 
             }
         }

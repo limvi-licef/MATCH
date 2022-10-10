@@ -45,14 +45,14 @@ namespace MATCH
                 cube.transform.parent = parent;
 
                 // Add buttons to interface
-                AdminMenu.Instance.AddButton("Bring " + name, delegate ()
+                AdminMenu.Instance.AddButton("Obstacle " + name + " - Bring", delegate ()
                 {
                     MATCH.Utilities.Utility.BringObject(cube.transform);
                 }, AdminMenu.Panels.Obstacles);
-                AdminMenu.Instance.AddSwitchButton("Hide " + name, delegate ()
+                AdminMenu.Instance.AddSwitchButton("Obstacle " + name + " - Hide", delegate ()
                 {
                     MATCH.Utilities.Utility.ShowInteractionSurface(cube.transform, !cube.GetComponent<Renderer>().enabled);
-                }, AdminMenu.Panels.Obstacles);
+                }, AdminMenu.Panels.Obstacles, AdminMenu.ButtonType.Hide);
 
                 // Set color
                 MATCH.Utilities.Utility.SetColor(cube.transform.transform, color);
