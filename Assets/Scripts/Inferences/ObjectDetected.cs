@@ -77,7 +77,7 @@ namespace MATCH
                 return toReturn;
             }
 
-            public void CallbackObjectDetected(System.Object o, EventArgs e)
+            void CallbackObjectDetected(System.Object o, EventArgs e)
             {
                 Utilities.EventHandlerArgs.PhysicalObject objectInfo = (Utilities.EventHandlerArgs.PhysicalObject)e;
                 Objectdetected = objectInfo.ObjectDetected;

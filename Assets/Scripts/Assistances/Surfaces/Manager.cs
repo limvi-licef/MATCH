@@ -30,6 +30,14 @@ namespace MATCH
             public class Manager : MonoBehaviour
             {
                 List<InteractionSurface> Surfaces;
+                Dictionary<GameObject, EventHandler> Objects;
+
+                private void Awake()
+                {
+                    // Initialize variables
+                    Surfaces = new List<InteractionSurface>();
+                    Objects = new Dictionary<GameObject, EventHandler>();
+                }
 
                 void Start()
                 {
@@ -38,23 +46,80 @@ namespace MATCH
                 }
 
 
-                void CallbackAddSurface()
+                public void CallbackAddSurface()
                 {
-                    Assistances.Factory.Instance.CreateInteractionSurface("Surface " + Surfaces.Count, AdminMenu.Panels.Obstacles, new Vector3(0.4f, 0.2f, 0.4f), Utilities.Materials.Colors.PurpleGlowing, true, true, Utilities.Utility.GetEventHandlerEmpty(), transform);
+                    InteractionSurface surface = Assistances.Factory.Instance.CreateInteractionSurface("Surface " + Surfaces.Count, AdminMenu.Panels.Obstacles, new Vector3(0.4f, 0.2f, 0.4f), Utilities.Materials.Colors.PurpleGlowing, true, true, Utilities.Utility.GetEventHandlerEmpty(), transform);
+                    Surfaces.Add(surface);
 
+                    // Increasing the boxcollider in y to have a margin to detect if the object is close to the surface
+                    BoxCollider collider = surface.GetInteractionSurface().GetComponent<BoxCollider>();
+                    collider.center = new Vector3(0, 1, 0);
+                    collider.size = new Vector3(1, 3, 1);
                 }
 
-                public bool IsObjectInteractingWithSurface(Vector3 positionDetected)
+                /**
+                 * The object must contain an ObjectManipulator component. If not present, the object is not registered and false is returned.
+                 * The callback is called when the object has finished moving and crosses one of the interaction surface.
+                 */
+                public bool RegisterObject(GameObject gameObject, EventHandler callback)
                 {
-                    // Todo - if hit surface and distance between origin and hit is < xxx 
+                    bool toReturn = false;
+
+                    ObjectManipulator objectManipulator = gameObject.GetComponent<ObjectManipulator>();
+
+                    if (objectManipulator != null)
+                    {
+                        toReturn = true;
+
+                        objectManipulator.OnManipulationEnded.AddListener(delegate
+                        {
+                            IsObjectInteractingWithSurface(gameObject);
+                        });
+
+                        Objects.Add(gameObject, callback);
+                    }
+
+                    return toReturn;
+                }
+
+                void IsObjectInteractingWithSurface(GameObject gameObject)
+                {
+                    //bool toReturn = false;
+
                     foreach(InteractionSurface surface in Surfaces)
                     {
                         //Vector3.Distance(positionDetected, )
                         //surface.GetD
+                        BoxCollider collider = surface.GetInteractionSurface().gameObject.GetComponent<BoxCollider>();
+
+                        // If the point if contained by the interaction surface, then returns true
+                        if (collider.bounds.Contains(gameObject.transform.position))
+                        {
+                            //toReturn = true;
+                            Objects[gameObject]?.Invoke(gameObject, EventArgs.Empty);
+                        }
                     }
                     
 
-                    return false;
+                    //return toReturn;
+                }
+
+                public bool IsObjectInteractingWithSurface(Vector3 positionToEvaluate)
+                {
+                    bool toReturn = false;
+
+                    foreach (InteractionSurface surface in Surfaces)
+                    {
+                        BoxCollider collider = surface.GetInteractionSurface().gameObject.GetComponent<BoxCollider>();
+
+                        // If the point if contained by the interaction surface, then returns true
+                        if (collider.bounds.Contains(positionToEvaluate))
+                        {
+                            toReturn = true;
+                        }
+                    }
+
+                    return toReturn;
                 }
             }
         }

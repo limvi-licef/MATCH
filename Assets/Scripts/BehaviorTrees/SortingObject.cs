@@ -30,6 +30,7 @@ namespace MATCH
             private NPBehave.Root Tree;
             private Blackboard Conditions;
             public Inferences.Manager InferenceManager;
+            public Assistances.Surfaces.Manager SurfacesManager;
 
             Assistances.InteractionSurface AreaStorage;         // Place where the object is supposed to be stored.
 
@@ -117,6 +118,11 @@ namespace MATCH
                 }, AdminMenu.Panels.Obstacles, AdminMenu.ButtonType.Hide);
 
                 FakeObject = transform.Find("FakeObject").gameObject;
+                // TEST - add it to the interaction surface manager to see if it is correctly detected when close to a surface
+                SurfacesManager.RegisterObject(FakeObject, delegate (System.Object o, EventArgs e)
+                {
+                    AssistancesDebugWindow.SetDescription("FakeObject has crossed surface!");
+                });
 
                 ObjectDetectedInformation = null;
                 AssistancesManager = new Assistances.Manager();
@@ -615,32 +621,39 @@ namespace MATCH
                 //InferenceManager.UnregisterInference(InferenceObjectDetected);
                 ObjectDetectedInformation = ((Utilities.EventHandlerArgs.PhysicalObject)e).ObjectDetected;
                
-                /**
-                 * If the code runs in the hololens, this is the place where the AreaObjectPosition is moved when the real object is detected.
-                 * */
-                if (!Utilities.Utility.IsEditorSimulator() && !Utilities.Utility.IsEditorGameView())
-                {
-                    AreaObjectPosition.transform.position = ObjectDetectedInformation.GetCenter();
 
+                if (SurfacesManager.IsObjectInteractingWithSurface(ObjectDetectedInformation.GetCenter()))
+                {
                     /**
-                    * If the code runs in the Hololens, then the AreaObject is moved to the position of the real object the first time and only the first time the object is detected
-                    */
-                    if (ObjectSet == false) //If the AreaObject is not placed on the object
+ * If the code runs in the hololens, this is the place where the AreaObjectPosition is moved when the real object is detected.
+ * */
+                    if (!Utilities.Utility.IsEditorSimulator() && !Utilities.Utility.IsEditorGameView())
                     {
-                        DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Object detected and set!");
-                        ObjectSet = true;
-                        CallBackSetAreaObject();
-                        InferenceManager.RegisterInference(InferenceTimeDidNotComeToObject);
-                        onChallengeStart();
-                        AssistancesEpsilonInteractionSurface.transform.localPosition = AreaObjectPosition.transform.localPosition;
+                        AreaObjectPosition.transform.position = ObjectDetectedInformation.GetCenter();
+
+                        /**
+                        * If the code runs in the Hololens, then the AreaObject is moved to the position of the real object the first time and only the first time the object is detected
+                        */
+                        if (ObjectSet == false) //If the AreaObject is not placed on the object
+                        {
+                            DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Object detected and set!");
+                            ObjectSet = true;
+                            CallBackSetAreaObject();
+                            InferenceManager.RegisterInference(InferenceTimeDidNotComeToObject);
+                            onChallengeStart();
+                            AssistancesEpsilonInteractionSurface.transform.localPosition = AreaObjectPosition.transform.localPosition;
+                        }
+
+                        //AssistancesDebugWindow.SetDescription(AssistancesDebugWindow.GetDescription() + "\n\nObject detected");
                     }
 
-                    AssistancesDebugWindow.SetDescription(AssistancesDebugWindow.GetDescription() + "\n\nObject detected");
+                    ObjectDetected = true;
+                    AssistancesDebugWindow.SetDescription("Object detected and crossing the surface!");
                 }
-
-                ObjectDetected = true;
-
-                
+                else
+                {
+                    AssistancesDebugWindow.SetDescription("Object detected but does not cross surface: nothing to do");
+                }
             }
 
             void CallbackGameObjectDetectedInStorage(System.Object o, EventArgs e)
@@ -836,7 +849,7 @@ namespace MATCH
 
                 AssistancesGradation.ShowOneHideOthers(gradation, delegate(System.Object o, EventArgs e)
                 {
-                    AssistancesDebugWindow.SetDescription(gradation + " shown and the others are hidden");
+                    //AssistancesDebugWindow.SetDescription(gradation + " shown and the others are hidden");
 
                     if (gradation == Assistances.QandDAssistances.Gradation.Delta)
                     {
