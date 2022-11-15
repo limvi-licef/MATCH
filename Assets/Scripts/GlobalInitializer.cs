@@ -79,7 +79,7 @@ namespace MATCH
                 AdminMenu.Instance.AddSwitchButton("Connection panel - Hide", delegate 
                 {
                     ObjectRecognitionInfoPanel.SetActive(!ObjectRecognitionInfoPanel.activeSelf);
-                }, AdminMenu.Panels.Default, AdminMenu.ButtonType.Hide);
+                }, AdminMenu.Panels.Middle, AdminMenu.ButtonType.Hide);
 
             }
         }
@@ -109,10 +109,10 @@ namespace MATCH
          * */
         void AddScenarioToGUI(MATCH.Scenarios.Scenario scenario)
         {
-            MATCH.Assistances.Buttons.Basic button = TodoList.AddButton(scenario.getId(), true); //add button
-            scenario.s_challengeOnStart += button.CallbackSetButtonBackgroundCyan; //m_todo.callbackStartButton;
-            scenario.s_challengeOnSuccess += button.CallbackSetButtonBackgroundGreen; //m_todo.callbackCheckButton;
-            scenario.s_challengeOnStandBy += button.CallbackSetButtonBackgroundDefault; //m_todo.callbackCheckButton;
+            MATCH.Assistances.Buttons.Basic button = TodoList.AddButton(scenario.GetId(), true); //add button
+            scenario.EventChallengeOnStart += button.CallbackSetButtonBackgroundCyan; //m_todo.callbackStartButton;
+            scenario.EventChallengeOnSuccess += button.CallbackSetButtonBackgroundGreen; //m_todo.callbackCheckButton;
+            scenario.EventChallengeOnStandBy += button.CallbackSetButtonBackgroundDefault; //m_todo.callbackCheckButton;
         }
 
         // Update is called once per frame

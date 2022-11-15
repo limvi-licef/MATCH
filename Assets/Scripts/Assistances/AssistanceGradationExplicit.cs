@@ -23,10 +23,10 @@ namespace MATCH
 {
     namespace Assistances
     {
-        public class AssistanceGradationExplicit : MonoBehaviour
+        public class AssistanceGradationExplicit : MATCH.Scenarios.BehaviorTrees.BehaviorTree
         {
-            private NPBehave.Root Tree;
-            private NPBehave.Blackboard Conditions;
+            //private NPBehave.Root Tree;
+            //private NPBehave.Blackboard Conditions;
 
             private Inferences.ObjectFocused InfFocusedOnAssistance;
             private Inferences.Timer InfTimer2Minutes;
@@ -51,16 +51,20 @@ namespace MATCH
 
             Utilities.EventHandlerArgs.ButtonAndAssistanceGradationAttention ArgsOnHelpButtonClicked;
 
-            private void Awake()
+            public override void Awake()
             {
+                base.Awake();
+
                 AssistancesGradation = null;
                 InfTimer2Minutes = new Inferences.Timer("AssistanceGradationExplicitTimer", 10, CallbackInterenceTimer);
 
                 ArgsOnHelpButtonClicked = null;
             }
 
-            void Start()
+            public override void Start()
             {
+                base.Start();
+
                 Tree = null;
 
                 InfManager.RegisterInference(InfTimer2Minutes);
@@ -81,7 +85,7 @@ namespace MATCH
             private void InitializeBT()
             {
                 // Initialize the BT
-                Conditions = new NPBehave.Blackboard(UnityContext.GetClock());
+
                 ResetConditions(); // Can also be used to initialize them
 
                 // seIsWaitingSince30sec - begin

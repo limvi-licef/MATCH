@@ -152,7 +152,7 @@ namespace MATCH
                 //DebugMessagesManager.Instance.displayMessage("MouseUtilitiesAdminMenu", "callbackBringInteractionSurface", DebugMessagesManager.MessageLevel.Info, "Called - Camera position: " + Camera.main.transform.position + " New position of the object: " + gameObject.transform.position);
             }
 
-            public void SetAdminButtons(string interfaceSurfaceId, AdminMenu.Panels panel = AdminMenu.Panels.Default)
+            public void SetAdminButtons(string interfaceSurfaceId, AdminMenu.Panels panel = AdminMenu.Panels.Middle)
             {
                 AdminMenu.Instance.AddSwitchButton("Interaction surface " + interfaceSurfaceId + " - Hide", CallbackShow, panel, AdminMenu.ButtonType.Hide);
                 AdminMenu.Instance.AddButton("Interaction surface" + interfaceSurfaceId + " - Bring", CallbackBring, panel);

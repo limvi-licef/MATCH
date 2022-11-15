@@ -34,8 +34,9 @@ namespace MATCH
     {
         public enum Panels
         {
-            Default = 0,
-            Obstacles = 1
+            Middle = 0,
+            Left = 1,
+            Right = 2
         };
 
         public enum ButtonType
@@ -82,8 +83,9 @@ namespace MATCH
                 DestroyImmediate(RefButtonSwitch.transform.Find("SeeItSayItLabel").Find("TextMeshPro").GetComponent<CanvasRenderer>(), true);
 
                 // Get children
-                PanelsStorage.Add(Panels.Default, gameObject.transform.Find("PanelDefault").Find("ButtonParent").transform);
-                PanelsStorage.Add(Panels.Obstacles, gameObject.transform.Find("PanelObstacles").Find("ButtonParent").transform);
+                PanelsStorage.Add(Panels.Middle, gameObject.transform.Find("PanelMiddle").Find("ButtonParent").transform);
+                PanelsStorage.Add(Panels.Left, gameObject.transform.Find("PanelLeft").Find("ButtonParent").transform);
+                PanelsStorage.Add(Panels.Right, gameObject.transform.Find("PanelRight").Find("ButtonParent").transform);
 
                 InstanceInternal = this;
             }
@@ -106,7 +108,7 @@ namespace MATCH
             //gameObject.AddComponent<ObjectManipulator>();
 
             // Hiding spongy
-            AddSwitchButton("Spongy - hide", CallbackHideSpongy, Panels.Obstacles, ButtonType.Hide);
+            AddSwitchButton("Spongy - hide", CallbackHideSpongy, Panels.Left, ButtonType.Hide);
 
         }
 
@@ -150,7 +152,7 @@ namespace MATCH
         /**
          * buttonType: used to manager internal functionalities. For instance, if "HideShow" type is selected, then the callback will also be added to a general "hide all" button.
          * */
-        public void AddSwitchButton(string text, UnityEngine.Events.UnityAction callback, Panels panel = Panels.Default, ButtonType buttonType = ButtonType.Default)
+        public void AddSwitchButton(string text, UnityEngine.Events.UnityAction callback, Panels panel = Panels.Middle, ButtonType buttonType = ButtonType.Default)
         {
             Buttons.Add(Instantiate(RefButtonSwitch, PanelsStorage[panel]));
             Buttons.Last().GetComponent<Interactable>().GetReceiver<InteractableOnPressReceiver>().OnPress.AddListener(callback);
@@ -164,7 +166,7 @@ namespace MATCH
             }
         }
 
-        public void AddButton(string text, UnityEngine.Events.UnityAction callback, Panels panel = Panels.Default)
+        public void AddButton(string text, UnityEngine.Events.UnityAction callback, Panels panel = Panels.Middle)
         {
             Buttons.Add(Instantiate(RefButton, PanelsStorage[panel]));
 

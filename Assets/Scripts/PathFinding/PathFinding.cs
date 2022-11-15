@@ -41,7 +41,7 @@ namespace MATCH
                 ObstaclesManager = GetComponent<Obstacles>();
 
                 // Set admin buttons
-                AdminMenu.Instance.AddButton("Add obstacle", CallbackAddObstacle, AdminMenu.Panels.Obstacles);
+                AdminMenu.Instance.AddButton("Add obstacle", CallbackAddObstacle, AdminMenu.Panels.Left);
                 InteractionSurfaceController.SetAdminButtons("path surface");
                 InteractionSurfaceController.SetColor(Utilities.Materials.Colors.CyanGlowing);
                 InteractionSurfaceView.position = new Vector3(0.3f, -0.16f, -5f);

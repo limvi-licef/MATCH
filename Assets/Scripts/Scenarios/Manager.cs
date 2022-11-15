@@ -67,7 +67,7 @@ namespace MATCH
                 if (absent)
                 {
                     m_scenarios.Add(scenario); //add scenario in the list of scenarios
-                    Utilities.EventHandlerArgs.String arg = new Utilities.EventHandlerArgs.String(scenario.getId()); //set a name to the scenario
+                    Utilities.EventHandlerArgs.String arg = new Utilities.EventHandlerArgs.String(scenario.GetId()); //set a name to the scenario
                     s_scenarioAdded?.Invoke(this, arg); //send information of new scenario => callback (MouseGlobalInitializer) => add new button (MouseAssistanceDialog)
                 }
             }

@@ -48,11 +48,11 @@ namespace MATCH
                 BehaviorTreeDebugWindow = Assistances.Factory.Instance.CreateDialogNoButton("Inferences status", "Empty for now", transform);
                 BehaviorTreeDebugWindow.Show(Utilities.Utility.GetEventHandlerEmpty());
                 BehaviorTreeDebugWindow.GetTransform().gameObject.AddComponent<ObjectManipulator>();
-                MATCH.AdminMenu.Instance.AddButton("Inferences status - Bring", CallbackBringWindow, AdminMenu.Panels.Obstacles);
+                MATCH.AdminMenu.Instance.AddButton("Inferences status - Bring", CallbackBringWindow, AdminMenu.Panels.Left);
                 MATCH.AdminMenu.Instance.AddSwitchButton("Inferences status - Hide", delegate
                 {
                     BehaviorTreeDebugWindow.gameObject.SetActive(!BehaviorTreeDebugWindow.gameObject.activeSelf);
-                }, AdminMenu.Panels.Default, AdminMenu.ButtonType.Hide);
+                }, AdminMenu.Panels.Middle, AdminMenu.ButtonType.Hide);
             }
 
             public void CallbackBringWindow()

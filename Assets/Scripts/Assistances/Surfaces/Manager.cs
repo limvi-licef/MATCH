@@ -42,13 +42,13 @@ namespace MATCH
                 void Start()
                 {
                     // Add admin button to create new surface
-                    AdminMenu.Instance.AddButton("Add surface", CallbackAddSurface, AdminMenu.Panels.Obstacles);
+                    AdminMenu.Instance.AddButton("Add surface", CallbackAddSurface, AdminMenu.Panels.Left);
                 }
 
 
                 public void CallbackAddSurface()
                 {
-                    InteractionSurface surface = Assistances.Factory.Instance.CreateInteractionSurface("Surface " + Surfaces.Count, AdminMenu.Panels.Obstacles, new Vector3(0.4f, 0.2f, 0.4f), Utilities.Materials.Colors.PurpleGlowing, true, true, Utilities.Utility.GetEventHandlerEmpty(), transform);
+                    InteractionSurface surface = Assistances.Factory.Instance.CreateInteractionSurface("Surface " + Surfaces.Count, AdminMenu.Panels.Left, new Vector3(0.4f, 0.2f, 0.4f), Utilities.Materials.Colors.PurpleGlowing, true, true, Utilities.Utility.GetEventHandlerEmpty(), transform);
                     Surfaces.Add(surface);
 
                     // Increasing the boxcollider in y to have a margin to detect if the object is close to the surface

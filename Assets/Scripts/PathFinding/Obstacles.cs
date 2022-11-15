@@ -48,11 +48,11 @@ namespace MATCH
                 AdminMenu.Instance.AddButton("Obstacle " + name + " - Bring", delegate ()
                 {
                     MATCH.Utilities.Utility.BringObject(cube.transform);
-                }, AdminMenu.Panels.Obstacles);
+                }, AdminMenu.Panels.Left);
                 AdminMenu.Instance.AddSwitchButton("Obstacle " + name + " - Hide", delegate ()
                 {
                     MATCH.Utilities.Utility.ShowInteractionSurface(cube.transform, !cube.GetComponent<Renderer>().enabled);
-                }, AdminMenu.Panels.Obstacles, AdminMenu.ButtonType.Hide);
+                }, AdminMenu.Panels.Left, AdminMenu.ButtonType.Hide);
 
                 // Set color
                 MATCH.Utilities.Utility.SetColor(cube.transform.transform, color);

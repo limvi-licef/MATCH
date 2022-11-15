@@ -26,12 +26,12 @@ namespace MATCH
 {
     public class UserDemo : MonoBehaviour
     {
-        public Scenarios.TakeOutGarbage m_challengeGarbage;
+        public Scenarios.FiniteStateMachine.TakeOutGarbage m_challengeGarbage;
         bool m_challengeGarbageFirstLevelCalled = false;
 
-        public Scenarios.WateringThePlants m_challengeWatering;
+        public Scenarios.FiniteStateMachine.WateringThePlants m_challengeWatering;
 
-        public Scenarios.DustingTheTable m_challengeTable;
+        public Scenarios.FiniteStateMachine.DustingTheTable m_challengeTable;
 
         Assistances.Basic m_triggerGarbage;
         Assistances.Basic m_triggerWateringPlants;
@@ -45,7 +45,7 @@ namespace MATCH
             AdminMenu.Instance.AddSwitchButton("User demo - Hide", delegate ()
             {
                 gameObject.SetActive(!gameObject.activeSelf);
-            }, AdminMenu.Panels.Obstacles, AdminMenu.ButtonType.Hide);
+            }, AdminMenu.Panels.Left, AdminMenu.ButtonType.Hide);
         }
 
         // Update is called once per frame
@@ -56,7 +56,7 @@ namespace MATCH
 
         void initializeScenario()
         {
-            Assistances.InteractionSurface demo = Assistances.Factory.Instance.CreateInteractionSurface("User Demos", AdminMenu.Panels.Obstacles, new Vector3(1.1f, 0.02f, 0.7f), Utilities.Materials.Colors.PurpleGlowing, true, false, Utilities.Utility.GetEventHandlerEmpty(), transform);
+            Assistances.InteractionSurface demo = Assistances.Factory.Instance.CreateInteractionSurface("User Demos", AdminMenu.Panels.Left, new Vector3(1.1f, 0.02f, 0.7f), Utilities.Materials.Colors.PurpleGlowing, true, false, Utilities.Utility.GetEventHandlerEmpty(), transform);
 
             Assistances.Basic demoSurface = Assistances.Factory.Instance.CreateFlatSurface(Utilities.Materials.Colors.CyanGlowing, new Vector3(demo.GetLocalPosition().x, demo.GetLocalPosition().y + 0.02f, demo.GetLocalPosition().z), demo.transform);
             demoSurface.SetScale(new Vector3(demo.GetLocalScale().x, demo.GetLocalScale().y, demo.GetLocalScale().z));
@@ -109,9 +109,9 @@ namespace MATCH
             dialogInstructions.Show(Utilities.Utility.GetEventHandlerEmpty());
 
 
-            m_challengeGarbage.s_challengeOnStandBy += callbackChallengeGarbageStandBy;
-            m_challengeWatering.s_challengeOnStandBy += callbackChallengeWateringPlants;
-            m_challengeTable.s_challengeOnStandBy += callbackChallengeCleanTable;
+            m_challengeGarbage.EventChallengeOnStandBy += callbackChallengeGarbageStandBy;
+            m_challengeWatering.EventChallengeOnStandBy += callbackChallengeWateringPlants;
+            m_challengeTable.EventChallengeOnStandBy += callbackChallengeCleanTable;
         }
 
         void callbackChallengeGarbageStandBy(System.Object o, EventArgs e)

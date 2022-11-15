@@ -29,49 +29,48 @@ namespace MATCH
         public abstract class Scenario : MonoBehaviour
         {
 
-            string m_scenarioId;
+            string ScenarioId;
 
-            public event EventHandler s_challengeOnStandBy; // Contains as EventArg a String object, which contains the id of the scenario
-            public event EventHandler s_challengeOnSuccess; // Contains as EventArg a String object, which contains the id of the scenario
-            public event EventHandler s_challengeOnStart;   // Contains as EventArg a String object, which contains the id of the scenario
+            public event EventHandler EventChallengeOnStandBy; // Contains as EventArg a String object, which contains the id of the scenario
+            public event EventHandler EventChallengeOnSuccess; // Contains as EventArg a String object, which contains the id of the scenario
+            public event EventHandler EventChallengeOnStart;   // Contains as EventArg a String object, which contains the id of the scenario
 
-            public string getId()
+            public string GetId()
             {
-                return this.m_scenarioId;
+                return this.ScenarioId;
             }
 
-            public void setId(string id)
+            public void SetId(string id)
             {
-                this.m_scenarioId = id;
+                this.ScenarioId = id;
             }
 
             /**
              * Function to be called when the scenario enters the stand by mode
              * */
-            protected void onChallengeStandBy()
+            protected void OnChallengeStandBy()
             {
-                Utilities.EventHandlerArgs.String arg = new Utilities.EventHandlerArgs.String(m_scenarioId);
-                s_challengeOnStandBy?.Invoke(this, arg);
+                Utilities.EventHandlerArgs.String arg = new Utilities.EventHandlerArgs.String(ScenarioId);
+                EventChallengeOnStandBy?.Invoke(this, arg);
             }
 
             /**
              * Function to be called when the scenario enters the success mode
              * */
-            protected void onChallengeSuccess()
+            protected void OnChallengeSuccess()
             {
-                Utilities.EventHandlerArgs.String arg = new Utilities.EventHandlerArgs.String(m_scenarioId);
-                s_challengeOnSuccess?.Invoke(this, arg);
+                Utilities.EventHandlerArgs.String arg = new Utilities.EventHandlerArgs.String(ScenarioId);
+                EventChallengeOnSuccess?.Invoke(this, arg);
             }
 
             /**
              * Function to be called when the scenario begins, wherever it is, i.e. this function might be called at several places of the scenario
              * */
-            protected void onChallengeStart()
+            protected void OnChallengeStart()
             {
-                Utilities.EventHandlerArgs.String arg = new Utilities.EventHandlerArgs.String(m_scenarioId);
-                s_challengeOnStart?.Invoke(this, arg);
+                Utilities.EventHandlerArgs.String arg = new Utilities.EventHandlerArgs.String(ScenarioId);
+                EventChallengeOnStart?.Invoke(this, arg);
             }
         }
     }
 }
-
