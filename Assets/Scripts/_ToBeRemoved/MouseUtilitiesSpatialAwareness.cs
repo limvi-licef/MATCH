@@ -11,14 +11,10 @@ using System;
 
 public class MouseUtilitiesSpatialAwareness : MonoBehaviour
 {
-    public SurfaceMeshesToPlanes m_scenePlanes;
+    public SurfaceMeshesToPlanes ScenePlanes;
 
-    DateTime m_time;
-    DateTime m_timeOneMinuteTrigger;
-
-    //string m_wallsColor = "Mouse_Green_Glowing";
-    //string m_ceilingsColor = "Mouse_Orange_Glowing";
-    //string m_floorsColor = "Mouse_Purple_Glowing";
+    DateTime Time;
+    DateTime TimeOneMinuteTrigger;
 
     // Start is called before the first frame update
     void Start()
@@ -26,16 +22,16 @@ public class MouseUtilitiesSpatialAwareness : MonoBehaviour
         //m_scenePlanes = new SurfaceMeshesToPlanes();
         if (SurfaceMeshesToPlanes.CanCreatePlanes)
         {
-            MouseDebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, MouseDebugMessagesManager.MessageLevel.Info, "Things are ok for the system to create planes");
+            MATCH.DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, MATCH.DebugMessagesManager.MessageLevel.Info, "Things are ok for the system to create planes");
         }
         else
         {
-            MouseDebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, MouseDebugMessagesManager.MessageLevel.Warning, "Components are missing to create planes - see the documentation of SurfaceMeshesToPlanes.CanCreatePlanes for more information on the required packages");
+            MATCH.DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, MATCH.DebugMessagesManager.MessageLevel.Warning, "Components are missing to create planes - see the documentation of SurfaceMeshesToPlanes.CanCreatePlanes for more information on the required packages");
         }
 
         
 
-        m_timeOneMinuteTrigger = DateTime.Now;
+        TimeOneMinuteTrigger = DateTime.Now;
     }
 
     // Update is called once per frame

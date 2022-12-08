@@ -98,11 +98,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 6353107494347420048}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 88709a90c7958ea419414f295e118d5c, type: 3}
+  m_Script: {fileID: 11500000, guid: 309f30263ab39354faa892f4a67adc33, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_debugMessages: {fileID: 0}
-  m_matWhenTouched: {fileID: 2100000, guid: 163c37494bc2d0540b3488a9d901ee07, type: 2}
+  m_matWhenTouched: {fileID: 2100000, guid: 0acef5d898c397546b6d6f19440764aa, type: 2}
 --- !u!65 &6353107494347420063
 BoxCollider:
   m_ObjectHideFlags: 0

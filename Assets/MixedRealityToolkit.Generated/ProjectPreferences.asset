@@ -16,15 +16,15 @@ MonoBehaviour:
     keys:
     - _MixedRealityToolkit_Editor_IgnoreSettingsPrompts
     - _MixedRealityToolkit_Editor_LockProfiles
-    - _MixedRealityToolkit_Editor_AutoEnableUWPCapabilities
     - MixedRealityToolkit_Editor_RunOptimalConfig
     - MixedRealityToolkit_Editor_NullDataProviders
-    values: 0001010100
+    - _MixedRealityToolkit_Editor_AutoEnableUWPCapabilities
+    values: 0001010001
   intPreferences:
     keys:
     - _MixedRealityToolkit_Editor_ConfiguratorState
     - MixedRealityToolkit_Editor_AudioSpatializerCount
-    values: f401000001000000
+    values: c800000000000000
   floatPreferences:
     keys: []
     values: []

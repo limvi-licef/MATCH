@@ -44,7 +44,7 @@ public class MouseRag : MonoBehaviour
         // Connect the callbacks
         //m_interactionSurfaceRagView.GetComponent<TapToPlace>().OnPlacingStopped.AddListener(callbackHologramRagInteractionSurfaceMovedFinished);
         m_interactionSurfaceRagView.GetComponent<BoundsControl>().ScaleStopped.AddListener(callbackHologramRagInteractionSurfaceMovedFinished);
-        MouseUtilities.mouseUtilitiesAddTouchCallback(m_interactionSurfaceRagView, delegate ()
+        MATCH.Utilities.Utility.AddTouchCallback(m_interactionSurfaceRagView, delegate ()
         {
             m_eventHologramInteractionSurfaceTouched?.Invoke(this, EventArgs.Empty);
         });
@@ -58,7 +58,7 @@ public class MouseRag : MonoBehaviour
 
     public void callbackHologramRagInteractionSurfaceMovedFinished()
     {
-        MouseDebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, MouseDebugMessagesManager.MessageLevel.Info, "Called");
+        MATCH.DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, MATCH.DebugMessagesManager.MessageLevel.Info, "Called");
 
         gameObject.transform.position = m_interactionSurfaceRagView.transform.position;
         m_interactionSurfaceRagView.transform.localPosition = new Vector3(0, 0f, 0);
