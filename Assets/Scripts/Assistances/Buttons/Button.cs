@@ -38,11 +38,11 @@ namespace MATCH
                     Yes = 0,
                     No = 1,
                     QuestionMark = 2,
-                    CustomChoice1 = 3,
-                    CustomChoice2 = 4,
-                    CustomChoice3 = 5,
-                    CustomChoice4 = 6
-
+                    ClosingButton = 3,
+                    CustomChoice1 = 4,
+                    CustomChoice2 = 5,
+                    CustomChoice3 = 6,
+                    CustomChoice4 = 7
                 }
 
                 public ButtonType Type { get; set; }

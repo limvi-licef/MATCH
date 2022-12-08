@@ -45,7 +45,7 @@ namespace MATCH
                     }
                 }
 
-                public MATCH.Assistances.Assistance CreateBackground (MATCH.Assistances.IPanel panelToDecorate, string background)
+                public MATCH.Assistances.Assistance CreateBackground (MATCH.Assistances.IPanel panelToDecorate, string backgroundColor)
                 {
                     Transform view = Instantiate(Utilities.Materials.Prefabs.Load(Utilities.Materials.Prefabs.DecoratorBackgroundColor));
                     view.name = ((Assistance)panelToDecorate).name;
@@ -53,7 +53,8 @@ namespace MATCH
                     Assistances.Decorators.BackgroundColor controller = view.gameObject.GetComponent<Assistances.Decorators.BackgroundColor>();
 
                     controller.SetAssistanceToDecorate(panelToDecorate);
-                    controller.SetBackgroundColor(background);
+                    //controller.SetBackgroundColor(background);
+                    controller.GetBackground().GetComponent<Renderer>().material = Utilities.Utility.LoadMaterial(backgroundColor);
 
                     return controller;
                 }

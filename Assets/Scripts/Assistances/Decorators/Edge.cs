@@ -52,10 +52,10 @@ namespace MATCH
                     return PanelToDecorate.GetAssistance().GetTransform();
                 }
 
-                public override bool IsActive()
+                /*public override bool IsActive()
                 {
                     return PanelToDecorate.GetAssistance().IsActive();
-                }
+                }*/
 
                 public override void Hide(EventHandler callback)
                 {
@@ -66,7 +66,7 @@ namespace MATCH
                         EdgeLeft.gameObject.SetActive(false);
                         EdgeRight.gameObject.SetActive(false);
 
-                        callback?.Invoke(this, EventArgs.Empty);
+                        callback?.Invoke(this, e);
 
                         IsDisplayed = false;
                     });
@@ -119,7 +119,7 @@ namespace MATCH
                         EdgeLeft.gameObject.SetActive(true);
                         EdgeRight.gameObject.SetActive(true);
 
-                        callback?.Invoke(this, EventArgs.Empty);
+                        callback?.Invoke(this, e);
                     });
                 }
 
@@ -138,10 +138,10 @@ namespace MATCH
                     return this;//PanelToDecorate.GetAssistance();
                 }
 
-                public void SetBackgroundColor(string colorName)
+                /*public void SetBackgroundColor(string colorName)
                 {
                     PanelToDecorate.SetBackgroundColor(colorName);
-                }
+                }*/
 
                 public void SetEdgeColor(string colorName)
                 {

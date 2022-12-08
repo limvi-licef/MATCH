@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 3143410250651880626}
   - component: {fileID: 6672164703286253685}
   m_Layer: 0
-  m_Name: AssistanceGradationAttention
+  m_Name: Attention
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -100,13 +100,16 @@ namespace MATCH
 
             }
 
-            bool MutexShow = false;
+            //bool MutexShow = false;
             public override void Show(EventHandler eventHandler)
             {
-                if (MutexShow == false)
-                {
-                    MutexShow = true;
+                Utilities.EventHandlerArgs.Animation args = new Utilities.EventHandlerArgs.Animation();
 
+                /*if (MutexShow == false)
+                {
+                    MutexShow = true;*/
+                if (IsDisplayed == false)
+                {
                     if (AdjustHeightOnShow)
                     {
                         MATCH.Utilities.Utility.AdjustObjectHeightToHeadHeight(transform);
@@ -115,26 +118,38 @@ namespace MATCH
                     MATCH.Utilities.Utility.AnimateAppearInPlace(ChildView.gameObject, ChildScaleOrigin, delegate (System.Object o, EventArgs e)
                     {
                         IsDisplayed = true;
-                        MutexShow = false;
-                        eventHandler?.Invoke(this, EventArgs.Empty);
+                        //MutexShow = false;
+                        args.Success = true;
+                        eventHandler?.Invoke(this, args);
                         //Help.Show(Utilities.Utility.GetEventHandlerEmpty());
                     });
                 }
+                else
+                {
+                    args.Success = false;
+                    eventHandler?.Invoke(this, args);
+                }
+                //}
             }
 
-            bool MutexHide = false;
+            //bool MutexHide = false;
             public override void Hide(EventHandler eventHandler)
             {
-                DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Hiding " + name);
+                //DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Hiding " + name);
 
-                if (MutexHide == false)
+                /*if (MutexHide == false)
                 {
-                    MutexHide = true;
+                    MutexHide = true;*/
+
+                Utilities.EventHandlerArgs.Animation args = new Utilities.EventHandlerArgs.Animation();
+
+                if (IsDisplayed)
+                {
 
                     MATCH.Utilities.Utility.AnimateDisappearInPlace(ChildView.gameObject, ChildScaleOrigin, delegate (System.Object o, EventArgs e)
                     {
                         ChildView.gameObject.transform.localScale = ChildScaleOrigin;
-                        MutexHide = false;
+                        //MutexHide = false;
                         IsDisplayed = false;
 
                         if (Help.IsDisplayed)
@@ -143,14 +158,20 @@ namespace MATCH
                         }
                         else
                         {
-                            eventHandler?.Invoke(this, EventArgs.Empty);
+                            args.Success = true;
+                            eventHandler?.Invoke(this, args);
                         }
 
                         //eventHandler?.Invoke(this, EventArgs.Empty);
                     });
-
-                    
                 }
+                else
+                {
+                    args.Success = false;
+                    eventHandler?.Invoke(this, args);
+                }
+                    
+                //}
             }
 
             public override void ShowHelp(bool show, EventHandler callback)
@@ -260,10 +281,10 @@ namespace MATCH
                 return false;
             }
 
-            public override bool IsActive()
+            /*public override bool IsActive()
             {
                 return ChildView.gameObject.activeSelf;
-            }
+            }*/
         }
     }
 }

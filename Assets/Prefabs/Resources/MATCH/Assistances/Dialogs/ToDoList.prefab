@@ -287,7 +287,7 @@ GameObject:
   - component: {fileID: 4872904015616280274}
   - component: {fileID: 9011939487763809346}
   m_Layer: 0
-  m_Name: MouseToDoList
+  m_Name: ToDoList
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

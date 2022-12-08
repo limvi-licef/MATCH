@@ -44,7 +44,7 @@ namespace MATCH
              * */
             public event EventHandler EventOnButtonClicked;
 
-            public void AddButton (GradationVisual.GradationVisual assistance, Buttons.Button.ButtonType type, ref GradationVisual.GradationVisual assistanceTarget)
+            public void AddAssistance (GradationVisual.GradationVisual assistance, Buttons.Button.ButtonType type, ref GradationVisual.GradationVisual assistanceTarget)
             {
                 if (AssistanceGradation.ContainsKey(assistance) == false)
                 {
@@ -55,6 +55,22 @@ namespace MATCH
                 AssistanceGradation[assistance].Add(type, assistanceTarget);
 
                 //DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Adding button " + type.ToString() + " for assistance " + assistance.name);
+            }
+
+            public void BackToRoot()
+            {
+                AssistanceCurrent = AssistanceRoot;
+            }
+
+            public List<Buttons.Button.ButtonType> GetButtonTypesCurrentAssistance()
+            {
+                List<Buttons.Button.ButtonType> toReturn = null;
+
+                if (AssistanceGradation.ContainsKey(AssistanceCurrent))
+                {
+                    toReturn = new List<Buttons.Button.ButtonType>(AssistanceGradation[AssistanceCurrent].Keys);
+                }
+                return toReturn;
             }
 
             /*public AssistanceGradationAttention GetNextAssistance(AssistanceGradationAttention assistance, Buttons.Button.ButtonType button)
@@ -86,12 +102,21 @@ namespace MATCH
 
                 Utilities.EventHandlerArgs.ButtonAndAssistanceGradationAttention argsToSend = new Utilities.EventHandlerArgs.ButtonAndAssistanceGradationAttention();                
                 argsToSend.AssistanceCurrent = AssistanceCurrent;
-                argsToSend.AssistanceNext = AssistanceGradation[AssistanceCurrent][args.ButtonType];
+                if (AssistanceGradation[AssistanceCurrent].ContainsKey(args.ButtonType))
+                {
+                    argsToSend.AssistanceNext = AssistanceGradation[AssistanceCurrent][args.ButtonType];
+                    //DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Next assistance: " + argsToSend.AssistanceNext.GetCurrentAssistance().name);
+                }
+                else
+                {
+                    argsToSend.AssistanceNext = null;
+                }
+                
                 argsToSend.ButtonType = args.ButtonType;
 
-                DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Next assistance: " + argsToSend.AssistanceNext.GetCurrentAssistance().name);
+                
 
-                AssistanceCurrent = argsToSend.AssistanceNext;
+                //AssistanceCurrent = argsToSend.AssistanceNext;
 
                 EventOnButtonClicked?.Invoke(this, argsToSend);
             }

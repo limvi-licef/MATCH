@@ -136,6 +136,16 @@ namespace MATCH
                 }
             }
 
+            public void UnregisterAllInferences()
+            {
+                List<string> ids = new List<String>(InferencesStorage.Keys);
+
+                foreach (string id in ids)
+                {
+                    UnregisterInference(id);
+                }
+            }
+
             public void UnregisterInference(Inference inference)
             {
                 if (inference != null )

@@ -62,7 +62,7 @@ namespace MATCH
                 Assistances.Basic m_successController;
 
                 Transform m_assistanceSurfaceTouchedView;
-                Assistances.ProcessingSurface m_assistanceSurfaceTouchedController;
+                Assistances.SurfaceToProcess m_assistanceSurfaceTouchedController;
 
                 public Transform m_displayGraphView;
                 MATCH.FiniteStateMachine.Display m_displayGraphController;
@@ -112,7 +112,7 @@ namespace MATCH
                     m_successController = m_successView.GetComponent<Assistances.Basic>();
 
                     m_assistanceSurfaceTouchedView = gameObject.transform.Find("AssistanceSurfaceTouched");
-                    m_assistanceSurfaceTouchedController = m_assistanceSurfaceTouchedView.GetComponent<Assistances.ProcessingSurface>();
+                    m_assistanceSurfaceTouchedController = m_assistanceSurfaceTouchedView.GetComponent<Assistances.SurfaceToProcess>();
 
                     m_displayGraphController = m_displayGraphView.GetComponent<MATCH.FiniteStateMachine.Display>();
 
@@ -313,7 +313,7 @@ namespace MATCH
                     Assistances.Dialog secondDialog = Assistances.Factory.Instance.CreateDialogThreeButtons("", firstMessage, "Je sais!", delegate (System.Object o, EventArgs e) { s_dialogSecondButtonOk?.Invoke(this, e); }, Assistances.Buttons.Button.ButtonType.CustomChoice1, "Je ne sais pas", delegate (System.Object o, EventArgs e) { s_dialogSecondButtonNok?.Invoke(this, e); }, Assistances.Buttons.Button.ButtonType.CustomChoice2, "Cela ne m'intéresse pas", delegate (System.Object o, EventArgs e) { s_dialogSecondButtonLeave?.Invoke(this, e); }, Assistances.Buttons.Button.ButtonType.CustomChoice3, interactionSurfaceTable.transform);
 
                     // Surface to clean
-                    Assistances.ProcessingSurface surfaceToProcess = Assistances.Factory.Instance.CreateSurfaceToProcess(interactionSurfaceTable.transform);
+                    Assistances.SurfaceToProcess surfaceToProcess = Assistances.Factory.Instance.CreateSurfaceToProcess(interactionSurfaceTable.transform);
                     surfaceToProcess.transform.localScale = new Vector3(interactionSurfaceTable.GetInteractionSurface().localScale.x, surfaceToProcess.transform.localScale.y, interactionSurfaceTable.GetInteractionSurface().localScale.z);
                     interactionSurfaceTable.EventInteractionSurfaceScaled += delegate (System.Object o, EventArgs e)
                     {
@@ -399,7 +399,7 @@ namespace MATCH
                     }, Utilities.Utility.GetEventHandlerEmpty());
 
                     MATCH.FiniteStateMachine.MouseUtilitiesGradationAssistance sProcessSurface = m_assistanceGradationManager.addNewAssistanceGradation("Process surface");
-                    sProcessSurface.addFunctionShow(surfaceToProcess.ShowInteractionCubesTablePanel, Utilities.Utility.GetEventHandlerEmpty());
+                    sProcessSurface.addFunctionShow(surfaceToProcess.Show, Utilities.Utility.GetEventHandlerEmpty());
                     sProcessSurface.setFunctionHide(surfaceToProcess.Hide, Utilities.Utility.GetEventHandlerEmpty());
 
                     MATCH.FiniteStateMachine.MouseUtilitiesGradationAssistance sSecondDialog = m_assistanceGradationManager.addNewAssistanceGradation("Second dialog");
@@ -551,7 +551,7 @@ namespace MATCH
                         m_audioListener.GetComponent<AudioSource>().PlayOneShot(m_audioClipToPlayOnTouchInteractionSurface);
                     }, Utilities.Utility.GetEventHandlerEmpty());
 
-                    state.addFunctionShow(m_assistanceSurfaceTouchedController.ShowInteractionCubesTablePanel, Utilities.Utility.GetEventHandlerEmpty());
+                    state.addFunctionShow(m_assistanceSurfaceTouchedController.Show, Utilities.Utility.GetEventHandlerEmpty());
                     //state.addFunctionShow(m_reminderController.Show, Utilities.Utility.GetEventHandlerEmpty());
 
                     state.setFunctionHide(m_assistanceSurfaceTouchedController.Hide, Utilities.Utility.GetEventHandlerEmpty());

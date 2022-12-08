@@ -74,7 +74,7 @@ namespace MATCH
                     //DebugMessagesManager.Instance.displayMessage("ShowOneHideOthers", "Evaluate", DebugMessagesManager.MessageLevel.Info, "Storage " + assistance.Value.GetTransform().name);
                     if (assistance.Key == gradationToShow)
                     {
-                        if (assistance.Value.IsActive() == false)
+                        if (assistance.Value.IsDisplayed/*IsActive()*/ == false)
                         {
                             assistance.Value.Show(delegate (System.Object o, EventArgs e)
                             {
@@ -97,7 +97,7 @@ namespace MATCH
                     else
                     {
                         //DebugMessagesManager.Instance.displayMessage("ShowOneHideOthers", "Evaluate", DebugMessagesManager.MessageLevel.Info, "Hide"); // Class and method names are hard coded for performance reasons.
-                        if (assistance.Value.IsActive())
+                        if (assistance.Value.IsDisplayed/*IsActive()*/)
                         {
                             assistance.Value.Hide(delegate (System.Object o, EventArgs e)
                             {
@@ -133,7 +133,7 @@ namespace MATCH
                         DebugMessagesManager.Instance.displayMessage("QAndDAssistances", "Hideall", DebugMessagesManager.MessageLevel.Info, "Hiding assistance delta");
                     }
 
-                    if (assistance.Value.IsActive())
+                    if (assistance.Value.IsDisplayed/*IsActive()*/)
                     {
                         assistance.Value.Hide(Utilities.Utility.GetEventHandlerEmpty());
                     }

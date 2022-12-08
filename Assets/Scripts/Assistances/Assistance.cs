@@ -63,7 +63,7 @@ namespace MATCH
                 OnHelpButtonClicked(args.ButtonType);
             }
 
-            public abstract bool IsActive();
+            //public abstract bool IsActive();
 
             public abstract bool IsDecorator(); // Must specify if the assistance is a decorator of another assistance or not
         }

@@ -87,7 +87,10 @@ namespace MATCH
             {
                 TextMeshPro tmp = DescriptionView.GetComponent<TextMeshPro>();
 
-                SetTextToTextMeshProComponent(tmp, text, fontSize);
+                if (text != tmp.text)
+                { // To avoid to update if the text did not change
+                    SetTextToTextMeshProComponent(tmp, text, fontSize);
+                }
             }
 
             public string GetDescription()
@@ -161,18 +164,23 @@ namespace MATCH
                 return controller;
             }
 
-            bool MutexHide = false;
+            //bool MutexHide = false;
             public override void Hide(EventHandler eventHandler)
             {
-                if (MutexHide == false)
+                /*if (MutexHide == false)
                 {
-                    MutexHide = true;
+                    MutexHide = true;*/
 
+                Utilities.EventHandlerArgs.Animation args = new Utilities.EventHandlerArgs.Animation();
+
+                if (IsDisplayed)
+                {
                     MATCH.Utilities.Utility.AnimateDisappearInPlace(TitleView.gameObject, TitleScalingOriginal, delegate
                     {
-                        MutexHide = false;
-                        eventHandler?.Invoke(this, EventArgs.Empty);
                         IsDisplayed = false;
+                        //MutexHide = false;
+                        args.Success = true;
+                        eventHandler?.Invoke(this, args);
                     });
 
                     Utilities.Utility.AnimateDisappearInPlace(DescriptionView.gameObject, DescriptionScalingOriginal);
@@ -183,18 +191,28 @@ namespace MATCH
                 }
                 else
                 {
-                    DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Warning, "Mutex locked, nothing will happen");
+                    args.Success = false;
+                    eventHandler?.Invoke(this, args);
                 }
+                /*}
+                else
+                {
+                    DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Warning, "Mutex locked, nothing will happen");
+                }*/
             }
 
-            bool MutexShow = false;
+            //bool MutexShow = false;
             public override void Show(EventHandler eventHandler)
             {
                 //DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Called for object " + name);
 
-                if (MutexShow == false)
-                {
-                    MutexShow = true;
+
+
+                /* if (MutexShow == false)
+                 {
+                     MutexShow = true;*/
+
+                Utilities.EventHandlerArgs.Animation args = new Utilities.EventHandlerArgs.Animation();
 
                     if (IsDisplayed == false)
                     {
@@ -212,27 +230,33 @@ namespace MATCH
                             //Utilities.Utility.AnimateAppearInPlace(ButtonsParentView.gameObject);
                             Utilities.Utility.AnimateAppearInPlace(DescriptionView.gameObject);
 
-                            MutexShow = false;
+                            //MutexShow = false;
                             IsDisplayed = true;
-                            eventHandler?.Invoke(this, EventArgs.Empty);
+
+                            args.Success = true;
+                            eventHandler?.Invoke(this, args);
 
                         });
                     }
                     else
                     {
-                        eventHandler?.Invoke(this, EventArgs.Empty);
+                        args.Success = false;
+                        eventHandler?.Invoke(this, args);
                     }   
-                }
+                /*}
                 else
                 {
                     DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Warning, "Mutex locked, nothing will happen");
-                }
+                }*/
             }
 
             public override void ShowHelp(bool show, EventHandler callback)
             {
                 ButtonsParentView.gameObject.SetActive(show);
-                callback?.Invoke(this, EventArgs.Empty);
+
+                Utilities.EventHandlerArgs.Animation args = new Utilities.EventHandlerArgs.Animation();
+                args.Success = true; //Todo: Always a success ... at least until I find a situation where it is not ok ... so double check this?
+                callback?.Invoke(this, args);
 
                 BoxCollider box = transform.GetComponent<BoxCollider>();
 
@@ -285,20 +309,20 @@ namespace MATCH
                 return false;
             }
 
-            public void SetBackgroundColor(string colorName)
+            /*public void SetBackgroundColor(string colorName)
             {
                 BackgroundView.GetComponent<Renderer>().material = Resources.Load(colorName, typeof(Material)) as Material;
-            }
+            }*/
 
-            public void SetEdgeColor(string colorName)
+            /*public void SetEdgeColor(string colorName)
             {
                 throw new NotImplementedException();
-            }
+            }*/
 
-            public void SetEdgeThickness(float thickness)
+            /*public void SetEdgeThickness(float thickness)
             {
                 throw new NotImplementedException();
-            }
+            }*/
 
             public void EnableWeavingHand(bool enable)
             {
@@ -313,11 +337,6 @@ namespace MATCH
             public Transform GetBackground()
             {
                 return BackgroundView;
-            }
-
-            public override bool IsActive()
-            {
-                return DescriptionView.gameObject.activeSelf;
             }
         }
 

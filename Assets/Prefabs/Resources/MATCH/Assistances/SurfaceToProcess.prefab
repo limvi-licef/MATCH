@@ -22,7 +22,7 @@ GameObject:
   - component: {fileID: 5382968303955433141}
   - component: {fileID: 5382968303955433133}
   m_Layer: 31
-  m_Name: AssistanceSurfaceToProcess
+  m_Name: SurfaceToProcess
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -188,7 +188,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   trackedTargetType: 5
-  trackedHandness: 3
+  trackedHandedness: 3
   trackedHandJoint: 2
   transformOverride: {fileID: 0}
   additionalOffset: {x: 0, y: 0, z: 0}
@@ -291,6 +291,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   handType: 3
   proximityType: 3
+  executionOrder: 0
   constraintOnRotation: 5
   useLocalSpaceForConstraint: 0
 --- !u!114 &5382968303955433132
@@ -305,9 +306,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5a1f658cd615624458c44f2e7e2129ed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_numberOfCubesToAddInRow: 5
-  m_numberOfCubesToAddInColumn: 4
-  m_hologramToUseToPopulateSurface: {fileID: 0}
+  NumberOfCubesToAddInRow: 5
+  NumberOfCubesToAddInColumn: 4
+  HologramToUseToPopulateSurfaceController: {fileID: 0}
 --- !u!114 &5382968303955433141
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -493,6 +494,10 @@ PrefabInstance:
       propertyPath: debounceThreshold
       value: 0.01
       objectReference: {fileID: 0}
+    - target: {fileID: 6353107494347420059, guid: fc0fa9816a356f1469e4f0b967284300, type: 3}
+      propertyPath: MatWhenTouched
+      value: 
+      objectReference: {fileID: 2100000, guid: 0acef5d898c397546b6d6f19440764aa, type: 2}
     - target: {fileID: 6353107494347420059, guid: fc0fa9816a356f1469e4f0b967284300, type: 3}
       propertyPath: m_debugMessages
       value: 

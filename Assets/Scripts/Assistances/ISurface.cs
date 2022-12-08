@@ -25,13 +25,10 @@ namespace MATCH
 {
     namespace Assistances
     {
-        public interface IPanel: IAssistance
+        public interface ISurface: IAssistance
         {
-            //public void SetBackgroundColor(string colorName);
-            //public void SetEdgeColor(string colorName);
-            //public void SetEdgeThickness(float thickness);
+            public void SetColor(string colorName);
             public void EnableWeavingHand(bool enable);
-            public Transform GetBackground();
         }
     }
 }

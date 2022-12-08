@@ -27,26 +27,27 @@ namespace MATCH
     {
         namespace BehaviorTrees
         {
-            public class BehaviorTree : MATCH.Scenarios.Scenario
+            public abstract class BehaviorTree : MATCH.Scenarios.Scenario
             {
-                protected NPBehave.Root Tree;
+                private NPBehave.Root Tree;
                 protected Blackboard Conditions;
                 private Dictionary<string, bool[]> ConditionsUpdate;
 
-                protected Assistances.Dialog BehaviorTreeDebugWindow;
-                protected Assistances.Dialog AssistancesDebugWindow;
+                protected Assistances.Dialog BehaviorTreeDebugWindow = null;
+                protected Assistances.Dialog AssistancesDebugWindow = null;
 
                 public virtual void Awake()
                 {
                     Conditions = new Blackboard(UnityContext.GetClock());
-                    ConditionsUpdate = new Dictionary<string, bool[]>();
+                    ConditionsUpdate = new Dictionary<string, bool[]>();  
                 }
 
                 // Start is called before the first frame update
                 public virtual void Start()
                 {
+                    InitializeDebugWindows();
+
                     // Debug object to display the status of the BT conditions
-                    BehaviorTreeDebugWindow = Assistances.Factory.Instance.CreateDialogNoButton("BT conditions - " + GetId(), "Empty for now", transform);
                     BehaviorTreeDebugWindow.Show(Utilities.Utility.GetEventHandlerEmpty());
                     BehaviorTreeDebugWindow.GetTransform().gameObject.AddComponent<ObjectManipulator>();
                     AdminMenu.Instance.AddButton("BT debug - " + GetId() + " - Bring", CallbackBringBTDebugWindow, AdminMenu.Panels.Left);
@@ -55,7 +56,6 @@ namespace MATCH
                         BehaviorTreeDebugWindow.gameObject.SetActive(!BehaviorTreeDebugWindow.gameObject.activeSelf);
                     }, AdminMenu.Panels.Left, AdminMenu.ButtonType.Hide);
 
-                    AssistancesDebugWindow = Assistances.Factory.Instance.CreateDialogNoButton("Assistances status - " + GetId(), "Empty for now", transform);
                     AssistancesDebugWindow.Show(Utilities.Utility.GetEventHandlerEmpty());
                     AssistancesDebugWindow.GetTransform().gameObject.AddComponent<ObjectManipulator>();
                     AdminMenu.Instance.AddButton("Assistances debug - " + GetId() + " - Bring", CallbackBringAssistancesDebugWindow, AdminMenu.Panels.Left);
@@ -65,6 +65,68 @@ namespace MATCH
                     }, AdminMenu.Panels.Left, AdminMenu.ButtonType.Hide);
                 }
 
+                /**
+                 * Function to call when all the assistances have added to the object, i.e. to start the behavior tree
+                 */
+                public void Init()
+                {
+                    InitializeDebugWindows(); // Debug windows are initialized in two places, because sometimes the Start function is called before the init and vice-versa
+
+                    // Initialize the behavior tree
+                    Tree = InitializeBehaviorTree();
+
+                    // NP debugger
+                    NPBehave.Debugger debugger = (Debugger)this.gameObject.AddComponent(typeof(Debugger));
+                    debugger.BehaviorTree = Tree;
+
+                    // Start BT
+                    Tree.Start();
+                }
+
+                private void InitializeDebugWindows()
+                {
+                    if (BehaviorTreeDebugWindow == null)
+                    {
+                        BehaviorTreeDebugWindow = Assistances.Factory.Instance.CreateDialogNoButton("BT conditions - " + GetId(), "Empty for now", transform);
+                    }
+
+                    if (AssistancesDebugWindow == null)
+                    {
+                        AssistancesDebugWindow = Assistances.Factory.Instance.CreateDialogNoButton("Assistances status - " + GetId(), "Empty for now", transform);
+                    }
+                }
+
+                protected void StartTree()
+                {
+                    /*if (Tree == null)
+                    {
+                        Start();
+                    }
+                    else*/ if (Tree.IsActive == false)
+                    {
+                        Tree.Start();
+                    }
+
+                    /*if (Tree != null && Tree.IsActive == false)
+                    {
+                        Tree.Start();
+                    }*/
+                    
+                }
+
+                protected void StopTree()
+                {
+                    if(Tree.IsActive)
+                    {
+                        Tree.Stop();
+                    }
+                }
+
+                /*
+                 * Should return the behavior tree root, that will be started by the Start function of this base class. Hence don't forget to call the base Start function of this class from your inherited class!
+                 */
+                protected abstract Root InitializeBehaviorTree();
+
                 public void CallbackBringBTDebugWindow()
                 {
                     BehaviorTreeDebugWindow.transform.position = new Vector3(Camera.main.transform.position.x + 0.5f, Camera.main.transform.position.y, Camera.main.transform.position.z);
@@ -73,6 +135,18 @@ namespace MATCH
                 public void CallbackBringAssistancesDebugWindow()
                 {
                     AssistancesDebugWindow.transform.position = new Vector3(Camera.main.transform.position.x + 0.5f, Camera.main.transform.position.y, Camera.main.transform.position.z);
+                }
+
+                protected void SetConditionsTo(bool value)
+                {
+                    List<string> keys = new List<string>(ConditionsUpdate.Keys);
+
+                    foreach(string key in keys)
+                    {
+                        Conditions[key] = value;
+                    }
+                       
+                    UpdateTextDebugBehaviorTreeWindow();
                 }
 
                 protected void UpdateConditionWithMatrix(string id)

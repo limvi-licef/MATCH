@@ -203,10 +203,10 @@ namespace MATCH
                 return transform;
             }
 
-            public override bool IsActive()
+            /*public override bool IsActive()
             {
                 return LineController.gameObject.activeSelf;
-            }
+            }*/
 
             public override bool IsDecorator()
             {

@@ -31,16 +31,18 @@ namespace MATCH
             private static Factory InstanceInternal;
             public static Factory Instance { get { return InstanceInternal; } }
 
-            public Assistances.Dialog DialogAssistance;
-            public Basic RefCube;
-            public Assistances.Dialog RefCheckListAssistance;
-            public Assistances.InteractionSurface RefInteractionSurface;
-            public ProcessingSurface RefSurfaceToProcess;
-            public Assistances.Dialog RefToDoListAssistance;
-            public AssistanceGradationExplicit RefAssistanceGradationExplicit;
-            public Assistances.Dialog RefButtons;
-            public GradationVisual.GradationVisual RefAssistanceGradationAttention;
-            public ArchWithTextAndHelp RefArch;
+            //Todo: all of those should be prefabs that can be loaded dybanically
+            //public Assistances.Dialog DialogAssistance;
+            //public Basic RefCube;
+            //public Assistances.Dialog RefCheckListAssistance;
+            //public Assistances.InteractionSurface RefInteractionSurface;
+            //public SurfaceToProcess RefSurfaceToProcess;
+            //public Assistances.Dialog RefToDoListAssistance;
+            //public AssistanceGradationExplicit RefAssistanceGradationExplicit;
+            //public Assistances.Dialog RefButtons;
+            //public GradationVisual.GradationVisual RefAssistanceGradationAttention;
+            //public ArchWithTextAndHelp RefArch;
+            public PathFinding.PathFinding PathFindingEngine;
 
             enum DialogsTypes
             {
@@ -50,7 +52,7 @@ namespace MATCH
                 Buttons = 3
             }
 
-            Dictionary<DialogsTypes, Dialog> DialogsStore;
+            Dictionary<DialogsTypes, string> DialogsStore;
 
             private void Awake()
             {
@@ -63,17 +65,17 @@ namespace MATCH
                     InstanceInternal = this;
 
                     // Initialize the dialogs types store
-                    DialogsStore = new Dictionary<DialogsTypes, Dialog>();
-                    DialogsStore.Add(DialogsTypes.Assistance, DialogAssistance);
-                    DialogsStore.Add(DialogsTypes.CheckList, RefCheckListAssistance);
-                    DialogsStore.Add(DialogsTypes.TodoList, RefToDoListAssistance);
-                    DialogsStore.Add(DialogsTypes.Buttons, RefButtons);
+                    DialogsStore = new Dictionary<DialogsTypes, string>();
+                    DialogsStore.Add(DialogsTypes.Assistance, /*DialogAssistance*/Utilities.Materials.Prefabs.AssistanceDialog);
+                    DialogsStore.Add(DialogsTypes.CheckList, /*RefCheckListAssistance*/Utilities.Materials.Prefabs.AssistanceDialogCheckList);
+                    DialogsStore.Add(DialogsTypes.TodoList, /*RefToDoListAssistance*/Utilities.Materials.Prefabs.AssistanceDialogToDoList);
+                    DialogsStore.Add(DialogsTypes.Buttons, /*RefButtons*/Utilities.Materials.Prefabs.AssistanceDialogButtons);
                 }
             }
 
             private Dialog InitializeDialog(DialogsTypes type, string title, string description, Transform parent)
             {
-                Transform view = Instantiate(DialogsStore[type].transform, parent);
+                Transform view = Instantiate(Utilities.Materials.Prefabs.Load(DialogsStore[type]).transform, parent);
                 Dialog controller = view.GetComponent<Dialog>();
                 controller.SetTitle(title, 0.15f);
                 float sizeDescriptionText = -0.0005f * description.Length + 0.206f;
@@ -131,6 +133,31 @@ namespace MATCH
                 return controller; //dialogController;
             }
 
+            public Dialog CreateDialogOneButton(string title, string description, string textButton1, EventHandler callbackButton1, Assistances.Buttons.Button.ButtonType type1, Transform parent)
+            {
+                //Transform dialogView = Instantiate(m_refDialogAssistance.transform, parent);
+                //MouseAssistanceDialog dialogController = dialogView.GetComponent<MouseAssistanceDialog>();
+                //dialogController.setTitle(title);
+                //float sizeDescriptionText = -0.002f * description.Length + 0.38f;
+                //dialogController.setDescription(description, sizeDescriptionText);
+                //dialogController.enableBillboard(true);
+                Dialog controller = CreateDialogNoButton(title, description, parent);
+
+                float fontSizeCoeffA = -0.017f;
+                float fontSizeCoeffB = 0.37f;
+
+                AddButton(ref controller, callbackButton1, textButton1, type1, true, fontSizeCoeffA, fontSizeCoeffB);
+
+                //float sizeDescriptionText = -0.017f * textButton1.Length + 0.37f;
+                //controller.AddButton(textButton1, true, sizeDescriptionText);
+                //sizeDescriptionText = -0.017f * textButton2.Length + 0.37f;
+                //controller.AddButton(textButton2, true, sizeDescriptionText);
+                //controller.ButtonsController[0].s_buttonClicked += callbackButton1;
+                //controller.ButtonsController[1].s_buttonClicked += callbackButton2;
+
+                return controller;
+            }
+
             public Dialog CreateDialogTwoButtons(string title, string description, string textButton1, EventHandler callbackButton1, Assistances.Buttons.Button.ButtonType type1, string textButton2, EventHandler callbackButton2, Assistances.Buttons.Button.ButtonType type2, Transform parent)
             {
                 //Transform dialogView = Instantiate(m_refDialogAssistance.transform, parent);
@@ -177,8 +204,11 @@ namespace MATCH
 
             public Basic CreateCube(string texture, Transform parent)
             {
-                Transform cubeView = Instantiate(RefCube.transform, parent);
-                Basic cubeController = cubeView.GetComponent<Basic>();
+                Transform view = Utilities.Materials.Prefabs.Load(Utilities.Materials.Prefabs.AssistanceCube).transform;
+                view.parent = parent;
+                view.localPosition = new Vector3(0, 0, 0);
+                //= Instantiate(RefCube.transform, parent);
+                Basic cubeController = view.GetComponent<Basic>();
                 cubeController.SetMaterial(texture);
 
                 return cubeController;
@@ -205,7 +235,8 @@ namespace MATCH
 
             public Assistances.InteractionSurface CreateInteractionSurface(string id, AdminMenu.Panels panel, Vector3 scaling, string texture, bool show, bool resizable, EventHandler onMove, Transform parent)
             {
-                Transform interactionSurface = Instantiate(RefInteractionSurface.transform, parent);
+                Transform interactionSurface = Utilities.Materials.Prefabs.Load(Utilities.Materials.Prefabs.AssistanceInteractionSurface); //Instantiate(RefInteractionSurface.transform, parent);
+                interactionSurface.parent = parent;
                 Assistances.InteractionSurface controller = interactionSurface.GetComponent<Assistances.InteractionSurface>();
                 controller.SetAdminButtons(id, panel);
                 controller.SetScaling(scaling);
@@ -217,11 +248,13 @@ namespace MATCH
                 return controller;
             }
 
-            public ProcessingSurface CreateSurfaceToProcess(Transform parent)
+            public SurfaceToProcess CreateSurfaceToProcess(Transform parent)
             {
-                Transform view = Instantiate(RefSurfaceToProcess.transform, parent);
+                Transform view = Utilities.Materials.Prefabs.Load(Utilities.Materials.Prefabs.AssistanceSurfaceToProcess); //Instantiate(RefSurfaceToProcess.transform, parent);
+                view.parent = parent;
+                view.localPosition = new Vector3(0, 0, 0);
 
-                ProcessingSurface controller = view.GetComponent<ProcessingSurface>();
+                SurfaceToProcess controller = view.GetComponent<SurfaceToProcess>();
 
                 //MouseChallengeleanTableSurfaceToPopulateWithCubes
                 return controller;
@@ -247,15 +280,20 @@ namespace MATCH
 
             public AssistanceGradationExplicit CreateAssistanceGradationExplicit(string name)
             {
-                Transform view = Instantiate(RefAssistanceGradationExplicit.transform);
+                Transform view = Utilities.Materials.Prefabs.Load(Utilities.Materials.Prefabs.AssistanceGradationExplicit);  //Instantiate(RefAssistanceGradationExplicit.transform);
                 AssistanceGradationExplicit controller = view.GetComponent<AssistanceGradationExplicit>();
+                controller.SetId(name);
                 view.name = name;
+                //view.gameObject.SetActive(true);
+                //controller.gameObject.SetActive(true);
+                //controller.Init();
                 return controller;
             }
 
             public GradationVisual.GradationVisual CreateAssistanceGradationAttention(string name)
             {
-                Transform view = Instantiate(RefAssistanceGradationAttention.transform);
+                //Transform view = Instantiate(RefAssistanceGradationAttention.transform);
+                Transform view = Utilities.Materials.Prefabs.Load(Utilities.Materials.Prefabs.AssistanceGradationAttention);
                 GradationVisual.GradationVisual controller = view.GetComponent<GradationVisual.GradationVisual>();
                 view.name = name;
                 return controller;
@@ -263,7 +301,9 @@ namespace MATCH
 
             public ArchWithTextAndHelp CreateAssistanceArch(string name, Transform origin, Transform target, Transform parent)
             {
-                Transform view = Instantiate(RefArch.transform, parent);
+                Transform view = Utilities.Materials.Prefabs.Load(Utilities.Materials.Prefabs.AssistanceArch);
+                view.parent = parent;
+                //Transform view = Instantiate(RefArch.transform, parent);
                 ArchWithTextAndHelp controller = view.GetComponent<ArchWithTextAndHelp>();
                 view.name = name;
                 controller.SetArchStartAndEndPoint(origin, target);
@@ -273,11 +313,26 @@ namespace MATCH
 
             public ArchWithTextAndHelp CreateAssistanceArch(string name, Transform origin, Transform target, string description, float size, Transform parent)
             {
-                Transform view = Instantiate(RefArch.transform, parent);
-                view.name = name;
-                ArchWithTextAndHelp controller = view.GetComponent<ArchWithTextAndHelp>();
+                ArchWithTextAndHelp controller = CreateAssistanceArch(name, origin, target, parent);
+
+                //Transform view = Instantiate(RefArch.transform, parent);
+                //view.name = name;
+                //ArchWithTextAndHelp controller = view.GetComponent<ArchWithTextAndHelp>();
                 controller.SetArchStartAndEndPoint(origin, target);
                 controller.SetDescription(description, size);
+
+                return controller;
+            }
+
+            public Assistances.LightedPath CreatePathFinding(string name, Transform objectBegin, Transform objectEnd, Transform parent)
+            {
+                Transform view = Instantiate(Utilities.Materials.Prefabs.Load(Utilities.Materials.Prefabs.AssistanceLightPath));
+                view.parent = parent;
+
+                Assistances.LightedPath controller = view.GetComponent<Assistances.LightedPath>();
+
+                controller.PathFindingEngine = PathFindingEngine;
+                controller.SetBeginAndEndObjects(objectBegin, objectEnd);
 
                 return controller;
             }

@@ -129,6 +129,18 @@ namespace MATCH
                     return toReturn;
                 }
 
+                public bool IsLastGradationLevel()
+                {
+                    bool toReturn = false;
+
+                    if (GradationCurrent+1 >= Gradation.Count)
+                    {
+                        toReturn = true;
+                    }
+
+                    return toReturn;
+                }
+
                 /**
                  * Show the minimal level of gradation. I.e. even if a higher level of gradation is displayed, will go back to the minimal level
                  * */
@@ -136,8 +148,35 @@ namespace MATCH
                 {
                     if (GradationCurrent > -1)
                     {
-                        GradationCurrent = 0;
-                        Gradation[GradationCurrent].Show(callback);
+                        /*while (GradationCurrent > 0)
+                        {
+                            Gradation[GradationCurrent].Hide(Utilities.Utility.GetEventHandlerEmpty());
+                            GradationCurrent--;
+                        }
+
+                        Gradation[GradationCurrent].Show(callback); // GradationCurrent is == 0 when reaching this point
+                        */
+                        Gradation[GradationCurrent].Hide(delegate (System.Object o, EventArgs e)
+                        {
+                            GradationCurrent--;
+
+                            if (GradationCurrent <= 0)
+                            {
+                                GradationCurrent = 0;
+                                Gradation[GradationCurrent].Show(callback);
+                            }
+                            else
+                            {
+                                ShowMinimalGradation(callback);
+                            }
+                        });
+
+                        /*Gradation[GradationCurrent].Hide(delegate(System.Object o, EventArgs e)
+                        {
+                            GradationCurrent = 0;
+                            Gradation[GradationCurrent].Show(callback);
+                        });*/
+
                         //DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Assistance should be shown now");
                     }
                     else
@@ -150,8 +189,8 @@ namespace MATCH
                 {
                     if (GradationCurrent > -1)
                     {
-                        GradationCurrent = 0;
                         Gradation[GradationCurrent].Hide(callback);
+                        GradationCurrent = 0;
                     }
                     else
                     {

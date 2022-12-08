@@ -9,6 +9,7 @@ using Microsoft.MixedReality.Toolkit.Experimental.SpatialAwareness;
 using System.Reflection;
 using System;
 
+//Todo: convert this class to a singleton, as there is no reason to have multiple instances of this
 namespace MATCH
 {
     namespace PathFinding
@@ -96,19 +97,24 @@ namespace MATCH
                     NavMeshBuilder.UpdateNavMeshData(NavMesh, defaultBuildSettings, Sources, bounds);
             }
 
-            public Vector3[] ComputePath(Transform origin, Transform destination)
+            public Vector3[] ComputePath(Vector3 origin, Vector3 destination)
             {
                 DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Number of registered meshes: " + UnityEngine.AI.NavMesh.GetSettingsCount());
 
                 NavMeshPath path = new NavMeshPath();
-                if (UnityEngine.AI.NavMesh.CalculatePath(origin.position, destination.position, UnityEngine.AI.NavMesh.AllAreas, path) == false)
+                if (UnityEngine.AI.NavMesh.CalculatePath(origin, destination, UnityEngine.AI.NavMesh.AllAreas, path) == false)
                 {
                     DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Warning, "Cannot compute the path");
                 }
 
-                DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Number of corner: " + path.corners.Length + " Start position: " + origin.position + " Target position: " + destination.position);
+                DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Number of corner: " + path.corners.Length + " Start position: " + origin+ " Target position: " + destination);
 
                 return path.corners;
+            }
+
+            public Vector3[] ComputePath(Transform origin, Transform destination)
+            {
+                return ComputePath(origin.position, destination.position);
             }
 
             Bounds QuantizedBounds()

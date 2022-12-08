@@ -33,16 +33,28 @@ namespace MATCH
     {
         public class ProcessingSurfaceElement : MonoBehaviour, IMixedRealityTouchHandler
         {
-            public Material m_matWhenTouched;
+            public Material MatWhenTouched;
             public event EventHandler CubeTouchedEvent;
 
             void IMixedRealityTouchHandler.OnTouchStarted(HandTrackingInputEventData eventData)
             {
                 DebugMessagesManager.Instance.displayMessage("MouseCubeInteractions", "IMixedRealityTouchHandler.OnTouchStarted", DebugMessagesManager.MessageLevel.Info, "Touched");
 
-                gameObject.GetComponent<Renderer>().material = m_matWhenTouched;
+                gameObject.GetComponent<Renderer>().material =  MatWhenTouched;
                 CubeTouchedEvent?.Invoke(this, EventArgs.Empty);
             }
+
+            public void SetDefaultColor(string name)
+            {
+                Renderer renderer = GetComponent<Renderer>();
+                renderer.material = Utilities.Utility.LoadMaterial(name);
+            }
+
+            public void SetTouchedColor(string name)
+            {
+                MatWhenTouched = Utilities.Utility.LoadMaterial(name);
+            }
+
 
             // Here because it has to be to complete the implementation of the interface
             void IMixedRealityTouchHandler.OnTouchCompleted(HandTrackingInputEventData eventData) { }

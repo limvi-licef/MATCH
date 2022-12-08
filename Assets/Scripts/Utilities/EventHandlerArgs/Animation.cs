@@ -1,4 +1,4 @@
-/*Copyright 2022 Guillaume Spalla
+/*Copyright 2022 Louis Marquet
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -12,26 +12,29 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.*/
 
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 using Microsoft.MixedReality.Toolkit.UI;
 using Microsoft.MixedReality.Toolkit.UI.BoundsControl;
 using Microsoft.MixedReality.Toolkit.Utilities.Solvers;
-using System.Reflection;
 using System;
+using System.Collections.Generic;
+using UnityEngine;
+using System.Timers;
+using System.Reflection;
+using System.Linq;
 
+/**
+ * Used to have a lighting object to point to a provided gameobject, from the same direction than the user's gaze
+ * */
 namespace MATCH
 {
-    namespace Assistances
+    namespace Utilities
     {
-        public interface IPanel: IAssistance
+        namespace EventHandlerArgs
         {
-            //public void SetBackgroundColor(string colorName);
-            //public void SetEdgeColor(string colorName);
-            //public void SetEdgeThickness(float thickness);
-            public void EnableWeavingHand(bool enable);
-            public Transform GetBackground();
+            public class Animation : EventArgs
+            {
+                public bool Success; // True: the animation went ok; False: an error occured. The most common case is for example that the object has not bee hidden, because it was already hidden (same for show).
+            }
         }
     }
 }

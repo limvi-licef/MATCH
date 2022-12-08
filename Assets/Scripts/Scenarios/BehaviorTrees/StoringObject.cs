@@ -69,7 +69,7 @@ namespace MATCH
                  * Currently, in order to test the code, the class QandDAssistances is used. This is meant to be a temporary solution, i.e. all assistances should in the end be based on the behavior tree.
                  * */
                 Assistances.InteractionSurface AssistancesEpsilonInteractionSurface;
-                Assistances.AssistanceGradationExplicit AssistancesEpsilonGradation;
+                //Assistances.AssistanceGradationExplicit AssistancesEpsilonGradation;
                 Assistances.GradationVisual.GradationVisual Epsilon1;
 
                 Assistances.QandDAssistances AssistancesGradation;
@@ -84,30 +84,7 @@ namespace MATCH
                 // Start is called before the first frame update
                 public override void Start()
                 {
-                    base.Start();
-
-                    Scenarios.Manager.Instance.addScenario(this);
-
-                    // Initialize variables
-                    InferenceObjectDetected = null;
-                    InferenceGameObjectInStorage = null;
-                    InferenceObjectInStorage = null;
-                    InferenceGrabbedObject = null;
-                    InferenceReleasedObject = null;
-                    InferenceFocusedOnObject = null;
-                    InferenceTimeDidNotComeToObject = null;
-                    Conditions = null;
-
-                    FakeObject = transform.Find("FakeObject").gameObject;
-                    // TEST - add it to the interaction surface manager to see if it is correctly detected when close to a surface
-                    SurfacesManager.RegisterObject(FakeObject, delegate (System.Object o, EventArgs e)
-                    {
-                        AssistancesDebugWindow.SetDescription("FakeObject has crossed surface!");
-                    });
-
-                    ObjectDetectedInformation = null;
-                    AssistancesManager = new Assistances.Manager();
-
+                    // Initialize assistances
                     AreaStorage = Assistances.Factory.Instance.CreateInteractionSurface("Storage", default, new Vector3(0.2f, 0.8f, 0.3f), Utilities.Materials.Colors.GreenGlowing, true, true, Utilities.Utility.GetEventHandlerEmpty(), transform);
 
                     /*if (Utilities.Utility.IsEditorSimulator() || Utilities.Utility.IsEditorGameView())
@@ -118,6 +95,18 @@ namespace MATCH
                     {
                         AreaStorage.SetLocalPosition(new Vector3(0f, 0f, 0.2f));
                     }*/
+
+                    // Initialize variables
+                    InferenceObjectDetected = null;
+                    InferenceGameObjectInStorage = null;
+                    InferenceObjectInStorage = null;
+                    InferenceGrabbedObject = null;
+                    InferenceReleasedObject = null;
+                    InferenceFocusedOnObject = null;
+                    InferenceTimeDidNotComeToObject = null;
+
+                    ObjectDetectedInformation = null;
+                    AssistancesManager = new Assistances.Manager();
 
                     /* 
                      * AreaObject is the interaction surface that is meant to be around the detected object. 
@@ -131,42 +120,32 @@ namespace MATCH
                     AreaObjectPosition.GetInteractionSurface().gameObject.layer = LayerMask.NameToLayer("Ignore Raycast");
                     AreaObjectPosition.transform.position = new Vector3(1000, 1000, 1000);
 
+                    FakeObject = transform.Find("FakeObject").gameObject;
+                    // TEST - add it to the interaction surface manager to see if it is correctly detected when close to a surface
+                    SurfacesManager.RegisterObject(FakeObject, delegate (System.Object o, EventArgs e)
+                    {
+                        AssistancesDebugWindow.SetDescription("FakeObject has crossed surface!");
+                    });
+
+                    // Base class
+                    base.Start();
+                    Init();
+                    InitializeInferences();
+
+                    Scenarios.Manager.Instance.addScenario(this);
+
+                    
+
                     //AdminMenu.Instance.AddButton("Sorting Object - See boolean states", CallbackSeeStates);
 
-                    InitializeBehaviorTreeConditions();
-                    InitializeInferences();
-                    InitializeBehaviorTree();
+                    
+                    //InitializeBehaviorTree();
                     //InitializeScenario();
 
                     if (!Utilities.Utility.IsEditorSimulator() && !Utilities.Utility.IsEditorGameView())
                     { // Hiding fake object when running on the hololens
                         FakeObject.SetActive(false);
                     }
-                }
-
-                
-
-                void InitializeBehaviorTreeConditions()
-                {
-                    OnChallengeStandBy();
-
-                    // Conditions
-                    if (Conditions == null)
-                    {
-                        Conditions = new Blackboard(UnityContext.GetClock());
-                    }
-
-                    Conditions["ObjectStored"] = false;
-                    Conditions["PersonMovedAwayFromObject"] = false;
-                    Conditions["PersonCloseToObject"] = false;
-                    Conditions["PersonGrabbedObject"] = false;
-                    Conditions["PersonWatchedObject"] = false;
-                    Conditions["PersonDroppedObjectOutsideStoringArea"] = false;
-                    Conditions["PersonDidNotComeToObject"] = false;
-                    Conditions["HelpClicked"] = false;
-                    Conditions["HelpRefused"] = false;
-
-                    UpdateCondition("ObjectStored", false);
                 }
 
                 /*void UpdateCondition(string id, bool value)
@@ -190,8 +169,22 @@ namespace MATCH
                     BehaviorTreeDebugWindow.SetDescription(textToDisplay, 0.08f);
                 }*/
 
-                void InitializeBehaviorTree()
+                protected override Root InitializeBehaviorTree()
                 { // To be called once
+                    OnChallengeStandBy();
+
+                    Conditions["ObjectStored"] = false;
+                    Conditions["PersonMovedAwayFromObject"] = false;
+                    Conditions["PersonCloseToObject"] = false;
+                    Conditions["PersonGrabbedObject"] = false;
+                    Conditions["PersonWatchedObject"] = false;
+                    Conditions["PersonDroppedObjectOutsideStoringArea"] = false;
+                    Conditions["PersonDidNotComeToObject"] = false;
+                    Conditions["HelpClicked"] = false;
+                    Conditions["HelpRefused"] = false;
+
+                    
+
                     /*
                      * Temporary assistances built with QandDAssistances
                      * To be removed when the behavior tree handling the assistances is reliable.
@@ -227,9 +220,20 @@ namespace MATCH
 
                         //AssistancesGradation.HideAll();
                         HideAll();
+                            OnChallengeStandBy();
+                            //InitializeBehaviorTreeConditions();
 
-                            InitializeBehaviorTreeConditions();
+                            Conditions["ObjectStored"] = false;
+                            Conditions["PersonMovedAwayFromObject"] = false;
+                            Conditions["PersonCloseToObject"] = false;
+                            Conditions["PersonGrabbedObject"] = false;
+                            Conditions["PersonWatchedObject"] = false;
+                            Conditions["PersonDroppedObjectOutsideStoringArea"] = false;
+                            Conditions["PersonDidNotComeToObject"] = false;
+                            Conditions["HelpClicked"] = false;
+                            Conditions["HelpRefused"] = false;
 
+                            UpdateCondition("ObjectStored", false);
                             ObjectSet = false;
 
                             InitializeInferences();
@@ -383,14 +387,10 @@ namespace MATCH
                     // Set assistances
                     // For now we use the assistances from the QandDAssistances class. Uncomment the following line when going to the BT to manage the assistances
                     InitializeAssistancesEpsilon();
-                    Tree = new Root(Conditions, srBegin);
+                    Root tree = new Root(Conditions, srBegin);
 
-                    //#if UNITY_EDITOR
-                    NPBehave.Debugger debugger = (Debugger)this.gameObject.AddComponent(typeof(Debugger));
-                    debugger.BehaviorTree = Tree;
-                    //#endif
 
-                    Tree.Start();
+                    return tree;
                 }
 
                 void HelpRefused()
@@ -494,14 +494,14 @@ namespace MATCH
                     alpha3.AddAssistance(Assistances.Decorators.Factory.Instance.CreateBackground(alpha3Base, Utilities.Materials.Colors.CyanGlowing));
                     alpha3.AddAssistance(Assistances.Decorators.Factory.Instance.CreateBackground(alpha3Base, Utilities.Materials.Colors.OrangeGlowing));
 
-                    AssistancesEpsilonGradation = Assistances.Factory.Instance.CreateAssistanceGradationExplicit("AssistanceGradationExplicitSortingObject");
-                    AssistancesEpsilonGradation.InfManager = InferenceManager;
+                    /*AssistancesEpsilonGradation = Assistances.Factory.Instance.CreateAssistanceGradationExplicit("AssistanceGradationExplicitSortingObject");
+                    AssistancesEpsilonGradation.InfManager = InferenceManager;*/
 
                     // Connecting the buttons
-                    AssistancesEpsilonGradation.AddButton(Epsilon1, Assistances.Buttons.Button.ButtonType.Yes, alpha2);
+                    /*AssistancesEpsilonGradation.AddButton(Epsilon1, Assistances.Buttons.Button.ButtonType.Yes, alpha2);
                     AssistancesEpsilonGradation.AddButton(Epsilon1, Assistances.Buttons.Button.ButtonType.No, end);
                     AssistancesEpsilonGradation.AddButton(alpha2, Assistances.Buttons.Button.ButtonType.Yes, end);
-                    AssistancesEpsilonGradation.AddButton(alpha2, Assistances.Buttons.Button.ButtonType.No, alpha3);
+                    AssistancesEpsilonGradation.AddButton(alpha2, Assistances.Buttons.Button.ButtonType.No, alpha3);*/
 
                     //AssistancesAlphaGradation.AddButton(yesNo1, Assistances.Buttons.Button.ButtonType.Undefined, null);
 
@@ -541,7 +541,9 @@ namespace MATCH
                 void RunAssistanceEpsilon()
                 {
                     AssistancesEpsilonInteractionSurface.gameObject.SetActive(true);
-                    AssistancesEpsilonGradation.RunAssistance(Utilities.Utility.GetEventHandlerEmpty());
+                    //AssistancesEpsilonGradation.RunAssistance(Utilities.Utility.GetEventHandlerEmpty());
+                    //AssistancesEpsilonGradation.RunAssistance();
+
                     AssistancesGradation.HideAll(); //And not the wrapped function, because otherwise it will also hide epsilon!
                 }
 
@@ -817,7 +819,7 @@ namespace MATCH
                     if (AssistancesEpsilonInteractionSurface.gameObject.activeSelf)
                     {
                         AssistancesEpsilonInteractionSurface.gameObject.SetActive(false);
-                        AssistancesEpsilonGradation.ResetConditions();
+                        //AssistancesEpsilonGradation.ResetConditions();
                     }
 
                     AssistancesGradation.ShowOneHideOthers(gradation, delegate (System.Object o, EventArgs e)
@@ -836,7 +838,7 @@ namespace MATCH
                     if (AssistancesEpsilonInteractionSurface.gameObject.activeSelf)
                     {
                         AssistancesEpsilonInteractionSurface.gameObject.SetActive(false);
-                        AssistancesEpsilonGradation.ResetConditions();
+                        //AssistancesEpsilonGradation.ResetConditions();
                     }
 
                     AssistancesGradation.HideAll();

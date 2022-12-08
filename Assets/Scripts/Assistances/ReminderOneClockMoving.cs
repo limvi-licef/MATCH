@@ -135,10 +135,10 @@ namespace MATCH
                 return transform;
             }
 
-            public override bool IsActive()
+            /*public override bool IsActive()
             {
                 return m_clockView.gameObject.activeSelf;
-            }
+            }*/
 
             void CallbackOnClockTouched(System.Object sender, EventArgs e)
             {// If a clock is touched, all other clocks are hidden

@@ -43,6 +43,16 @@ namespace MATCH
                 }
             }
 
+            public MATCH.Inferences.Manager CreateManager(Transform parent)
+            {
+                Transform view = MATCH.Utilities.Materials.Prefabs.Load(MATCH.Utilities.Materials.Prefabs.InferenceManager);
+                view.parent = parent;
+
+                MATCH.Inferences.Manager controller = view.GetComponent<MATCH.Inferences.Manager>();
+
+                return controller;
+            }
+
             public void CreateDistanceLeavingInferenceOneShot(MATCH.Inferences.Manager inferenceManager, string inferenceId, EventHandler toTrigger, GameObject refObject, float trigerringDistance = 2.0f)
             {
                 MATCH.Inferences.DistanceLeaving inference = new MATCH.Inferences.DistanceLeaving(inferenceId, delegate (System.Object o, EventArgs e)

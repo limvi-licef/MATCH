@@ -30,8 +30,8 @@ namespace MATCH
     {
         public class InteractionSurface : MonoBehaviour
         {
-            Transform m_interactionSurfaceView;
-
+            Transform View;
+            
             public event EventHandler EventInteractionSurfaceTableTouched;
             public event EventHandler EventInteractionSurfaceScaled;
             public event EventHandler EventInteractionSurfaceMoved;
@@ -46,20 +46,20 @@ namespace MATCH
                 SurfaceInitialized = false;
 
                 // Children
-                m_interactionSurfaceView = gameObject.transform.Find("InteractionSurfaceChild");
+                View = gameObject.transform.Find("InteractionSurfaceChild");
             }
 
             // Start is called before the first frame update
             void Start()
             {
-                BoundsControl boundsControl = m_interactionSurfaceView.GetComponent<BoundsControl>();
+                BoundsControl boundsControl = View.GetComponent<BoundsControl>();
 
                 boundsControl.ScaleStopped.AddListener(delegate
                 {
                     EventInteractionSurfaceScaled?.Invoke(this, EventArgs.Empty);
                 });
 
-                ObjectManipulator objectManipulator = m_interactionSurfaceView.GetComponent<ObjectManipulator>();
+                ObjectManipulator objectManipulator = View.GetComponent<ObjectManipulator>();
                 objectManipulator.OnManipulationEnded.AddListener(delegate (ManipulationEventData data)
                 {
                     //DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Called");
@@ -69,7 +69,7 @@ namespace MATCH
 
             public Transform GetInteractionSurface()
             {
-                return m_interactionSurfaceView;
+                return View;
             }
 
             /**
@@ -81,27 +81,29 @@ namespace MATCH
 
                 Color = colorName;
 
-                m_interactionSurfaceView.GetComponent<Renderer>().material = Resources.Load(Color, typeof(Material)) as Material;
+                View.GetComponent<Renderer>().material = Resources.Load(Color, typeof(Material)) as Material;
             }
 
             public void SetScaling(Vector3 scaling)
             {
-                m_interactionSurfaceView.localScale = scaling;
+                View.GetComponent<BoundsControl>().enabled = false;
+                View.localScale = scaling;
+                View.GetComponent<BoundsControl>().enabled = true;
             }
 
             public void SetLocalPosition(Vector3 position)
             {
-                m_interactionSurfaceView.localPosition = position;
+                View.localPosition = position;
             }
 
             public Vector3 GetLocalPosition()
             {
-                return m_interactionSurfaceView.localPosition;
+                return View.localPosition;
             }
 
             public Vector3 GetLocalScale()
             {
-                return m_interactionSurfaceView.localScale;
+                return View.localScale;
             }
 
             void CallbackHologramInteractionSurfaceMovedFinished()
@@ -109,15 +111,15 @@ namespace MATCH
                 //DebugMessagesManager.Instance.displayMessage("MousePopulateSurfaceTableWithCubes", "callbackOnTapToPlaceFinished", DebugMessagesManager.MessageLevel.Info, "Called");
 
                 // Bring specific components to the center of the interaction surface
-                gameObject.transform.position = m_interactionSurfaceView.transform.position;
-                m_interactionSurfaceView.transform.localPosition = new Vector3(0, 0f, 0);
+                gameObject.transform.position = View.transform.position;
+                View.transform.localPosition = new Vector3(0, 0f, 0);
             }
 
             void CallbackShow()
             {
                 //DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Warning, "Callback showing / hiding interaction surface called");
 
-                ShowInteractionSurfaceTable(!(m_interactionSurfaceView.GetComponent<BoundsControl>().enabled));
+                ShowInteractionSurfaceTable(!(View.GetComponent<BoundsControl>().enabled));
             }
 
             public void ShowInteractionSurfaceTable(bool show)
@@ -126,11 +128,11 @@ namespace MATCH
 
                 if (SurfaceInitialized == false)
                 {
-                    m_interactionSurfaceView.gameObject.SetActive(true); // If it happens that the surface is not displayed
+                    View.gameObject.SetActive(true); // If it happens that the surface is not displayed
 
                     // Connect the callbacks
-                    m_interactionSurfaceView.GetComponent<BoundsControl>().ScaleStopped.AddListener(CallbackHologramInteractionSurfaceMovedFinished); // Use the same callback than for taptoplace as the process to do is the same
-                    m_interactionSurfaceView.GetComponent<Interactable>().GetReceiver<InteractableOnTouchReceiver>().OnTouchStart.AddListener(delegate ()
+                    View.GetComponent<BoundsControl>().ScaleStopped.AddListener(CallbackHologramInteractionSurfaceMovedFinished); // Use the same callback than for taptoplace as the process to do is the same
+                    View.GetComponent<Interactable>().GetReceiver<InteractableOnTouchReceiver>().OnTouchStart.AddListener(delegate ()
                     {
                         EventInteractionSurfaceTableTouched?.Invoke(this, EventArgs.Empty);
                     }); // Only have to forward the event
@@ -140,9 +142,9 @@ namespace MATCH
 
                 }
 
-                m_interactionSurfaceView.GetComponent<Renderer>().enabled = show; // To hide the surface while keeping it interactable, then the renderer is disabled if show==false;
-                m_interactionSurfaceView.GetComponent<BoundsControl>().enabled = show;
-                m_interactionSurfaceView.GetComponent<ObjectManipulator>().enabled = show;
+                View.GetComponent<Renderer>().enabled = show; // To hide the surface while keeping it interactable, then the renderer is disabled if show==false;
+                View.GetComponent<BoundsControl>().enabled = show;
+                View.GetComponent<ObjectManipulator>().enabled = show;
             }
 
             public void CallbackBring()
@@ -162,11 +164,11 @@ namespace MATCH
             {
                 if (enable)
                 {
-                    m_interactionSurfaceView.GetComponent<BoundsControl>().ScaleHandlesConfig.ScaleBehavior = Microsoft.MixedReality.Toolkit.UI.BoundsControlTypes.HandleScaleMode.NonUniform;
+                    View.GetComponent<BoundsControl>().ScaleHandlesConfig.ScaleBehavior = Microsoft.MixedReality.Toolkit.UI.BoundsControlTypes.HandleScaleMode.NonUniform;
                 }
                 else
                 {
-                    m_interactionSurfaceView.GetComponent<BoundsControl>().ScaleHandlesConfig.ScaleBehavior = Microsoft.MixedReality.Toolkit.UI.BoundsControlTypes.HandleScaleMode.Uniform;
+                    View.GetComponent<BoundsControl>().ScaleHandlesConfig.ScaleBehavior = Microsoft.MixedReality.Toolkit.UI.BoundsControlTypes.HandleScaleMode.Uniform;
                 }
 
             }
@@ -177,11 +179,11 @@ namespace MATCH
             {
                 if (prevent)
                 {
-                    m_interactionSurfaceView.GetComponent<BoundsControl>().FlattenAxis = Microsoft.MixedReality.Toolkit.UI.BoundsControlTypes.FlattenModeType.FlattenY;
+                    View.GetComponent<BoundsControl>().FlattenAxis = Microsoft.MixedReality.Toolkit.UI.BoundsControlTypes.FlattenModeType.FlattenY;
                 }
                 else
                 {
-                    m_interactionSurfaceView.GetComponent<BoundsControl>().FlattenAxis = Microsoft.MixedReality.Toolkit.UI.BoundsControlTypes.FlattenModeType.DoNotFlatten;
+                    View.GetComponent<BoundsControl>().FlattenAxis = Microsoft.MixedReality.Toolkit.UI.BoundsControlTypes.FlattenModeType.DoNotFlatten;
                 }
             }
 

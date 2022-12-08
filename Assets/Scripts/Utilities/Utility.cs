@@ -98,6 +98,8 @@ namespace MATCH
              * */
             public static void AnimateDisappearInPlace(GameObject gameObject, Vector3 scalingOriginal, EventHandler eventHandler)
             {
+                Utilities.EventHandlerArgs.Animation args = new EventHandlerArgs.Animation();
+
                 if (gameObject.activeSelf)
                 {
                     gameObject.AddComponent<Animation>().AnimateDiseappearInPlace(new EventHandler(delegate (System.Object o, EventArgs e)
@@ -107,8 +109,14 @@ namespace MATCH
                         gameObject.SetActive(false);
                         gameObject.transform.localScale = scalingOriginal;
 
-                        eventHandler?.Invoke(gameObject, EventArgs.Empty);
+                        args.Success = true;
+                        eventHandler?.Invoke(gameObject, args);
                     }));
+                }
+                else
+                {
+                    args.Success = false;
+                    eventHandler?.Invoke(gameObject, args);
                 }
             }
             public static void AnimateDisappearInPlace(GameObject gameObject, Vector3 scalingOriginal)
@@ -171,6 +179,11 @@ namespace MATCH
             {
                 Renderer r = gameobject.GetComponent<Renderer>();
                 r.material = Resources.Load(colorName, typeof(Material)) as Material;
+            }
+
+            public static Material LoadMaterial(string name)
+            {
+                return Resources.Load(name, typeof(Material)) as Material;
             }
 
             /**

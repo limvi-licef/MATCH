@@ -39,6 +39,20 @@ namespace MATCH
                 public static string DecoratorBackgroundColor = Path + "Assistances/Decorators/BackgroundColor";
                 public static string DecoratorEdge = Path + "Assistances/Decorators/Edge";
 
+                public static string AssistanceGradationAttention = Path + "Assistances/Gradation/Attention";
+                public static string AssistanceGradationExplicit = Path + "Assistances/Gradation/Explicit";
+                public static string AssistanceInteractionSurface = Path + "Assistances/InteractionSurface";
+                public static string AssistanceSurfaceToProcess = Path + "Assistances/SurfaceToProcess";
+                public static string AssistanceArch = Path + "Assistances/Arch";
+                public static string AssistanceCube = Path + "Assistances/Cube";
+                public static string AssistanceLightPath = Path + "Assistances/LightedPath";
+                public static string AssistanceDialog = Path + "Assistances/Dialogs/Dialog";
+                public static string AssistanceDialogButtons = Path + "Assistances/Dialogs/Buttons";
+                public static string AssistanceDialogToDoList = Path + "Assistances/Dialogs/ToDoList";
+                public static string AssistanceDialogCheckList = Path + "Assistances/Dialogs/CheckList";
+
+                public static string InferenceManager = Path + "Inferences/Manager";
+
                 public static Transform Load(string prefabPath)
                 {
                     return UnityEngine.Object.Instantiate<Transform>(Resources.Load<Transform>(prefabPath));
