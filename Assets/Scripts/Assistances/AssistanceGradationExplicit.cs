@@ -140,17 +140,28 @@ namespace MATCH
                 InfFocusLost = null;
                 InfIsClose = null;*/
 
-                Conditions[ConditionStartAssistance] = false;
+                /*Conditions[ConditionStartAssistance] = false;
                 Conditions[ConditionIsDisplayed] = false;
                 Conditions[ConditionsIsFocused] = false;
                 Conditions[ConditionHelpClicked] = false;
                 Conditions[ConditionDisplayedSince2Minutes] = false;
                 Conditions[ConditionIsFar] = false;
                 Conditions[ConditionWaitingSince30Seconds] = false;
-                Conditions[ConditionMinimalConditionDisplayed] = true;
+                Conditions[ConditionMinimalConditionDisplayed] = true;*/
+                AddCondition(ConditionStartAssistance, false);
+                AddCondition(ConditionIsDisplayed, false);
+                AddCondition(ConditionsIsFocused, false);
+                AddCondition(ConditionHelpClicked, false);
+                AddCondition(ConditionDisplayedSince2Minutes, false);
+                AddCondition(ConditionIsFar, false);
+                AddCondition(ConditionWaitingSince30Seconds, false);
+                AddCondition(ConditionMinimalConditionDisplayed, true);
+
 
                 // Set the matrix
-                int nbConditions = Conditions.Keys.Count;
+                //int nbConditions = Conditions.Keys.Count;
+                int nbConditions = GetNumberOfConditions();
+
                 AddConditionsUpdate(ConditionStartAssistance, new bool[] { true, false, false, false, false, false, false, false });
                 AddConditionsUpdate(ConditionIsDisplayed, new bool[] { true, true, false, false, false, false, false, false });
                 AddConditionsUpdate(ConditionsIsFocused, new bool[] { true, true, true, false, false, false, false, false });
@@ -242,7 +253,7 @@ namespace MATCH
                     );
                 // seBegin - end
 
-                Root tree = new Root(Conditions, srBegin);
+                Root tree = new Root(/*Conditions*/Getconditions(), srBegin);
 
 
                 return tree;
@@ -260,7 +271,8 @@ namespace MATCH
              private void ShowAssistanceMinimalGradation(GradationVisual.GradationVisual assistance, EventHandler callback)
              {
                  assistance.ShowMinimalGradation(callback);
-                 Conditions["MinimalConditionDisplayed"] = true;
+                UpdateCondition(ConditionMinimalConditionDisplayed, true);
+                 //Conditions["MinimalConditionDisplayed"] = true;
              }
 
              /*private void HideCurrentGradation()
@@ -294,6 +306,7 @@ namespace MATCH
                         });
 
                         AssistancesDebugWindow.SetDescription("Eta");
+                        MATCH.Utilities.Logger.Instance.Log(this.GetId(), MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, "Eta");
                     }),
                     new WaitUntilStopped());
 
@@ -330,6 +343,7 @@ namespace MATCH
                             timer.StartCounter();
 
                             AssistancesDebugWindow.SetDescription("Alpha");
+                                MATCH.Utilities.Logger.Instance.Log(this.GetId(), MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, "Alpha");
                             }
                         });
 
@@ -365,7 +379,9 @@ namespace MATCH
                         InfManager.RegisterInference(timer);
                         timer.StartCounter();
 
-                        AssistancesDebugWindow.SetDescription("Beta"); })
+                        AssistancesDebugWindow.SetDescription("Beta");
+                        MATCH.Utilities.Logger.Instance.Log(this.GetId(), MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, "Beta");
+                    })
                     );
 
                 return temp;
@@ -377,6 +393,7 @@ namespace MATCH
                     new NPBehave.Action(() => {
                         AssistancesGradation.AssistanceCurrent.ShowNextGradation(Utilities.Utility.GetEventHandlerEmpty());
                         AssistancesDebugWindow.SetDescription("Delta");
+                        MATCH.Utilities.Logger.Instance.Log(this.GetId(), MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, "Delta");
 
                         if (AssistancesGradation.AssistanceCurrent.IsLastGradationLevel() == false)
                         {
@@ -400,7 +417,10 @@ namespace MATCH
             private Sequence AssistanceGamma()
             {
                 Sequence temp = new Sequence(
-                    new NPBehave.Action(() => AssistancesDebugWindow.SetDescription("Gamma")),
+                    new NPBehave.Action(() => {
+                        AssistancesDebugWindow.SetDescription("Gamma");
+                        MATCH.Utilities.Logger.Instance.Log(this.GetId(), MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, "Gamma");
+                    }),
                     new WaitUntilStopped()
                     );
 
@@ -431,7 +451,8 @@ namespace MATCH
                             }
                         }
                         
-                        AssistancesDebugWindow.SetDescription("Epsilon"); 
+                        AssistancesDebugWindow.SetDescription("Epsilon");
+                        MATCH.Utilities.Logger.Instance.Log(this.GetId(), MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, "Epsilon");
                     }),
                     new WaitUntilStopped()
                     );
@@ -446,7 +467,8 @@ namespace MATCH
                     {
                         AssistancesGradation.AssistanceCurrent.ShowHelpCurrentGradation(true, Utilities.Utility.GetEventHandlerEmpty());
                         AssistancesDebugWindow.SetDescription("Zeta");
-                        }),
+                        MATCH.Utilities.Logger.Instance.Log(this.GetId(), MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, "Zeta");
+                    }),
                     new WaitUntilStopped()
                     );
 
@@ -489,7 +511,8 @@ namespace MATCH
 
                 /*if (ArgsOnHelpButtonClicked.AssistanceNext != null)
                 {*/
-                    Conditions["HelpClicked"] = true;
+                //Conditions["HelpClicked"] = true;
+                UpdateCondition(ConditionHelpClicked, true);    
                 //}
             }
 

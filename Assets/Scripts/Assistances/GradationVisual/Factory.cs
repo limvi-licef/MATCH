@@ -94,9 +94,9 @@ namespace MATCH
                     return toReturn;
                 }
 
-                public GradationVisual CreateSurfaceToProcess(string assistanceName, EventHandler callbackNewPartCleaned, EventHandler callbackWhenCleaned, Transform parent)
+                public GradationVisual CreateSurfaceToProcess(string assistanceName, EventHandler callbackNewPartCleaned, EventHandler callbackWhenCleaned, InteractionSurface surfaceToPopulate, Transform parent)
                 {
-                    Assistances.SurfaceToProcess surface = Assistances.Factory.Instance.CreateSurfaceToProcess(parent);
+                    Assistances.SurfaceToProcess surface = Assistances.Factory.Instance.CreateSurfaceToProcess(parent, surfaceToPopulate);
                     surface.EventSurfaceCleaned += callbackWhenCleaned;
                     surface.EventNewPartCleaned += callbackNewPartCleaned;
                     //surface.Event

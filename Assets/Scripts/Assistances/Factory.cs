@@ -233,11 +233,12 @@ namespace MATCH
                 return cube;
             }
 
-            public Assistances.InteractionSurface CreateInteractionSurface(string id, AdminMenu.Panels panel, Vector3 scaling, string texture, bool show, bool resizable, EventHandler onMove, Transform parent)
+            public Assistances.InteractionSurface CreateInteractionSurface(string id, AdminMenu.Panels panel, Vector3 scaling, Vector3 localPosition, string texture, bool show, bool resizable, EventHandler onMove, bool registerToWLT, Transform parent)
             {
-                Transform interactionSurface = Utilities.Materials.Prefabs.Load(Utilities.Materials.Prefabs.AssistanceInteractionSurface); //Instantiate(RefInteractionSurface.transform, parent);
-                interactionSurface.parent = parent;
-                Assistances.InteractionSurface controller = interactionSurface.GetComponent<Assistances.InteractionSurface>();
+                Transform view = Utilities.Materials.Prefabs.Load(Utilities.Materials.Prefabs.AssistanceInteractionSurface); //Instantiate(RefInteractionSurface.transform, parent);
+                view.parent = parent;
+                view.name = id;
+                Assistances.InteractionSurface controller = view.GetComponent<Assistances.InteractionSurface>();
                 controller.SetAdminButtons(id, panel);
                 controller.SetScaling(scaling);
                 controller.SetColor(texture);
@@ -245,16 +246,30 @@ namespace MATCH
                 controller.SetObjectResizable(resizable);
                 controller.EventInteractionSurfaceMoved += onMove;
 
+                view.localPosition = localPosition;
+
+                if (registerToWLT)
+                {
+                     Utilities.WorldLockingToolsManager.Instance.RegisterObject(id, view, controller.GetInteractionSurface());
+                }
+
+                /*ObjectManipulator temp = view.GetComponent<ObjectManipulator>();
+                temp.OnManipulationStarted.AddListener(delegate (ManipulationEventData data)
+                {
+                    DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Warning, "Proutiprout");
+                });*/
+
                 return controller;
             }
 
-            public SurfaceToProcess CreateSurfaceToProcess(Transform parent)
+            public SurfaceToProcess CreateSurfaceToProcess(Transform parent, InteractionSurface surfaceToPopulate)
             {
                 Transform view = Utilities.Materials.Prefabs.Load(Utilities.Materials.Prefabs.AssistanceSurfaceToProcess); //Instantiate(RefSurfaceToProcess.transform, parent);
                 view.parent = parent;
                 view.localPosition = new Vector3(0, 0, 0);
 
                 SurfaceToProcess controller = view.GetComponent<SurfaceToProcess>();
+                controller.SetSurfaceToPopulate(surfaceToPopulate);
 
                 //MouseChallengeleanTableSurfaceToPopulateWithCubes
                 return controller;

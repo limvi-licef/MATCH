@@ -87,14 +87,23 @@ namespace MATCH
                 protected override Root InitializeBehaviorTree()
                 {
                     // Making the conditions update. SEE EXCEL SHEET TO GENERATE THE CODE BELOW
-                    Conditions[ConditionTableCleaned] = false;
+                    /*Conditions[ConditionTableCleaned] = false;
                     Conditions[ConditionRagTaken] = false;
                     Conditions[ConditionCleaningWithoutRag] = false;
                     Conditions[ConditionDidNotStartCleaning] = false;
                     Conditions[ConditionCleaningInterrupted] = false;
                     Conditions[ConditionNewPartCleaned] = false;
                     Conditions[ConditionsProcessRelatedToNewPartsCleanedDone] = false;
-                    int nbConditions = Conditions.Keys.Count;
+                    int nbConditions = Conditions.Keys.Count;*/
+                    AddCondition(ConditionTableCleaned, false);
+                    AddCondition(ConditionRagTaken, false);
+                    AddCondition(ConditionCleaningWithoutRag, false);
+                    AddCondition(ConditionDidNotStartCleaning, false);
+                    AddCondition(ConditionCleaningInterrupted, false);
+                    AddCondition(ConditionNewPartCleaned, false);
+                    AddCondition(ConditionsProcessRelatedToNewPartsCleanedDone, false);
+                    int nbConditions = GetNumberOfConditions();
+
 
                     AddConditionsUpdate(ConditionTableCleaned, new bool[] { true, false, false, false, false, false, false });
                     AddConditionsUpdate(ConditionRagTaken, new bool[] { false, true, false, false, false, false, false });
@@ -125,7 +134,7 @@ namespace MATCH
                         new BlackboardCondition(ConditionTableCleaned, Operator.IS_EQUAL, true, Stops.IMMEDIATE_RESTART, AssistanceAlpha()),
                         srTableNotCleaned);
 
-                    Root tree = new Root(Conditions, srBegin);
+                    Root tree = new Root(/*Conditions*/Getconditions(), srBegin);
 
                     return tree;
                 }
@@ -202,6 +211,7 @@ namespace MATCH
                             ShowAssistanceHideOthers(alpha);
                             InferenceManager.UnregisterAllInferences();
                             AssistancesDebugWindow.SetDescription("Alpha");
+                            MATCH.Utilities.Logger.Instance.Log(this.GetId(), MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, "Alpha");
                         }),
                         new WaitUntilStopped()
                         );
@@ -211,11 +221,11 @@ namespace MATCH
 
                 void InitializeAssistances()
                 {
-                    InteractionSurfaceTable = Assistances.Factory.Instance.CreateInteractionSurface("DustingTable - Table", AdminMenu.Panels.Right, new Vector3(1.1f, 0.02f, 0.7f), Utilities.Materials.Colors.CyanGlowing, true, true, Utilities.Utility.GetEventHandlerEmpty(), transform);
-                    InteractionSurfaceTable.transform.localPosition = new Vector3(-0.447f, -0.406f, 0.009f);
+                    InteractionSurfaceTable = Assistances.Factory.Instance.CreateInteractionSurface("DustingTable - Table", AdminMenu.Panels.Right, new Vector3(1.1f, 0.02f, 0.7f), new Vector3(-0.447f, -0.406f, 0.009f), Utilities.Materials.Colors.CyanGlowing, true, true, Utilities.Utility.GetEventHandlerEmpty(), true, transform);
+                    
 
-                    InteractionRag = Assistances.Factory.Instance.CreateInteractionSurface("DustingTable - Rag", AdminMenu.Panels.Right, new Vector3(0.1f, 0.1f, 0.1f), Utilities.Materials.Colors.OrangeGlowing, true, true, Utilities.Utility.GetEventHandlerEmpty(), transform);
-                    InteractionRag.transform.localPosition = new Vector3(-1.378f, -0.364f, 2.743f);
+                    InteractionRag = Assistances.Factory.Instance.CreateInteractionSurface("DustingTable - Rag", AdminMenu.Panels.Right, new Vector3(0.1f, 0.1f, 0.1f), new Vector3(-1.378f, -0.364f, 2.743f), Utilities.Materials.Colors.OrangeGlowing, true, true, Utilities.Utility.GetEventHandlerEmpty(), true, transform);
+                    //InteractionRag.transform.localPosition = new Vector3(-1.378f, -0.364f, 2.743f);
                     InteractionRag.EventInteractionSurfaceTableTouched += CallbackInteractionSurfaceRagTouched;
 
                     //AssistanceBeta = MATCH.Assistances.Factory.Instance.CreateAssistanceGradationExplicit("Dusting - Beta");
@@ -275,7 +285,7 @@ namespace MATCH
                         new NPBehave.Action(() => {
                             ShowAssistanceHideOthers(assistanceBeta); //assistanceBeta.RunAssistance();
                             AssistancesDebugWindow.SetDescription("Beta");
-
+                            MATCH.Utilities.Logger.Instance.Log(this.GetId(), MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, "Beta");
                         }),
                         new WaitUntilStopped()
                         );
@@ -309,7 +319,11 @@ namespace MATCH
                 Sequence AssistanceEpsilon()
                 {
                     Sequence temp = new Sequence(
-                        new NPBehave.Action(() => AssistancesDebugWindow.SetDescription("Epsilon")),
+                        new NPBehave.Action(() =>
+                        {
+                            AssistancesDebugWindow.SetDescription("Epsilon");
+                            MATCH.Utilities.Logger.Instance.Log(this.GetId(), MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, "Epsilon");
+                        }),
                         new WaitUntilStopped());
 
                     return temp;
@@ -343,6 +357,7 @@ namespace MATCH
                             AssistancesDusting[gamma] = true;
                             InferenceManager.UnregisterAllInferences();
                             AssistancesDebugWindow.SetDescription("Gamma");
+                            MATCH.Utilities.Logger.Instance.Log(this.GetId(), MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, "Gamma");
                         }),
                         new WaitUntilStopped()
                         );
@@ -373,6 +388,7 @@ namespace MATCH
                             InferenceManager.RegisterInference(inf2);
                             inf2.StartCounter();
                             AssistancesDebugWindow.SetDescription("Zeta");
+                            MATCH.Utilities.Logger.Instance.Log(this.GetId(), MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, "Zeta");
                             UpdateConditionWithMatrix(ConditionsProcessRelatedToNewPartsCleanedDone);
                         }),
                         new WaitUntilStopped());
@@ -386,6 +402,7 @@ namespace MATCH
                         new NPBehave.Action(() =>
                         {
                             AssistancesDebugWindow.SetDescription("Theta");
+                            MATCH.Utilities.Logger.Instance.Log(this.GetId(), MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, "Theta");
                         }),
                         new WaitUntilStopped()
                         );
@@ -425,6 +442,7 @@ namespace MATCH
                             delta.RunAssistance();
                             AssistancesDusting[delta] = true;
                             AssistancesDebugWindow.SetDescription("Delta");
+                            MATCH.Utilities.Logger.Instance.Log(this.GetId(), MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, "Delta");
                         }),
                         new WaitUntilStopped());
 
@@ -445,7 +463,7 @@ namespace MATCH
                     }, delegate(System.Object o, EventArgs e)
                     {
                         UpdateConditionWithMatrix(ConditionTableCleaned);
-                    }, InteractionSurfaceTable.transform);
+                    }, InteractionSurfaceTable, InteractionSurfaceTable.transform);
                     //eta1
 
 
@@ -472,6 +490,7 @@ namespace MATCH
                             inf.StartCounter();
 
                             AssistancesDebugWindow.SetDescription("Eta");
+                            MATCH.Utilities.Logger.Instance.Log(this.GetId(), MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, "Eta");
                         })
                         );
 

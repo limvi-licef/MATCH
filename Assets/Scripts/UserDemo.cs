@@ -56,7 +56,7 @@ namespace MATCH
 
         void initializeScenario()
         {
-            Assistances.InteractionSurface demo = Assistances.Factory.Instance.CreateInteractionSurface("User Demos", AdminMenu.Panels.Left, new Vector3(1.1f, 0.02f, 0.7f), Utilities.Materials.Colors.PurpleGlowing, true, false, Utilities.Utility.GetEventHandlerEmpty(), transform);
+            Assistances.InteractionSurface demo = Assistances.Factory.Instance.CreateInteractionSurface("User Demos", AdminMenu.Panels.Left, new Vector3(1.1f, 0.02f, 0.7f), new Vector3(0,0,0), Utilities.Materials.Colors.PurpleGlowing, true, false, Utilities.Utility.GetEventHandlerEmpty(), true, transform);
 
             Assistances.Basic demoSurface = Assistances.Factory.Instance.CreateFlatSurface(Utilities.Materials.Colors.CyanGlowing, new Vector3(demo.GetLocalPosition().x, demo.GetLocalPosition().y + 0.02f, demo.GetLocalPosition().z), demo.transform);
             demoSurface.SetScale(new Vector3(demo.GetLocalScale().x, demo.GetLocalScale().y, demo.GetLocalScale().z));
