@@ -59,12 +59,22 @@ namespace MATCH
                     EventInteractionSurfaceScaled?.Invoke(this, EventArgs.Empty);
                 });
 
+                boundsControl.RotateStopped.AddListener(delegate
+                {
+                    //transform.Rotate(View.rotation.eulerAngles);
+                    transform.rotation = View.rotation;
+                    View.localRotation = Quaternion.Euler(new Vector3(0, 0, 0));
+
+                });
+
                 ObjectManipulator objectManipulator = View.GetComponent<ObjectManipulator>();
                 objectManipulator.OnManipulationEnded.AddListener(delegate (ManipulationEventData data)
                 {
                     //DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Called");
                     EventInteractionSurfaceMoved?.Invoke(this, EventArgs.Empty);
                 });
+
+                
             }
 
             public Transform GetInteractionSurface()

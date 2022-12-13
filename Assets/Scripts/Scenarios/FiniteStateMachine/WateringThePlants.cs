@@ -503,10 +503,11 @@ namespace MATCH
 
                     Id = id;
 
-                    InteractionSurface = Assistances.Factory.Instance.CreateInteractionSurface(id, AdminMenu.Panels.Left, new Vector3(0.1f, 0.1f, 0.1f), Utilities.Materials.Colors.YellowGlowing, true, true, delegate (System.Object o, EventArgs e)
+                    //Todo: here the initial position is set to 0,0,0. But this is not comptaible with WLT, because the local position is modified elsewhere. So if this scenario has to be compatible with WLT, you will have to update this part
+                    InteractionSurface = Assistances.Factory.Instance.CreateInteractionSurface(id, AdminMenu.Panels.Left, new Vector3(0.1f, 0.1f, 0.1f), new Vector3(0,0,0), Utilities.Materials.Colors.YellowGlowing, true, true, delegate (System.Object o, EventArgs e)
                     {
                         s_moved?.Invoke(this, EventArgs.Empty);
-                    }, parent);
+                    }, true, parent);
 
                     Highlight = Assistances.Factory.Instance.CreateCube(Utilities.Materials.Colors.YellowGlowing, false, new Vector3(InteractionSurface.GetInteractionSurface().localScale.x, 0.6f, InteractionSurface.GetInteractionSurface().localScale.z), new Vector3(0, -0.35f, 0), false, InteractionSurface.transform);
 

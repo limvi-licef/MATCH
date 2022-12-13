@@ -48,7 +48,7 @@ namespace MATCH
 
                 public void CallbackAddSurface()
                 {
-                    InteractionSurface surface = Assistances.Factory.Instance.CreateInteractionSurface("Surface " + Surfaces.Count, AdminMenu.Panels.Left, new Vector3(0.4f, 0.2f, 0.4f), Utilities.Materials.Colors.PurpleGlowing, true, true, Utilities.Utility.GetEventHandlerEmpty(), transform);
+                    InteractionSurface surface = Assistances.Factory.Instance.CreateInteractionSurface("Surface " + Surfaces.Count, AdminMenu.Panels.Left, new Vector3(0.4f, 0.2f, 0.4f), new Vector3(0,0,0), Utilities.Materials.Colors.PurpleGlowing, true, true, Utilities.Utility.GetEventHandlerEmpty(), true, transform);
                     Surfaces.Add(surface);
 
                     // Increasing the boxcollider in y to have a margin to detect if the object is close to the surface

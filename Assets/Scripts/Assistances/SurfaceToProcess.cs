@@ -43,6 +43,8 @@ namespace MATCH
 
             Dictionary<Tuple<float, float>, Tuple<ProcessingSurfaceElement, bool>> CubesTouched;
 
+            private InteractionSurface SurfaceToPopulate;
+
             private Dialog Help;
 
             private void Awake()
@@ -125,10 +127,16 @@ namespace MATCH
 
                     if (populateTable)
                     {
+                        // Adjusting the scale and rotation to correctly match the surface to process to the interaction surface
+                        transform.localScale = SurfaceToPopulate.GetLocalScale();
+                        transform.localRotation = Quaternion.Euler(new Vector3(0, 0, 0));
+                        transform.localPosition = new Vector3(transform.localPosition.x, transform.localPosition.y + transform.localScale.y / 2.0f, transform.localPosition.z);
+
+                        // Populating the surface
                         Vector3 goLocalPosition = gameObject.transform.localPosition;
 
-                        float goScaleX = 1.0f;
-                        float goScaleZ = 1.0f;
+                        float goScaleX = 1.0f /*SurfaceToPopulate.GetLocalScale().x*/;
+                        float goScaleZ = 1.0f /*SurfaceToPopulate.GetLocalScale().z*/;
 
                         //MouseDebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, MouseDebugMessagesManager.MessageLevel.Info, "Scaling of surface to populate: x=" + goScaleX + " z=" + goScaleZ);
 
@@ -150,7 +158,7 @@ namespace MATCH
                                 float posXP = posX - goScaleX / 2.0f + tempView.transform.localScale.x / 2.0f;
                                 float posZP = posZ - goScaleZ / 2.0f + tempView.transform.localScale.z / 2.0f;
 
-                                tempView.transform.localPosition = new Vector3(posXP, goLocalPosition.y + 1.0f, posZP);
+                                tempView.transform.localPosition = new Vector3(posXP, /*goLocalPosition.y + 1.0f*/0.0f, posZP);
 
                                 BoxCollider box = tempView.GetComponent<BoxCollider>();
                                 box.size = new Vector3(box.size.x, 1000, box.size.z);
@@ -173,6 +181,11 @@ namespace MATCH
                     args.Success = false;
                     eventHandler?.Invoke(this, args);
                 }
+            }
+
+            public void SetSurfaceToPopulate(InteractionSurface surfaceToPopulate)
+            {
+                SurfaceToPopulate = surfaceToPopulate;
             }
 
             private void CubeTouched(object sender, EventArgs e)

@@ -64,6 +64,18 @@ namespace MATCH
 
                 GameObject FakeObject;
 
+                // Conditions
+                string ConditionObjectStored = "ObjectStored";
+                string ConditionPersonMovedAwayFromObject = "PersonMovedAwayFromObject";
+                string ConditionPersonCloseToObject = "PersonCloseToObject";
+                string ConditionPersonGrabbedObject = "PersonGrabbedObject";
+                string ConditionPersonWatchedObject = "PersonWatchedObject";
+                string ConditionPersonDroppedObjectOutsideStoringArea = "PersonDroppedObjectOutsideStoringArea";
+                string ConditionPersonDidNotComeToObject = "PersonDidNotComeToObject";
+                string ConditionHelpClicked = "HelpClicked";
+                string ConditionHelpRefused = "HelpRefused";
+
+
                 /**
                  * The next two lines are to be used with the assistance behavior tree.
                  * Currently, in order to test the code, the class QandDAssistances is used. This is meant to be a temporary solution, i.e. all assistances should in the end be based on the behavior tree.
@@ -85,11 +97,11 @@ namespace MATCH
                 public override void Start()
                 {
                     // Initialize assistances
-                    AreaStorage = Assistances.Factory.Instance.CreateInteractionSurface("Storage", default, new Vector3(0.2f, 0.8f, 0.3f), Utilities.Materials.Colors.GreenGlowing, true, true, Utilities.Utility.GetEventHandlerEmpty(), transform);
+                    AreaStorage = Assistances.Factory.Instance.CreateInteractionSurface("Storage", default, new Vector3(0.2f, 0.8f, 0.3f), new Vector3(3.38f, 0.22f, 3.19f), Utilities.Materials.Colors.GreenGlowing, true, true, Utilities.Utility.GetEventHandlerEmpty(), true, transform);
 
                     /*if (Utilities.Utility.IsEditorSimulator() || Utilities.Utility.IsEditorGameView())
                     {*/
-                    AreaStorage.transform.position = new Vector3(3.38f, 0.22f, 3.19f);
+                    //AreaStorage.transform.position = new Vector3(3.38f, 0.22f, 3.19f);
                     /*}
                     else
                     {
@@ -112,13 +124,13 @@ namespace MATCH
                      * AreaObject is the interaction surface that is meant to be around the detected object. 
                      * However, it is worth noticing that some inferences are based on the distance between the user and this interaction surface. Hence, to avoid that those inferences are triggered at the beginning of the scenario, the position of the area is set to (1000, 1000, 1000) on purpose.
                     */
-                    AreaObject = Assistances.Factory.Instance.CreateInteractionSurface("Object", default, new Vector3(0.4f, 0.4f, 0.4f), Utilities.Materials.Colors.YellowGlowing, true, true, Utilities.Utility.GetEventHandlerEmpty(), transform);
-                    AreaObject.transform.position = new Vector3(1000, 1000, 1000);
+                    AreaObject = Assistances.Factory.Instance.CreateInteractionSurface("Object", default, new Vector3(0.4f, 0.4f, 0.4f), new Vector3(1000, 1000, 1000), Utilities.Materials.Colors.YellowGlowing, true, true, Utilities.Utility.GetEventHandlerEmpty(), true, transform);
+                    //AreaObject.transform.position = new Vector3(1000, 1000, 1000);
 
 
-                    AreaObjectPosition = Assistances.Factory.Instance.CreateInteractionSurface("Object_Position", default, new Vector3(0.05f, 0.05f, 0.05f), Utilities.Materials.Colors.YellowGlowing, true, true, Utilities.Utility.GetEventHandlerEmpty(), transform);
+                    AreaObjectPosition = Assistances.Factory.Instance.CreateInteractionSurface("Object_Position", default, new Vector3(0.05f, 0.05f, 0.05f), new Vector3(1000, 1000, 1000), Utilities.Materials.Colors.YellowGlowing, true, true, Utilities.Utility.GetEventHandlerEmpty(), true, transform);
                     AreaObjectPosition.GetInteractionSurface().gameObject.layer = LayerMask.NameToLayer("Ignore Raycast");
-                    AreaObjectPosition.transform.position = new Vector3(1000, 1000, 1000);
+                    //AreaObjectPosition.transform.position = new Vector3(1000, 1000, 1000);
 
                     FakeObject = transform.Find("FakeObject").gameObject;
                     // TEST - add it to the interaction surface manager to see if it is correctly detected when close to a surface
@@ -173,7 +185,7 @@ namespace MATCH
                 { // To be called once
                     OnChallengeStandBy();
 
-                    Conditions["ObjectStored"] = false;
+                    /*Conditions["ObjectStored"] = false;
                     Conditions["PersonMovedAwayFromObject"] = false;
                     Conditions["PersonCloseToObject"] = false;
                     Conditions["PersonGrabbedObject"] = false;
@@ -181,9 +193,21 @@ namespace MATCH
                     Conditions["PersonDroppedObjectOutsideStoringArea"] = false;
                     Conditions["PersonDidNotComeToObject"] = false;
                     Conditions["HelpClicked"] = false;
-                    Conditions["HelpRefused"] = false;
+                    Conditions["HelpRefused"] = false;*/
+                    AddCondition(ConditionObjectStored, false);
+                    AddCondition(ConditionPersonMovedAwayFromObject, false);
+                    AddCondition(ConditionPersonCloseToObject, false);
+                    AddCondition(ConditionPersonGrabbedObject, false);
+                    AddCondition(ConditionPersonWatchedObject, false);
+                    AddCondition(ConditionPersonDroppedObjectOutsideStoringArea, false);
+                    AddCondition(ConditionPersonDidNotComeToObject, false);
+                    AddCondition(ConditionHelpClicked, false);
+                    AddCondition(ConditionHelpRefused, false);
+                    int nbConditions = GetNumberOfConditions();
 
-                    
+
+
+
 
                     /*
                      * Temporary assistances built with QandDAssistances
@@ -223,7 +247,7 @@ namespace MATCH
                             OnChallengeStandBy();
                             //InitializeBehaviorTreeConditions();
 
-                            Conditions["ObjectStored"] = false;
+                            /*Conditions["ObjectStored"] = false;
                             Conditions["PersonMovedAwayFromObject"] = false;
                             Conditions["PersonCloseToObject"] = false;
                             Conditions["PersonGrabbedObject"] = false;
@@ -231,7 +255,16 @@ namespace MATCH
                             Conditions["PersonDroppedObjectOutsideStoringArea"] = false;
                             Conditions["PersonDidNotComeToObject"] = false;
                             Conditions["HelpClicked"] = false;
-                            Conditions["HelpRefused"] = false;
+                            Conditions["HelpRefused"] = false;*/
+                            UpdateCondition("ObjectStored", false);
+                            UpdateCondition("PersonMovedAwayFromObject", false);
+                            UpdateCondition("PersonCloseToObject", false);
+                            UpdateCondition("PersonGrabbedObject", false);
+                            UpdateCondition("PersonWatchedObject", false);
+                            UpdateCondition("PersonDroppedObjectOutsideStoringArea", false);
+                            UpdateCondition("PersonDidNotComeToObject", false);
+                            UpdateCondition("HelpClicked", false);
+                            UpdateCondition("HelpRefused", false);
 
                             UpdateCondition("ObjectStored", false);
                             ObjectSet = false;
@@ -387,7 +420,7 @@ namespace MATCH
                     // Set assistances
                     // For now we use the assistances from the QandDAssistances class. Uncomment the following line when going to the BT to manage the assistances
                     InitializeAssistancesEpsilon();
-                    Root tree = new Root(Conditions, srBegin);
+                    Root tree = new Root(/*Conditions*/Getconditions(), srBegin);
 
 
                     return tree;
@@ -465,8 +498,8 @@ namespace MATCH
 
                 void InitializeAssistancesEpsilon()
                 {
-                    AssistancesEpsilonInteractionSurface = Assistances.Factory.Instance.CreateInteractionSurface("AssistancesAlpha", AdminMenu.Panels.Left, new Vector3(0.5f, 0.05f, 0.5f), Utilities.Materials.Colors.OrangeGlowing, true, true, Utilities.Utility.GetEventHandlerEmpty(), transform);
-                    AssistancesEpsilonInteractionSurface.transform.localPosition = new Vector3(0, 0.464f, 1.632f); //new Vector3(0.85f, 0.46f, 2.18f);
+                    AssistancesEpsilonInteractionSurface = Assistances.Factory.Instance.CreateInteractionSurface("AssistancesAlpha", AdminMenu.Panels.Left, new Vector3(0.5f, 0.05f, 0.5f), new Vector3(0, 0, 0 ), Utilities.Materials.Colors.OrangeGlowing, true, true, Utilities.Utility.GetEventHandlerEmpty(), true, transform);
+                    //AssistancesEpsilonInteractionSurface.transform.localPosition = new Vector3(0, 0.464f, 1.632f); //new Vector3(0.85f, 0.46f, 2.18f);
                     AssistancesEpsilonInteractionSurface.name = "Assistances Alpha - Interaction surface";
 
 

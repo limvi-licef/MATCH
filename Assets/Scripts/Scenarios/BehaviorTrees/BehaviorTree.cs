@@ -30,7 +30,8 @@ namespace MATCH
             public abstract class BehaviorTree : MATCH.Scenarios.Scenario
             {
                 private NPBehave.Root Tree;
-                protected Blackboard Conditions;
+                private Blackboard Conditions;
+                private List<string> ConditionsIds; // To ease browsing of Conditions with updating the matrix
                 private Dictionary<string, bool[]> ConditionsUpdate;
 
                 protected Assistances.Dialog BehaviorTreeDebugWindow = null;
@@ -39,7 +40,8 @@ namespace MATCH
                 public virtual void Awake()
                 {
                     Conditions = new Blackboard(UnityContext.GetClock());
-                    ConditionsUpdate = new Dictionary<string, bool[]>();  
+                    ConditionsIds = new List<string>();
+                    ConditionsUpdate = new Dictionary<string, bool[]>();
                 }
 
                 // Start is called before the first frame update
@@ -81,6 +83,22 @@ namespace MATCH
 
                     // Start BT
                     Tree.Start();
+                }
+
+                protected void AddCondition(string id, bool initialValue)
+                {
+                    Conditions[id] = initialValue;
+                    ConditionsIds.Add(id);
+                }
+
+                protected int GetNumberOfConditions()
+                {
+                    return ConditionsIds.Count;
+                }
+
+                protected Blackboard Getconditions()
+                {
+                    return Conditions;
                 }
 
                 private void InitializeDebugWindows()
@@ -156,7 +174,7 @@ namespace MATCH
                         bool[] values = ConditionsUpdate[id];
                         for (int i = 0; i < values.Length; i ++)
                         {
-                            Conditions[Conditions.Keys[i]] = values[i];
+                            Conditions[/*Conditions.Keys[i]*/ConditionsIds[i]] = values[i];
                         }
                         UpdateTextDebugBehaviorTreeWindow();
                     }
@@ -181,7 +199,7 @@ namespace MATCH
                     // Making the text to display
                     string textToDisplay = "Scenario: " + GetId();
 
-                    foreach (string key in Conditions.Keys)
+                    foreach (string key in /*Conditions.Keys*/ConditionsIds)
                     {
                         textToDisplay += "\n" + key + " = " + Conditions[key];
                     }
@@ -195,7 +213,7 @@ namespace MATCH
                  */
                 protected void AddConditionsUpdate(string key, bool value)
                 {
-                    int nbConditions = Conditions.Keys.Count;
+                    int nbConditions = /*Conditions.Keys.Count*/ConditionsIds.Count;
 
                     bool[] values = new bool[nbConditions];
 

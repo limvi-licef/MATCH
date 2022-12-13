@@ -286,14 +286,14 @@ namespace MATCH
                     Manager.Instance.addScenario(this);
 
                     // Interaction surface table
-                    Assistances.InteractionSurface interactionSurfaceTable = Assistances.Factory.Instance.CreateInteractionSurface("table v2", AdminMenu.Panels.Middle, new Vector3(1.1f, 0.02f, 0.7f), Utilities.Materials.Colors.CyanGlowing, true, true, Utilities.Utility.GetEventHandlerEmpty(), transform);
+                    Assistances.InteractionSurface interactionSurfaceTable = Assistances.Factory.Instance.CreateInteractionSurface("table v2", AdminMenu.Panels.Middle, new Vector3(1.1f, 0.02f, 0.7f), new Vector3(0.8258258700370789f, 0.4396502375602722f, 2.451075315475464f), Utilities.Materials.Colors.CyanGlowing, true, true, Utilities.Utility.GetEventHandlerEmpty(), true, transform);
                     //interactionSurfaceTable.setLocalPosition(new Vector3(0.949f, -0.017f, 1.117f));
                     interactionSurfaceTable.SetPreventResizeY(true);
-                    interactionSurfaceTable.transform.position = new Vector3(0.8258258700370789f, 0.4396502375602722f, 2.451075315475464f);
+                    //interactionSurfaceTable.transform.position = new Vector3(0.8258258700370789f, 0.4396502375602722f, 2.451075315475464f);
 
                     // Interaction surface rag
-                    Assistances.InteractionSurface interactionSurfaceRag = Assistances.Factory.Instance.CreateInteractionSurface("rag v2", AdminMenu.Panels.Middle, new Vector3(0.2f, 0.01f, 0.2f), Utilities.Materials.Colors.OrangeGlowing, true, true, Utilities.Utility.GetEventHandlerEmpty(), transform);
-                    interactionSurfaceRag.transform.localPosition = new Vector3(0, -0.008f, 3.843f);
+                    Assistances.InteractionSurface interactionSurfaceRag = Assistances.Factory.Instance.CreateInteractionSurface("rag v2", AdminMenu.Panels.Middle, new Vector3(0.2f, 0.01f, 0.2f), new Vector3(0, -0.008f, 3.843f), Utilities.Materials.Colors.OrangeGlowing, true, true, Utilities.Utility.GetEventHandlerEmpty(), true, transform);
+                    //interactionSurfaceRag.transform.localPosition = new Vector3(0, -0.008f, 3.843f);
                     //interactionSurfaceRag.getInteractionSurface().transform.localPosition = new Vector3(0, -0.008f, 3.843f);
 
 
@@ -313,7 +313,7 @@ namespace MATCH
                     Assistances.Dialog secondDialog = Assistances.Factory.Instance.CreateDialogThreeButtons("", firstMessage, "Je sais!", delegate (System.Object o, EventArgs e) { s_dialogSecondButtonOk?.Invoke(this, e); }, Assistances.Buttons.Button.ButtonType.CustomChoice1, "Je ne sais pas", delegate (System.Object o, EventArgs e) { s_dialogSecondButtonNok?.Invoke(this, e); }, Assistances.Buttons.Button.ButtonType.CustomChoice2, "Cela ne m'intéresse pas", delegate (System.Object o, EventArgs e) { s_dialogSecondButtonLeave?.Invoke(this, e); }, Assistances.Buttons.Button.ButtonType.CustomChoice3, interactionSurfaceTable.transform);
 
                     // Surface to clean
-                    Assistances.SurfaceToProcess surfaceToProcess = Assistances.Factory.Instance.CreateSurfaceToProcess(interactionSurfaceTable.transform);
+                    Assistances.SurfaceToProcess surfaceToProcess = Assistances.Factory.Instance.CreateSurfaceToProcess(interactionSurfaceTable.transform, interactionSurfaceTable);
                     surfaceToProcess.transform.localScale = new Vector3(interactionSurfaceTable.GetInteractionSurface().localScale.x, surfaceToProcess.transform.localScale.y, interactionSurfaceTable.GetInteractionSurface().localScale.z);
                     interactionSurfaceTable.EventInteractionSurfaceScaled += delegate (System.Object o, EventArgs e)
                     {

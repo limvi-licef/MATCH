@@ -97,15 +97,20 @@ namespace MATCH
                     Transform backPlate = transformPanelToDecorate.Find("ContentBackPlate");
                     EdgeTop.localScale = new Vector3(backPlate.localScale.x+0.02f, 0.01f, 0.01f);
                     EdgeTop.position = new Vector3(backPlate.localPosition.x, backPlate.localPosition.y + backPlate.localScale.y / 2.0f + EdgeTop.localScale.y/2.0f, backPlate.localPosition.z);
+                    EdgeTop.Rotate(new Vector3(0, 180, 0));
 
                     EdgeBottom.localScale = new Vector3(backPlate.localScale.x+0.02f, 0.01f, 0.01f);
                     EdgeBottom.position = new Vector3(backPlate.localPosition.x, backPlate.localPosition.y - (backPlate.localScale.y / 2.0f + EdgeBottom.localScale.y / 2.0f), backPlate.localPosition.z);
+                    EdgeBottom.Rotate(new Vector3(0, 180, 0));
+
 
                     EdgeLeft.localScale = new Vector3(0.01f, backPlate.localScale.y, 0.01f);
                     EdgeLeft.position = new Vector3(backPlate.localPosition.x - (backPlate.localScale.x / 2.0f + EdgeLeft.localScale.x / 2.0f), backPlate.localPosition.y, backPlate.localPosition.z);
+                    EdgeLeft.Rotate(new Vector3(0, 180, 0));
 
                     EdgeRight.localScale = new Vector3(0.01f, backPlate.localScale.y, 0.01f);
                     EdgeRight.position = new Vector3(backPlate.localPosition.x + (backPlate.localScale.x / 2.0f + EdgeRight.localScale.x / 2.0f), backPlate.localPosition.y, backPlate.localPosition.z);
+                    EdgeRight.Rotate(new Vector3(0, 180, 0));
                 }
 
                 public override void Show(EventHandler callback)
@@ -113,6 +118,8 @@ namespace MATCH
                     PanelToDecorate.GetAssistance().Show(delegate (System.Object o, EventArgs e)
                     {
                         transform.localPosition = PanelToDecorate.GetBackground().localPosition;
+
+                        transform.GetComponent<Billboard>().gameObject.SetActive(true);
 
                         EdgeTop.gameObject.SetActive(true);
                         EdgeBottom.gameObject.SetActive(true);
