@@ -109,7 +109,8 @@ namespace MATCH
                     return toReturn;
                 }
 
-                public GradationVisual CreateLightPath(string assistanceName, Transform parent)
+                //Todo: finalize the implementation of the assistance below
+                /*public GradationVisual CreateLightPath(string assistanceName, Transform parent)
                 {
                     //Assistances.Pa
                     Assistances.GradationVisual.GradationVisual toReturn = Assistances.Factory.Instance.CreateAssistanceGradationAttention(assistanceName);
@@ -117,14 +118,26 @@ namespace MATCH
                     // Todo: assistance not yet implemented
 
                     return toReturn;
-                }
+                }*/
 
-                public GradationVisual CreateLightPathWithInformation(string assistanceName, Transform parent)
+                // Todo: finalize the implementation of the assistance below
+                /*public GradationVisual CreateLightPathWithInformation(string assistanceName, Transform parent)
                 {
                     //Assistances.Pa
                     Assistances.GradationVisual.GradationVisual toReturn = Assistances.Factory.Instance.CreateAssistanceGradationAttention(assistanceName);
 
                     // Todo: assistance not yet implemented
+
+                    return toReturn;
+                }*/
+
+                public GradationVisual CreateArch(string assistanceName, string assistance, Transform start, Transform end, Transform parent)
+                {
+                    ArchWithTextAndHelp controller = Assistances.Factory.Instance.CreateAssistanceArch(assistanceName, start, end, parent);
+                    controller.SetDescription(assistance);
+
+                    Assistances.GradationVisual.GradationVisual toReturn = Assistances.Factory.Instance.CreateAssistanceGradationAttention(assistanceName);
+                    toReturn.AddAssistance(controller);
 
                     return toReturn;
                 }

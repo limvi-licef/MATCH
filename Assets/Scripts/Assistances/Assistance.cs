@@ -39,8 +39,8 @@ namespace MATCH
                 EventHelpButtonClicked?.Invoke(this, args);
             }
 
-            public abstract void Show(EventHandler callback);
-            public abstract void Hide(EventHandler callback);
+            public abstract void Show(EventHandler callback/*, bool withAnimation = true*/);
+            public abstract void Hide(EventHandler callback/*, bool withAnimation=true*/);
 
             /**
              * True: show; False: hide

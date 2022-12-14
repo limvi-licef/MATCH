@@ -133,7 +133,7 @@ namespace MATCH
             }
 
             //bool MutexHide = false;
-            public override void Hide(EventHandler eventHandler)
+            public override void Hide(EventHandler eventHandler/*, bool withAnimation*/)
             {
                 //DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Hiding " + name);
 

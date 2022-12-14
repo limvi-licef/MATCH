@@ -15,6 +15,7 @@ limitations under the License.*/
 using Microsoft.MixedReality.Toolkit.UI;
 using Microsoft.MixedReality.Toolkit.UI.BoundsControl;
 using Microsoft.MixedReality.Toolkit.Utilities.Solvers;
+using Microsoft.MixedReality.Toolkit.Input;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -30,6 +31,7 @@ namespace MATCH
         {
             GameObject ObjectToFocus;
             Utilities.HologramInteractions InteractionComponent;
+            EyeTrackingTarget EyeTracker;
             int SecondsToFocus = 3;
 
             DateTime StartTime;
@@ -51,10 +53,30 @@ namespace MATCH
                      InteractionComponent = ObjectToFocus.AddComponent<Utilities.HologramInteractions>();
                 }
 
+                if(ObjectToFocus.TryGetComponent<EyeTrackingTarget>(out EyeTracker) == false)
+                {
+                    //EyeTracker = ObjectToFocus.AddComponent<EyeTrackingTarget>();
+                    MATCH.DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, MATCH.DebugMessagesManager.MessageLevel.Error, "Cannot instanciate the inference, as the EyeTrackingTarget component is missing for the target object");
+                }
+
+                //EyeTracker = ObjectToFocus.GetComponent<EyeTrackingTarget>();
+
                 SecondsToFocus = secondsToFocus;
 
-                InteractionComponent.EventFocusOn += CallbackFocusOn;
+                /*InteractionComponent.EventFocusOn += CallbackFocusOn;
                 InteractionComponent.EventFocusOff += CallbackFocusOff;
+
+                EyeTracker.OnLookAtStart.AddListener(delegate
+                {
+                    CallbackFocusOn(this, EventArgs.Empty);
+                });
+
+                EyeTracker.OnLookAway.AddListener(delegate
+                {
+                    CallbackFocusOff(this, EventArgs.Empty);
+                });*/
+                InteractionComponent.EyeFocusOn += CallbackFocusOn;
+                InteractionComponent.EyeFocusOff += CallbackFocusOff;
             }
 
             public override bool Evaluate()
@@ -91,6 +113,8 @@ namespace MATCH
             {
                 InteractionComponent.EventFocusOn -= CallbackFocusOn;
                 InteractionComponent.EventFocusOff -= CallbackFocusOff;
+                EyeTracker.OnLookAtStart.RemoveAllListeners();
+                EyeTracker.OnLookAway.RemoveAllListeners();
             }
         }
     }
