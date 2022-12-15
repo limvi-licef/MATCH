@@ -21,6 +21,9 @@ using System.Reflection;
 using TMPro;
 using Microsoft.MixedReality.Toolkit.UI;
 
+/**
+ * For graphical details of the behavior tree implemented here, refer to the documentation
+ */
 namespace MATCH
 {
     namespace Scenarios
@@ -504,7 +507,7 @@ namespace MATCH
 
 
                     //Assistances.Basic cube = ;
-                    Epsilon1 = Assistances.GradationVisual.Factory.Instance.CreateTypeExclamationMark("Alpha1", AssistancesEpsilonInteractionSurface.transform); /*Assistances.Factory.Instance.CreateAssistanceGradationAttention("AssistanceGradationExclamationMark");
+                    Epsilon1 = Assistances.GradationVisual.Factory.Instance.CreateExclamationMarkFromCube("Alpha1", AssistancesEpsilonInteractionSurface.transform); /*Assistances.Factory.Instance.CreateAssistanceGradationAttention("AssistanceGradationExclamationMark");
                 Assistances.Basic alpha1Base = Assistances.Factory.Instance.CreateCube(Utilities.Materials.Colors.PurpleGlowing, AssistancesAlphaInteractionSurface.transform);
                 alpha1Base.name = "Alpha1";
                 Alpha1.AddAssistance(Assistances.Decorators.Factory.Instance.CreateMaterial(alpha1Base, Utilities.Materials.Textures.Exclamation));

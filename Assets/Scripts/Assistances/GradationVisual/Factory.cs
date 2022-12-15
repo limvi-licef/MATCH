@@ -50,13 +50,27 @@ namespace MATCH
                     }
                 }
 
-                public GradationVisual CreateTypeExclamationMark(string name, Transform parent)
+                public GradationVisual CreateExclamationMarkFromCube(string name, Transform parent)
                 {
                     GradationVisual assistance = Assistances.Factory.Instance.CreateAssistanceGradationAttention(name);
                     Assistances.Basic assistanceBase = Assistances.Factory.Instance.CreateCube(Utilities.Materials.Colors.PurpleGlowing,parent);
                     assistanceBase.name = name+"_base";
                     assistance.AddAssistance(Assistances.Decorators.Factory.Instance.CreateMaterial(assistanceBase, Utilities.Materials.Textures.Exclamation));
                     assistance.AddAssistance(Assistances.Decorators.Factory.Instance.CreateMaterial(assistanceBase, Utilities.Materials.Textures.ExclamationRed));
+
+                    return assistance;
+                }
+
+                public GradationVisual CreateExclamationMark(string name, Transform parent)
+                {
+                    GradationVisual assistance = Assistances.Factory.Instance.CreateAssistanceGradationAttention(name);
+                    Assistances.ExclamationMark assistanceBase = Assistances.Factory.Instance.CreateExclamationMark(true, new Vector3(0,0,0), true, parent);
+                    assistanceBase.name = name + "_base";
+                    assistance.AddAssistance(Assistances.Decorators.Factory.Instance.CreateMaterial(assistanceBase, Utilities.Materials.Colors.WhiteMetallic));
+                    assistance.AddAssistance(Assistances.Decorators.Factory.Instance.CreateMaterial(assistanceBase, Utilities.Materials.Colors.YellowGlowing));
+                    assistance.AddAssistance(Assistances.Decorators.Factory.Instance.CreateMaterial(assistanceBase, Utilities.Materials.Colors.RedGlowing));
+
+                    assistance.transform.localPosition = new Vector3(0, 0, 0);
 
                     return assistance;
                 }

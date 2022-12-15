@@ -42,6 +42,7 @@ namespace MATCH
                 public static string GreenGlowing = Path + "GreenGlowing";
                 public static string YellowGlowing = Path + "YellowGlowing";
                 public static string WhiteTransparent = Path + "WhiteTransparent";
+                public static string WhiteMetallic = Path + "WhiteMetallic";
                 public static string Red = Path + "Red";
                 public static string HolographicBackPlate = Path + "HolographicBackPlate";
             }

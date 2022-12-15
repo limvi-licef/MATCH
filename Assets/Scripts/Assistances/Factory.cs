@@ -162,6 +162,20 @@ namespace MATCH
                 return cube;
             }
 
+            public ExclamationMark CreateExclamationMark(bool adjustHeight, Vector3 localPosition, bool enableBillboard, Transform parent)
+            {
+                Transform view = Utilities.Materials.Prefabs.Load(Utilities.Materials.Prefabs.AssistanceExclamationMark).transform;
+                view.parent = parent;
+                view.transform.localPosition = localPosition;
+
+                ExclamationMark controller = view.GetComponent<ExclamationMark>();
+                controller.AdjustHeightOnShow = adjustHeight;
+                controller.SetLocalPosition(localPosition);
+                controller.SetBillboard(enableBillboard);
+
+                return controller;
+            }
+
             public Basic CreateFlatSurface(string texture, Vector3 localPosition, Transform parent)
             {
                 Basic cube = CreateCube(texture, false, new Vector3(1.0f, 0.01f, 1.0f), localPosition, false, parent);
