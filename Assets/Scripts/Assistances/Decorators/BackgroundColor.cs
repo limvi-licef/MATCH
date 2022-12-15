@@ -35,12 +35,6 @@ namespace MATCH
 
                 Transform BackgroundView;
 
-                /*public BackgroundColor(IPanel panelToDecorate, string backgroundColor)
-                {
-                    PanelToDecorate = panelToDecorate;
-                    BackgroundColorDecorated = backgroundColor;
-                }*/
-
                 private void Awake()
                 {
                     BackgroundView = gameObject.transform.Find("ContentBackPlate");
@@ -65,36 +59,37 @@ namespace MATCH
                     temp.EventHelpButtonClicked += delegate (System.Object o, EventArgs e)
                     {
                         MATCH.Utilities.EventHandlerArgs.Button args = (MATCH.Utilities.EventHandlerArgs.Button)e;
-
-                        //DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "EventHelpButtonClicked caught by decorated object. Relaying the event ...");
-
                         OnHelpButtonClicked(args.ButtonType);
                     };
                 }
 
-                public override void Hide(EventHandler callback)
+                public override void Hide(EventHandler callback, bool withAnimation)
                 {
                     if (IsDisplayed)
                     {
-                        PanelToDecorate.GetAssistance().Hide(callback);
-                        BackgroundView.gameObject.SetActive(false);
-                        IsDisplayed = false;
+                        PanelToDecorate.GetAssistance().Hide(delegate(System.Object o, EventArgs e)
+                        {
+                            BackgroundView.gameObject.SetActive(false);
+                            IsDisplayed = false;
+
+                            callback?.Invoke(o, e);
+                        }, withAnimation);
+                        
                     }
                     else
                     {
                         Utilities.EventHandlerArgs.Animation args = new Utilities.EventHandlerArgs.Animation();
-                        args.Success = false; ;
+                        args.Success = false;
                         callback?.Invoke(this, args);
                     }
                 }
 
-                public override void Show(EventHandler callback)
+                public override void Show(EventHandler callback, bool withAnimation)
                 {
                     if (IsDisplayed == false)
                     {
                         IsDisplayed = true;
                         
-                        //PanelToDecorate.SetBackgroundColor(BackgroundColorDecorated);
                         PanelToDecorate.GetAssistance().Show(delegate(System.Object o, EventArgs e)
                         {
                             PanelToDecorate.GetBackground().gameObject.SetActive(false);
@@ -102,14 +97,8 @@ namespace MATCH
                             BackgroundView.gameObject.SetActive(true);
 
                             callback?.Invoke(this, e);
-                        });
-//                        IsDisplayed = true;
-                        DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Called with color "  + BackgroundColorDecorated);
-  //                  }
-                    
-    /*                if (PanelToDecorate.GetAssistance().IsDisplayed == false)
-                    {*/
-                                 
+                        }, withAnimation);
+                        DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Called with color "  + BackgroundColorDecorated);                                 
                     }
                     else
                     {
@@ -120,49 +109,14 @@ namespace MATCH
                             PanelToDecorate.GetBackground().gameObject.SetActive(false);
                             args.Success = false;
                             callback?.Invoke(this, args);
-                        });
-
-
-                        
+                        }, withAnimation);
                     }
-
-
-
-                    /*if (PanelToDecorate.GetAssistance().GetTransform().gameObject.activeSelf == false)
-                    {
-                        PanelToDecorate.SetBackgroundColor(BackgroundColorDecorated);
-                        PanelToDecorate.GetAssistance().Show(callback);
-                    }
-                    else
-                    {
-                        PanelToDecorate.GetAssistance().Hide(delegate (System.Object o, EventArgs e)
-                        {
-                            PanelToDecorate.SetBackgroundColor(BackgroundColorDecorated);
-                            PanelToDecorate.GetAssistance().Show(callback);
-                        });
-                    }*/
                 }
 
-                public override void ShowHelp(bool show, EventHandler callback)
+                public override void ShowHelp(bool show, EventHandler callback, bool withAnimation)
                 {
-                    PanelToDecorate.GetAssistance().ShowHelp(show, callback);
+                    PanelToDecorate.GetAssistance().ShowHelp(show, callback, withAnimation);
                 }
-
-                /*public void SetBackgroundColor(string colorName)
-                {
-                    BackgroundColorDecorated = colorName;
-                    //PanelToDecorate.SetBackgroundColor(colorName);
-                }*/
-
-                /*public void SetEdgeColor(string colorName)
-                {
-                    PanelToDecorate.SetEdgeColor(colorName);
-                }*/
-
-                /*public void SetEdgeThickness(float thickness)
-                {
-                    PanelToDecorate.SetEdgeThickness(thickness);
-                }*/
 
                 public void EnableWeavingHand(bool enable)
                 {
@@ -174,14 +128,9 @@ namespace MATCH
                     return PanelToDecorate.GetAssistance().GetTransform();
                 }
 
-                /*public override bool IsActive()
-                {
-                    return PanelToDecorate.GetAssistance().IsActive();
-                }*/
-
                 public Assistance GetAssistance()
                 {
-                    return this;//PanelToDecorate.GetAssistance();
+                    return this;
                 }
 
                 public override bool IsDecorator()
@@ -191,7 +140,7 @@ namespace MATCH
 
                 public Transform GetBackground()
                 {
-                    return BackgroundView;//PanelToDecorate.GetBackground();
+                    return BackgroundView;
                 }
             }
         }

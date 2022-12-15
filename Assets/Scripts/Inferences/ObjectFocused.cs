@@ -30,7 +30,7 @@ namespace MATCH
         public class ObjectFocused : Inference
         {
             GameObject ObjectToFocus;
-            Utilities.HologramInteractions InteractionComponent;
+            //Utilities.HologramInteractions InteractionComponent;
             EyeTrackingTarget EyeTracker;
             int SecondsToFocus = 3;
 
@@ -48,10 +48,10 @@ namespace MATCH
                     ObjectToFocus.AddComponent<BoxCollider>();
                 }
 
-                if (ObjectToFocus.TryGetComponent<Utilities.HologramInteractions>(out InteractionComponent) == false)
+                /*if (ObjectToFocus.TryGetComponent<Utilities.HologramInteractions>(out InteractionComponent) == false)
                 {
                      InteractionComponent = ObjectToFocus.AddComponent<Utilities.HologramInteractions>();
-                }
+                }*/
 
                 if(ObjectToFocus.TryGetComponent<EyeTrackingTarget>(out EyeTracker) == false)
                 {
@@ -75,8 +75,10 @@ namespace MATCH
                 {
                     CallbackFocusOff(this, EventArgs.Empty);
                 });*/
-                InteractionComponent.EyeFocusOn += CallbackFocusOn;
-                InteractionComponent.EyeFocusOff += CallbackFocusOff;
+                /*InteractionComponent.EyeFocusOn += CallbackFocusOn;
+                InteractionComponent.EyeFocusOff += CallbackFocusOff;*/
+                EyeTracker.OnLookAtStart.AddListener(CallbackFocusOn);
+                EyeTracker.OnLookAway.AddListener(CallbackFocusOff);
             }
 
             public override bool Evaluate()
@@ -88,7 +90,7 @@ namespace MATCH
                     TimeSpan elapsed = DateTime.Now.Subtract(StartTime);
                     if (elapsed.Seconds >= SecondsToFocus)
                     {
-                        //DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Object focused !!!");
+                        DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Callback object focused triggered");
                         toReturn = true;
                     }
                 }
@@ -96,23 +98,33 @@ namespace MATCH
                 return toReturn;
             }
 
+            void CallbackFocusOn()
+            {
+                CallbackFocusOn(this, EventArgs.Empty);
+            }
+
+            void CallbackFocusOff()
+            {
+                CallbackFocusOff(this, EventArgs.Empty);
+            }
+
             void CallbackFocusOn(System.Object o, EventArgs e)
             {
-                //DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Object focused");
+                DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Object focused on");
                 FocusOn = true;
                 StartTime = DateTime.Now;
             }
 
             void CallbackFocusOff(System.Object o, EventArgs e)
             {
-                //DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Object not focused anymore");
+                DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Object not focused anymore");
                 FocusOn = false;
             }
 
             public override void Unregistered()
             {
-                InteractionComponent.EventFocusOn -= CallbackFocusOn;
-                InteractionComponent.EventFocusOff -= CallbackFocusOff;
+                //InteractionComponent.EventFocusOn -= CallbackFocusOn;
+                //InteractionComponent.EventFocusOff -= CallbackFocusOff;
                 EyeTracker.OnLookAtStart.RemoveAllListeners();
                 EyeTracker.OnLookAway.RemoveAllListeners();
             }

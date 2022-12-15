@@ -31,17 +31,6 @@ namespace MATCH
             private static Factory InstanceInternal;
             public static Factory Instance { get { return InstanceInternal; } }
 
-            //Todo: all of those should be prefabs that can be loaded dybanically
-            //public Assistances.Dialog DialogAssistance;
-            //public Basic RefCube;
-            //public Assistances.Dialog RefCheckListAssistance;
-            //public Assistances.InteractionSurface RefInteractionSurface;
-            //public SurfaceToProcess RefSurfaceToProcess;
-            //public Assistances.Dialog RefToDoListAssistance;
-            //public AssistanceGradationExplicit RefAssistanceGradationExplicit;
-            //public Assistances.Dialog RefButtons;
-            //public GradationVisual.GradationVisual RefAssistanceGradationAttention;
-            //public ArchWithTextAndHelp RefArch;
             public PathFinding.PathFinding PathFindingEngine;
 
             enum DialogsTypes
@@ -89,97 +78,52 @@ namespace MATCH
             {
                 dialog.AddButton(text, autoScaling, fontSize);
                 dialog.ButtonsController.Last().EventButtonClicked += callback;
-                /*dialog.EventHelpButtonClicked += delegate (System.Object o, EventArgs e)
-                {
-                    
-                };*/
+  
                 dialog.ButtonsController.Last().Type = type;
             }
 
-            private void AddButton(ref Dialog dialog, EventHandler callback, string text, Assistances.Buttons.Button.ButtonType type, bool autoScaling, float fontSizeCoeffA, float fontSizeCoeffB)
+            /*private void AddButton(ref Dialog dialog, EventHandler callback, string text, Assistances.Buttons.Button.ButtonType type, bool autoScaling, float fontSizeCoeffA, float fontSizeCoeffB)
             {
                 AddButton(ref dialog, callback, text, type, autoScaling, fontSizeCoeffA * text.Length + fontSizeCoeffB);
-            }
+            }*/
 
             public Dialog CreateDialogNoButton(string title, string description, Transform parent)
             {
-                ///Transform dialogView = Instantiate(DialogAssistance.transform, parent);
                 Dialog controller = InitializeDialog(DialogsTypes.Assistance, title, description, parent);
 
-                ///Dialog dialogController = dialogView.GetComponent<Dialog>();
-                ///dialogController.SetTitle(title);
-                
-                //float sizeDescriptionText = -0.002f * description.Length + 0.38f;
-                
-                ///float sizeDescriptionText = -0.00047619f * description.Length + 0.205714286f;
-                ///dialogController.SetDescription(description, sizeDescriptionText);
-                ///dialogController.EnableBillboard(true);
-
-                return controller;//dialogController;
+                return controller;;
             }
 
             public Dialog CreateCheckListNoButton(string title, string description, Transform parent)
             {
                 Dialog controller = InitializeDialog(DialogsTypes.CheckList, title, description, parent);
 
-                //Transform dialogView = Instantiate(RefCheckListAssistance.transform, parent);
-
-                //Dialog dialogController = dialogView.GetComponent<Dialog>();
-                //dialogController.SetTitle(title);
-                //float sizeDescriptionText = -0.00047619f * description.Length + 0.205714286f;
-                //dialogController.SetDescription(description, sizeDescriptionText);
-                //dialogController.EnableBillboard(true);
-
-                return controller; //dialogController;
+                return controller;
             }
 
             public Dialog CreateDialogOneButton(string title, string description, string textButton1, EventHandler callbackButton1, Assistances.Buttons.Button.ButtonType type1, Transform parent)
             {
-                //Transform dialogView = Instantiate(m_refDialogAssistance.transform, parent);
-                //MouseAssistanceDialog dialogController = dialogView.GetComponent<MouseAssistanceDialog>();
-                //dialogController.setTitle(title);
-                //float sizeDescriptionText = -0.002f * description.Length + 0.38f;
-                //dialogController.setDescription(description, sizeDescriptionText);
-                //dialogController.enableBillboard(true);
                 Dialog controller = CreateDialogNoButton(title, description, parent);
 
-                float fontSizeCoeffA = -0.017f;
-                float fontSizeCoeffB = 0.37f;
+                /*float fontSizeCoeffA = -0.017f;
+                float fontSizeCoeffB = 0.37f;*/
 
-                AddButton(ref controller, callbackButton1, textButton1, type1, true, fontSizeCoeffA, fontSizeCoeffB);
-
-                //float sizeDescriptionText = -0.017f * textButton1.Length + 0.37f;
-                //controller.AddButton(textButton1, true, sizeDescriptionText);
-                //sizeDescriptionText = -0.017f * textButton2.Length + 0.37f;
-                //controller.AddButton(textButton2, true, sizeDescriptionText);
-                //controller.ButtonsController[0].s_buttonClicked += callbackButton1;
-                //controller.ButtonsController[1].s_buttonClicked += callbackButton2;
+                //AddButton(ref controller, callbackButton1, textButton1, type1, true, FontSizeCoeffA, FontSizeCoeffB);
+                AddButton(ref controller, callbackButton1, textButton1, type1, true, ComputeFontSizeExp(textButton1.Length));
 
                 return controller;
             }
 
             public Dialog CreateDialogTwoButtons(string title, string description, string textButton1, EventHandler callbackButton1, Assistances.Buttons.Button.ButtonType type1, string textButton2, EventHandler callbackButton2, Assistances.Buttons.Button.ButtonType type2, Transform parent)
             {
-                //Transform dialogView = Instantiate(m_refDialogAssistance.transform, parent);
-                //MouseAssistanceDialog dialogController = dialogView.GetComponent<MouseAssistanceDialog>();
-                //dialogController.setTitle(title);
-                //float sizeDescriptionText = -0.002f * description.Length + 0.38f;
-                //dialogController.setDescription(description, sizeDescriptionText);
-                //dialogController.enableBillboard(true);
                 Dialog controller = CreateDialogNoButton(title, description, parent);
 
-                float fontSizeCoeffA = -0.017f;
-                float fontSizeCoeffB = 0.37f;
 
-                AddButton(ref controller, callbackButton1, textButton1, type1, true, fontSizeCoeffA, fontSizeCoeffB);
-                AddButton(ref controller, callbackButton2, textButton2, type2, true, fontSizeCoeffA, fontSizeCoeffB);
 
-                //float sizeDescriptionText = -0.017f * textButton1.Length + 0.37f;
-                //controller.AddButton(textButton1, true, sizeDescriptionText);
-                //sizeDescriptionText = -0.017f * textButton2.Length + 0.37f;
-                //controller.AddButton(textButton2, true, sizeDescriptionText);
-                //controller.ButtonsController[0].s_buttonClicked += callbackButton1;
-                //controller.ButtonsController[1].s_buttonClicked += callbackButton2;
+                //AddButton(ref controller, callbackButton1, textButton1, type1, true, FontSizeCoeffA, FontSizeCoeffB);
+                //AddButton(ref controller, callbackButton2, textButton2, type2, true, FontSizeCoeffA, FontSizeCoeffB);
+                AddButton(ref controller, callbackButton1, textButton1, type1, true, ComputeFontSizeExp(textButton1.Length));
+                AddButton(ref controller, callbackButton2, textButton2, type2, true, ComputeFontSizeExp(textButton2.Length));
 
                 return controller;
             }
@@ -188,16 +132,9 @@ namespace MATCH
             {
                 Dialog controller = CreateDialogNoButton(title, description, parent);
 
-                AddButton(ref controller, callbackButton1, textButton1, type1, true);
-                AddButton(ref controller, callbackButton2, textButton2, type2, true);
-                AddButton(ref controller, callbackButton3, textButton3, type3, true);
-
-                /*controller.AddButton(textButton1, true);
-                controller.AddButton(textButton2, true);
-                controller.AddButton(textButton3, true);
-                controller.ButtonsController[0].s_buttonClicked += callbackButton1;
-                controller.ButtonsController[1].s_buttonClicked += callbackButton2;
-                controller.ButtonsController[2].s_buttonClicked += callbackButton3;*/
+                AddButton(ref controller, callbackButton1, textButton1, type1, true, ComputeFontSizeExp(textButton1.Length));
+                AddButton(ref controller, callbackButton2, textButton2, type2, true, ComputeFontSizeExp(textButton2.Length));
+                AddButton(ref controller, callbackButton3, textButton3, type3, true, ComputeFontSizeExp(textButton3.Length));
 
                 return controller;
             }
@@ -207,7 +144,7 @@ namespace MATCH
                 Transform view = Utilities.Materials.Prefabs.Load(Utilities.Materials.Prefabs.AssistanceCube).transform;
                 view.parent = parent;
                 view.localPosition = new Vector3(0, 0, 0);
-                //= Instantiate(RefCube.transform, parent);
+
                 Basic cubeController = view.GetComponent<Basic>();
                 cubeController.SetMaterial(texture);
 
@@ -217,7 +154,6 @@ namespace MATCH
             public Basic CreateCube(string texture, bool adjustHeight, Vector3 scale, Vector3 localPosition, bool enableBillboard, Transform parent)
             {
                 Basic cube = CreateCube(texture, parent);
-                //cube.SetAdjustHeightOnShow(adjustHeight);
                 cube.AdjustHeightOnShow = adjustHeight;
                 cube.SetScale(scale);
                 cube.SetLocalPosition(localPosition);
@@ -253,12 +189,6 @@ namespace MATCH
                      Utilities.WorldLockingToolsManager.Instance.RegisterObject(id, view, controller.GetInteractionSurface());
                 }
 
-                /*ObjectManipulator temp = view.GetComponent<ObjectManipulator>();
-                temp.OnManipulationStarted.AddListener(delegate (ManipulationEventData data)
-                {
-                    DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Warning, "Proutiprout");
-                });*/
-
                 return controller;
             }
 
@@ -271,7 +201,6 @@ namespace MATCH
                 SurfaceToProcess controller = view.GetComponent<SurfaceToProcess>();
                 controller.SetSurfaceToPopulate(surfaceToPopulate);
 
-                //MouseChallengeleanTableSurfaceToPopulateWithCubes
                 return controller;
             }
 
@@ -287,10 +216,26 @@ namespace MATCH
                 Dialog controller = InitializeDialog(DialogsTypes.Buttons, title, description, parent);
                 for (int i = 0; i < buttonsText.Count; i ++)
                 {
-                    AddButton(ref controller, buttonsCallback[i], buttonsText[i], buttonTypes[i], true);
+                    AddButton(ref controller, buttonsCallback[i], buttonsText[i], buttonTypes[i], true, ComputeFontSizeExp(buttonsText[i].Length));
                 }
 
                 return controller;
+            }           
+
+            private float ComputeFontSizeLinear(int textLength)
+            {
+                float coeffA = -0.017f;
+                float coeffB = 0.37f;
+
+                return coeffA * textLength + coeffB;
+            }
+
+            private float ComputeFontSizeExp(int textLength)
+            {
+                float coeffA = 0.3813f;
+                float coeffB = -0.065f;
+
+                return coeffA * (float)Math.Exp(coeffB * textLength);
             }
 
             public AssistanceGradationExplicit CreateAssistanceGradationExplicit(string name)
@@ -299,15 +244,12 @@ namespace MATCH
                 AssistanceGradationExplicit controller = view.GetComponent<AssistanceGradationExplicit>();
                 controller.SetId(name);
                 view.name = name;
-                //view.gameObject.SetActive(true);
-                //controller.gameObject.SetActive(true);
-                //controller.Init();
+
                 return controller;
             }
 
             public GradationVisual.GradationVisual CreateAssistanceGradationAttention(string name)
             {
-                //Transform view = Instantiate(RefAssistanceGradationAttention.transform);
                 Transform view = Utilities.Materials.Prefabs.Load(Utilities.Materials.Prefabs.AssistanceGradationAttention);
                 GradationVisual.GradationVisual controller = view.GetComponent<GradationVisual.GradationVisual>();
                 view.name = name;
@@ -318,7 +260,7 @@ namespace MATCH
             {
                 Transform view = Utilities.Materials.Prefabs.Load(Utilities.Materials.Prefabs.AssistanceArch);
                 view.parent = parent;
-                //Transform view = Instantiate(RefArch.transform, parent);
+
                 ArchWithTextAndHelp controller = view.GetComponent<ArchWithTextAndHelp>();
                 view.name = name;
                 controller.SetArchStartAndEndPoint(origin, target);
@@ -330,9 +272,6 @@ namespace MATCH
             {
                 ArchWithTextAndHelp controller = CreateAssistanceArch(name, origin, target, parent);
 
-                //Transform view = Instantiate(RefArch.transform, parent);
-                //view.name = name;
-                //ArchWithTextAndHelp controller = view.GetComponent<ArchWithTextAndHelp>();
                 controller.SetArchStartAndEndPoint(origin, target);
                 controller.SetDescription(description, size);
 

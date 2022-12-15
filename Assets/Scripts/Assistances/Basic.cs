@@ -101,13 +101,10 @@ namespace MATCH
             }
 
             //bool MutexShow = false;
-            public override void Show(EventHandler eventHandler)
+            public override void Show(EventHandler eventHandler, bool withAnimation)
             {
                 Utilities.EventHandlerArgs.Animation args = new Utilities.EventHandlerArgs.Animation();
 
-                /*if (MutexShow == false)
-                {
-                    MutexShow = true;*/
                 if (IsDisplayed == false)
                 {
                     if (AdjustHeightOnShow)
@@ -115,14 +112,25 @@ namespace MATCH
                         MATCH.Utilities.Utility.AdjustObjectHeightToHeadHeight(transform);
                     }
 
-                    MATCH.Utilities.Utility.AnimateAppearInPlace(ChildView.gameObject, ChildScaleOrigin, delegate (System.Object o, EventArgs e)
+                    if (withAnimation)
                     {
+                        MATCH.Utilities.Utility.AnimateAppearInPlace(ChildView.gameObject, ChildScaleOrigin, delegate (System.Object o, EventArgs e)
+                        {
+                            IsDisplayed = true;
+                            //MutexShow = false;
+                            args.Success = true;
+                            eventHandler?.Invoke(this, args);
+                            //Help.Show(Utilities.Utility.GetEventHandlerEmpty());
+                        });
+                    }
+                    else
+                    {
+                        ChildView.gameObject.SetActive(true);
                         IsDisplayed = true;
-                        //MutexShow = false;
                         args.Success = true;
                         eventHandler?.Invoke(this, args);
-                        //Help.Show(Utilities.Utility.GetEventHandlerEmpty());
-                    });
+                    }
+
                 }
                 else
                 {
@@ -133,37 +141,47 @@ namespace MATCH
             }
 
             //bool MutexHide = false;
-            public override void Hide(EventHandler eventHandler/*, bool withAnimation*/)
+            public override void Hide(EventHandler eventHandler, bool withAnimation)
             {
-                //DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Hiding " + name);
-
-                /*if (MutexHide == false)
-                {
-                    MutexHide = true;*/
-
                 Utilities.EventHandlerArgs.Animation args = new Utilities.EventHandlerArgs.Animation();
 
                 if (IsDisplayed)
                 {
-
-                    MATCH.Utilities.Utility.AnimateDisappearInPlace(ChildView.gameObject, ChildScaleOrigin, delegate (System.Object o, EventArgs e)
+                    if ( withAnimation )
                     {
+                        MATCH.Utilities.Utility.AnimateDisappearInPlace(ChildView.gameObject, ChildScaleOrigin, delegate (System.Object o, EventArgs e)
+                        {
+                            ChildView.gameObject.transform.localScale = ChildScaleOrigin;
+                            IsDisplayed = false;
+
+                            if (Help.IsDisplayed)
+                            {
+                                ShowHelp(false, eventHandler, withAnimation);
+                            }
+                            else
+                            {
+                                args.Success = true;
+                                eventHandler?.Invoke(this, args);
+                            }
+                        });
+                    }
+                    else
+                    {
+                        ChildView.gameObject.SetActive(false);
+
                         ChildView.gameObject.transform.localScale = ChildScaleOrigin;
-                        //MutexHide = false;
                         IsDisplayed = false;
 
                         if (Help.IsDisplayed)
                         {
-                            ShowHelp(false, eventHandler);
+                            ShowHelp(false, eventHandler, withAnimation);
                         }
                         else
                         {
                             args.Success = true;
                             eventHandler?.Invoke(this, args);
                         }
-
-                        //eventHandler?.Invoke(this, EventArgs.Empty);
-                    });
+                    }
                 }
                 else
                 {
@@ -174,27 +192,19 @@ namespace MATCH
                 //}
             }
 
-            public override void ShowHelp(bool show, EventHandler callback)
+            public override void ShowHelp(bool show, EventHandler callback, bool withAnimation)
             {
                 DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "ShowHelp function called for " + Help.name + " show=" + show.ToString());
                 if (show)
                 {
-                    //Help.GetTransform().localPosition = new Vector3(ChildView.localPosition.x, ChildView.localPosition.y - 0.3f, ChildView.localPosition.z);
-                    //DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Help is going to be shown");
-
                     Help.Show(delegate(System.Object o, EventArgs e)
                     {
-                        //Help.GetTransform().localPosition = new Vector3(0, 0.3f, 0);
-                        //DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Help should be visible now");
-                        //Help.EventHelpButtonClicked += CButtonHelp;
-                        Help.ShowHelp(true, callback);
-                    });
+                        Help.ShowHelp(true, callback, withAnimation);
+                    }, withAnimation);
                 }
                 else
                 {
-                    //DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Help is going to be hidden");
-
-                    Help.Hide(callback);
+                    Help.Hide(callback, withAnimation);
                 }
             }
 

@@ -37,6 +37,8 @@ namespace MATCH
 
             Assistances.Dialog BehaviorTreeDebugWindow;
 
+            public event EventHandler OnStartFinished;
+
             private void Awake()
             {
                 InferencesStorage = new Dictionary<string, Inference>();
@@ -46,13 +48,15 @@ namespace MATCH
             {
                 // Debug object to display the status of the BT conditions
                 BehaviorTreeDebugWindow = Assistances.Factory.Instance.CreateDialogNoButton("Inferences status", "Empty for now", transform);
-                BehaviorTreeDebugWindow.Show(Utilities.Utility.GetEventHandlerEmpty());
+                BehaviorTreeDebugWindow.Show(Utilities.Utility.GetEventHandlerEmpty(), false);
                 BehaviorTreeDebugWindow.GetTransform().gameObject.AddComponent<ObjectManipulator>();
                 MATCH.AdminMenu.Instance.AddButton("Inferences status - Bring", CallbackBringWindow, AdminMenu.Panels.Left);
                 MATCH.AdminMenu.Instance.AddSwitchButton("Inferences status - Hide", delegate
                 {
                     BehaviorTreeDebugWindow.gameObject.SetActive(!BehaviorTreeDebugWindow.gameObject.activeSelf);
                 }, AdminMenu.Panels.Middle, AdminMenu.ButtonType.Hide);
+
+                OnStartFinished?.Invoke(this, EventArgs.Empty);
             }
 
             public void CallbackBringWindow()

@@ -127,13 +127,16 @@ namespace MATCH
             }
 
             bool MutexShow = false;
-            public override void Show(EventHandler eventHandler)
+            /**
+             * The "withAnimation" is ignored.
+             */
+            public override void Show(EventHandler eventHandler, bool withAnimation)
             {
                 if (MutexShow == false)
                 {
                     MutexShow = true;
 
-                    Animation animator = HologramView.gameObject.AddComponent<Animation>();
+                    //Animation animator = HologramView.gameObject.AddComponent<Animation>();
 
                     MATCH.Utilities.Utility.AdjustObjectHeightToHeadHeight(Help);
                     HologramController.backupScaling();
@@ -143,10 +146,7 @@ namespace MATCH
                         Vector3 newScale = new Vector3(SurfaceWithStarsViewTarget.localScale.x, 
                             SurfaceWithStarsView.localScale.y, // Important not to change the height scale
                             SurfaceWithStarsViewTarget.localScale.z);
-                        /*newScale.x = m_surfaceWithStarsViewTarget.localScale.x;
-                        newScale.y = m_surfaceWithStarsView.localScale.y; // Important not to change the height scale
-                        newScale.z = m_surfaceWithStarsViewTarget.localScale.z;*/
-
+                        
                         SurfaceWithStarsView.localScale = newScale;
                     }
 
@@ -167,7 +167,10 @@ namespace MATCH
                 HologramView.localPosition = HologramOriginalLocalPos;
             }
 
-            public override void Hide(EventHandler eventHandler)
+            /**
+             * withAnimation is ignored.
+             */
+            public override void Hide(EventHandler eventHandler, bool withAnimation)
             {
                 SetGradationToMinimum();
 
@@ -215,9 +218,9 @@ namespace MATCH
                 return HologramView.gameObject.activeSelf;
             }*/
 
-            public override void ShowHelp(bool show, EventHandler callback)
+            public override void ShowHelp(bool show, EventHandler callback, bool withAnimation)
             {
-                //
+                DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Warning, "Not implemented yet");
             }
 
             public bool IncreaseGradation()

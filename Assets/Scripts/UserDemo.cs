@@ -60,11 +60,11 @@ namespace MATCH
 
             Assistances.Basic demoSurface = Assistances.Factory.Instance.CreateFlatSurface(Utilities.Materials.Colors.CyanGlowing, new Vector3(demo.GetLocalPosition().x, demo.GetLocalPosition().y + 0.02f, demo.GetLocalPosition().z), demo.transform);
             demoSurface.SetScale(new Vector3(demo.GetLocalScale().x, demo.GetLocalScale().y, demo.GetLocalScale().z));
-            demoSurface.Show(Utilities.Utility.GetEventHandlerEmpty());
+            demoSurface.Show(Utilities.Utility.GetEventHandlerEmpty(), false);
 
             m_triggerGarbage = Assistances.Factory.Instance.CreateCube(Utilities.Materials.Textures.GarbageLevel1, demo.transform);
             m_triggerGarbage.SetLocalPosition(new Vector3(-0.2f, m_triggerGarbage.GetLocalPosition().y, m_triggerGarbage.GetLocalPosition().z));
-            m_triggerGarbage.Show(Utilities.Utility.GetEventHandlerEmpty());
+            m_triggerGarbage.Show(Utilities.Utility.GetEventHandlerEmpty(), false);
             m_triggerGarbage.s_touched += delegate (System.Object o, EventArgs e)
             {
                 if (m_challengeGarbageFirstLevelCalled == false)
@@ -83,7 +83,7 @@ namespace MATCH
 
             m_triggerWateringPlants = Assistances.Factory.Instance.CreateCube(Utilities.Materials.Textures.Flower, demo.transform);
             m_triggerWateringPlants.SetLocalPosition(new Vector3(0f, m_triggerWateringPlants.GetLocalPosition().y, m_triggerWateringPlants.GetLocalPosition().z));
-            m_triggerWateringPlants.Show(Utilities.Utility.GetEventHandlerEmpty());
+            m_triggerWateringPlants.Show(Utilities.Utility.GetEventHandlerEmpty(), false);
             m_triggerWateringPlants.s_touched += delegate (System.Object o, EventArgs e)
             {
                 m_challengeWatering.GetInference().CallbackOneMinuteTrigger();
@@ -93,7 +93,7 @@ namespace MATCH
 
             m_triggerCleanTable = Assistances.Factory.Instance.CreateCube(Utilities.Materials.Textures.CleanTable, demo.transform);
             m_triggerCleanTable.SetLocalPosition(new Vector3(0.2f, m_triggerCleanTable.GetLocalPosition().y, m_triggerCleanTable.GetLocalPosition().z));
-            m_triggerCleanTable.Show(Utilities.Utility.GetEventHandlerEmpty());
+            m_triggerCleanTable.Show(Utilities.Utility.GetEventHandlerEmpty(), false);
             m_triggerCleanTable.s_touched += delegate (System.Object o, EventArgs e)
             {
                 m_challengeTable.GetInference().CallbackOneMinuteTrigger();
@@ -106,7 +106,7 @@ namespace MATCH
             //dialogInstructions.setDescription("Touchez un des boutons pour commencer un scénario. Le scénario commence 10 secondes après avoir touché le bouton.", 0.15f);
             dialogInstructions.AdjustToHeight = false;
             dialogInstructions.transform.localPosition = new Vector3(0f, 0.5f, 0);
-            dialogInstructions.Show(Utilities.Utility.GetEventHandlerEmpty());
+            dialogInstructions.Show(Utilities.Utility.GetEventHandlerEmpty(), false);
 
 
             m_challengeGarbage.EventChallengeOnStandBy += callbackChallengeGarbageStandBy;

@@ -53,44 +53,36 @@ namespace MATCH
                     return AssistanceToDecorate.GetAssistance().GetTransform();
                 }
 
-                /*public override bool IsActive()
+                public override void Hide(EventHandler callback, bool withAnimation)
                 {
-                    return AssistanceToDecorate.GetAssistance().GetTransform();
-                }*/
-
-                public override void Hide(EventHandler callback)
-                {
-                    AssistanceToDecorate.GetAssistance().Hide(callback);
+                    AssistanceToDecorate.GetAssistance().Hide(callback, withAnimation);
                 }
 
                 public void SetMaterial(string materialName)
                 {
                     MaterialName = materialName;
-                    //AssistanceToDecorate.SetMaterial(materialName);
                 }
 
-                public override void Show(EventHandler callback)
+                public override void Show(EventHandler callback, bool withAnimation)
                 {
-                    //DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Decorated assistance is going to be shown");
-
                     if (AssistanceToDecorate.GetAssistance().GetTransform().gameObject.activeSelf == false)
                     {
                         AssistanceToDecorate.SetMaterial(MaterialName);
-                        AssistanceToDecorate.GetAssistance().Show(callback);
+                        AssistanceToDecorate.GetAssistance().Show(callback, withAnimation);
                     }
                     else
                     {
                         AssistanceToDecorate.GetAssistance().Hide(delegate (System.Object o, EventArgs e)
                         {
                             AssistanceToDecorate.SetMaterial(MaterialName);
-                            AssistanceToDecorate.GetAssistance().Show(callback);
-                        });
+                            AssistanceToDecorate.GetAssistance().Show(callback, withAnimation);
+                        }, withAnimation);
                     }
                 }
 
-                public override void ShowHelp(bool show, EventHandler callback)
+                public override void ShowHelp(bool show, EventHandler callback, bool withAnimation)
                 {
-                    AssistanceToDecorate.GetAssistance().ShowHelp(show, callback);
+                    AssistanceToDecorate.GetAssistance().ShowHelp(show, callback, withAnimation);
                 }
 
                 public Assistance GetAssistance()

@@ -99,7 +99,10 @@ namespace MATCH
                 throw new NotImplementedException();
             }
 
-            public override void Show(EventHandler eventHandler)
+            /**
+             * withAnimation ignored for now
+             */
+            public override void Show(EventHandler eventHandler, bool withAnimation)
             {
                 Utilities.EventHandlerArgs.Animation args = new Utilities.EventHandlerArgs.Animation();
 
@@ -246,7 +249,10 @@ namespace MATCH
                 GetComponent<BoundsControl>().enabled = status;
             }
 
-            public override void Hide(EventHandler eventHandler)
+            /**
+             * withAnimation: ignored for now
+             */
+            public override void Hide(EventHandler eventHandler, bool withAnimation)
             {
                 Utilities.EventHandlerArgs.Animation args = new Utilities.EventHandlerArgs.Animation();
 
@@ -273,20 +279,20 @@ namespace MATCH
                 }
             }
 
-            public override void ShowHelp(bool show, EventHandler callback)
+            public override void ShowHelp(bool show, EventHandler callback, bool withAnimation)
             {
                 if (show)
                 {
                     if (Help.IsDisplayed == false)
                     {
-                        Help.Show(callback);
+                        Help.Show(callback, withAnimation);
                     }
                 }
                 else
                 {
                     if(Help.IsDisplayed)
                     {
-                        Help.Hide(callback);
+                        Help.Hide(callback, withAnimation);
                     }
                 }
             }

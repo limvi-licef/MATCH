@@ -117,7 +117,7 @@ namespace MATCH
                     if (GradationCurrent > -1 && ++GradationCurrent < Gradation.Count)
                     {
                         //DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Next gradation is going to be shown");
-                        Gradation[GradationCurrent].Show(callback);
+                        Gradation[GradationCurrent].Show(callback, false);
                         toReturn = true;
                     }
                     else
@@ -148,14 +148,6 @@ namespace MATCH
                 {
                     if (GradationCurrent > -1)
                     {
-                        /*while (GradationCurrent > 0)
-                        {
-                            Gradation[GradationCurrent].Hide(Utilities.Utility.GetEventHandlerEmpty());
-                            GradationCurrent--;
-                        }
-
-                        Gradation[GradationCurrent].Show(callback); // GradationCurrent is == 0 when reaching this point
-                        */
                         Gradation[GradationCurrent].Hide(delegate (System.Object o, EventArgs e)
                         {
                             GradationCurrent--;
@@ -163,21 +155,13 @@ namespace MATCH
                             if (GradationCurrent <= 0)
                             {
                                 GradationCurrent = 0;
-                                Gradation[GradationCurrent].Show(callback);
+                                Gradation[GradationCurrent].Show(callback, false);
                             }
                             else
                             {
                                 ShowMinimalGradation(callback);
                             }
-                        });
-
-                        /*Gradation[GradationCurrent].Hide(delegate(System.Object o, EventArgs e)
-                        {
-                            GradationCurrent = 0;
-                            Gradation[GradationCurrent].Show(callback);
-                        });*/
-
-                        //DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Assistance should be shown now");
+                        }, false);
                     }
                     else
                     {

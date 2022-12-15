@@ -332,10 +332,10 @@ namespace MATCH
                                 UpdateConditionWithMatrix(ConditionsIsFocused);
                                 InfManager.UnregisterInference(InferenceFocused);
                                 InfManager.UnregisterInference(InferenceTimer2Minutes);
-                            }, AssistancesGradation.AssistanceCurrent.GetCurrentAssistance().GetTransform().gameObject, 3);
+                            }, AssistancesGradation.AssistanceCurrent.GetCurrentAssistance().GetTransform().gameObject, 1);
                             InfManager.RegisterInference(inf);
 
-                            Inferences.Timer timer = new Inferences.Timer(InferenceTimer2Minutes, 20, delegate (System.Object o, EventArgs e)
+                            Inferences.Timer timer = new Inferences.Timer(InferenceTimer2Minutes, 15, delegate (System.Object o, EventArgs e)
                             { // Currently, manages only one level of visual gradation - to manage more than one, an extra level in the behavior tree might be required
                                 UpdateConditionWithMatrix(ConditionDisplayedSince2Minutes);
                                 InfManager.UnregisterInference(InferenceTimer2Minutes);
@@ -372,7 +372,7 @@ namespace MATCH
                     new NPBehave.Action(() => {
                         AssistancesGradation.AssistanceCurrent.ShowMinimalGradation(Utilities.Utility.GetEventHandlerEmpty());
 
-                        Inferences.Timer timer = new Inferences.Timer(InferenceTimer30Seconds, 20, delegate (System.Object o, EventArgs e)
+                        Inferences.Timer timer = new Inferences.Timer(InferenceTimer30Seconds, 10, delegate (System.Object o, EventArgs e)
                         {
                             UpdateConditionWithMatrix(ConditionWaitingSince30Seconds);
                             InfManager.UnregisterInference(InferenceTimer30Seconds);
@@ -399,7 +399,7 @@ namespace MATCH
                         if (AssistancesGradation.AssistanceCurrent.IsLastGradationLevel() == false)
                         {
                             UpdateCondition(ConditionDisplayedSince2Minutes, false);
-                            Inferences.Timer timer = new Inferences.Timer(InferenceTimer2Minutes, 20, delegate (System.Object o, EventArgs e)
+                            Inferences.Timer timer = new Inferences.Timer(InferenceTimer2Minutes, 15, delegate (System.Object o, EventArgs e)
                             { 
                                 UpdateConditionWithMatrix(ConditionDisplayedSince2Minutes);
 

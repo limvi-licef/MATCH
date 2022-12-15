@@ -21,6 +21,9 @@ using System.Reflection;
 using TMPro;
 using Microsoft.MixedReality.Toolkit.UI;
 
+/**
+ * For graphical details of the behavior tree implemented here, refer to the documentation
+ */
 namespace MATCH
 {
     namespace Scenarios
@@ -29,7 +32,6 @@ namespace MATCH
         {
             public class DustingTable : Scenarios.BehaviorTrees.BehaviorTree
             {
-                //private NPBehave.Root Tree;
                 private Inferences.Manager InferenceManager;
                 public Assistances.Surfaces.Manager SurfacesManager;
 
@@ -44,15 +46,11 @@ namespace MATCH
                 string InferenceDidNotStartDusting = "DidNotStartCleaning";
                 string InferenceInterruptDusting = "InterruptedDusting";
 
-                //Assistances.AssistanceGradationExplicit TestGradationExplicit;
-
                 // Interaction surface
                 Assistances.InteractionSurface InteractionSurfaceTable;
                 Assistances.InteractionSurface InteractionRag;
 
                 Dictionary<Assistances.AssistanceGradationExplicit, bool> AssistancesDusting;
-                //Assistances.AssistanceGradationExplicit AssistanceBeta;
-
 
                 public override void Awake()
                 {
@@ -74,27 +72,13 @@ namespace MATCH
 
                     Init();
 
-                    
-
                     // Initialize debug buttons
                     InitializeDebugButtons();
-
-                    // Test BT for gradation explicit
-                    //TestGradationExplicit = Assistances.Factory.Instance.CreateAssistanceGradationExplicit("Test BT");
-                    //TestGradationExplicit.InfManager = InferenceManager;
                 }
 
                 protected override Root InitializeBehaviorTree()
                 {
                     // Making the conditions update. SEE EXCEL SHEET TO GENERATE THE CODE BELOW
-                    /*Conditions[ConditionTableCleaned] = false;
-                    Conditions[ConditionRagTaken] = false;
-                    Conditions[ConditionCleaningWithoutRag] = false;
-                    Conditions[ConditionDidNotStartCleaning] = false;
-                    Conditions[ConditionCleaningInterrupted] = false;
-                    Conditions[ConditionNewPartCleaned] = false;
-                    Conditions[ConditionsProcessRelatedToNewPartsCleanedDone] = false;
-                    int nbConditions = Conditions.Keys.Count;*/
                     AddCondition(ConditionTableCleaned, false);
                     AddCondition(ConditionRagTaken, false);
                     AddCondition(ConditionCleaningWithoutRag, false);
@@ -113,6 +97,7 @@ namespace MATCH
                     AddConditionsUpdate(ConditionNewPartCleaned, new bool[] { false, true, false, false, false, true, false });
                     AddConditionsUpdate(ConditionsProcessRelatedToNewPartsCleanedDone, new bool[] { false, true, false, false, false, false, true });
 
+                    // End of code generation using the EXCEL file
 
                     // Defining the BT
                     Selector srRagNotTaken = new Selector(
@@ -161,10 +146,7 @@ namespace MATCH
                     {
                         UpdateConditionWithMatrix(ConditionDidNotStartCleaning);
                     }, AdminMenu.Panels.Right);
-                    /*AdminMenu.Instance.AddButton("BT - Dusting - Trigger - new parts cleaned", delegate
-                    {
-                        UpdateConditionWithMatrix(ConditionNewPartsCleaned);
-                    }, AdminMenu.Panels.Right);*/
+
                     AdminMenu.Instance.AddButton("BT - Dusting - Trigger - cleaning interrupted", delegate
                     {
                         UpdateConditionWithMatrix(ConditionCleaningInterrupted);
@@ -174,29 +156,23 @@ namespace MATCH
                         UpdateConditionWithMatrix(ConditionTableCleaned);
                         UpdateCondition(ConditionTableCleaned, false);
                     }, AdminMenu.Panels.Right);
-                    /*AdminMenu.Instance.AddButton("BT - Dusting - Test gradation explicit", delegate
-                    {
-                        //RunTestGradationExplicit();
-                    }, AdminMenu.Panels.Right);*/
 
                     
                 }
 
-                /*void RunTestGradationExplicit ()
-                {
-                    TestGradationExplicit.RunAssistance(Utilities.Utility.GetEventHandlerEmpty());
-                }*/
-
                 Sequence AssistanceAlpha()
                 {
-                    Assistances.GradationVisual.GradationVisual alpha1 = Assistances.Factory.Instance.CreateAssistanceGradationAttention("DustingTable-Beta-1");
-                    Assistances.Basic assistanceBase = Assistances.Factory.Instance.CreateCube(Utilities.Materials.Colors.PurpleGlowing, InteractionSurfaceTable.transform);
+                    /*Assistances.GradationVisual.GradationVisual alpha1 = Assistances.Factory.Instance.CreateAssistanceGradationAttention("DustingTable-Beta-1");*/
+
+                    Assistances.GradationVisual.GradationVisual alpha1 = Assistances.GradationVisual.Factory.Instance.CreateDialogOneButton("DustingTable-Alpha-1", "", "Vous avez terminé l'activité! Félicitations!", "Terminer", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.ClosingButton, InteractionSurfaceTable.transform);
+
+                    /*Assistances.Basic assistanceBase = Assistances.Factory.Instance.CreateCube(Utilities.Materials.Colors.PurpleGlowing, InteractionSurfaceTable.transform);
                     assistanceBase.name = name + "_base";
-                    alpha1.AddAssistance(Assistances.Decorators.Factory.Instance.CreateMaterial(assistanceBase, Utilities.Materials.Textures.Congratulation));
+                    alpha1.AddAssistance(Assistances.Decorators.Factory.Instance.CreateMaterial(assistanceBase, Utilities.Materials.Textures.Congratulation));*/
+
 
                     Assistances.AssistanceGradationExplicit alpha = MATCH.Assistances.Factory.Instance.CreateAssistanceGradationExplicit("DustingTable-Alpha");
                     alpha.transform.parent = transform;
-                    //alpha.InfManager = InferenceManager;
 
                     alpha.AddAssistance(alpha1, Assistances.Buttons.Button.ButtonType.ClosingButton, null);
 
@@ -223,14 +199,9 @@ namespace MATCH
                 {
                     InteractionSurfaceTable = Assistances.Factory.Instance.CreateInteractionSurface("DustingTable - Table", AdminMenu.Panels.Right, new Vector3(1.1f, 0.02f, 0.7f), new Vector3(-0.447f, -0.406f, 0.009f), Utilities.Materials.Colors.CyanGlowing, true, true, Utilities.Utility.GetEventHandlerEmpty(), true, transform);
                     
-
                     InteractionRag = Assistances.Factory.Instance.CreateInteractionSurface("DustingTable - Rag", AdminMenu.Panels.Right, new Vector3(0.1f, 0.1f, 0.1f), new Vector3(-1.378f, -0.364f, 2.743f), Utilities.Materials.Colors.OrangeGlowing, true, true, Utilities.Utility.GetEventHandlerEmpty(), true, transform);
-                    //InteractionRag.transform.localPosition = new Vector3(-1.378f, -0.364f, 2.743f);
-                    InteractionRag.EventInteractionSurfaceTableTouched += CallbackInteractionSurfaceRagTouched;
 
-                    //AssistanceBeta = MATCH.Assistances.Factory.Instance.CreateAssistanceGradationExplicit("Dusting - Beta");
-                    //AssistanceBeta.ge
-                    //AssistancesDusting.Add(AssistanceBeta, false);
+                    InteractionRag.EventInteractionSurfaceTableTouched += CallbackInteractionSurfaceRagTouched;
                 }
 
                 Sequence AssistanceBeta()
@@ -458,7 +429,6 @@ namespace MATCH
 
                     Assistances.GradationVisual.GradationVisual eta1 = Assistances.GradationVisual.Factory.Instance.CreateSurfaceToProcess("DustingTable-Eta-1", delegate(System.Object o, EventArgs e)
                     {
-                        //SetConditionsTo(false);
                         ShowAssistanceHideOthers(eta);
                         UpdateConditionWithMatrix(ConditionNewPartCleaned);
                     }, delegate(System.Object o, EventArgs e)

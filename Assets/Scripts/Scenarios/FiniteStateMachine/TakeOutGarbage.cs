@@ -143,48 +143,48 @@ namespace MATCH
 
                     // Set states
                     MATCH.FiniteStateMachine.MouseUtilitiesGradationAssistance sStandBy = m_gradationManager.addNewAssistanceGradation("StandBy");
-                    sStandBy.addFunctionShow(delegate (EventHandler e)
+                    sStandBy.addFunctionShow(delegate (EventHandler e, bool animate)
                     {
                         m_inferenceManager.RegisterInference(m_inference19h00);
                         OnChallengeStandBy();
-                    }, Utilities.Utility.GetEventHandlerEmpty());
-                    sStandBy.setFunctionHide(delegate (EventHandler e)
+                    }, Utilities.Utility.GetEventHandlerEmpty(), true);
+                    sStandBy.setFunctionHide(delegate (EventHandler e, bool animate)
                     {
                         e?.Invoke(this, EventArgs.Empty);
-                    }, Utilities.Utility.GetEventHandlerEmpty());
+                    }, Utilities.Utility.GetEventHandlerEmpty(), true);
                     MATCH.FiniteStateMachine.MouseUtilitiesGradationAssistance sHighlightGarbage = m_gradationManager.addNewAssistanceGradation("HighlightGarbage");
                     sHighlightGarbage.setFunctionHideAndShow(highlightGarbageController);
-                    sHighlightGarbage.addFunctionShow(delegate (EventHandler e)
+                    sHighlightGarbage.addFunctionShow(delegate (EventHandler e, bool animate)
                     {
                         m_inferenceManager.RegisterInference(m_inference19h30);
                         OnChallengeStart();
-                    }, Utilities.Utility.GetEventHandlerEmpty());
+                    }, Utilities.Utility.GetEventHandlerEmpty(), true);
                     MATCH.FiniteStateMachine.MouseUtilitiesGradationAssistance sExclamationMark = m_gradationManager.addNewAssistanceGradation("ExclamationMark");
-                    sExclamationMark.addFunctionShow(exclamationMarkController);
-                    sExclamationMark.addFunctionShow(highlightGarbageVividController);
-                    sExclamationMark.setFunctionHide(delegate (EventHandler e)
+                    sExclamationMark.addFunctionShow(exclamationMarkController, true);
+                    sExclamationMark.addFunctionShow(highlightGarbageVividController, true);
+                    sExclamationMark.setFunctionHide(delegate (EventHandler e, bool animate)
                     {
-                        exclamationMarkController.Hide(e);
-                        highlightGarbageVividController.Hide(Utilities.Utility.GetEventHandlerEmpty());
-                    }, Utilities.Utility.GetEventHandlerEmpty());
+                        exclamationMarkController.Hide(e, animate);
+                        highlightGarbageVividController.Hide(Utilities.Utility.GetEventHandlerEmpty(), animate);
+                    }, Utilities.Utility.GetEventHandlerEmpty(), true);
                     //sExclamationMark.setFunctionHideAndShow(exclamationMarkController);
                     MATCH.FiniteStateMachine.MouseUtilitiesGradationAssistance sSolution = m_gradationManager.addNewAssistanceGradation("Solution");
                     sSolution.setFunctionHideAndShow(solutionController);
                     MATCH.FiniteStateMachine.MouseUtilitiesGradationAssistance sGarbageGrabbed = m_gradationManager.addNewAssistanceGradation("Garbage grabbed");
-                    sGarbageGrabbed.addFunctionShow(delegate (EventHandler e)
+                    sGarbageGrabbed.addFunctionShow(delegate (EventHandler e, bool animate)
                     {
 
-                    }, Utilities.Utility.GetEventHandlerEmpty());
-                    sGarbageGrabbed.setFunctionHide(delegate (EventHandler e)
+                    }, Utilities.Utility.GetEventHandlerEmpty(), true);
+                    sGarbageGrabbed.setFunctionHide(delegate (EventHandler e, bool animate)
                     {
                         e?.Invoke(this, EventArgs.Empty);
-                    }, Utilities.Utility.GetEventHandlerEmpty());
+                    }, Utilities.Utility.GetEventHandlerEmpty(), true);
                     MATCH.FiniteStateMachine.MouseUtilitiesGradationAssistance sSuccess = m_gradationManager.addNewAssistanceGradation("Success");
                     sSuccess.setFunctionHideAndShow(successController);
-                    sSuccess.addFunctionShow(delegate (EventHandler e)
+                    sSuccess.addFunctionShow(delegate (EventHandler e, bool animate)
                     {
                         OnChallengeSuccess();
-                    }, Utilities.Utility.GetEventHandlerEmpty());
+                    }, Utilities.Utility.GetEventHandlerEmpty(), true);
 
                     // Connections between states
                     s_inference19h00 += sStandBy.goToState(sHighlightGarbage);
