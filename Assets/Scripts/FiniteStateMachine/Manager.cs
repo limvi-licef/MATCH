@@ -125,10 +125,10 @@ namespace MATCH
                 }*/
 
                 // Setting the internal callbacks to actually go to the next state
-                List<Action<EventHandler>> fShows = newItem.getFunctionsShow();
-                List<EventHandler> fShowsEventHandlers = newItem.getFunctionsShowEventHandlers();
+                List<Action<EventHandler, bool>> fShows = newItem.getFunctionsShow();
+                List<KeyValuePair<EventHandler,bool>> fShowsEventHandlers = newItem.getFunctionsShowEventHandlers();
 
-                fShows.Add(delegate (EventHandler e)
+                fShows.Add(delegate (EventHandler e, bool withAnimation)
                 {
                     //MouseDebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, MouseDebugMessagesManager.MessageLevel.Info, "Setting the new current: current>previous: " + m_gradationCurrent + " next>current: " + m_gradationNext);
 
@@ -142,8 +142,8 @@ namespace MATCH
                     s_newStateSelected?.Invoke(this, args);
                 });
 
-                List<EventHandler> actionsEventHandler = newItem.getFunctionsShowEventHandlers();
-                actionsEventHandler.Add(Utilities.Utility.GetEventHandlerEmpty());
+                List<KeyValuePair<EventHandler, bool>> actionsEventHandler = newItem.getFunctionsShowEventHandlers();
+                actionsEventHandler.Add(new KeyValuePair<EventHandler, bool>(Utilities.Utility.GetEventHandlerEmpty(),true));
 
                 newItem.m_triggerNext += new EventHandler(delegate (System.Object o, EventArgs e)
                 {
@@ -183,10 +183,10 @@ namespace MATCH
                     m_assistanceGradation.Add(id, state);
 
 
-                    List<Action<EventHandler>> fShows = state.getFunctionsShow();
-                    List<EventHandler> fShowsEventHandlers = state.getFunctionsShowEventHandlers();
+                    List<Action<EventHandler, bool>> fShows = state.getFunctionsShow();
+                    List<KeyValuePair<EventHandler, bool>> fShowsEventHandlers = state.getFunctionsShowEventHandlers();
 
-                    state.setFunctionShow(delegate (EventHandler e)
+                    state.setFunctionShow(delegate (EventHandler e, bool animate)
                     {
                         //MouseDebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, MouseDebugMessagesManager.MessageLevel.Info, "Called - intermediate show function trigerring the event for the graph display");
 
@@ -265,7 +265,7 @@ namespace MATCH
             /**
              * Reponsible to call the hide event of the current state, and the shows functions of the next state.
              * */
-            void raiseEventsGradation(Action<EventHandler> fHide, EventHandler fHideEventHandler, List<Action<EventHandler>> fShows, List<EventHandler> fShowsEventHandler)
+            void raiseEventsGradation(Action<EventHandler, bool> fHide, KeyValuePair<EventHandler, bool> fHideEventHandler,  List<Action<EventHandler, bool>> fShows, List<KeyValuePair<EventHandler, bool>> fShowsEventHandler)
             {
                 fHide(new EventHandler(delegate (System.Object o, EventArgs e)
                 {
@@ -273,11 +273,11 @@ namespace MATCH
                     {
                         //MouseDebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, MouseDebugMessagesManager.MessageLevel.Info, "Function show " + i + " is going to be called");
 
-                        fShows[i](fShowsEventHandler[i]);
+                        fShows[i](fShowsEventHandler[i].Key, fShowsEventHandler[i].Value);
                     }
 
-                    fHideEventHandler?.Invoke(this, EventArgs.Empty);
-                }));
+                    fHideEventHandler.Key?.Invoke(this, EventArgs.Empty);
+                }), fHideEventHandler.Value);
             }
 
             public void goBackToOriginalState()
@@ -298,10 +298,10 @@ namespace MATCH
         public abstract class MouseUtilitiesGradationAssistanceAbstract
         {
             public abstract string getId();
-            public abstract List<Action<EventHandler>> getFunctionsShow();
-            public abstract List<EventHandler> getFunctionsShowEventHandlers();
-            public abstract Action<EventHandler> getFunctionHide();
-            public abstract EventHandler getFunctionHideEventHandler();
+            public abstract List<Action<EventHandler, bool>> getFunctionsShow();
+            public abstract List<KeyValuePair<EventHandler, bool>> getFunctionsShowEventHandlers();
+            public abstract Action<EventHandler, bool> getFunctionHide();
+            public abstract KeyValuePair<EventHandler, bool> getFunctionHideEventHandler();
             public abstract MouseUtilitiesGradationAssistanceAbstract getGradationNext(string id);
             public abstract Dictionary<string, MouseUtilitiesGradationAssistanceAbstract> getNextStates();
         }
@@ -317,10 +317,10 @@ namespace MATCH
 
             Dictionary<string, MouseUtilitiesGradationAssistanceAbstract> m_nextStates; // Id of the state, <next state corresponding to this ID, list of hide / show pair>. Use of this way because a same state can go to different next states following the provided interaction
 
-            List<Action<EventHandler>> m_functionsShow;
-            List<EventHandler> m_functionsShowEventHandlers;
-            Action<EventHandler> m_functionHide;
-            EventHandler m_functionHideEventHandler;
+            List<Action<EventHandler, bool>> m_functionsShow;
+            List<KeyValuePair<EventHandler, bool>> m_functionsShowEventHandlers;
+            Action<EventHandler, bool> m_functionHide;
+            KeyValuePair<EventHandler, bool> m_functionHideEventHandler;
 
             public event EventHandler m_triggerNext;
             public event EventHandler m_triggerPrevious;
@@ -330,10 +330,10 @@ namespace MATCH
                 m_id = id;
                 m_nextStates = new Dictionary<string, MouseUtilitiesGradationAssistanceAbstract>();
 
-                m_functionsShow = new List<Action<EventHandler>>();
-                m_functionsShowEventHandlers = new List<EventHandler>();
+                m_functionsShow = new List<Action<EventHandler, bool>>();
+                m_functionsShowEventHandlers = new List<KeyValuePair<EventHandler, bool>>();
                 m_functionHide = null;
-                m_functionHideEventHandler = null;
+                //m_functionHideEventHandler = new KeyValuePair<EventHandler, bool>();
             }
 
             public override string getId()
@@ -379,63 +379,67 @@ namespace MATCH
                 return toReturn;
             }
 
-            public void addFunctionShow(Action<EventHandler> fShow, EventHandler handler)
+            public void addFunctionShow(Action<EventHandler, bool> fShow, EventHandler handler, bool animate)
             {
                 m_functionsShow.Add(fShow);
-                m_functionsShowEventHandlers.Add(handler);
+                m_functionsShowEventHandlers.Add(new KeyValuePair<EventHandler, bool>(handler, animate));
             }
 
-            public void addFunctionShow(Assistances.Assistance assistance, EventHandler callback)
+            public void addFunctionShow(Assistances.Assistance assistance, EventHandler callback, bool animate)
             {
-                addFunctionShow(assistance.Show, callback);
+                addFunctionShow(assistance.Show, callback, animate);
             }
 
             /**
              * Then no callback trigerred when processed finished
              * */
-            public void addFunctionShow(Assistances.Assistance assistance)
+            public void addFunctionShow(Assistances.Assistance assistance, bool animate)
             {
-                addFunctionShow(assistance.Show, Utilities.Utility.GetEventHandlerEmpty());
+                addFunctionShow(assistance.Show, Utilities.Utility.GetEventHandlerEmpty(), animate);
             }
 
-            public override List<Action<EventHandler>> getFunctionsShow()
+            public override List<Action<EventHandler, bool>> getFunctionsShow()
             {
                 return m_functionsShow;
             }
 
-            public override List<EventHandler> getFunctionsShowEventHandlers()
+            public override List<KeyValuePair<EventHandler, bool>> getFunctionsShowEventHandlers()
             {
                 return m_functionsShowEventHandlers;
             }
 
-            public void setFunctionHide(Action<EventHandler> fHide, EventHandler handler)
+            public void setFunctionHide(Action<EventHandler, bool> fHide, EventHandler handler, bool animate)
             {
                 m_functionHide = fHide;
-                m_functionHideEventHandler = handler;
+                m_functionHideEventHandler = new KeyValuePair<EventHandler, bool>(handler, animate);
+
             }
 
-            public void setFunctionHide(Assistances.Assistance assistance, EventHandler callback)
+            public void setFunctionHide(Assistances.Assistance assistance, EventHandler callback, bool animate)
             {
-                setFunctionHide(assistance.Hide, callback);
+                setFunctionHide(assistance.Hide, callback, animate);
             }
 
-            public void setFunctionHide(Assistances.Assistance assistance)
+            public void setFunctionHide(Assistances.Assistance assistance, bool animate)
             {
-                setFunctionHide(assistance.Hide, Utilities.Utility.GetEventHandlerEmpty());
+                setFunctionHide(assistance.Hide, Utilities.Utility.GetEventHandlerEmpty(), animate);
             }
 
-            public void setFunctionHideAndShow(Assistances.Assistance assistance)
+            /**
+             * Animation enabled by default
+             */
+            public void setFunctionHideAndShow(Assistances.Assistance assistance, bool animate=true)
             {
-                setFunctionHide(assistance);
-                addFunctionShow(assistance);
+                setFunctionHide(assistance, animate);
+                addFunctionShow(assistance, animate);
             }
 
-            public override Action<EventHandler> getFunctionHide()
+            public override Action<EventHandler, bool> getFunctionHide()
             {
                 return m_functionHide;
             }
 
-            public override EventHandler getFunctionHideEventHandler()
+            public override KeyValuePair<EventHandler, bool> getFunctionHideEventHandler()
             {
                 return m_functionHideEventHandler;
             }
@@ -456,7 +460,7 @@ namespace MATCH
             string m_id;
             int m_nbOfStatesCalled = 0; // Variable storing the number of intermediate states that have called so far
 
-            Action<EventHandler> m_showFunction;
+            Action<EventHandler, bool> m_showFunction;
 
             public MouseUtilitiesGradationAssistanceIntermediateState(string id, MouseUtilitiesGradationAssistance nextState)
             {
@@ -470,7 +474,7 @@ namespace MATCH
             /**
              * For internal use. Please do not call this function, although it is public on purpose
              * */
-            public void setFunctionShow(Action<EventHandler> fShow)
+            public void setFunctionShow(Action<EventHandler, bool> fShow)
             {
                 m_showFunction = fShow;
             }
@@ -580,9 +584,9 @@ namespace MATCH
                 return m_id;
             }
 
-            public override List<Action<EventHandler>> getFunctionsShow()
+            public override List<Action<EventHandler, bool>> getFunctionsShow()
             {
-                List<Action<EventHandler>> toReturn = new List<Action<EventHandler>>();
+                List<Action<EventHandler, bool>> toReturn = new List<Action<EventHandler, bool>>();
 
                 // Stacking in the return list all the show functions available
                 foreach (KeyValuePair<string, MouseUtilitiesGradationAssistanceAbstract> assistance in m_statesThatHaveToCall)
@@ -595,9 +599,9 @@ namespace MATCH
                 return toReturn;
             }
 
-            public override List<EventHandler> getFunctionsShowEventHandlers()
+            public override List<KeyValuePair<EventHandler, bool>> getFunctionsShowEventHandlers()
             {
-                List<EventHandler> toReturn = new List<EventHandler>();
+                List<KeyValuePair<EventHandler, bool>> toReturn = new List<KeyValuePair<EventHandler, bool>>();
 
                 // Stacking in the return list all the show functions available
                 foreach (KeyValuePair<string, MouseUtilitiesGradationAssistanceAbstract> assistance in m_statesThatHaveToCall)
@@ -605,23 +609,23 @@ namespace MATCH
                     toReturn.AddRange(assistance.Value.getFunctionsShowEventHandlers());
                 }
 
-                toReturn.Insert(0, Utilities.Utility.GetEventHandlerEmpty()); // For internal purpose, to add extra process from the gradationmanager, although this is empty here. This is to remain consistant with the bunch of show functions, where the process is relevant.
+                toReturn.Insert(0, new KeyValuePair<EventHandler, bool>(Utilities.Utility.GetEventHandlerEmpty(), true)); // For internal purpose, to add extra process from the gradationmanager, although this is empty here. This is to remain consistant with the bunch of show functions, where the process is relevant.
 
                 return toReturn;
             }
 
-            public override Action<EventHandler> getFunctionHide()
+            public override Action<EventHandler, bool> getFunctionHide()
             {
                 return hide;
             }
 
-            void hide(EventHandler eventHandler)
+            void hide(EventHandler eventHandler, bool animate)
             {
                 // Calling hide function of all registered assistances
 
                 foreach (KeyValuePair<string, MouseUtilitiesGradationAssistanceAbstract> assistance in m_statesThatHaveToCall)
                 {
-                    assistance.Value.getFunctionHide()(assistance.Value.getFunctionHideEventHandler());
+                    assistance.Value.getFunctionHide()(assistance.Value.getFunctionHideEventHandler().Key, animate);
                 }
 
                 // And resetting the object
@@ -633,12 +637,19 @@ namespace MATCH
                 eventHandler?.Invoke(this, EventArgs.Empty);
             }
 
-            public override EventHandler getFunctionHideEventHandler()
+            public override KeyValuePair<EventHandler, bool> getFunctionHideEventHandler()
             {
-                return delegate (System.Object o, EventArgs e)
+                KeyValuePair<EventHandler, bool> toReturn = new KeyValuePair<EventHandler, bool>(delegate (System.Object o, EventArgs e)
                 {
 
-                };
+                }, true);
+
+                /*return delegate (System.Object o, EventArgs e)
+                {
+
+                };*/
+
+                return toReturn;
             }
 
             public override MouseUtilitiesGradationAssistanceAbstract getGradationNext(string id)

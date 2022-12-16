@@ -80,46 +80,30 @@ namespace MATCH
             }
 
             bool m_mutexShow = false;
-            public override void Show(EventHandler eventHandler)
+            /**
+             * Choice to have an animation or not is only managed for the dialog
+             */
+            public override void Show(EventHandler eventHandler, bool withAnimation = true)
             {
                 if (m_mutexShow == false)
                 {
                     m_mutexShow = true;
 
-                    TextView.position = new Vector3(LineController.PointOrigin.x, /*LineController.m_hologramOrigin.transform.position.y + 0.5f*/Camera.main.transform.position.y, /*TextView.position.z*/ LineController.PointOrigin.z);
+                    TextView.position = new Vector3(LineController.PointOrigin.x, Camera.main.transform.position.y,  LineController.PointOrigin.z);
                     TextView.transform.LookAt(Camera.main.transform);
                     TextView.transform.Rotate(new Vector3(0, 1, 0), 180);
-                    //TextController.EnableBillboard(false, -0.1f);
-                    //MATCH.Utilities.Utility.AdjustObjectHeightToHeadHeight(TextView);
 
                     // Trick to start the line to the text position, i.e. to start at user's head's position
-                    //LineController.m_hologramOrigin.transform.position = TextView.position;
-                    //LineController.m_hologramOrigin = TextView.gameObject;
                     LineController.PointOrigin = TextView.position;
                     TextView.position = Vector3.MoveTowards(TextView.position, Camera.main.transform.position, 0.01f);
 
-
                     TextController.Show(delegate
                     {
-                        //m_textController.enableBillboard(true);
                         m_mutexShow = false;
-                    });
+                    }, withAnimation);
 
                     // Showing line
-                    LineView.GetComponent<LineToObject>().show(/*delegate {
-                        EventHandler[] temp = new EventHandler[] { delegate
-                    {
-                        DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Called");
-
-                        Destroy(HelpController.gameObject.GetComponent<Animation>());
-
-                        m_mutexShow = false;
-                    }, eventHandler };
-
-                        MATCH.Utilities.Utility.AdjustObjectHeightToHeadHeight(HelpController);
-
-                        HelpController.gameObject.AddComponent<MATCH.Utilities.Animation>().AnimateAppearInPlaceToScaling(new Vector3(0.1f, 0.1f, 0.1f), temp);
-                    }*/delegate
+                    LineView.GetComponent<LineToObject>().show(delegate
                        {
                            eventHandler?.Invoke(this, EventArgs.Empty);
                            m_mutexShow = false;
@@ -132,29 +116,30 @@ namespace MATCH
             }
 
             bool m_mutexHide = false;
-            public override void Hide(EventHandler eventHandler)
+            /**
+             * Choice to have an animation or not is only managed for the dialog
+             */
+            public override void Hide(EventHandler eventHandler, bool withAnimation)
             {
                 if (m_mutexHide == false)
                 {
                     m_mutexHide = true;
 
-                    TextController.Hide(eventHandler);
-                    /*MATCH.Utilities.Utility.AnimateDisappearInPlace(HelpController.gameObject, new Vector3(0.1f, 0.1f, 0.1f), delegate {
-                        DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Mutex unlocked - all elements from the arch should be hidden");
-                        m_mutexHide = false;
-                    });*/
-
-                    // Hiding line
-                    if (LineView.gameObject.activeSelf)
+                    TextController.Hide(/*eventHandler*/ delegate(System.Object o, EventArgs e)
                     {
-                        LineView.GetComponent<LineToObject>().hide(MATCH.Utilities.Utility.GetEventHandlerEmpty()); // The eventhandler being already called above, we do not want it to be called twice, as this could create strange behaviors.
-                        m_mutexHide = false;
-                    }
-                    else
-                    {
-                        DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Warning, "Line already hidden: nothing to do");
-                        m_mutexHide = false;
-                    }
+                        // Hiding line
+                        if (LineView.gameObject.activeSelf)
+                        {
+                            LineView.GetComponent<LineToObject>().hide(eventHandler); // The eventhandler being already called above, we do not want it to be called twice, as this could create strange behaviors.
+                            m_mutexHide = false;
+                        }
+                        else
+                        {
+                            DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Warning, "Line already hidden: nothing to do");
+                            eventHandler?.Invoke(this, EventArgs.Empty);
+                            m_mutexHide = false;
+                        }
+                    }, withAnimation);
                 }
                 else
                 {
@@ -171,24 +156,42 @@ namespace MATCH
                 LineController.PointEnd = target.position;
             }
 
-            public override void ShowHelp(bool show, EventHandler callback)
+            public override void ShowHelp(bool show, EventHandler callback, bool withAnimation)
             {
                 if (show)
                 {
                     MATCH.Utilities.Utility.AdjustObjectHeightToHeadHeight(HelpController);
 
-                    HelpController.gameObject.AddComponent<MATCH.Utilities.Animation>().AnimateAppearInPlaceToScaling(new Vector3(0.1f, 0.1f, 0.1f), delegate
+                    if (withAnimation)
                     {
-                        DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Called");
+                        HelpController.gameObject.AddComponent<MATCH.Utilities.Animation>().AnimateAppearInPlaceToScaling(new Vector3(0.1f, 0.1f, 0.1f), delegate
+                        {
+                            DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Called");
 
-                        Destroy(HelpController.gameObject.GetComponent<Animation>());
+                            Destroy(HelpController.gameObject.GetComponent<Animation>());
+                            callback?.Invoke(this, EventArgs.Empty);
+                        }
+                        );
+                    }
+                    else
+                    {
+                        HelpController.gameObject.SetActive(true);
                         callback?.Invoke(this, EventArgs.Empty);
                     }
-                    );
+                    
                 }
                 else
                 {
-                    MATCH.Utilities.Utility.AnimateDisappearInPlace(HelpController.gameObject, new Vector3(0.1f, 0.1f, 0.1f), callback);
+                    if (withAnimation)
+                    {
+                        MATCH.Utilities.Utility.AnimateDisappearInPlace(HelpController.gameObject, new Vector3(0.1f, 0.1f, 0.1f), callback);
+                    }
+                    else
+                    {
+                        HelpController.gameObject.SetActive(false);
+                        HelpController.transform.localScale = new Vector3(0.1f, 0.1f, 0.1f);
+                        callback?.Invoke(this, EventArgs.Empty);
+                    }
 
                 }
 

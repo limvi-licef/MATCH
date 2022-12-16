@@ -149,7 +149,7 @@ namespace MATCH
                 {
                     m_hologramWindowReminderView.position = new Vector3(m_hologramWindowReminderView.position.x, m_clockView.position.y, m_hologramWindowReminderView.position.z);
 
-                    m_dialogController.Show(MATCH.Utilities.Utility.GetEventHandlerEmpty());
+                    m_dialogController.Show(MATCH.Utilities.Utility.GetEventHandlerEmpty(), true);
                     EventHologramClockTouched?.Invoke(this, EventArgs.Empty);
                 });
             }
@@ -160,31 +160,14 @@ namespace MATCH
                 { // I.e. not active if the dialog is displayed
                     if (m_newObjectToFocusTransform == null || (m_newObjectToFocusTransform.name != ((GameObject)sender).name))
                     { // To avoid doing unnecessary processes if the situation did not change
-                        /*string currentObjectName = "not initialized yet";
-
-                        if (m_newObjectToFocusTransform != null)
-                        {
-                            currentObjectName = ((UnityEngine.GameObject)sender).name;
-                        }*/
-
                         m_newObjectToFocusTransform = ((GameObject)sender).transform;
                         m_newObjectToFocus = true;
                     }
                 }
             }
 
-            /*void CallbackOnWindowOkButtonTouched()
-            {
-                EventHologramWindowButtonOkTouched?.Invoke(this, EventArgs.Empty);
-            }*/
-
-            /*void CallbackOnWindowBackButtonTouched()
-            {
-                EventHologramWindowButtonBackTouched?.Invoke(this, EventArgs.Empty);
-            }*/
-
             bool MutexHide = false;
-            public override void Hide(EventHandler e)
+            public override void Hide(EventHandler e, bool withAnimation)
             {
                 DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Called");
 
@@ -193,16 +176,25 @@ namespace MATCH
                     DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Mutex locked");
                     MutexHide = true;
 
-                    //GameObject temp;
-
                     if (m_clockView.gameObject.activeSelf)
                     {
-                        MATCH.Utilities.Utility.AnimateDisappearInPlace(m_clockView.gameObject, new Vector3(0.1f, 0.1f, 0.1f), delegate
+                        if (withAnimation)
                         {
-                            DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Mutex unlocked - clock hidden");
+                            MATCH.Utilities.Utility.AnimateDisappearInPlace(m_clockView.gameObject, new Vector3(0.1f, 0.1f, 0.1f), delegate
+                            {
+                                DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Mutex unlocked - clock hidden");
+                                MutexHide = false;
+                                IsDisplayed = false;
+                            });
+                        }
+                        else
+                        {
+                            m_clockView.gameObject.SetActive(false);
+                            m_clockView.transform.localScale = new Vector3(0.1f, 0.1f, 0.1f);
                             MutexHide = false;
                             IsDisplayed = false;
-                        });
+                        }
+                        
                     }
                     else
                     { // Only two children for know so fine this way. But to be extended if it happens that more children are added in the future
@@ -212,7 +204,7 @@ namespace MATCH
 
                             MutexHide = false; //.unlockMutex();
                             e?.Invoke(this, EventArgs.Empty);
-                        });
+                        }, withAnimation);
                     }
 
 
@@ -221,7 +213,7 @@ namespace MATCH
 
             bool MutexShow = false;
             bool ShowFirstTime = false;
-            public override void Show(EventHandler eventHandler)
+            public override void Show(EventHandler eventHandler, bool withAnimation)
             {
                 m_clockScalingOriginal = new Vector3(0.1f, 0.1f, 0.1f);
                 DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Clock is going to appear to scaling: " + m_clockScalingOriginal);
@@ -234,25 +226,45 @@ namespace MATCH
 
                     MATCH.Utilities.Utility.AdjustObjectHeightToHeadHeight(transform, m_yOffsetOrigin);
 
-                    MATCH.Utilities.Animation animator = m_clockView.gameObject.AddComponent<MATCH.Utilities.Animation>();
-
-                    animator.AnimateAppearInPlaceToScaling(m_clockScalingOriginal, new EventHandler(delegate (System.Object oo, EventArgs ee)
+                    if (withAnimation)
                     {
+                        MATCH.Utilities.Animation animator = m_clockView.gameObject.AddComponent<MATCH.Utilities.Animation>();
+                        animator.AnimateAppearInPlaceToScaling(m_clockScalingOriginal, new EventHandler(delegate (System.Object oo, EventArgs ee)
+                        {
+                            eventHandler?.Invoke(this, EventArgs.Empty);
+
+                            if (ShowFirstTime == false)
+                            {
+                                Utilities.HologramInteractions temp = m_clockView.GetComponent<Utilities.HologramInteractions>();
+                                temp.EventTouched += CallbackOnClockTouched;
+
+                                ShowFirstTime = true;
+                            }
+
+                            Destroy(m_clockView.gameObject.GetComponent<MATCH.Utilities.Animation>());
+                            MutexShow = false;
+                            IsDisplayed = true;
+                        }
+                            ));
+                    }
+                    else
+                    {
+                        m_clockView.gameObject.SetActive(true);
+                        m_clockView.transform.localScale = m_clockScalingOriginal;
                         eventHandler?.Invoke(this, EventArgs.Empty);
 
-                        if (ShowFirstTime == false)
-                        {
-                            Utilities.HologramInteractions temp = m_clockView.GetComponent<Utilities.HologramInteractions>();
-                            temp.EventTouched += CallbackOnClockTouched;
+                            if (ShowFirstTime == false)
+                            {
+                                Utilities.HologramInteractions temp = m_clockView.GetComponent<Utilities.HologramInteractions>();
+                                temp.EventTouched += CallbackOnClockTouched;
 
-                            ShowFirstTime = true;
-                        }
+                                ShowFirstTime = true;
+                            }
 
-                        Destroy(m_clockView.gameObject.GetComponent<MATCH.Utilities.Animation>());
-                        MutexShow = false;
-                        IsDisplayed = true;
+                            MutexShow = false;
+                            IsDisplayed = true;
                     }
-                        ));
+                    
                 }
                 else
                 {
@@ -260,9 +272,12 @@ namespace MATCH
                 }
             }
 
-            public override void ShowHelp(bool show, EventHandler callback)
+            /**
+             * Todo: to implement
+             */
+            public override void ShowHelp(bool show, EventHandler callback, bool withAnimation)
             {
-                // Todo
+                DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Warning, "Not implemented yet");
             }
 
             // Be aware that this function does not send the object back to its original position

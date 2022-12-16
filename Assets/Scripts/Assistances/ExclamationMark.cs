@@ -31,14 +31,13 @@ namespace MATCH
 {
     namespace Assistances
     {
-        public class Basic : Assistance, IBasic
+        public class ExclamationMark : Assistance, IBasic
         {
-            public Transform ChildView;
+            Transform Top;
+            Transform Bottom;
+            Transform Child;
 
             Vector3 ChildScaleOrigin;
-
-            /*MouseUtilitiesMutex m_mutexShow;
-            MouseUtilitiesMutex m_mutexHide;*/
 
             public EventHandler s_touched;
 
@@ -51,16 +50,18 @@ namespace MATCH
                 // Initialize variables
 
                 // Children
-                ChildView = gameObject.transform.Find("Child");
+                Child = gameObject.transform.Find("Child");
+                Top = Child.transform.Find("Top");
+                Bottom = Child.transform.Find("Bottom");
 
                 // Scale origin
-                ChildScaleOrigin = ChildView.localScale;
+                ChildScaleOrigin = Child.localScale;
 
                 // Adding the touch event
-                Utilities.HologramInteractions interactions = ChildView.GetComponent<Utilities.HologramInteractions>();
+                Utilities.HologramInteractions interactions = Child.GetComponent<Utilities.HologramInteractions>();
                 if (interactions == null)
                 {
-                    interactions = ChildView.gameObject.AddComponent<Utilities.HologramInteractions>();
+                    interactions = Child.gameObject.AddComponent<Utilities.HologramInteractions>();
                 }
                 interactions.EventTouched += delegate (System.Object sender, EventArgs args)
                 {
@@ -114,7 +115,7 @@ namespace MATCH
 
                     if (withAnimation)
                     {
-                        MATCH.Utilities.Utility.AnimateAppearInPlace(ChildView.gameObject, ChildScaleOrigin, delegate (System.Object o, EventArgs e)
+                        MATCH.Utilities.Utility.AnimateAppearInPlace(Child.gameObject, ChildScaleOrigin, delegate (System.Object o, EventArgs e)
                         {
                             IsDisplayed = true;
                             //MutexShow = false;
@@ -125,7 +126,7 @@ namespace MATCH
                     }
                     else
                     {
-                        ChildView.gameObject.SetActive(true);
+                        Child.gameObject.SetActive(true);
                         IsDisplayed = true;
                         args.Success = true;
                         eventHandler?.Invoke(this, args);
@@ -149,9 +150,9 @@ namespace MATCH
                 {
                     if ( withAnimation )
                     {
-                        MATCH.Utilities.Utility.AnimateDisappearInPlace(ChildView.gameObject, ChildScaleOrigin, delegate (System.Object o, EventArgs e)
+                        MATCH.Utilities.Utility.AnimateDisappearInPlace(Child.gameObject, ChildScaleOrigin, delegate (System.Object o, EventArgs e)
                         {
-                            ChildView.gameObject.transform.localScale = ChildScaleOrigin;
+                            Child.gameObject.transform.localScale = ChildScaleOrigin;
                             IsDisplayed = false;
 
                             if (Help.IsDisplayed)
@@ -167,9 +168,9 @@ namespace MATCH
                     }
                     else
                     {
-                        ChildView.gameObject.SetActive(false);
+                        Child.gameObject.SetActive(false);
 
-                        ChildView.gameObject.transform.localScale = ChildScaleOrigin;
+                        Child.gameObject.transform.localScale = ChildScaleOrigin;
                         IsDisplayed = false;
 
                         if (Help.IsDisplayed)
@@ -210,12 +211,12 @@ namespace MATCH
 
             public override Transform GetTransform()
             {
-                return ChildView;
+                return Child;
             }
 
             public void SetMaterial(string materialName)
             {
-                Renderer renderer = ChildView.GetComponent<Renderer>();
+                Renderer renderer = Top.GetComponent<Renderer>();
                 if (renderer != null)
                 {
                     //DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Material set to " + materialName);
@@ -241,13 +242,13 @@ namespace MATCH
 
             public void SetScale(Vector3 scale)
             {
-                ChildView.transform.localScale = scale;
-                ChildScaleOrigin = ChildView.transform.localScale;
+                Child.transform.localScale = scale;
+                ChildScaleOrigin = Child.transform.localScale;
             }
 
             public Vector3 GetScale()
             {
-                return ChildView.transform.localScale;
+                return Child.transform.localScale;
             }
 
             public void SetLocalPosition(float x, float y, float z)
@@ -258,17 +259,17 @@ namespace MATCH
 
             public void SetLocalPosition(Vector3 localPosition)
             {
-                ChildView.transform.localPosition = localPosition;
+                Child.transform.localPosition = localPosition;
             }
 
             public Vector3 GetLocalPosition()
             {
-                return ChildView.transform.localPosition;
+                return Child.transform.localPosition;
             }
 
             public void SetBillboard(bool enable)
             {
-                ChildView.GetComponent<Billboard>().enabled = enable;
+                Child.GetComponent<Billboard>().enabled = enable;
             }
 
             public void TriggerTouch()
@@ -278,7 +279,7 @@ namespace MATCH
 
             public Transform GetChildTransform()
             {
-                return ChildView.transform;
+                return Child.transform;
             }
 
             public Assistance GetAssistance()

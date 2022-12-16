@@ -88,21 +88,21 @@ namespace MATCH
 
                     //Stand by
                     MATCH.FiniteStateMachine.MouseUtilitiesGradationAssistance sStandBy = m_gradationManager.addNewAssistanceGradation("StandBy");
-                    sStandBy.addFunctionShow(delegate (EventHandler e)
+                    sStandBy.addFunctionShow(delegate (EventHandler e, bool animate)
                     {
                         m_inferenceObjectOutStorage = new Inferences.ObjectOutInteractionSurface("Out Storage", CallbackDetectedOutStorage, mainObject, m_storage);
                         m_inferenceManager.RegisterInference(m_inferenceObjectOutStorage);
                         m_object.GetInteractionSurface().gameObject.layer = LayerMask.NameToLayer("Ignore Raycast"); //need to ignore raycast if the object is in the same area that the last one
                     OnChallengeStart();
-                    }, Utilities.Utility.GetEventHandlerEmpty());
-                    sStandBy.setFunctionHide(delegate (EventHandler e)
+                    }, Utilities.Utility.GetEventHandlerEmpty(), true);
+                    sStandBy.setFunctionHide(delegate (EventHandler e, bool animate)
                     {
                         e?.Invoke(this, EventArgs.Empty);
-                    }, Utilities.Utility.GetEventHandlerEmpty());
+                    }, Utilities.Utility.GetEventHandlerEmpty(), true);
 
                     //Waiting for taking object
                     MATCH.FiniteStateMachine.MouseUtilitiesGradationAssistance sWaitingToTakeObject = m_gradationManager.addNewAssistanceGradation("Waiting To Take Object");
-                    sWaitingToTakeObject.addFunctionShow(delegate (EventHandler e)
+                    sWaitingToTakeObject.addFunctionShow(delegate (EventHandler e, bool animate)
                     {
                         m_object.transform.localPosition = m_objectdetected.GetCenter();
                         m_object.GetInteractionSurface().gameObject.layer = LayerMask.NameToLayer("Spatial Awareness"); //for increase the object's area recognition
@@ -113,11 +113,11 @@ namespace MATCH
                         {
                             s_inferenceIgnoreObject?.Invoke(this, e);
                         }, m_object.GetInteractionSurface().gameObject);
-                    }, Utilities.Utility.GetEventHandlerEmpty());
-                    sWaitingToTakeObject.setFunctionHide(delegate (EventHandler e)
+                    }, Utilities.Utility.GetEventHandlerEmpty(), true);
+                    sWaitingToTakeObject.setFunctionHide(delegate (EventHandler e, bool animate)
                     {
                         e?.Invoke(this, EventArgs.Empty);
-                    }, Utilities.Utility.GetEventHandlerEmpty());
+                    }, Utilities.Utility.GetEventHandlerEmpty(), true);
 
                     //Exclamation Mark
                     MATCH.FiniteStateMachine.MouseUtilitiesGradationAssistance sExclamationMark = m_gradationManager.addNewAssistanceGradation("Exclamation mark");
@@ -126,23 +126,23 @@ namespace MATCH
 
                     //Transport
                     MATCH.FiniteStateMachine.MouseUtilitiesGradationAssistance sTransport = m_gradationManager.addNewAssistanceGradation("Transport");
-                    sTransport.addFunctionShow(delegate (EventHandler e)
+                    sTransport.addFunctionShow(delegate (EventHandler e, bool animate)
                     {
                         m_inferenceObjectInStorage = new Inferences.ObjectInInteractionSurface("Transport", CallbackDetectedInStorage, mainObject, m_storage);
                         m_inferenceManager.RegisterInference(m_inferenceObjectInStorage);
-                    }, Utilities.Utility.GetEventHandlerEmpty());
-                    sTransport.setFunctionHide(delegate (EventHandler e)
+                    }, Utilities.Utility.GetEventHandlerEmpty(), true);
+                    sTransport.setFunctionHide(delegate (EventHandler e, bool animate)
                     {
                         e?.Invoke(this, EventArgs.Empty);
-                    }, Utilities.Utility.GetEventHandlerEmpty());
+                    }, Utilities.Utility.GetEventHandlerEmpty(), true);
 
                     //Success
                     MATCH.FiniteStateMachine.MouseUtilitiesGradationAssistance sSuccess = m_gradationManager.addNewAssistanceGradation("Success");
                     sSuccess.setFunctionHideAndShow(successController);
-                    sSuccess.addFunctionShow(delegate (EventHandler e)
+                    sSuccess.addFunctionShow(delegate (EventHandler e, bool animate)
                     {
                         OnChallengeSuccess();
-                    }, Utilities.Utility.GetEventHandlerEmpty());
+                    }, Utilities.Utility.GetEventHandlerEmpty(), true);
 
 
 

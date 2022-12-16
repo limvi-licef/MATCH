@@ -62,7 +62,10 @@ namespace MATCH
                 PathPoints = PathFindingEngine.ComputePath(begin, end);
             }
 
-            public override void Show(EventHandler eventHandler)
+            /**
+             * withAnimation: ignored for now
+             */
+            public override void Show(EventHandler eventHandler, bool withAnimation)
             {
 
                 if (IsDisplayed == false)
@@ -80,7 +83,10 @@ namespace MATCH
 
             }
 
-            public override void Hide(EventHandler eventHandler)
+            /**
+             * Todo: withAnimation not implemented yet
+             */
+            public override void Hide(EventHandler eventHandler, bool withAnimation)
             {
                 if (IsDisplayed)
                 {
@@ -91,9 +97,12 @@ namespace MATCH
                 }
             }
 
-            public override void ShowHelp(bool show, EventHandler callback)
+            /**
+             * Todo: to implement
+             */
+            public override void ShowHelp(bool show, EventHandler callback, bool withAnimation)
             {
-
+                DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Warning, "Not implemented yet");
             }
 
             public override Transform GetTransform()

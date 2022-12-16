@@ -35,6 +35,8 @@ namespace MATCH
             public event EventHandler EventTouched;
             public event EventHandler EventFocusOn;
             public event EventHandler EventFocusOff;
+            public event EventHandler EyeFocusOn;
+            public event EventHandler EyeFocusOff;
 
             // Start is called before the first frame update
             void Start()
@@ -66,14 +68,22 @@ namespace MATCH
             // Not sure this works - at least I was not able to make it working on the Unity editor
             protected override void OnEyeFocusStart()
             {
-                DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Object focused by eye tracking");
+                //DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Object focused by eye tracking");
+                EyeFocusOn?.Invoke(this.gameObject, EventArgs.Empty);
             }
 
             // Not sure this works - at least I was not able to make it working on the Unity editor
             protected override void OnEyeFocusStay()
             {
                 base.OnEyeFocusStay();
-                DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Object focused by eye tracking");
+                //DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Object focused by eye tracking");
+                
+            }
+
+            protected override void OnEyeFocusStop()
+            {
+                base.OnEyeFocusStop();
+                EyeFocusOff?.Invoke(this.gameObject, EventArgs.Empty);
             }
 
             //public void On

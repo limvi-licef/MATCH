@@ -39,7 +39,7 @@ namespace MATCH
             public List<Buttons.Basic> ButtonsController;
 
             Vector3 ButtonsParentScalingOriginal;
-            Vector3 BackgoundScalingOriginal;
+            Vector3 BackgroundScalingOriginal;
             Vector3 TitleScalingOriginal;
             Vector3 DescriptionScalingOriginal;
             List<Vector3> ButtonsScalingOriginal;
@@ -66,7 +66,7 @@ namespace MATCH
 
                 // Initialize some values of the children
                 ButtonsParentScalingOriginal = ButtonsParentView.localScale;
-                BackgoundScalingOriginal = BackgroundView.localScale;
+                BackgroundScalingOriginal = BackgroundView.localScale;
                 TitleScalingOriginal = TitleView.localScale;
                 DescriptionScalingOriginal = DescriptionView.localScale;
 
@@ -147,6 +147,10 @@ namespace MATCH
                     b.localScale = new Vector3(scalingx, b.localScale.y, b.localScale.z);
                     Transform textButton = b.Find("IconAndText");
                     textButton.localScale = new Vector3(1.0f / scalingx, textButton.localScale.y, textButton.localScale.z);
+
+                    // Update the boxcollider
+                    BoxCollider collider = b.GetComponent<BoxCollider>();
+                    collider.size = new Vector3(0.18f, collider.size.y, 0.05f);
                 }
 
                 // Store button scaling
@@ -164,73 +168,67 @@ namespace MATCH
                 return controller;
             }
 
-            //bool MutexHide = false;
-            public override void Hide(EventHandler eventHandler)
+            public override void Hide(EventHandler eventHandler, bool withAnimation)
             {
-                /*if (MutexHide == false)
-                {
-                    MutexHide = true;*/
-
                 Utilities.EventHandlerArgs.Animation args = new Utilities.EventHandlerArgs.Animation();
 
                 if (IsDisplayed)
                 {
-                    MATCH.Utilities.Utility.AnimateDisappearInPlace(TitleView.gameObject, TitleScalingOriginal, delegate
+                    gameObject.GetComponent<BoxCollider>().enabled = false;
+
+                    if (withAnimation)
                     {
+                        MATCH.Utilities.Utility.AnimateDisappearInPlace(TitleView.gameObject, TitleScalingOriginal, delegate
+                        {
+                            IsDisplayed = false;
+                            args.Success = true;
+                            eventHandler?.Invoke(this, args);
+                        });
+
+                        Utilities.Utility.AnimateDisappearInPlace(DescriptionView.gameObject, DescriptionScalingOriginal);
+
+                        Utilities.Utility.AnimateDisappearInPlace(ButtonsParentView.gameObject, ButtonsParentScalingOriginal);
+
+                        Utilities.Utility.AnimateDisappearInPlace(BackgroundView.gameObject, BackgroundScalingOriginal);
+                    }
+                    else
+                    {
+                        TitleView.gameObject.SetActive(false);
+                        DescriptionView.gameObject.SetActive(false);
+                        ButtonsParentView.gameObject.SetActive(false);
+                        BackgroundView.gameObject.SetActive(false);
                         IsDisplayed = false;
-                        //MutexHide = false;
                         args.Success = true;
                         eventHandler?.Invoke(this, args);
-                    });
-
-                    Utilities.Utility.AnimateDisappearInPlace(DescriptionView.gameObject, DescriptionScalingOriginal);
-
-                    Utilities.Utility.AnimateDisappearInPlace(ButtonsParentView.gameObject, ButtonsParentScalingOriginal);
-
-                    Utilities.Utility.AnimateDisappearInPlace(BackgroundView.gameObject, BackgoundScalingOriginal);
+                    }
                 }
                 else
                 {
                     args.Success = false;
                     eventHandler?.Invoke(this, args);
                 }
-                /*}
-                else
-                {
-                    DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Warning, "Mutex locked, nothing will happen");
-                }*/
             }
 
-            //bool MutexShow = false;
-            public override void Show(EventHandler eventHandler)
+            public override void Show(EventHandler eventHandler, bool withAnimation)
             {
-                //DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Called for object " + name);
-
-
-
-                /* if (MutexShow == false)
-                 {
-                     MutexShow = true;*/
-
                 Utilities.EventHandlerArgs.Animation args = new Utilities.EventHandlerArgs.Animation();
 
-                    if (IsDisplayed == false)
+                if (IsDisplayed == false)
+                {
+                    gameObject.GetComponent<BoxCollider>().enabled = true;
+
+                    if (AdjustToHeight)
                     {
-                        if (AdjustToHeight)
-                        {
-                            Utilities.Utility.AdjustObjectHeightToHeadHeight(transform);
-                        }
+                        Utilities.Utility.AdjustObjectHeightToHeadHeight(transform);
+                    }
 
-                        //DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Going to show the background");
-
-                        Utilities.Utility.AnimateAppearInPlace(BackgroundView.gameObject, BackgoundScalingOriginal, delegate {
-                            //DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Background shown");
+                    if (withAnimation)
+                    {
+                        Utilities.Utility.AnimateAppearInPlace(BackgroundView.gameObject, BackgroundScalingOriginal, delegate {
 
                             Utilities.Utility.AnimateAppearInPlace(TitleView.gameObject);
-                            //Utilities.Utility.AnimateAppearInPlace(ButtonsParentView.gameObject);
                             Utilities.Utility.AnimateAppearInPlace(DescriptionView.gameObject);
 
-                            //MutexShow = false;
                             IsDisplayed = true;
 
                             args.Success = true;
@@ -240,17 +238,30 @@ namespace MATCH
                     }
                     else
                     {
-                        args.Success = false;
+                        BackgroundView.gameObject.SetActive(true);
+                        BackgroundView.transform.localScale = BackgroundScalingOriginal;
+
+                        TitleView.gameObject.SetActive(true);
+                        DescriptionView.gameObject.SetActive(true);
+                        IsDisplayed = true;
+
+                        args.Success = true;
                         eventHandler?.Invoke(this, args);
-                    }   
-                /*}
+                    }
+
+                    
+                }
                 else
                 {
-                    DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Warning, "Mutex locked, nothing will happen");
-                }*/
+                    args.Success = false;
+                    eventHandler?.Invoke(this, args);
+                }   
             }
 
-            public override void ShowHelp(bool show, EventHandler callback)
+            /**
+             * Todo: withAnimation ignored for now. Never uses animations to display help here
+             */
+            public override void ShowHelp(bool show, EventHandler callback, bool withAnimation)
             {
                 ButtonsParentView.gameObject.SetActive(show);
 

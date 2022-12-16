@@ -50,13 +50,27 @@ namespace MATCH
                     }
                 }
 
-                public GradationVisual CreateTypeExclamationMark(string name, Transform parent)
+                public GradationVisual CreateExclamationMarkFromCube(string name, Transform parent)
                 {
                     GradationVisual assistance = Assistances.Factory.Instance.CreateAssistanceGradationAttention(name);
                     Assistances.Basic assistanceBase = Assistances.Factory.Instance.CreateCube(Utilities.Materials.Colors.PurpleGlowing,parent);
                     assistanceBase.name = name+"_base";
                     assistance.AddAssistance(Assistances.Decorators.Factory.Instance.CreateMaterial(assistanceBase, Utilities.Materials.Textures.Exclamation));
                     assistance.AddAssistance(Assistances.Decorators.Factory.Instance.CreateMaterial(assistanceBase, Utilities.Materials.Textures.ExclamationRed));
+
+                    return assistance;
+                }
+
+                public GradationVisual CreateExclamationMark(string name, Transform parent)
+                {
+                    GradationVisual assistance = Assistances.Factory.Instance.CreateAssistanceGradationAttention(name);
+                    Assistances.ExclamationMark assistanceBase = Assistances.Factory.Instance.CreateExclamationMark(true, new Vector3(0,0,0), true, parent);
+                    assistanceBase.name = name + "_base";
+                    assistance.AddAssistance(Assistances.Decorators.Factory.Instance.CreateMaterial(assistanceBase, Utilities.Materials.Colors.WhiteMetallic));
+                    assistance.AddAssistance(Assistances.Decorators.Factory.Instance.CreateMaterial(assistanceBase, Utilities.Materials.Colors.YellowGlowing));
+                    assistance.AddAssistance(Assistances.Decorators.Factory.Instance.CreateMaterial(assistanceBase, Utilities.Materials.Colors.RedGlowing));
+
+                    assistance.transform.localPosition = new Vector3(0, 0, 0);
 
                     return assistance;
                 }
@@ -109,7 +123,8 @@ namespace MATCH
                     return toReturn;
                 }
 
-                public GradationVisual CreateLightPath(string assistanceName, Transform parent)
+                //Todo: finalize the implementation of the assistance below
+                /*public GradationVisual CreateLightPath(string assistanceName, Transform parent)
                 {
                     //Assistances.Pa
                     Assistances.GradationVisual.GradationVisual toReturn = Assistances.Factory.Instance.CreateAssistanceGradationAttention(assistanceName);
@@ -117,14 +132,26 @@ namespace MATCH
                     // Todo: assistance not yet implemented
 
                     return toReturn;
-                }
+                }*/
 
-                public GradationVisual CreateLightPathWithInformation(string assistanceName, Transform parent)
+                // Todo: finalize the implementation of the assistance below
+                /*public GradationVisual CreateLightPathWithInformation(string assistanceName, Transform parent)
                 {
                     //Assistances.Pa
                     Assistances.GradationVisual.GradationVisual toReturn = Assistances.Factory.Instance.CreateAssistanceGradationAttention(assistanceName);
 
                     // Todo: assistance not yet implemented
+
+                    return toReturn;
+                }*/
+
+                public GradationVisual CreateArch(string assistanceName, string assistance, Transform start, Transform end, Transform parent)
+                {
+                    ArchWithTextAndHelp controller = Assistances.Factory.Instance.CreateAssistanceArch(assistanceName, start, end, parent);
+                    controller.SetDescription(assistance);
+
+                    Assistances.GradationVisual.GradationVisual toReturn = Assistances.Factory.Instance.CreateAssistanceGradationAttention(assistanceName);
+                    toReturn.AddAssistance(controller);
 
                     return toReturn;
                 }

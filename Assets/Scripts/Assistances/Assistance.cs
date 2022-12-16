@@ -39,13 +39,13 @@ namespace MATCH
                 EventHelpButtonClicked?.Invoke(this, args);
             }
 
-            public abstract void Show(EventHandler callback);
-            public abstract void Hide(EventHandler callback);
+            public abstract void Show(EventHandler callback, bool withAnimation = true);
+            public abstract void Hide(EventHandler callback, bool withAnimation=true);
 
             /**
              * True: show; False: hide
              * */
-            public abstract void ShowHelp(bool show, EventHandler callback);
+            public abstract void ShowHelp(bool show, EventHandler callback, bool withAnimation=true);
 
             /**
              * Return the Transform associated to the assistance
@@ -62,8 +62,6 @@ namespace MATCH
 
                 OnHelpButtonClicked(args.ButtonType);
             }
-
-            //public abstract bool IsActive();
 
             public abstract bool IsDecorator(); // Must specify if the assistance is a decorator of another assistance or not
         }

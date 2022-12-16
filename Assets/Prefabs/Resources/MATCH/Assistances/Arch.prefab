@@ -173,6 +173,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1806448422440766891}
   - component: {fileID: 1806448422440766892}
+  - component: {fileID: 2924209847894877456}
   m_Layer: 0
   m_Name: Arch
   m_TagString: Untagged
@@ -209,8 +210,46 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b456e542ff6de6040bf3f355474208d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  HelpController: {fileID: 0}
-  TextView: {fileID: 0}
+--- !u!114 &2924209847894877456
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1806448422440766890}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e1e6657bab90ac149872e5361b42ea62, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  selectAction:
+    id: 0
+    description: None
+    axisConstraint: 0
+  voiceSelect: []
+  dwellTimeInSec: 0.8
+  onLookAtStart:
+    m_PersistentCalls:
+      m_Calls: []
+  whileLookingAtTarget:
+    m_PersistentCalls:
+      m_Calls: []
+  onLookAway:
+    m_PersistentCalls:
+      m_Calls: []
+  onDwell:
+    m_PersistentCalls:
+      m_Calls: []
+  onSelected:
+    m_PersistentCalls:
+      m_Calls: []
+  onTapDown:
+    m_PersistentCalls:
+      m_Calls: []
+  onTapUp:
+    m_PersistentCalls:
+      m_Calls: []
+  eyeCursorSnapToTargetCenter: 0
 --- !u!1 &1806448422741981611
 GameObject:
   m_ObjectHideFlags: 0
@@ -255,8 +294,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 120706a0824004f438afee00eb0b677b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_hologramTarget: {fileID: 0}
-  m_hologramOrigin: {fileID: 0}
   m_numPoints: 100
 --- !u!120 &1806448422741981613
 LineRenderer:

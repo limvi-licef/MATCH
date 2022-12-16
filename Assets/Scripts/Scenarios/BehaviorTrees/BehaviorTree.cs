@@ -50,7 +50,7 @@ namespace MATCH
                     InitializeDebugWindows();
 
                     // Debug object to display the status of the BT conditions
-                    BehaviorTreeDebugWindow.Show(Utilities.Utility.GetEventHandlerEmpty());
+                    BehaviorTreeDebugWindow.Show(Utilities.Utility.GetEventHandlerEmpty(), false);
                     BehaviorTreeDebugWindow.GetTransform().gameObject.AddComponent<ObjectManipulator>();
                     AdminMenu.Instance.AddButton("BT debug - " + GetId() + " - Bring", CallbackBringBTDebugWindow, AdminMenu.Panels.Left);
                     AdminMenu.Instance.AddSwitchButton("BT debug - " + GetId() + " - Hide", delegate ()
@@ -58,7 +58,7 @@ namespace MATCH
                         BehaviorTreeDebugWindow.gameObject.SetActive(!BehaviorTreeDebugWindow.gameObject.activeSelf);
                     }, AdminMenu.Panels.Left, AdminMenu.ButtonType.Hide);
 
-                    AssistancesDebugWindow.Show(Utilities.Utility.GetEventHandlerEmpty());
+                    AssistancesDebugWindow.Show(Utilities.Utility.GetEventHandlerEmpty(), false);
                     AssistancesDebugWindow.GetTransform().gameObject.AddComponent<ObjectManipulator>();
                     AdminMenu.Instance.AddButton("Assistances debug - " + GetId() + " - Bring", CallbackBringAssistancesDebugWindow, AdminMenu.Panels.Left);
                     AdminMenu.Instance.AddSwitchButton("Assistances debug - " + GetId() + " - Hide", delegate ()
