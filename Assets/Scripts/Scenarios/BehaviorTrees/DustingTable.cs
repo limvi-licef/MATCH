@@ -73,7 +73,7 @@ namespace MATCH
                     Init();
 
                     // Initialize debug buttons
-                    InitializeDebugButtons();
+                    //InitializeDebugButtons();
                 }
 
                 protected override Root InitializeBehaviorTree()
@@ -186,7 +186,7 @@ namespace MATCH
                         new NPBehave.Action(() => {
                             ShowAssistanceHideOthers(alpha);
                             InferenceManager.UnregisterAllInferences();
-                            AssistancesDebugWindow.SetDescription("Alpha");
+                            UpdateTextAssistancesDebugWindow("Alpha");
                             MATCH.Utilities.Logger.Instance.Log(this.GetId(), MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, "Alpha");
                         }),
                         new WaitUntilStopped()
@@ -258,7 +258,7 @@ namespace MATCH
                     Sequence temp = new Sequence(
                         new NPBehave.Action(() => {
                             ShowAssistanceHideOthers(assistanceBeta); //assistanceBeta.RunAssistance();
-                            AssistancesDebugWindow.SetDescription("Beta");
+                            UpdateTextAssistancesDebugWindow("Beta");
                             MATCH.Utilities.Logger.Instance.Log(this.GetId(), MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, "Beta");
                         }),
                         new WaitUntilStopped()
@@ -295,7 +295,7 @@ namespace MATCH
                     Sequence temp = new Sequence(
                         new NPBehave.Action(() =>
                         {
-                            AssistancesDebugWindow.SetDescription("Epsilon");
+                            UpdateTextAssistancesDebugWindow("Epsilon");
                             MATCH.Utilities.Logger.Instance.Log(this.GetId(), MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, "Epsilon");
                         }),
                         new WaitUntilStopped());
@@ -330,7 +330,7 @@ namespace MATCH
                             gamma.RunAssistance();
                             AssistancesDusting[gamma] = true;
                             InferenceManager.UnregisterAllInferences();
-                            AssistancesDebugWindow.SetDescription("Gamma");
+                            UpdateTextAssistancesDebugWindow("Gamma");
                             MATCH.Utilities.Logger.Instance.Log(this.GetId(), MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, "Gamma");
                         }),
                         new WaitUntilStopped()
@@ -342,7 +342,7 @@ namespace MATCH
                 Sequence AssistanceTest()
                 {
                     Sequence temp = new Sequence(
-                        new NPBehave.Action(() => AssistancesDebugWindow.SetDescription("Test")),
+                        new NPBehave.Action(() => UpdateTextAssistancesDebugWindow("Test")),
                         new WaitUntilStopped());
 
                     return temp;
@@ -361,7 +361,7 @@ namespace MATCH
                             });
                             InferenceManager.RegisterInference(inf2);
                             inf2.StartCounter();
-                            AssistancesDebugWindow.SetDescription("Zeta");
+                            UpdateTextAssistancesDebugWindow("Zeta");
                             MATCH.Utilities.Logger.Instance.Log(this.GetId(), MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, "Zeta");
                             UpdateConditionWithMatrix(ConditionsProcessRelatedToNewPartsCleanedDone);
                         }),
@@ -375,7 +375,7 @@ namespace MATCH
                     Sequence temp = new Sequence(
                         new NPBehave.Action(() =>
                         {
-                            AssistancesDebugWindow.SetDescription("Theta");
+                            UpdateTextAssistancesDebugWindow("Theta");
                             MATCH.Utilities.Logger.Instance.Log(this.GetId(), MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, "Theta");
                         }),
                         new WaitUntilStopped()
@@ -415,7 +415,7 @@ namespace MATCH
                             //ShowAssistanceHideOthers(delta);
                             delta.RunAssistance();
                             AssistancesDusting[delta] = true;
-                            AssistancesDebugWindow.SetDescription("Delta");
+                            UpdateTextAssistancesDebugWindow("Delta");
                             MATCH.Utilities.Logger.Instance.Log(this.GetId(), MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, "Delta");
                         }),
                         new WaitUntilStopped());
@@ -462,7 +462,7 @@ namespace MATCH
                             InferenceManager.RegisterInference(inf);
                             inf.StartCounter();
 
-                            AssistancesDebugWindow.SetDescription("Eta");
+                            UpdateTextAssistancesDebugWindow("Eta");
                             MATCH.Utilities.Logger.Instance.Log(this.GetId(), MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, "Eta");
                         })
                         );

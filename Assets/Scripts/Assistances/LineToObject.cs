@@ -116,7 +116,7 @@ namespace MATCH
                         //Vector3 startPoint = m_hologramOrigin.transform.position;
                         //Vector3 endPoint = m_hologramTarget.transform.position;
                         Vector3 midPoint = (PointOrigin + PointEnd) / 2;
-                        midPoint.y += 2.0f;
+                        midPoint.y += 1.0f;
 
                         gameObject.SetActive(true);
 

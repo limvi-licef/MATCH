@@ -42,11 +42,19 @@ namespace MATCH
             private void Awake()
             {
                 InferencesStorage = new Dictionary<string, Inference>();
+                BehaviorTreeDebugWindow = null;
             }
 
             private void Start()
             {
                 // Debug object to display the status of the BT conditions
+                //InitializeDebugWindow();
+
+                OnStartFinished?.Invoke(this, EventArgs.Empty);
+            }
+
+            private void InitializeDebugWindow()
+            {
                 BehaviorTreeDebugWindow = Assistances.Factory.Instance.CreateDialogNoButton("Inferences status", "Empty for now", transform);
                 BehaviorTreeDebugWindow.Show(Utilities.Utility.GetEventHandlerEmpty(), false);
                 BehaviorTreeDebugWindow.GetTransform().gameObject.AddComponent<ObjectManipulator>();
@@ -55,13 +63,14 @@ namespace MATCH
                 {
                     BehaviorTreeDebugWindow.gameObject.SetActive(!BehaviorTreeDebugWindow.gameObject.activeSelf);
                 }, AdminMenu.Panels.Middle, AdminMenu.ButtonType.Hide);
-
-                OnStartFinished?.Invoke(this, EventArgs.Empty);
             }
 
             public void CallbackBringWindow()
             {
-                BehaviorTreeDebugWindow.transform.position = new Vector3(Camera.main.transform.position.x + 0.5f, Camera.main.transform.position.y, Camera.main.transform.position.z);
+                if (BehaviorTreeDebugWindow != null)
+                {
+                    BehaviorTreeDebugWindow.transform.position = new Vector3(Camera.main.transform.position.x + 0.5f, Camera.main.transform.position.y, Camera.main.transform.position.z);
+                }
             }
 
             void UpdateInferencesStatus(List<string> ids, List<bool> evaluations)
@@ -75,7 +84,10 @@ namespace MATCH
                 }
 
                 // Display the text
-                BehaviorTreeDebugWindow.SetDescription(textToDisplay, 0.08f);
+                if (BehaviorTreeDebugWindow != null)
+                {
+                    BehaviorTreeDebugWindow.SetDescription(textToDisplay, 0.08f);
+                }
             }
 
             // Update is called once per frame

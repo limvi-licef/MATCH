@@ -34,8 +34,8 @@ namespace MATCH
                 private List<string> ConditionsIds; // To ease browsing of Conditions with updating the matrix
                 private Dictionary<string, bool[]> ConditionsUpdate;
 
-                protected Assistances.Dialog BehaviorTreeDebugWindow = null;
-                protected Assistances.Dialog AssistancesDebugWindow = null;
+                private Assistances.Dialog BehaviorTreeDebugWindow = null;
+                private Assistances.Dialog AssistancesDebugWindow = null;
 
                 public virtual void Awake()
                 {
@@ -47,10 +47,10 @@ namespace MATCH
                 // Start is called before the first frame update
                 public virtual void Start()
                 {
-                    InitializeDebugWindows();
+                    //InitializeDebugWindows();
 
                     // Debug object to display the status of the BT conditions
-                    BehaviorTreeDebugWindow.Show(Utilities.Utility.GetEventHandlerEmpty(), false);
+                    /*BehaviorTreeDebugWindow.Show(Utilities.Utility.GetEventHandlerEmpty(), false);
                     BehaviorTreeDebugWindow.GetTransform().gameObject.AddComponent<ObjectManipulator>();
                     AdminMenu.Instance.AddButton("BT debug - " + GetId() + " - Bring", CallbackBringBTDebugWindow, AdminMenu.Panels.Left);
                     AdminMenu.Instance.AddSwitchButton("BT debug - " + GetId() + " - Hide", delegate ()
@@ -64,7 +64,7 @@ namespace MATCH
                     AdminMenu.Instance.AddSwitchButton("Assistances debug - " + GetId() + " - Hide", delegate ()
                     {
                         AssistancesDebugWindow.gameObject.SetActive(!AssistancesDebugWindow.gameObject.activeSelf);
-                    }, AdminMenu.Panels.Left, AdminMenu.ButtonType.Hide);
+                    }, AdminMenu.Panels.Left, AdminMenu.ButtonType.Hide);*/
                 }
 
                 /**
@@ -72,7 +72,7 @@ namespace MATCH
                  */
                 public void Init()
                 {
-                    InitializeDebugWindows(); // Debug windows are initialized in two places, because sometimes the Start function is called before the init and vice-versa
+                    //InitializeDebugWindows(); // Debug windows are initialized in two places, because sometimes the Start function is called before the init and vice-versa
 
                     // Initialize the behavior tree
                     Tree = InitializeBehaviorTree();
@@ -194,18 +194,30 @@ namespace MATCH
                     UpdateTextDebugBehaviorTreeWindow();
                 }
 
+                protected void UpdateTextAssistancesDebugWindow(string text)
+                {
+                    if (AssistancesDebugWindow != null)
+                    {
+                        AssistancesDebugWindow.SetDescription(text);
+                    }
+                }
+
                 private void UpdateTextDebugBehaviorTreeWindow()
                 {
-                    // Making the text to display
-                    string textToDisplay = "Scenario: " + GetId();
-
-                    foreach (string key in /*Conditions.Keys*/ConditionsIds)
+                    if (BehaviorTreeDebugWindow != null)
                     {
-                        textToDisplay += "\n" + key + " = " + Conditions[key];
-                    }
+                        // Making the text to display
+                        string textToDisplay = "Scenario: " + GetId();
 
-                    // Display the text
-                    BehaviorTreeDebugWindow.SetDescription(textToDisplay, 0.08f);
+                        foreach (string key in /*Conditions.Keys*/ConditionsIds)
+                        {
+                            textToDisplay += "\n" + key + " = " + Conditions[key];
+                        }
+
+                        // Display the text
+                   
+                        BehaviorTreeDebugWindow.SetDescription(textToDisplay, 0.08f);
+                    }
                 }
 
                 /**
