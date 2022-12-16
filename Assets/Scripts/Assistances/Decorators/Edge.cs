@@ -128,6 +128,8 @@ namespace MATCH
                         EdgeLeft.gameObject.SetActive(true);
                         EdgeRight.gameObject.SetActive(true);
 
+                        DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Edges shown");
+
                         callback?.Invoke(this, e);
                     }, withAnimation);
                 }

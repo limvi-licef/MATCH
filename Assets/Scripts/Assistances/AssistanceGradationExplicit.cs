@@ -86,7 +86,7 @@ namespace MATCH
                 //InitializeBehaviorTree();
 
                 // Debug buttons to check if the BT has been correctly modeled
-                AdminMenu.Instance.AddButton("BT - GradationExplicit- Trigger - Start assistance", delegate
+                /*AdminMenu.Instance.AddButton("BT - GradationExplicit- Trigger - Start assistance", delegate
                 {
                     UpdateConditionWithMatrix(ConditionStartAssistance);
                 }, AdminMenu.Panels.Right);
@@ -123,7 +123,7 @@ namespace MATCH
                 AdminMenu.Instance.AddButton("BT - GradationExplicit- Trigger - Waiting since 30s", delegate
                 {
                     UpdateConditionWithMatrix(ConditionWaitingSince30Seconds);
-                }, AdminMenu.Panels.Right);
+                }, AdminMenu.Panels.Right);*/
 
                 // To check if the description of the assistance windows is correctly updated
                 //AssistancesDebugWindow.SetDescription("Test for gradation explicit");
@@ -306,7 +306,8 @@ namespace MATCH
                             AssistancesGradation.BackToRoot();
                         });
 
-                        AssistancesDebugWindow.SetDescription("Eta");
+                        //AssistancesDebugWindow.SetDescription("Eta");
+                        base.UpdateTextAssistancesDebugWindow("Eta");
                         MATCH.Utilities.Logger.Instance.Log(this.GetId(), MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, "Eta");
                     }),
                     new WaitUntilStopped());
@@ -343,7 +344,7 @@ namespace MATCH
                             InfManager.RegisterInference(timer);
                             timer.StartCounter();
 
-                            AssistancesDebugWindow.SetDescription("Alpha");
+                                UpdateTextAssistancesDebugWindow("Alpha");
                                 MATCH.Utilities.Logger.Instance.Log(this.GetId(), MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, "Alpha");
                             }
                         });
@@ -380,7 +381,7 @@ namespace MATCH
                         InfManager.RegisterInference(timer);
                         timer.StartCounter();
 
-                        AssistancesDebugWindow.SetDescription("Beta");
+                        UpdateTextAssistancesDebugWindow("Beta");
                         MATCH.Utilities.Logger.Instance.Log(this.GetId(), MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, "Beta");
                     })
                     );
@@ -393,7 +394,7 @@ namespace MATCH
                 Sequence temp = new Sequence(
                     new NPBehave.Action(() => {
                         AssistancesGradation.AssistanceCurrent.ShowNextGradation(Utilities.Utility.GetEventHandlerEmpty());
-                        AssistancesDebugWindow.SetDescription("Delta");
+                        UpdateTextAssistancesDebugWindow("Delta");
                         MATCH.Utilities.Logger.Instance.Log(this.GetId(), MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, "Delta");
 
                         if (AssistancesGradation.AssistanceCurrent.IsLastGradationLevel() == false)
@@ -419,7 +420,7 @@ namespace MATCH
             {
                 Sequence temp = new Sequence(
                     new NPBehave.Action(() => {
-                        AssistancesDebugWindow.SetDescription("Gamma");
+                        UpdateTextAssistancesDebugWindow("Gamma");
                         MATCH.Utilities.Logger.Instance.Log(this.GetId(), MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, "Gamma");
                     }),
                     new WaitUntilStopped()
@@ -451,8 +452,8 @@ namespace MATCH
                                 UpdateConditionWithMatrix(ConditionStartAssistance);
                             }
                         }
-                        
-                        AssistancesDebugWindow.SetDescription("Epsilon");
+
+                        UpdateTextAssistancesDebugWindow("Epsilon");
                         MATCH.Utilities.Logger.Instance.Log(this.GetId(), MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, "Epsilon");
                     }),
                     new WaitUntilStopped()
@@ -467,7 +468,7 @@ namespace MATCH
                     new NPBehave.Action(() =>
                     {
                         AssistancesGradation.AssistanceCurrent.ShowHelpCurrentGradation(true, Utilities.Utility.GetEventHandlerEmpty());
-                        AssistancesDebugWindow.SetDescription("Zeta");
+                        UpdateTextAssistancesDebugWindow("Zeta");
                         MATCH.Utilities.Logger.Instance.Log(this.GetId(), MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, "Zeta");
                     }),
                     new WaitUntilStopped()

@@ -123,14 +123,14 @@ namespace MATCH
                 {
                     InteractionSurfaceDialogs = Assistances.Factory.Instance.CreateInteractionSurface("Tutorial-Dialogs", AdminMenu.Panels.Right, new Vector3(1.1f, 0.02f, 0.7f), new Vector3(-0.447f, -0.406f, 0.009f), Utilities.Materials.Colors.CyanGlowing, true, true, Utilities.Utility.GetEventHandlerEmpty(), true, transform);
                     
-                    InteractionCube = Assistances.Factory.Instance.CreateInteractionSurface("Tutorial-Cube", AdminMenu.Panels.Right, new Vector3(0.1f, 0.02f, 0.1f), new Vector3(-1.378f, -0.364f, 2.743f), Utilities.Materials.Colors.OrangeGlowing, true, true, Utilities.Utility.GetEventHandlerEmpty(), true, transform);
+                    InteractionCube = Assistances.Factory.Instance.CreateInteractionSurface("Tutorial-Cube", AdminMenu.Panels.Right, new Vector3(0.1f, 0.02f, 0.1f), new Vector3(-0.9f, -0.406f, -0.7f), Utilities.Materials.Colors.OrangeGlowing, true, true, Utilities.Utility.GetEventHandlerEmpty(), true, transform);
 
-                    InteractionPen = Assistances.Factory.Instance.CreateInteractionSurface("Tutorial-Pen", AdminMenu.Panels.Right, new Vector3(0.1f, 0.1f, 0.1f), new Vector3(-1.378f, -0.364f, 2.743f), Utilities.Materials.Colors.PurpleGlowing, true, true, Utilities.Utility.GetEventHandlerEmpty(), true, transform);
+                    InteractionPen = Assistances.Factory.Instance.CreateInteractionSurface("Tutorial-Pen", AdminMenu.Panels.Right, new Vector3(0.1f, 0.1f, 0.1f), new Vector3(-0.1f, -0.406f, -0.7f), Utilities.Materials.Colors.PurpleGlowing, true, true, Utilities.Utility.GetEventHandlerEmpty(), true, transform);
                 }
 
                 Sequence AssistanceAlpha()
                 {
-                    Assistances.GradationVisual.GradationVisual alpha1 = Assistances.GradationVisual.Factory.Instance.CreateDialogOneButton("Tutorial-Alpha-1", "", "Bienvenue! Voici un tutoriel pour vous familiariser avec cette assistance. Pour commencer, avec un doigt, touchez le bouton \"commencer\" ci-dessous", "Commencer !", delegate(System.Object o, EventArgs e)
+                    Assistances.GradationVisual.GradationVisual alpha1 = Assistances.GradationVisual.Factory.Instance.CreateDialogOneButton("Tutorial-Alpha-1", "", "Bienvenue! Voici un tutoriel pour vous familiariser avec cette assistance. Pour commencer, avec un doigt, touchez le bouton \"Commencer !\" ci-dessous.", "Commencer !", delegate(System.Object o, EventArgs e)
                     {
                         UpdateConditionWithMatrix(ConditionBeginningClicked);
                     }, Assistances.Buttons.Button.ButtonType.ClosingButton, InteractionSurfaceDialogs.transform);
@@ -148,7 +148,7 @@ namespace MATCH
                         new NPBehave.Action(() => {
                             ShowAssistanceHideOthers(alpha);
                             InferenceManager.UnregisterAllInferences();
-                            AssistancesDebugWindow.SetDescription("Alpha");
+                            UpdateTextAssistancesDebugWindow("Alpha");
                             MATCH.Utilities.Logger.Instance.Log(this.GetId(), MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, "Alpha");
                         }),
                         new WaitUntilStopped()
@@ -159,7 +159,7 @@ namespace MATCH
 
                 Sequence AssistanceBeta()
                 {
-                    Assistances.GradationVisual.GradationVisual betaBase = Assistances.GradationVisual.Factory.Instance.CreateDialogNoButton("Tutorial-Alpha-1", "", "Vous venez de découvrir la première interaction: toucher un bouton!\nMaintenant, vous allez voir un cube sur votre droite. Regardez le pendant quelques secondes pour passer à la suite", InteractionSurfaceDialogs.transform);
+                    Assistances.GradationVisual.GradationVisual betaBase = Assistances.GradationVisual.Factory.Instance.CreateDialogNoButton("Tutorial-Alpha-1", "", "Vous venez de découvrir la première interaction: toucher un bouton!\nMaintenant, vous allez voir un cube sur votre droite. Regardez le pendant quelques secondes pour passer à la suite.", InteractionSurfaceDialogs.transform);
 
                     Assistances.AssistanceGradationExplicit beta = MATCH.Assistances.Factory.Instance.CreateAssistanceGradationExplicit("Tutorial-Beta");
                     beta.transform.parent = transform;
@@ -183,7 +183,7 @@ namespace MATCH
                             Cube.gameObject.SetActive(true);
 
                             InferenceManager.UnregisterAllInferences();
-                            AssistancesDebugWindow.SetDescription("Beta");
+                            UpdateTextAssistancesDebugWindow("Beta");
                             MATCH.Utilities.Logger.Instance.Log(this.GetId(), MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, "Beta");
                         }),
                         new WaitUntilStopped()
@@ -194,7 +194,7 @@ namespace MATCH
                     
                 Sequence AssistanceGamma()
                 {
-                    Assistances.GradationVisual.GradationVisual gamma1 = Assistances.GradationVisual.Factory.Instance.CreateDialogOneButton("Tutorial-Gamma-1", "", "Super! Comme vous le voyez, le système comprend ce que vous regardez. Il pourra donc faire certaines action si vous regardez un objet.\nTouchez le bouton ci-dessous pour continuer", "Suivant", delegate(System.Object o, EventArgs e)
+                    Assistances.GradationVisual.GradationVisual gamma1 = Assistances.GradationVisual.Factory.Instance.CreateDialogOneButton("Tutorial-Gamma-1", "", "Super! Comme vous le voyez, le système comprend ce que vous regardez. Il pourra donc faire certaines actions si vous regardez un objet.\nTouchez le bouton ci-dessous pour continuer.", "Suivant", delegate(System.Object o, EventArgs e)
                     {
                         UpdateConditionWithMatrix(ConditionNextClicked);
                     }, Assistances.Buttons.Button.ButtonType.ClosingButton, InteractionCube.transform);
@@ -213,7 +213,7 @@ namespace MATCH
                             ShowAssistanceHideOthers(gamma);
                             Cube.gameObject.SetActive(false);
                             InferenceManager.UnregisterAllInferences();
-                            AssistancesDebugWindow.SetDescription("Gamma");
+                            UpdateTextAssistancesDebugWindow("Gamma");
                             MATCH.Utilities.Logger.Instance.Log(this.GetId(), MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, "Gamma");
                         }),
                         new WaitUntilStopped()
@@ -224,9 +224,9 @@ namespace MATCH
 
                 Sequence AssistanceDelta()
                 {
-                    Assistances.GradationVisual.GradationVisual delta1 = Assistances.GradationVisual.Factory.Instance.CreateDialogOneButton("Tutorial-Delta-1", "", "Une dernière chose! Il est important que vous regardiez votre lorsque vous faites une action. Cea est dû à une limite du casque que vous portez. Touchez le bouton ci-dessous pour continuer", "Suivant", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.Yes, InteractionCube.transform);
+                    Assistances.GradationVisual.GradationVisual delta1 = Assistances.GradationVisual.Factory.Instance.CreateDialogOneButton("Tutorial-Delta-1", "", "Une dernière chose! Il est important que vous regardiez votre main lorsque vous faites une action. Cea est dû à une limite technique du casque que vous portez. Un bouton va apparaître ci-dessous dans quelques secondes. Touchez le pour continuer.", "Suivant", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.Yes, InteractionCube.transform);
 
-                    Assistances.GradationVisual.GradationVisual delta2 = Assistances.GradationVisual.Factory.Instance.CreateDialogNoButton("Tutorial-Delta-1", "", "Pour tester cela, prenez le stylo sur votre gauche. Si vous l'avez regardé correctement en le prenant, alors vous verrez un nouveau texte apparaître ici. Sinon, reposez le au même endroit et recommencez.", InteractionCube.transform);
+                    Assistances.GradationVisual.GradationVisual delta2 = Assistances.GradationVisual.Factory.Instance.CreateDialogNoButton("Tutorial-Delta-1", "", "Pour tester cela, prenez le stylo sur votre gauche. Si vous l'avez regardé correctement en le prenant, alors vous verrez un nouveau texte apparaître ici. Sinon, reposez-le au même endroit et recommencez.", InteractionCube.transform);
 
                     Assistances.AssistanceGradationExplicit delta = MATCH.Assistances.Factory.Instance.CreateAssistanceGradationExplicit("Tutorial-Delta");
                     delta.transform.parent = transform;
@@ -247,7 +247,7 @@ namespace MATCH
                         new NPBehave.Action(() => {
                             ShowAssistanceHideOthers(delta);
                             InferenceManager.UnregisterAllInferences();
-                            AssistancesDebugWindow.SetDescription("Delta");
+                            UpdateTextAssistancesDebugWindow("Delta");
                             MATCH.Utilities.Logger.Instance.Log(this.GetId(), MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, "Delta");
                         }),
                         new WaitUntilStopped()
@@ -277,7 +277,7 @@ namespace MATCH
                         new NPBehave.Action(() => {
                             ShowAssistanceHideOthers(epsilon);
                             InferenceManager.UnregisterAllInferences();
-                            AssistancesDebugWindow.SetDescription("Epsilon");
+                            UpdateTextAssistancesDebugWindow("Epsilon");
                             MATCH.Utilities.Logger.Instance.Log(this.GetId(), MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, "Epsilon");
                         }),
                         new WaitUntilStopped()

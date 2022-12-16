@@ -139,7 +139,7 @@ namespace MATCH
                     // TEST - add it to the interaction surface manager to see if it is correctly detected when close to a surface
                     SurfacesManager.RegisterObject(FakeObject, delegate (System.Object o, EventArgs e)
                     {
-                        AssistancesDebugWindow.SetDescription("FakeObject has crossed surface!");
+                        UpdateTextAssistancesDebugWindow("FakeObject has crossed surface!");
                     });
 
                     // Base class
@@ -239,7 +239,7 @@ namespace MATCH
 
                         if (objectDetectedTemp)
                         { // Means object is still in the interaction surface: inform user before resetting the scenario
-                        AssistancesDebugWindow.SetDescription("Il faut d'abord enlever l'objet de la zone de stockage avant de pouvoir remettre le scénario à 0.");
+                            UpdateTextAssistancesDebugWindow("Il faut d'abord enlever l'objet de la zone de stockage avant de pouvoir remettre le scénario à 0.");
                         }
                         else
                         { // Object is outside the interface surface, safe to reset the scenario
@@ -374,13 +374,13 @@ namespace MATCH
                     BlackboardCondition cDidPersonApproachObject = new BlackboardCondition("PersonCloseToObject", Operator.IS_EQUAL, true, Stops.IMMEDIATE_RESTART, new Sequence(sePersonApproachedObject));
 
                     Sequence sePersonLookedAtObject = new Sequence(
-                        new NPBehave.Action(() => /*ShowOneHideOthers(Assistances.QandDAssistances.Gradation.Beta)*/ AssistancesDebugWindow.SetDescription("Assistance beta disabled in code")),
+                        new NPBehave.Action(() => /*ShowOneHideOthers(Assistances.QandDAssistances.Gradation.Beta)*/ UpdateTextAssistancesDebugWindow("Assistance beta disabled in code")),
                         new WaitUntilStopped());
 
                     BlackboardCondition cDidPersonLookAtObject = new BlackboardCondition("PersonWatchedObject", Operator.IS_EQUAL, true, Stops.IMMEDIATE_RESTART, sePersonLookedAtObject);
 
                     Sequence sePersonDidNotCameToObjectSinceAWhile = new Sequence(
-                        new NPBehave.Action(() => /*ShowOneHideOthers(Assistances.QandDAssistances.Gradation.Gamma)*/AssistancesDebugWindow.SetDescription("Assistance gamma disabled in code")),
+                        new NPBehave.Action(() => /*ShowOneHideOthers(Assistances.QandDAssistances.Gradation.Gamma)*/UpdateTextAssistancesDebugWindow("Assistance gamma disabled in code")),
                         new WaitUntilStopped());
 
                     BlackboardCondition cDidPersonDidNotComeToTheObjectSinceAWhile = new BlackboardCondition("PersonDidNotComeToObject", Operator.IS_EQUAL, true, Stops.IMMEDIATE_RESTART, sePersonDidNotCameToObjectSinceAWhile);
@@ -659,11 +659,11 @@ namespace MATCH
                         }
 
                         ObjectDetected = true;
-                        AssistancesDebugWindow.SetDescription("Object detected and crossing the surface!");
+                        UpdateTextAssistancesDebugWindow("Object detected and crossing the surface!");
                     }
                     else
                     {
-                        AssistancesDebugWindow.SetDescription("Object detected but does not cross surface: nothing to do");
+                        UpdateTextAssistancesDebugWindow("Object detected but does not cross surface: nothing to do");
                     }
                 }
 
