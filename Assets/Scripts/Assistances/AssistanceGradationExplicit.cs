@@ -511,6 +511,8 @@ namespace MATCH
 
                 ArgsOnHelpButtonClicked = (Utilities.EventHandlerArgs.ButtonAndAssistanceGradationAttention)e;
 
+
+                InfManager.UnregisterAllInferences();
                 /*if (ArgsOnHelpButtonClicked.AssistanceNext != null)
                 {*/
                 //Conditions["HelpClicked"] = true;

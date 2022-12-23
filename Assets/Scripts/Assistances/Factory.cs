@@ -192,7 +192,6 @@ namespace MATCH
                 controller.SetAdminButtons(id, panel);
                 controller.SetScaling(scaling);
                 controller.SetColor(texture);
-                controller.ShowInteractionSurfaceTable(show);
                 controller.SetObjectResizable(resizable);
                 controller.EventInteractionSurfaceMoved += onMove;
 
@@ -202,6 +201,9 @@ namespace MATCH
                 {
                      Utilities.WorldLockingToolsManager.Instance.RegisterObject(id, view, controller.GetInteractionSurface());
                 }
+
+                controller.ShowInteractionSurfaceTable(true);
+                controller.ShowInteractionSurfaceTable(show);
 
                 return controller;
             }

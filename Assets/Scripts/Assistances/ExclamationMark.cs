@@ -34,7 +34,7 @@ namespace MATCH
         public class ExclamationMark : Assistance, IBasic
         {
             Transform Top;
-            Transform Bottom;
+            //Transform Bottom;
             Transform Child;
 
             Vector3 ChildScaleOrigin;
@@ -51,8 +51,8 @@ namespace MATCH
 
                 // Children
                 Child = gameObject.transform.Find("Child");
-                Top = Child.transform.Find("Top");
-                Bottom = Child.transform.Find("Bottom");
+                Top = Child.transform.Find("default");
+                //Bottom = Child.transform.Find("Bottom");
 
                 // Scale origin
                 ChildScaleOrigin = Child.localScale;

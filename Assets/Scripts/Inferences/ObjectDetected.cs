@@ -39,7 +39,10 @@ namespace MATCH
                 ObjectName = objectName;
 
                 Objectdetected = null;
+
+                #if OBJECT_RECOGNITION
                 ObjectRecognition.ObjectInformation.Instance.RegisterCallbackToObject(objectName, CallbackObjectDetected);
+#endif
 
                 FakeObjectStatus = false;
             }
