@@ -37,7 +37,11 @@ namespace MATCH
             {
                 Surface = surface;
                 Objectdetected = null;
+
+#if OBJECT_RECOGNITION
                 ObjectRecognition.ObjectInformation.Instance.RegisterCallbackToObject(objectName, CallbackObjectDetection);
+#endif
+
                 Collider = Surface.GetInteractionSurface().gameObject.GetComponent<BoxCollider>();
             }
 

@@ -152,9 +152,10 @@ namespace MATCH
 
                 }
 
-                View.GetComponent<Renderer>().enabled = show; // To hide the surface while keeping it interactable, then the renderer is disabled if show==false;
                 View.GetComponent<BoundsControl>().enabled = show;
                 View.GetComponent<ObjectManipulator>().enabled = show;
+                View.GetComponent<Renderer>().enabled = show; // To hide the surface while keeping it interactable, then the renderer is disabled if show==false;
+                //View.GetComponent<BoxCollider>().enabled = show;
             }
 
             public void CallbackBring()

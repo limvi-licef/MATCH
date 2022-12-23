@@ -49,10 +49,14 @@ namespace MATCH
             {
                 //DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Editor simulator");
                 AdminMenu.Instance.MenuStatic = true;
-                if (ObjectRecognition != null)
+
+#if !OBJECT_RECOGNITION
+                /*if (ObjectRecognition != null)
                 {
                     ObjectRecognition.SetActive(false);
-                }
+                }*/
+#endif
+
             }
             else
             { // Means running in the Hololens, so adjusting some parameters
@@ -72,10 +76,12 @@ namespace MATCH
             // Adding buttons to manage the object connecting to the server
             if (ObjectRecognitionInfoPanel != null)
             {
-                /*if (ObjectRecognitionInfoPanel.activeSelf)
+#if !OBJECT_RECOGNITION
+                if (ObjectRecognitionInfoPanel.activeSelf)
                 {
                     ObjectRecognitionInfoPanel.SetActive(false);
-                }*/
+                }
+#endif
                 AdminMenu.Instance.AddSwitchButton("Connection panel - Hide", delegate 
                 {
                     ObjectRecognitionInfoPanel.SetActive(!ObjectRecognitionInfoPanel.activeSelf);

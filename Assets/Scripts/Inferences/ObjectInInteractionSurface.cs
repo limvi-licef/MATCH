@@ -45,7 +45,9 @@ namespace MATCH
                 m_objectdetected = null;
 
                 //DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Inference Object Launched");
+#if OBJECT_RECOGNITION
                 ObjectRecognition.ObjectInformation.Instance.RegisterCallbackToObject(objectName, callbackObjectDetection);
+#endif
 
                 m_Collider = m_surface.GetInteractionSurface().gameObject.GetComponent<BoxCollider>(); // Can't this be in the constructor?
             }
