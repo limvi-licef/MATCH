@@ -45,7 +45,7 @@ namespace MATCH
 
             private InteractionSurface SurfaceToPopulate;
 
-            private Dialog Help;
+            private MATCH.Assistances.Dialogs.Dialog1 Help;
 
             private void Awake()
             {

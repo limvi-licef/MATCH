@@ -34,8 +34,8 @@ namespace MATCH
                 private List<string> ConditionsIds; // To ease browsing of Conditions with updating the matrix
                 private Dictionary<string, bool[]> ConditionsUpdate;
 
-                private Assistances.Dialog BehaviorTreeDebugWindow = null;
-                private Assistances.Dialog AssistancesDebugWindow = null;
+                private MATCH.Assistances.Dialogs.Dialog1 BehaviorTreeDebugWindow = null;
+                private MATCH.Assistances.Dialogs.Dialog1 AssistancesDebugWindow = null;
 
                 public virtual void Awake()
                 {

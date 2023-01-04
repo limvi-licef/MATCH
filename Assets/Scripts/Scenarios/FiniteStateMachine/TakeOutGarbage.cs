@@ -100,7 +100,7 @@ namespace MATCH
                     exclamationMarkController.SetMaterial(Utilities.Materials.Textures.Exclamation);
 
                     GameObject solutionView = Instantiate(m_refDialog, garbageInteractionSurfaceView.transform);
-                    Assistances.Dialog solutionController = solutionView.GetComponent<Assistances.Dialog>();
+                    MATCH.Assistances.Dialogs.Dialog1 solutionController = solutionView.GetComponent<MATCH.Assistances.Dialogs.Dialog1>();
                     solutionController.SetDescription("Il est l'heure de sortir les poubelles!", 0.3f);
                     solutionController.EnableBillboard(true);
 

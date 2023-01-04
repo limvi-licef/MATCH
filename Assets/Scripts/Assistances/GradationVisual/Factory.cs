@@ -33,9 +33,12 @@ namespace MATCH
 
                 public enum AlreadyConfigured
                 {
-                    SomeoneComingToHelp = 0,
-                    LetGo = 1,
-                    DoYouNeedHelp = 2
+                    SomeoneComingToHelpDialog1 = 0,
+                    LetGoDialog1 = 1,
+                    DoYouNeedHelpDialog1 = 2,
+                    SomeoneComingToHelpDialog2 = 3,
+                    LetGoDialog2 = 4,
+                    DoYouNeedHelpDialog2 = 5,
                 }
 
                 private void Awake()
@@ -77,18 +80,18 @@ namespace MATCH
 
                 public GradationVisual CreateDialogNoButton(string assistanceName, string title, string description, Transform parent)
                 {
-                    Assistances.Dialog dialog = Assistances.Factory.Instance.CreateDialogNoButton(title, description,  parent);
+                    MATCH.Assistances.Dialogs.Dialog1 dialog = Assistances.Factory.Instance.CreateDialogNoButton(title, description,  parent);
 
-                    Assistances.GradationVisual.GradationVisual toReturn = AddDecoratorsToDialog(assistanceName, dialog);
+                    Assistances.GradationVisual.GradationVisual toReturn = AddDecoratorsToDialog1(assistanceName, dialog);
 
                     return toReturn;
                 }
 
                 public GradationVisual CreateDialogOneButton(string assistanceName, string title, string description, string textButton1, EventHandler callbackButton1, Assistances.Buttons.Button.ButtonType type1, Transform parent)
                 {
-                    Assistances.Dialog dialog = Assistances.Factory.Instance.CreateDialogOneButton(title, description, textButton1, callbackButton1, type1, parent);
+                    MATCH.Assistances.Dialogs.Dialog1 dialog = Assistances.Factory.Instance.CreateDialogOneButton(title, description, textButton1, callbackButton1, type1, parent);
 
-                    Assistances.GradationVisual.GradationVisual toReturn = AddDecoratorsToDialog(assistanceName, dialog);
+                    Assistances.GradationVisual.GradationVisual toReturn = AddDecoratorsToDialog1(assistanceName, dialog);
 
                     return toReturn;
                 }
@@ -99,11 +102,11 @@ namespace MATCH
                     //GradationVisual toReturn = Assistances.Factory.Instance.CreateAssistanceGradationAttention(name);
                     //toReturn.name = assistanceName;
 
-                    Assistances.Dialog dialog = Assistances.Factory.Instance.CreateDialogTwoButtons(title, description, textButton1, callbackButton1, type1, textButton2, callbackButton2, type2, parent);
+                    MATCH.Assistances.Dialogs.Dialog1 dialog = Assistances.Factory.Instance.CreateDialogTwoButtons(title, description, textButton1, callbackButton1, type1, textButton2, callbackButton2, type2, parent);
                     //toReturn.AddAssistance(Assistances.Decorators.Factory.Instance.CreateBackground(assistanceBase, Utilities.Materials.Colors.CyanGlowing));
                     //toReturn.AddAssistance(Assistances.Decorators.Factory.Instance.CreateBackground(assistanceBase, Utilities.Materials.Colors.OrangeGlowing));
 
-                    Assistances.GradationVisual.GradationVisual toReturn = AddDecoratorsToDialog(assistanceName, dialog);
+                    Assistances.GradationVisual.GradationVisual toReturn = AddDecoratorsToDialog1(assistanceName, dialog);
 
                     return toReturn;
                 }
@@ -162,16 +165,24 @@ namespace MATCH
 
                     switch (type)
                     {
-                        case AlreadyConfigured.SomeoneComingToHelp:
+                        case AlreadyConfigured.SomeoneComingToHelpDialog1:
                             toReturn = CreateDialogOneButton(assistanceName, "", "Je ne peux continuer à vous aider. Une personne arrive pour vous aider", "Ok", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.ClosingButton, parent);
                             break;
-                        case AlreadyConfigured.LetGo:
+                        case AlreadyConfigured.LetGoDialog1:
                             toReturn = CreateDialogOneButton(assistanceName, "", "Parfait! Je vous laisse aller", "Ok", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.ClosingButton, parent);
                             break;
-                        case AlreadyConfigured.DoYouNeedHelp:
+                        case AlreadyConfigured.DoYouNeedHelpDialog1:
                             toReturn = CreateDialogTwoButtons(assistanceName, "", "Avez-vous besoin d'aide?", "Oui", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.Yes, "Non", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.No, parent);
                             break;
-
+                        case AlreadyConfigured.SomeoneComingToHelpDialog2:
+                            toReturn = CreateDialog2WithButtons(assistanceName, "", "Je ne peux continuer à vous aider. Une personne arrive pour vous aider", "Ok", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.ClosingButton, parent);
+                            break;
+                        case AlreadyConfigured.LetGoDialog2:
+                            toReturn = CreateDialog2WithButtons(assistanceName, "", "Parfait! Je vous laisse aller", "Ok", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.ClosingButton, parent);
+                            break;
+                        case AlreadyConfigured.DoYouNeedHelpDialog2:
+                            toReturn = CreateDialog2WithButtons(assistanceName, "", "Avez-vous besoin d'aide?", "Oui", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.Yes, "Non", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.No, parent);
+                            break;
                         default:
                             break;
                     }
@@ -180,7 +191,28 @@ namespace MATCH
                     return toReturn;
                 }
 
-                private GradationVisual AddDecoratorsToDialog(string assistanceName, Assistances.Dialog dialog)
+                public GradationVisual CreateDialog2NoButton(string assistanceName, string title, string description, Transform parent)
+                {
+                    Assistances.Dialogs.Dialog2 dialog = Assistances.Factory.Instance.CreateDialog2NoButton(title, description, parent);
+
+                    return AddDecoratorsToDialog2(assistanceName, dialog);
+                }
+
+                public GradationVisual CreateDialog2WithButtons(string assistanceName, string title, string description, string textButton1, EventHandler callbackButton1, Assistances.Buttons.Button.ButtonType type1, Transform parent)
+                {
+                    Assistances.Dialogs.Dialog2 dialog = Assistances.Factory.Instance.CreateDialog2WithButtons(title, description, textButton1, callbackButton1, type1, parent);
+
+                    return AddDecoratorsToDialog2(assistanceName, dialog);
+                }
+
+                public GradationVisual CreateDialog2WithButtons(string assistanceName, string title, string description, string textButton1, EventHandler callbackButton1, Assistances.Buttons.Button.ButtonType type1, string textButton2, EventHandler callbackButton2, Assistances.Buttons.Button.ButtonType type2, Transform parent)
+                {
+                    Assistances.Dialogs.Dialog2 dialog = Assistances.Factory.Instance.CreateDialog2WithButtons(title, description, textButton1, callbackButton1, type1, textButton2, callbackButton2, type2, parent);
+
+                    return AddDecoratorsToDialog2(assistanceName, dialog);
+                }
+
+                private GradationVisual AddDecoratorsToDialog1(string assistanceName, MATCH.Assistances.Dialogs.Dialog1 dialog)
                 {
                     GradationVisual toReturn = Assistances.Factory.Instance.CreateAssistanceGradationAttention(assistanceName);
                     toReturn.name = assistanceName;
@@ -188,6 +220,28 @@ namespace MATCH
                     toReturn.AddAssistance(Assistances.Decorators.Factory.Instance.CreateBackground(dialog, Utilities.Materials.Colors.CyanGlowing));
                     toReturn.AddAssistance(Assistances.Decorators.Factory.Instance.CreateEdge(dialog, Utilities.Materials.Colors.OrangeGlowing));
                     toReturn.AddAssistance(Assistances.Decorators.Factory.Instance.CreateBackground(dialog, Utilities.Materials.Colors.OrangeGlowing)); //Todo: won't work for now, because only one level of visual gradation is supported
+
+                    return toReturn;
+                }
+
+                private GradationVisual AddDecoratorsToDialog2(string assistanceName, MATCH.Assistances.Dialogs.Dialog2 dialog)
+                {
+                    GradationVisual toReturn = Assistances.Factory.Instance.CreateAssistanceGradationAttention(assistanceName);
+                    toReturn.name = assistanceName;
+
+                    
+
+                    Decorators.BackgroundColorFor2 decorator1 = (Decorators.BackgroundColorFor2)Assistances.Decorators.Factory.Instance.CreateBackground(dialog, Utilities.Materials.Colors.Cyan);
+                    toReturn.AddAssistance(decorator1);
+
+                    Decorators.BackgroundColorFor2 decorator2 = (Decorators.BackgroundColorFor2)Assistances.Decorators.Factory.Instance.CreateBackground(dialog, Utilities.Materials.Colors.Cyan, Utilities.Materials.Colors.Orange, decorator1);
+                    toReturn.AddAssistance(decorator2);
+
+                    //toReturn.AddAssistance(Assistances.Decorators.Factory.Instance.CreateEdge(dialog, Utilities.Materials.Colors.OrangeGlowing));
+                    Decorators.BackgroundColorFor2 decorator3 = (Decorators.BackgroundColorFor2)Assistances.Decorators.Factory.Instance.CreateBackground(dialog, Utilities.Materials.Colors.Orange, decorator2);
+                    toReturn.AddAssistance(decorator3);
+
+
 
                     return toReturn;
                 }

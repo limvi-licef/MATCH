@@ -35,7 +35,7 @@ namespace MATCH
         {
             Dictionary<string, Inference> InferencesStorage;
 
-            Assistances.Dialog BehaviorTreeDebugWindow;
+            MATCH.Assistances.Dialogs.Dialog1 BehaviorTreeDebugWindow;
 
             public event EventHandler OnStartFinished;
 

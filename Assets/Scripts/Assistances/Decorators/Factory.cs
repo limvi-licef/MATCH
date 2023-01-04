@@ -59,6 +59,32 @@ namespace MATCH
                     return controller;
                 }
 
+                public MATCH.Assistances.Assistance CreateBackground(MATCH.Assistances.IPanel2 panelToDecorate, string backgroundColor, BackgroundColorFor2 toHideOnShow=null)
+                {
+
+                    return CreateBackground(panelToDecorate, backgroundColor, backgroundColor, toHideOnShow);
+                }
+
+                    public MATCH.Assistances.Assistance CreateBackground(MATCH.Assistances.IPanel2 panelToDecorate, string backgroundMessageColor, string backgroundIconColor, BackgroundColorFor2 toHideOnShow=null)
+                {
+                    Transform view = Instantiate(Utilities.Materials.Prefabs.Load(Utilities.Materials.Prefabs.DecoratorBackgroundColor2));
+                    view.name = ((Assistance)panelToDecorate).name;
+
+                    Assistances.Decorators.BackgroundColorFor2 controller = view.gameObject.GetComponent<Assistances.Decorators.BackgroundColorFor2>();
+
+                    controller.SetAssistanceToDecorate(panelToDecorate);
+                    //controller.SetBackgroundColor(background);
+                    controller.GetBackgroundMessage().GetComponent<Renderer>().material = Utilities.Utility.LoadMaterial(backgroundMessageColor);
+                    controller.GetBackgroundIcon().GetComponent<Renderer>().material = Utilities.Utility.LoadMaterial(backgroundIconColor);
+
+                    if (toHideOnShow != null)
+                    {
+                        controller.AddToHideOnShow(toHideOnShow);
+                    }
+
+                    return controller;
+                }
+
                 public MATCH.Assistances.Assistance CreateMaterial(MATCH.Assistances.IBasic toDecorate, string material)
                 {
                     Transform view = Instantiate(RefMaterial.transform);

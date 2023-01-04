@@ -35,7 +35,7 @@ namespace MATCH
             Transform m_clockView; // Because we can have multiple clocks
 
             Transform m_hologramWindowReminderView;
-            Dialog m_dialogController;
+            MATCH.Assistances.Dialogs.Dialog1 m_dialogController;
 
             public event EventHandler EventHologramClockTouched;
             public event EventHandler EventHologramWindowButtonOkTouched;
@@ -77,7 +77,7 @@ namespace MATCH
                 // Let's get the children
                 m_clockView = gameObject.transform.Find("Clock");
                 m_hologramWindowReminderView = gameObject.transform.Find("MouseAssistanceDialog"); //gameObject.transform.Find("Text");
-                m_dialogController = m_hologramWindowReminderView.GetComponent<Dialog>();
+                m_dialogController = m_hologramWindowReminderView.GetComponent<MATCH.Assistances.Dialogs.Dialog1>();
                 m_dialogController.SetDescription("Très bien! J'apparaitrai de nouveau demain à la même heure. Est-ce que cela vous convient?", 0.15f);
                 m_dialogController.AddButton("Parfait!", true);
                 m_dialogController.ButtonsController[0].EventButtonClicked += new EventHandler(delegate (System.Object o, EventArgs e)

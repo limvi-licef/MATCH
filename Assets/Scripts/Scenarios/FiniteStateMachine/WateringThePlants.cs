@@ -38,7 +38,7 @@ namespace MATCH
                 public MATCH.FiniteStateMachine.Display m_graphPlants;
                 public MATCH.Inferences.Manager m_inferenceManager;
 
-                Assistances.Dialog m_dialogAssistanceWaterHelp; // Class variable as used in another function than the initialization of the scenario
+                MATCH.Assistances.Dialogs.Dialog1 m_dialogAssistanceWaterHelp; // Class variable as used in another function than the initialization of the scenario
 
                 Transform m_pointOfReferenceForPaths;
 
@@ -196,16 +196,16 @@ namespace MATCH
                     faucetController.SetObjectResizable(true);
 
                     // First dialog
-                    Assistances.Dialog dialogFirst = Assistances.Factory.Instance.CreateDialogNoButton("", "Qu'est-ce qu'il est conseillé de faire en fin de journée quand il fait moins chaud?", m_pointOfReferenceForPaths);
+                    MATCH.Assistances.Dialogs.Dialog1 dialogFirst = Assistances.Factory.Instance.CreateDialogNoButton("", "Qu'est-ce qu'il est conseillé de faire en fin de journée quand il fait moins chaud?", m_pointOfReferenceForPaths);
 
                     // Second dialog
-                    Assistances.Dialog dialogSecond = Assistances.Factory.Instance.CreateDialogNoButton("", "Il n'y a pas que vous qui avez soif!", m_pointOfReferenceForPaths);
+                    MATCH.Assistances.Dialogs.Dialog1 dialogSecond = Assistances.Factory.Instance.CreateDialogNoButton("", "Il n'y a pas que vous qui avez soif!", m_pointOfReferenceForPaths);
 
                     // Third dialog
-                    Assistances.Dialog dialogThird = Assistances.Factory.Instance.CreateDialogNoButton("", "Il est temps d'arroser vos plantes", m_pointOfReferenceForPaths);
+                    MATCH.Assistances.Dialogs.Dialog1 dialogThird = Assistances.Factory.Instance.CreateDialogNoButton("", "Il est temps d'arroser vos plantes", m_pointOfReferenceForPaths);
 
                     // Dialog to provide assistance to water the plants
-                    Assistances.Dialog dialogAssistanceWaterProposeHelp = Assistances.Factory.Instance.CreateDialogTwoButtons("", "Besoin d'aide?", "Oui", delegate (System.Object o, EventArgs e) { s_assistanceWaterNeedHelp?.Invoke(o, e); }, Assistances.Buttons.Button.ButtonType.Yes, "Non", delegate (System.Object o, EventArgs e) { s_assistanceWaterNoNeedForHelp?.Invoke(o, e); }, Assistances.Buttons.Button.ButtonType.No, m_pointOfReferenceForPaths);
+                    MATCH.Assistances.Dialogs.Dialog1 dialogAssistanceWaterProposeHelp = Assistances.Factory.Instance.CreateDialogTwoButtons("", "Besoin d'aide?", "Oui", delegate (System.Object o, EventArgs e) { s_assistanceWaterNeedHelp?.Invoke(o, e); }, Assistances.Buttons.Button.ButtonType.Yes, "Non", delegate (System.Object o, EventArgs e) { s_assistanceWaterNoNeedForHelp?.Invoke(o, e); }, Assistances.Buttons.Button.ButtonType.No, m_pointOfReferenceForPaths);
 
                     //// Inferences
                     DateTime tempTime = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 19, 0, 0);

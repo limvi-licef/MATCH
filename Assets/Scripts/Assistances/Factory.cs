@@ -62,10 +62,13 @@ namespace MATCH
                 }
             }
 
-            private Dialog InitializeDialog(DialogsTypes type, string title, string description, Transform parent)
+            private MATCH.Assistances.Dialogs.Dialog1 InitializeDialog(DialogsTypes type, string title, string description, Transform parent)
             {
-                Transform view = Instantiate(Utilities.Materials.Prefabs.Load(DialogsStore[type]).transform, parent);
-                Dialog controller = view.GetComponent<Dialog>();
+                Transform view = /*Instantiate(*/Utilities.Materials.Prefabs.Load(DialogsStore[type]).transform;
+                view.parent = parent;
+                view.localPosition = new Vector3(0, 0, 0);
+
+                MATCH.Assistances.Dialogs.Dialog1 controller = view.GetComponent<MATCH.Assistances.Dialogs.Dialog1>();
                 controller.SetTitle(title, 0.15f);
                 float sizeDescriptionText = -0.0005f * description.Length + 0.206f;
                 controller.SetDescription(description, sizeDescriptionText);
@@ -74,7 +77,7 @@ namespace MATCH
                 return controller;
             }
 
-            private void AddButton(ref Dialog dialog, EventHandler callback, string text, Assistances.Buttons.Button.ButtonType type, bool autoScaling, float fontSize = -1)
+            private void AddButton(ref MATCH.Assistances.Dialogs.Dialog dialog, EventHandler callback, string text, Assistances.Buttons.Button.ButtonType type, bool autoScaling, float fontSize = -1)
             {
                 dialog.AddButton(text, autoScaling, fontSize);
                 dialog.ButtonsController.Last().EventButtonClicked += callback;
@@ -87,23 +90,23 @@ namespace MATCH
                 AddButton(ref dialog, callback, text, type, autoScaling, fontSizeCoeffA * text.Length + fontSizeCoeffB);
             }*/
 
-            public Dialog CreateDialogNoButton(string title, string description, Transform parent)
+            public MATCH.Assistances.Dialogs.Dialog1 CreateDialogNoButton(string title, string description, Transform parent)
             {
-                Dialog controller = InitializeDialog(DialogsTypes.Assistance, title, description, parent);
+                MATCH.Assistances.Dialogs.Dialog1 controller = InitializeDialog(DialogsTypes.Assistance, title, description, parent);
 
                 return controller;;
             }
 
-            public Dialog CreateCheckListNoButton(string title, string description, Transform parent)
+            public MATCH.Assistances.Dialogs.Dialog1 CreateCheckListNoButton(string title, string description, Transform parent)
             {
-                Dialog controller = InitializeDialog(DialogsTypes.CheckList, title, description, parent);
+                MATCH.Assistances.Dialogs.Dialog1 controller = InitializeDialog(DialogsTypes.CheckList, title, description, parent);
 
                 return controller;
             }
 
-            public Dialog CreateDialogOneButton(string title, string description, string textButton1, EventHandler callbackButton1, Assistances.Buttons.Button.ButtonType type1, Transform parent)
+            public MATCH.Assistances.Dialogs.Dialog1 CreateDialogOneButton(string title, string description, string textButton1, EventHandler callbackButton1, Assistances.Buttons.Button.ButtonType type1, Transform parent)
             {
-                Dialog controller = CreateDialogNoButton(title, description, parent);
+                MATCH.Assistances.Dialogs.Dialog controller = CreateDialogNoButton(title, description, parent);
 
                 /*float fontSizeCoeffA = -0.017f;
                 float fontSizeCoeffB = 0.37f;*/
@@ -111,12 +114,12 @@ namespace MATCH
                 //AddButton(ref controller, callbackButton1, textButton1, type1, true, FontSizeCoeffA, FontSizeCoeffB);
                 AddButton(ref controller, callbackButton1, textButton1, type1, true, ComputeFontSizeExp(textButton1.Length));
 
-                return controller;
+                return (Dialogs.Dialog1)controller;
             }
 
-            public Dialog CreateDialogTwoButtons(string title, string description, string textButton1, EventHandler callbackButton1, Assistances.Buttons.Button.ButtonType type1, string textButton2, EventHandler callbackButton2, Assistances.Buttons.Button.ButtonType type2, Transform parent)
+            public MATCH.Assistances.Dialogs.Dialog1 CreateDialogTwoButtons(string title, string description, string textButton1, EventHandler callbackButton1, Assistances.Buttons.Button.ButtonType type1, string textButton2, EventHandler callbackButton2, Assistances.Buttons.Button.ButtonType type2, Transform parent)
             {
-                Dialog controller = CreateDialogNoButton(title, description, parent);
+                MATCH.Assistances.Dialogs.Dialog controller = CreateDialogNoButton(title, description, parent);
 
 
 
@@ -125,18 +128,53 @@ namespace MATCH
                 AddButton(ref controller, callbackButton1, textButton1, type1, true, ComputeFontSizeExp(textButton1.Length));
                 AddButton(ref controller, callbackButton2, textButton2, type2, true, ComputeFontSizeExp(textButton2.Length));
 
-                return controller;
+                return (Dialogs.Dialog1)controller;
             }
 
-            public Dialog CreateDialogThreeButtons(string title, string description, string textButton1, EventHandler callbackButton1, Assistances.Buttons.Button.ButtonType type1, string textButton2, EventHandler callbackButton2, Assistances.Buttons.Button.ButtonType type2, string textButton3, EventHandler callbackButton3, Assistances.Buttons.Button.ButtonType type3, Transform parent)
+            public MATCH.Assistances.Dialogs.Dialog1 CreateDialogThreeButtons(string title, string description, string textButton1, EventHandler callbackButton1, Assistances.Buttons.Button.ButtonType type1, string textButton2, EventHandler callbackButton2, Assistances.Buttons.Button.ButtonType type2, string textButton3, EventHandler callbackButton3, Assistances.Buttons.Button.ButtonType type3, Transform parent)
             {
-                Dialog controller = CreateDialogNoButton(title, description, parent);
+                MATCH.Assistances.Dialogs.Dialog controller = CreateDialogNoButton(title, description, parent);
 
                 AddButton(ref controller, callbackButton1, textButton1, type1, true, ComputeFontSizeExp(textButton1.Length));
                 AddButton(ref controller, callbackButton2, textButton2, type2, true, ComputeFontSizeExp(textButton2.Length));
                 AddButton(ref controller, callbackButton3, textButton3, type3, true, ComputeFontSizeExp(textButton3.Length));
 
+                return (Dialogs.Dialog1)controller;
+            }
+
+            public Dialogs.Dialog2 CreateDialog2NoButton(string title, string description, Transform parent)
+            {
+                Transform view = Utilities.Materials.Prefabs.Load(Utilities.Materials.Prefabs.AssistanceDialog2);
+                view.parent = parent;
+                view.localPosition = new Vector3(0, 0, 0);
+
+                Dialogs.Dialog2 controller = view.GetComponent<Dialogs.Dialog2>();
+                controller.SetTitle(title, 0.15f);
+                //float sizeDescriptionText = -0.0005f * description.Length + 0.206f;
+                float sizeDescriptionText = -0.0003f * description.Length + 0.17f;
+                controller.SetDescription(description, sizeDescriptionText);
+                controller.EnableBillboard(true);
+
                 return controller;
+            }
+
+            public Dialogs.Dialog2 CreateDialog2WithButtons(string title, string description, string textButton1, EventHandler callbackButton1, Assistances.Buttons.Button.ButtonType type1, Transform parent)
+            {
+                Dialogs.Dialog controller = CreateDialog2NoButton(title, description, parent);
+
+                AddButton(ref controller, callbackButton1, textButton1, type1, true, ComputeFontSizeExp(textButton1.Length));
+
+                return (Dialogs.Dialog2)controller;
+            }
+
+            public Dialogs.Dialog2 CreateDialog2WithButtons(string title, string description, string textButton1, EventHandler callbackButton1, Assistances.Buttons.Button.ButtonType type1, string textButton2, EventHandler callbackButton2, Assistances.Buttons.Button.ButtonType type2, Transform parent)
+            {
+                Dialogs.Dialog controller = CreateDialog2NoButton(title, description, parent);
+
+                AddButton(ref controller, callbackButton1, textButton1, type1, true, ComputeFontSizeExp(textButton1.Length));
+                AddButton(ref controller, callbackButton2, textButton2, type2, true, ComputeFontSizeExp(textButton2.Length));
+
+                return (Dialogs.Dialog2)controller;
             }
 
             public Basic CreateCube(string texture, Transform parent)
@@ -220,22 +258,22 @@ namespace MATCH
                 return controller;
             }
 
-            public Dialog CreateToDoList(string title, string description)
+            public MATCH.Assistances.Dialogs.Dialog1 CreateToDoList(string title, string description)
             {
-                Dialog controller = InitializeDialog(DialogsTypes.TodoList, title, description, null);
+                MATCH.Assistances.Dialogs.Dialog1 controller = InitializeDialog(DialogsTypes.TodoList, title, description, null);
                 controller.EnableBillboard(false);
                 return controller;
             }
 
-            public Dialog CreateButtons(string title, string description, List<string> buttonsText, List<EventHandler> buttonsCallback, List<Assistances.Buttons.Button.ButtonType> buttonTypes, Transform parent)
+            public MATCH.Assistances.Dialogs.Dialog1 CreateButtons(string title, string description, List<string> buttonsText, List<EventHandler> buttonsCallback, List<Assistances.Buttons.Button.ButtonType> buttonTypes, Transform parent)
             {
-                Dialog controller = InitializeDialog(DialogsTypes.Buttons, title, description, parent);
+                MATCH.Assistances.Dialogs.Dialog controller = InitializeDialog(DialogsTypes.Buttons, title, description, parent);
                 for (int i = 0; i < buttonsText.Count; i ++)
                 {
                     AddButton(ref controller, buttonsCallback[i], buttonsText[i], buttonTypes[i], true, ComputeFontSizeExp(buttonsText[i].Length));
                 }
 
-                return controller;
+                return (Dialogs.Dialog1)controller;
             }           
 
             private float ComputeFontSizeLinear(int textLength)
@@ -296,7 +334,7 @@ namespace MATCH
 
             public Assistances.LightedPath CreatePathFinding(string name, Transform objectBegin, Transform objectEnd, Transform parent)
             {
-                Transform view = Instantiate(Utilities.Materials.Prefabs.Load(Utilities.Materials.Prefabs.AssistanceLightPath));
+                Transform view = /*Instantiate(*/Utilities.Materials.Prefabs.Load(Utilities.Materials.Prefabs.AssistanceLightPath);
                 view.parent = parent;
 
                 Assistances.LightedPath controller = view.GetComponent<Assistances.LightedPath>();

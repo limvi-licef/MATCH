@@ -130,10 +130,16 @@ namespace MATCH
 
                 Sequence AssistanceAlpha()
                 {
-                    Assistances.GradationVisual.GradationVisual alpha1 = Assistances.GradationVisual.Factory.Instance.CreateDialogOneButton("Tutorial-Alpha-1", "", "Bienvenue! Voici un tutoriel pour vous familiariser avec cette assistance. Pour commencer, avec un doigt, touchez le bouton \"Commencer !\" ci-dessous, comme si vous touchiez un interrupteur.", "Commencer !", delegate(System.Object o, EventArgs e)
+                    /*Assistances.GradationVisual.GradationVisual alpha1 = Assistances.GradationVisual.Factory.Instance.CreateDialogOneButton("Tutorial-Alpha-1", "", "Bienvenue! Voici un tutoriel pour vous familiariser avec cette assistance. Pour commencer, avec un doigt, touchez le bouton \"Commencer !\" ci-dessous, comme si vous touchiez un interrupteur.", "Commencer !", delegate(System.Object o, EventArgs e)
+                    {
+                        UpdateConditionWithMatrix(ConditionBeginningClicked);
+                    }, Assistances.Buttons.Button.ButtonType.ClosingButton, InteractionSurfaceDialogs.transform);*/
+
+                    Assistances.GradationVisual.GradationVisual alpha1 = Assistances.GradationVisual.Factory.Instance.CreateDialog2WithButtons("Tutorial-Alpha-1", "", "Bienvenue! Voici un tutoriel pour vous familiariser avec cette assistance. Pour commencer, avec un doigt, touchez le bouton \"Commencer !\" ci-dessous, comme si vous touchiez un interrupteur.", "Commencer !", delegate (System.Object o, EventArgs e)
                     {
                         UpdateConditionWithMatrix(ConditionBeginningClicked);
                     }, Assistances.Buttons.Button.ButtonType.ClosingButton, InteractionSurfaceDialogs.transform);
+
 
                     Assistances.AssistanceGradationExplicit alpha = MATCH.Assistances.Factory.Instance.CreateAssistanceGradationExplicit("DustingTable-Alpha");
                     alpha.transform.parent = transform;
@@ -159,7 +165,9 @@ namespace MATCH
 
                 Sequence AssistanceBeta()
                 {
-                    Assistances.GradationVisual.GradationVisual betaBase = Assistances.GradationVisual.Factory.Instance.CreateDialogNoButton("Tutorial-Alpha-1", "", "Vous venez de découvrir la première interaction: toucher un bouton!\nMaintenant, vous allez voir un cube sur votre droite. Regardez le pendant quelques secondes pour passer à la suite.", InteractionSurfaceDialogs.transform);
+                    /*Assistances.GradationVisual.GradationVisual betaBase = Assistances.GradationVisual.Factory.Instance.CreateDialogNoButton("Tutorial-Alpha-1", "", "Vous venez de découvrir la première interaction: toucher un bouton!\nMaintenant, vous allez voir un cube sur votre droite. Regardez le pendant quelques secondes pour passer à la suite.", InteractionSurfaceDialogs.transform);*/
+
+                    Assistances.GradationVisual.GradationVisual betaBase = Assistances.GradationVisual.Factory.Instance.CreateDialog2NoButton("Tutorial-Alpha-1", "", "Vous venez de découvrir la première interaction: toucher un bouton!\nMaintenant, vous allez voir un cube sur votre droite. Regardez le pendant quelques secondes pour passer à la suite.", InteractionSurfaceDialogs.transform);
 
                     Assistances.AssistanceGradationExplicit beta = MATCH.Assistances.Factory.Instance.CreateAssistanceGradationExplicit("Tutorial-Beta");
                     beta.transform.parent = transform;
@@ -195,7 +203,12 @@ namespace MATCH
                     
                 Sequence AssistanceGamma()
                 {
-                    Assistances.GradationVisual.GradationVisual gamma1 = Assistances.GradationVisual.Factory.Instance.CreateDialogOneButton("Tutorial-Gamma-1", "", "Super! Comme vous le voyez, le système comprend ce que vous regardez. Il pourra donc faire certaines actions si vous regardez un objet.\nTouchez le bouton ci-dessous pour continuer.", "Suivant", delegate(System.Object o, EventArgs e)
+                    /*Assistances.GradationVisual.GradationVisual gamma1 = Assistances.GradationVisual.Factory.Instance.CreateDialogOneButton("Tutorial-Gamma-1", "", "Super! Comme vous le voyez, le système comprend ce que vous regardez. Il pourra donc faire certaines actions si vous regardez un objet.\nTouchez le bouton ci-dessous pour continuer.", "Suivant", delegate(System.Object o, EventArgs e)
+                    {
+                        UpdateConditionWithMatrix(ConditionNextClicked);
+                    }, Assistances.Buttons.Button.ButtonType.ClosingButton, InteractionCube.transform);*/
+
+                    Assistances.GradationVisual.GradationVisual gamma1 = Assistances.GradationVisual.Factory.Instance.CreateDialog2WithButtons("Tutorial-Gamma-1", "", "Super! Comme vous le voyez, le système comprend ce que vous regardez. Il pourra donc faire certaines actions si vous regardez un objet.Touchez le bouton ci-dessous pour continuer.", "Suivant", delegate (System.Object o, EventArgs e)
                     {
                         UpdateConditionWithMatrix(ConditionNextClicked);
                     }, Assistances.Buttons.Button.ButtonType.ClosingButton, InteractionCube.transform);
@@ -226,9 +239,13 @@ namespace MATCH
 
                 Sequence AssistanceDelta()
                 {
-                    Assistances.GradationVisual.GradationVisual delta1 = Assistances.GradationVisual.Factory.Instance.CreateDialogOneButton("Tutorial-Delta-1", "", "Une dernière chose! Il est important que vous regardiez votre main lorsque vous faites une action. Cela est dû à une limite technique du casque que vous portez. Un bouton va apparaître ci-dessous dans quelques secondes. Touchez le pour continuer.", "Suivant", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.Yes, InteractionCube.transform);
+                    /*Assistances.GradationVisual.GradationVisual delta1 = Assistances.GradationVisual.Factory.Instance.CreateDialogOneButton("Tutorial-Delta-1", "", "Une dernière chose! Il est important que vous regardiez votre main lorsque vous faites une action. Cela est dû à une limite technique du casque que vous portez. Un bouton va apparaître ci-dessous dans quelques secondes. Touchez le pour continuer.", "Suivant", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.Yes, InteractionCube.transform);*/
 
-                    Assistances.GradationVisual.GradationVisual delta2 = Assistances.GradationVisual.Factory.Instance.CreateDialogNoButton("Tutorial-Delta-1", "", "Pour tester cela, prenez le stylo sur votre droite. Si vous l'avez regardé correctement en le prenant, alors vous verrez un nouveau texte apparaître ici. Sinon, reposez-le au même endroit et recommencez.", InteractionCube.transform);
+                    Assistances.GradationVisual.GradationVisual delta1 = Assistances.GradationVisual.Factory.Instance.CreateDialog2WithButtons("Tutorial-Delta-1", "", "Une dernière chose! Il est important que vous regardiez votre main lorsque vous faites une action. Cela est dû à une limite technique du casque que vous portez. Un bouton va apparaître ci-dessous dans quelques secondes. Touchez le pour continuer.", "Suivant", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.Yes, InteractionCube.transform);
+
+                    /*Assistances.GradationVisual.GradationVisual delta2 = Assistances.GradationVisual.Factory.Instance.CreateDialogNoButton("Tutorial-Delta-1", "", "Pour tester cela, prenez le stylo sur votre droite. Si vous l'avez regardé correctement en le prenant, alors vous verrez un nouveau texte apparaître ici. Sinon, reposez-le au même endroit et recommencez.", InteractionCube.transform);*/
+
+                    Assistances.GradationVisual.GradationVisual delta2 = Assistances.GradationVisual.Factory.Instance.CreateDialog2NoButton("Tutorial-Delta-1", "", "Pour tester cela, prenez le stylo sur votre droite. Si vous l'avez regardé correctement en le prenant, alors vous verrez un nouveau texte apparaître ici. Sinon, reposez-le au même endroit et recommencez.", InteractionCube.transform);
 
                     Assistances.AssistanceGradationExplicit delta = MATCH.Assistances.Factory.Instance.CreateAssistanceGradationExplicit("Tutorial-Delta");
                     delta.transform.parent = transform;
@@ -260,7 +277,13 @@ namespace MATCH
 
                 Sequence AssistanceEpsilon()
                 {
-                    Assistances.GradationVisual.GradationVisual epsilon1 = Assistances.GradationVisual.Factory.Instance.CreateDialogOneButton("Tutorial-Epsilon-1", "", "Félicitations! Le tutoriel est maintenant terminé. Touchez le bouton ci-dessous pour commencer le test de l'application!", "Commencer le test", delegate(System.Object o, EventArgs e)
+                    /*Assistances.GradationVisual.GradationVisual epsilon1 = Assistances.GradationVisual.Factory.Instance.CreateDialogOneButton("Tutorial-Epsilon-1", "", "Félicitations! Le tutoriel est maintenant terminé. Touchez le bouton ci-dessous pour commencer le test de l'application!", "Commencer le test", delegate(System.Object o, EventArgs e)
+                    {
+                        gameObject.transform.parent.Find("DustingTable").gameObject.SetActive(true);
+                        gameObject.SetActive(false);
+                    }, Assistances.Buttons.Button.ButtonType.ClosingButton, InteractionCube.transform);*/
+
+                    Assistances.GradationVisual.GradationVisual epsilon1 = Assistances.GradationVisual.Factory.Instance.CreateDialog2WithButtons("Tutorial-Epsilon-1", "", "Félicitations! Le tutoriel est maintenant terminé. Touchez le bouton ci-dessous pour commencer le test de l'application!", "Commencer le test", delegate (System.Object o, EventArgs e)
                     {
                         gameObject.transform.parent.Find("DustingTable").gameObject.SetActive(true);
                         gameObject.SetActive(false);

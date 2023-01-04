@@ -31,7 +31,7 @@ namespace MATCH
     {
         public AdminMenu AdministrationMenu;
         public GameObject VirtualRoom;
-        MATCH.Assistances.Dialog TodoList;
+        MATCH.Assistances.Dialogs.Dialog1 TodoList;
         public GameObject ObjectRecognition;
         public GameObject ObjectRecognitionInfoPanel;
 
@@ -74,6 +74,7 @@ namespace MATCH
             InitializeTodoList();
 
             // Adding buttons to manage the object connecting to the server
+
             if (ObjectRecognitionInfoPanel != null)
             {
 #if !OBJECT_RECOGNITION
@@ -82,15 +83,18 @@ namespace MATCH
                     ObjectRecognitionInfoPanel.SetActive(false);
                 }
 #endif
-                AdminMenu.Instance.AddSwitchButton("Connection panel - Hide", delegate 
+
+#if OBJECT_RECOGNITION
+                AdminMenu.Instance.AddSwitchButton("Connection panel - Hide", delegate
                 {
                     ObjectRecognitionInfoPanel.SetActive(!ObjectRecognitionInfoPanel.activeSelf);
                 }, AdminMenu.Panels.Middle, AdminMenu.ButtonType.Hide);
-
-            }
+#endif
         }
 
-        void InitializeTodoList()
+            }
+
+            void InitializeTodoList()
         {
             // First: check if some scenarios have been added, and if yes, add them to the GUI
             List<MATCH.Scenarios.Scenario> scenarios = MATCH.Scenarios.Manager.Instance.getScenarios();
