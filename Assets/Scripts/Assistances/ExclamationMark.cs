@@ -41,7 +41,7 @@ namespace MATCH
 
             public EventHandler s_touched;
 
-            Dialog Help;
+            MATCH.Assistances.Dialogs.Dialog1 Help;
 
             public bool AdjustHeightOnShow { private get; set; }
 

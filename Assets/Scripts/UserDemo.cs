@@ -100,7 +100,7 @@ namespace MATCH
                 m_triggerCleanTable.SetMaterial(Utilities.Materials.Textures.CleanTablePressed);
             };
 
-            Assistances.Dialog dialogInstructions = Assistances.Factory.Instance.CreateDialogNoButton("", "Touchez un des boutons pour commencer un scénario. Le scénario commence 10 secondes après avoir touché le bouton.", demo.transform);
+            MATCH.Assistances.Dialogs.Dialog1 dialogInstructions = Assistances.Factory.Instance.CreateDialogNoButton("", "Touchez un des boutons pour commencer un scénario. Le scénario commence 10 secondes après avoir touché le bouton.", demo.transform);
             //MouseAssistanceDialog dialogInstructions = MouseUtilitiesAssistancesFactory.Instance.createDialogTwoButtons("", "Touchez un des boutons pour commencer un scénario. Le scénario commence 10 secondes après avoir touché le bouton.", "Test bouton 1", MouseUtilities.getEventHandlerEmpty(), "Test button 2", MouseUtilities.getEventHandlerEmpty(), demo.transform);
             //dialogInstructions.setDescription("Touchez un des boutons pour commencer un scénario: sortir les poubelles, arroser les plantes, nettoyer la table.Le scénario commence 10 secondes après avoir touché le bouton.", 0.12f);
             //dialogInstructions.setDescription("Touchez un des boutons pour commencer un scénario. Le scénario commence 10 secondes après avoir touché le bouton.", 0.15f);

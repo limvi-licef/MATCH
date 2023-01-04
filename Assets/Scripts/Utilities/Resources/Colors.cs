@@ -35,15 +35,18 @@ namespace MATCH
             {
                 static string Path = "MATCH/Colors/";
 
+                public static string Cyan = Path + "Cyan";
                 public static string CyanGlowing = Path+"CyanGlowing";
                 public static string RedGlowing = Path + "RedGlowing";
                 public static string PurpleGlowing = Path + "PurpleGlowing";
                 public static string OrangeGlowing = Path + "OrangeGlowing";
+                public static string Orange = Path + "Orange";
                 public static string GreenGlowing = Path + "GreenGlowing";
                 public static string YellowGlowing = Path + "YellowGlowing";
                 public static string WhiteTransparent = Path + "WhiteTransparent";
                 public static string WhiteMetallic = Path + "WhiteMetallic";
                 public static string Red = Path + "Red";
+                public static string Red2 = Path + "Red2";
                 public static string HolographicBackPlate = Path + "HolographicBackPlate";
             }
         }

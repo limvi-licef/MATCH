@@ -186,14 +186,14 @@ namespace MATCH
 
                     // Cueing for the beginning of the scenario
                     GameObject initialCueingView = Instantiate(m_refAssistanceDialog, interactionTableView.transform);
-                    Assistances.Dialog initialCueingController = initialCueingView.GetComponent<Assistances.Dialog>();
+                    MATCH.Assistances.Dialogs.Dialog1 initialCueingController = initialCueingView.GetComponent<MATCH.Assistances.Dialogs.Dialog1>();
                     initialCueingController.SetDescription("Que faites-vous typiquement après manger?", 0.2f);
                     initialCueingController.AddButton("Je ne sais pas", true, 0.4f);
                     initialCueingController.EnableBillboard(true);
 
                     // Cueing for the solution
                     GameObject solutionView = Instantiate(m_refAssistanceDialog, interactionRagView.transform);
-                    Assistances.Dialog solutionController = solutionView.GetComponent<Assistances.Dialog>();
+                    MATCH.Assistances.Dialogs.Dialog1 solutionController = solutionView.GetComponent<MATCH.Assistances.Dialogs.Dialog1>();
                     solutionController.SetDescription("Ne serait-ce pas un bon moment pour nettoyer la table? \n Vous avez pour cela besoin du chiffon ci - dessous.", 0.14f);
                     solutionController.EnableBillboard(true);
 
@@ -307,10 +307,10 @@ namespace MATCH
 
                     // First message
                     string firstMessage = "Que faites-vous normalement après manger?"; // Used in the first two dialogs
-                    Assistances.Dialog firstDialog = Assistances.Factory.Instance.CreateDialogNoButton("", firstMessage, interactionSurfaceTable.transform);
+                    MATCH.Assistances.Dialogs.Dialog1 firstDialog = Assistances.Factory.Instance.CreateDialogNoButton("", firstMessage, interactionSurfaceTable.transform);
 
                     // Second dialog
-                    Assistances.Dialog secondDialog = Assistances.Factory.Instance.CreateDialogThreeButtons("", firstMessage, "Je sais!", delegate (System.Object o, EventArgs e) { s_dialogSecondButtonOk?.Invoke(this, e); }, Assistances.Buttons.Button.ButtonType.CustomChoice1, "Je ne sais pas", delegate (System.Object o, EventArgs e) { s_dialogSecondButtonNok?.Invoke(this, e); }, Assistances.Buttons.Button.ButtonType.CustomChoice2, "Cela ne m'intéresse pas", delegate (System.Object o, EventArgs e) { s_dialogSecondButtonLeave?.Invoke(this, e); }, Assistances.Buttons.Button.ButtonType.CustomChoice3, interactionSurfaceTable.transform);
+                    MATCH.Assistances.Dialogs.Dialog1 secondDialog = Assistances.Factory.Instance.CreateDialogThreeButtons("", firstMessage, "Je sais!", delegate (System.Object o, EventArgs e) { s_dialogSecondButtonOk?.Invoke(this, e); }, Assistances.Buttons.Button.ButtonType.CustomChoice1, "Je ne sais pas", delegate (System.Object o, EventArgs e) { s_dialogSecondButtonNok?.Invoke(this, e); }, Assistances.Buttons.Button.ButtonType.CustomChoice2, "Cela ne m'intéresse pas", delegate (System.Object o, EventArgs e) { s_dialogSecondButtonLeave?.Invoke(this, e); }, Assistances.Buttons.Button.ButtonType.CustomChoice3, interactionSurfaceTable.transform);
 
                     // Surface to clean
                     Assistances.SurfaceToProcess surfaceToProcess = Assistances.Factory.Instance.CreateSurfaceToProcess(interactionSurfaceTable.transform, interactionSurfaceTable);
@@ -321,13 +321,13 @@ namespace MATCH
                     };
 
                     // Dialog to ask to get the rag
-                    Assistances.Dialog dialogRag = Assistances.Factory.Instance.CreateDialogNoButton("", "Vous devez nettoyer la table avec un chiffon", interactionSurfaceTable.transform);
+                    MATCH.Assistances.Dialogs.Dialog1 dialogRag = Assistances.Factory.Instance.CreateDialogNoButton("", "Vous devez nettoyer la table avec un chiffon", interactionSurfaceTable.transform);
 
                     // Dialog to inform where the rag is
                     // To do later
 
                     // Calling the caregiver
-                    Assistances.Dialog dialogCallCaregiver = Assistances.Factory.Instance.CreateDialogTwoButtons("", "Est-ce que j'appelle votre aidant?", "Oui", delegate (System.Object o, EventArgs e) { s_caregiverCall?.Invoke(this, e); }, Assistances.Buttons.Button.ButtonType.Yes, "Non", delegate (System.Object o, EventArgs e) { s_caregiverCall?.Invoke(this, e); }, Assistances.Buttons.Button.ButtonType.No, interactionSurfaceTable.transform);
+                    MATCH.Assistances.Dialogs.Dialog1 dialogCallCaregiver = Assistances.Factory.Instance.CreateDialogTwoButtons("", "Est-ce que j'appelle votre aidant?", "Oui", delegate (System.Object o, EventArgs e) { s_caregiverCall?.Invoke(this, e); }, Assistances.Buttons.Button.ButtonType.Yes, "Non", delegate (System.Object o, EventArgs e) { s_caregiverCall?.Invoke(this, e); }, Assistances.Buttons.Button.ButtonType.No, interactionSurfaceTable.transform);
 
                     // Success
                     Assistances.Basic success = Assistances.Factory.Instance.CreateCube(Utilities.Materials.Textures.Congratulation, interactionSurfaceTable.transform);

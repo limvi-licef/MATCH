@@ -32,7 +32,7 @@ namespace MATCH
             Transform HelpController;
             Transform LineView;
             Transform TextView;
-            MATCH.Assistances.Dialog TextController;
+            MATCH.Assistances.Dialogs.Dialog1 TextController;
 
             LineToObject LineController;
 
@@ -45,7 +45,7 @@ namespace MATCH
                 LineController = LineView.GetComponent<LineToObject>();
                 HelpController = MATCH.Utilities.Utility.FindChild(gameObject, "Help");
                 TextView = gameObject.transform.Find("Text");
-                TextController = TextView.GetComponent<MATCH.Assistances.Dialog>();
+                TextController = TextView.GetComponent<MATCH.Assistances.Dialogs.Dialog1>();
                 
 
                 TextOriginalScaling = TextView.localScale;

@@ -65,7 +65,7 @@ namespace MATCH
 
             Dictionary<string, ObjectsInformation> ObjectsPositions;
 
-            public MATCH.Assistances.Dialog DebugPositioner;
+            public MATCH.Assistances.Dialogs.Dialog1 DebugPositioner;
 
             private void Awake()
             {

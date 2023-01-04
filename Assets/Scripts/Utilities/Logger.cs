@@ -32,7 +32,7 @@ namespace MATCH
 
             public static Logger Instance { get { return InstanceInternal; } }
 
-            private MATCH.Assistances.Dialog DebugLogger;
+            MATCH.Assistances.Dialogs.Dialog1 DebugLogger;
 
             //private StreamWriter StreamToFile;
 

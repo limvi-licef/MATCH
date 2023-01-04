@@ -100,7 +100,7 @@ namespace MATCH
                 public override void Start()
                 {
                     // Initialize assistances
-                    AreaStorage = Assistances.Factory.Instance.CreateInteractionSurface("Storage", default, new Vector3(0.2f, 0.8f, 0.3f), new Vector3(3.38f, 0.22f, 3.19f), Utilities.Materials.Colors.GreenGlowing, true, true, Utilities.Utility.GetEventHandlerEmpty(), true, transform);
+                    AreaStorage = Assistances.Factory.Instance.CreateInteractionSurface("Storage", default, new Vector3(0.2f, 0.8f, 0.3f), new Vector3(2.53f, 0.23f, 2.641f/*3.38f, 0.22f, 3.19f*/), Utilities.Materials.Colors.GreenGlowing, true, true, Utilities.Utility.GetEventHandlerEmpty(), true, transform);
 
                     /*if (Utilities.Utility.IsEditorSimulator() || Utilities.Utility.IsEditorGameView())
                     {*/
@@ -287,13 +287,13 @@ namespace MATCH
                         parentForAssistances = AreaObject.transform;
                     }
 
-                    Assistances.Dialog AssistancesBeta = Assistances.Factory.Instance.CreateDialogNoButton("Information", "Cet objet doit être rangé.", /*AreaObject.transform*/parentForAssistances);
+                    MATCH.Assistances.Dialogs.Dialog1 AssistancesBeta = Assistances.Factory.Instance.CreateDialogNoButton("Information", "Cet objet doit être rangé.", /*AreaObject.transform*/parentForAssistances);
                     AssistancesGradation.AddAssistance(Assistances.QandDAssistances.Gradation.Beta, AssistancesBeta);
 
                     Assistances.Basic AssistancesGamma = Assistances.Factory.Instance.CreateCube(Utilities.Materials.Textures.Exclamation, /*AreaObject.transform*/parentForAssistances);
                     AssistancesGradation.AddAssistance(Assistances.QandDAssistances.Gradation.Gamma, AssistancesGamma);
 
-                    Assistances.Dialog AssistancesDelta = Assistances.Factory.Instance.CreateDialogTwoButtons("Information", "L'objet n'est pas rangé au bon endroit.", "Ok!", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.Yes, "Aidez-moi!", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.No, /*AreaObject.transform*/parentForAssistances);
+                    MATCH.Assistances.Dialogs.Dialog1 AssistancesDelta = Assistances.Factory.Instance.CreateDialogTwoButtons("Information", "L'objet n'est pas rangé au bon endroit.", "Ok!", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.Yes, "Aidez-moi!", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.No, /*AreaObject.transform*/parentForAssistances);
                     TextMeshPro tmp = AssistancesDelta.transform.Find("ButtonParent").Find("Ok!").Find("IconAndText").Find("TextMeshPro").GetComponent<TextMeshPro>();
                     tmp.fontSize = 0.2f;
 
@@ -517,7 +517,7 @@ namespace MATCH
                     end.AddAssistance(Assistances.Factory.Instance.CreateDialogNoButton("", "Ok! We let you do.", AssistancesEpsilonInteractionSurface.transform));
 
                     Assistances.GradationVisual.GradationVisual alpha2 = Assistances.Factory.Instance.CreateAssistanceGradationAttention("AssistanceGradationYesNo1");
-                    Assistances.Dialog alpha2Base = Assistances.Factory.Instance.CreateDialogTwoButtons("", "You can do something here to tidy up your room", "I know what!", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.Yes, "I don't know", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.No, AssistancesEpsilonInteractionSurface.transform);
+                    MATCH.Assistances.Dialogs.Dialog1 alpha2Base = Assistances.Factory.Instance.CreateDialogTwoButtons("", "You can do something here to tidy up your room", "I know what!", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.Yes, "I don't know", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.No, AssistancesEpsilonInteractionSurface.transform);
                     alpha2Base.name = "Alpha2";
                     Assistances.Assistance alpha21 = alpha2.AddAssistance(Assistances.Decorators.Factory.Instance.CreateBackground(alpha2Base, Utilities.Materials.Colors.CyanGlowing));
                     //alpha2.
@@ -525,7 +525,7 @@ namespace MATCH
                     alpha2.AddAssistance(Assistances.Decorators.Factory.Instance.CreateBackground((Assistances.IPanel)alpha22, Utilities.Materials.Colors.OrangeGlowing));
 
                     Assistances.GradationVisual.GradationVisual alpha3 = Assistances.Factory.Instance.CreateAssistanceGradationAttention("Alpha3");
-                    Assistances.Dialog alpha3Base = Assistances.Factory.Instance.CreateDialogTwoButtons("", "Do you think the cup should be here?", "Yes", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.Yes, "No", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.No, AssistancesEpsilonInteractionSurface.transform);
+                    MATCH.Assistances.Dialogs.Dialog1 alpha3Base = Assistances.Factory.Instance.CreateDialogTwoButtons("", "Do you think the cup should be here?", "Yes", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.Yes, "No", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.No, AssistancesEpsilonInteractionSurface.transform);
                     alpha3Base.name = "Alpha3";
                     alpha3.AddAssistance(Assistances.Decorators.Factory.Instance.CreateBackground(alpha3Base, Utilities.Materials.Colors.CyanGlowing));
                     alpha3.AddAssistance(Assistances.Decorators.Factory.Instance.CreateBackground(alpha3Base, Utilities.Materials.Colors.OrangeGlowing));
