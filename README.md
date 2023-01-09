@@ -4,7 +4,7 @@ Welcome to the MATCH (Mixed reAliTy Cognitive ortHosis) project!
 
 <b>Before reading this section, it is worth noting that the software's architecture, functionalities and this README are not yet stable ... indeed, some of the software's basis are currently being redesigned. If you are interested in using the software, I advise you to contact me first so that I can provide you with the current status.</b>
 
-This readme has two sections:
+This readme has three sections:
 - Context
 - Demo
 - Install and run the project
