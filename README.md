@@ -20,7 +20,7 @@ As part of this methodology, focus groups have been conducted with occupational 
 This project is part of my PhD degree, performed within the [DOMUS lab](https://domus.recherche.usherbrooke.ca/) of the the [Université de Sherbrooke](https://www.usherbrooke.ca/about/), and the [Centre universitaire de gériatrie de l'université de Montréal](https://criugm.qc.ca/en/).
 
 ### Components and functionalities of the project
-You can an overview of the main components of this software in this article: https://ieeexplore.ieee.org/document/9974275.
+You can get an overview of the main components of this software in this article: https://ieeexplore.ieee.org/document/9974275.
 Since the publication of this article, behavior trees have added as an alternative to finite state machine.
 If you need any information, please do not hesitate to contact me (see section below).
 
