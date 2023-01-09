@@ -13,14 +13,16 @@ This readme has two sections:
 ### Why this project?
 Mixed reality is an emerging technology aimed at blending virtual content with the real environment. Using a headset, which can be compared to glasses, it allows virtual content to be displayed at any time, anywhere.
 People at the beginning of the dementia continuum are often able and wish to live independently at home. But they may have difficulty finding a solution to satisfy certain needs, planning this solution, or taking the steps to carry it out. These difficulties may impact their ability to continue to live independently at home.
-To support independence at home for people at the beginning of the dementia continuum, we are investigating the utility of using a mixed reality headset as a cognitive orthosis. There are several theoretical advantages to using this technology in this context: the headset is able to interpret the context of the person and provide the necessary assistance when needed with appropriate gradation (to stimulate their residual cognitive potential); the assistance is provided in the user’s environment, so they do not need to look away (to a screen for example); the environment does not need to be modified to use it. The design of the cognitive orthosis is based on a user-centered design methodology and follows the “zero effort technologies” principles.
+To support independence at home for people at the beginning of the dementia continuum, we are investigating the utility of using a mixed reality headset as a cognitive orthosis. There are several theoretical advantages to using this technology in this context: the headset is able to interpret the context of the person and provide the necessary assistance when needed with appropriate gradation (to stimulate their residual cognitive potential); the assistance is provided in the user’s environment, so they do not need to look away (to a screen for example); the environment does not need to be modified to use it. The design of the cognitive orthosis is based on a user-centered design methodology and follows the “zero effort technologies” principles (see https://www.morganclaypool.com/doi/abs/10.2200/S00826ED2V01Y201802ARH012 for more information).
+As part of this methodology, focus groups have been conducted with occupational therapist to get their insight about the potential use of mixed reality in this context. See this article for more information: https://rehab.jmir.org/2022/3/e34983.
 
 ### In which context this project is developed
 This project is part of my PhD degree, performed within the [DOMUS lab](https://domus.recherche.usherbrooke.ca/) of the the [Université de Sherbrooke](https://www.usherbrooke.ca/about/), and the [Centre universitaire de gériatrie de l'université de Montréal](https://criugm.qc.ca/en/).
 
 ### Components and functionalities of the project
-There are indeed components and functionalities. However, what is missing are explanations to introduce them. Those explanations will be present here, one day. 
-I still need to do this. But in the meantime, if you need any information, please do not hesitate to contact me (see section below).
+You can an overview of the main components of this software in this article: https://ieeexplore.ieee.org/document/9974275.
+Since the publication of this article, behavior trees have added as an alternative to finite state machine.
+If you need any information, please do not hesitate to contact me (see section below).
 
 ## Install and run
 
