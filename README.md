@@ -26,7 +26,7 @@ Since the publication of this article, behavior trees have been added as an alte
 If you need any information, please do not hesitate to contact me (see section below).
 
 ## Demo
-You can find a demo of the projet here: https://www.youtube.com/watch?v=OW0SfMAaAPU
+You can find a demo of the projet here: https://www.youtube.com/watch?v=OW0SfMAaAPU.
 Assistances are in French, but the video has English subtitles. New demos will be available in the coming weeks.
 
 ## Install and run
