@@ -6,6 +6,7 @@ Welcome to the MATCH (Mixed reAliTy Cognitive ortHosis) project!
 
 This readme has two sections:
 - Context
+- Demo
 - Install and run the project
 
 ## Context
@@ -23,6 +24,10 @@ This project is part of my PhD degree, performed within the [DOMUS lab](https://
 You can get an overview of the main components of this software in this article: https://ieeexplore.ieee.org/document/9974275.
 Since the publication of this article, behavior trees have been added as an alternative to finite state machine.
 If you need any information, please do not hesitate to contact me (see section below).
+
+## Demo
+You can find a demo of the projet here: https://www.youtube.com/watch?v=OW0SfMAaAPU
+Assistances are in French, but the video has English subtitles. New demos will be available in the coming weeks.
 
 ## Install and run
 
