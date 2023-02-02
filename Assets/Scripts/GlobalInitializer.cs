@@ -33,14 +33,7 @@ namespace MATCH
         public GameObject VirtualRoom;
         public GameObject ObjectRecognition;
         public GameObject ObjectRecognitionInfoPanel;
-
-        
-        private void Awake()
-        {
-            /*TodoList = */MATCH.Assistances.Factory.Instance.CreateToDoList("Choses à faire", ""); //create to do list
-        }
-        
-
+   
         // Start is called before the first frame update
         void Start()
         {
