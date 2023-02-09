@@ -25,19 +25,19 @@ using TMPro;
 
 namespace MATCH
 {
-    public class ToDoListController : MonoBehaviour
+    public class ToDoList : MonoBehaviour
     {
-        MATCH.Assistances.Dialogs.Dialog1 ToDoList;
+        MATCH.Assistances.Dialogs.Dialog1 ToDo;
         private void Awake()
         {
             //create to do list
-            //ToDoList = MATCH.Assistances.Factory.Instance.CreateToDoList("Choses à faire", ""); --> ça ne marche pas lol 
+            //ToDoList = MATCH.Assistances.Factory.Instance.CreateToDoList("Choses à faire", "");
         }
         void Start()
         {
-            ToDoList = MATCH.Assistances.Factory.Instance.CreateToDoList("Choses à faire", "");
+            ToDo = MATCH.Assistances.Factory.Instance.CreateToDoList("Choses à faire", "");
             //AdminMenu.Instance.AddButton("Bring ToDo List window", callbackBringAgenda);
-            AdminMenu.Instance.AddButton("Bring to do list window", delegate () { Utilities.Utility.BringObject(ToDoList.transform); }); //add button to the admin menu
+            AdminMenu.Instance.AddButton("Bring to do list window", delegate () { Utilities.Utility.BringObject(ToDo.transform); }); //add button to the admin menu
             AdminMenu.Instance.AddSwitchButton("Lock To Do List", CallbackLockToDo);
             InitializeTodoList();
         }
@@ -56,7 +56,7 @@ namespace MATCH
         /**
          * return local date 
          * */
-        public static string GetSeason(DateTime date) // public static (?)
+        string GetSeason(DateTime date) // public static (?)
         {
             float value = (float)date.Month + date.Day / 100f;
             if (value < 3.21 || value >= 12.22) return "Hiver";
@@ -76,7 +76,7 @@ namespace MATCH
          * */
         void AddScenarioToGUI(MATCH.Scenarios.Scenario scenario)
         {
-            MATCH.Assistances.Buttons.Basic button = ToDoList.AddButton(scenario.GetId(), true); //add button
+            MATCH.Assistances.Buttons.Basic button = ToDo.AddButton(scenario.GetId(), true); //add button
             scenario.EventChallengeOnStart += button.CallbackSetButtonBackgroundCyan; //m_todo.callbackStartButton;
             scenario.EventChallengeOnSuccess += button.CallbackSetButtonBackgroundGreen; //m_todo.callbackCheckButton;
             scenario.EventChallengeOnStandBy += button.CallbackSetButtonBackgroundDefault; //m_todo.callbackCheckButton;
@@ -86,10 +86,26 @@ namespace MATCH
         * */
         void CallbackLockToDo()
         {
-            if (ToDoList.GetComponent<ObjectManipulator>().enabled)
-                ToDoList.GetComponent<ObjectManipulator>().enabled = false;
+            if (ToDo.GetComponent<ObjectManipulator>().enabled)
+                ToDo.GetComponent<ObjectManipulator>().enabled = false;
             else
-                ToDoList.GetComponent<ObjectManipulator>().enabled = true;
+                ToDo.GetComponent<ObjectManipulator>().enabled = true;
+        }
+        // Update is called once per frame
+        void Update()
+        {
+            ToDoListConfig(); //config of the todo list for update the time
+        }
+
+        void ToDoListConfig()
+        {
+            string date = System.DateTime.Now.ToString("D", new System.Globalization.CultureInfo("fr-FR"));
+            string hour = System.DateTime.Now.ToString("HH:mm");
+            string textToDisplay = "Date : " + date + "                              Heure : " + hour + "\nSaison : " + GetSeason(System.DateTime.Now) + "\n\nTâches à réaliser : ";
+            //if (textToDisplay != TodoList.GetDescription())
+            //{ // To avoid updating the text at each frame
+            ToDo.SetDescription(textToDisplay, 0.1f);
+            //}
         }
     }
 }
