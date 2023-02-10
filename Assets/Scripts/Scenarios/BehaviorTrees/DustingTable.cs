@@ -35,16 +35,18 @@ namespace MATCH
                 private Inferences.Manager InferenceManager;
                 public Assistances.Surfaces.Manager SurfacesManager;
 
-                string ConditionTableCleaned = "TableCleaned",
-                    ConditionRagTaken = "RagTaken",
-                    ConditionCleaningWithoutRag = "CleaningWithoutRag",
-                    ConditionDidNotStartCleaning = "idNotStartCleaning",
-                    ConditionCleaningInterrupted = "CleaningInterrupted",
-                    ConditionNewPartCleaned = "CleanedNewParts",
-                    ConditionsProcessRelatedToNewPartsCleanedDone = "ProcessCleanedNewPartsDone";
+                string ConditionTableCleaned = "TableCleaned";
+                string ConditionRagNotTakenButHelpReceived = "RagNotTakenButHelpReceived";
+                string ConditionRagTaken = "RagTaken";
+                string ConditionDidNotStartCleaning = "DidNotStartCleaning";
+                string ConditionCleaningInterrupted = "CleaningInterrupted";
+                string ConditionNewPartCleaned = "NewPartCleaned";
+                string ConditionProcessRelatedToNewPartsCleanedDone = "ProcessRelatedToNewPartsCleanedDone";
 
                 string InferenceDidNotStartDusting = "DidNotStartCleaning";
                 string InferenceInterruptDusting = "InterruptedDusting";
+                string InferenceFarFromRag = "FarFromRag";
+                float InferenceFarFromRagDistance = 4.0f;
 
                 // Interaction surface
                 Assistances.InteractionSurface InteractionSurfaceTable;
@@ -79,6 +81,20 @@ namespace MATCH
                         MATCH.Utilities.Logger.Instance.Log(this.GetId(), MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, "----------Scenario restarted----------");
                     }, AdminMenu.Panels.Right);
 
+                    // Add button to modify the distance from rag for the inference
+                    AdminMenu.Instance.AddInputWithButton(InferenceFarFromRagDistance.ToString(), "DustingTable - Update distance from rag", delegate (System.Object o, EventArgs e)
+                    {
+                        Utilities.EventHandlerArgs.String arg = (Utilities.EventHandlerArgs.String)e;
+                        InferenceFarFromRagDistance = float.Parse(arg.m_text);
+                        
+                        if (InferenceManager.GetInference(InferenceFarFromRag)!=null)
+                        {
+                            RegisterInferenceFarFromRag(); // Register the inference with the new value, only if it has been registered already
+                        }
+                        
+                        
+                    }, AdminMenu.Panels.Right);
+
                     // Initialize debug buttons
                     //InitializeDebugButtons();
                 }
@@ -87,28 +103,27 @@ namespace MATCH
                 {
                     // Making the conditions update. SEE EXCEL SHEET TO GENERATE THE CODE BELOW
                     AddCondition(ConditionTableCleaned, false);
+                    AddCondition(ConditionRagNotTakenButHelpReceived, false);
                     AddCondition(ConditionRagTaken, false);
-                    AddCondition(ConditionCleaningWithoutRag, false);
                     AddCondition(ConditionDidNotStartCleaning, false);
                     AddCondition(ConditionCleaningInterrupted, false);
                     AddCondition(ConditionNewPartCleaned, false);
-                    AddCondition(ConditionsProcessRelatedToNewPartsCleanedDone, false);
+                    AddCondition(ConditionProcessRelatedToNewPartsCleanedDone, false);
                     int nbConditions = GetNumberOfConditions();
 
-
                     AddConditionsUpdate(ConditionTableCleaned, new bool[] { true, false, false, false, false, false, false });
-                    AddConditionsUpdate(ConditionRagTaken, new bool[] { false, true, false, false, false, false, false });
-                    AddConditionsUpdate(ConditionCleaningWithoutRag, new bool[] { false, false, true, false, false, false, false });
-                    AddConditionsUpdate(ConditionDidNotStartCleaning, new bool[] { false, true, false, true, false, false, false });
-                    AddConditionsUpdate(ConditionCleaningInterrupted, new bool[] { false, true, false, false, true, false, false });
-                    AddConditionsUpdate(ConditionNewPartCleaned, new bool[] { false, true, false, false, false, true, false });
-                    AddConditionsUpdate(ConditionsProcessRelatedToNewPartsCleanedDone, new bool[] { false, true, false, false, false, false, true });
+                    AddConditionsUpdate(ConditionRagNotTakenButHelpReceived, new bool[] { false, true, false, false, false, false, false });
+                    AddConditionsUpdate(ConditionRagTaken, new bool[] { false, false, true, false, false, false, false });
+                    AddConditionsUpdate(ConditionDidNotStartCleaning, new bool[] { false, false, true, true, false, false, false });
+                    AddConditionsUpdate(ConditionCleaningInterrupted, new bool[] { false, false, true, false, true, false, false });
+                    AddConditionsUpdate(ConditionNewPartCleaned, new bool[] { false, false, true, false, false, true, false });
+                    AddConditionsUpdate(ConditionProcessRelatedToNewPartsCleanedDone, new bool[] { false, false, true, false, false, false, true });
 
                     // End of code generation using the EXCEL file
 
                     // Defining the BT
                     Selector srRagNotTaken = new Selector(
-                        new BlackboardCondition(ConditionCleaningWithoutRag, Operator.IS_EQUAL, true, Stops.IMMEDIATE_RESTART, AssistanceEpsilon()),
+                        new BlackboardCondition(ConditionRagNotTakenButHelpReceived, Operator.IS_EQUAL, true, Stops.IMMEDIATE_RESTART, AssistanceEpsilon()),
                         AssistanceBeta()
                         );
 
@@ -117,7 +132,7 @@ namespace MATCH
                         new Inverter(AssistanceEta()),
                         new BlackboardCondition(ConditionDidNotStartCleaning, Operator.IS_EQUAL, true, Stops.IMMEDIATE_RESTART, AssistanceGamma()),
                         new BlackboardCondition(ConditionNewPartCleaned, Operator.IS_EQUAL, true, Stops.IMMEDIATE_RESTART, AssistanceZeta()),
-                        new BlackboardCondition(ConditionsProcessRelatedToNewPartsCleanedDone, Operator.IS_EQUAL, true, Stops.IMMEDIATE_RESTART, AssistanceTheta()),
+                        new BlackboardCondition(ConditionProcessRelatedToNewPartsCleanedDone, Operator.IS_EQUAL, true, Stops.IMMEDIATE_RESTART, AssistanceTheta()),
                         new BlackboardCondition(ConditionCleaningInterrupted, Operator.IS_EQUAL, true, Stops.IMMEDIATE_RESTART, AssistanceDelta()),
                         new WaitUntilStopped()
                         );
@@ -146,7 +161,7 @@ namespace MATCH
 
                     AdminMenu.Instance.AddButton("BT - Dusting - Trigger - clean without rag", delegate
                     {
-                        UpdateConditionWithMatrix(ConditionCleaningWithoutRag);
+                        UpdateConditionWithMatrix(ConditionRagNotTakenButHelpReceived);
                     }, AdminMenu.Panels.Right);
 
                     AdminMenu.Instance.AddButton("BT - Dusting - Trigger - clean with rag", delegate
@@ -232,7 +247,10 @@ namespace MATCH
                     /*Assistances.GradationVisual.GradationVisual beta7 = Assistances.GradationVisual.Factory.Instance.CreateLightPath("DustingTable-Beta-7", InteractionSurfaceTable.transform);*/
                     Assistances.GradationVisual.GradationVisual beta7 = Assistances.GradationVisual.Factory.Instance.CreateArch("DustingTable-Beta-7", "Vous trouverez le chiffon au bout de cette arche", InteractionSurfaceTable.transform, InteractionRag.transform, InteractionSurfaceTable.transform);
 
-                    Assistances.GradationVisual.GradationVisual beta8 = Assistances.GradationVisual.Factory.Instance.CreateDialog2WithButtons("DustingTable-Beta-8", "", "Parfait! Nous vous laissons faire.", "Ok!", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.Yes, InteractionSurfaceTable.transform);
+                    Assistances.GradationVisual.GradationVisual beta8 = Assistances.GradationVisual.Factory.Instance.CreateDialog2WithButtons("DustingTable-Beta-8", "", "Parfait! Nous vous laissons faire.", "Ok!", delegate(System.Object o, EventArgs e)
+                    {
+                        RegisterInferenceFarFromRag();
+                    }, Assistances.Buttons.Button.ButtonType.Yes, InteractionSurfaceTable.transform);
 
                     Assistances.GradationVisual.GradationVisual beta9 = Assistances.GradationVisual.Factory.Instance.CreateDialog2WithButtons("DustingTable-Beta-5", "", "Parfait! Savez-vous où il est?", "Oui", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.Yes, "Non", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.No, InteractionSurfaceTable.transform);
 
@@ -305,9 +323,33 @@ namespace MATCH
 
                 Sequence AssistanceEpsilon()
                 {
+                    Assistances.GradationVisual.GradationVisual epsilon1 = Assistances.GradationVisual.Factory.Instance.CreateExclamationMark("DustingTable-Epsilon1", InteractionRag.transform);
+                    Assistances.GradationVisual.GradationVisual epsilon2 = Assistances.GradationVisual.Factory.Instance.CreateDialog2WithButtons("DustingTable-Epsilon2", "", "Le chiffon est ici!", "Ok!", delegate(System.Object o, EventArgs e)
+                    {
+                        RegisterInferenceFarFromRag();
+                    }, Assistances.Buttons.Button.ButtonType.ClosingButton, "Je ne comprends pas", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.No, InteractionRag.transform);
+                    Assistances.GradationVisual.GradationVisual epsilon3 = Assistances.GradationVisual.Factory.Instance.CreateDialog2WithButtons("DustingTable-Epsilon3", "", "Parfait! Nous vous laissons faire", "Ok!", delegate (System.Object o, EventArgs e)
+                    {
+                        RegisterInferenceFarFromRag();
+                    }, Assistances.Buttons.Button.ButtonType.ClosingButton, InteractionRag.transform);
+                    Assistances.GradationVisual.GradationVisual epsilon4 = Assistances.GradationVisual.Factory.Instance.CreateAlreadyConfigured(Assistances.GradationVisual.Factory.AlreadyConfigured.SomeoneComingToHelpDialog2, "DustingTable-Epsilon4", InteractionRag.transform);
+
+                    Assistances.AssistanceGradationExplicit epsilon = Assistances.Factory.Instance.CreateAssistanceGradationExplicit("DustingTable-Epsilon");
+                    epsilon.AddAssistance(epsilon1, Assistances.Buttons.Button.ButtonType.No, epsilon3);
+                    epsilon.AddAssistance(epsilon1, Assistances.Buttons.Button.ButtonType.Yes, epsilon2);
+                    epsilon.AddAssistance(epsilon2, Assistances.Buttons.Button.ButtonType.ClosingButton, null);
+                    epsilon.AddAssistance(epsilon2, Assistances.Buttons.Button.ButtonType.No, epsilon4);
+                    epsilon.AddAssistance(epsilon4, Assistances.Buttons.Button.ButtonType.ClosingButton, null);
+
+                    AssistancesDusting.Add(epsilon, false);
+
+                    epsilon.Init();
+
                     Sequence temp = new Sequence(
                         new NPBehave.Action(() =>
                         {
+                            ShowAssistanceHideOthers(epsilon);
+                            epsilon.RunAssistance();
                             UpdateTextAssistancesDebugWindow("Epsilon");
                             MATCH.Utilities.Logger.Instance.Log(this.GetId(), MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, "Epsilon");
                         }),
@@ -376,7 +418,7 @@ namespace MATCH
                             inf2.StartCounter();
                             UpdateTextAssistancesDebugWindow("Zeta");
                             MATCH.Utilities.Logger.Instance.Log(this.GetId(), MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, "Zeta");
-                            UpdateConditionWithMatrix(ConditionsProcessRelatedToNewPartsCleanedDone);
+                            UpdateConditionWithMatrix(ConditionProcessRelatedToNewPartsCleanedDone);
                         }),
                         new WaitUntilStopped());
 
@@ -485,7 +527,20 @@ namespace MATCH
 
                 void CallbackInteractionSurfaceRagTouched(System.Object o, EventArgs e)
                 {
+                    InferenceManager.UnregisterInference(InferenceFarFromRag);
                     UpdateConditionWithMatrix(ConditionRagTaken);
+                }
+
+                void RegisterInferenceFarFromRag()
+                {
+                    DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Registering inference distance from rag with distance value: " + InferenceFarFromRagDistance);
+
+                    InferenceManager.UnregisterInference(InferenceFarFromRag);
+
+                    MATCH.Inferences.Factory.Instance.CreateDistanceLeavingInferenceOneShot(InferenceManager, InferenceFarFromRag, delegate (System.Object oo, EventArgs ee)
+                    {
+                        UpdateConditionWithMatrix(ConditionRagNotTakenButHelpReceived);
+                    }, InteractionRag.gameObject, InferenceFarFromRagDistance);
                 }
             }
 

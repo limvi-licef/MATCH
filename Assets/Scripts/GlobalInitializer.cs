@@ -37,13 +37,15 @@ namespace MATCH
 
         private void Awake()
         {
-            TodoList = MATCH.Assistances.Factory.Instance.CreateToDoList("Choses à faire", ""); //create to do list
+            //TodoList = MATCH.Assistances.Factory.Instance.CreateToDoList("Choses à faire", "", transform.parent); //create to do list
         }
 
 
         // Start is called before the first frame update
         void Start()
         {
+            TodoList = MATCH.Assistances.Factory.Instance.CreateToDoList("Choses à faire", "", transform.parent); //create to do list
+
             // Tuning parameters following if the software runs on the Unity editor or the Hololens
             if (Utilities.Utility.IsEditorSimulator() || Utilities.Utility.IsEditorGameView())
             {
@@ -91,6 +93,9 @@ namespace MATCH
                 }, AdminMenu.Panels.Middle, AdminMenu.ButtonType.Hide);
 #endif
         }
+
+            // 
+
 
             }
 
