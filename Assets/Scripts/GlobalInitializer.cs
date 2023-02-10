@@ -37,7 +37,7 @@ namespace MATCH
         // Start is called before the first frame update
         void Start()
         {
-            TodoList = MATCH.Assistances.Factory.Instance.CreateToDoList("Choses à faire", "", transform.parent); //create to do list
+            //TodoList = MATCH.Assistances.Factory.Instance.CreateToDoList("Choses à faire", "", transform.parent); //create to do list
 
             // Tuning parameters following if the software runs on the Unity editor or the Hololens
             if (Utilities.Utility.IsEditorSimulator() || Utilities.Utility.IsEditorGameView())

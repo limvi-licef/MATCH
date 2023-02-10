@@ -37,7 +37,7 @@ namespace MATCH
             }
             void Start()
             {
-                ToDo = MATCH.Assistances.Factory.Instance.CreateToDoList("Choses à faire", "");
+                ToDo = MATCH.Assistances.Factory.Instance.CreateToDoList("Choses à faire", "", transform);
                 //AdminMenu.Instance.AddButton("Bring ToDo List window", callbackBringAgenda);
                 AdminMenu.Instance.AddButton("Bring to do list window", delegate () { Utilities.Utility.BringObject(ToDo.transform); }); //add button to the admin menu
                 AdminMenu.Instance.AddSwitchButton("Lock To Do List", CallbackLockToDo);

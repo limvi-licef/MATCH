@@ -63,6 +63,8 @@ namespace MATCH
 
                 public override void Start()
                 {
+                    Scenarios.Manager.Instance.addScenario(this);
+
                     // Initialize assistances
                     InitializeAssistances();
 
@@ -74,7 +76,7 @@ namespace MATCH
 
                     Init();
 
-                    Scenarios.Manager.Instance.addScenario(this);
+                    
 
                     // Add button to restart scenario
                     MATCH.AdminMenu.Instance.AddButton("Dusting table - restart scenario", delegate
