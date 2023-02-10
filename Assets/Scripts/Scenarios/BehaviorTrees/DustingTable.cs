@@ -74,6 +74,8 @@ namespace MATCH
 
                     Init();
 
+                    Scenarios.Manager.Instance.addScenario(this);
+
                     // Add button to restart scenario
                     MATCH.AdminMenu.Instance.AddButton("Dusting table - restart scenario", delegate
                     {
@@ -210,6 +212,7 @@ namespace MATCH
                             InferenceManager.UnregisterAllInferences();
                             UpdateTextAssistancesDebugWindow("Alpha");
                             MATCH.Utilities.Logger.Instance.Log(this.GetId(), MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, "Alpha");
+                            OnChallengeSuccess();
                         }),
                         new WaitUntilStopped()
                         );
@@ -288,9 +291,11 @@ namespace MATCH
 
                     Sequence temp = new Sequence(
                         new NPBehave.Action(() => {
+                            OnChallengeStart();
                             ShowAssistanceHideOthers(assistanceBeta); //assistanceBeta.RunAssistance();
                             UpdateTextAssistancesDebugWindow("Beta");
                             MATCH.Utilities.Logger.Instance.Log(this.GetId(), MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, "Beta");
+                            
                         }),
                         new WaitUntilStopped()
                         );
@@ -352,6 +357,7 @@ namespace MATCH
                             epsilon.RunAssistance();
                             UpdateTextAssistancesDebugWindow("Epsilon");
                             MATCH.Utilities.Logger.Instance.Log(this.GetId(), MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, "Epsilon");
+                        
                         }),
                         new WaitUntilStopped());
 
@@ -387,6 +393,7 @@ namespace MATCH
                             InferenceManager.UnregisterAllInferences();
                             UpdateTextAssistancesDebugWindow("Gamma");
                             MATCH.Utilities.Logger.Instance.Log(this.GetId(), MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, "Gamma");
+                            
                         }),
                         new WaitUntilStopped()
                         );
@@ -507,8 +514,8 @@ namespace MATCH
                         new NPBehave.Action(() =>
                         {
                             ShowAssistanceHideOthers(eta);
-
-                              Inferences.Timer inf = new Inferences.Timer(InferenceDidNotStartDusting, 15, delegate (System.Object o, EventArgs e)
+                            OnChallengeStart();
+                            Inferences.Timer inf = new Inferences.Timer(InferenceDidNotStartDusting, 15, delegate (System.Object o, EventArgs e)
                             {
                                 UpdateConditionWithMatrix(ConditionDidNotStartCleaning);
                                 InferenceManager.UnregisterInference(InferenceDidNotStartDusting);
