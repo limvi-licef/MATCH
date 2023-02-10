@@ -247,3 +247,6 @@ Assets/NPBehave/Scripts/Task/Wait.cs
 Assets/NPBehave/Scripts/Task/Wait.cs.meta
 Assets/NPBehave/Scripts/Task/WaitUntilStopped.cs
 Assets/NPBehave/Scripts/Task/WaitUntilStopped.cs.meta
+Assets/JsonDotNet/
+Assets/JsonDotNet.meta
+BuildForHololens/

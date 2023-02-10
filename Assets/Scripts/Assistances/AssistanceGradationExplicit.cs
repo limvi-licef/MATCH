@@ -324,7 +324,15 @@ namespace MATCH
                         List<Buttons.Button.ButtonType> buttons = AssistancesGradation.GetButtonTypesCurrentAssistance();
                         if (buttons != null && buttons.Count == 1 && buttons[0] == Buttons.Button.ButtonType.ClosingButton)
                         {
-                            UpdateConditionWithMatrix(ConditionWaitingSince30Seconds);
+                                Inferences.Timer temp = new Inferences.Timer("GradationExplicit-TimerToMakeClosingButtonAppear", 2, delegate (System.Object oo, EventArgs ee)
+                                {
+                                    UpdateConditionWithMatrix(ConditionWaitingSince30Seconds);
+                                    ((Inferences.Timer)InfManager.GetInference("GradationExplicit-TimerToMakeClosingButtonAppear")).StopCounter();
+                                    InfManager.UnregisterInference("GradationExplicit-TimerToMakeClosingButtonAppear");
+                                });
+
+                                InfManager.RegisterInference(temp);
+                                temp.StartCounter();
                         }
                         else
                         {

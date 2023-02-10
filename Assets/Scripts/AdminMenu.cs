@@ -23,6 +23,8 @@ using Microsoft.MixedReality.Toolkit.Utilities.Solvers;
 using Microsoft.MixedReality.Toolkit.SpatialAwareness;
 using Microsoft.MixedReality.Toolkit.Diagnostics;
 using Microsoft.MixedReality.Toolkit.Utilities;
+using Microsoft.MixedReality.Toolkit.Experimental.UI;
+using UnityEngine.UI;
 using TMPro;
 using System.Reflection;
 using System;
@@ -57,11 +59,15 @@ namespace MATCH
 
         public GameObject RefButtonSwitch;
         public GameObject RefButton;
+        public GameObject RefInput;
 
         List<GameObject> Buttons;
         Dictionary<Panels, Transform> PanelsStorage;
 
         List<UnityEngine.Events.UnityAction> HideAllCallbacks;
+
+        TouchScreenKeyboard Keyboard;
+        GameObject ModifiedByKeyboard;
 
         private void Awake()
         {
@@ -110,6 +116,16 @@ namespace MATCH
             // Hiding spongy
             AddSwitchButton("Spongy - hide", CallbackHideSpongy, Panels.Left, ButtonType.Hide);
 
+
+            //AddText("Test", delegate() { });
+        }
+
+        private void Update()
+        {
+            if (Keyboard != null)
+            {
+                ModifiedByKeyboard.GetComponent<TextMesh>().text = Keyboard.text;
+            }
         }
 
         public void CallbackHideSpongy()
@@ -175,6 +191,40 @@ namespace MATCH
             Buttons.Last().GetComponent<Interactable>().GetReceiver<InteractableOnPressReceiver>().OnPress.AddListener(callback);
             Buttons.Last().GetComponent<Interactable>().GetReceiver<InteractableOnPressReceiver>().InteractionFilter = 0;
             Buttons.Last().transform.Find("IconAndText").Find("TextMeshPro").GetComponent<TextMeshPro>().SetText(text);
+            PanelsStorage[panel].GetComponent<GridObjectCollection>().UpdateCollection();
+        }
+
+        /**
+         * Callback contains a EventHandlerArgs.String arg, the value being the new value of the text field.
+         */
+        public void AddInputWithButton(string textInput, string textButton, EventHandler callbackButton, Panels panel = Panels.Middle)
+        {
+            // Manage the input text
+            GameObject input = Instantiate(RefInput, PanelsStorage[panel]);
+            Buttons.Add(input);
+            Buttons.Last().AddComponent<BoxCollider>();
+            Interactable interactions = Buttons.Last().AddComponent<Interactable>();
+            interactions.OnClick.AddListener(delegate ()
+            {
+                ModifiedByKeyboard = input;
+                Keyboard = TouchScreenKeyboard.Open("", TouchScreenKeyboardType.NumberPad, false);
+            });
+
+            TextMesh textMesh = Buttons.Last().GetComponent<TextMesh>();
+            textMesh.text = textInput;
+            PanelsStorage[panel].GetComponent<GridObjectCollection>().UpdateCollection();
+
+            // Manage the update button
+            Buttons.Add(Instantiate(RefButton, PanelsStorage[panel]));
+            Buttons.Last().GetComponent<ButtonConfigHelper>().IconStyle = ButtonIconStyle.None;
+            Buttons.Last().GetComponent<ButtonConfigHelper>().SeeItSayItLabelEnabled = false;
+            Buttons.Last().GetComponent<Interactable>().GetReceiver<InteractableOnPressReceiver>().OnPress.AddListener(delegate()
+            {
+                Utilities.EventHandlerArgs.String arg = new Utilities.EventHandlerArgs.String(textMesh.text);
+                callbackButton?.Invoke(this, arg);
+            });
+            Buttons.Last().GetComponent<Interactable>().GetReceiver<InteractableOnPressReceiver>().InteractionFilter = 0;
+            Buttons.Last().transform.Find("IconAndText").Find("TextMeshPro").GetComponent<TextMeshPro>().SetText(textButton);
             PanelsStorage[panel].GetComponent<GridObjectCollection>().UpdateCollection();
         }
 
