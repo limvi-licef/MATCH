@@ -94,7 +94,7 @@ namespace MATCH
                 Help.AdjustToHeight = false;
                 Help.gameObject.name = "ExclamationMarkButtons";
                 //Help.GetTransform().localPosition = new Vector3(ChildView.localPosition.x, ChildView.localPosition.y - 0.3f, ChildView.localPosition.z);
-                Help.GetTransform().localPosition = new Vector3(0, -0.2f, 0);
+                Help.GetTransform().localPosition = new Vector3(0, -0.1f, 0);
                 //Help.Hide(Utilities.Utility.GetEventHandlerEmpty());
                 //}
 
@@ -251,13 +251,18 @@ namespace MATCH
                 return Child.transform.localScale;
             }
 
-            public void SetLocalPosition(float x, float y, float z)
+            public void SetLocalPositionObject(float x, float y, float z)
             {
                 //m_childView.transform.localPosition = new Vector3(x, y, z);
-                SetLocalPosition(new Vector3(x, y, z));
+                SetLocalPositionObject(new Vector3(x, y, z));
             }
 
-            public void SetLocalPosition(Vector3 localPosition)
+            public void SetLocalPositionObject(Vector3 localPosition)
+            {
+                transform.localPosition = localPosition;
+            }
+
+            public void SetLocalPositionExclamationMark(Vector3 localPosition)
             {
                 Child.transform.localPosition = localPosition;
             }

@@ -208,7 +208,7 @@ namespace MATCH
 
                 ExclamationMark controller = view.GetComponent<ExclamationMark>();
                 controller.AdjustHeightOnShow = adjustHeight;
-                controller.SetLocalPosition(localPosition);
+                controller.SetLocalPositionObject(localPosition);
                 controller.SetBillboard(enableBillboard);
 
                 return controller;
@@ -258,9 +258,11 @@ namespace MATCH
                 return controller;
             }
 
-            public MATCH.Assistances.Dialogs.Dialog1 CreateToDoList(string title, string description)
+            public MATCH.Assistances.Dialogs.Dialog1 CreateToDoList(string title, string description, Transform parent)
             {
-                MATCH.Assistances.Dialogs.Dialog1 controller = InitializeDialog(DialogsTypes.TodoList, title, description, null);
+                InteractionSurface temp = CreateInteractionSurface("TodoList", AdminMenu.Panels.Left, new Vector3(0.7f, 0.02f, 0.05f), new Vector3(-1.949f, -0.523f, -2.753f), Utilities.Materials.Colors.Red2, false, true, Utilities.Utility.GetEventHandlerEmpty(), true, parent);
+
+                MATCH.Assistances.Dialogs.Dialog1 controller = InitializeDialog(DialogsTypes.TodoList, title, description, temp.transform);
                 controller.EnableBillboard(false);
                 return controller;
             }
