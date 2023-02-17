@@ -44,12 +44,12 @@ public class MouseUtilitiesRefuseChallenge : MonoBehaviour
         {
             m_palmFacingUser = true;
 
-            MouseDebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, MouseDebugMessagesManager.MessageLevel.Info, "Palm detected");
+            MATCH.DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, MATCH.DebugMessagesManager.MessageLevel.Info, "Palm detected");
         });
 
         gameObject.GetComponent<HandConstraintPalmUp>().OnLastHandLost.AddListener(delegate ()
         {
-            MouseDebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, MouseDebugMessagesManager.MessageLevel.Info, "Palm not detected anymore");
+            MATCH.DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, MATCH.DebugMessagesManager.MessageLevel.Info, "Palm not detected anymore");
 
             m_palmFacingUser = false;
         });
@@ -73,7 +73,7 @@ public class MouseUtilitiesRefuseChallenge : MonoBehaviour
                 if (m_statusEventTriggered == false)
                 {
                     m_eventChallengeRefused?.Invoke(this, EventArgs.Empty);
-                    MouseDebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, MouseDebugMessagesManager.MessageLevel.Info, "Event triggered, thanks to object: " + hitInfo.transform.gameObject.name);
+                    MATCH.DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, MATCH.DebugMessagesManager.MessageLevel.Info, "Event triggered, thanks to object: " + hitInfo.transform.gameObject.name);
                     m_statusEventTriggered = true;
                 }
             }

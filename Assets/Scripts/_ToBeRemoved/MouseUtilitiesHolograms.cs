@@ -57,11 +57,11 @@ public class MouseUtilitiesHolograms : MonoBehaviour
             {
                 m_headHeightAdjusted = true;
 
-                MouseDebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, MouseDebugMessagesManager.MessageLevel.Info, "Height adjusted for height of the head disabled for now. Here are some debug information: " + " Camera y position in world space: " + Camera.main.transform.position.y.ToString() + "  | object local position: " + gameObject.transform.localPosition.y.ToString());
+                MATCH.DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, MATCH.DebugMessagesManager.MessageLevel.Info, "Height adjusted for height of the head disabled for now. Here are some debug information: " + " Camera y position in world space: " + Camera.main.transform.position.y.ToString() + "  | object local position: " + gameObject.transform.localPosition.y.ToString());
 
                 gameObject.transform.position = new Vector3(gameObject.transform.position.x, Camera.main.transform.position.y+gameObject.transform.localPosition.y, gameObject.transform.position.z);
 
-                MouseDebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, MouseDebugMessagesManager.MessageLevel.Info, "New y position: " + gameObject.transform.position.y.ToString());
+                MATCH.DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, MATCH.DebugMessagesManager.MessageLevel.Info, "New y position: " + gameObject.transform.position.y.ToString());
             }
             else if (gameObject.activeSelf == false && m_headHeightAdjusted == true)
             {
@@ -105,6 +105,6 @@ public class MouseUtilitiesHolograms : MonoBehaviour
         gameObject.transform.localScale = new Vector3(1.0f, 1.0f, 1.0f);
         gameObject.transform.localPosition = position;
 
-        Destroy(gameObject.GetComponent<MouseUtilitiesAnimation>());
+        Destroy(gameObject.GetComponent<Animation>());
     }
 }

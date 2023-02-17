@@ -6,11 +6,11 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 0
-    path: Assets/Scenes/SampleScene.unity
-    guid: 9fc0d4010bbf28b4594072e72b8655ab
+    path: Assets/MX_Context_Awareness.unity
+    guid: 23dafe5bb908672419b54c75c53f5bff
   - enabled: 1
-    path: Assets/Scenes/Mouse.unity
+    path: Assets/Scenes/MATCH.unity
     guid: fe427dbc86e4d3c408f710505c2344f9
   m_configObjects:
-    com.unity.xr.management.loader_settings: {fileID: 11400000, guid: 4a453b6d1529b234d8631f9a85b88ba7, type: 2}
-    com.unity.xr.openxr.settings4: {fileID: 11400000, guid: df4cca82861b19e41a92187da6690b8f, type: 2}
+    com.unity.xr.management.loader_settings: {fileID: 11400000, guid: 059a7a3802e1002479b8bb8ef9f20a47, type: 2}
+    com.unity.xr.openxr.settings4: {fileID: 11400000, guid: 359d35bc5233ff146bce4931bf21af09, type: 2}
