@@ -117,7 +117,34 @@ namespace MATCH
                 //Is it 7pm?
                 Sequence AssistanceBTWP7()
                 {
-                    return null;
+                    MATCH.Utilities.Logger.Instance.Log(this.GetId(), MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, "Is it 7pm?");
+
+                    Assistances.GradationVisual.GradationVisual alpha1 = Assistances.GradationVisual.Factory.Instance.CreateDialog2WithButtons("Practice-Alpha-1", "", "Qu'est-ce qu'il est conseilé de faire à la fin de la journée lorsqu'il ne fait moins chaud?", "Commencer !", delegate (System.Object o, EventArgs e)
+                    {
+                        UpdateConditionWithMatrix(ConditionAllPlantsWatered);
+                    }, Assistances.Buttons.Button.ButtonType.ClosingButton, InteractionSurfaceDialogs.transform);
+
+
+                    Assistances.AssistanceGradationExplicit alpha = MATCH.Assistances.Factory.Instance.CreateAssistanceGradationExplicit("ArroserLesPlantes-Alpha");
+                    alpha.transform.parent = transform;
+
+                    alpha.AddAssistance(alpha1, Assistances.Buttons.Button.ButtonType.ClosingButton, null);
+
+                    AssistancesWatering.Add(alpha, false);
+
+                    alpha.Init();
+
+                    Sequence temp = new Sequence(
+                        new NPBehave.Action(() => {
+                            ShowAssistanceHideOthers(alpha);
+                            InferenceManager.UnregisterAllInferences();
+                            UpdateTextAssistancesDebugWindow("Alpha");
+                            MATCH.Utilities.Logger.Instance.Log(this.GetId(), MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, "BTWP7");
+                        }),
+                        new WaitUntilStopped()
+                        );
+
+                    return temp;
                 }
 
                 //Did the person fill the bottle to water the plants?
@@ -153,8 +180,6 @@ namespace MATCH
                 //Are all plants watered?
                 Sequence AssistanceBTWP1()
                 {
-                    MATCH.Utilities.Logger.Instance.Log(this.GetId(), MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, "BTWP1");
-
                     return null;
                 }
 
