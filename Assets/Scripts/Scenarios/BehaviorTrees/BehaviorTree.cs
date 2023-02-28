@@ -47,7 +47,7 @@ namespace MATCH
                 // Start is called before the first frame update
                 public virtual void Start()
                 {
-                    //InitializeDebugWindows();
+                    InitializeDebugWindows();
 
                     // Debug object to display the status of the BT conditions
                     /*BehaviorTreeDebugWindow.Show(Utilities.Utility.GetEventHandlerEmpty(), false);

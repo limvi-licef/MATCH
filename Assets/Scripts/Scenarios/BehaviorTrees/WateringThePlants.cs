@@ -99,7 +99,7 @@ namespace MATCH
 
                 void InitializeDebugButtons()
                 {
-                    //Est-ce � modifier?
+                    //Est-ce à modifier?
 
                 }
 
@@ -153,6 +153,8 @@ namespace MATCH
                 //Are all plants watered?
                 Sequence AssistanceBTWP1()
                 {
+                    MATCH.Utilities.Logger.Instance.Log(this.GetId(), MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, "BTWP1");
+
                     return null;
                 }
 
