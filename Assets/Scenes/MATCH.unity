@@ -4715,8 +4715,8 @@ Transform:
   - {fileID: 1823297491}
   - {fileID: 260781486}
   - {fileID: 371362082}
-  - {fileID: 1286514339}
   - {fileID: 1410610488}
+  - {fileID: 1286514339}
   - {fileID: 1131041414}
   - {fileID: 1869671895}
   - {fileID: 54866232}
@@ -10745,7 +10745,7 @@ GameObject:
   - component: {fileID: 1286514341}
   - component: {fileID: 1286514340}
   m_Layer: 0
-  m_Name: Plant2
+  m_Name: Plant3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -10763,7 +10763,7 @@ Transform:
   m_LocalScale: {x: 0.3, y: 0.5, z: 0.3}
   m_Children: []
   m_Father: {fileID: 514905943}
-  m_RootOrder: 7
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!65 &1286514340
 BoxCollider:
@@ -11896,7 +11896,7 @@ GameObject:
   - component: {fileID: 1410610490}
   - component: {fileID: 1410610489}
   m_Layer: 0
-  m_Name: Plant3
+  m_Name: Plant2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -11914,7 +11914,7 @@ Transform:
   m_LocalScale: {x: 0.3, y: 0.5, z: 0.3}
   m_Children: []
   m_Father: {fileID: 514905943}
-  m_RootOrder: 8
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!65 &1410610489
 BoxCollider:
@@ -15634,7 +15634,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1887309926}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -3.6189203, y: 0.6954708, z: 2.5199938}
+  m_LocalPosition: {x: -3.6189194, y: 0.6954708, z: 2.519994}
   m_LocalScale: {x: 0.1, y: 0.1, z: 0.1}
   m_Children: []
   m_Father: {fileID: 1310589445}

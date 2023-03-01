@@ -34,6 +34,7 @@ namespace MATCH
                 Assistances.InteractionSurface InteractionSink;
                 Assistances.InteractionSurface InteractionPlant1;
                 Assistances.InteractionSurface InteractionPlant2;
+                Assistances.InteractionSurface InteractionPlant3;
 
                 Dictionary<Assistances.AssistanceGradationExplicit, bool> AssistancesWatering;
 
@@ -99,46 +100,74 @@ namespace MATCH
 
                 void InitializeDebugButtons()
                 {
-                    //Est-ce à modifier?
+                    // Debug buttons to check if the BT has been correctly modeled
+                    AdminMenu.Instance.AddButton("BT - Watering - Trigger - All plants watered", delegate
+                    {
+                        UpdateConditionWithMatrix(ConditionAllPlantsWatered);
+                    }, AdminMenu.Panels.Right);
+
+                    AdminMenu.Instance.AddButton("BT - Watering - Trigger - one plant watered", delegate
+                    {
+                        UpdateConditionWithMatrix(ConditionOnePlantWatered);
+                    }, AdminMenu.Panels.Right);
+
+                    AdminMenu.Instance.AddButton("BT - Watering - Trigger - help needed", delegate
+                    {
+                        UpdateConditionWithMatrix(ConditionHelpNeeded);
+                    }, AdminMenu.Panels.Right);
+
+                    AdminMenu.Instance.AddButton("BT - Watering - Trigger - help requested", delegate
+                    {
+                        UpdateConditionWithMatrix(ConditionHelpRequested);
+                    }, AdminMenu.Panels.Right);
+
+                    AdminMenu.Instance.AddButton("BT - Watering - Trigger - help requested again", delegate
+                    {
+                        UpdateConditionWithMatrix(ConditionHelpRequestedAgain);
+                    }, AdminMenu.Panels.Right);
+                    AdminMenu.Instance.AddButton("BT - Watering - Trigger - Bottle filled", delegate
+                    {
+                        UpdateConditionWithMatrix(ConditionBottleFilled);
+                    }, AdminMenu.Panels.Right);
+                    AdminMenu.Instance.AddButton("BT - Watering - Trigger - all false", delegate
+                    {
+                        UpdateConditionWithMatrix(ConditionAllPlantsWatered);
+                        UpdateCondition(ConditionAllPlantsWatered, false);
+                    }, AdminMenu.Panels.Right);
 
                 }
 
                 void InitializeAssistances()
                 {
-                    InteractionSurfaceDialogs = Assistances.Factory.Instance.CreateInteractionSurface("Practice-Dialogs", AdminMenu.Panels.Right, new Vector3(1.1f, 0.02f, 0.7f), new Vector3(0f, 0f, 0f), Utilities.Materials.Colors.CyanGlowing, false, true, Utilities.Utility.GetEventHandlerEmpty(), true, transform);
+                    InteractionSurfaceDialogs = Assistances.Factory.Instance.CreateInteractionSurface("Practice-Dialogs", AdminMenu.Panels.Right, new Vector3(1.1f, 0.02f, 0.7f), new Vector3(-0.447f, -0.406f, 0.009f), Utilities.Materials.Colors.CyanGlowing, false, true, Utilities.Utility.GetEventHandlerEmpty(), true, transform);
 
-                    //� modifier les interactions
-                    InteractionSink = Assistances.Factory.Instance.CreateInteractionSurface("Practice-Plant", AdminMenu.Panels.Right, new Vector3(1.1f, 0.02f, 0.7f), new Vector3(0f, 0f, 0f), Utilities.Materials.Colors.GreenGlowing, false, true, Utilities.Utility.GetEventHandlerEmpty(), true, transform);
-                    InteractionPlant1 = Assistances.Factory.Instance.CreateInteractionSurface("Practice-Plant", AdminMenu.Panels.Right, new Vector3(1.1f, 0.02f, 0.7f), new Vector3(0f, 0f, 0f), Utilities.Materials.Colors.GreenGlowing, false, true, Utilities.Utility.GetEventHandlerEmpty(), true, transform);
-                    InteractionPlant2 = Assistances.Factory.Instance.CreateInteractionSurface("Practice-Plant", AdminMenu.Panels.Right, new Vector3(1.1f, 0.02f, 0.7f), new Vector3(0f, 0f, 0f), Utilities.Materials.Colors.GreenGlowing, false, true, Utilities.Utility.GetEventHandlerEmpty(), true, transform);
+                    //à modifier les interactions
+                    InteractionSink = Assistances.Factory.Instance.CreateInteractionSurface("Practice-Sink", AdminMenu.Panels.Right, new Vector3(1.1f, 0.02f, 0.7f),
+                        new Vector3(-4.777f, 0.659f, 2.031f), Utilities.Materials.Colors.GreenGlowing, false, true, Utilities.Utility.GetEventHandlerEmpty(), true, transform);
+
+                    InteractionPlant1 = Assistances.Factory.Instance.CreateInteractionSurface("Practice-Plant1", AdminMenu.Panels.Right, new Vector3(0.3f, 0.5f, 0.3f),
+                        new Vector3(-2.309f, 0.263f, 2.031f), Utilities.Materials.Colors.GreenGlowing, false, true, Utilities.Utility.GetEventHandlerEmpty(), true, transform);
+                    InteractionPlant2 = Assistances.Factory.Instance.CreateInteractionSurface("Practice-Plant2", AdminMenu.Panels.Right, new Vector3(0.3f, 0.5f, 0.3f),
+                        new Vector3(0f, 0f, 0f), Utilities.Materials.Colors.GreenGlowing, false, true, Utilities.Utility.GetEventHandlerEmpty(), true, transform);
+                    InteractionPlant3 = Assistances.Factory.Instance.CreateInteractionSurface("Practice-Plant3", AdminMenu.Panels.Right, new Vector3(0.3f, 0.5f, 0.3f),
+                         new Vector3(0f, 0f, 0f), Utilities.Materials.Colors.GreenGlowing, false, true, Utilities.Utility.GetEventHandlerEmpty(), true, transform);
+
+                    
+                    InteractionSink.EventInteractionSurfaceTableTouched += CallbackInteractionSurfaceSinkTouched;
+                    InteractionPlant1.EventInteractionSurfaceTableTouched += CallbackInteractionSurfacePlantWatered;
+                    InteractionPlant2.EventInteractionSurfaceTableTouched += CallbackInteractionSurfacePlantWatered;
+                    InteractionPlant3.EventInteractionSurfaceTableTouched += CallbackInteractionSurfacePlantWatered;
 
                 }
 
                 //Is it 7pm?
                 Sequence AssistanceBTWP7()
                 {
-                    MATCH.Utilities.Logger.Instance.Log(this.GetId(), MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, "Is it 7pm?");
-
-                    Assistances.GradationVisual.GradationVisual alpha1 = Assistances.GradationVisual.Factory.Instance.CreateDialog2WithButtons("Practice-Alpha-1", "", "Qu'est-ce qu'il est conseilé de faire à la fin de la journée lorsqu'il ne fait moins chaud?", "Commencer !", delegate (System.Object o, EventArgs e)
-                    {
-                        UpdateConditionWithMatrix(ConditionAllPlantsWatered);
-                    }, Assistances.Buttons.Button.ButtonType.ClosingButton, InteractionSurfaceDialogs.transform);
-
-
-                    Assistances.AssistanceGradationExplicit alpha = MATCH.Assistances.Factory.Instance.CreateAssistanceGradationExplicit("ArroserLesPlantes-Alpha");
-                    alpha.transform.parent = transform;
-
-                    alpha.AddAssistance(alpha1, Assistances.Buttons.Button.ButtonType.ClosingButton, null);
-
-                    AssistancesWatering.Add(alpha, false);
-
-                    alpha.Init();
-
                     Sequence temp = new Sequence(
                         new NPBehave.Action(() => {
-                            ShowAssistanceHideOthers(alpha);
-                            InferenceManager.UnregisterAllInferences();
-                            UpdateTextAssistancesDebugWindow("Alpha");
+                        
+         
+                            UpdateTextAssistancesDebugWindow("Is it 7pm?");
                             MATCH.Utilities.Logger.Instance.Log(this.GetId(), MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, "BTWP7");
                         }),
                         new WaitUntilStopped()
@@ -150,37 +179,109 @@ namespace MATCH
                 //Did the person fill the bottle to water the plants?
                 Sequence AssistanceBTWP5()
                 {
-                    return null;
+                    
+                    Sequence temp = new Sequence(
+                        new NPBehave.Action(() => {
+                            //ShowAssistanceHideOthers(btwp5);
+        
+                            UpdateTextAssistancesDebugWindow("Bottle Filled");
+
+                            MATCH.Utilities.Logger.Instance.Log(this.GetId(), MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, "BTWP5");
+                        }),
+                        new WaitUntilStopped()
+                        );
+
+                    return temp;
                 }
 
                 //Does the person come back to the faucet without having watered any plant?
                 Sequence AssistanceBTWP4()
                 {
-                    return null;
+                    Sequence temp = new Sequence(
+                        new NPBehave.Action(() => {
+                            //ShowAssistanceHideOthers(alpha);
+        
+                            UpdateTextAssistancesDebugWindow("BTWP4");
+                            MATCH.Utilities.Logger.Instance.Log(this.GetId(), MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, "BTWP4");
+                        }),
+                        new WaitUntilStopped()
+                        );
+
+                    return temp;
                 }
 
                 //Does the person request some help?
                 Sequence AssistanceBTWP6()
                 {
-                    return null;
+                    Sequence temp = new Sequence(
+                        new NPBehave.Action(() => {
+                            //ShowAssistanceHideOthers(alpha);
+      
+                            UpdateTextAssistancesDebugWindow("BTWP6");
+                            MATCH.Utilities.Logger.Instance.Log(this.GetId(), MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, "BTWP6");
+                        }),
+                        new WaitUntilStopped()
+                        );
+
+                    return temp;
                 }
 
                 //Did the person already request help to find the location of the plants?
                 Sequence AssistanceBTWP3()
                 {
-                    return null;
+                    Sequence temp = new Sequence(
+                        new NPBehave.Action(() => {
+                            //ShowAssistanceHideOthers(alpha);
+        
+                            UpdateTextAssistancesDebugWindow("BTWP3");
+                            MATCH.Utilities.Logger.Instance.Log(this.GetId(), MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, "BTWP3");
+                        }),
+                        new WaitUntilStopped()
+                        );
+
+                    return temp;
                 }
 
                 //Did the person water one of the plants?
                 Sequence AssistanceBTWP2()
                 {
-                    return null;
+                    Sequence temp = new Sequence(
+                        new NPBehave.Action(() => {
+                            //ShowAssistanceHideOthers(alpha);
+        
+                            UpdateTextAssistancesDebugWindow("One plant watered");
+                            MATCH.Utilities.Logger.Instance.Log(this.GetId(), MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, " BTWP2 : One plant watered");
+                        }),
+                        new WaitUntilStopped()
+                        );
+
+                    return temp;
                 }
 
                 //Are all plants watered?
                 Sequence AssistanceBTWP1()
                 {
-                    return null;
+                    Sequence temp = new Sequence(
+                        new NPBehave.Action(() => {
+                            //ShowAssistanceHideOthers(alpha);
+         
+                            UpdateTextAssistancesDebugWindow("BTWP1");
+                            MATCH.Utilities.Logger.Instance.Log(this.GetId(), MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, "BTWP1");
+                        }),
+                        new WaitUntilStopped()
+                        );
+
+                    return temp;
+                }
+
+                void CallbackInteractionSurfaceSinkTouched(System.Object o, EventArgs e)
+                {
+                    UpdateConditionWithMatrix(ConditionBottleFilled);
+                }
+
+                void CallbackInteractionSurfacePlantWatered(System.Object o, EventArgs e)
+                {
+                    UpdateConditionWithMatrix(ConditionOnePlantWatered);
                 }
 
                 void ShowAssistanceHideOthers(Assistances.AssistanceGradationExplicit assistance)
