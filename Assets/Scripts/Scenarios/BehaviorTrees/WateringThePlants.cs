@@ -26,9 +26,8 @@ namespace MATCH
                 string ConditionHelpNeeded = "HelpNeeded";
                 string ConditionHelpRequested = "HelpRequested";
                 string ConditionHelpRequestedAgain = "HelpRequestedAgain";
-                string ConditionOnePlantWatered = "OnePlantWatered";
+                string ConditionPlantWatered = "PlantWatered";
                 string ConditionAllPlantsWatered = "AllPlantsWatered";
-
 
                 string InferenceFarFromRag = "FarFromRag";
                 float InferenceFarFromRagDistance = 4.0f;
@@ -79,7 +78,7 @@ namespace MATCH
                     AddCondition(ConditionHelpNeeded, false);
                     AddCondition(ConditionHelpRequested, false);
                     AddCondition(ConditionHelpRequestedAgain, false);
-                    AddCondition(ConditionOnePlantWatered, false);
+                    AddCondition(ConditionPlantWatered, false);
                     AddCondition(ConditionAllPlantsWatered, false);
 
 
@@ -90,7 +89,7 @@ namespace MATCH
                     AddConditionsUpdate(ConditionHelpNeeded, new bool[]         { false, false, true, false, false, false, false });
                     AddConditionsUpdate(ConditionHelpRequested, new bool[]      { false, false, false, true, false, false, false });
                     AddConditionsUpdate(ConditionHelpRequestedAgain, new bool[] { false, false, false, false, true, false, false });
-                    AddConditionsUpdate(ConditionOnePlantWatered, new bool[]    { false, false, false, false, false, true, false });
+                    AddConditionsUpdate(ConditionPlantWatered, new bool[]    { false, false, false, false, false, true, false });
                     AddConditionsUpdate(ConditionAllPlantsWatered, new bool[]   { false, false, false, false, false, false, true });
 
 
@@ -99,31 +98,20 @@ namespace MATCH
                     UpdateConditionWithMatrix(ConditionBeginning);
 
                     //Defining the BT
-                    //Selector srBottleNotTaken = new Selector(
-                    //    new BlackboardCondition(ConditionBeginning, Operator.IS_EQUAL, true, Stops.IMMEDIATE_RESTART, AssistanceBTWP7())
-                    //    );
-
-                    //Selector srPlantsNotWatered = new Selector(
-                    //    new BlackboardCondition(ConditionBeginning, Operator.IS_EQUAL, false, Stops.IMMEDIATE_RESTART, srBottleNotTaken),
-                    //    new BlackboardCondition(ConditionHelpNeeded, Operator.IS_EQUAL, true, Stops.IMMEDIATE_RESTART, AssistanceBTWP4()),
-                    //    new BlackboardCondition(ConditionOnePlantWatered, Operator.IS_EQUAL, true, Stops.IMMEDIATE_RESTART, AssistanceBTWP2()),
-                    //    new BlackboardCondition(ConditionTwoPlantWatered, Operator.IS_EQUAL, true, Stops.IMMEDIATE_RESTART, AssistanceBTWP2()),
-                    //    new BlackboardCondition(ConditionThreePlantWatered, Operator.IS_EQUAL, true, Stops.IMMEDIATE_RESTART, AssistanceBTWP2()),
-                    //    new BlackboardCondition(ConditionHelpRequestedAgain, Operator.IS_EQUAL, true, Stops.IMMEDIATE_RESTART, AssistanceBTWP3()),
-                    //    new WaitUntilStopped()
-                    //    );
-
-                    //Selector srBegin = new Selector(
-                    //    new BlackboardCondition(ConditionAllPlantsWatered, Operator.IS_EQUAL, true, Stops.IMMEDIATE_RESTART, AssistanceBTWP1()));
-
-                    Selector srBegin = new Selector(
+                    Selector srPlantsNotWatered = new Selector(
                         new BlackboardCondition(ConditionBeginning, Operator.IS_EQUAL, true, Stops.IMMEDIATE_RESTART, AssistanceBTWP7()),
-                        new BlackboardCondition(ConditionBottleFilled, Operator.IS_EQUAL, true, Stops.IMMEDIATE_RESTART, AssistanceEta()),
+                        new BlackboardCondition(ConditionBottleFilled, Operator.IS_EQUAL, true, Stops.IMMEDIATE_RESTART, AssistanceBTWP5()),
                         new BlackboardCondition(ConditionHelpNeeded, Operator.IS_EQUAL, true, Stops.IMMEDIATE_RESTART, AssistanceBTWP4()),
                         new BlackboardCondition(ConditionHelpRequested, Operator.IS_EQUAL, true, Stops.IMMEDIATE_RESTART, AssistanceBTWP6()),
                         new BlackboardCondition(ConditionHelpRequestedAgain, Operator.IS_EQUAL, true, Stops.IMMEDIATE_RESTART, AssistanceBTWP3()),
-                        new BlackboardCondition(ConditionOnePlantWatered, Operator.IS_EQUAL, true, Stops.IMMEDIATE_RESTART, AssistanceBTWP2()),
-                        new BlackboardCondition(ConditionAllPlantsWatered, Operator.IS_EQUAL, true, Stops.IMMEDIATE_RESTART, AssistanceBTWP1()));
+                        new BlackboardCondition(ConditionPlantWatered, Operator.IS_EQUAL, true, Stops.IMMEDIATE_RESTART, AssistanceBTWP2()),
+                        new WaitUntilStopped()
+                        );
+
+                    //
+                    Selector srBegin = new Selector(
+                        new BlackboardCondition(ConditionAllPlantsWatered, Operator.IS_EQUAL, true, Stops.IMMEDIATE_RESTART, AssistanceBTWP1()),
+                        srPlantsNotWatered);
 
                     Root tree = new Root(/*Conditions*/Getconditions(), srBegin);
 
@@ -140,7 +128,7 @@ namespace MATCH
 
                     AdminMenu.Instance.AddButton("BT - Watering - Trigger - one plant watered", delegate
                     {
-                        UpdateConditionWithMatrix(ConditionOnePlantWatered);
+                        UpdateConditionWithMatrix(ConditionPlantWatered);
                     }, AdminMenu.Panels.Right);
 
                     AdminMenu.Instance.AddButton("BT - Watering - Trigger - help needed", delegate
@@ -184,12 +172,7 @@ namespace MATCH
                     InteractionPlant3 = Assistances.Factory.Instance.CreateInteractionSurface("Practice-Plant3", AdminMenu.Panels.Right, new Vector3(0.3f, 0.5f, 0.3f),
                          new Vector3(-7f, 0f, 0f), Utilities.Materials.Colors.GreenGlowing, false, true, Utilities.Utility.GetEventHandlerEmpty(), true, transform);
 
-                    
                     InteractionSink.EventInteractionSurfaceTableTouched += CallbackInteractionSurfaceSinkTouched;
-                    InteractionPlant1.EventInteractionSurfaceTableTouched += CallbackInteractionSurfacePlantWatered;
-                    InteractionPlant2.EventInteractionSurfaceTableTouched += CallbackInteractionSurfacePlantWatered;
-                    InteractionPlant3.EventInteractionSurfaceTableTouched += CallbackInteractionSurfacePlantWatered;
-
                 }
 
                 //Is it 7pm?
@@ -198,7 +181,7 @@ namespace MATCH
                     Assistances.GradationVisual.GradationVisual alpha1 = Assistances.GradationVisual.Factory.Instance.CreateDialog2WithButtons("Practice-Alpha-1", "",
                         "Qu'est-ce qu'il est conseilé de faire à la fin de la journée lorsqu'il ne fait moins chaud?", "Commencer !", delegate (System.Object o, EventArgs e)
                     {
-                        UpdateConditionWithMatrix(ConditionBottleFilled);
+                        //UpdateConditionWithMatrix(ConditionBottleFilled);
                     }, Assistances.Buttons.Button.ButtonType.ClosingButton, InteractionSurfaceDialogs.transform);
 
 
@@ -223,45 +206,6 @@ namespace MATCH
                     return temp;
                 }
 
-                Sequence AssistanceEta()
-                {
-                    Assistances.AssistanceGradationExplicit eta = MATCH.Assistances.Factory.Instance.CreateAssistanceGradationExplicit("Dusting - Eta");
-                    eta.transform.parent = transform;
-                    //eta.InfManager = InferenceManager;
-
-                    Assistances.GradationVisual.GradationVisual eta1 = Assistances.GradationVisual.Factory.Instance.CreateSurfaceToProcess("DustingTable-Eta-1", delegate (System.Object o, EventArgs e)
-                    {
-                        ShowAssistanceHideOthers(eta);
-                        UpdateConditionWithMatrix(ConditionOnePlantWatered);
-                    }, delegate (System.Object o, EventArgs e)
-                    {
-                        UpdateConditionWithMatrix(ConditionAllPlantsWatered);
-                    }, InteractionPlant1, InteractionPlant1.transform);
-                    //eta1
-
-
-                    /*Assistances.GradationVisual.GradationVisual beta2 = Assistances.GradationVisual.Factory.Instance.CreateDialogTwoButtons("DustingTable-Gamma-2", "", "Il y a une activité à faire ici", "Je sais!", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.Yes, "Je ne sais pas", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.No, InteractionSurfaceTable.transform);*/
-
-                    eta.AddAssistance(eta1, Assistances.Buttons.Button.ButtonType.Undefined, null);
-
-                    AssistancesWatering.Add(eta, false);
-
-                    eta.Init();
-
-                    Sequence temp = new Sequence(
-                        new NPBehave.Action(() =>
-                        {
-                            ShowAssistanceHideOthers(eta);
-                            OnChallengeStart();
-
-                            UpdateTextAssistancesDebugWindow("Eta");
-                            MATCH.Utilities.Logger.Instance.Log(this.GetId(), MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, "Eta");
-                        })
-                        );
-
-                    return temp;
-                }
-
                 //Did the person fill the bottle to water the plants?
                 Sequence AssistanceBTWP5()
                 {
@@ -271,7 +215,9 @@ namespace MATCH
                             //ShowAssistanceHideOthers(btwp5);
         
                             UpdateTextAssistancesDebugWindow("Bottle Filled");
-
+                            InteractionPlant1.EventInteractionSurfaceTableTouched += CallbackInteractionSurfacePlantWatered;
+                            InteractionPlant2.EventInteractionSurfaceTableTouched += CallbackInteractionSurfacePlantWatered;
+                            InteractionPlant3.EventInteractionSurfaceTableTouched += CallbackInteractionSurfacePlantWatered;
                             MATCH.Utilities.Logger.Instance.Log(this.GetId(), MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, "BTWP5");
                         }),
                         new WaitUntilStopped()
@@ -332,11 +278,26 @@ namespace MATCH
                 Sequence AssistanceBTWP2()
                 {
                     Sequence temp = new Sequence(
-                        new NPBehave.Action(() => {
+                        new NPBehave.Action(() =>
+                        {
                             //ShowAssistanceHideOthers(alpha);
-        
+
                             UpdateTextAssistancesDebugWindow("One plant watered");
                             MATCH.Utilities.Logger.Instance.Log(this.GetId(), MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, " BTWP2 : One plant watered");
+                        }),
+                        new WaitUntilStopped()
+                        );
+
+                    return temp;
+                }
+
+                Sequence AssistanceTheta()
+                { // This assistance has only one goal: to be able to go back to Zeta.
+                    Sequence temp = new Sequence(
+                        new NPBehave.Action(() =>
+                        {
+                            UpdateTextAssistancesDebugWindow("Theta");
+                            MATCH.Utilities.Logger.Instance.Log(this.GetId(), MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, "Theta");
                         }),
                         new WaitUntilStopped()
                         );
@@ -381,7 +342,30 @@ namespace MATCH
 
                 void CallbackInteractionSurfacePlantWatered(System.Object o, EventArgs e)
                 {
-                    UpdateConditionWithMatrix(ConditionOnePlantWatered);
+                    UpdateConditionWithMatrix(ConditionPlantWatered);
+                    if(o.Equals(InteractionPlant1))
+                    {
+                        InteractionPlant1.tag = "Watered";
+
+
+                    }
+
+                    if (o.Equals(InteractionPlant2))
+                    {                   
+                        InteractionPlant2.tag = "Watered";
+
+                    }
+
+                    if (o.Equals(InteractionPlant3))
+                    {
+                        InteractionPlant3.tag = "Watered";
+
+                    }
+
+                    if(InteractionPlant1.tag == "Watered" && InteractionPlant2.tag == "Watered" && InteractionPlant3.tag == "Watered")
+                    {
+                        UpdateConditionWithMatrix(ConditionAllPlantsWatered);
+                    }
                 }
 
                 void ShowAssistanceHideOthers(Assistances.AssistanceGradationExplicit assistance)
