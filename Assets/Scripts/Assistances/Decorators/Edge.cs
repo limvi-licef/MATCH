@@ -150,6 +150,11 @@ namespace MATCH
                     return this;//PanelToDecorate.GetAssistance();
                 }
 
+                public Assistance GetDecoratedAssistance()
+                {
+                    return PanelToDecorate.GetDecoratedAssistance();
+                }
+
                 /*public void SetBackgroundColor(string colorName)
                 {
                     PanelToDecorate.SetBackgroundColor(colorName);

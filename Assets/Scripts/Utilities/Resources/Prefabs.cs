@@ -37,7 +37,8 @@ namespace MATCH
 
                 public static string DecoratorMaterial = Path + "Assistances/Decorators/Material";
                 public static string DecoratorBackgroundColor = Path + "Assistances/Decorators/BackgroundColor";
-                public static string DecoratorBackgroundColor2 = Path + "Assistances/Decorators/BackgroundColor2";
+                public static string DecoratorBackgroundColorMessage2 = Path + "Assistances/Decorators/BackgroundColorMessage2";
+                public static string DecoratorBackgroundColorIcon2 = Path + "Assistances/Decorators/BackgroundColorIcon2";
                 public static string DecoratorEdge = Path + "Assistances/Decorators/Edge";
 
                 public static string AssistanceGradationAttention = Path + "Assistances/Gradation/Attention";

@@ -347,7 +347,12 @@ namespace MATCH
                     throw new NotImplementedException();
                 }
 
-                Assistance IAssistance.GetAssistance()
+                public Assistance GetAssistance()
+                {
+                    return this;
+                }
+
+                public Assistance GetDecoratedAssistance()
                 {
                     return this;
                 }

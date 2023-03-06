@@ -87,7 +87,12 @@ namespace MATCH
 
                 public Assistance GetAssistance()
                 {
-                    return AssistanceToDecorate.GetAssistance();
+                    return this;//AssistanceToDecorate.GetAssistance();
+                }
+
+                public Assistance GetDecoratedAssistance()
+                {
+                    return AssistanceToDecorate.GetDecoratedAssistance();
                 }
 
                 public override bool IsDecorator()
