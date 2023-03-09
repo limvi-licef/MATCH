@@ -21,7 +21,7 @@ using UnityEngine;
 using System.Timers;
 using System.Reflection;
 using System.Linq;
-//using Newtonsoft.Json.Linq;
+using Newtonsoft.Json.Linq;
 
 /**
  * Used to have a lighting object to point to a provided gameobject, from the same direction than the user's gaze

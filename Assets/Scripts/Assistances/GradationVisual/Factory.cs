@@ -229,16 +229,18 @@ namespace MATCH
                     GradationVisual toReturn = Assistances.Factory.Instance.CreateAssistanceGradationAttention(assistanceName);
                     toReturn.name = assistanceName;
 
-
+                    //Premier niveau de gradation avec 2 décorateurs
                     Decorators.BackgroundColorIcon2 decorator1a = (Decorators.BackgroundColorIcon2)Assistances.Decorators.Factory.Instance.CreateBackgroundIcon(dialog, Utilities.Materials.Colors.Cyan);
                     Decorators.BackgroundColorMessage2 decorator1 = (Decorators.BackgroundColorMessage2)Assistances.Decorators.Factory.Instance.CreateBackgroundMessage(decorator1a, Utilities.Materials.Colors.Cyan);
                     
 
                     toReturn.AddAssistance(decorator1);
 
+                    //Deuxieme niveau de gradation
                     Decorators.BackgroundColorIcon2 decorator2 = (Decorators.BackgroundColorIcon2)Assistances.Decorators.Factory.Instance.CreateBackgroundIcon(decorator1/*dialog*/, /*Utilities.Materials.Colors.Cyan,*/ Utilities.Materials.Colors.Orange/*, decorator1*/);
                     toReturn.AddAssistance(decorator2);
 
+                    //Troisieme niveau de gradation
                     //toReturn.AddAssistance(Assistances.Decorators.Factory.Instance.CreateEdge(dialog, Utilities.Materials.Colors.OrangeGlowing));
                     Decorators.BackgroundColorMessage2 decorator3 = (Decorators.BackgroundColorMessage2)Assistances.Decorators.Factory.Instance.CreateBackgroundMessage(decorator2/*dialog*/, Utilities.Materials.Colors.Orange/*, decorator2*/);
                     toReturn.AddAssistance(decorator3);
