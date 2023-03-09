@@ -7232,15 +7232,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4b9589c4bff638046a64c848e98cd9b8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cursor: {fileID: 0}
-  labelPrefab: {fileID: 0}
-  labelPrefab2: {fileID: 0}
-  _labelObject: {fileID: 0}
-  _cube: {fileID: 0}
-  lastLabelPlaced: {fileID: 0}
-  lastLabelPlaced2: {fileID: 0}
-  lastLabelPlacedText: {fileID: 0}
-  lastLabelPlacedText2: {fileID: 0}
 --- !u!1 &909551014
 GameObject:
   m_ObjectHideFlags: 0
@@ -13749,7 +13740,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d3ba1ed32c312744abd2722fc52b41b3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SurfacesManager: {fileID: 0}
 --- !u!1 &1712743354
 GameObject:
   m_ObjectHideFlags: 0
@@ -14922,8 +14912,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d0fe19bc416dd0a418b563dee5d9f207, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  WebsocketAddress: 
-  connectionIP: 
 --- !u!1 &1851939768
 GameObject:
   m_ObjectHideFlags: 0
@@ -15357,12 +15345,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b7b2e463487d73449726cab2b5d7456, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tcpHandler: {fileID: 0}
-  wsHandler: {fileID: 0}
-  webSocketTextPrefab: {fileID: 0}
-  connectionIpTextPrefab: {fileID: 0}
-  infoPannelPrefab: {fileID: 0}
-  connectionBtn: {fileID: 0}
 --- !u!1 &1894565779
 GameObject:
   m_ObjectHideFlags: 0

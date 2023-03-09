@@ -55,51 +55,52 @@ namespace MATCH
 
                 public override void Hide(EventHandler callback, bool withAnimation)// : base(callback,withAnimation)
                 {
-                   /* if (IsDisplayed)
+                    if (IsDisplayed)
                     {
                         AssistanceToDecorate.GetAssistance().Hide(delegate (System.Object o, EventArgs e)
                         {
                             IsDisplayed = false;
+                            DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Sound cleared ");
 
                             callback?.Invoke(o, e);
-                        }, withAnimation);
+                        }/*, withAnimation*/);
 
                     }
                     else
                     {
-                        Utilities.EventHandlerArgs.Animation args = new Utilities.EventHandlerArgs.Animation();
-                        args.Success = false;
-                        callback?.Invoke(this, args);
-                    }*/
+                        DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Sound already cleared ");
+
+                        //args.Success = false;
+                        //callback?.Invoke(this, args);
+                    }
                 }
 
                 public override void Show(EventHandler callback, bool withAnimation)//: base(callback,withAnimation)
                 {
-                    /*if (IsDisplayed == false)
+                    if (IsDisplayed == false)
                     {
                         IsDisplayed = true;
 
                         AssistanceToDecorate.GetAssistance().Show(delegate (System.Object o, EventArgs e)
                         {
-                            /*AssistanceToDecorate.GetBackground().gameObject.SetActive(false);
-                            BackgroundView.position = AssistanceToDecorate.GetBackground().position;
-                            BackgroundView.gameObject.SetActive(true);*//*
-
+                            DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Sound played ");
+                            //AssistanceToDecorate.Show();
+                            
                             callback?.Invoke(this, e);
-                        }, withAnimation);
-                        //DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Called with color "  + BackgroundColorDecorated); 
+                        }/*, withAnimation*/);
                     }
                     else
                     {
                         // Check first if the decorated assistance needs to be displayed
                         AssistanceToDecorate.GetAssistance().Show(delegate (System.Object o, EventArgs e)
                         {
-                            Utilities.EventHandlerArgs.Animation args = new Utilities.EventHandlerArgs.Animation();
+                            DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Sound already played ");
+
                             //AssistanceToDecorate.GetBackground().gameObject.SetActive(false);
-                            args.Success = false;
-                            callback?.Invoke(this, args);
+                            //args.Success = false;
+                            //callback?.Invoke(this, args);
                         }, withAnimation);
-                    }*/
+                    }
                 }
 
                 public override void ShowHelp(bool show, EventHandler callback, bool withAnimation)
