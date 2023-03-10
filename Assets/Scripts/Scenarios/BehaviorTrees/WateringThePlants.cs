@@ -219,6 +219,19 @@ namespace MATCH
                             InteractionPlant2.EventInteractionSurfaceTableTouched += CallbackInteractionSurfacePlantWatered;
                             InteractionPlant3.EventInteractionSurfaceTableTouched += CallbackInteractionSurfacePlantWatered;
                             MATCH.Utilities.Logger.Instance.Log(this.GetId(), MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, "BTWP5");
+                            InferenceManager.UnregisterInference(ConditionHelpNeeded);
+                            Inferences.Timer inf1 = new Inferences.Timer(ConditionHelpNeeded, 15, delegate (System.Object oo, EventArgs ee)
+                            {
+                                if (InteractionPlant1.tag != "Watered" && InteractionPlant2.tag != "Watered" && InteractionPlant3.tag != "Watered")
+                                {
+                                    UpdateConditionWithMatrix(ConditionHelpNeeded);
+                                    InferenceManager.UnregisterInference(ConditionHelpNeeded);
+                                }
+                            });
+                            InferenceManager.RegisterInference(inf1);
+                            inf1.StartCounter();
+                            UpdateTextAssistancesDebugWindow("Timer started");
+                            MATCH.Utilities.Logger.Instance.Log(this.GetId(), MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, "Timer started");
                         }),
                         new WaitUntilStopped()
                         );
