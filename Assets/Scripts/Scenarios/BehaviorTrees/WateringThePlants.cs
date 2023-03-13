@@ -218,6 +218,7 @@ namespace MATCH
                             InteractionPlant1.EventInteractionSurfaceTableTouched += CallbackInteractionSurfacePlantWatered;
                             InteractionPlant2.EventInteractionSurfaceTableTouched += CallbackInteractionSurfacePlantWatered;
                             InteractionPlant3.EventInteractionSurfaceTableTouched += CallbackInteractionSurfacePlantWatered;
+                            InteractionSink.EventInteractionSurfaceTableTouched += CallbackInteractionSurfaceSinkTouchedAgain;
                             MATCH.Utilities.Logger.Instance.Log(this.GetId(), MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, "BTWP5");
                             InferenceManager.UnregisterInference(ConditionHelpNeeded);
                             Inferences.Timer inf1 = new Inferences.Timer(ConditionHelpNeeded, 15, delegate (System.Object oo, EventArgs ee)
@@ -351,6 +352,12 @@ namespace MATCH
                 void CallbackInteractionSurfaceSinkTouched(System.Object o, EventArgs e)
                 {
                     UpdateConditionWithMatrix(ConditionBottleFilled);
+                }
+
+                void CallbackInteractionSurfaceSinkTouchedAgain(System.Object o, EventArgs e)
+                {
+                    if (InteractionPlant1.tag != "Watered" && InteractionPlant2.tag != "Watered" && InteractionPlant3.tag != "Watered")
+                        UpdateConditionWithMatrix(ConditionHelpNeeded);
                 }
 
                 void CallbackInteractionSurfacePlantWatered(System.Object o, EventArgs e)
