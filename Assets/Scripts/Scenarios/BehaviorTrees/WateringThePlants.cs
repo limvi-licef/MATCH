@@ -363,30 +363,23 @@ namespace MATCH
                 void CallbackInteractionSurfacePlantWatered(System.Object o, EventArgs e)
                 {
                     UpdateConditionWithMatrix(ConditionPlantWatered);
-                    if(o.Equals(InteractionPlant1))
+
+                    Assistances.InteractionSurface[] interactionPlants = new Assistances.InteractionSurface[] { InteractionPlant1, InteractionPlant2, InteractionPlant3 };
+
+                    foreach (Assistances.InteractionSurface interactionPlant in interactionPlants)
                     {
-                        InteractionPlant1.tag = "Watered";
-
-
+                        if (o.Equals(interactionPlant))
+                        {
+                            interactionPlant.tag = "Watered";
+                        }
                     }
 
-                    if (o.Equals(InteractionPlant2))
-                    {                   
-                        InteractionPlant2.tag = "Watered";
-
-                    }
-
-                    if (o.Equals(InteractionPlant3))
-                    {
-                        InteractionPlant3.tag = "Watered";
-
-                    }
-
-                    if(InteractionPlant1.tag == "Watered" && InteractionPlant2.tag == "Watered" && InteractionPlant3.tag == "Watered")
+                    if (interactionPlants.All(interactionPlant => interactionPlant.tag == "Watered"))
                     {
                         UpdateConditionWithMatrix(ConditionAllPlantsWatered);
                     }
                 }
+
 
                 void ShowAssistanceHideOthers(Assistances.AssistanceGradationExplicit assistance)
                 {
