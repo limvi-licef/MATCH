@@ -221,10 +221,13 @@ namespace MATCH
                             InteractionSink.EventInteractionSurfaceTableTouched += CallbackInteractionSurfaceSinkTouchedAgain;
                             MATCH.Utilities.Logger.Instance.Log(this.GetId(), MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, "BTWP5");
                             InferenceManager.UnregisterInference(ConditionHelpNeeded);
+
+                            //L'arrêter quand une plante est arrosée
                             Inferences.Timer inf1 = new Inferences.Timer(ConditionHelpNeeded, 15, delegate (System.Object oo, EventArgs ee)
                             {
                                 if (InteractionPlant1.tag != "Watered" && InteractionPlant2.tag != "Watered" && InteractionPlant3.tag != "Watered")
                                 {
+                                    //Faire attention si on a 2 inférences avec le même nom (pour la même condition par exemple)
                                     UpdateConditionWithMatrix(ConditionHelpNeeded);
                                     InferenceManager.UnregisterInference(ConditionHelpNeeded);
                                 }
@@ -296,7 +299,27 @@ namespace MATCH
                         {
                             //ShowAssistanceHideOthers(alpha);
 
+                            //Arrêter l'inférence du timer ici
+
                             UpdateTextAssistancesDebugWindow("One plant watered");
+                            MATCH.Utilities.Logger.Instance.Log(this.GetId(), MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, " BTWP2 : One plant watered");
+                        }),
+                        new WaitUntilStopped()
+                        );
+
+                    return temp;
+                }
+
+                //Did the person stop in the middle of the activity?
+                //Créer l'assistance plus haut
+                Sequence AssistanceBTWP8()
+                {
+                    Sequence temp = new Sequence(
+                        new NPBehave.Action(() =>
+                        {
+                            //ShowAssistanceHideOthers(alpha);
+
+                            UpdateTextAssistancesDebugWindow("Are you finished?");
                             MATCH.Utilities.Logger.Instance.Log(this.GetId(), MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, " BTWP2 : One plant watered");
                         }),
                         new WaitUntilStopped()
