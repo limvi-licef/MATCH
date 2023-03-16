@@ -28,6 +28,7 @@ namespace MATCH
                 string ConditionHelpRequestedAgain = "HelpRequestedAgain";
                 string ConditionPlantWatered = "PlantWatered";
                 string ConditionAllPlantsWatered = "AllPlantsWatered";
+                string ConditionWateringInterrupted = "CleaningWateringInterrupted";
 
                 string InferenceFarFromRag = "FarFromRag";
                 float InferenceFarFromRagDistance = 4.0f;
@@ -44,6 +45,8 @@ namespace MATCH
                 Assistances.InteractionSurface InteractionPlant3;
 
                 Dictionary<Assistances.AssistanceGradationExplicit, bool> AssistancesWatering;
+
+                Inferences.Timer inf1;
 
                 public override void Awake()
                 {
@@ -80,19 +83,19 @@ namespace MATCH
                     AddCondition(ConditionHelpRequestedAgain, false);
                     AddCondition(ConditionPlantWatered, false);
                     AddCondition(ConditionAllPlantsWatered, false);
+                    AddCondition(ConditionWateringInterrupted, false);
 
 
                     int nbConditions = GetNumberOfConditions();
 
-                    AddConditionsUpdate(ConditionBeginning, new bool[]          { true, false, false, false, false, false, false });
-                    AddConditionsUpdate(ConditionBottleFilled, new bool[]       { false, true, false, false, false, false, false });
-                    AddConditionsUpdate(ConditionHelpNeeded, new bool[]         { false, false, true, false, false, false, false });
-                    AddConditionsUpdate(ConditionHelpRequested, new bool[]      { false, false, false, true, false, false, false });
-                    AddConditionsUpdate(ConditionHelpRequestedAgain, new bool[] { false, false, false, false, true, false, false });
-                    AddConditionsUpdate(ConditionPlantWatered, new bool[]    { false, false, false, false, false, true, false });
-                    AddConditionsUpdate(ConditionAllPlantsWatered, new bool[]   { false, false, false, false, false, false, true });
-
-
+                    AddConditionsUpdate(ConditionBeginning, new bool[]             { true, false, false, false, false, false, false, false });
+                    AddConditionsUpdate(ConditionBottleFilled, new bool[]          { false, true, false, false, false, false, false, false });
+                    AddConditionsUpdate(ConditionHelpNeeded, new bool[]            { false, false, true, false, false, false, false, false });
+                    AddConditionsUpdate(ConditionHelpRequested, new bool[]         { false, false, false, true, false, false, false, false });
+                    AddConditionsUpdate(ConditionHelpRequestedAgain, new bool[]    { false, false, false, false, true, false, false, false });
+                    AddConditionsUpdate(ConditionPlantWatered, new bool[]          { false, false, false, false, false, true, false, false });
+                    AddConditionsUpdate(ConditionAllPlantsWatered, new bool[]      { false, false, false, false, false, false, true, false });
+                    AddConditionsUpdate(ConditionWateringInterrupted, new bool[]   { false, false, false, false, false, false, false, true });
                     // End of code generation using the EXCEL file
 
                     UpdateConditionWithMatrix(ConditionBeginning);
@@ -105,6 +108,7 @@ namespace MATCH
                         new BlackboardCondition(ConditionHelpRequested, Operator.IS_EQUAL, true, Stops.IMMEDIATE_RESTART, AssistanceBTWP6()),
                         new BlackboardCondition(ConditionHelpRequestedAgain, Operator.IS_EQUAL, true, Stops.IMMEDIATE_RESTART, AssistanceBTWP3()),
                         new BlackboardCondition(ConditionPlantWatered, Operator.IS_EQUAL, true, Stops.IMMEDIATE_RESTART, AssistanceBTWP2()),
+                        new BlackboardCondition(ConditionWateringInterrupted, Operator.IS_EQUAL, true, Stops.IMMEDIATE_RESTART, AssistanceBTWP8()),
                         new WaitUntilStopped()
                         );
 
@@ -162,7 +166,7 @@ namespace MATCH
                     InteractionSurfaceDialogs = Assistances.Factory.Instance.CreateInteractionSurface("Practice-Dialogs", AdminMenu.Panels.Right, new Vector3(1.1f, 0.02f, 0.7f), new Vector3(-0.447f, -0.406f, 0.009f), Utilities.Materials.Colors.CyanGlowing, false, true, Utilities.Utility.GetEventHandlerEmpty(), true, transform);
 
                     //à modifier les interactions
-                    InteractionSink = Assistances.Factory.Instance.CreateInteractionSurface("Practice-Sink", AdminMenu.Panels.Right, new Vector3(1.1f, 0.02f, 0.7f),
+                    InteractionSink = Assistances.Factory.Instance.CreateInteractionSurface("Practice-Sink", AdminMenu.Panels.Right, new Vector3(0.6f, 0.1f, 0.4f),
                         new Vector3(-4.777f, 0.659f, 2.031f), Utilities.Materials.Colors.GreenGlowing, false, true, Utilities.Utility.GetEventHandlerEmpty(), true, transform);
 
                     InteractionPlant1 = Assistances.Factory.Instance.CreateInteractionSurface("Practice-Plant1", AdminMenu.Panels.Right, new Vector3(0.3f, 0.5f, 0.3f),
@@ -223,7 +227,7 @@ namespace MATCH
                             InferenceManager.UnregisterInference(ConditionHelpNeeded);
 
                             //L'arrêter quand une plante est arrosée
-                            Inferences.Timer inf1 = new Inferences.Timer(ConditionHelpNeeded, 15, delegate (System.Object oo, EventArgs ee)
+                            inf1 = new Inferences.Timer(ConditionHelpNeeded, 15, delegate (System.Object oo, EventArgs ee)
                             {
                                 if (InteractionPlant1.tag != "Watered" && InteractionPlant2.tag != "Watered" && InteractionPlant3.tag != "Watered")
                                 {
@@ -300,8 +304,22 @@ namespace MATCH
                             //ShowAssistanceHideOthers(alpha);
 
                             //Arrêter l'inférence du timer ici
-
+                            UpdateTextAssistancesDebugWindow("On Arrête l'inférence du timer ici");
+                            inf1.StopCounter();
+                            
                             UpdateTextAssistancesDebugWindow("One plant watered");
+                            InferenceManager.UnregisterInference(InferenceInterruptWatering);
+
+                            //L'arrêter quand une plante est arrosée
+                            inf1 = new Inferences.Timer(ConditionWateringInterrupted, 15, delegate (System.Object oo, EventArgs ee)
+                            {
+                                    UpdateConditionWithMatrix(ConditionWateringInterrupted);
+                                    InferenceManager.UnregisterInference(InferenceInterruptWatering);
+                            });
+                            InferenceManager.RegisterInference(inf1);
+                            inf1.StartCounter();
+                            UpdateTextAssistancesDebugWindow("Interupt water : Timer started");
+
                             MATCH.Utilities.Logger.Instance.Log(this.GetId(), MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, " BTWP2 : One plant watered");
                         }),
                         new WaitUntilStopped()
@@ -321,20 +339,6 @@ namespace MATCH
 
                             UpdateTextAssistancesDebugWindow("Are you finished?");
                             MATCH.Utilities.Logger.Instance.Log(this.GetId(), MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, " BTWP2 : One plant watered");
-                        }),
-                        new WaitUntilStopped()
-                        );
-
-                    return temp;
-                }
-
-                Sequence AssistanceTheta()
-                { // This assistance has only one goal: to be able to go back to Zeta.
-                    Sequence temp = new Sequence(
-                        new NPBehave.Action(() =>
-                        {
-                            UpdateTextAssistancesDebugWindow("Theta");
-                            MATCH.Utilities.Logger.Instance.Log(this.GetId(), MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, "Theta");
                         }),
                         new WaitUntilStopped()
                         );
@@ -362,6 +366,7 @@ namespace MATCH
                         new NPBehave.Action(() => {
                             ShowAssistanceHideOthers(gradationExplicit_BTWP1);
                             InferenceManager.UnregisterAllInferences();
+
                             UpdateTextAssistancesDebugWindow("BTWP1");
                             MATCH.Utilities.Logger.Instance.Log(this.GetId(), MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, "BTWP1");
                             OnChallengeSuccess();
@@ -426,23 +431,7 @@ namespace MATCH
                     }
                 }
 
-                //void CallbackInteractionSurfaceRagTouched(System.Object o, EventArgs e)
-                //{
-                //    InferenceManager.UnregisterInference(InferenceFarFromRag);
-                //    UpdateConditionWithMatrix(ConditionBeginning);
-                //}
-
-                //void RegisterInferenceFarFromRag()
-                //{
-                //    DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Registering inference distance from rag with distance value: " + InferenceFarFromRagDistance);
-
-                //    InferenceManager.UnregisterInference(InferenceFarFromRag);
-
-                //    MATCH.Inferences.Factory.Instance.CreateDistanceLeavingInferenceOneShot(InferenceManager, InferenceFarFromRag, delegate (System.Object oo, EventArgs ee)
-                //    {
-                //        UpdateConditionWithMatrix(ConditionRagNotTakenButHelpReceived);
-                //    }, InteractionRag.gameObject, InferenceFarFromRagDistance);
-                //}
+                
             }
 
         }
