@@ -44,6 +44,9 @@ namespace MATCH
                 Assistances.InteractionSurface InteractionPlant2;
                 Assistances.InteractionSurface InteractionPlant3;
 
+                Assistances.InteractionSurface[] InteractionPlants = new Assistances.InteractionSurface[3];
+
+
                 Dictionary<Assistances.AssistanceGradationExplicit, bool> AssistancesWatering;
 
                 Inferences.Timer inf1;
@@ -176,6 +179,8 @@ namespace MATCH
                     InteractionPlant3 = Assistances.Factory.Instance.CreateInteractionSurface("Practice-Plant3", AdminMenu.Panels.Right, new Vector3(0.3f, 0.5f, 0.3f),
                          new Vector3(-7f, 0f, 0f), Utilities.Materials.Colors.GreenGlowing, false, true, Utilities.Utility.GetEventHandlerEmpty(), true, transform);
 
+                    InteractionPlants = new Assistances.InteractionSurface[]{ InteractionPlant1, InteractionPlant2, InteractionPlant3 };
+
                     InteractionSink.EventInteractionSurfaceTableTouched += CallbackInteractionSurfaceSinkTouched;
                 }
 
@@ -219,21 +224,21 @@ namespace MATCH
                             //ShowAssistanceHideOthers(btwp5);
         
                             UpdateTextAssistancesDebugWindow("Bottle Filled");
-                            InteractionPlant1.EventInteractionSurfaceTableTouched += CallbackInteractionSurfacePlantWatered;
-                            InteractionPlant2.EventInteractionSurfaceTableTouched += CallbackInteractionSurfacePlantWatered;
-                            InteractionPlant3.EventInteractionSurfaceTableTouched += CallbackInteractionSurfacePlantWatered;
+                            foreach (Assistances.InteractionSurface interactionPlant in InteractionPlants)
+                            {
+                                interactionPlant.EventInteractionSurfaceTableTouched += CallbackInteractionSurfacePlantWatered;
+                            }
                             InteractionSink.EventInteractionSurfaceTableTouched += CallbackInteractionSurfaceSinkTouchedAgain;
                             MATCH.Utilities.Logger.Instance.Log(this.GetId(), MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, "BTWP5");
-                            InferenceManager.UnregisterInference(ConditionHelpNeeded);
+                            InferenceManager.UnregisterInference(InferenceDidNotStartWatering);
 
-                            //L'arrêter quand une plante est arrosée
-                            inf1 = new Inferences.Timer(ConditionHelpNeeded, 15, delegate (System.Object oo, EventArgs ee)
+                            inf1 = new Inferences.Timer(InferenceDidNotStartWatering, 15, delegate (System.Object oo, EventArgs ee)
                             {
-                                if (InteractionPlant1.tag != "Watered" && InteractionPlant2.tag != "Watered" && InteractionPlant3.tag != "Watered")
+                                if (!InteractionPlants.Any(p=> p.tag == "Watered"))
                                 {
                                     //Faire attention si on a 2 inférences avec le même nom (pour la même condition par exemple)
                                     UpdateConditionWithMatrix(ConditionHelpNeeded);
-                                    InferenceManager.UnregisterInference(ConditionHelpNeeded);
+                                    InferenceManager.UnregisterInference(InferenceDidNotStartWatering);
                                 }
                             });
                             InferenceManager.RegisterInference(inf1);
@@ -310,7 +315,7 @@ namespace MATCH
                             UpdateTextAssistancesDebugWindow("One plant watered");
                             InferenceManager.UnregisterInference(InferenceInterruptWatering);
 
-                            //L'arrêter quand une plante est arrosée
+                            //Démarrage du timer
                             inf1 = new Inferences.Timer(ConditionWateringInterrupted, 15, delegate (System.Object oo, EventArgs ee)
                             {
                                     UpdateConditionWithMatrix(ConditionWateringInterrupted);
@@ -384,7 +389,7 @@ namespace MATCH
 
                 void CallbackInteractionSurfaceSinkTouchedAgain(System.Object o, EventArgs e)
                 {
-                    if (InteractionPlant1.tag != "Watered" && InteractionPlant2.tag != "Watered" && InteractionPlant3.tag != "Watered")
+                    if (!InteractionPlants.Any(p => p.tag == "Watered"))
                         UpdateConditionWithMatrix(ConditionHelpNeeded);
                 }
 
@@ -392,9 +397,7 @@ namespace MATCH
                 {
                     UpdateConditionWithMatrix(ConditionPlantWatered);
 
-                    Assistances.InteractionSurface[] interactionPlants = new Assistances.InteractionSurface[] { InteractionPlant1, InteractionPlant2, InteractionPlant3 };
-
-                    foreach (Assistances.InteractionSurface interactionPlant in interactionPlants)
+                    foreach (Assistances.InteractionSurface interactionPlant in InteractionPlants)
                     {
                         if (o.Equals(interactionPlant))
                         {
@@ -402,7 +405,7 @@ namespace MATCH
                         }
                     }
 
-                    if (interactionPlants.All(interactionPlant => interactionPlant.tag == "Watered"))
+                    if (InteractionPlants.All(interactionPlant => interactionPlant.tag == "Watered"))
                     {
                         UpdateConditionWithMatrix(ConditionAllPlantsWatered);
                     }
@@ -430,10 +433,7 @@ namespace MATCH
                         }
                     }
                 }
-
-                
             }
-
         }
     }
 }
