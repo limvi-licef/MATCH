@@ -31,24 +31,11 @@ namespace MATCH
             public class Sound : Assistance, IPanel2
             {
                 IPanel2 PanelToDecorate;
-                //string BackgroundColorDecorated;
-
-                //Transform BackgroundParent;
-                //Transform BackgroundMessage;
-                //Transform BackgroundIcon;
-
-                //List<BackgroundColorFor2> ToHideOnShow;
+               
 
                 private void Awake()
                 {
-                    /*BackgroundParent = gameObject.transform.Find("Dialog");
-                    BackgroundMessage = BackgroundParent.Find("Modale-Support_Cube.010");
-                    BackgroundIcon = BackgroundParent.Find("Modale-Rond_Cylinder.003");*/
-
-                    //BackgroundMessage = transform.Find("Modale-Support_Cube.010");
-                    //BackgroundIcon = transform.Find("Modale-Rond_Cylinder.003");
-
-                    //ToHideOnShow = new List<BackgroundColorFor2>();
+                
                 }
 
                 public void Start()
@@ -56,37 +43,20 @@ namespace MATCH
 
                 }
 
-                /*public void AddToHideOnShow(BackgroundColorFor2 toHide)
-                {
-                    ToHideOnShow.Add(toHide);
-                }*/
+             
 
                 public void SetAssistanceToDecorate(IPanel2 toDecorate)
                 {
                     PanelToDecorate = toDecorate;
 
-                    // Set the size of the background plate to fit the one of the decorated panel
-                    //BackgroundViewMain.parent = PanelToDecorate.GetAssistance().transform;
+                   
                     name = PanelToDecorate.GetAssistance().name + "_decoratorSound";
-                    //BackgroundParent.parent = PanelToDecorate.GetAssistance().transform;
-                    //BackgroundParent.position = PanelToDecorate.GetAssistance().transform.position;
+                    
 
                     transform.parent = PanelToDecorate.GetDecoratedAssistance().transform;
-                    //transform.position = PanelToDecorate.GetAssistance().transform.position;
                     transform.localPosition = PanelToDecorate.GetBackground().transform.localPosition;
 
-                    //BackgroundParent.transform.SetParent(PanelToDecorate.GetAssistance().transform);
-
-                    //BackgroundParent.localPosition = PanelToDecorate.GetAssistance().transform.localPosition;
-                    //BackgroundParent.localScale = PanelToDecorate.GetAssistance().transform.localScale;
-
-
-                    /*BackgroundViewMain.rotation = PanelToDecorate.GetBackground().rotation;
-                    BackgroundViewMain.localScale = PanelToDecorate.GetBackground().localScale;
-                    BackgroundViewIcon.rotation   = PanelToDecorate.GetBackgroundIcon().rotation;
-                    BackgroundViewIcon.localScale = PanelToDecorate.GetBackgroundIcon().localScale;*/
-
-                    // Relaying the eventhandler
+                    
                     Assistance temp = (Assistance)PanelToDecorate;
                     temp.EventHelpButtonClicked += delegate (System.Object o, EventArgs e)
                     {
@@ -101,8 +71,6 @@ namespace MATCH
                     {
                         PanelToDecorate.GetAssistance().Hide(delegate (System.Object o, EventArgs e)
                         {
-                            //BackgroundMessage.gameObject.SetActive(false);
-                            //BackgroundIcon.gameObject.SetActive(false);
                             DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Sound stopped ");
 
                             IsDisplayed = false;
@@ -121,68 +89,22 @@ namespace MATCH
 
                 public override void Show(EventHandler callback, bool withAnimation)
                 {
-                    //BackgroundMessage.position = PanelToDecorate.GetBackgroundMessage().position;
-                    //BackgroundMessage.localScale = PanelToDecorate.GetBackgroundMessage().localScale;
-
-                    //BackgroundIcon.position = PanelToDecorate.GetBackgroundIcon().position;
-                    //BackgroundIcon.localScale = PanelToDecorate.GetBackgroundIcon().localScale;
-
-                    //BackgroundMessage.gameObject.SetActive(true);
-                    //BackgroundIcon.gameObject.SetActive(true);
-
+                   
                     if (IsDisplayed == false)
                     {
                         IsDisplayed = true;
 
-                        //PanelToDecorate.GetDecoratedAssistance().Show(delegate(System.Object o, EventArgs e)
                         PanelToDecorate.GetAssistance().Show(delegate (System.Object o, EventArgs e)
                         {
-                            //BackgroundMessage.gameObject.SetActive(true);
-                            //Back
-
-                            /*foreach (Transform child in PanelToDecorate.GetAssistance().transform)
-                            {
-                                if (child.name == "Dialog")
-                                {
-                                    foreach (Transform dialogComponent in child)
-                                    {
-                                        dialogComponent.gameObject.SetActive(false);
-                                    }
-                                }
-                            }*/
-
-                            /*foreach (BackgroundColorFor2 toHide in ToHideOnShow)
-                            {
-                                toHide.Hide(Utilities.Utility.GetEventHandlerEmpty(), false);
-                            }*/
-
-                            //PanelToDecorate.GetBackground().gameObject.SetActive(false);
+                            
                             DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Sound played ");
 
 
                             PanelToDecorate.GetDecoratedAssistance().Show(Utilities.Utility.GetEventHandlerEmpty(), false);
-                            //PanelToDecorate.GetBackground().gameObject.SetActive(false);
-                            //PanelToDecorate.GetBackgroundIcon().gameObject.SetActive(false);
-                            PanelToDecorate.GetBackgroundMessage().gameObject.SetActive(false);
-
-                            /*BackgroundParent.position = PanelToDecorate.GetBackground().position;
-                            BackgroundParent.localScale = PanelToDecorate.GetBackground().localScale;
-                            BackgroundParent.rotation = PanelToDecorate.GetBackground().rotation;*/
-
-                            /*transform.position = PanelToDecorate.GetBackground().position;
-                            transform.localScale = PanelToDecorate.GetBackground().localScale;
-                            transform.rotation = PanelToDecorate.GetBackground().rotation;*/
-
-                            transform.localPosition = ((IPanel2)PanelToDecorate.GetDecoratedAssistance()).GetBackground().localPosition;
-                            transform.localScale = ((IPanel2)PanelToDecorate.GetDecoratedAssistance()).GetBackground().localScale;
-                            transform.rotation = ((IPanel2)PanelToDecorate.GetDecoratedAssistance()).GetBackground().rotation;
-
-
-
+                           
 
                             callback?.Invoke(this, e);
                         }, withAnimation);
-                        /*DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Called with color "  + BackgroundColorDecorated);   */
                     }
                     else
                     {
