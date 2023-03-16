@@ -31,7 +31,11 @@ namespace MATCH
             public class Sound : Assistance, IPanel2
             {
                 IPanel2 PanelToDecorate;
-               
+                AudioSource audioSource;
+                AudioClip audioClip;
+                float timeBetweenShots = 0.75f;
+                float timer;
+                string soundToPlay;
 
                 private void Awake()
                 {
@@ -40,15 +44,25 @@ namespace MATCH
 
                 public void Start()
                 {
-
+                    
                 }
 
+                public void Update()
+                {
+                    timer += Time.deltaTime;
+                    if (timer > timeBetweenShots && audioClip != null)
+                    {
+                        audioSource.PlayOneShot(audioClip);
+                        timer = 0;
+                    }
+                }
              
 
-                public void SetAssistanceToDecorate(IPanel2 toDecorate)
+                public void SetAssistanceToDecorate(IPanel2 toDecorate, string soundPath)
                 {
                     PanelToDecorate = toDecorate;
 
+                    this.soundToPlay = soundPath;
                    
                     name = PanelToDecorate.GetAssistance().name + "_decoratorSound";
                     
@@ -71,6 +85,7 @@ namespace MATCH
                     {
                         PanelToDecorate.GetAssistance().Hide(delegate (System.Object o, EventArgs e)
                         {
+                            audioSource.Stop();
                             DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Sound stopped ");
 
                             IsDisplayed = false;
@@ -96,7 +111,11 @@ namespace MATCH
 
                         PanelToDecorate.GetAssistance().Show(delegate (System.Object o, EventArgs e)
                         {
-                            
+                            audioSource = GetComponent<AudioSource>();
+                            //if (audioClip == null)
+                            //{
+                            audioClip = Resources.Load<AudioClip>(soundToPlay);
+                            //}
                             DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Sound played ");
 
 

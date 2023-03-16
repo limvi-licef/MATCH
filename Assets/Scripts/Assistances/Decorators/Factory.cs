@@ -137,7 +137,7 @@ namespace MATCH
 
                     Assistances.Decorators.Sound controller = view.GetComponent<Assistances.Decorators.Sound>();
 
-                    controller.SetAssistanceToDecorate((Assistances.IPanel2)toDecorate);
+                    controller.SetAssistanceToDecorate((Assistances.IPanel2)toDecorate, soundPath);
                     //controller.SetEdgeColor(edgeMaterial);
 
                     //controller.Show(Utilities.Utility.GetEventHandlerEmpty());
