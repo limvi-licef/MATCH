@@ -146,7 +146,7 @@ namespace MATCH
 
                 public Transform GetBackground()
                 {
-                    return /*BackgroundParent*/transform;
+                    return /*BackgroundParent*//*transform;*/ PanelToDecorate.GetBackground();
                 }
 
                 public Transform GetBackgroundIcon()

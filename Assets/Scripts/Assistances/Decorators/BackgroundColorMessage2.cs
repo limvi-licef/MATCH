@@ -83,7 +83,7 @@ namespace MATCH
 
                     /*BackgroundViewMain.rotation = PanelToDecorate.GetBackground().rotation;
                     BackgroundViewMain.localScale = PanelToDecorate.GetBackground().localScale;
-                    BackgroundViewIcon.rotation = PanelToDecorate.GetBackgroundIcon().rotation;
+                    BackgroundViewIcon.rotation   = PanelToDecorate.GetBackgroundIcon().rotation;
                     BackgroundViewIcon.localScale = PanelToDecorate.GetBackgroundIcon().localScale;*/
 
                     // Relaying the eventhandler
