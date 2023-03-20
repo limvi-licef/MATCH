@@ -30,14 +30,14 @@ namespace MATCH
                 string ConditionAllPlantsWatered = "AllPlantsWatered";
                 string ConditionWateringInterrupted = "CleaningWateringInterrupted";
 
-                string InferenceFarFromRag = "FarFromRag";
-                float InferenceFarFromRagDistance = 4.0f;
+                string InferenceFarFromBottle = "FarFromBottle";
+                float InferenceFarFromBottleDistance = 4.0f;
                 string InferenceDidNotStartWatering = "DidNotStartWatering";
                 string InferenceInterruptWatering = "InterruptedWatering";
 
                 // Interaction surface
                 Assistances.InteractionSurface InteractionSurfaceDialogs;
-                Assistances.InteractionSurface InteractionRag;
+                Assistances.InteractionSurface InteractionBottle;
 
                 Assistances.InteractionSurface InteractionSink;
                 Assistances.InteractionSurface InteractionPlant1;
