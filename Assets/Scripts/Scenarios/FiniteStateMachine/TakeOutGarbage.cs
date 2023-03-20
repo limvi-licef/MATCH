@@ -188,16 +188,16 @@ namespace MATCH
 
                     // Connections between states
                     s_inference19h00 += sStandBy.goToState(sHighlightGarbage);
-                    garbageInteractionSurfaceController.EventInteractionSurfaceTableTouched += sStandBy.goToState(/*sSuccess*/sGarbageGrabbed);
+                    garbageInteractionSurfaceController.EventInteractionSurfaceTouched += sStandBy.goToState(/*sSuccess*/sGarbageGrabbed);
                     highlightGarbageController.s_touched += sHighlightGarbage.goToState(sSolution);
                     s_inference19h30 += sHighlightGarbage.goToState(sExclamationMark);
-                    garbageInteractionSurfaceController.EventInteractionSurfaceTableTouched += sHighlightGarbage.goToState(/*sSuccess*/sGarbageGrabbed);
+                    garbageInteractionSurfaceController.EventInteractionSurfaceTouched += sHighlightGarbage.goToState(/*sSuccess*/sGarbageGrabbed);
                     exclamationMarkController.s_touched += sExclamationMark.goToState(sSolution);
                     highlightGarbageVividController.s_touched += delegate (System.Object o, EventArgs e) { exclamationMarkController.TriggerTouch(); };
 
-                    garbageInteractionSurfaceController.EventInteractionSurfaceTableTouched += sExclamationMark.goToState(/*sSuccess*/sGarbageGrabbed);
-                    garbageInteractionSurfaceController.EventInteractionSurfaceTableTouched += sSolution.goToState(/*sSuccess*/sGarbageGrabbed);
-                    doorInteractionSurfaceController.EventInteractionSurfaceTableTouched += sGarbageGrabbed.goToState(sSuccess);
+                    garbageInteractionSurfaceController.EventInteractionSurfaceTouched += sExclamationMark.goToState(/*sSuccess*/sGarbageGrabbed);
+                    garbageInteractionSurfaceController.EventInteractionSurfaceTouched += sSolution.goToState(/*sSuccess*/sGarbageGrabbed);
+                    doorInteractionSurfaceController.EventInteractionSurfaceTouched += sGarbageGrabbed.goToState(sSuccess);
                     successController.s_touched += sSuccess.goToState(sStandBy);
 
                     m_gradationManager.setGradationInitial("StandBy");

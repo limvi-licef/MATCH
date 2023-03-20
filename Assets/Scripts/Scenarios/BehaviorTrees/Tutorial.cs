@@ -257,7 +257,7 @@ namespace MATCH
 
                     delta.Init();
 
-                    InteractionPen.EventInteractionSurfaceTableTouched += delegate (System.Object o, EventArgs e)
+                    InteractionPen.EventInteractionSurfaceTouched += delegate (System.Object o, EventArgs e)
                     {
                         UpdateConditionWithMatrix(ConditionPenGrabbed);
                     };

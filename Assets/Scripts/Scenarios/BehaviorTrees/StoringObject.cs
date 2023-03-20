@@ -448,7 +448,7 @@ namespace MATCH
                     InferenceManager.UnregisterInference(InferenceFocusedOnObject);
                     InferenceManager.UnregisterInference(InferenceTimeDidNotComeToObject);
 
-                    AreaObject.EventInteractionSurfaceTableTouched -= CallbackPersonGrabbedObject;
+                    AreaObject.EventInteractionSurfaceTouched -= CallbackPersonGrabbedObject;
 
                     // Register interences
                     InferenceObjectDetected = new Inferences.ObjectDetected("SortingObjectDetectionObject", CallbackObjectDetected, ObjectOfInterestName);
@@ -464,7 +464,7 @@ namespace MATCH
                     InferenceObjectInStorage = new Inferences.ObjectInInteractionSurface("ObjectStorage", CallbackGameObjectDetectedInStorage, ObjectOfInterestName, AreaStorage);
                     InferenceManager.RegisterInference(InferenceObjectInStorage);
 
-                    AreaObject.EventInteractionSurfaceTableTouched += CallbackPersonGrabbedObject;
+                    AreaObject.EventInteractionSurfaceTouched += CallbackPersonGrabbedObject;
 
                     RegisterInferenceComing();
                     RegisterInferenceComingAndLeaving();

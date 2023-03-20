@@ -32,7 +32,7 @@ namespace MATCH
         {
             Transform View;
             
-            public event EventHandler EventInteractionSurfaceTableTouched;
+            public event EventHandler EventInteractionSurfaceTouched;
             public event EventHandler EventInteractionSurfaceScaled;
             public event EventHandler EventInteractionSurfaceMoved;
 
@@ -144,7 +144,7 @@ namespace MATCH
                     View.GetComponent<BoundsControl>().ScaleStopped.AddListener(CallbackHologramInteractionSurfaceMovedFinished); // Use the same callback than for taptoplace as the process to do is the same
                     View.GetComponent<Interactable>().GetReceiver<InteractableOnTouchReceiver>().OnTouchStart.AddListener(delegate ()
                     {
-                        EventInteractionSurfaceTableTouched?.Invoke(this, EventArgs.Empty);
+                        EventInteractionSurfaceTouched?.Invoke(this, EventArgs.Empty);
                     }); // Only have to forward the event
 
 
@@ -203,7 +203,7 @@ namespace MATCH
              * */
             public void TriggerTouchEvent()
             {
-                EventInteractionSurfaceTableTouched?.Invoke(this, EventArgs.Empty);
+                EventInteractionSurfaceTouched?.Invoke(this, EventArgs.Empty);
             }
         }
 

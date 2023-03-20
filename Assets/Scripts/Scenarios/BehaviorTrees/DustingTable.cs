@@ -229,7 +229,7 @@ namespace MATCH
                     
                     InteractionRag = Assistances.Factory.Instance.CreateInteractionSurface("DustingTable - Rag", AdminMenu.Panels.Right, new Vector3(0.1f, 0.1f, 0.1f), new Vector3(-1.378f, -0.364f, 2.743f), Utilities.Materials.Colors.OrangeGlowing, false, true, Utilities.Utility.GetEventHandlerEmpty(), true, transform);
 
-                    InteractionRag.EventInteractionSurfaceTableTouched += CallbackInteractionSurfaceRagTouched;
+                    InteractionRag.EventInteractionSurfaceTouched += CallbackInteractionSurfaceRagTouched;
                 }
 
                 Sequence AssistanceBeta()

@@ -166,7 +166,8 @@ namespace MATCH
 
                 void InitializeAssistances()
                 {
-                    InteractionSurfaceDialogs = Assistances.Factory.Instance.CreateInteractionSurface("Practice-Dialogs", AdminMenu.Panels.Right, new Vector3(1.1f, 0.02f, 0.7f), new Vector3(-0.447f, -0.406f, 0.009f), Utilities.Materials.Colors.CyanGlowing, false, true, Utilities.Utility.GetEventHandlerEmpty(), true, transform);
+                    InteractionSurfaceDialogs = Assistances.Factory.Instance.CreateInteractionSurface("Practice-Dialogs", AdminMenu.Panels.Right, new Vector3(1.1f, 0.02f, 0.7f),
+                        new Vector3(-0.447f, -0.406f, 0.009f), Utilities.Materials.Colors.CyanGlowing, false, true, Utilities.Utility.GetEventHandlerEmpty(), true, transform);
 
                     //à modifier les interactions
                     InteractionSink = Assistances.Factory.Instance.CreateInteractionSurface("Practice-Sink", AdminMenu.Panels.Right, new Vector3(0.6f, 0.1f, 0.4f),
@@ -181,7 +182,7 @@ namespace MATCH
 
                     InteractionPlants = new Assistances.InteractionSurface[]{ InteractionPlant1, InteractionPlant2, InteractionPlant3 };
 
-                    InteractionSink.EventInteractionSurfaceTableTouched += CallbackInteractionSurfaceSinkTouched;
+                    InteractionSink.EventInteractionSurfaceTouched += CallbackInteractionSurfaceSinkTouched;
                 }
 
                 //Is it 7pm?
@@ -207,6 +208,7 @@ namespace MATCH
                         new NPBehave.Action(() => {
                             ShowAssistanceHideOthers(alpha);
                             UpdateTextAssistancesDebugWindow("Is it 7pm?");
+
                             MATCH.Utilities.Logger.Instance.Log(this.GetId(), MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, "BTWP7");
                         }),
                         new WaitUntilStopped()
@@ -226,9 +228,9 @@ namespace MATCH
                             UpdateTextAssistancesDebugWindow("Bottle Filled");
                             foreach (Assistances.InteractionSurface interactionPlant in InteractionPlants)
                             {
-                                interactionPlant.EventInteractionSurfaceTableTouched += CallbackInteractionSurfacePlantWatered;
+                                interactionPlant.EventInteractionSurfaceTouched += CallbackInteractionSurfacePlantWatered;
                             }
-                            InteractionSink.EventInteractionSurfaceTableTouched += CallbackInteractionSurfaceSinkTouchedAgain;
+                            InteractionSink.EventInteractionSurfaceTouched += CallbackInteractionSurfaceSinkTouchedAgain;
                             MATCH.Utilities.Logger.Instance.Log(this.GetId(), MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, "BTWP5");
                             InferenceManager.UnregisterInference(InferenceDidNotStartWatering);
 
@@ -255,10 +257,46 @@ namespace MATCH
                 //Does the person come back to the faucet without having watered any plant?
                 Sequence AssistanceBTWP4()
                 {
+                   
+                    Assistances.GradationVisual.GradationVisual requestHelp = Assistances.GradationVisual.Factory.Instance.CreateAlreadyConfigured(Assistances.GradationVisual.Factory.AlreadyConfigured.DoYouNeedHelpDialog1,
+                         "WateringThePlants-BTWP4", InteractionSink.transform);
+
+                    Assistances.GradationVisual.GradationVisual DontKnow = Assistances.GradationVisual.Factory.Instance.CreateDialog2WithButtons("WateringThePlants-BTWP4-1", "",
+                        "Saviez ce que vous êtier en train de faire?", "Oui", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.Yes, 
+                        "Non", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.No, InteractionSink.transform);
+
+                    Assistances.GradationVisual.GradationVisual letitgo = Assistances.GradationVisual.Factory.Instance.CreateAlreadyConfigured(Assistances.GradationVisual.Factory.AlreadyConfigured.LetGoDialog2,
+                        "WateringThePlants-BTWP4-1", InteractionSink.transform);
+
+                    Assistances.GradationVisual.GradationVisual sayWhatToDo = Assistances.GradationVisual.Factory.Instance.CreateDialog2WithButtons("WateringThePlants-BTWP4-1", "",
+                        "Vous devez commencer à arroser les plantes", "Ok", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.Yes, "Je ne comprends pas", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.No, InteractionSink.transform);
+
+                    Assistances.GradationVisual.GradationVisual SomeonComing = Assistances.GradationVisual.Factory.Instance.CreateAlreadyConfigured(Assistances.GradationVisual.Factory.AlreadyConfigured.SomeoneComingToHelpDialog2, "DustingTable-Gamma-3", InteractionSink.transform);
+
+                    Assistances.AssistanceGradationExplicit BTWP4 = MATCH.Assistances.Factory.Instance.CreateAssistanceGradationExplicit("WateringThePlants-BTWP4");
+                    BTWP4.transform.parent = transform;
+
+                    BTWP4.AddAssistance(requestHelp, Assistances.Buttons.Button.ButtonType.Yes, DontKnow);
+                    BTWP4.AddAssistance(requestHelp, Assistances.Buttons.Button.ButtonType.No, letitgo);
+                    BTWP4.AddAssistance(DontKnow, Assistances.Buttons.Button.ButtonType.Yes, letitgo);
+                    BTWP4.AddAssistance(DontKnow, Assistances.Buttons.Button.ButtonType.No, sayWhatToDo);
+                    BTWP4.AddAssistance(sayWhatToDo, Assistances.Buttons.Button.ButtonType.Yes, letitgo);
+                    BTWP4.AddAssistance(sayWhatToDo, Assistances.Buttons.Button.ButtonType.No, SomeonComing);
+
+                    BTWP4.AddAssistance(letitgo, Assistances.Buttons.Button.ButtonType.ClosingButton, null);
+                    BTWP4.AddAssistance(SomeonComing, Assistances.Buttons.Button.ButtonType.ClosingButton, null);
+
+
+
+                    AssistancesWatering.Add(BTWP4, false);
+
+                    BTWP4.Init();
                     Sequence temp = new Sequence(
                         new NPBehave.Action(() => {
                             //ShowAssistanceHideOthers(alpha);
-        
+                            BTWP4.RunAssistance();
+                            AssistancesWatering[BTWP4] = true;
+                            InferenceManager.UnregisterAllInferences();
                             UpdateTextAssistancesDebugWindow("BTWP4");
                             MATCH.Utilities.Logger.Instance.Log(this.GetId(), MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, "BTWP4");
                         }),
@@ -355,7 +393,7 @@ namespace MATCH
                 Sequence AssistanceBTWP1()
                 {
                     Assistances.GradationVisual.GradationVisual gradationVisual_BTWP1 = Assistances.GradationVisual.Factory.Instance.CreateDialog2WithButtons("Watering-BTWP-1", "",
-                        "Vous avez terminé l'activité! Félicitations!", "Terminer", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.ClosingButton, InteractionSurfaceDialogs.transform);
+                        "Vous avez terminé l'activité! Félicitations!", "Terminer", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.ClosingButton, InteractionSink.transform);
 
 
                     Assistances.AssistanceGradationExplicit gradationExplicit_BTWP1 = MATCH.Assistances.Factory.Instance.CreateAssistanceGradationExplicit("Watering-BTWP1");

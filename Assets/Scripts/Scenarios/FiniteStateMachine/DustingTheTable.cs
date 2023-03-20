@@ -245,14 +245,14 @@ namespace MATCH
                     m_assistanceGradationManager.setGradationInitial("StandBy");
 
                     // States changing
-                    interactionTableController.EventInteractionSurfaceTableTouched += sStandBy.goToState(sCubeRagTable);
+                    interactionTableController.EventInteractionSurfaceTouched += sStandBy.goToState(sCubeRagTable);
                     m_assistancePicturalController.EventHologramStimulateLevel1Gradation1Or2Touched += sCubeRagTable.goToState(sMessageCue);
                     initialCueingController.ButtonsController[0].EventButtonClicked += sMessageCue.goToState(sArchToRag);
                     m_assistanceConnectWithArchController.EventHelpTouched += sArchToRag.goToState(sSolution);
-                    interactionRagController.EventInteractionSurfaceTableTouched += sCubeRagTable.goToState(sSurfaceToClean);
-                    interactionRagController.EventInteractionSurfaceTableTouched += sMessageCue.goToState(sSurfaceToClean);
-                    interactionRagController.EventInteractionSurfaceTableTouched += sArchToRag.goToState(sSurfaceToClean);
-                    interactionRagController.EventInteractionSurfaceTableTouched += sSolution.goToState(sSurfaceToClean);
+                    interactionRagController.EventInteractionSurfaceTouched += sCubeRagTable.goToState(sSurfaceToClean);
+                    interactionRagController.EventInteractionSurfaceTouched += sMessageCue.goToState(sSurfaceToClean);
+                    interactionRagController.EventInteractionSurfaceTouched += sArchToRag.goToState(sSurfaceToClean);
+                    interactionRagController.EventInteractionSurfaceTouched += sSolution.goToState(sSurfaceToClean);
                     m_assistanceSurfaceTouchedController.EventSurfaceCleaned += sSurfaceToClean.goToState(sSuccess);
                     m_successController.s_touched += sSuccess.goToState(sStandBy);
 
@@ -442,15 +442,15 @@ namespace MATCH
                     s_ignoreRedSurface += sRedSurface.goToState(sRedSurfaceAndExclamation);
                     exclamationMark.s_touched += sRedSurfaceAndExclamation.goToState(sFirstDialog);
 
-                    interactionSurfaceRag.EventInteractionSurfaceTableTouched += delegate (System.Object o, EventArgs e)
+                    interactionSurfaceRag.EventInteractionSurfaceTouched += delegate (System.Object o, EventArgs e)
                     {
                         m_inferenceEngine.UnregisterInference("BackToTable");
                         m_inferenceEngine.UnregisterInference("BackToTableInternal");
                     };
-                    interactionSurfaceRag.EventInteractionSurfaceTableTouched += sRedSurface.goToState(sProcessSurface);
-                    interactionSurfaceRag.EventInteractionSurfaceTableTouched += sRedSurfaceAndExclamation.goToState(sProcessSurface);
-                    interactionSurfaceRag.EventInteractionSurfaceTableTouched += sFirstDialog.goToState(sProcessSurface);
-                    interactionSurfaceRag.EventInteractionSurfaceTableTouched += sDialogRag.goToState(sProcessSurface);
+                    interactionSurfaceRag.EventInteractionSurfaceTouched += sRedSurface.goToState(sProcessSurface);
+                    interactionSurfaceRag.EventInteractionSurfaceTouched += sRedSurfaceAndExclamation.goToState(sProcessSurface);
+                    interactionSurfaceRag.EventInteractionSurfaceTouched += sFirstDialog.goToState(sProcessSurface);
+                    interactionSurfaceRag.EventInteractionSurfaceTouched += sDialogRag.goToState(sProcessSurface);
 
                     s_backToTable += sFirstDialog.goToState(sSecondDialog);
 
