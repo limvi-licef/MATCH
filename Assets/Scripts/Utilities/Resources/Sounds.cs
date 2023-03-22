@@ -36,6 +36,10 @@ namespace MATCH
                 static string Path = "MATCH/Sounds/";
 
                 public static string Debug = Path + "DEBUG_SON";
+                public static AudioClip Load(string audioPath)
+                {
+                    return (Resources.Load<AudioClip>(audioPath));
+                }
             }
         }
     }
