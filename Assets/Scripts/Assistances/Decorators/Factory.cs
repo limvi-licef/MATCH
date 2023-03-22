@@ -61,17 +61,22 @@ namespace MATCH
 
                 public MATCH.Assistances.Assistance CreateBackgroundMessage(MATCH.Assistances.IPanel2 panelToDecorate, string backgroundColor)
                 {
-
+                    DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "TEST3");
                     //return CreateBackground(panelToDecorate, backgroundColor, backgroundColor/*, toHideOnShow*/);
 
                     Transform view = Instantiate(Utilities.Materials.Prefabs.Load(Utilities.Materials.Prefabs.DecoratorBackgroundColorMessage2));
-                    view.name = ((Assistance)panelToDecorate).name;
-
+                    DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "TEST4");
+                    /////view.name = ((Assistance)panelToDecorate).name;
+                    view.name = panelToDecorate.GetDecoratedAssistance().name;
+                    DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "TEST5");
                     Assistances.Decorators.BackgroundColorMessage2 controller = view.gameObject.GetComponent<Assistances.Decorators.BackgroundColorMessage2>();
 
+                    DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "TEST6");
                     controller.SetAssistanceToDecorate(panelToDecorate);
+                    DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "TEST7");
                     //controller.SetBackgroundColor(background);
                     controller.GetBackgroundMessage().GetComponent<Renderer>().material = Utilities.Utility.LoadMaterial(backgroundColor);
+                    DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "TEST8");
 
                     return controller;
 
@@ -95,8 +100,8 @@ namespace MATCH
                 public MATCH.Assistances.Assistance CreateBackgroundIcon(MATCH.Assistances.IPanel2 panelToDecorate, string backgroundIconColor)
                 {
                     Transform view = Instantiate(Utilities.Materials.Prefabs.Load(Utilities.Materials.Prefabs.DecoratorBackgroundColorIcon2));
-                    view.name = ((Assistance)panelToDecorate).name;
-
+                    view.name = panelToDecorate.GetDecoratedAssistance().name;
+                    //view.name = ((Assistance)panelToDecorate).name;
                     Assistances.Decorators.BackgroundColorIcon2 controller = view.gameObject.GetComponent<Assistances.Decorators.BackgroundColorIcon2>();
 
                     controller.SetAssistanceToDecorate(panelToDecorate);
@@ -130,14 +135,16 @@ namespace MATCH
                     return controller;
                 }
                 
-                public MATCH.Assistances.Assistance CreateSound(MATCH.Assistances.IPanel2 toDecorate, string soundPath)
+                public MATCH.Assistances.Assistance CreateSound(MATCH.Assistances.IAssistance toDecorate, string soundPath)
                 {
                     Transform view = Utilities.Materials.Prefabs.Load(Utilities.Materials.Prefabs.DecoratorSound);
-                    view.name = ((Assistance)toDecorate).name;
+                    view.name = toDecorate.GetDecoratedAssistance().name;
 
                     Assistances.Decorators.Sound controller = view.GetComponent<Assistances.Decorators.Sound>();
 
-                    controller.SetAssistanceToDecorate((Assistances.IPanel2)toDecorate, soundPath);
+
+                    //Adapters.IAssistanceToIPanel2 adapter = new Adapters.IAssistanceToIPanel2(toDecorate, (IPanel2)toDecorate.GetDecoratedAssistance());
+                    controller.SetAssistanceToDecorate(toDecorate, soundPath);
                     //controller.SetEdgeColor(edgeMaterial);
 
                     //controller.Show(Utilities.Utility.GetEventHandlerEmpty());

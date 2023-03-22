@@ -28,9 +28,9 @@ namespace MATCH
     {
         namespace Decorators
         {
-            public class Sound : Assistance, IPanel2
+            public class Sound : Assistance, IAssistance
             {
-                IPanel2 PanelToDecorate;
+                IAssistance PanelToDecorate;
                 AudioSource audioSource;
                 AudioClip audioClip;
                 float timeBetweenShots = 0.75f;
@@ -58,20 +58,18 @@ namespace MATCH
                 }
              
 
-                public void SetAssistanceToDecorate(IPanel2 toDecorate, string soundPath)
+                public void SetAssistanceToDecorate(IAssistance toDecorate, string soundPath)
                 {
                     PanelToDecorate = toDecorate;
 
                     this.soundToPlay = soundPath;
-                   
+             
                     name = PanelToDecorate.GetAssistance().name + "_decoratorSound";
                     
+                    transform.parent = PanelToDecorate.GetDecoratedAssistance().GetTransform();
+                    transform.localPosition = PanelToDecorate.GetDecoratedAssistance().GetTransform().localPosition;
 
-                    transform.parent = PanelToDecorate.GetDecoratedAssistance().transform;
-                    transform.localPosition = PanelToDecorate.GetBackground().transform.localPosition;
-
-                    
-                    Assistance temp = (Assistance)PanelToDecorate;
+                    Assistance temp = PanelToDecorate.GetDecoratedAssistance();
                     temp.EventHelpButtonClicked += delegate (System.Object o, EventArgs e)
                     {
                         MATCH.Utilities.EventHandlerArgs.Button args = (MATCH.Utilities.EventHandlerArgs.Button)e;
@@ -112,10 +110,8 @@ namespace MATCH
                         PanelToDecorate.GetAssistance().Show(delegate (System.Object o, EventArgs e)
                         {
                             audioSource = GetComponent<AudioSource>();
-                            //if (audioClip == null)
-                            //{
-                            audioClip = Resources.Load<AudioClip>(soundToPlay);
-                            //}
+                            audioClip = MATCH.Utilities.Materials.Sounds.Load(MATCH.Utilities.Materials.Sounds.Debug);
+                            
                             DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Sound played ");
 
 
@@ -132,23 +128,24 @@ namespace MATCH
                         {
                             Utilities.EventHandlerArgs.Animation args = new Utilities.EventHandlerArgs.Animation();
                             //PanelToDecorate.GetBackground().gameObject.SetActive(false);
-                            PanelToDecorate.GetBackgroundMessage().gameObject.SetActive(false);
+                            ///////PanelToDecorate.GetBackgroundMessage().gameObject.SetActive(false);
                             //PanelToDecorate.GetBackgroundIcon().gameObject.SetActive(false);
                             args.Success = false;
                             callback?.Invoke(this, args);
                         }, withAnimation);
                     }
                 }
-
+                
+                
                 public override void ShowHelp(bool show, EventHandler callback, bool withAnimation)
                 {
                     PanelToDecorate.GetDecoratedAssistance().ShowHelp(show, callback, withAnimation);
                 }
-
+                /*
                 public void EnableWeavingHand(bool enable)
                 {
                     PanelToDecorate.EnableWeavingHand(enable);
-                }
+                }*/
 
                 public override Transform GetTransform()
                 {
@@ -162,28 +159,34 @@ namespace MATCH
 
                 public Assistance GetAssistance()
                 {
-                    return this;
+                    return PanelToDecorate.GetAssistance();
                 }
-
+                
                 public override bool IsDecorator()
                 {
                     return true;
                 }
 
+                public AudioClip GetSound()
+                {
+                    return this.audioClip;
+                }
+          
+                /*
                 public Transform GetBackground()
                 {
-                    return /*BackgroundParent*/transform;
+                    return PanelToDecorate.GetBackground();
                 }
 
                 public Transform GetBackgroundIcon()
                 {
-                    return PanelToDecorate.GetBackgroundIcon()/*BackgroundIcon*/;
+                    return PanelToDecorate.GetBackgroundIcon();
                 }
 
                 public Transform GetBackgroundMessage()
                 {
                     return PanelToDecorate.GetBackgroundMessage();
-                }
+                }*/
             }
         }
     }

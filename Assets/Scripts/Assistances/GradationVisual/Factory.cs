@@ -231,10 +231,12 @@ namespace MATCH
 
                     //Premier niveau de gradation avec 2 décorateurs
                     Decorators.BackgroundColorIcon2 decorator1a = (Decorators.BackgroundColorIcon2)Assistances.Decorators.Factory.Instance.CreateBackgroundIcon(dialog, Utilities.Materials.Colors.Cyan);
-                    Decorators.Sound decorator1b = (Decorators.Sound)Assistances.Decorators.Factory.Instance.CreateSound(decorator1a, "DEBUG_SON");
-                    Decorators.BackgroundColorMessage2 decorator1 = (Decorators.BackgroundColorMessage2)Assistances.Decorators.Factory.Instance.CreateBackgroundMessage(decorator1b, Utilities.Materials.Colors.Cyan);
-                    
 
+                    Decorators.Sound decoratorSound = (Decorators.Sound)Assistances.Decorators.Factory.Instance.CreateSound(decorator1a, "DEBUG_SON");
+                    IPanel2 adapterSound = new Adapters.IAssistanceToIPanel2(decoratorSound,(IPanel2)decoratorSound.GetDecoratedAssistance());
+
+                    Decorators.BackgroundColorMessage2 decorator1 = (Decorators.BackgroundColorMessage2)Assistances.Decorators.Factory.Instance.CreateBackgroundMessage(adapterSound, Utilities.Materials.Colors.Cyan);
+                    
                     DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Decorator : " + decorator1.name);
 
                     toReturn.AddAssistance(decorator1);////1 -> 1a/b
