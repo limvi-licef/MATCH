@@ -257,7 +257,13 @@ namespace MATCH
                 //Does the person come back to the faucet without having watered any plant?
                 Sequence AssistanceBTWP4()
                 {
-                   
+                    Assistances.GradationVisual.GradationVisual sinkToPlant1 = Assistances.GradationVisual.Factory.Instance
+                        .CreateArch("PathToPlants-BTWP4", "Vous trouverez la plante au bout de cette arche", InteractionSink.transform, InteractionPlant1.transform, InteractionPlant1.transform);
+                    Assistances.GradationVisual.GradationVisual sinkToPlant2 = Assistances.GradationVisual.Factory.Instance
+                        .CreateArch("PathToPlants-BTWP4", "Vous trouverez la plante au bout de cette arche", InteractionSink.transform, InteractionPlant2.transform, InteractionPlant2.transform);
+                    Assistances.GradationVisual.GradationVisual sinkToPlant3 = Assistances.GradationVisual.Factory.Instance
+                        .CreateArch("PathToPlants-BTWP4", "Vous trouverez la plante au bout de cette arche", InteractionSink.transform, InteractionPlant3.transform, InteractionPlant3.transform);
+
                     Assistances.GradationVisual.GradationVisual requestHelp = Assistances.GradationVisual.Factory.Instance.CreateAlreadyConfigured(Assistances.GradationVisual.Factory.AlreadyConfigured.DoYouNeedHelpDialog1,
                          "WateringThePlants-BTWP4", InteractionSink.transform);
 
