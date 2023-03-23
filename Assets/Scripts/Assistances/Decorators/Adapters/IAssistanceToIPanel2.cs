@@ -28,7 +28,7 @@ namespace MATCH
     {
         namespace Adapters
         {
-            class IAssistanceToIPanel2 : /*Assistance,*/ IPanel2
+            class IAssistanceToIPanel2 : Assistance, IPanel2
             {
                 readonly IAssistance AssistanceToAdapt;
                 readonly IPanel2 AssistanceDecorated;
@@ -38,25 +38,30 @@ namespace MATCH
                     AssistanceToAdapt = assistanceToAdapt;
                     //AssistanceToAdapt.GetAssistance().Show(Utilities.Utility.GetEventHandlerEmpty(), false);
                 }
-                /*public override void Show(EventHandler callback, bool withAnimation)
+                /*
+                public override void Show(EventHandler callback, bool withAnimation)
                 {
-                    AssistanceToAdapt.GetAssistance().Show(Utilities.Utility.GetEventHandlerEmpty(), false);
+                    this.GetAssistance().Show(delegate (System.Object o, EventArgs e)
+                    {
+                        callback?.Invoke(o, e);
+                    }, withAnimation);
                 }
 
                 public override void Hide(EventHandler callback, bool withAnimation)
                 {
-                    AssistanceToAdapt.GetAssistance().Hide(Utilities.Utility.GetEventHandlerEmpty(), false);
+                    this.GetAssistance().Hide(delegate (System.Object o, EventArgs e)
+                    {
+                        callback?.Invoke(o, e);
+                    }, withAnimation);
                 }
-
+                */
+                
                 public override void Hide(EventHandler callback, bool withAnimation)
                 {
                     if (IsDisplayed)
                     {
-                        AssistanceToAdapt.GetAssistance().Hide(delegate (System.Object o, EventArgs e)
+                        this.GetAssistance().Hide(delegate (System.Object o, EventArgs e)
                         {
-                            //audioSource.Stop();
-                            DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Sound stopped ");
-
                             IsDisplayed = false;
 
                             callback?.Invoke(o, e);
@@ -78,17 +83,9 @@ namespace MATCH
                     {
                         IsDisplayed = true;
 
-                        AssistanceToAdapt.GetAssistance().Show(delegate (System.Object o, EventArgs e)
+                        this.GetAssistance().Show(delegate (System.Object o, EventArgs e)
                         {
-                            //audioSource = GetComponent<AudioSource>();
-                            //audioClip = MATCH.Utilities.Materials.Sounds.Load(MATCH.Utilities.Materials.Sounds.Debug);
-
-                            DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Sound played ");
-
-
-                            AssistanceToAdapt.GetDecoratedAssistance().Show(Utilities.Utility.GetEventHandlerEmpty(), false);
-
-
+                            
                             callback?.Invoke(this, e);
                         }, withAnimation);
                     }
@@ -98,14 +95,11 @@ namespace MATCH
                         AssistanceToAdapt.GetDecoratedAssistance().Show(delegate (System.Object o, EventArgs e)
                         {
                             Utilities.EventHandlerArgs.Animation args = new Utilities.EventHandlerArgs.Animation();
-                            //PanelToDecorate.GetBackground().gameObject.SetActive(false);
-                            ///////PanelToDecorate.GetBackgroundMessage().gameObject.SetActive(false);
-                            //PanelToDecorate.GetBackgroundIcon().gameObject.SetActive(false);
                             args.Success = false;
                             callback?.Invoke(this, args);
                         }, withAnimation);
                     }
-                }*/
+                }
 
                 public Transform GetBackgroundMessage()
                 {
@@ -142,7 +136,7 @@ namespace MATCH
                     return AssistanceToAdapt.GetSound();
                 }
 
-                /*
+                
                 public override Transform GetTransform()
                 {
                     return AssistanceToAdapt.GetDecoratedAssistance().GetTransform();
@@ -156,7 +150,7 @@ namespace MATCH
                 public override void ShowHelp(bool show, EventHandler callback, bool withAnimation)
                 {
                     AssistanceToAdapt.GetDecoratedAssistance().ShowHelp(show, callback, withAnimation);
-                }*/
+                }
             }
         }
     }

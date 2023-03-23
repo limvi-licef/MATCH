@@ -138,13 +138,16 @@ namespace MATCH
                     Assistances.GradationVisual.GradationVisual alpha1 = Assistances.GradationVisual.Factory.Instance.CreateDialog2WithButtons("Tutorial-Alpha-1", "", "Bienvenue! Voici un tutoriel pour vous familiariser avec cette assistance. Pour commencer, avec un doigt, touchez le bouton \"Commencer !\" ci-dessous, comme si vous touchiez un interrupteur.", "Commencer !", delegate (System.Object o, EventArgs e)
                     {
                         UpdateConditionWithMatrix(ConditionBeginningClicked);
-                    }, Assistances.Buttons.Button.ButtonType.ClosingButton, InteractionSurfaceDialogs.transform);
+                    }, Assistances.Buttons.Button.ButtonType.ClosingButton, InteractionSurfaceDialogs.transform);           
 
 
                     Assistances.AssistanceGradationExplicit alpha = MATCH.Assistances.Factory.Instance.CreateAssistanceGradationExplicit("DustingTable-Alpha");
                     alpha.transform.parent = transform;
 
                     alpha.AddAssistance(alpha1, Assistances.Buttons.Button.ButtonType.ClosingButton, null);
+
+                    //////////Line to delete [FOR TEST ONLY]
+                    alpha.AddAssistance(alpha1, Assistances.Buttons.Button.ButtonType.CustomChoice1, null);
 
                     AssistancesDusting.Add(alpha, false);
 

@@ -232,7 +232,7 @@ namespace MATCH
                     //Premier niveau de gradation avec 2 décorateurs
                     Decorators.BackgroundColorIcon2 decorator1a = (Decorators.BackgroundColorIcon2)Assistances.Decorators.Factory.Instance.CreateBackgroundIcon(dialog, Utilities.Materials.Colors.Cyan);
 
-                    Decorators.Sound decoratorSound = (Decorators.Sound)Assistances.Decorators.Factory.Instance.CreateSound(decorator1a, "DEBUG_SON");
+                    Decorators.Sound decoratorSound = (Decorators.Sound)Assistances.Decorators.Factory.Instance.CreateSound(decorator1a, MATCH.Utilities.Materials.Sounds.Debug,2.0f);
                     IPanel2 adapterSound = new Adapters.IAssistanceToIPanel2(decoratorSound,(IPanel2)decoratorSound.GetDecoratedAssistance());
 
                     Decorators.BackgroundColorMessage2 decorator1 = (Decorators.BackgroundColorMessage2)Assistances.Decorators.Factory.Instance.CreateBackgroundMessage(adapterSound, Utilities.Materials.Colors.Cyan);
@@ -242,7 +242,12 @@ namespace MATCH
                     toReturn.AddAssistance(decorator1);////1 -> 1a/b
 
                     //Deuxieme niveau de gradation
-                    Decorators.BackgroundColorIcon2 decorator2 = (Decorators.BackgroundColorIcon2)Assistances.Decorators.Factory.Instance.CreateBackgroundIcon(decorator1/*dialog*/, /*Utilities.Materials.Colors.Cyan,*/ Utilities.Materials.Colors.Orange/*, decorator1*/);
+                    /*
+                    Decorators.Sound decoratorSound2 = (Decorators.Sound)Assistances.Decorators.Factory.Instance.CreateSound(decorator1, null, 3.0f);
+                    IPanel2 adapterSound2 = new Adapters.IAssistanceToIPanel2(decoratorSound2, (IPanel2)decoratorSound2.GetDecoratedAssistance());
+                    */
+                    Decorators.BackgroundColorIcon2 decorator2 = (Decorators.BackgroundColorIcon2)Assistances.Decorators.Factory.Instance.CreateBackgroundIcon(/*adapterSound2*/decorator1/*dialog*/, /*Utilities.Materials.Colors.Cyan,*/ Utilities.Materials.Colors.Orange/*, decorator1*/);
+
                     toReturn.AddAssistance(decorator2);
 
                     //Troisieme niveau de gradation

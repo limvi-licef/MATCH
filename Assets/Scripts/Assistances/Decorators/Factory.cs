@@ -135,7 +135,7 @@ namespace MATCH
                     return controller;
                 }
                 
-                public MATCH.Assistances.Assistance CreateSound(MATCH.Assistances.IAssistance toDecorate, string soundPath)
+                public MATCH.Assistances.Assistance CreateSound(MATCH.Assistances.IAssistance toDecorate, string soundPath, float timeBetweenSoundShots)
                 {
                     Transform view = Utilities.Materials.Prefabs.Load(Utilities.Materials.Prefabs.DecoratorSound);
                     view.name = toDecorate.GetDecoratedAssistance().name;
@@ -144,7 +144,7 @@ namespace MATCH
 
 
                     //Adapters.IAssistanceToIPanel2 adapter = new Adapters.IAssistanceToIPanel2(toDecorate, (IPanel2)toDecorate.GetDecoratedAssistance());
-                    controller.SetAssistanceToDecorate(toDecorate, soundPath);
+                    controller.SetAssistanceToDecorate(toDecorate, soundPath, timeBetweenSoundShots);
                     //controller.SetEdgeColor(edgeMaterial);
 
                     //controller.Show(Utilities.Utility.GetEventHandlerEmpty());
