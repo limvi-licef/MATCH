@@ -316,6 +316,11 @@ namespace MATCH
             {
                 return this;
             }
+
+            public Transform GetSound()
+            {
+                return null;
+            }
         }
 
     }

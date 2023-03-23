@@ -32,6 +32,8 @@ namespace MATCH
              * */
             public Assistance GetDecoratedAssistance();
             public Assistance GetAssistance();
+
+            public Transform GetSound();
         }
     }
 }

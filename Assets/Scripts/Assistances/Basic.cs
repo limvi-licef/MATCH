@@ -300,6 +300,11 @@ namespace MATCH
             {
                 return ChildView.gameObject.activeSelf;
             }*/
+
+            public Transform GetSound()
+            {
+                return null;
+            }
         }
     }
 }

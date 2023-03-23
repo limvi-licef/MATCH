@@ -50,7 +50,8 @@ namespace MATCH
                     transform.localPosition = PanelToDecorate.GetBackground().transform.localPosition;
 
                     // Relaying the eventhandler
-                    Assistance temp = (Assistance)PanelToDecorate;
+                    Assistance temp = PanelToDecorate.GetDecoratedAssistance();
+                    //Assistance temp = (Assistance)PanelToDecorate;
                     temp.EventHelpButtonClicked += delegate (System.Object o, EventArgs e)
                     {
                         MATCH.Utilities.EventHandlerArgs.Button args = (MATCH.Utilities.EventHandlerArgs.Button)e;
@@ -157,6 +158,11 @@ namespace MATCH
                 public Transform GetBackgroundMessage()
                 {
                     return PanelToDecorate.GetBackgroundMessage();
+                }
+
+                public Transform GetSound()
+                {
+                    return PanelToDecorate.GetSound();
                 }
             }
         }

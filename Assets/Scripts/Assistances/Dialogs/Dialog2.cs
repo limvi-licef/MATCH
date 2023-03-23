@@ -398,6 +398,11 @@ namespace MATCH
                 {
                     return BackgroundMessage;
                 }
+
+                public Transform GetSound()
+                {
+                    return null;
+                }
             }
 
         }

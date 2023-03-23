@@ -36,6 +36,7 @@ namespace MATCH
                 {
                     AssistanceDecorated = assistanceDecorated;
                     AssistanceToAdapt = assistanceToAdapt;
+                    //AssistanceToAdapt.GetAssistance().Show(Utilities.Utility.GetEventHandlerEmpty(), false);
                 }
                 /*public override void Show(EventHandler callback, bool withAnimation)
                 {
@@ -136,11 +137,10 @@ namespace MATCH
                     return AssistanceToAdapt.GetAssistance();
                 }
 
-                public AudioClip GetSound()
+                public Transform GetSound()
                 {
                     return AssistanceToAdapt.GetSound();
                 }
-
 
                 /*
                 public override Transform GetTransform()
@@ -162,4 +162,5 @@ namespace MATCH
     }
 }
 //// Dans la fonction pour créer l'adapter
-//Adapters.IAssistanceToIPanel2 adapter = new Adapters.IAssistanceToIPanel2(sound, (IPanel2)sound.GetDecoratedAssistance());
+//Adapters.IAssi
+//stanceToIPanel2 adapter = new Adapters.IAssistanceToIPanel2(sound, (IPanel2)sound.GetDecoratedAssistance());

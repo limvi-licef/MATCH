@@ -99,6 +99,11 @@ namespace MATCH
                 {
                     return true;
                 }
+
+                public Transform GetSound()
+                {
+                    return AssistanceToDecorate.GetSound();
+                }
             }
         }
     }

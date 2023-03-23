@@ -64,15 +64,16 @@ namespace MATCH
                 public void SetAssistanceToDecorate(IPanel2 toDecorate)
                 {
                     PanelToDecorate = toDecorate;
-
+                    DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "TEST6.1");
                     // Set the size of the background plate to fit the one of the decorated panel
                     //BackgroundViewMain.parent = PanelToDecorate.GetAssistance().transform;
                     name = PanelToDecorate.GetAssistance().name + "_decoratorBackgroundColorFor2";
                     //BackgroundParent.parent = PanelToDecorate.GetAssistance().transform;
                     //BackgroundParent.position = PanelToDecorate.GetAssistance().transform.position;
-
+                    DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "TEST6.2");
                     transform.parent = PanelToDecorate.GetDecoratedAssistance().transform;
                     //transform.position = PanelToDecorate.GetAssistance().transform.position;
+                    DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "TEST6.3");
                     transform.localPosition = PanelToDecorate.GetBackground().transform.localPosition;
 
                     //BackgroundParent.transform.SetParent(PanelToDecorate.GetAssistance().transform);
@@ -87,7 +88,8 @@ namespace MATCH
                     BackgroundViewIcon.localScale = PanelToDecorate.GetBackgroundIcon().localScale;*/
 
                     // Relaying the eventhandler
-                    Assistance temp = (Assistance)PanelToDecorate;
+                    DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "TEST6.4");
+                    Assistance temp = PanelToDecorate.GetDecoratedAssistance();
                     temp.EventHelpButtonClicked += delegate (System.Object o, EventArgs e)
                     {
                         MATCH.Utilities.EventHandlerArgs.Button args = (MATCH.Utilities.EventHandlerArgs.Button)e;
@@ -238,6 +240,11 @@ namespace MATCH
                 public Transform GetBackgroundMessage()
                 {
                     return BackgroundMessage;
+                }
+
+                public Transform GetSound()
+                {
+                    return null;
                 }
             }
         }

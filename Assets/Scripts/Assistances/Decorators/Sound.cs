@@ -102,10 +102,11 @@ namespace MATCH
 
                 public override void Show(EventHandler callback, bool withAnimation)
                 {
-                   
+                    DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "TEST100");
                     if (IsDisplayed == false)
                     {
                         IsDisplayed = true;
+                        DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "TEST101");
 
                         PanelToDecorate.GetAssistance().Show(delegate (System.Object o, EventArgs e)
                         {
@@ -166,12 +167,12 @@ namespace MATCH
                 {
                     return true;
                 }
-
-                public AudioClip GetSound()
+                    
+                public Transform GetSound()
                 {
-                    return this.audioClip;
+                    return transform;
                 }
-          
+
                 /*
                 public Transform GetBackground()
                 {

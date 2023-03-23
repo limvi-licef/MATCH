@@ -361,6 +361,11 @@ namespace MATCH
                 {
                     return BackgroundView;
                 }
+
+                public Transform GetSound()
+                {
+                    return null;
+                }
             }
 
         }
