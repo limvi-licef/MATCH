@@ -166,7 +166,7 @@ namespace MATCH
 
                 public Assistance GetDecoratedAssistance()
                 {
-                    return PanelToDecorate.GetDecoratedAssistance();
+                    return PanelToDecorate.GetAssistance();//.GetDecoratedAssistance();
                 }
 
                 public Assistance GetAssistance()
