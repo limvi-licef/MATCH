@@ -164,7 +164,7 @@ namespace MATCH
                     PathWithTextAndHelp controller = Assistances.Factory.Instance.CreateAssistancePath(assistanceName, start, end, parent);
                     controller.SetDescription(assistance);
 
-                    Assistances.GradationVisual.GradationVisual toReturn = Assistances.Factory.Instance.CreateAssistanceGradationAttention(assistanceName);
+                    GradationVisual toReturn = Assistances.Factory.Instance.CreateAssistanceGradationAttention(assistanceName);
                     toReturn.AddAssistance(controller);
 
                     return toReturn;
