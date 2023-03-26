@@ -39,6 +39,7 @@ namespace MATCH
                 Assistances.InteractionSurface InteractionSurfaceDialogs;
                 Assistances.InteractionSurface InteractionBottle;
 
+                Assistances.InteractionSurface me;
                 Assistances.InteractionSurface InteractionSink;
                 Assistances.InteractionSurface InteractionPlant1;
                 Assistances.InteractionSurface InteractionPlant2;
@@ -258,13 +259,13 @@ namespace MATCH
                 Sequence AssistanceBTWP4()
                 {
                     Assistances.GradationVisual.GradationVisual pathToPlant = Assistances.GradationVisual.Factory.Instance
-                                .CreatePath("PathToPlants-BTWP4", "Vous trouverez la plante au bout de ce chemin", InteractionSink.transform, InteractionPlant1.transform, InteractionPlant1.transform); ;
+                                .CreatePath("PathToPlants-BTWP4", "Vous trouverez la plante au bout de ce chemin", me.transform, InteractionPlant1.transform, InteractionPlant1.transform); ;
                     foreach (Assistances.InteractionSurface interactionPlant in InteractionPlants)
                     {
                         if (!interactionPlant.CompareTag("Watered"))
                         {
                             pathToPlant = Assistances.GradationVisual.Factory.Instance
-                                .CreatePath("PathToPlants-BTWP4", "Vous trouverez la plante au bout de ce chemin", InteractionSink.transform, interactionPlant.transform, interactionPlant.transform);
+                                .CreatePath("PathToPlants-BTWP4", "Vous trouverez la plante au bout de ce chemin", me.transform, interactionPlant.transform, interactionPlant.transform);
 
                         }
                     }
