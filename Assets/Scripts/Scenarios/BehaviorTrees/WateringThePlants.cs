@@ -258,13 +258,13 @@ namespace MATCH
                 Sequence AssistanceBTWP4()
                 {
                     Assistances.GradationVisual.GradationVisual pathToPlant = Assistances.GradationVisual.Factory.Instance
-                                .CreatePath("PathToPlants-BTWP4", "Vous trouverez la plante au bout de cette arche", InteractionSink.transform, InteractionPlant1.transform, InteractionPlant1.transform); ;
+                                .CreatePath("PathToPlants-BTWP4", "Vous trouverez la plante au bout de cette chemin", InteractionSink.transform, InteractionPlant1.transform, InteractionPlant1.transform); ;
                     foreach (Assistances.InteractionSurface interactionPlant in InteractionPlants)
                     {
-                        if (interactionPlant.tag != "Watered")
+                        if (!interactionPlant.CompareTag("Watered"))
                         {
                             pathToPlant = Assistances.GradationVisual.Factory.Instance
-                                .CreatePath("PathToPlants-BTWP4", "Vous trouverez la plante au bout de cette arche", InteractionSink.transform, interactionPlant.transform, interactionPlant.transform);
+                                .CreatePath("PathToPlants-BTWP4", "Vous trouverez la plante au bout de cette chemin", InteractionSink.transform, interactionPlant.transform, interactionPlant.transform);
 
                         }
                     }
