@@ -60,9 +60,10 @@ namespace MATCH
                 {
                     if (IsDisplayed)
                     {
-                        this.GetAssistance().Hide(delegate (System.Object o, EventArgs e)
+                        AssistanceDecorated.GetAssistance().Hide(delegate (System.Object o, EventArgs e)
                         {
                             IsDisplayed = false;
+                            DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Hide Adapter");
 
                             callback?.Invoke(o, e);
                         }, withAnimation);
@@ -71,6 +72,8 @@ namespace MATCH
                     else
                     {
                         Utilities.EventHandlerArgs.Animation args = new Utilities.EventHandlerArgs.Animation();
+                        DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Hide Adapter ?");
+
                         args.Success = false;
                         callback?.Invoke(this, args);
                     }
@@ -83,18 +86,21 @@ namespace MATCH
                     {
                         IsDisplayed = true;
 
-                        this.GetAssistance().Show(delegate (System.Object o, EventArgs e)
+                        AssistanceDecorated.GetAssistance().Show(delegate (System.Object o, EventArgs e)
                         {
-                            
+                            DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Show Adapter");
+
                             callback?.Invoke(this, e);
                         }, withAnimation);
                     }
                     else
                     {
                         // Check first if the decorated assistance needs to be displayed
-                        AssistanceToAdapt.GetDecoratedAssistance().Show(delegate (System.Object o, EventArgs e)
+                        AssistanceDecorated.GetAssistance().Show(delegate (System.Object o, EventArgs e)
                         {
                             Utilities.EventHandlerArgs.Animation args = new Utilities.EventHandlerArgs.Animation();
+                            DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Show Adapter ?");
+
                             args.Success = false;
                             callback?.Invoke(this, args);
                         }, withAnimation);
@@ -139,7 +145,7 @@ namespace MATCH
                 
                 public override Transform GetTransform()
                 {
-                    return AssistanceToAdapt.GetDecoratedAssistance().GetTransform();
+                    return AssistanceToAdapt.GetAssistance().GetTransform(); //Decorated ?
                 }
 
                 public override bool IsDecorator()
@@ -149,7 +155,7 @@ namespace MATCH
 
                 public override void ShowHelp(bool show, EventHandler callback, bool withAnimation)
                 {
-                    AssistanceToAdapt.GetDecoratedAssistance().ShowHelp(show, callback, withAnimation);
+                    AssistanceToAdapt.GetAssistance().ShowHelp(show, callback, withAnimation); //Decorated ?
                 }
             }
         }
