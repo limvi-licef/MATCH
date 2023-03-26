@@ -1,55 +1,18 @@
-﻿/*Copyright 2022 Guillaume Spalla
-
-Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
-
-    http://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.*/
-
-using System;
+﻿using System;
+using System.Reflection;
 using UnityEngine;
-using static UnityEngine.XR.OpenXR.Features.Interactions.HTCViveControllerProfile;
+using UnityEngine.UIElements;
 
 namespace MATCH.Assistances.GradationVisual
 {
     public class PathWithTextAndHelp : Assistance
     {
+        readonly Transform HelpController;
+        readonly Transform LineView;
+        readonly Transform TextView;
 
-        MATCH.Assistances.Dialogs.Dialog1 TextController;
-
-        LineToObject LineController;
-
-
-        public override Transform GetTransform()
-        {
-            throw new NotImplementedException();
-        }
-
-        public override void Hide(EventHandler callback, bool withAnimation = true)
-        {
-            throw new NotImplementedException();
-        }
-
-        public override bool IsDecorator()
-        {
-            throw new NotImplementedException();
-        }
-
-        public override void Show(EventHandler callback, bool withAnimation = true)
-        {
-            throw new NotImplementedException();
-        }
-
-        public override void ShowHelp(bool show, EventHandler callback, bool withAnimation = true)
-        {
-            throw new NotImplementedException();
-        }
+        readonly Dialogs.Dialog1 TextController;
+        readonly LineToObject LineController;
 
         public void SetDescription(string text, float fontSize = -1.0f)
         {
@@ -58,11 +21,123 @@ namespace MATCH.Assistances.GradationVisual
 
         public void SetPathStartAndEndPoint(Transform origin, Transform target)
         {
-            /*LineController.m_hologramOrigin = origin.gameObject;
-            LineController.m_hologramTarget = target.gameObject;*/
-
             LineController.PointOrigin = origin.position;
             LineController.PointEnd = target.position;
+        }
+
+        public override Transform GetTransform()
+        {
+            return transform;
+        }
+
+        public override bool IsDecorator()
+        {
+            return false;
+        }
+
+        bool m_mutexHide = false;
+
+        public override void Hide(EventHandler eventHandler, bool withAnimation)
+        {
+            if (m_mutexHide == false)
+            {
+                m_mutexHide = true;
+
+                TextController.Hide(/*eventHandler*/ delegate (System.Object o, EventArgs e)
+                {
+                    // Hiding line
+                    if (LineView.gameObject.activeSelf)
+                    {
+                        LineView.GetComponent<LineToObject>().hide(eventHandler); // The eventhandler being already called above, we do not want it to be called twice, as this could create strange behaviors.
+                        m_mutexHide = false;
+                    }
+                    else
+                    {
+                        DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Warning, "Line already hidden: nothing to do");
+                        eventHandler?.Invoke(this, EventArgs.Empty);
+                        m_mutexHide = false;
+                    }
+                }, withAnimation);
+            }
+            else
+            {
+                DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Warning, "Mutex locked - request ignored");
+            }
+        }
+
+        bool m_mutexShow = false;
+
+        public override void Show(EventHandler eventHandler, bool withAnimation = true)
+        {
+            if (m_mutexShow == false)
+            {
+                m_mutexShow = true;
+
+                TextView.position = new Vector3(LineController.PointOrigin.x, Camera.main.transform.position.y, LineController.PointOrigin.z);
+                TextView.transform.LookAt(Camera.main.transform);
+                TextView.transform.Rotate(new Vector3(0, 1, 0), 180);
+
+                // Trick to start the line to the text position, i.e. to start at user's head's position
+                LineController.PointOrigin = TextView.position;
+                TextView.position = Vector3.MoveTowards(TextView.position, Camera.main.transform.position, 0.01f);
+
+                TextController.Show(delegate
+                {
+                    m_mutexShow = false;
+                }, withAnimation);
+
+                // Showing line
+                LineView.GetComponent<LineToObject>().show(delegate
+                {
+                    eventHandler?.Invoke(this, EventArgs.Empty);
+                    m_mutexShow = false;
+                });
+            }
+            else
+            {
+                DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Warning, "Mutex locked - request ignored");
+            }
+        }
+
+        public override void ShowHelp(bool show, EventHandler callback, bool withAnimation)
+        {
+            if (show)
+            {
+                Utilities.Utility.AdjustObjectHeightToHeadHeight(HelpController);
+
+                if (withAnimation)
+                {
+                    HelpController.gameObject.AddComponent<Utilities.Animation>().AnimateAppearInPlaceToScaling(new Vector3(0.1f, 0.1f, 0.1f), delegate
+                    {
+                        DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Called");
+
+                        Destroy(HelpController.gameObject.GetComponent<Animation>());
+                        callback?.Invoke(this, EventArgs.Empty);
+                    }
+                    );
+                }
+                else
+                {
+                    HelpController.gameObject.SetActive(true);
+                    callback?.Invoke(this, EventArgs.Empty);
+                }
+
+            }
+            else
+            {
+                if (withAnimation)
+                {
+                    Utilities.Utility.AnimateDisappearInPlace(HelpController.gameObject, new Vector3(0.1f, 0.1f, 0.1f), callback);
+                }
+                else
+                {
+                    HelpController.gameObject.SetActive(false);
+                    HelpController.transform.localScale = new Vector3(0.1f, 0.1f, 0.1f);
+                    callback?.Invoke(this, EventArgs.Empty);
+                }
+
+            }
+
         }
     }
 }
