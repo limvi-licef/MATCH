@@ -38,7 +38,7 @@ Assistances are in French, but the video has English subtitles. New demos will b
   - [JSon for Unity](https://assetstore.unity.com/packages/tools/input-management/json-net-for-unity-11347)
   - [NPBehave](https://assetstore.unity.com/packages/tools/ai/npbehave-event-driven-code-based-behaviour-trees-75884)
   - [Textures when running the tool in the Unity editor](https://assetstore.unity.com/packages/2d/textures-materials/wood/high-quality-realistic-wood-textures-mega-pack-75831)
-  - MRTK, configured with the following packages (use the Mixed Reality Features Tool if some packages are missing [https://www.microsoft.com/en-us/download/details.aspx?id=102778]): 
+  - MRTK, configured with the following packages (use the [Mixed Reality Features Tool](https://www.microsoft.com/en-us/download/details.aspx?id=102778) if some packages are missing): 
     - Mixed Reality Toolkit Foundation version 2.8.2
     - Mixed Reality Toolkit Standard Assets version 2.8.2
     - Mixed Reality Toolkit Tools version 2.8.2
