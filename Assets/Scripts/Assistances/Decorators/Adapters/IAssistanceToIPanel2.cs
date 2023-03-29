@@ -58,7 +58,7 @@ namespace MATCH
                 
                 public override void Hide(EventHandler callback, bool withAnimation)
                 {
-                    if (IsDisplayed)
+                    /*if (IsDisplayed)
                     {
                         AssistanceDecorated.GetAssistance().Hide(delegate (System.Object o, EventArgs e)
                         {
@@ -76,12 +76,13 @@ namespace MATCH
 
                         args.Success = false;
                         callback?.Invoke(this, args);
-                    }
+                    }*/
+                    AssistanceToAdapt.GetAssistance().Hide(callback, withAnimation);
                 }
 
                 public override void Show(EventHandler callback, bool withAnimation)
                 {
-
+                    /*
                     if (IsDisplayed == false)
                     {
                         IsDisplayed = true;
@@ -104,7 +105,8 @@ namespace MATCH
                             args.Success = false;
                             callback?.Invoke(this, args);
                         }, withAnimation);
-                    }
+                    }*/
+                    AssistanceToAdapt.GetAssistance().Show(callback, withAnimation);
                 }
 
                 public Transform GetBackgroundMessage()

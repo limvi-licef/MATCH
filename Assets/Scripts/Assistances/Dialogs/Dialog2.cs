@@ -401,7 +401,8 @@ namespace MATCH
 
                 public Transform GetSound()
                 {
-                    return null;
+                    //return null;
+                    throw new NotImplementedException();
                 }
             }
 
