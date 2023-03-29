@@ -132,7 +132,7 @@ namespace MATCH
                 public MATCH.Assistances.Assistance CreateSound(MATCH.Assistances.IAssistance toDecorate, string soundPath, float timeBetweenSoundShots)
                 {
                     Transform view = Utilities.Materials.Prefabs.Load(Utilities.Materials.Prefabs.DecoratorSound);
-                    view.name = toDecorate.GetDecoratedAssistance().name;
+                    view.name = toDecorate.GetAssistance().name;
 
                     Assistances.Decorators.Sound controller = view.GetComponent<Assistances.Decorators.Sound>();
 

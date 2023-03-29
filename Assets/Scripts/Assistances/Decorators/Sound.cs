@@ -144,7 +144,7 @@ namespace MATCH
                     else
                     {
                         // Check first if the decorated assistance needs to be displayed
-                        PanelToDecorate.GetDecoratedAssistance().Show(delegate (System.Object o, EventArgs e)
+                        PanelToDecorate.GetAssistance().Show(delegate (System.Object o, EventArgs e)
                         {
                             Utilities.EventHandlerArgs.Animation args = new Utilities.EventHandlerArgs.Animation();
 
@@ -178,7 +178,7 @@ namespace MATCH
 
                 public Assistance GetDecoratedAssistance()
                 {
-                    return PanelToDecorate.GetAssistance();//.GetDecoratedAssistance();//.GetDecoratedAssistance();
+                    return PanelToDecorate.GetDecoratedAssistance();//.GetDecoratedAssistance();//.GetDecoratedAssistance();
                 }
 
                 public Assistance GetAssistance()

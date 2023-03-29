@@ -246,7 +246,7 @@ namespace MATCH
                     //Deuxieme niveau de gradation
                     
                     Decorators.Sound decoratorSound2 = (Decorators.Sound)Assistances.Decorators.Factory.Instance.CreateSound(decorator1, null, 3.0f);
-                    IPanel2 adapterSound2 = new Adapters.IAssistanceToIPanel2(decoratorSound2, (IPanel2)decoratorSound2.GetAssistance());
+                    IPanel2 adapterSound2 = new Adapters.IAssistanceToIPanel2(decoratorSound2, (IPanel2)decoratorSound2.GetDecoratedAssistance());
                     
                     Decorators.BackgroundColorIcon2 decorator2 = (Decorators.BackgroundColorIcon2)Assistances.Decorators.Factory.Instance.CreateBackgroundIcon(adapterSound2/*decorator1/*dialog*/, /*Utilities.Materials.Colors.Cyan,*/ Utilities.Materials.Colors.Orange/*, decorator1*/);
 
