@@ -75,9 +75,14 @@ namespace MATCH
                     return AssistanceToDecorate.GetAssistance();
                 }
 
+                public Assistance GetRootDecoratedAssistance()
+                {
+                    return AssistanceToDecorate.GetRootDecoratedAssistance();
+                }
+
                 public Assistance GetDecoratedAssistance()
                 {
-                    return AssistanceToDecorate.GetDecoratedAssistance();
+                    return AssistanceToDecorate.GetAssistance();
                 }
 
                 public Transform GetSound()

@@ -30,9 +30,10 @@ namespace MATCH
             /**
              * Way to make it mandatory to have every class using this interface to inherit from the abstract class Assistance
              * */
-            public Assistance GetDecoratedAssistance();
+            public Assistance GetRootDecoratedAssistance();
             public Assistance GetAssistance();
 
+            public Assistance GetDecoratedAssistance();
             public Transform GetSound();
         }
     }

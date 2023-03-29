@@ -36,76 +36,17 @@ namespace MATCH
                 {
                     AssistanceDecorated = assistanceDecorated;
                     AssistanceToAdapt = assistanceToAdapt;
-                    //AssistanceToAdapt.GetAssistance().Show(Utilities.Utility.GetEventHandlerEmpty(), false);
                 }
-                /*
-                public override void Show(EventHandler callback, bool withAnimation)
-                {
-                    this.GetAssistance().Show(delegate (System.Object o, EventArgs e)
-                    {
-                        callback?.Invoke(o, e);
-                    }, withAnimation);
-                }
-
-                public override void Hide(EventHandler callback, bool withAnimation)
-                {
-                    this.GetAssistance().Hide(delegate (System.Object o, EventArgs e)
-                    {
-                        callback?.Invoke(o, e);
-                    }, withAnimation);
-                }
-                */
                 
                 public override void Hide(EventHandler callback, bool withAnimation)
                 {
-                    /*if (IsDisplayed)
-                    {
-                        AssistanceDecorated.GetAssistance().Hide(delegate (System.Object o, EventArgs e)
-                        {
-                            IsDisplayed = false;
-                            DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Hide Adapter");
-
-                            callback?.Invoke(o, e);
-                        }, withAnimation);
-
-                    }
-                    else
-                    {
-                        Utilities.EventHandlerArgs.Animation args = new Utilities.EventHandlerArgs.Animation();
-                        DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Hide Adapter ?");
-
-                        args.Success = false;
-                        callback?.Invoke(this, args);
-                    }*/
+                    //useless method ? (necessary to be an assistance (only assistances can be added to gradation visual)
                     AssistanceToAdapt.GetAssistance().Hide(callback, withAnimation);
                 }
 
                 public override void Show(EventHandler callback, bool withAnimation)
                 {
-                    /*
-                    if (IsDisplayed == false)
-                    {
-                        IsDisplayed = true;
-
-                        AssistanceDecorated.GetAssistance().Show(delegate (System.Object o, EventArgs e)
-                        {
-                            DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Show Adapter");
-
-                            callback?.Invoke(this, e);
-                        }, withAnimation);
-                    }
-                    else
-                    {
-                        // Check first if the decorated assistance needs to be displayed
-                        AssistanceDecorated.GetAssistance().Show(delegate (System.Object o, EventArgs e)
-                        {
-                            Utilities.EventHandlerArgs.Animation args = new Utilities.EventHandlerArgs.Animation();
-                            DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Show Adapter ?");
-
-                            args.Success = false;
-                            callback?.Invoke(this, args);
-                        }, withAnimation);
-                    }*/
+                    //useless method ? (necessary to be an assistance (only assistances can be added to gradation visual)
                     AssistanceToAdapt.GetAssistance().Show(callback, withAnimation);
                 }
 
@@ -129,14 +70,19 @@ namespace MATCH
                     AssistanceDecorated.EnableWeavingHand(enable);
                 }
 
-                public Assistance GetDecoratedAssistance()
+                public Assistance GetRootDecoratedAssistance()
                 {
-                    return AssistanceToAdapt.GetDecoratedAssistance();
+                    return AssistanceToAdapt.GetRootDecoratedAssistance();
                 }
 
                 public Assistance GetAssistance()
                 {
                     return AssistanceToAdapt.GetAssistance();
+                }
+
+                public Assistance GetDecoratedAssistance()
+                {
+                    return AssistanceDecorated.GetAssistance();
                 }
 
                 public Transform GetSound()
@@ -147,7 +93,7 @@ namespace MATCH
                 
                 public override Transform GetTransform()
                 {
-                    return AssistanceToAdapt.GetAssistance().GetTransform(); //Decorated ?
+                    return AssistanceToAdapt.GetRootDecoratedAssistance().GetTransform(); //Decorated ?
                 }
 
                 public override bool IsDecorator()
@@ -157,12 +103,9 @@ namespace MATCH
 
                 public override void ShowHelp(bool show, EventHandler callback, bool withAnimation)
                 {
-                    AssistanceToAdapt.GetAssistance().ShowHelp(show, callback, withAnimation); //Decorated ?
+                    AssistanceToAdapt.GetRootDecoratedAssistance().ShowHelp(show, callback, withAnimation); //Decorated ?
                 }
             }
         }
     }
 }
-//// Dans la fonction pour créer l'adapter
-//Adapters.IAssi
-//stanceToIPanel2 adapter = new Adapters.IAssistanceToIPanel2(sound, (IPanel2)sound.GetDecoratedAssistance());

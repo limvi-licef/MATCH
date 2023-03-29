@@ -90,9 +90,14 @@ namespace MATCH
                     return this;//AssistanceToDecorate.GetAssistance();
                 }
 
+                public Assistance GetRootDecoratedAssistance()
+                {
+                    return AssistanceToDecorate.GetRootDecoratedAssistance();
+                }
+
                 public Assistance GetDecoratedAssistance()
                 {
-                    return AssistanceToDecorate.GetDecoratedAssistance();
+                    return AssistanceToDecorate.GetAssistance();
                 }
 
                 public override bool IsDecorator()

@@ -33,6 +33,7 @@ namespace MATCH
                 IAssistance PanelToDecorate;
                 AudioSource audioSource;
                 AudioClip audioClip;
+                String audioPath;
                 float timeBetweenShots = 0.75f;
                 float timer;
 
@@ -66,20 +67,14 @@ namespace MATCH
                     
                     timeBetweenShots = timeBetweenSoundShots;
 
-                    //this.soundToPlay = soundPath;
+                    this.audioPath = soundPath;
 
                     name = PanelToDecorate.GetAssistance().name + "_decoratorSound";
                     
-                    transform.parent = PanelToDecorate.GetDecoratedAssistance().GetTransform();
-                    //transform.parent = PanelToDecorate.GetSound();
-                    transform.localPosition = PanelToDecorate.GetDecoratedAssistance().GetTransform().localPosition;
+                    transform.parent = PanelToDecorate.GetRootDecoratedAssistance().GetTransform();
+                    transform.localPosition = PanelToDecorate.GetRootDecoratedAssistance().GetTransform().localPosition;
 
-                    //initialiaze the sound
-                    audioSource = GetComponent<AudioSource>();
-                    audioClip = MATCH.Utilities.Materials.Sounds.Load(soundPath);
-
-
-                    Assistance temp = PanelToDecorate.GetDecoratedAssistance();
+                    Assistance temp = PanelToDecorate.GetRootDecoratedAssistance();
                     temp.EventHelpButtonClicked += delegate (System.Object o, EventArgs e)
                     {
                         MATCH.Utilities.EventHandlerArgs.Button args = (MATCH.Utilities.EventHandlerArgs.Button)e;
@@ -93,10 +88,6 @@ namespace MATCH
                     {
                         PanelToDecorate.GetAssistance().Hide(delegate (System.Object o, EventArgs e)
                         {
-                            //PanelToDecorate.GetDecoratedAssistance().Show(Utilities.Utility.GetEventHandlerEmpty(), false);
-                            //SoundTransform.gameObject.SetActive(false);
-                            //audioSource.Stop();
-                            DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Sound stopped ");
                             GetSound().gameObject.SetActive(false);
 
                             IsDisplayed = false;
@@ -115,28 +106,19 @@ namespace MATCH
 
                 public override void Show(EventHandler callback, bool withAnimation)
                 {
-                    //SoundTransform.position = PanelToDecorate.GetSound().position;
-                    //SoundTransform.localScale = PanelToDecorate.GetSound().localScale;
-
-                    //SoundTransform.gameObject.SetActive(true);
-
-                    DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "TEST100");
                     if (IsDisplayed == false)
                     {
                         IsDisplayed = true;
-                        DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "TEST101");
-
+                        
                         PanelToDecorate.GetAssistance().Show(delegate (System.Object o, EventArgs e)
                         {
-                            //audioSource = GetComponent<AudioSource>();
-                            //audioClip = MATCH.Utilities.Materials.Sounds.Load(MATCH.Utilities.Materials.Sounds.Debug);
-                            PanelToDecorate.GetDecoratedAssistance().Show(Utilities.Utility.GetEventHandlerEmpty(), false);
-                            PanelToDecorate.GetSound().gameObject.SetActive(false); //le transform des panels décorés n'est plus visible
+                            PanelToDecorate.GetRootDecoratedAssistance().Show(Utilities.Utility.GetEventHandlerEmpty(), false);
 
-                            DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Sound played ");
+                            //initialiaze the sound
+                            audioSource = GetComponent<AudioSource>();
+                            audioClip = MATCH.Utilities.Materials.Sounds.Load(audioPath);
 
-
-                            
+                            PanelToDecorate.GetSound().gameObject.SetActive(false); //The decorated panels transform become invisible
 
                             callback?.Invoke(this, e);
                         }, withAnimation);
@@ -148,12 +130,8 @@ namespace MATCH
                         {
                             Utilities.EventHandlerArgs.Animation args = new Utilities.EventHandlerArgs.Animation();
 
-                            PanelToDecorate.GetSound().gameObject.SetActive(false); //le transform des panels décorés n'est plus visible
-                            DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Sound ??? ");
+                            PanelToDecorate.GetSound().gameObject.SetActive(false); //The decorated panels transform become invisible
 
-                            //PanelToDecorate.GetBackground().gameObject.SetActive(false);
-                            ///////PanelToDecorate.GetBackgroundMessage().gameObject.SetActive(false);
-                            //PanelToDecorate.GetBackgroundIcon().gameObject.SetActive(false);
                             args.Success = false;
                             callback?.Invoke(this, args);
                         }, withAnimation);
@@ -163,29 +141,29 @@ namespace MATCH
                 
                 public override void ShowHelp(bool show, EventHandler callback, bool withAnimation)
                 {
-                    PanelToDecorate.GetDecoratedAssistance().ShowHelp(show, callback, withAnimation);
+                    PanelToDecorate.GetRootDecoratedAssistance().ShowHelp(show, callback, withAnimation);
                 }
-                /*
-                public void EnableWeavingHand(bool enable)
-                {
-                    PanelToDecorate.EnableWeavingHand(enable);
-                }*/
 
                 public override Transform GetTransform()
                 {
-                    return PanelToDecorate.GetDecoratedAssistance().GetTransform();
+                    return PanelToDecorate.GetRootDecoratedAssistance().GetTransform();
                 }
 
-                public Assistance GetDecoratedAssistance()
+                public Assistance GetRootDecoratedAssistance()
                 {
-                    return PanelToDecorate.GetDecoratedAssistance();//.GetDecoratedAssistance();//.GetDecoratedAssistance();
+                    return PanelToDecorate.GetRootDecoratedAssistance();
                 }
 
                 public Assistance GetAssistance()
                 {
-                    return this;//PanelToDecorate.GetAssistance();
+                    return this;
                 }
                 
+                public Assistance GetDecoratedAssistance()
+                {
+                    return PanelToDecorate.GetAssistance();
+                }
+
                 public override bool IsDecorator()
                 {
                     return true;
@@ -195,22 +173,6 @@ namespace MATCH
                 {
                     return transform;// SoundTransform;
                 }
-
-                /*
-                public Transform GetBackground()
-                {
-                    return PanelToDecorate.GetBackground();
-                }
-
-                public Transform GetBackgroundIcon()
-                {
-                    return PanelToDecorate.GetBackgroundIcon();
-                }
-
-                public Transform GetBackgroundMessage()
-                {
-                    return PanelToDecorate.GetBackgroundMessage();
-                }*/
             }
         }
     }

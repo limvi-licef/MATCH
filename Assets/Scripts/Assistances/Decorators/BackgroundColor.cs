@@ -133,10 +133,15 @@ namespace MATCH
                     return this;
                 }
 
+                public Assistance GetRootDecoratedAssistance()
+                {
+                    return PanelToDecorate.GetRootDecoratedAssistance();
+                }
                 public Assistance GetDecoratedAssistance()
                 {
-                    return PanelToDecorate.GetDecoratedAssistance();
+                    return PanelToDecorate.GetAssistance();
                 }
+
 
                 public override bool IsDecorator()
                 {

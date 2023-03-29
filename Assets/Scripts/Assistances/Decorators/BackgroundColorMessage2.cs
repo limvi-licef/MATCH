@@ -69,7 +69,7 @@ namespace MATCH
                     name = PanelToDecorate.GetAssistance().name + "_decoratorBackgroundColorFor2";
                     //BackgroundParent.parent = PanelToDecorate.GetAssistance().transform;
                     //BackgroundParent.position = PanelToDecorate.GetAssistance().transform.position;
-                    transform.parent = PanelToDecorate.GetDecoratedAssistance().transform;
+                    transform.parent = PanelToDecorate.GetRootDecoratedAssistance().transform;
                     //transform.position = PanelToDecorate.GetAssistance().transform.position;
                     transform.localPosition = PanelToDecorate.GetBackground().transform.localPosition;
 
@@ -85,7 +85,7 @@ namespace MATCH
                     BackgroundViewIcon.localScale = PanelToDecorate.GetBackgroundIcon().localScale;*/
 
                     // Relaying the eventhandler
-                    Assistance temp = PanelToDecorate.GetDecoratedAssistance();
+                    Assistance temp = PanelToDecorate.GetRootDecoratedAssistance();
                     temp.EventHelpButtonClicked += delegate (System.Object o, EventArgs e)
                     {
                         MATCH.Utilities.EventHandlerArgs.Button args = (MATCH.Utilities.EventHandlerArgs.Button)e;
@@ -158,7 +158,7 @@ namespace MATCH
 
                             //PanelToDecorate.GetBackground().gameObject.SetActive(false);
 
-                            PanelToDecorate.GetDecoratedAssistance().Show(Utilities.Utility.GetEventHandlerEmpty(), false);
+                            PanelToDecorate.GetRootDecoratedAssistance().Show(Utilities.Utility.GetEventHandlerEmpty(), false);
                             //PanelToDecorate.GetBackground().gameObject.SetActive(false);
                             //PanelToDecorate.GetBackgroundIcon().gameObject.SetActive(false);
                             PanelToDecorate.GetBackgroundMessage().gameObject.SetActive(false);
@@ -171,9 +171,9 @@ namespace MATCH
                             transform.localScale = PanelToDecorate.GetBackground().localScale;
                             transform.rotation = PanelToDecorate.GetBackground().rotation;*/
 
-                            transform.localPosition = ((IPanel2)PanelToDecorate.GetDecoratedAssistance()).GetBackground().localPosition;
-                            transform.localScale = ((IPanel2)PanelToDecorate.GetDecoratedAssistance()).GetBackground().localScale;
-                            transform.rotation = ((IPanel2)PanelToDecorate.GetDecoratedAssistance()).GetBackground().rotation;
+                            transform.localPosition = ((IPanel2)PanelToDecorate.GetRootDecoratedAssistance()).GetBackground().localPosition;
+                            transform.localScale = ((IPanel2)PanelToDecorate.GetRootDecoratedAssistance()).GetBackground().localScale;
+                            transform.rotation = ((IPanel2)PanelToDecorate.GetRootDecoratedAssistance()).GetBackground().rotation;
 
 
                             //DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "4");
@@ -185,7 +185,7 @@ namespace MATCH
                     else
                     {
                         // Check first if the decorated assistance needs to be displayed
-                        PanelToDecorate.GetDecoratedAssistance().Show(delegate (System.Object o, EventArgs e)
+                        PanelToDecorate.GetRootDecoratedAssistance().Show(delegate (System.Object o, EventArgs e)
                         {
                             Utilities.EventHandlerArgs.Animation args = new Utilities.EventHandlerArgs.Animation();
                             //PanelToDecorate.GetBackground().gameObject.SetActive(false);
@@ -200,7 +200,7 @@ namespace MATCH
 
                 public override void ShowHelp(bool show, EventHandler callback, bool withAnimation)
                 {
-                    PanelToDecorate.GetDecoratedAssistance().ShowHelp(show, callback, withAnimation);
+                    PanelToDecorate.GetRootDecoratedAssistance().ShowHelp(show, callback, withAnimation);
                 }
 
                 public void EnableWeavingHand(bool enable)
@@ -210,17 +210,22 @@ namespace MATCH
 
                 public override Transform GetTransform()
                 {
-                    return PanelToDecorate.GetDecoratedAssistance().GetTransform();
+                    return PanelToDecorate.GetRootDecoratedAssistance().GetTransform();
                 }
 
-                public Assistance GetDecoratedAssistance()
+                public Assistance GetRootDecoratedAssistance()
                 {
-                    return PanelToDecorate.GetDecoratedAssistance();
+                    return PanelToDecorate.GetRootDecoratedAssistance();
                 }
 
                 public Assistance GetAssistance()
                 {
                     return this;
+                }
+
+                public Assistance GetDecoratedAssistance()
+                {
+                    return PanelToDecorate.GetAssistance();
                 }
 
                 public override bool IsDecorator()
@@ -245,7 +250,7 @@ namespace MATCH
 
                 public Transform GetSound()
                 {
-                    return null;
+                    return PanelToDecorate.GetSound();
                 }
             }
         }

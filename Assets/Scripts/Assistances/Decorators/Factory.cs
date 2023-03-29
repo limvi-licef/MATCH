@@ -65,7 +65,7 @@ namespace MATCH
 
                     Transform view = Instantiate(Utilities.Materials.Prefabs.Load(Utilities.Materials.Prefabs.DecoratorBackgroundColorMessage2));
                      /////view.name = ((Assistance)panelToDecorate).name;
-                    view.name = panelToDecorate.GetDecoratedAssistance().name;
+                    view.name = panelToDecorate.GetRootDecoratedAssistance().name;
                     Assistances.Decorators.BackgroundColorMessage2 controller = view.gameObject.GetComponent<Assistances.Decorators.BackgroundColorMessage2>();
 
                     controller.SetAssistanceToDecorate(panelToDecorate);
@@ -94,7 +94,7 @@ namespace MATCH
                 public MATCH.Assistances.Assistance CreateBackgroundIcon(MATCH.Assistances.IPanel2 panelToDecorate, string backgroundIconColor)
                 {
                     Transform view = Instantiate(Utilities.Materials.Prefabs.Load(Utilities.Materials.Prefabs.DecoratorBackgroundColorIcon2));
-                    view.name = panelToDecorate.GetDecoratedAssistance().name;
+                    view.name = panelToDecorate.GetRootDecoratedAssistance().name;
                     //view.name = ((Assistance)panelToDecorate).name;
                     Assistances.Decorators.BackgroundColorIcon2 controller = view.gameObject.GetComponent<Assistances.Decorators.BackgroundColorIcon2>();
 
@@ -136,13 +136,8 @@ namespace MATCH
 
                     Assistances.Decorators.Sound controller = view.GetComponent<Assistances.Decorators.Sound>();
 
-
-                    //Adapters.IAssistanceToIPanel2 adapter = new Adapters.IAssistanceToIPanel2(toDecorate, (IPanel2)toDecorate.GetDecoratedAssistance());
                     controller.SetAssistanceToDecorate(toDecorate, soundPath, timeBetweenSoundShots);
-                    //controller.SetEdgeColor(edgeMaterial);
-
-                    //controller.Show(Utilities.Utility.GetEventHandlerEmpty());
-
+                    
                     return controller;
                 }
 

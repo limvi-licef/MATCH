@@ -40,6 +40,7 @@ namespace MATCH
                 Transform BackgroundMessage;
                 Transform BackgroundIcon;
                 Transform IconView;
+                Transform Sound;
                 //List<Transform> ButtonsView;
                 //public List<Buttons.Basic> ButtonsController;
 
@@ -76,6 +77,7 @@ namespace MATCH
                     BackgroundMessage = BackgroundParent.Find("Modale-Support_Cube.010");
                     BackgroundIcon = BackgroundParent.Find("Modale-Rond_Cylinder.003");
                     IconView = gameObject.transform.Find("ExclamationMark");
+                    Sound = gameObject.transform.Find("Sound");
 
                     // Initialize some values of the children
                     ButtonsParentScalingOriginal = ButtonsParentView.localScale;
@@ -379,9 +381,14 @@ namespace MATCH
                     return this;
                 }
 
-                Assistance IAssistance.GetDecoratedAssistance()
+                Assistance IAssistance.GetRootDecoratedAssistance()
                 {
                     return this; // Here there is no decorator, so we return the same assistance.
+                }
+
+                public Assistance GetDecoratedAssistance()
+                {
+                    return this;
                 }
 
                 public Transform GetBackground()
@@ -401,8 +408,7 @@ namespace MATCH
 
                 public Transform GetSound()
                 {
-                    //return null;
-                    throw new NotImplementedException();
+                    return Sound;
                 }
             }
 

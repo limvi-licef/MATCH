@@ -286,6 +286,11 @@ namespace MATCH
                 return this;
             }
 
+            public Assistance GetRootDecoratedAssistance()
+            {
+                return this;
+            }
+
             public Assistance GetDecoratedAssistance()
             {
                 return this;

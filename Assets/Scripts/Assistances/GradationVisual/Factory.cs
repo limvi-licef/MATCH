@@ -232,15 +232,10 @@ namespace MATCH
                     //Premier niveau de gradation avec 2 décorateurs
                     Decorators.BackgroundColorIcon2 decorator1a = (Decorators.BackgroundColorIcon2)Assistances.Decorators.Factory.Instance.CreateBackgroundIcon(dialog, Utilities.Materials.Colors.Cyan);
 
-                    DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "DECORATOR SOUND");
-
                     Decorators.Sound decoratorSound = (Decorators.Sound)Assistances.Decorators.Factory.Instance.CreateSound(decorator1a, MATCH.Utilities.Materials.Sounds.Debug,2.0f);
-                    IPanel2 adapterSound = new Adapters.IAssistanceToIPanel2(decoratorSound,(IPanel2)decoratorSound.GetDecoratedAssistance()/*.GetAssistance()*/);
+                    IPanel2 adapterSound = new Adapters.IAssistanceToIPanel2(decoratorSound,(IPanel2)decoratorSound.GetDecoratedAssistance());
 
                     Decorators.BackgroundColorMessage2 decorator1 = (Decorators.BackgroundColorMessage2)Assistances.Decorators.Factory.Instance.CreateBackgroundMessage(adapterSound, Utilities.Materials.Colors.Cyan);
-                    
-                    DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Decorator : " + decorator1.name);
-
                     toReturn.AddAssistance(decorator1);////1 -> 1a/b
 
                     //Deuxieme niveau de gradation
@@ -254,7 +249,11 @@ namespace MATCH
 
                     //Troisieme niveau de gradation
                     //toReturn.AddAssistance(Assistances.Decorators.Factory.Instance.CreateEdge(dialog, Utilities.Materials.Colors.OrangeGlowing));
-                    Decorators.BackgroundColorMessage2 decorator3 = (Decorators.BackgroundColorMessage2)Assistances.Decorators.Factory.Instance.CreateBackgroundMessage(decorator2/*dialog*/, Utilities.Materials.Colors.Orange/*, decorator2*/);
+
+                    Decorators.Sound decoratorSound3 = (Decorators.Sound)Assistances.Decorators.Factory.Instance.CreateSound(decorator2, MATCH.Utilities.Materials.Sounds.Debug, 0.5f);
+                    IPanel2 adapterSound3 = new Adapters.IAssistanceToIPanel2(decoratorSound3, (IPanel2)decoratorSound3.GetDecoratedAssistance());
+
+                    Decorators.BackgroundColorMessage2 decorator3 = (Decorators.BackgroundColorMessage2)Assistances.Decorators.Factory.Instance.CreateBackgroundMessage(adapterSound3/*decorator2/*dialog*/, Utilities.Materials.Colors.Orange/*, decorator2*/);
                     toReturn.AddAssistance(decorator3);
 
 
