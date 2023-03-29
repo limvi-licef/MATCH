@@ -178,12 +178,12 @@ namespace MATCH
 
                 public Assistance GetDecoratedAssistance()
                 {
-                    return PanelToDecorate.GetDecoratedAssistance();//.GetDecoratedAssistance();
+                    return PanelToDecorate.GetAssistance();//.GetDecoratedAssistance();//.GetDecoratedAssistance();
                 }
 
                 public Assistance GetAssistance()
                 {
-                    return PanelToDecorate.GetAssistance();
+                    return this;//PanelToDecorate.GetAssistance();
                 }
                 
                 public override bool IsDecorator()
