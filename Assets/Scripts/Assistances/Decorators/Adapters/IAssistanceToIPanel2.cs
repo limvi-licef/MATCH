@@ -90,7 +90,11 @@ namespace MATCH
                     return AssistanceToAdapt.GetSound();
                 }
 
-                
+                public Transform GetArch()
+                {
+                    return AssistanceToAdapt.GetArch();
+                }
+
                 public override Transform GetTransform()
                 {
                     return AssistanceToAdapt.GetRootDecoratedAssistance().GetTransform(); //Decorated ?

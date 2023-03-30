@@ -28,34 +28,51 @@ namespace MATCH
     {
         namespace Decorators
         {
-            public class BackgroundColor : Assistance, IPanel
+            public class Arch : Assistance, IAssistance
             {
-                IPanel PanelToDecorate;
-                //string BackgroundColorDecorated;
+                IAssistance PanelToDecorate;
+                Transform LineView;
+                LineToObject LineController;
 
-                Transform BackgroundView;
+                //EventHandler classEvent;
 
                 private void Awake()
                 {
-                    BackgroundView = gameObject.transform.Find("ContentBackPlate");
+                    LineView = gameObject.transform.Find("Line");
+                    LineController = LineView.GetComponent<LineToObject>();
                 }
 
                 public void Start()
                 {
-                    
+
                 }
 
-                public void SetAssistanceToDecorate(IPanel toDecorate)
+                public void Update()
+                {
+                        /*
+                    LineView = gameObject.transform.Find("Line");
+                    LineController = LineView.GetComponent<LineToObject>();
+                    LineController.PointOrigin = Camera.main.transform.position;
+
+                    LineView.GetComponent<LineToObject>().show(delegate
+                    {
+                        classEvent?.Invoke(this, EventArgs.Empty);
+                        //m_mutexShow = false;
+                    });*/
+                }
+
+
+                public void SetAssistanceToDecorate(IAssistance toDecorate)
                 {
                     PanelToDecorate = toDecorate;
+                    name = PanelToDecorate.GetAssistance().name + "_decoratorArch";             
 
-                    // Set the size of the background plate to fit the one of the decorated panel
-                    BackgroundView.parent = PanelToDecorate.GetAssistance().transform;
-                    BackgroundView.rotation = PanelToDecorate.GetBackground().rotation;
-                    BackgroundView.localScale = PanelToDecorate.GetBackground().localScale;
 
-                    // Relaying the eventhandler
-                    Assistance temp = (Assistance)PanelToDecorate;
+                    /*
+                    transform.parent = PanelToDecorate.GetRootDecoratedAssistance().GetTransform();
+                    transform.localPosition = PanelToDecorate.GetRootDecoratedAssistance().GetTransform().localPosition;
+                    */
+                    Assistance temp = PanelToDecorate.GetRootDecoratedAssistance();
                     temp.EventHelpButtonClicked += delegate (System.Object o, EventArgs e)
                     {
                         MATCH.Utilities.EventHandlerArgs.Button args = (MATCH.Utilities.EventHandlerArgs.Button)e;
@@ -67,14 +84,15 @@ namespace MATCH
                 {
                     if (IsDisplayed)
                     {
-                        PanelToDecorate.GetAssistance().Hide(delegate(System.Object o, EventArgs e)
+                        PanelToDecorate.GetAssistance().Hide(delegate (System.Object o, EventArgs e)
                         {
-                            BackgroundView.gameObject.SetActive(false);
+                            GetArch().gameObject.SetActive(false);
+
                             IsDisplayed = false;
 
                             callback?.Invoke(o, e);
                         }, withAnimation);
-                        
+
                     }
                     else
                     {
@@ -89,16 +107,26 @@ namespace MATCH
                     if (IsDisplayed == false)
                     {
                         IsDisplayed = true;
-                        
-                        PanelToDecorate.GetAssistance().Show(delegate(System.Object o, EventArgs e)
+
+                        PanelToDecorate.GetAssistance().Show(delegate (System.Object o, EventArgs e)
                         {
-                            PanelToDecorate.GetBackground().gameObject.SetActive(false);
-                            BackgroundView.position = PanelToDecorate.GetBackground().position;
-                            BackgroundView.gameObject.SetActive(true);
+                            PanelToDecorate.GetRootDecoratedAssistance().Show(Utilities.Utility.GetEventHandlerEmpty(), false);
+
+                            //classEvent = callback;
+
+                            LineController.PointOrigin = Camera.main.transform.position;
+                            LineController.PointEnd = PanelToDecorate.GetAssistance().transform.position;
+
+                            LineView.GetComponent<LineToObject>().show(delegate
+                            {
+                                callback?.Invoke(this, EventArgs.Empty);
+                                //m_mutexShow = false;
+                            });
+
+                            PanelToDecorate.GetArch().gameObject.SetActive(false); //The decorated panels transform become invisible
 
                             callback?.Invoke(this, e);
                         }, withAnimation);
-                        /*DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Called with color "  + BackgroundColorDecorated);   */                              
                     }
                     else
                     {
@@ -106,26 +134,29 @@ namespace MATCH
                         PanelToDecorate.GetAssistance().Show(delegate (System.Object o, EventArgs e)
                         {
                             Utilities.EventHandlerArgs.Animation args = new Utilities.EventHandlerArgs.Animation();
-                            PanelToDecorate.GetBackground().gameObject.SetActive(false);
+
+                            PanelToDecorate.GetArch().gameObject.SetActive(false); //The decorated panels transform become invisible
+                   
                             args.Success = false;
                             callback?.Invoke(this, args);
                         }, withAnimation);
                     }
                 }
 
+
                 public override void ShowHelp(bool show, EventHandler callback, bool withAnimation)
                 {
-                    PanelToDecorate.GetAssistance().ShowHelp(show, callback, withAnimation);
-                }
-
-                public void EnableWeavingHand(bool enable)
-                {
-                    PanelToDecorate.EnableWeavingHand(enable);
+                    PanelToDecorate.GetRootDecoratedAssistance().ShowHelp(show, callback, withAnimation);
                 }
 
                 public override Transform GetTransform()
                 {
-                    return PanelToDecorate.GetAssistance().GetTransform();
+                    return PanelToDecorate.GetRootDecoratedAssistance().GetTransform();
+                }
+
+                public Assistance GetRootDecoratedAssistance()
+                {
+                    return PanelToDecorate.GetRootDecoratedAssistance();
                 }
 
                 public Assistance GetAssistance()
@@ -133,38 +164,29 @@ namespace MATCH
                     return this;
                 }
 
-                public Assistance GetRootDecoratedAssistance()
-                {
-                    return PanelToDecorate.GetRootDecoratedAssistance();
-                }
                 public Assistance GetDecoratedAssistance()
                 {
                     return PanelToDecorate.GetAssistance();
                 }
-
 
                 public override bool IsDecorator()
                 {
                     return true;
                 }
 
-                public Transform GetBackground()
-                {
-                    return BackgroundView;
-                }
-
                 public Transform GetSound()
                 {
-                    return PanelToDecorate.GetSound();
+                    return PanelToDecorate.GetSound();// SoundTransform;
                 }
 
                 public Transform GetArch()
                 {
-                    return PanelToDecorate.GetArch();
+                    return transform;
                 }
             }
         }
     }
 }
+
 
 

@@ -191,6 +191,11 @@ namespace MATCH
                 {
                     return PanelToDecorate.GetSound();
                 }
+
+                public Transform GetArch()
+                {
+                    return PanelToDecorate.GetArch();
+                }
             }
         }
     }

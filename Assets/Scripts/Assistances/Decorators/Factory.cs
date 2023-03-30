@@ -141,6 +141,18 @@ namespace MATCH
                     return controller;
                 }
 
+                public MATCH.Assistances.Assistance CreateArch(MATCH.Assistances.IAssistance toDecorate)
+                {
+                    Transform view = Utilities.Materials.Prefabs.Load(Utilities.Materials.Prefabs.DecoratorArch);
+                    view.name = toDecorate.GetAssistance().name;
+
+                    Assistances.Decorators.Arch controller = view.GetComponent<Assistances.Decorators.Arch>();
+
+                    controller.SetAssistanceToDecorate(toDecorate);
+
+                    return controller;
+                }
+
             }
         }
     }

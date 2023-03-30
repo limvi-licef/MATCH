@@ -232,31 +232,46 @@ namespace MATCH
                     //Premier niveau de gradation avec 2 décorateurs
                     Decorators.BackgroundColorIcon2 decorator1a = (Decorators.BackgroundColorIcon2)Assistances.Decorators.Factory.Instance.CreateBackgroundIcon(dialog, Utilities.Materials.Colors.Cyan);
 
+                    //For Test
                     Decorators.Sound decoratorSound = (Decorators.Sound)Assistances.Decorators.Factory.Instance.CreateSound(decorator1a, MATCH.Utilities.Materials.Sounds.Debug,2.0f);
                     IPanel2 adapterSound = new Adapters.IAssistanceToIPanel2(decoratorSound,(IPanel2)decoratorSound.GetDecoratedAssistance());
+                    //------
 
                     Decorators.BackgroundColorMessage2 decorator1 = (Decorators.BackgroundColorMessage2)Assistances.Decorators.Factory.Instance.CreateBackgroundMessage(adapterSound, Utilities.Materials.Colors.Cyan);
-                    toReturn.AddAssistance(decorator1);////1 -> 1a/b
+                    toReturn.AddAssistance(decorator1);
 
                     //Deuxieme niveau de gradation
-                    
-                    Decorators.Sound decoratorSound2 = (Decorators.Sound)Assistances.Decorators.Factory.Instance.CreateSound(decorator1, null, 3.0f);
+
+                    //For Test
+                    Decorators.Arch decorator2a = (Decorators.Arch)Assistances.Decorators.Factory.Instance.CreateArch(decorator1);
+                    IPanel2 adapterArch = new Adapters.IAssistanceToIPanel2(decorator2a, (IPanel2)decorator2a.GetDecoratedAssistance());
+
+                    Decorators.BackgroundColorMessage2 decorator2useless = (Decorators.BackgroundColorMessage2)Assistances.Decorators.Factory.Instance.CreateBackgroundMessage(adapterArch, Utilities.Materials.Colors.Cyan);
+
+                    Decorators.Sound decoratorSound2 = (Decorators.Sound)Assistances.Decorators.Factory.Instance.CreateSound(decorator2useless, null, 3.0f);
                     IPanel2 adapterSound2 = new Adapters.IAssistanceToIPanel2(decoratorSound2, (IPanel2)decoratorSound2.GetDecoratedAssistance());
-                    
-                    Decorators.BackgroundColorIcon2 decorator2 = (Decorators.BackgroundColorIcon2)Assistances.Decorators.Factory.Instance.CreateBackgroundIcon(adapterSound2/*decorator1/*dialog*/, /*Utilities.Materials.Colors.Cyan,*/ Utilities.Materials.Colors.Orange/*, decorator1*/);
+                    //------
+
+                    Decorators.BackgroundColorIcon2 decorator2 = (Decorators.BackgroundColorIcon2)Assistances.Decorators.Factory.Instance.CreateBackgroundIcon(adapterSound2, Utilities.Materials.Colors.Orange);
 
                     toReturn.AddAssistance(decorator2);
 
                     //Troisieme niveau de gradation
                     //toReturn.AddAssistance(Assistances.Decorators.Factory.Instance.CreateEdge(dialog, Utilities.Materials.Colors.OrangeGlowing));
 
+                    //For Test
                     Decorators.Sound decoratorSound3 = (Decorators.Sound)Assistances.Decorators.Factory.Instance.CreateSound(decorator2, MATCH.Utilities.Materials.Sounds.Debug, 0.5f);
                     IPanel2 adapterSound3 = new Adapters.IAssistanceToIPanel2(decoratorSound3, (IPanel2)decoratorSound3.GetDecoratedAssistance());
 
-                    Decorators.BackgroundColorMessage2 decorator3 = (Decorators.BackgroundColorMessage2)Assistances.Decorators.Factory.Instance.CreateBackgroundMessage(adapterSound3/*decorator2/*dialog*/, Utilities.Materials.Colors.Orange/*, decorator2*/);
+                    Decorators.BackgroundColorIcon2 decorator3a = (Decorators.BackgroundColorIcon2)Assistances.Decorators.Factory.Instance.CreateBackgroundIcon(adapterSound3, Utilities.Materials.Colors.Orange);
+
+                    Decorators.Arch decoratorArch3 = (Decorators.Arch)Assistances.Decorators.Factory.Instance.CreateArch(decorator3a);
+                    IPanel2 adapterArch3 = new Adapters.IAssistanceToIPanel2(decoratorArch3, (IPanel2)decoratorArch3.GetDecoratedAssistance());
+                    //------
+
+                    Decorators.BackgroundColorMessage2 decorator3 = (Decorators.BackgroundColorMessage2)Assistances.Decorators.Factory.Instance.CreateBackgroundMessage(adapterArch3, Utilities.Materials.Colors.Orange);
+                    
                     toReturn.AddAssistance(decorator3);
-
-
 
                     return toReturn;
                 }

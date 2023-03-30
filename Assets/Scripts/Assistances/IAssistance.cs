@@ -32,9 +32,10 @@ namespace MATCH
              * */
             public Assistance GetRootDecoratedAssistance();
             public Assistance GetAssistance();
-
             public Assistance GetDecoratedAssistance();
+
             public Transform GetSound();
+            public Transform GetArch();
         }
     }
 }

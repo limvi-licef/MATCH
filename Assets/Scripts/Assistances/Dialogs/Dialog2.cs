@@ -41,6 +41,7 @@ namespace MATCH
                 Transform BackgroundIcon;
                 Transform IconView;
                 Transform Sound;
+                Transform Arch;
                 //List<Transform> ButtonsView;
                 //public List<Buttons.Basic> ButtonsController;
 
@@ -78,6 +79,7 @@ namespace MATCH
                     BackgroundIcon = BackgroundParent.Find("Modale-Rond_Cylinder.003");
                     IconView = gameObject.transform.Find("ExclamationMark");
                     Sound = gameObject.transform.Find("Sound");
+                    Arch = gameObject.transform.Find("Arch");
 
                     // Initialize some values of the children
                     ButtonsParentScalingOriginal = ButtonsParentView.localScale;
@@ -409,6 +411,11 @@ namespace MATCH
                 public Transform GetSound()
                 {
                     return Sound;
+                }
+
+                public Transform GetArch()
+                {
+                    return Arch;
                 }
             }
 

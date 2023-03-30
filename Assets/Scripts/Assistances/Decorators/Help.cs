@@ -89,6 +89,11 @@ namespace MATCH
                 {
                     return AssistanceToDecorate.GetSound();
                 }
+
+                public Transform GetArch()
+                {
+                    return AssistanceToDecorate.GetArch();
+                }
             }
         }
     }

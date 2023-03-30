@@ -310,6 +310,11 @@ namespace MATCH
             {
                 return null;
             }
+
+            public Transform GetArch()
+            {
+                return null;
+            }
         }
     }
 }

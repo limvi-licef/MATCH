@@ -71,7 +71,7 @@ namespace MATCH
 
                     name = PanelToDecorate.GetAssistance().name + "_decoratorSound";
                     
-                    transform.parent = PanelToDecorate.GetRootDecoratedAssistance().GetTransform();
+                    //transform.parent = PanelToDecorate.GetRootDecoratedAssistance().GetTransform();
                     transform.localPosition = PanelToDecorate.GetRootDecoratedAssistance().GetTransform().localPosition;
 
                     Assistance temp = PanelToDecorate.GetRootDecoratedAssistance();
@@ -172,6 +172,11 @@ namespace MATCH
                 public Transform GetSound()
                 {
                     return transform;// SoundTransform;
+                }
+
+                public Transform GetArch()
+                {
+                    return PanelToDecorate.GetArch();
                 }
             }
         }
