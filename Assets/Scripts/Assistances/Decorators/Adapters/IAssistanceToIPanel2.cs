@@ -26,88 +26,92 @@ namespace MATCH
 {
     namespace Assistances
     {
-        namespace Adapters
+        namespace Decorators
         {
-            class IAssistanceToIPanel2 : Assistance, IPanel2
+            namespace Adapters
             {
-                readonly IAssistance AssistanceToAdapt;
-                readonly IPanel2 AssistanceDecorated;
-                public IAssistanceToIPanel2(IAssistance assistanceToAdapt, IPanel2 assistanceDecorated)
+                public class IAssistanceToIPanel2 : Assistance, IPanel2
                 {
-                    AssistanceDecorated = assistanceDecorated;
-                    AssistanceToAdapt = assistanceToAdapt;
-                }
-                
-                public override void Hide(EventHandler callback, bool withAnimation)
-                {
-                    //useless method ? (necessary to be an assistance (only assistances can be added to gradation visual)
-                    AssistanceToAdapt.GetAssistance().Hide(callback, withAnimation);
-                }
+                    IAssistance AssistanceToAdapt;
+                    IPanel2 AssistanceDecorated;
 
-                public override void Show(EventHandler callback, bool withAnimation)
-                {
-                    //useless method ? (necessary to be an assistance (only assistances can be added to gradation visual)
-                    AssistanceToAdapt.GetAssistance().Show(callback, withAnimation);
-                }
+                    public void InitializeAssistanceToAdapt(IAssistance assistanceToAdapt, IPanel2 assistanceDecorated)
+                    {
+                        AssistanceDecorated = assistanceDecorated;
+                        AssistanceToAdapt = assistanceToAdapt;
+                    }
 
-                public Transform GetBackgroundMessage()
-                {
-                    return AssistanceDecorated.GetBackgroundMessage();
-                }
+                    public override void Hide(EventHandler callback, bool withAnimation)
+                    {
+                        //useless method ? (necessary to be an assistance (only assistances can be added to gradation visual)
+                        AssistanceToAdapt.GetAssistance().Hide(callback, withAnimation);
+                    }
 
-                public Transform GetBackgroundIcon()
-                {
-                    return AssistanceDecorated.GetBackgroundIcon();
-                }
+                    public override void Show(EventHandler callback, bool withAnimation)
+                    {
+                        //useless method ? (necessary to be an assistance (only assistances can be added to gradation visual)
+                        AssistanceToAdapt.GetAssistance().Show(callback, withAnimation);
+                    }
 
-                public Transform GetBackground()
-                {
-                    return AssistanceDecorated.GetBackground();
-                }
+                    public Transform GetBackgroundMessage()
+                    {
+                        return AssistanceDecorated.GetBackgroundMessage();
+                    }
 
-                public void EnableWeavingHand(bool enable)
-                {
-                    AssistanceDecorated.EnableWeavingHand(enable);
-                }
+                    public Transform GetBackgroundIcon()
+                    {
+                        return AssistanceDecorated.GetBackgroundIcon();
+                    }
 
-                public Assistance GetRootDecoratedAssistance()
-                {
-                    return AssistanceToAdapt.GetRootDecoratedAssistance();
-                }
+                    public Transform GetBackground()
+                    {
+                        return AssistanceDecorated.GetBackground();
+                    }
 
-                public Assistance GetAssistance()
-                {
-                    return AssistanceToAdapt.GetAssistance();
-                }
+                    public void EnableWeavingHand(bool enable)
+                    {
+                        AssistanceDecorated.EnableWeavingHand(enable);
+                    }
 
-                public Assistance GetDecoratedAssistance()
-                {
-                    return AssistanceDecorated.GetAssistance();
-                }
+                    public Assistance GetRootDecoratedAssistance()
+                    {
+                        return AssistanceToAdapt.GetRootDecoratedAssistance();
+                    }
 
-                public Transform GetSound()
-                {
-                    return AssistanceToAdapt.GetSound();
-                }
+                    public Assistance GetAssistance()
+                    {
+                        return /*AssistanceToAdapt.GetAssistance()*/ this;
+                    }
 
-                public Transform GetArch()
-                {
-                    return AssistanceToAdapt.GetArch();
-                }
+                    public Assistance GetDecoratedAssistance()
+                    {
+                        return AssistanceDecorated.GetAssistance();
+                    }
 
-                public override Transform GetTransform()
-                {
-                    return AssistanceToAdapt.GetRootDecoratedAssistance().GetTransform(); //Decorated ?
-                }
+                    public Transform GetSound()
+                    {
+                        return AssistanceToAdapt.GetSound();
+                    }
 
-                public override bool IsDecorator()
-                {
-                    return true;
-                }
+                    public Transform GetArch()
+                    {
+                        return AssistanceToAdapt.GetArch();
+                    }
 
-                public override void ShowHelp(bool show, EventHandler callback, bool withAnimation)
-                {
-                    AssistanceToAdapt.GetRootDecoratedAssistance().ShowHelp(show, callback, withAnimation); //Decorated ?
+                    public override Transform GetTransform()
+                    {
+                        return AssistanceToAdapt.GetRootDecoratedAssistance().GetTransform(); //Decorated ?
+                    }
+
+                    public override bool IsDecorator()
+                    {
+                        return true;
+                    }
+
+                    public override void ShowHelp(bool show, EventHandler callback, bool withAnimation)
+                    {
+                        AssistanceToAdapt.GetRootDecoratedAssistance().ShowHelp(show, callback, withAnimation); //Decorated ?
+                    }
                 }
             }
         }

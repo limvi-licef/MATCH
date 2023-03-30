@@ -91,6 +91,9 @@ namespace MATCH
                         MATCH.Utilities.EventHandlerArgs.Button args = (MATCH.Utilities.EventHandlerArgs.Button)e;
                         OnHelpButtonClicked(args.ButtonType);
                     };
+
+                    BackgroundMessage.position = PanelToDecorate.GetBackgroundMessage().position;
+                    BackgroundMessage.localScale = PanelToDecorate.GetBackgroundMessage().localScale;
                 }
 
                 //public override void Hide(EventHandler callback, bool withAnimation) { }
