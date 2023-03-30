@@ -31,15 +31,24 @@ namespace MATCH
             public class Arch : Assistance, IAssistance
             {
                 IAssistance PanelToDecorate;
-                Transform LineView;
-                LineToObject LineController;
+                //Transform LineView;
+                //LineToObject LineController;
 
                 //EventHandler classEvent;
 
+                private LineRenderer lineRenderer;
+                //private bool toShow=false;
                 private void Awake()
                 {
-                    LineView = gameObject.transform.Find("Line");
-                    LineController = LineView.GetComponent<LineToObject>();
+                    //LineView = gameObject.transform.Find("Line");
+                    //LineController = LineView.GetComponent<LineToObject>();
+                    lineRenderer = GetComponent<LineRenderer>();
+                    lineRenderer.positionCount = 2;
+                    lineRenderer.startWidth = 0.1f;
+                    lineRenderer.endWidth = 0.1f;
+                    lineRenderer.startColor = Color.red;
+                    lineRenderer.endColor = Color.red;
+
                 }
 
                 public void Start()
@@ -59,6 +68,12 @@ namespace MATCH
                         classEvent?.Invoke(this, EventArgs.Empty);
                         //m_mutexShow = false;
                     });*/
+                    //if (isActiveAndEnabled && toShow)
+                    //{
+                        Vector3 PlayerPosFeet = new Vector3(Camera.main.transform.position.x, (Camera.main.transform.position.y) - 0.5f, Camera.main.transform.position.z);
+                        lineRenderer.SetPosition(0, PlayerPosFeet);
+                        lineRenderer.SetPosition(1, PanelToDecorate.GetAssistance().GetTransform().position);
+                    //}
                 }
 
 
@@ -87,6 +102,7 @@ namespace MATCH
                         PanelToDecorate.GetAssistance().Hide(delegate (System.Object o, EventArgs e)
                         {
                             GetArch().gameObject.SetActive(false);
+                            
 
                             IsDisplayed = false;
 
@@ -96,6 +112,7 @@ namespace MATCH
                     }
                     else
                     {
+                        //GetArch().gameObject.SetActive(false);
                         Utilities.EventHandlerArgs.Animation args = new Utilities.EventHandlerArgs.Animation();
                         args.Success = false;
                         callback?.Invoke(this, args);
@@ -112,18 +129,21 @@ namespace MATCH
                         {
                             PanelToDecorate.GetRootDecoratedAssistance().Show(Utilities.Utility.GetEventHandlerEmpty(), false);
 
+                            
+
                             //classEvent = callback;
 
-                            LineController.PointOrigin = Camera.main.transform.position;
-                            LineController.PointEnd = PanelToDecorate.GetAssistance().transform.position;
-
+                            //LineController.PointOrigin = Camera.main.transform.position;
+                            //LineController.PointEnd = PanelToDecorate.GetAssistance().transform.position;
+                            /*
                             LineView.GetComponent<LineToObject>().show(delegate
                             {
                                 callback?.Invoke(this, EventArgs.Empty);
                                 //m_mutexShow = false;
                             });
-
+                            */
                             PanelToDecorate.GetArch().gameObject.SetActive(false); //The decorated panels transform become invisible
+                            
 
                             callback?.Invoke(this, e);
                         }, withAnimation);
