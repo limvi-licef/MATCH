@@ -44,6 +44,8 @@ namespace MATCH
                     //LineController = LineView.GetComponent<LineToObject>();
                     lineRenderer = GetComponent<LineRenderer>();
                     lineRenderer.positionCount = 2;
+                    lineRenderer.SetPosition(0, Vector3.zero);
+                    lineRenderer.SetPosition(1, Vector3.zero);
                     lineRenderer.startWidth = 0.1f;
                     lineRenderer.endWidth = 0.1f;
                     lineRenderer.startColor = Color.red;
@@ -58,21 +60,24 @@ namespace MATCH
 
                 public void Update()
                 {
-                        /*
-                    LineView = gameObject.transform.Find("Line");
-                    LineController = LineView.GetComponent<LineToObject>();
-                    LineController.PointOrigin = Camera.main.transform.position;
+                    /*
+                LineView = gameObject.transform.Find("Line");
+                LineController = LineView.GetComponent<LineToObject>();
+                LineController.PointOrigin = Camera.main.transform.position;
 
-                    LineView.GetComponent<LineToObject>().show(delegate
-                    {
-                        classEvent?.Invoke(this, EventArgs.Empty);
-                        //m_mutexShow = false;
-                    });*/
+                LineView.GetComponent<LineToObject>().show(delegate
+                {
+                    classEvent?.Invoke(this, EventArgs.Empty);
+                    //m_mutexShow = false;
+                });*/
                     //if (isActiveAndEnabled && toShow)
                     //{
+                    if (IsDisplayed)
+                    {
                         Vector3 PlayerPosFeet = new Vector3(Camera.main.transform.position.x, (Camera.main.transform.position.y) - 0.5f, Camera.main.transform.position.z);
                         lineRenderer.SetPosition(0, PlayerPosFeet);
                         lineRenderer.SetPosition(1, PanelToDecorate.GetAssistance().GetTransform().position);
+                    }
                     //}
                 }
 
