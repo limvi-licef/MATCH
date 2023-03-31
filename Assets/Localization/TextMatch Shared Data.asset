@@ -23,6 +23,10 @@ MonoBehaviour:
     m_Key: Greetings
     m_Metadata:
       m_Items: []
+  - m_Id: 363814131097600
+    m_Key: Tutorial_Alpha
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

@@ -7871,7 +7871,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-<<<<<<< HEAD:Assets/Scenes/Mouse.unity
     - target: {fileID: 3559158083355588206, guid: dafddd60b67d2984fb7b3093f32c33ab, type: 3}
       propertyPath: m_text
       value: 
@@ -7915,8 +7914,6 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
-=======
->>>>>>> main:Assets/Scenes/MATCH.unity
     m_RemovedComponents:
     - {fileID: 0}
   m_SourcePrefab: {fileID: 100100000, guid: a7621b8a06b7e7d468a552fe17a92105, type: 3}

@@ -26,5 +26,11 @@ MonoBehaviour:
     m_Localized: Welcome
     m_Metadata:
       m_Items: []
+  - m_Id: 363814131097600
+    m_Localized: Welcome! Here is a tutorial to familiarize you with this assistance.
+      To begin, with one finger, touch the "Start!" button below, as if you were
+      touching a switch.
+    m_Metadata:
+      m_Items: []
   references:
     version: 1
