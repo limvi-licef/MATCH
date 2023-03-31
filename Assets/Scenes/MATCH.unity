@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657755, g: 0.4964127, b: 0.57481825, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657695, g: 0.49641138, b: 0.5748176, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -2932,29 +2932,6 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   eyeCursorSnapToTargetCenter: 0
---- !u!114 &282305067
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9fcb6341cafc3f84994828d3606683d3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  handleMaterial: {fileID: 0}
-  handleGrabbedMaterial: {fileID: 0}
-  handlePrefab: {fileID: 0}
-  handleSize: 0.016
-  colliderPadding: {x: 0.016, y: 0.016, z: 0.016}
-  drawTetherWhenManipulating: 1
-  handlesIgnoreCollider: {fileID: 0}
-  handlePrefabColliderType: 1
-  showHandleForX: 1
-  showHandleForY: 1
-  showHandleForZ: 1
 --- !u!1 &298930475
 GameObject:
   m_ObjectHideFlags: 0
@@ -4483,28 +4460,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &481648999
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a0d3e2fcd636d0243820f1bebf6e167b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  handleMaterial: {fileID: 0}
-  handleGrabbedMaterial: {fileID: 0}
-  handlePrefab: {fileID: 0}
-  handleSize: 0.016
-  colliderPadding: {x: 0.016, y: 0.016, z: 0.016}
-  drawTetherWhenManipulating: 1
-  handlesIgnoreCollider: {fileID: 0}
-  handleSlatePrefab: {fileID: 0}
-  showScaleHandles: 1
-  scaleBehavior: 1
 --- !u!1 &484695185
 GameObject:
   m_ObjectHideFlags: 0
@@ -5469,7 +5424,7 @@ MonoBehaviour:
   boxPadding: {x: 0, y: 0, z: 0}
   boxDisplayConfiguration: {fileID: 0}
   linksConfiguration: {fileID: 0}
-  scaleHandlesConfiguration: {fileID: 1612149916}
+  scaleHandlesConfiguration: {fileID: 0}
   rotationHandlesConfiguration: {fileID: 0}
   translationHandlesConfiguration: {fileID: 0}
   handleProximityEffectConfiguration: {fileID: 0}
@@ -5585,7 +5540,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 3}
     m_FontSize: 14
     m_FontStyle: 0
     m_BestFit: 0
@@ -7232,15 +7187,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4b9589c4bff638046a64c848e98cd9b8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cursor: {fileID: 0}
-  labelPrefab: {fileID: 0}
-  labelPrefab2: {fileID: 0}
-  _labelObject: {fileID: 0}
-  _cube: {fileID: 0}
-  lastLabelPlaced: {fileID: 0}
-  lastLabelPlaced2: {fileID: 0}
-  lastLabelPlacedText: {fileID: 0}
-  lastLabelPlacedText2: {fileID: 0}
 --- !u!1 &909551014
 GameObject:
   m_ObjectHideFlags: 0
@@ -7543,9 +7489,9 @@ MonoBehaviour:
   boxPadding: {x: 0, y: 0, z: 0}
   boxDisplayConfiguration: {fileID: 0}
   linksConfiguration: {fileID: 0}
-  scaleHandlesConfiguration: {fileID: 481648999}
+  scaleHandlesConfiguration: {fileID: 0}
   rotationHandlesConfiguration: {fileID: 0}
-  translationHandlesConfiguration: {fileID: 282305067}
+  translationHandlesConfiguration: {fileID: 0}
   handleProximityEffectConfiguration: {fileID: 0}
   hideElementsInInspector: 1
   smoothingActive: 0
@@ -12106,9 +12052,53 @@ Transform:
   - {fileID: 1600286672}
   - {fileID: 514905943}
   - {fileID: 960541334}
+  - {fileID: 1462482686}
   m_Father: {fileID: 0}
   m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1462482685
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1462482686}
+  - component: {fileID: 1462482687}
+  m_Layer: 0
+  m_Name: Localization
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1462482686
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1462482685}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1439939704}
+  m_RootOrder: 12
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1462482687
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1462482685}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 721460a8ee9824b4d8c15a8b811684ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1464721806
 GameObject:
   m_ObjectHideFlags: 0
@@ -13315,28 +13305,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 1806448422440766891, guid: d8ae52b5a4190b544873fb87b071bdbf, type: 3}
   m_PrefabInstance: {fileID: 1806448421479601768}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1612149916
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a0d3e2fcd636d0243820f1bebf6e167b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  handleMaterial: {fileID: 0}
-  handleGrabbedMaterial: {fileID: 0}
-  handlePrefab: {fileID: 0}
-  handleSize: 0.016
-  colliderPadding: {x: 0.016, y: 0.016, z: 0.016}
-  drawTetherWhenManipulating: 1
-  handlesIgnoreCollider: {fileID: 0}
-  handleSlatePrefab: {fileID: 0}
-  showScaleHandles: 1
-  scaleBehavior: 1
 --- !u!1 &1630943556
 GameObject:
   m_ObjectHideFlags: 0
@@ -13795,7 +13763,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d3ba1ed32c312744abd2722fc52b41b3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SurfacesManager: {fileID: 0}
 --- !u!1 &1712743354
 GameObject:
   m_ObjectHideFlags: 0
@@ -14968,8 +14935,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d0fe19bc416dd0a418b563dee5d9f207, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  WebsocketAddress: 
-  connectionIP: 
 --- !u!1 &1851939768
 GameObject:
   m_ObjectHideFlags: 0
@@ -15210,29 +15175,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1e186ec4a9eae5843a84e5d0d896d945, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &1863113287
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 36981d974b5546a4cbfa0b4bfa0c0ecb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  handleMaterial: {fileID: 0}
-  handleGrabbedMaterial: {fileID: 0}
-  handlePrefab: {fileID: 0}
-  handleSize: 0.016
-  colliderPadding: {x: 0.016, y: 0.016, z: 0.016}
-  drawTetherWhenManipulating: 1
-  handlesIgnoreCollider: {fileID: 0}
-  handlePrefabColliderType: 1
-  showHandleForX: 1
-  showHandleForY: 1
-  showHandleForZ: 1
 --- !u!1 &1869134130
 GameObject:
   m_ObjectHideFlags: 0
@@ -15403,12 +15345,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b7b2e463487d73449726cab2b5d7456, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tcpHandler: {fileID: 0}
-  wsHandler: {fileID: 0}
-  webSocketTextPrefab: {fileID: 0}
-  connectionIpTextPrefab: {fileID: 0}
-  infoPannelPrefab: {fileID: 0}
-  connectionBtn: {fileID: 0}
 --- !u!1 &1894565779
 GameObject:
   m_ObjectHideFlags: 0
@@ -16876,28 +16812,6 @@ PrefabInstance:
     m_RemovedComponents:
     - {fileID: 0}
   m_SourcePrefab: {fileID: 100100000, guid: a7621b8a06b7e7d468a552fe17a92105, type: 3}
---- !u!114 &2096906607
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a0d3e2fcd636d0243820f1bebf6e167b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  handleMaterial: {fileID: 0}
-  handleGrabbedMaterial: {fileID: 0}
-  handlePrefab: {fileID: 0}
-  handleSize: 0.016
-  colliderPadding: {x: 0.016, y: 0.016, z: 0.016}
-  drawTetherWhenManipulating: 1
-  handlesIgnoreCollider: {fileID: 0}
-  handleSlatePrefab: {fileID: 0}
-  showScaleHandles: 1
-  scaleBehavior: 0
 --- !u!1 &2109004321
 GameObject:
   m_ObjectHideFlags: 0
@@ -18628,8 +18542,8 @@ MonoBehaviour:
   boxPadding: {x: 0, y: 0, z: 0}
   boxDisplayConfiguration: {fileID: 114307133794489298, guid: 937ce507dd7ee334ba569554e24adbdd, type: 3}
   linksConfiguration: {fileID: 0}
-  scaleHandlesConfiguration: {fileID: 2096906607}
-  rotationHandlesConfiguration: {fileID: 1863113287}
+  scaleHandlesConfiguration: {fileID: 0}
+  rotationHandlesConfiguration: {fileID: 0}
   translationHandlesConfiguration: {fileID: 0}
   handleProximityEffectConfiguration: {fileID: 0}
   hideElementsInInspector: 1
