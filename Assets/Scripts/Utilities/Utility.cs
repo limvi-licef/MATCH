@@ -214,6 +214,44 @@ namespace MATCH
                 return false;
             }
 
+            public static List<Vector3> CalculateBezierCurve(Vector3 startPoint, Vector3 endPoint, bool vertical )
+            {
+                List<Vector3> points = new List<Vector3>();
+                Vector3 midPoint = new Vector3();
+
+                if (vertical)
+                {
+                    midPoint = (startPoint + endPoint) / 2;
+                    midPoint.y += 1.0f;
+                }
+                else
+                {
+                    endPoint.y -= 0.2f;
+                    startPoint.y -= 0.2f;
+                    midPoint = (startPoint + endPoint) / 2;
+                    midPoint.x += 1.0f; //(float)Math.Sqrt(Math.Pow((startPoint.x - endPoint.x), 2) + Math.Pow((startPoint.z - endPoint.z), 2)) / 2; //calcule y pour avoir un cercle parfait
+                }
+                
+                float t = 0.0f;
+                int nbPoints = 1000;
+
+                for (int i = 0; i < nbPoints; i++)
+                {
+                    t = (float)i / (float)nbPoints;
+
+                    points.Add((1.0f - t) * (1.0f - t) * startPoint + 2 * (1 - t) * t * midPoint + t * t * endPoint);
+                }
+
+                return points;
+
+            }
+
+            public static List<Vector3> CalculateBezierCurveOnPlayer(Vector3 playerPosition, Vector3 endPoint, bool vertical)
+            {
+                Vector3 startPoint = 2 * playerPosition - endPoint;
+                startPoint.y = endPoint.y;
+                return CalculateBezierCurve(startPoint, endPoint,vertical);
+            }
         }
     }
 }

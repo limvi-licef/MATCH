@@ -34,6 +34,8 @@ namespace MATCH
                 //Transform LineView;
                 //LineToObject LineController;
 
+                List<Vector3> points = new List<Vector3>();
+
                 //EventHandler classEvent;
 
                 private LineRenderer lineRenderer;
@@ -60,25 +62,7 @@ namespace MATCH
 
                 public void Update()
                 {
-                    /*
-                LineView = gameObject.transform.Find("Line");
-                LineController = LineView.GetComponent<LineToObject>();
-                LineController.PointOrigin = Camera.main.transform.position;
-
-                LineView.GetComponent<LineToObject>().show(delegate
-                {
-                    classEvent?.Invoke(this, EventArgs.Empty);
-                    //m_mutexShow = false;
-                });*/
-                    //if (isActiveAndEnabled && toShow)
-                    //{
-                    if (IsDisplayed)
-                    {
-                        Vector3 PlayerPosFeet = new Vector3(Camera.main.transform.position.x, (Camera.main.transform.position.y) - 0.5f, Camera.main.transform.position.z);
-                        lineRenderer.SetPosition(0, PlayerPosFeet);
-                        lineRenderer.SetPosition(1, PanelToDecorate.GetAssistance().GetTransform().position);
-                    }
-                    //}
+                    drawArch();
                 }
 
 
@@ -134,19 +118,6 @@ namespace MATCH
                         {
                             PanelToDecorate.GetRootDecoratedAssistance().Show(Utilities.Utility.GetEventHandlerEmpty(), false);
 
-                            
-
-                            //classEvent = callback;
-
-                            //LineController.PointOrigin = Camera.main.transform.position;
-                            //LineController.PointEnd = PanelToDecorate.GetAssistance().transform.position;
-                            /*
-                            LineView.GetComponent<LineToObject>().show(delegate
-                            {
-                                callback?.Invoke(this, EventArgs.Empty);
-                                //m_mutexShow = false;
-                            });
-                            */
                             PanelToDecorate.GetArch().gameObject.SetActive(false); //The decorated panels transform become invisible
                             
 
@@ -207,6 +178,23 @@ namespace MATCH
                 public Transform GetArch()
                 {
                     return transform;
+                }
+
+                private void drawArch()
+                {
+                    if (IsDisplayed)
+                    {
+
+                        Vector3 PlayerPosFeet = new Vector3(Camera.main.transform.position.x, (Camera.main.transform.position.y) - 0.5f, Camera.main.transform.position.z);
+                        Vector3 FinalPos = PanelToDecorate.GetAssistance().GetTransform().position;
+
+                        points = MATCH.Utilities.Utility.CalculateBezierCurveOnPlayer(PlayerPosFeet, FinalPos, false);
+                        lineRenderer.positionCount = points.Count;
+                        for (int i = 0; i < points.Count; i++)
+                        {
+                            lineRenderer.SetPosition(i, points[i]);
+                        }
+                    }
                 }
             }
         }
