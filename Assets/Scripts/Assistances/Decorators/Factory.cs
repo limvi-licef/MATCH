@@ -59,28 +59,48 @@ namespace MATCH
                     return controller;
                 }
 
-                public MATCH.Assistances.Assistance CreateBackground(MATCH.Assistances.IPanel2 panelToDecorate, string backgroundColor, BackgroundColorFor2 toHideOnShow=null)
+                public MATCH.Assistances.Assistance CreateBackgroundMessage(MATCH.Assistances.IPanel2 panelToDecorate, string backgroundColor)
                 {
 
-                    return CreateBackground(panelToDecorate, backgroundColor, backgroundColor, toHideOnShow);
-                }
+                    //return CreateBackground(panelToDecorate, backgroundColor, backgroundColor/*, toHideOnShow*/);
 
-                    public MATCH.Assistances.Assistance CreateBackground(MATCH.Assistances.IPanel2 panelToDecorate, string backgroundMessageColor, string backgroundIconColor, BackgroundColorFor2 toHideOnShow=null)
-                {
-                    Transform view = Instantiate(Utilities.Materials.Prefabs.Load(Utilities.Materials.Prefabs.DecoratorBackgroundColor2));
+                    Transform view = Instantiate(Utilities.Materials.Prefabs.Load(Utilities.Materials.Prefabs.DecoratorBackgroundColorMessage2));
                     view.name = ((Assistance)panelToDecorate).name;
 
-                    Assistances.Decorators.BackgroundColorFor2 controller = view.gameObject.GetComponent<Assistances.Decorators.BackgroundColorFor2>();
+                    Assistances.Decorators.BackgroundColorMessage2 controller = view.gameObject.GetComponent<Assistances.Decorators.BackgroundColorMessage2>();
 
                     controller.SetAssistanceToDecorate(panelToDecorate);
                     //controller.SetBackgroundColor(background);
-                    controller.GetBackgroundMessage().GetComponent<Renderer>().material = Utilities.Utility.LoadMaterial(backgroundMessageColor);
-                    controller.GetBackgroundIcon().GetComponent<Renderer>().material = Utilities.Utility.LoadMaterial(backgroundIconColor);
+                    controller.GetBackgroundMessage().GetComponent<Renderer>().material = Utilities.Utility.LoadMaterial(backgroundColor);
 
-                    if (toHideOnShow != null)
-                    {
-                        controller.AddToHideOnShow(toHideOnShow);
-                    }
+                    return controller;
+
+                }
+
+                /*public MATCH.Assistances.Assistance CreateBackground(MATCH.Assistances.IPanel2 panelToDecorate, string backgroundMessageColor)
+                 {
+                     Transform view = Instantiate(Utilities.Materials.Prefabs.Load(Utilities.Materials.Prefabs.DecoratorBackgroundColorMessage2));
+                     view.name = ((Assistance)panelToDecorate).name;
+
+                     Assistances.Decorators.BackgroundColorMessage2 controller = view.gameObject.GetComponent<Assistances.Decorators.BackgroundColorMessage2>();
+
+                     controller.SetAssistanceToDecorate(panelToDecorate);
+                     //controller.SetBackgroundColor(background);
+                     controller.GetBackgroundMessage().GetComponent<Renderer>().material = Utilities.Utility.LoadMaterial(backgroundMessageColor);
+                     controller.GetBackgroundIcon().GetComponent<Renderer>().material = Utilities.Utility.LoadMaterial(backgroundIconColor);
+
+                     return controller;
+                 }*/
+
+                public MATCH.Assistances.Assistance CreateBackgroundIcon(MATCH.Assistances.IPanel2 panelToDecorate, string backgroundIconColor)
+                {
+                    Transform view = Instantiate(Utilities.Materials.Prefabs.Load(Utilities.Materials.Prefabs.DecoratorBackgroundColorIcon2));
+                    view.name = ((Assistance)panelToDecorate).name;
+
+                    Assistances.Decorators.BackgroundColorIcon2 controller = view.gameObject.GetComponent<Assistances.Decorators.BackgroundColorIcon2>();
+
+                    controller.SetAssistanceToDecorate(panelToDecorate);
+                    controller.GetBackgroundIcon().GetComponent<Renderer>().material = Utilities.Utility.LoadMaterial(backgroundIconColor);
 
                     return controller;
                 }

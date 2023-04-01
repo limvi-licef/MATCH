@@ -112,7 +112,7 @@ namespace MATCH
                     highlightGarbageController.SetScale(0.2f, 0.6f, 0.2f);
                     highlightGarbageController.SetLocalPosition(0, -0.35f, 0);
                     highlightGarbageController.SetBillboard(false);
-                    garbageInteractionSurfaceController.EventInteractionSurfaceScaled += delegate
+                    garbageInteractionSurfaceController.EventConfigScaled += delegate
                     {
                         highlightGarbageController.SetScale(garbageInteractionSurfaceController.GetInteractionSurface().localScale.x,
                             highlightGarbageController.GetChildTransform().localScale.y,
@@ -127,7 +127,7 @@ namespace MATCH
                     highlightGarbageVividController.SetScale(0.2f, 0.6f, 0.2f);
                     highlightGarbageVividController.SetLocalPosition(0, -0.35f, 0);
                     highlightGarbageVividController.SetBillboard(false);
-                    garbageInteractionSurfaceController.EventInteractionSurfaceScaled += delegate
+                    garbageInteractionSurfaceController.EventConfigScaled += delegate
                     {
                         highlightGarbageVividController.SetScale(garbageInteractionSurfaceController.GetInteractionSurface().localScale.x,
                             highlightGarbageVividController.GetChildTransform().localScale.y,
@@ -188,16 +188,18 @@ namespace MATCH
 
                     // Connections between states
                     s_inference19h00 += sStandBy.goToState(sHighlightGarbage);
-                    garbageInteractionSurfaceController.EventInteractionSurfaceTouched += sStandBy.goToState(/*sSuccess*/sGarbageGrabbed);
+
+                    garbageInteractionSurfaceController.EventUserTouched += sStandBy.goToState(/*sSuccess*/sGarbageGrabbed);
                     highlightGarbageController.s_touched += sHighlightGarbage.goToState(sSolution);
                     s_inference19h30 += sHighlightGarbage.goToState(sExclamationMark);
-                    garbageInteractionSurfaceController.EventInteractionSurfaceTouched += sHighlightGarbage.goToState(/*sSuccess*/sGarbageGrabbed);
+                    garbageInteractionSurfaceController.EventUserTouched += sHighlightGarbage.goToState(/*sSuccess*/sGarbageGrabbed);
                     exclamationMarkController.s_touched += sExclamationMark.goToState(sSolution);
                     highlightGarbageVividController.s_touched += delegate (System.Object o, EventArgs e) { exclamationMarkController.TriggerTouch(); };
 
-                    garbageInteractionSurfaceController.EventInteractionSurfaceTouched += sExclamationMark.goToState(/*sSuccess*/sGarbageGrabbed);
-                    garbageInteractionSurfaceController.EventInteractionSurfaceTouched += sSolution.goToState(/*sSuccess*/sGarbageGrabbed);
-                    doorInteractionSurfaceController.EventInteractionSurfaceTouched += sGarbageGrabbed.goToState(sSuccess);
+                    garbageInteractionSurfaceController.EventUserTouched += sExclamationMark.goToState(/*sSuccess*/sGarbageGrabbed);
+                    garbageInteractionSurfaceController.EventUserTouched += sSolution.goToState(/*sSuccess*/sGarbageGrabbed);
+                    doorInteractionSurfaceController.EventUserTouched += sGarbageGrabbed.goToState(sSuccess);
+
                     successController.s_touched += sSuccess.goToState(sStandBy);
 
                     m_gradationManager.setGradationInitial("StandBy");

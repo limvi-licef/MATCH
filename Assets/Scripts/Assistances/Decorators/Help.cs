@@ -74,6 +74,11 @@ namespace MATCH
                 {
                     return AssistanceToDecorate.GetAssistance();
                 }
+
+                public Assistance GetDecoratedAssistance()
+                {
+                    return AssistanceToDecorate.GetDecoratedAssistance();
+                }
             }
         }
     }

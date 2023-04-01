@@ -174,7 +174,7 @@ namespace MATCH
 
                     m_assistanceSurfaceTouchedView.localScale = new Vector3(interactionTableController.GetInteractionSurface().localScale.x,
                             m_assistanceSurfaceTouchedView.localScale.y, interactionTableController.GetInteractionSurface().localScale.z);
-                    interactionTableController.EventInteractionSurfaceScaled += delegate
+                    interactionTableController.EventConfigScaled += delegate
                     {
                         m_assistanceSurfaceTouchedView.localScale = new Vector3(interactionTableController.GetInteractionSurface().localScale.x,
                             m_assistanceSurfaceTouchedView.localScale.y, interactionTableController.GetInteractionSurface().localScale.z);
@@ -245,14 +245,15 @@ namespace MATCH
                     m_assistanceGradationManager.setGradationInitial("StandBy");
 
                     // States changing
-                    interactionTableController.EventInteractionSurfaceTouched += sStandBy.goToState(sCubeRagTable);
+                    interactionTableController.EventUserTouched += sStandBy.goToState(sCubeRagTable);
                     m_assistancePicturalController.EventHologramStimulateLevel1Gradation1Or2Touched += sCubeRagTable.goToState(sMessageCue);
                     initialCueingController.ButtonsController[0].EventButtonClicked += sMessageCue.goToState(sArchToRag);
                     m_assistanceConnectWithArchController.EventHelpTouched += sArchToRag.goToState(sSolution);
-                    interactionRagController.EventInteractionSurfaceTouched += sCubeRagTable.goToState(sSurfaceToClean);
-                    interactionRagController.EventInteractionSurfaceTouched += sMessageCue.goToState(sSurfaceToClean);
-                    interactionRagController.EventInteractionSurfaceTouched += sArchToRag.goToState(sSurfaceToClean);
-                    interactionRagController.EventInteractionSurfaceTouched += sSolution.goToState(sSurfaceToClean);
+                    interactionRagController.EventUserTouched += sCubeRagTable.goToState(sSurfaceToClean);
+                    interactionRagController.EventUserTouched += sMessageCue.goToState(sSurfaceToClean);
+                    interactionRagController.EventUserTouched += sArchToRag.goToState(sSurfaceToClean);
+                    interactionRagController.EventUserTouched += sSolution.goToState(sSurfaceToClean);
+
                     m_assistanceSurfaceTouchedController.EventSurfaceCleaned += sSurfaceToClean.goToState(sSuccess);
                     m_successController.s_touched += sSuccess.goToState(sStandBy);
 
@@ -270,12 +271,12 @@ namespace MATCH
                     AdminMenu.Instance.AddButton("Reset clean table challenge", delegate () { m_assistanceGradationManager.goBackToOriginalState(); });
 
 
-                    interactionRagController.EventInteractionSurfaceMoved += delegate (System.Object o, EventArgs e)
+                    interactionRagController.EventConfigMoved += delegate (System.Object o, EventArgs e)
                     {
                         m_assistanceConnectWithArchController.SetArchStartAndEndPoint(initialCueingView.transform, interactionRagView.transform);
                     };
 
-                    interactionTableController.EventInteractionSurfaceMoved += delegate (System.Object o, EventArgs e)
+                    interactionTableController.EventConfigMoved += delegate (System.Object o, EventArgs e)
                     {
                         m_assistanceConnectWithArchController.SetArchStartAndEndPoint(initialCueingView.transform, interactionRagView.transform);
                     };
@@ -300,7 +301,7 @@ namespace MATCH
                     // Red surface on table
                     Assistances.Basic redSurface = Assistances.Factory.Instance.CreateFlatSurface(Utilities.Materials.Colors.RedGlowing, new Vector3(interactionSurfaceTable.GetLocalPosition().x, interactionSurfaceTable.GetLocalPosition().y + 0.02f, interactionSurfaceTable.GetLocalPosition().z), interactionSurfaceTable.transform);
                     redSurface.SetScale(interactionSurfaceTable.GetLocalScale().x, redSurface.GetScale().y, interactionSurfaceTable.GetLocalScale().z);
-                    interactionSurfaceTable.EventInteractionSurfaceScaled += delegate { redSurface.SetScale(new Vector3(interactionSurfaceTable.GetInteractionSurface().localScale.x, redSurface.GetScale().y, interactionSurfaceTable.GetInteractionSurface().localScale.z)); };
+                    interactionSurfaceTable.EventConfigScaled += delegate { redSurface.SetScale(new Vector3(interactionSurfaceTable.GetInteractionSurface().localScale.x, redSurface.GetScale().y, interactionSurfaceTable.GetInteractionSurface().localScale.z)); };
 
                     // Exclamation mark
                     Assistances.Basic exclamationMark = Assistances.Factory.Instance.CreateCube(Utilities.Materials.Textures.ExclamationRed, true, new Vector3(0.1f, 0.1f, 0.1f), new Vector3(0, 0, 0), true, interactionSurfaceTable.transform);
@@ -315,7 +316,7 @@ namespace MATCH
                     // Surface to clean
                     Assistances.SurfaceToProcess surfaceToProcess = Assistances.Factory.Instance.CreateSurfaceToProcess(interactionSurfaceTable.transform, interactionSurfaceTable);
                     surfaceToProcess.transform.localScale = new Vector3(interactionSurfaceTable.GetInteractionSurface().localScale.x, surfaceToProcess.transform.localScale.y, interactionSurfaceTable.GetInteractionSurface().localScale.z);
-                    interactionSurfaceTable.EventInteractionSurfaceScaled += delegate (System.Object o, EventArgs e)
+                    interactionSurfaceTable.EventConfigScaled += delegate (System.Object o, EventArgs e)
                     {
                         surfaceToProcess.transform.localScale = new Vector3(interactionSurfaceTable.GetInteractionSurface().localScale.x, surfaceToProcess.transform.localScale.y, interactionSurfaceTable.GetInteractionSurface().localScale.z);
                     };
@@ -442,15 +443,16 @@ namespace MATCH
                     s_ignoreRedSurface += sRedSurface.goToState(sRedSurfaceAndExclamation);
                     exclamationMark.s_touched += sRedSurfaceAndExclamation.goToState(sFirstDialog);
 
-                    interactionSurfaceRag.EventInteractionSurfaceTouched += delegate (System.Object o, EventArgs e)
+                    interactionSurfaceRag.EventUserTouched += delegate (System.Object o, EventArgs e)
                     {
                         m_inferenceEngine.UnregisterInference("BackToTable");
                         m_inferenceEngine.UnregisterInference("BackToTableInternal");
                     };
-                    interactionSurfaceRag.EventInteractionSurfaceTouched += sRedSurface.goToState(sProcessSurface);
-                    interactionSurfaceRag.EventInteractionSurfaceTouched += sRedSurfaceAndExclamation.goToState(sProcessSurface);
-                    interactionSurfaceRag.EventInteractionSurfaceTouched += sFirstDialog.goToState(sProcessSurface);
-                    interactionSurfaceRag.EventInteractionSurfaceTouched += sDialogRag.goToState(sProcessSurface);
+
+                    interactionSurfaceRag.EventUserTouched += sRedSurface.goToState(sProcessSurface);
+                    interactionSurfaceRag.EventUserTouched += sRedSurfaceAndExclamation.goToState(sProcessSurface);
+                    interactionSurfaceRag.EventUserTouched += sFirstDialog.goToState(sProcessSurface);
+                    interactionSurfaceRag.EventUserTouched += sDialogRag.goToState(sProcessSurface);
 
                     s_backToTable += sFirstDialog.goToState(sSecondDialog);
 

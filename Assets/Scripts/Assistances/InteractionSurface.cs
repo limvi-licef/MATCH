@@ -21,6 +21,15 @@ using Microsoft.MixedReality.Toolkit.UI;
 using Microsoft.MixedReality.Toolkit.UI.BoundsControl;
 using Microsoft.MixedReality.Toolkit.Utilities.Solvers;
 
+/*
+Example of use of the new event:
+
+MATCH.Assistances.InteractionSurfaceFollower.Instance.GetInteractionSurface().EventUserMoved += delegate (System.Object o, EventArgs e)
+{
+    Utilities.EventHandlerArgs.Position pos = (Utilities.EventHandlerArgs.Position)e;
+    DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Position of the invisible surface changed: " + pos.PositionWorld);
+};*/
+
 /**
  * Manages the table interaction surface
  * */
@@ -32,13 +41,16 @@ namespace MATCH
         {
             Transform View;
             
-            public event EventHandler EventInteractionSurfaceTouched;
-            public event EventHandler EventInteractionSurfaceScaled;
-            public event EventHandler EventInteractionSurfaceMoved;
+            public event EventHandler EventUserTouched;
+            public event EventHandler EventConfigScaled;
+            public event EventHandler EventConfigMoved;
+            public event EventHandler EventUserMoved; // Embeds a Utilities.EventHandlerArgs.Position containing the position of the interaction surface
 
             string Color = Utilities.Materials.Colors.GreenGlowing; // Default color if the user does not set one
 
             bool SurfaceInitialized;
+
+            Vector3 LastPos;
 
             private void Awake()
             {
@@ -49,6 +61,16 @@ namespace MATCH
                 View = gameObject.transform.Find("InteractionSurfaceChild");
             }
 
+            public void Update()
+            {
+                if (transform.position != LastPos)
+                {
+                    LastPos = transform.position;
+                    Utilities.EventHandlerArgs.Position arg = new Utilities.EventHandlerArgs.Position(transform.position, transform.localPosition);
+                    EventUserMoved?.Invoke(this, arg);
+                }
+            }
+
             // Start is called before the first frame update
             void Start()
             {
@@ -56,7 +78,7 @@ namespace MATCH
 
                 boundsControl.ScaleStopped.AddListener(delegate
                 {
-                    EventInteractionSurfaceScaled?.Invoke(this, EventArgs.Empty);
+                    EventConfigScaled?.Invoke(this, EventArgs.Empty);
                 });
 
                 boundsControl.RotateStopped.AddListener(delegate
@@ -71,10 +93,10 @@ namespace MATCH
                 objectManipulator.OnManipulationEnded.AddListener(delegate (ManipulationEventData data)
                 {
                     //DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Called");
-                    EventInteractionSurfaceMoved?.Invoke(this, EventArgs.Empty);
+                    EventConfigMoved?.Invoke(this, EventArgs.Empty);
                 });
 
-                
+                LastPos = transform.position;
             }
 
             public Transform GetInteractionSurface()
@@ -144,7 +166,7 @@ namespace MATCH
                     View.GetComponent<BoundsControl>().ScaleStopped.AddListener(CallbackHologramInteractionSurfaceMovedFinished); // Use the same callback than for taptoplace as the process to do is the same
                     View.GetComponent<Interactable>().GetReceiver<InteractableOnTouchReceiver>().OnTouchStart.AddListener(delegate ()
                     {
-                        EventInteractionSurfaceTouched?.Invoke(this, EventArgs.Empty);
+                        EventUserTouched?.Invoke(this, EventArgs.Empty);
                     }); // Only have to forward the event
 
 
@@ -203,7 +225,7 @@ namespace MATCH
              * */
             public void TriggerTouchEvent()
             {
-                EventInteractionSurfaceTouched?.Invoke(this, EventArgs.Empty);
+                EventUserTouched?.Invoke(this, EventArgs.Empty);
             }
         }
 

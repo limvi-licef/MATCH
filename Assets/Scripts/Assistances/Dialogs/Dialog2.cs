@@ -55,6 +55,8 @@ namespace MATCH
                 Vector3 BoxColliderOriginalCenter;
                 Vector3 BoxColliderOriginalSize;
 
+                public event EventHandler EventPositionAdjustedToHead;
+
                 protected override void Awake()
                 {
                     base.Awake();
@@ -245,6 +247,7 @@ namespace MATCH
                         if (AdjustToHeight)
                         {
                             Utilities.Utility.AdjustObjectHeightToHeadHeight(transform);
+                            EventPositionAdjustedToHead?.Invoke(this, EventArgs.Empty);
                         }
 
                         if (withAnimation)
@@ -374,6 +377,11 @@ namespace MATCH
                 Assistance IAssistance.GetAssistance()
                 {
                     return this;
+                }
+
+                Assistance IAssistance.GetDecoratedAssistance()
+                {
+                    return this; // Here there is no decorator, so we return the same assistance.
                 }
 
                 public Transform GetBackground()

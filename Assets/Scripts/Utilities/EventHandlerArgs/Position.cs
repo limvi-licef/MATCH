@@ -12,26 +12,36 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.*/
 
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 using Microsoft.MixedReality.Toolkit.UI;
 using Microsoft.MixedReality.Toolkit.UI.BoundsControl;
 using Microsoft.MixedReality.Toolkit.Utilities.Solvers;
-using System.Reflection;
 using System;
+using System.Collections.Generic;
+using UnityEngine;
+using System.Timers;
+using System.Reflection;
+using System.Linq;
 
+/**
+ * Used to have a lighting object to point to a provided gameobject, from the same direction than the user's gaze
+ * */
 namespace MATCH
 {
-    namespace Assistances
+    namespace Utilities
     {
-        public interface IAssistance
+        namespace EventHandlerArgs
         {
-            /**
-             * Way to make it mandatory to have every class using this interface to inherit from the abstract class Assistance
-             * */
-            public Assistance GetDecoratedAssistance();
-            public Assistance GetAssistance();
+            public class Position : EventArgs
+            {
+                public Vector3 PositionWorld;
+                public Vector3 PositionLocal;
+
+                public Position(Vector3 posWorld, Vector3 posLocal)
+                {
+                    PositionWorld = posWorld;
+                    PositionLocal = posLocal;
+                }
+            }
         }
     }
 }
