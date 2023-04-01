@@ -332,11 +332,11 @@ namespace MATCH
                     AssistanceZeta = Assistances.Factory.Instance.CreateAssistanceArch("Arch", origin, AreaStorage.transform, "L'objet doit être rangé au bout de l'arche bleue", 0.2f, transform);
                     AssistancesGradation.AddAssistance(Assistances.QandDAssistances.Gradation.Zeta, AssistanceZeta);
 
-                    AreaStorage.EventInteractionSurfaceMoved += delegate (System.Object o, EventArgs e)
+                    AreaStorage.EventConfigMoved += delegate (System.Object o, EventArgs e)
                     {
                         AssistanceZeta.SetArchStartAndEndPoint(origin, AreaStorage.transform);
                     };
-                    AreaObject.EventInteractionSurfaceMoved += delegate (System.Object o, EventArgs e)
+                    AreaObject.EventConfigMoved += delegate (System.Object o, EventArgs e)
                     {
                         AssistanceZeta.SetArchStartAndEndPoint(origin, AreaStorage.transform);
                     };
@@ -448,7 +448,7 @@ namespace MATCH
                     InferenceManager.UnregisterInference(InferenceFocusedOnObject);
                     InferenceManager.UnregisterInference(InferenceTimeDidNotComeToObject);
 
-                    AreaObject.EventInteractionSurfaceTableTouched -= CallbackPersonGrabbedObject;
+                    AreaObject.EventUserTouched -= CallbackPersonGrabbedObject;
 
                     // Register interences
                     InferenceObjectDetected = new Inferences.ObjectDetected("SortingObjectDetectionObject", CallbackObjectDetected, ObjectOfInterestName);
@@ -464,7 +464,7 @@ namespace MATCH
                     InferenceObjectInStorage = new Inferences.ObjectInInteractionSurface("ObjectStorage", CallbackGameObjectDetectedInStorage, ObjectOfInterestName, AreaStorage);
                     InferenceManager.RegisterInference(InferenceObjectInStorage);
 
-                    AreaObject.EventInteractionSurfaceTableTouched += CallbackPersonGrabbedObject;
+                    AreaObject.EventUserTouched += CallbackPersonGrabbedObject;
 
                     RegisterInferenceComing();
                     RegisterInferenceComingAndLeaving();

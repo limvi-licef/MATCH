@@ -231,7 +231,7 @@ namespace MATCH
                 controller.SetScaling(scaling);
                 controller.SetColor(texture);
                 controller.SetObjectResizable(resizable);
-                controller.EventInteractionSurfaceMoved += onMove;
+                controller.EventConfigMoved += onMove;
 
                 view.localPosition = localPosition;
 

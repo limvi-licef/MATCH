@@ -117,9 +117,9 @@ namespace MATCH
                     }, Utilities.Utility.GetEventHandlerEmpty(), true);
 
                     //EventHandler temp = m_sIntermediateWateringPlants.addState(p.getState());
-                    p.GetInteractionSurface().EventInteractionSurfaceTableTouched += p.GotoStateHighlightWatered(); // If we remain in the default attention state, it will just not go there, so should be safe
-                    p.GetInteractionSurface().EventInteractionSurfaceTableTouched += m_sIntermediateWateringPlants.addState(p.GetState());
-                    p.GetInteractionSurface().EventInteractionSurfaceTableTouched += delegate (System.Object o, EventArgs e)
+                    p.GetInteractionSurface().EventUserTouched += p.GotoStateHighlightWatered(); // If we remain in the default attention state, it will just not go there, so should be safe
+                    p.GetInteractionSurface().EventUserTouched += m_sIntermediateWateringPlants.addState(p.GetState());
+                    p.GetInteractionSurface().EventUserTouched += delegate (System.Object o, EventArgs e)
                     {
                         m_plantsManager.GetLineRenderer(plantId).positionCount = 0;
                     };
@@ -280,11 +280,11 @@ namespace MATCH
                     s_dialogFirstUserFar += sDialogFirst.goToState(sDialogSecond);
                     s_dialogSecondUserFar += sDialogSecond.goToState(sDialogThird);
 
-                    faucetController.EventInteractionSurfaceTableTouched += sStandBy.goToState(m_sIntermediateWateringPlants);
-                    faucetController.EventInteractionSurfaceTableTouched += sDialogFirst.goToState(m_sIntermediateWateringPlants);
-                    faucetController.EventInteractionSurfaceTableTouched += sDialogSecond.goToState(m_sIntermediateWateringPlants);
-                    faucetController.EventInteractionSurfaceTableTouched += sDialogThird.goToState(m_sIntermediateWateringPlants);
-                    faucetController.EventInteractionSurfaceTableTouched += sAssistanceWaterPlantsStandBy.goToState(sAssistanceWaterStart); // Enabling the nested state machine
+                    faucetController.EventUserTouched += sStandBy.goToState(m_sIntermediateWateringPlants);
+                    faucetController.EventUserTouched += sDialogFirst.goToState(m_sIntermediateWateringPlants);
+                    faucetController.EventUserTouched += sDialogSecond.goToState(m_sIntermediateWateringPlants);
+                    faucetController.EventUserTouched += sDialogThird.goToState(m_sIntermediateWateringPlants);
+                    faucetController.EventUserTouched += sAssistanceWaterPlantsStandBy.goToState(sAssistanceWaterStart); // Enabling the nested state machine
 
                     s_assistanceWaterNoPlantWatered += sAssistanceWaterStart.goToState(sAssistanceWaterDialogFirst);
                     foreach (EventHandler handler in m_plantsManager.GotoStateHighlight(/*s_assistanceWaterNeedHelp*/))
@@ -316,7 +316,7 @@ namespace MATCH
                                 plant.GetInteractionSurface().TriggerTouchEvent();
                             }
 
-                            plant.GetInteractionSurface().EventInteractionSurfaceTableTouched += delegate (System.Object oo, EventArgs ee)
+                            plant.GetInteractionSurface().EventUserTouched += delegate (System.Object oo, EventArgs ee)
                             {
                             //MouseDebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, MouseDebugMessagesManager.MessageLevel.Info, "Called for plant index " + indexPlant);
 
@@ -515,7 +515,7 @@ namespace MATCH
 
                     Highlight = Assistances.Factory.Instance.CreateCube(Utilities.Materials.Colors.YellowGlowing, false, new Vector3(InteractionSurface.GetInteractionSurface().localScale.x, 0.6f, InteractionSurface.GetInteractionSurface().localScale.z), new Vector3(0, -0.35f, 0), false, InteractionSurface.transform);
 
-                    InteractionSurface.EventInteractionSurfaceScaled += delegate
+                    InteractionSurface.EventConfigScaled += delegate
                     {
                         Highlight.SetScale(InteractionSurface.GetInteractionSurface().localScale.x,
                             Highlight.GetChildTransform().localScale.y,
