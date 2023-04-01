@@ -135,7 +135,7 @@ namespace MATCH
                         UpdateConditionWithMatrix(ConditionBeginningClicked);
                     }, Assistances.Buttons.Button.ButtonType.ClosingButton, InteractionSurfaceDialogs.transform);*/
 
-                    Assistances.GradationVisual.GradationVisual alpha1 = Assistances.GradationVisual.Factory.Instance.CreateDialog2WithButtons("Tutorial-Alpha-1", "", /*"Bienvenue! Voici un tutoriel pour vous familiariser avec cette assistance. Pour commencer, avec un doigt, touchez le bouton \"Commencer !\" ci-dessous, comme si vous touchiez un interrupteur."*/ UnityEngine.Localization.Settings.LocalizationSettings.StringDatabase.GetLocalizedString("Tutorial_Alpha"), "Commencer !", delegate (System.Object o, EventArgs e)
+                    Assistances.GradationVisual.GradationVisual alpha1 = Assistances.GradationVisual.Factory.Instance.CreateDialog2WithButtons("Tutorial-Alpha-1", "", /*"Bienvenue! Voici un tutoriel pour vous familiariser avec cette assistance. Pour commencer, avec un doigt, touchez le bouton \"Commencer !\" ci-dessous, comme si vous touchiez un interrupteur."*/ /*UnityEngine.Localization.Settings.LocalizationSettings.StringDatabase.GetLocalizedString("Tutorial_Alpha")*/Utilities.Materials.Localization.GetLocalizedString(Utilities.Materials.Localization.TutorialAlpha), "Commencer !", delegate (System.Object o, EventArgs e)
                     {
                         UpdateConditionWithMatrix(ConditionBeginningClicked);
                     }, Assistances.Buttons.Button.ButtonType.ClosingButton, InteractionSurfaceDialogs.transform);
