@@ -1,4 +1,4 @@
-/*Copyright 2022 Guillaume Spalla
+/*Copyright 2022 Guillaume Spalla, Louis Marquet, Léri Lamour
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -229,7 +229,7 @@ namespace MATCH
                     endPoint.y -= 0.2f;
                     startPoint.y -= 0.2f;
                     midPoint = (startPoint + endPoint) / 2;
-                    midPoint.x += 1.0f; //(float)Math.Sqrt(Math.Pow((startPoint.x - endPoint.x), 2) + Math.Pow((startPoint.z - endPoint.z), 2)) / 2; //calcule y pour avoir un cercle parfait
+                    midPoint.x += 1.0f;
                 }
                 
                 float t = 0.0f;
@@ -244,13 +244,6 @@ namespace MATCH
 
                 return points;
 
-            }
-
-            public static List<Vector3> CalculateBezierCurveOnPlayer(Vector3 playerPosition, Vector3 endPoint, bool vertical)
-            {
-                Vector3 startPoint = 2 * playerPosition - endPoint;
-                startPoint.y = endPoint.y;
-                return CalculateBezierCurve(startPoint, endPoint,vertical);
             }
         }
     }

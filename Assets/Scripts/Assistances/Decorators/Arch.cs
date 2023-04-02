@@ -62,7 +62,7 @@ namespace MATCH
 
                 public void Update()
                 {
-                    drawArch();
+                
                 }
 
 
@@ -71,11 +71,9 @@ namespace MATCH
                     PanelToDecorate = toDecorate;
                     name = PanelToDecorate.GetAssistance().name + "_decoratorArch";             
 
-
-                    /*
                     transform.parent = PanelToDecorate.GetRootDecoratedAssistance().GetTransform();
                     transform.localPosition = PanelToDecorate.GetRootDecoratedAssistance().GetTransform().localPosition;
-                    */
+                    
                     Assistance temp = PanelToDecorate.GetRootDecoratedAssistance();
                     temp.EventHelpButtonClicked += delegate (System.Object o, EventArgs e)
                     {
@@ -101,7 +99,6 @@ namespace MATCH
                     }
                     else
                     {
-                        //GetArch().gameObject.SetActive(false);
                         Utilities.EventHandlerArgs.Animation args = new Utilities.EventHandlerArgs.Animation();
                         args.Success = false;
                         callback?.Invoke(this, args);
@@ -119,7 +116,8 @@ namespace MATCH
                             PanelToDecorate.GetRootDecoratedAssistance().Show(Utilities.Utility.GetEventHandlerEmpty(), false);
 
                             PanelToDecorate.GetArch().gameObject.SetActive(false); //The decorated panels transform become invisible
-                            
+                            drawArch();
+
 
                             callback?.Invoke(this, e);
                         }, withAnimation);
@@ -184,16 +182,21 @@ namespace MATCH
                 {
                     if (IsDisplayed)
                     {
-
-                        Vector3 PlayerPosFeet = new Vector3(Camera.main.transform.position.x, (Camera.main.transform.position.y) - 0.5f, Camera.main.transform.position.z);
-                        Vector3 FinalPos = PanelToDecorate.GetAssistance().GetTransform().position;
-
-                        points = MATCH.Utilities.Utility.CalculateBezierCurveOnPlayer(PlayerPosFeet, FinalPos, false);
-                        lineRenderer.positionCount = points.Count;
-                        for (int i = 0; i < points.Count; i++)
+                        MATCH.Assistances.InteractionSurfaceFollower.Instance.GetInteractionSurface().EventUserMoved += delegate (System.Object o, EventArgs e)
                         {
-                            lineRenderer.SetPosition(i, points[i]);
-                        }
+                            Utilities.EventHandlerArgs.Position pos = (Utilities.EventHandlerArgs.Position)e;
+                            
+                            Vector3 PlayerPosFeet = pos.PositionWorld;
+                            Vector3 FinalPos = PanelToDecorate.GetAssistance().GetTransform().position;
+
+                            points = MATCH.Utilities.Utility.CalculateBezierCurve(PlayerPosFeet, FinalPos, false);
+                            lineRenderer.positionCount = points.Count;
+                            for (int i = 0; i < points.Count; i++)
+                            {
+                                lineRenderer.SetPosition(i, points[i]);
+                            }
+
+                        };
                     }
                 }
             }
