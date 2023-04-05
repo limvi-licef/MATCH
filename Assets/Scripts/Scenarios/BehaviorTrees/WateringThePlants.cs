@@ -1,4 +1,18 @@
-﻿using Microsoft.MixedReality.Toolkit.UI;
+﻿/*Copyright 2023 Rémi Létourneau, Pierre-Daniel Godfrey, Brian Biswas
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.*/
+
+using Microsoft.MixedReality.Toolkit.UI;
 using Microsoft.MixedReality.Toolkit.UI.BoundsControl;
 using Microsoft.MixedReality.Toolkit.Utilities.Solvers;
 using Microsoft.MixedReality.Toolkit.Input;
@@ -16,7 +30,7 @@ namespace MATCH
     {
         namespace BehaviorTrees
         {
-            public class WateringThePlants : Scenarios.BehaviorTrees.BehaviorTree
+            public class WateringThePlants : BehaviorTree
             {
                 private Inferences.Manager InferenceManager;
                 public Assistances.Surfaces.Manager SurfacesManager;
@@ -39,7 +53,6 @@ namespace MATCH
                 Assistances.InteractionSurface InteractionSurfaceDialogs;
                 Assistances.InteractionSurface InteractionBottle;
 
-                Assistances.InteractionSurface me;
                 Assistances.InteractionSurface InteractionSink;
                 Assistances.InteractionSurface InteractionPlant1;
                 Assistances.InteractionSurface InteractionPlant2;
@@ -52,7 +65,7 @@ namespace MATCH
 
                 Inferences.Timer inf1;
 
-                GameObject FollowObject;
+                Assistances.InteractionSurface FollowObject;
 
                 public override void Awake()
                 {
@@ -171,14 +184,8 @@ namespace MATCH
                 {
                     InteractionSurfaceDialogs = Assistances.Factory.Instance.CreateInteractionSurface("Practice-Dialogs", AdminMenu.Panels.Right, new Vector3(0f, 0.02f, 0.7f),
                         new Vector3(0f, 0f, 0.009f), Utilities.Materials.Colors.CyanGlowing, false, true, Utilities.Utility.GetEventHandlerEmpty(), true, transform);
-             
 
-                    FollowObject = new GameObject();
-                    RadialView radialview = FollowObject.AddComponent<RadialView>();
-                    radialview.MinDistance = 0.6f;
-                    radialview.MaxDistance = 0.7f;
-                    radialview.UseFixedVerticalPosition = true;
-                    radialview.FixedVerticalPosition = 0.9f;
+                    FollowObject = Assistances.InteractionSurfaceFollower.Instance.GetInteractionSurface();
 
                     //à modifier les interactions
                     InteractionSink = Assistances.Factory.Instance.CreateInteractionSurface("Practice-Sink", AdminMenu.Panels.Right, new Vector3(0.6f, 0.1f, 0.4f),
@@ -273,30 +280,7 @@ namespace MATCH
                 //Does the person come back to the faucet without having watered any plant?
                 Sequence AssistanceBTWP4()
                 {
-
-                    DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Called");
-
-                    PathFinding.PathFinding m_pathFinderEngine = gameObject.AddComponent<PathFinding.PathFinding>();
-
-                    Vector3[] corners = m_pathFinderEngine.ComputePath(InteractionSink.transform, InteractionPlant1.transform);
-
-                    GameObject gameObjectForLine = new GameObject("Line for " + 1);
-                    LineRenderer lineRenderer = gameObjectForLine.AddComponent<LineRenderer>();
-                    lineRenderer.startWidth = 0.017f;
-                    lineRenderer.endWidth = 0.017f;
-                    lineRenderer.material = Resources.Load(Utilities.Materials.Colors.GreenGlowing, typeof(Material)) as Material;
-                    lineRenderer.positionCount = 0;
-
-                    lineRenderer.positionCount = corners.Length;
-
-                    for (int i = 0; i < corners.Length; i++)
-                    {
-                        Vector3 corner = corners[i];
-
-                        lineRenderer.SetPosition(i, corner);
-
-                        DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Corner : " + corner);
-                    }
+                    ShowLightpathToPlant();
 
                     Assistances.GradationVisual.GradationVisual requestHelp = Assistances.GradationVisual.Factory.Instance.CreateAlreadyConfigured(Assistances.GradationVisual.Factory.AlreadyConfigured.DoYouNeedHelpDialog1,
                          "WateringThePlants-BTWP4", FollowObject.transform);
@@ -518,6 +502,33 @@ namespace MATCH
                     if (InteractionPlants.All(interactionPlant => interactionPlant.tag == "Watered"))
                     {
                         UpdateConditionWithMatrix(ConditionAllPlantsWatered);
+                    }
+                }
+
+                void ShowLightpathToPlant()
+                {
+                    DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Called");
+
+                    PathFinding.PathFinding m_pathFinderEngine = gameObject.AddComponent<PathFinding.PathFinding>();
+
+                    Vector3[] corners = m_pathFinderEngine.ComputePath(FollowObject.transform, InteractionPlant1.transform);
+
+                    GameObject gameObjectForLine = new GameObject("Line for " + 1);
+                    LineRenderer lineRenderer = gameObjectForLine.AddComponent<LineRenderer>();
+                    lineRenderer.startWidth = 0.017f;
+                    lineRenderer.endWidth = 0.017f;
+                    lineRenderer.material = Resources.Load(Utilities.Materials.Colors.GreenGlowing, typeof(Material)) as Material;
+                    lineRenderer.positionCount = 0;
+
+                    lineRenderer.positionCount = corners.Length;
+
+                    for (int i = 0; i < corners.Length; i++)
+                    {
+                        Vector3 corner = corners[i];
+
+                        lineRenderer.SetPosition(i, corner);
+
+                        DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Corner : " + corner);
                     }
                 }
 
