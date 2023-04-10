@@ -280,25 +280,35 @@ namespace MATCH
                 //Does the person come back to the faucet without having watered any plant?
                 Sequence AssistanceBTWP4()
                 {
-                    ShowLightpathToPlant();
+                    
 
                     Assistances.GradationVisual.GradationVisual requestHelp = Assistances.GradationVisual.Factory.Instance.CreateAlreadyConfigured(Assistances.GradationVisual.Factory.AlreadyConfigured.DoYouNeedHelpDialog1,
                          "WateringThePlants-BTWP4", FollowObject.transform);
 
                     Assistances.GradationVisual.GradationVisual dontKnow = Assistances.GradationVisual.Factory.Instance.CreateDialog2WithButtons("WateringThePlants-BTWP4-1", "",
-                        "Saviez ce que vous êtier en train de faire?", "Oui", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.Yes, 
+                        "Voulez vous savoir où sont vos plantes?", "Oui", delegate (System.Object o, EventArgs e)
+                        {
+                            InteractionPlant1.CallbackShow();
+                            InteractionPlant2.CallbackShow();
+                            InteractionPlant3.CallbackShow();
+                            ShowLightpathToPlant(InteractionPlant1);
+                            ShowLightpathToPlant(InteractionPlant2);
+                            ShowLightpathToPlant(InteractionPlant3);
+
+                        }, Assistances.Buttons.Button.ButtonType.Yes, 
                         "Non", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.No, FollowObject.transform);
 
                     Assistances.GradationVisual.GradationVisual letItGo = Assistances.GradationVisual.Factory.Instance.CreateAlreadyConfigured(Assistances.GradationVisual.Factory.AlreadyConfigured.LetGoDialog2,
                         "WateringThePlants-BTWP4-1", FollowObject.transform);
 
                     Assistances.GradationVisual.GradationVisual sayWhatToDo = Assistances.GradationVisual.Factory.Instance.CreateDialog2WithButtons("WateringThePlants-BTWP4-1", "",
-                        "Vous devez commencer à arroser les plantes", "Ok", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.Yes, "Je ne comprends pas",
+                        "Maintenant vos plantes sont indiquer en vert, Arroser-les maintenant", "Ok", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.Yes, "Je ne comprends pas",
                         Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.No, FollowObject.transform);
 
                     Assistances.GradationVisual.GradationVisual someoneComing = Assistances.GradationVisual.Factory.Instance.CreateAlreadyConfigured(Assistances.GradationVisual.Factory.AlreadyConfigured.SomeoneComingToHelpDialog2, "Watering-BTWP4-3", FollowObject.transform);
 
                     Assistances.AssistanceGradationExplicit BTWP4 = MATCH.Assistances.Factory.Instance.CreateAssistanceGradationExplicit("WateringThePlants-BTWP4");
+ 
                     BTWP4.transform.parent = transform;
 
                     BTWP4.AddAssistance(requestHelp, Assistances.Buttons.Button.ButtonType.Yes, dontKnow);
@@ -496,6 +506,7 @@ namespace MATCH
                         if (o.Equals(interactionPlant))
                         {
                             interactionPlant.tag = "Watered";
+                            interactionPlant.SetColor(Utilities.Materials.Colors.OrangeGlowing);
                         }
                     }
 
@@ -505,15 +516,15 @@ namespace MATCH
                     }
                 }
 
-                void ShowLightpathToPlant()
+                void ShowLightpathToPlant(Assistances.InteractionSurface plant)
                 {
                     DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Called");
 
                     PathFinding.PathFinding m_pathFinderEngine = gameObject.AddComponent<PathFinding.PathFinding>();
 
-                    Vector3[] corners = m_pathFinderEngine.ComputePath(FollowObject.transform, InteractionPlant1.transform);
+                    Vector3[] corners = m_pathFinderEngine.ComputePath(FollowObject.transform, plant.transform);
 
-                    GameObject gameObjectForLine = new GameObject("Line for " + 1);
+                    GameObject gameObjectForLine = new GameObject("Line for " + plant.name);
                     LineRenderer lineRenderer = gameObjectForLine.AddComponent<LineRenderer>();
                     lineRenderer.startWidth = 0.017f;
                     lineRenderer.endWidth = 0.017f;
