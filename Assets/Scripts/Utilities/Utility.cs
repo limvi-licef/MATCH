@@ -214,23 +214,9 @@ namespace MATCH
                 return false;
             }
 
-            public static List<Vector3> CalculateBezierCurve(Vector3 startPoint, Vector3 endPoint, bool vertical )
+            public static List<Vector3> CalculateBezierCurve(Vector3 startPoint, Vector3 endPoint, Vector3 cornerPoint)
             {
                 List<Vector3> points = new List<Vector3>();
-                Vector3 midPoint = new Vector3();
-
-                if (vertical)
-                {
-                    midPoint = (startPoint + endPoint) / 2;
-                    midPoint.y += 1.0f;
-                }
-                else
-                {
-                    endPoint.y -= 0.2f;
-                    startPoint.y -= 0.2f;
-                    midPoint = (startPoint + endPoint) / 2;
-                    midPoint.x += 1.0f;
-                }
                 
                 float t = 0.0f;
                 int nbPoints = 1000;
@@ -239,7 +225,7 @@ namespace MATCH
                 {
                     t = (float)i / (float)nbPoints;
 
-                    points.Add((1.0f - t) * (1.0f - t) * startPoint + 2 * (1 - t) * t * midPoint + t * t * endPoint);
+                    points.Add((1.0f - t) * (1.0f - t) * startPoint + 2 * (1 - t) * t * cornerPoint + t * t * endPoint);
                 }
 
                 return points;

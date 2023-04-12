@@ -321,7 +321,7 @@ namespace MATCH
                 return null;
             }
 
-            public Transform GetIcon()
+            public Assistances.Icon GetIcon()
             {
                 return null;
             }

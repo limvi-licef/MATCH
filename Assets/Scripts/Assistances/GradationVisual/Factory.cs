@@ -247,7 +247,7 @@ namespace MATCH
                     Decorators.Icon decoratorIcon2 = (Decorators.Icon)Assistances.Decorators.Factory.Instance.CreateIcon(decorator1, MATCH.Utilities.Materials.Icon.Club);
                     IPanel2 adapterIcon2 = Decorators.Adapters.Factory.Instance.CreateAdapterForIPanel2(decoratorIcon2, (IPanel2)decoratorIcon2.GetDecoratedAssistance());
 
-                    Decorators.Arch decorator2a = (Decorators.Arch)Assistances.Decorators.Factory.Instance.CreateArch(adapterIcon2);
+                    Decorators.Arch decorator2a = (Decorators.Arch)Assistances.Decorators.Factory.Instance.CreateArch(adapterIcon2,true);
                     /*IPanel2 adapterArch = new Adapters.IAssistanceToIPanel2(decorator2a, (IPanel2)decorator2a.GetDecoratedAssistance());*/
                     IPanel2 adapterArch = Decorators.Adapters.Factory.Instance.CreateAdapterForIPanel2(decorator2a, (IPanel2)decorator2a.GetDecoratedAssistance());
 
@@ -277,7 +277,7 @@ namespace MATCH
                     Decorators.BackgroundColorMessage2 decorator3a = (Decorators.BackgroundColorMessage2)Assistances.Decorators.Factory.Instance.CreateBackgroundMessage(adapterSound3, Utilities.Materials.Colors.PurpleGlowing);
 
 
-                    Decorators.Arch decoratorArch3 = (Decorators.Arch)Assistances.Decorators.Factory.Instance.CreateArch(decorator3a);
+                    Decorators.Arch decoratorArch3 = (Decorators.Arch)Assistances.Decorators.Factory.Instance.CreateArch(decorator3a,false);
                     /*IPanel2 adapterArch3 = new Adapters.IAssistanceToIPanel2(decoratorArch3, (IPanel2)decoratorArch3.GetDecoratedAssistance());*/
                     IPanel2 adapterArch3 = Decorators.Adapters.Factory.Instance.CreateAdapterForIPanel2(decoratorArch3, (IPanel2)decoratorArch3.GetDecoratedAssistance());
                     //------

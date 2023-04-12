@@ -115,7 +115,7 @@ namespace MATCH
                     return AssistanceToDecorate.GetArch();
                 }
 
-                public Transform GetIcon()
+                public Assistances.Icon GetIcon()
                 {
                     return AssistanceToDecorate.GetIcon();
                 }

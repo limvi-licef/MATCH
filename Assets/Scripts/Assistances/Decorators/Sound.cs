@@ -179,7 +179,7 @@ namespace MATCH
                     return PanelToDecorate.GetArch();
                 }
 
-                public Transform GetIcon()
+                public Assistances.Icon GetIcon()
                 {
                     return PanelToDecorate.GetIcon();
                 }

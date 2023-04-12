@@ -33,6 +33,7 @@ namespace MATCH
                 IAssistance PanelToDecorate;
                 //Transform LineView;
                 //LineToObject LineController;
+                bool IsArchVisible;
 
                 List<Vector3> points = new List<Vector3>();
 
@@ -66,14 +67,16 @@ namespace MATCH
                 }
 
 
-                public void SetAssistanceToDecorate(IAssistance toDecorate)
+                public void SetAssistanceToDecorate(IAssistance toDecorate, bool archVisible)
                 {
                     PanelToDecorate = toDecorate;
                     name = PanelToDecorate.GetAssistance().name + "_decoratorArch";             
 
                     transform.parent = PanelToDecorate.GetRootDecoratedAssistance().GetTransform();
                     transform.localPosition = PanelToDecorate.GetRootDecoratedAssistance().GetTransform().localPosition;
-                    
+
+                    IsArchVisible = archVisible;
+
                     Assistance temp = PanelToDecorate.GetRootDecoratedAssistance();
                     temp.EventHelpButtonClicked += delegate (System.Object o, EventArgs e)
                     {
@@ -116,8 +119,11 @@ namespace MATCH
                             PanelToDecorate.GetRootDecoratedAssistance().Show(Utilities.Utility.GetEventHandlerEmpty(), false);
 
                             PanelToDecorate.GetArch().gameObject.SetActive(false); //The decorated panels transform become invisible
-                            drawArch();
 
+                            if (IsArchVisible)
+                            {
+                                drawArch();
+                            }
 
                             callback?.Invoke(this, e);
                         }, withAnimation);
@@ -178,7 +184,7 @@ namespace MATCH
                     return transform;
                 }
 
-                public Transform GetIcon()
+                public Assistances.Icon GetIcon()
                 {
                     return PanelToDecorate.GetIcon();
                 }
@@ -194,8 +200,14 @@ namespace MATCH
                             
                             Vector3 PlayerPosFeet = pos.PositionWorld;
                             Vector3 FinalPos = PanelToDecorate.GetAssistance().GetTransform().position;
+                            FinalPos.y = FinalPos.y - 0.2f; //end of the arch under the assistance to avoid hiding the text
 
-                            points = MATCH.Utilities.Utility.CalculateBezierCurve(PlayerPosFeet, FinalPos, false);
+                            Vector3 LineUserAssistance = FinalPos - PlayerPosFeet;
+                            Vector3 NormalizedLine = new Vector3(-LineUserAssistance.z, 0, LineUserAssistance.x).normalized; //normalize the line in the xz plane
+                            //Vector3 NormalizedLine = new Vector3(-LineUserAssistance.y, LineUserAssistance.x, 0).normalized; //normalizes the line for a vertical arch
+                            Vector3 CornerPoint = Vector3.Reflect(Camera.main.transform.position - PlayerPosFeet*1.25f, NormalizedLine) + PlayerPosFeet*1.25f; //1.25f so that the point is a little further
+
+                            points = MATCH.Utilities.Utility.CalculateBezierCurve(PlayerPosFeet, FinalPos, CornerPoint);
                             lineRenderer.positionCount = points.Count;
                             for (int i = 0; i < points.Count; i++)
                             {

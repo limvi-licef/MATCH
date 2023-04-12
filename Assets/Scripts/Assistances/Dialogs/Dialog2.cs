@@ -1,4 +1,4 @@
-/*Copyright 2022 Guillaume Spalla, Marquet Louis, Lamour Léri
+/*Copyright 2022 Guillaume Spalla, Louis Marquet, Léri Lamour
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -422,9 +422,9 @@ namespace MATCH
                     return Arch;
                 }
 
-                public Transform GetIcon()
+                public Assistances.Icon GetIcon()
                 {
-                    return IconView.GetIconObjTransform();
+                    return IconView;
                 }
             }
 

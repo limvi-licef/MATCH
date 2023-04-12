@@ -1,4 +1,4 @@
-/*Copyright 2022 Guillaume Spalla, Marquet Loui, Lamour Léri
+/*Copyright 2022 Guillaume Spalla, Louis Marquet, Léri Lamour
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -213,14 +213,24 @@ namespace MATCH
                 transform.localPosition = localPosition;
             }
 
-            public void SetLocalPositionExclamationMark(Vector3 localPosition)
+            public void SetLocalPositionIcon(float x, float y, float z)
+            {
+                SetLocalPositionIcon(new Vector3(x, y, z));
+            }
+
+            public void SetLocalPositionIcon(Vector3 localPosition)
             {
                 IconObj.transform.localPosition = localPosition;
             }
 
-            public Vector3 GetLocalPosition()
+            public Vector3 GetLocalPositionIcon()
             {
                 return IconObj.transform.localPosition;
+            }
+
+            public Vector3 GetLocalPositionObject()
+            {
+                return transform.localPosition;
             }
 
             public void SetBillboard(bool enable)
@@ -268,9 +278,9 @@ namespace MATCH
                 return null;
             }
 
-            public Transform GetIcon()
+            public Icon GetIcon()
             {
-                return this.transform;
+                return this;
             }
         }
     }

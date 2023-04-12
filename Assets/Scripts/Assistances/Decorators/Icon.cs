@@ -58,6 +58,8 @@ namespace MATCH
                     transform.localPosition = PanelToDecorate.GetRootDecoratedAssistance().GetTransform().localPosition;
 
                     IconView = Assistances.Factory.Instance.CreateIcon(true, new Vector3(0, 0, 0), true, GetTransform(), IconType);
+                    IconView.SetScale(PanelToDecorate.GetIcon().GetScale());
+                    IconView.SetLocalPositionObject(PanelToDecorate.GetIcon().GetLocalPositionObject());
 
                     Assistance temp = PanelToDecorate.GetRootDecoratedAssistance();
                     temp.EventHelpButtonClicked += delegate (System.Object o, EventArgs e)
@@ -73,7 +75,7 @@ namespace MATCH
                     {
                         PanelToDecorate.GetAssistance().Hide(delegate (System.Object o, EventArgs e)
                         {
-                            GetIcon().gameObject.SetActive(false);
+                            GetIcon().GetIconObjTransform().gameObject.SetActive(false);
 
 
                             IsDisplayed = false;
@@ -100,10 +102,10 @@ namespace MATCH
                         {
                             PanelToDecorate.GetRootDecoratedAssistance().Show(Utilities.Utility.GetEventHandlerEmpty(), false);
 
-                            PanelToDecorate.GetIcon().gameObject.SetActive(false); //The decorated panels transform become invisible
+                            PanelToDecorate.GetIcon().GetIconObjTransform().gameObject.SetActive(false); //The decorated panels transform become invisible
 
-                            IconView.SetScale(0.05f, 0.05f, 0.05f); // Set the scale to having tiny icon that feat in the circle ! This rescale is just for the dialog2
-                            IconView.SetLocalPositionObject(0.1075f, 0.068f, -0.02f); //Set position to be in center of the circle
+                            //IconView.SetScale(0.05f, 0.05f, 0.05f); // Set the scale to having tiny icon that feat in the circle ! This rescale is just for the dialog2
+                            //IconView.SetLocalPositionObject(0.1075f, 0.068f, -0.02f); //Set position to be in center of the circle
                             IconView.GetIconObjTransform().gameObject.SetActive(true);
 
                             callback?.Invoke(this, e);
@@ -116,7 +118,7 @@ namespace MATCH
                         {
                             Utilities.EventHandlerArgs.Animation args = new Utilities.EventHandlerArgs.Animation();
 
-                            PanelToDecorate.GetIcon().gameObject.SetActive(false); //The decorated panels transform become invisible
+                            PanelToDecorate.GetIcon().GetIconObjTransform().gameObject.SetActive(false); //The decorated panels transform become invisible
 
                             args.Success = false;
                             callback?.Invoke(this, args);
@@ -165,9 +167,9 @@ namespace MATCH
                     return PanelToDecorate.GetArch();
                 }
 
-                public Transform GetIcon()
+                public Assistances.Icon GetIcon()
                 {
-                    return IconView.GetTransform();
+                    return IconView;
                 }
             }
         }

@@ -1,4 +1,4 @@
-/*Copyright 2022 Guillaume Spalla
+/*Copyright 2022 Guillaume Spalla, Louis Marquet, Léri Lamour
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -141,14 +141,14 @@ namespace MATCH
                     return controller;
                 }
 
-                public MATCH.Assistances.Assistance CreateArch(MATCH.Assistances.IAssistance toDecorate)
+                public MATCH.Assistances.Assistance CreateArch(MATCH.Assistances.IAssistance toDecorate, bool IsArchVisible)
                 {
                     Transform view = Utilities.Materials.Prefabs.Load(Utilities.Materials.Prefabs.DecoratorArch);
                     view.name = toDecorate.GetAssistance().name;
 
                     Assistances.Decorators.Arch controller = view.GetComponent<Assistances.Decorators.Arch>();
 
-                    controller.SetAssistanceToDecorate(toDecorate);
+                    controller.SetAssistanceToDecorate(toDecorate, IsArchVisible);
 
                     return controller;
                 }
