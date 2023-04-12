@@ -38,7 +38,6 @@ namespace MATCH
                 string ConditionBeginning = "Beginning";
                 string ConditionBottleFilled = "BottleFilled";
                 string ConditionHelpNeeded = "HelpNeeded";
-                string ConditionHelpRequested = "HelpRequested";
                 string ConditionHelpRequestedAgain = "HelpRequestedAgain";
                 string ConditionPlantWatered = "PlantWatered";
                 string ConditionAllPlantsWatered = "AllPlantsWatered";
@@ -98,7 +97,6 @@ namespace MATCH
                     AddCondition(ConditionBeginning, false);
                     AddCondition(ConditionBottleFilled, false);
                     AddCondition(ConditionHelpNeeded, false);
-                    AddCondition(ConditionHelpRequested, false);
                     AddCondition(ConditionHelpRequestedAgain, false);
                     AddCondition(ConditionPlantWatered, false);
                     AddCondition(ConditionAllPlantsWatered, false);
@@ -107,14 +105,13 @@ namespace MATCH
 
                     int nbConditions = GetNumberOfConditions();
 
-                    AddConditionsUpdate(ConditionBeginning, new bool[]             { true, false, false, false, false, false, false, false });
-                    AddConditionsUpdate(ConditionBottleFilled, new bool[]          { false, true, false, false, false, false, false, false });
-                    AddConditionsUpdate(ConditionHelpNeeded, new bool[]            { false, false, true, false, false, false, false, false });
-                    AddConditionsUpdate(ConditionHelpRequested, new bool[]         { false, false, false, true, false, false, false, false });
-                    AddConditionsUpdate(ConditionHelpRequestedAgain, new bool[]    { false, false, false, false, true, false, false, false });
-                    AddConditionsUpdate(ConditionPlantWatered, new bool[]          { false, false, false, false, false, true, false, false });
-                    AddConditionsUpdate(ConditionAllPlantsWatered, new bool[]      { false, false, false, false, false, false, true, false });
-                    AddConditionsUpdate(ConditionWateringInterrupted, new bool[]   { false, false, false, false, false, false, false, true });
+                    AddConditionsUpdate(ConditionBeginning, new bool[]             { true, false, false, false, false, false, false });
+                    AddConditionsUpdate(ConditionBottleFilled, new bool[]          { false, true, false, false, false, false, false });
+                    AddConditionsUpdate(ConditionHelpNeeded, new bool[]            { false, false, true, false, false, false, false });
+                    AddConditionsUpdate(ConditionHelpRequestedAgain, new bool[]    { false, false, false, true, false, false, false });
+                    AddConditionsUpdate(ConditionPlantWatered, new bool[]          { false, false, false, false, true, false, false });
+                    AddConditionsUpdate(ConditionAllPlantsWatered, new bool[]      { false, false, false, false, false, true, false });
+                    AddConditionsUpdate(ConditionWateringInterrupted, new bool[]   { false, false, false, false, false, false, true });
                     // End of code generation using the EXCEL file
 
                     UpdateConditionWithMatrix(ConditionBeginning);
@@ -124,7 +121,6 @@ namespace MATCH
                         new BlackboardCondition(ConditionBeginning, Operator.IS_EQUAL, true, Stops.IMMEDIATE_RESTART, AssistanceBTWP7()),
                         new BlackboardCondition(ConditionBottleFilled, Operator.IS_EQUAL, true, Stops.IMMEDIATE_RESTART, AssistanceBTWP5()),
                         new BlackboardCondition(ConditionHelpNeeded, Operator.IS_EQUAL, true, Stops.IMMEDIATE_RESTART, AssistanceBTWP4()),
-                        new BlackboardCondition(ConditionHelpRequested, Operator.IS_EQUAL, true, Stops.IMMEDIATE_RESTART, AssistanceBTWP6()),
                         new BlackboardCondition(ConditionHelpRequestedAgain, Operator.IS_EQUAL, true, Stops.IMMEDIATE_RESTART, AssistanceBTWP3()),
                         new BlackboardCondition(ConditionPlantWatered, Operator.IS_EQUAL, true, Stops.IMMEDIATE_RESTART, AssistanceBTWP2()),
                         new BlackboardCondition(ConditionWateringInterrupted, Operator.IS_EQUAL, true, Stops.IMMEDIATE_RESTART, AssistanceBTWP8()),
@@ -157,11 +153,6 @@ namespace MATCH
                     AdminMenu.Instance.AddButton("BT - Watering - Trigger - help needed", delegate
                     {
                         UpdateConditionWithMatrix(ConditionHelpNeeded);
-                    }, AdminMenu.Panels.Right);
-
-                    AdminMenu.Instance.AddButton("BT - Watering - Trigger - help requested", delegate
-                    {
-                        UpdateConditionWithMatrix(ConditionHelpRequested);
                     }, AdminMenu.Panels.Right);
 
                     AdminMenu.Instance.AddButton("BT - Watering - Trigger - help requested again", delegate
@@ -333,22 +324,6 @@ namespace MATCH
                             InferenceManager.UnregisterAllInferences();
                             UpdateTextAssistancesDebugWindow("BTWP4");
                             MATCH.Utilities.Logger.Instance.Log(this.GetId(), MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, "BTWP4");
-                        }),
-                        new WaitUntilStopped()
-                        );
-
-                    return temp;
-                }
-
-                //Does the person request some help?
-                Sequence AssistanceBTWP6()
-                {
-                    Sequence temp = new Sequence(
-                        new NPBehave.Action(() => {
-                            //ShowAssistanceHideOthers(alpha);
-      
-                            UpdateTextAssistancesDebugWindow("BTWP6");
-                            MATCH.Utilities.Logger.Instance.Log(this.GetId(), MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, "BTWP6");
                         }),
                         new WaitUntilStopped()
                         );
