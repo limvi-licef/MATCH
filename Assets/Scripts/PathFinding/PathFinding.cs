@@ -151,7 +151,7 @@ namespace MATCH
 
                 Vector3 scaling = new Vector3(0.1f, 0.1f, 0.1f);
 
-                ObstaclesManager.AddObstacle("Obstacle " + (ObstaclesManager.GetObstacles().Count + 1).ToString(), scaling, position, Utilities.Materials.Colors.WhiteTransparent, true, false, transform);
+                ObstaclesManager.AddObstacle("Obstacle " + (ObstaclesManager.GetObstacles().Count + 1).ToString(), scaling, position, Utilities.Materials.Colors.WhiteTransparent, true, false, true, transform);
             }
 
             void CallbackObstacleResizedOrMoved(System.Object sender, EventArgs e)
