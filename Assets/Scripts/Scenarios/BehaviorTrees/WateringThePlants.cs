@@ -41,7 +41,6 @@ namespace MATCH
                 string ConditionHelpRequestedAgain = "HelpRequestedAgain";
                 string ConditionPlantWatered = "PlantWatered";
                 string ConditionAllPlantsWatered = "AllPlantsWatered";
-                string ConditionWateringInterrupted = "CleaningWateringInterrupted";
 
                 string InferenceFarFromBottle = "FarFromBottle";
                 float InferenceFarFromBottleDistance = 4.0f;
@@ -100,18 +99,16 @@ namespace MATCH
                     AddCondition(ConditionHelpRequestedAgain, false);
                     AddCondition(ConditionPlantWatered, false);
                     AddCondition(ConditionAllPlantsWatered, false);
-                    AddCondition(ConditionWateringInterrupted, false);
 
 
                     int nbConditions = GetNumberOfConditions();
 
-                    AddConditionsUpdate(ConditionBeginning, new bool[]             { true, false, false, false, false, false, false });
-                    AddConditionsUpdate(ConditionBottleFilled, new bool[]          { false, true, false, false, false, false, false });
-                    AddConditionsUpdate(ConditionHelpNeeded, new bool[]            { false, false, true, false, false, false, false });
-                    AddConditionsUpdate(ConditionHelpRequestedAgain, new bool[]    { false, false, false, true, false, false, false });
-                    AddConditionsUpdate(ConditionPlantWatered, new bool[]          { false, false, false, false, true, false, false });
-                    AddConditionsUpdate(ConditionAllPlantsWatered, new bool[]      { false, false, false, false, false, true, false });
-                    AddConditionsUpdate(ConditionWateringInterrupted, new bool[]   { false, false, false, false, false, false, true });
+                    AddConditionsUpdate(ConditionBeginning, new bool[]             { true, false, false, false, false, false });
+                    AddConditionsUpdate(ConditionBottleFilled, new bool[]          { false, true, false, false, false, false });
+                    AddConditionsUpdate(ConditionHelpNeeded, new bool[]            { false, false, true, false, false, false });
+                    AddConditionsUpdate(ConditionHelpRequestedAgain, new bool[]    { false, false, false, true, false, false });
+                    AddConditionsUpdate(ConditionPlantWatered, new bool[]          { false, false, false, false, true, false });
+                    AddConditionsUpdate(ConditionAllPlantsWatered, new bool[]      { false, false, false, false, false, true });
                     // End of code generation using the EXCEL file
 
                     UpdateConditionWithMatrix(ConditionBeginning);
@@ -123,7 +120,6 @@ namespace MATCH
                         new BlackboardCondition(ConditionHelpNeeded, Operator.IS_EQUAL, true, Stops.IMMEDIATE_RESTART, AssistanceBTWP4()),
                         new BlackboardCondition(ConditionHelpRequestedAgain, Operator.IS_EQUAL, true, Stops.IMMEDIATE_RESTART, AssistanceBTWP3()),
                         new BlackboardCondition(ConditionPlantWatered, Operator.IS_EQUAL, true, Stops.IMMEDIATE_RESTART, AssistanceBTWP2()),
-                        new BlackboardCondition(ConditionWateringInterrupted, Operator.IS_EQUAL, true, Stops.IMMEDIATE_RESTART, AssistanceBTWP8()),
                         new WaitUntilStopped()
                         );
 
@@ -271,8 +267,6 @@ namespace MATCH
                 //Does the person come back to the faucet without having watered any plant?
                 Sequence AssistanceBTWP4()
                 {
-                    
-
                     Assistances.GradationVisual.GradationVisual requestHelp = Assistances.GradationVisual.Factory.Instance.CreateAlreadyConfigured(Assistances.GradationVisual.Factory.AlreadyConfigured.DoYouNeedHelpDialog1,
                          "WateringThePlants-BTWP4", FollowObject.transform);
 
@@ -363,65 +357,15 @@ namespace MATCH
                             InferenceManager.UnregisterInference(InferenceInterruptWatering);
 
                             //Démarrage du timer
-                            inf1 = new Inferences.Timer(ConditionWateringInterrupted, 15, delegate (System.Object oo, EventArgs ee)
+                            inf1 = new Inferences.Timer(ConditionHelpNeeded, 15, delegate (System.Object oo, EventArgs ee)
                             {
-                                    UpdateConditionWithMatrix(ConditionWateringInterrupted);
+                                    UpdateConditionWithMatrix(ConditionHelpNeeded);
                                     InferenceManager.UnregisterInference(InferenceInterruptWatering);
                             });
                             InferenceManager.RegisterInference(inf1);
                             inf1.StartCounter();
                             UpdateTextAssistancesDebugWindow("Interupt water : Timer started");
 
-                            MATCH.Utilities.Logger.Instance.Log(this.GetId(), MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, " BTWP2 : One plant watered");
-                        }),
-                        new WaitUntilStopped()
-                        );
-
-                    return temp;
-                }
-
-                //Did the person stop in the middle of the activity?
-                Sequence AssistanceBTWP8()
-                {
-                    Assistances.GradationVisual.GradationVisual helpNeeded = Assistances.GradationVisual.Factory.Instance.CreateAlreadyConfigured(Assistances.GradationVisual.Factory.AlreadyConfigured.DoYouNeedHelpDialog1,
-                        "WateringThePlants-BTWP8", FollowObject.transform);
-
-                    Assistances.GradationVisual.GradationVisual dontKnow = Assistances.GradationVisual.Factory.Instance.CreateDialog2WithButtons("WateringThePlants-BTWP8-1", "",
-                        "Saviez ce que vous êtier en train de faire?", "Oui", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.Yes,
-                        "Non", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.No, FollowObject.transform);
-
-                    Assistances.GradationVisual.GradationVisual letItGo = Assistances.GradationVisual.Factory.Instance.CreateAlreadyConfigured(Assistances.GradationVisual.Factory.AlreadyConfigured.LetGoDialog2,
-                        "WateringThePlants-BTWP8-1", FollowObject.transform);
-
-                    Assistances.GradationVisual.GradationVisual sayWhatToDo = Assistances.GradationVisual.Factory.Instance.CreateDialog2WithButtons("WateringThePlants-BTWP8-1", "",
-                        "Vous devez continuer à arroser les plantes", "Ok", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.Yes, "Je ne comprends pas", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.No, FollowObject.transform);
-
-                    Assistances.GradationVisual.GradationVisual someoneComing = Assistances.GradationVisual.Factory.Instance.CreateAlreadyConfigured(Assistances.GradationVisual.Factory.AlreadyConfigured.SomeoneComingToHelpDialog2, "WateringThePlants-BTWP8-3", FollowObject.transform);
-
-                    Assistances.AssistanceGradationExplicit BTWP8 = MATCH.Assistances.Factory.Instance.CreateAssistanceGradationExplicit("WateringThePlants-BTWP8");
-                    BTWP8.transform.parent = transform;
-
-                    BTWP8.AddAssistance(helpNeeded, Assistances.Buttons.Button.ButtonType.Yes, dontKnow);
-                    BTWP8.AddAssistance(helpNeeded, Assistances.Buttons.Button.ButtonType.No, letItGo);
-                    BTWP8.AddAssistance(dontKnow, Assistances.Buttons.Button.ButtonType.Yes, letItGo);
-                    BTWP8.AddAssistance(dontKnow, Assistances.Buttons.Button.ButtonType.No, sayWhatToDo);
-                    BTWP8.AddAssistance(sayWhatToDo, Assistances.Buttons.Button.ButtonType.Yes, letItGo);
-                    BTWP8.AddAssistance(sayWhatToDo, Assistances.Buttons.Button.ButtonType.No, someoneComing);
-
-                    BTWP8.AddAssistance(letItGo, Assistances.Buttons.Button.ButtonType.ClosingButton, null);
-                    BTWP8.AddAssistance(someoneComing, Assistances.Buttons.Button.ButtonType.ClosingButton, null);
-
-
-
-                    AssistancesWatering.Add(BTWP8, false);
-                    BTWP8.Init();
-                    Sequence temp = new Sequence(
-                        new NPBehave.Action(() =>
-                        {
-                            BTWP8.RunAssistance();
-                            AssistancesWatering[BTWP8] = true;
-                            InferenceManager.UnregisterAllInferences();
-                            UpdateTextAssistancesDebugWindow("Are you finished?");
                             MATCH.Utilities.Logger.Instance.Log(this.GetId(), MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, " BTWP2 : One plant watered");
                         }),
                         new WaitUntilStopped()
