@@ -1,4 +1,4 @@
-/*Copyright 2022 Guillaume Spalla
+/*Copyright 2022 Guillaume Spalla, Marquet Louis, Lamour Léri
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -39,9 +39,10 @@ namespace MATCH
                 Transform BackgroundParent;
                 Transform BackgroundMessage;
                 Transform BackgroundIcon;
-                Transform IconView;
+                Icon IconView;
                 Transform Sound;
                 Transform Arch;
+                string IconType;
                 //List<Transform> ButtonsView;
                 //public List<Buttons.Basic> ButtonsController;
 
@@ -77,7 +78,10 @@ namespace MATCH
                     BackgroundParent = gameObject.transform.Find("Dialog");
                     BackgroundMessage = BackgroundParent.Find("Modale-Support_Cube.010");
                     BackgroundIcon = BackgroundParent.Find("Modale-Rond_Cylinder.003");
-                    IconView = gameObject.transform.Find("ExclamationMark");
+                    IconView = Assistances.Factory.Instance.CreateIcon(true, new Vector3(0, 0, 0), true, GetTransform(), MATCH.Utilities.Materials.Icon.ExclamationMark);
+                    IconView.SetScale(0.05f, 0.05f, 0.05f); // Set the scale to having tiny icon that feat in the circle
+                    IconView.SetLocalPositionObject(0.1075f, 0.068f, -0.02f); //Set position to be in center of the circle
+
                     Sound = gameObject.transform.Find("Sound");
                     Arch = gameObject.transform.Find("Arch");
 
@@ -86,7 +90,7 @@ namespace MATCH
                     BackgroundScalingOriginal = BackgroundMessage.localScale;
                     TitleScalingOriginal = TitleView.localScale;
                     DescriptionScalingOriginal = DescriptionView.localScale;
-                    IconScalingOriginal = IconView.localScale;
+                    //IconScalingOriginal = IconView.GetChildTransform().localScale;
 
                     // Storing the original center and size of the box collider
                     BoxCollider box = transform.GetComponent<BoxCollider>();
@@ -227,7 +231,7 @@ namespace MATCH
                             ButtonsParentView.gameObject.SetActive(false);
                             BackgroundMessage.gameObject.SetActive(false);
                             BackgroundIcon.gameObject.SetActive(false);
-                            IconView.gameObject.SetActive(false);
+                            IconView.GetIconObjTransform().gameObject.SetActive(false);
                             IsDisplayed = false;
                             args.Success = true;
                             eventHandler?.Invoke(this, args);
@@ -277,7 +281,7 @@ namespace MATCH
                             BackgroundIcon.gameObject.SetActive(true);
                             BackgroundMessage.transform.localScale = BackgroundScalingOriginal;
                             BackgroundIcon.transform.localScale = BackgroundScalingOriginal;
-                            IconView.gameObject.SetActive(true);
+                            IconView.GetIconObjTransform().gameObject.SetActive(true);
 
                             TitleView.gameObject.SetActive(true);
                             DescriptionView.gameObject.SetActive(true);

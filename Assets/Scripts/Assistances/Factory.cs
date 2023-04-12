@@ -1,4 +1,4 @@
-/*Copyright 2022 Guillaume Spalla, Louis Marquet
+/*Copyright 2022 Guillaume Spalla, Louis Marquet, Lamour Léri
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -200,14 +200,16 @@ namespace MATCH
                 return cube;
             }
 
-            public ExclamationMark CreateExclamationMark(bool adjustHeight, Vector3 localPosition, bool enableBillboard, Transform parent)
+            public Icon CreateIcon(bool adjustHeight, Vector3 localPosition, bool enableBillboard, Transform parent, string iconType)
             {
-                Transform view = Utilities.Materials.Prefabs.Load(Utilities.Materials.Prefabs.AssistanceExclamationMark).transform;
+                Transform view = Utilities.Materials.Prefabs.Load(Utilities.Materials.Prefabs.AssistanceIcon).transform;
+
                 view.parent = parent;
                 view.transform.localPosition = localPosition;
 
-                ExclamationMark controller = view.GetComponent<ExclamationMark>();
+                Icon controller = view.GetComponent<Icon>();
                 controller.AdjustHeightOnShow = adjustHeight;
+                controller.setIconType(iconType);
                 controller.SetLocalPositionObject(localPosition);
                 controller.SetBillboard(enableBillboard);
 

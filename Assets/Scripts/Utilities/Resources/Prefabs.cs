@@ -55,6 +55,7 @@ namespace MATCH
                 public static string AssistanceDialogToDoList = Path + "Assistances/Dialogs/ToDoList";
                 public static string AssistanceDialogCheckList = Path + "Assistances/Dialogs/CheckList";
                 public static string AssistanceExclamationMark = Path + "Assistances/ExclamationMark";
+                public static string AssistanceIcon = Path + "Assistances/Icon";
                 public static string AssistanceDialog2 = Path + "Assistances/Dialogs/Dialog2";
 
                 public static string InferenceManager = Path + "Inferences/Manager";
