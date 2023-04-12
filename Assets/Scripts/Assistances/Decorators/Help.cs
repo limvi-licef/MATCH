@@ -94,6 +94,11 @@ namespace MATCH
                 {
                     return AssistanceToDecorate.GetArch();
                 }
+
+                public Transform GetIcon()
+                {
+                    return AssistanceToDecorate.GetIcon();
+                }
             }
         }
     }

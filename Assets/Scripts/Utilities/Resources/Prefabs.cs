@@ -42,6 +42,7 @@ namespace MATCH
                 public static string DecoratorEdge = Path + "Assistances/Decorators/Edge";
                 public static string DecoratorSound = Path + "Assistances/Decorators/Sound";
                 public static string DecoratorArch = Path + "Assistances/Decorators/Arch";
+                public static string DecoratorIcon = Path + "Assistances/Decorators/Icon";
 
                 public static string AssistanceGradationAttention = Path + "Assistances/Gradation/Attention";
                 public static string AssistanceGradationExplicit = Path + "Assistances/Gradation/Explicit";

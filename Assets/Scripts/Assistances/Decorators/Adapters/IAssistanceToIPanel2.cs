@@ -49,7 +49,6 @@ namespace MATCH
 
                     public override void Show(EventHandler callback, bool withAnimation)
                     {
-                        //useless method ? (necessary to be an assistance (only assistances can be added to gradation visual)
                         AssistanceToAdapt.GetAssistance().Show(callback, withAnimation);
                     }
 
@@ -111,6 +110,11 @@ namespace MATCH
                     public override void ShowHelp(bool show, EventHandler callback, bool withAnimation)
                     {
                         AssistanceToAdapt.GetRootDecoratedAssistance().ShowHelp(show, callback, withAnimation); //Decorated ?
+                    }
+
+                    public Transform GetIcon()
+                    {
+                        return AssistanceToAdapt.GetIcon();
                     }
                 }
             }

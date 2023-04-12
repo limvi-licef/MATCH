@@ -9,12 +9,12 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8723506847625754619}
-  - component: {fileID: 1757540633099477273}
   - component: {fileID: 8048540502344717505}
   - component: {fileID: 7832485756419053207}
   - component: {fileID: 7961304440176869385}
   - component: {fileID: 6905321189596234243}
   - component: {fileID: 8083894303615919987}
+  - component: {fileID: 5706837297425175209}
   m_Layer: 0
   m_Name: Icon
   m_TagString: Untagged
@@ -41,19 +41,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1757540633099477273
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7019961915251868429}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 52e66ca206c54fc4c8b6b1896eb2cf53, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  iconType: 
 --- !u!65 &8048540502344717505
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -133,7 +120,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1410eac1ae94b4d4492a09cc368e152c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  states: {fileID: 0}
+  states: {fileID: 11400000, guid: 5eac1712038236e4b8ffdb3893804fe1, type: 2}
   InputActionId: 0
   isGlobal: 0
   Dimensions: 1
@@ -143,7 +130,10 @@ MonoBehaviour:
   CanDeselect: 1
   voiceCommand: 
   voiceRequiresFocus: 1
-  profiles: []
+  profiles:
+  - Target: {fileID: 0}
+    Themes:
+    - {fileID: 0}
   OnClick:
     m_PersistentCalls:
       m_Calls: []
@@ -169,6 +159,19 @@ MonoBehaviour:
   localCenter: {x: 0, y: 0, z: 0}
   bounds: {x: 0, y: 0}
   touchableCollider: {fileID: 8048540502344717505}
+--- !u!114 &5706837297425175209
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7019961915251868429}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ce468ee605e6fb34f9713de22de09f39, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  iconType: 
 --- !u!1001 &3453230271089512699
 PrefabInstance:
   m_ObjectHideFlags: 0

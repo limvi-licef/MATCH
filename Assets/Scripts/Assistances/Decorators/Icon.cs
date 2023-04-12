@@ -28,30 +28,13 @@ namespace MATCH
     {
         namespace Decorators
         {
-            public class Arch : Assistance, IAssistance
+            public class Icon : Assistance, IAssistance
             {
                 IAssistance PanelToDecorate;
-                //Transform LineView;
-                //LineToObject LineController;
+                Assistances.Icon IconView;
 
-                List<Vector3> points = new List<Vector3>();
-
-                //EventHandler classEvent;
-
-                private LineRenderer lineRenderer;
-                //private bool toShow=false;
                 private void Awake()
                 {
-                    //LineView = gameObject.transform.Find("Line");
-                    //LineController = LineView.GetComponent<LineToObject>();
-                    lineRenderer = GetComponent<LineRenderer>();
-                    lineRenderer.positionCount = 2;
-                    lineRenderer.SetPosition(0, Vector3.zero);
-                    lineRenderer.SetPosition(1, Vector3.zero);
-                    lineRenderer.startWidth = 0.1f;
-                    lineRenderer.endWidth = 0.1f;
-                    lineRenderer.startColor = Color.red;
-                    lineRenderer.endColor = Color.red;
 
                 }
 
@@ -62,18 +45,20 @@ namespace MATCH
 
                 public void Update()
                 {
-                
+
                 }
 
 
-                public void SetAssistanceToDecorate(IAssistance toDecorate)
+                public void SetAssistanceToDecorate(IAssistance toDecorate,string IconType)
                 {
                     PanelToDecorate = toDecorate;
-                    name = PanelToDecorate.GetAssistance().name + "_decoratorArch";             
+                    name = PanelToDecorate.GetAssistance().name + "_decoratorIcon";
 
                     transform.parent = PanelToDecorate.GetRootDecoratedAssistance().GetTransform();
                     transform.localPosition = PanelToDecorate.GetRootDecoratedAssistance().GetTransform().localPosition;
-                    
+
+                    IconView = Assistances.Factory.Instance.CreateIcon(true, new Vector3(0, 0, 0), true, GetTransform(), IconType);
+
                     Assistance temp = PanelToDecorate.GetRootDecoratedAssistance();
                     temp.EventHelpButtonClicked += delegate (System.Object o, EventArgs e)
                     {
@@ -88,8 +73,8 @@ namespace MATCH
                     {
                         PanelToDecorate.GetAssistance().Hide(delegate (System.Object o, EventArgs e)
                         {
-                            GetArch().gameObject.SetActive(false);
-                            
+                            GetIcon().gameObject.SetActive(false);
+
 
                             IsDisplayed = false;
 
@@ -115,9 +100,11 @@ namespace MATCH
                         {
                             PanelToDecorate.GetRootDecoratedAssistance().Show(Utilities.Utility.GetEventHandlerEmpty(), false);
 
-                            PanelToDecorate.GetArch().gameObject.SetActive(false); //The decorated panels transform become invisible
-                            drawArch();
+                            PanelToDecorate.GetIcon().gameObject.SetActive(false); //The decorated panels transform become invisible
 
+                            IconView.SetScale(0.05f, 0.05f, 0.05f); // Set the scale to having tiny icon that feat in the circle ! This rescale is just for the dialog2
+                            IconView.SetLocalPositionObject(0.1075f, 0.068f, -0.02f); //Set position to be in center of the circle
+                            IconView.GetIconObjTransform().gameObject.SetActive(true);
 
                             callback?.Invoke(this, e);
                         }, withAnimation);
@@ -129,8 +116,8 @@ namespace MATCH
                         {
                             Utilities.EventHandlerArgs.Animation args = new Utilities.EventHandlerArgs.Animation();
 
-                            PanelToDecorate.GetArch().gameObject.SetActive(false); //The decorated panels transform become invisible
-                   
+                            PanelToDecorate.GetIcon().gameObject.SetActive(false); //The decorated panels transform become invisible
+
                             args.Success = false;
                             callback?.Invoke(this, args);
                         }, withAnimation);
@@ -175,35 +162,12 @@ namespace MATCH
 
                 public Transform GetArch()
                 {
-                    return transform;
+                    return PanelToDecorate.GetArch();
                 }
 
                 public Transform GetIcon()
                 {
-                    return PanelToDecorate.GetIcon();
-                }
-
-
-                private void drawArch()
-                {
-                    if (IsDisplayed)
-                    {
-                        MATCH.Assistances.InteractionSurfaceFollower.Instance.GetInteractionSurface().EventUserMoved += delegate (System.Object o, EventArgs e)
-                        {
-                            Utilities.EventHandlerArgs.Position pos = (Utilities.EventHandlerArgs.Position)e;
-                            
-                            Vector3 PlayerPosFeet = pos.PositionWorld;
-                            Vector3 FinalPos = PanelToDecorate.GetAssistance().GetTransform().position;
-
-                            points = MATCH.Utilities.Utility.CalculateBezierCurve(PlayerPosFeet, FinalPos, false);
-                            lineRenderer.positionCount = points.Count;
-                            for (int i = 0; i < points.Count; i++)
-                            {
-                                lineRenderer.SetPosition(i, points[i]);
-                            }
-
-                        };
-                    }
+                    return IconView.GetTransform();
                 }
             }
         }

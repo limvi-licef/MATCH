@@ -178,6 +178,11 @@ namespace MATCH
                 {
                     return PanelToDecorate.GetArch();
                 }
+
+                public Transform GetIcon()
+                {
+                    return PanelToDecorate.GetIcon();
+                }
             }
         }
     }

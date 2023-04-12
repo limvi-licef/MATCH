@@ -153,6 +153,18 @@ namespace MATCH
                     return controller;
                 }
 
+                public MATCH.Assistances.Assistance CreateIcon(MATCH.Assistances.IAssistance toDecorate, string IconType)
+                {
+                    Transform view = Utilities.Materials.Prefabs.Load(Utilities.Materials.Prefabs.DecoratorIcon);
+                    view.name = toDecorate.GetAssistance().name;
+
+                    Assistances.Decorators.Icon controller = view.GetComponent<Assistances.Decorators.Icon>();
+
+                    controller.SetAssistanceToDecorate(toDecorate,IconType);
+
+                    return controller;
+                }
+
             }
         }
     }

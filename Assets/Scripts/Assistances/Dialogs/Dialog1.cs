@@ -376,8 +376,12 @@ namespace MATCH
                 {
                     return null;
                 }
-            }
 
+                public Transform GetIcon()
+                {
+                    return null;
+                }
+            }
         }
     }
 }

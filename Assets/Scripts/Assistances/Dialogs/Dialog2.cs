@@ -421,6 +421,11 @@ namespace MATCH
                 {
                     return Arch;
                 }
+
+                public Transform GetIcon()
+                {
+                    return IconView.GetIconObjTransform();
+                }
             }
 
         }

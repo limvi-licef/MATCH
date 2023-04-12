@@ -36,6 +36,7 @@ namespace MATCH
 
             public Transform GetSound();
             public Transform GetArch();
+            public Transform GetIcon();
         }
     }
 }
