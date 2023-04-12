@@ -287,7 +287,7 @@ namespace MATCH
                         "WateringThePlants-BTWP4-1", FollowObject.transform);
 
                     Assistances.GradationVisual.GradationVisual sayWhatToDo = Assistances.GradationVisual.Factory.Instance.CreateDialog2WithButtons("WateringThePlants-BTWP4-1", "",
-                        "Maintenant vos plantes sont indiquer en vert, Arroser-les maintenant", "Ok", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.Yes, "Je ne comprends pas",
+                        "Vos plantes sont indiquées en vert, Arroser-les maintenant", "Ok", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.Yes, "Je ne comprends pas",
                         Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.No, FollowObject.transform);
 
                     Assistances.GradationVisual.GradationVisual someoneComing = Assistances.GradationVisual.Factory.Instance.CreateAlreadyConfigured(Assistances.GradationVisual.Factory.AlreadyConfigured.SomeoneComingToHelpDialog2, "Watering-BTWP4-3", FollowObject.transform);
@@ -298,8 +298,8 @@ namespace MATCH
 
                     BTWP4.AddAssistance(requestHelp, Assistances.Buttons.Button.ButtonType.Yes, dontKnow);
                     BTWP4.AddAssistance(requestHelp, Assistances.Buttons.Button.ButtonType.No, letItGo);
-                    BTWP4.AddAssistance(dontKnow, Assistances.Buttons.Button.ButtonType.Yes, letItGo);
-                    BTWP4.AddAssistance(dontKnow, Assistances.Buttons.Button.ButtonType.No, sayWhatToDo);
+                    BTWP4.AddAssistance(dontKnow, Assistances.Buttons.Button.ButtonType.Yes, sayWhatToDo);
+                    BTWP4.AddAssistance(dontKnow, Assistances.Buttons.Button.ButtonType.No, letItGo);
                     BTWP4.AddAssistance(sayWhatToDo, Assistances.Buttons.Button.ButtonType.Yes, letItGo);
                     BTWP4.AddAssistance(sayWhatToDo, Assistances.Buttons.Button.ButtonType.No, someoneComing);
 
