@@ -200,7 +200,6 @@ namespace MATCH
                     {
                         AssistancesDebugWindow.SetDescription(text);
                         DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, text);
-                        Debug.Log(text);
                     }
                 }
 

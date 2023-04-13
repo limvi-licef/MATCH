@@ -62,11 +62,9 @@ namespace MATCH
 
                 Assistances.InteractionSurface FollowObject;
 
-
-                MATCH.Assistances.Dialogs.Dialog1 DialogAssistanceWaterHelp;
-                Assistances.GradationVisual.GradationVisual menuPlant;
-
-                PathFinding.PathFinding m_pathFinderEngine;
+                //MATCH.Assistances.Dialogs.Dialog1 DialogAssistanceWaterHelp;
+                //Assistances.GradationVisual.GradationVisual MenuPlant;
+                PathFinding.PathFinding PathFinderEngine;
 
 
                 public override void Awake()
@@ -91,7 +89,7 @@ namespace MATCH
 
                     Init();
 
-                    m_pathFinderEngine = gameObject.AddComponent<PathFinding.PathFinding>();
+                    PathFinderEngine = gameObject.AddComponent<PathFinding.PathFinding>();
 
                     // Add button to restart scenario
                     MATCH.AdminMenu.Instance.AddButton("Watering the plants - restart scenario", delegate
@@ -102,8 +100,6 @@ namespace MATCH
 
                     // Initialize debug buttons
                     InitializeDebugButtons();
-
-                    m_pathFinderEngine = gameObject.AddComponent<PathFinding.PathFinding>();
                 }
 
                 protected override Root InitializeBehaviorTree()
@@ -186,7 +182,6 @@ namespace MATCH
 
                 void InitializeAssistances()
                 {
-
                     InteractionSurfaceDialogs = Assistances.Factory.Instance.CreateInteractionSurface("Practice-Dialogs", AdminMenu.Panels.Right, new Vector3(0f, 0.02f, 0.7f),
                         new Vector3(0f, 0f, 0.009f), Utilities.Materials.Colors.CyanGlowing, false, true, Utilities.Utility.GetEventHandlerEmpty(), true, transform);
 
@@ -207,30 +202,14 @@ namespace MATCH
 
                     InteractionSink.EventUserTouched += CallbackInteractionSurfaceSinkTouched;
 
-                    DialogAssistanceWaterHelp = Assistances.Factory.Instance.CreateCheckListNoButton("", "Voici les plantes qu'il vous reste à arroser. Si vous touchez une des plantes, un chemin au sol vous y guidera.", FollowObject.transform);
-                    DialogAssistanceWaterHelp.gameObject.AddComponent<BoxCollider>();
+                    //DialogAssistanceWaterHelp = Assistances.Factory.Instance.CreateCheckListNoButton("", "Voici les plantes qu'il vous reste à arroser. Si vous touchez une des plantes, un chemin au sol vous y guidera.", FollowObject.transform);
+                    //DialogAssistanceWaterHelp.gameObject.AddComponent<BoxCollider>();
 
-                    DialogAssistanceWaterHelp.AddButton("Plante " + (1), false, 0.12f);
-                    DialogAssistanceWaterHelp.AddButton("Plante " + (2), false, 0.12f);
-                    DialogAssistanceWaterHelp.AddButton("Plante " + (3), false, 0.12f);
-
-
-                    UpdateTextAssistancesDebugWindow("menu btn count: "+ DialogAssistanceWaterHelp.ButtonsController.Count);
-                    DialogAssistanceWaterHelp.ButtonsController[0].EventButtonClicked += CallbackPlantButtonTouched;
-                    DialogAssistanceWaterHelp.ButtonsController[1].EventButtonClicked += CallbackPlantButtonTouched;
-                    DialogAssistanceWaterHelp.ButtonsController[2].EventButtonClicked += CallbackPlantButtonTouched;
-
-                    menuPlant = Assistances.GradationVisual.Factory.Instance.CreateAssistanceDialog("WateringThePlants-BTWP4-1", DialogAssistanceWaterHelp);
-                }
-                void CallbackPlantButtonTouched(System.Object o, EventArgs e)
-                {
-                    Assistances.Buttons.Basic btn = (Assistances.Buttons.Basic)o;
-                    if (btn.IsChecked() == false)
-                    {
-
-                        btn.CheckButton(true);
-
-                    }
+                    //DialogAssistanceWaterHelp.AddButton("Plante " + (1), false, 0.12f);
+                    //DialogAssistanceWaterHelp.AddButton("Plante " + (2), false, 0.12f);
+                    //DialogAssistanceWaterHelp.AddButton("Plante " + (3), false, 0.12f);
+                    
+                    //menuPlant = Assistances.GradationVisual.Factory.Instance.CreateAssistanceDialog("WateringThePlants-BTWP4-1", DialogAssistanceWaterHelp);
                 }
 
                 private void Update()
@@ -266,7 +245,6 @@ namespace MATCH
                         new NPBehave.Action(() => {
                             ShowAssistanceHideOthers(BTWP7);
                             UpdateTextAssistancesDebugWindow("Is it 7pm?");
-
                             MATCH.Utilities.Logger.Instance.Log(this.GetId(), MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, "BTWP7");
                         }),
                         new WaitUntilStopped()
@@ -364,8 +342,6 @@ namespace MATCH
                     BTWP4.AddAssistance(letItGo, Assistances.Buttons.Button.ButtonType.ClosingButton, null);
                     BTWP4.AddAssistance(someoneComing, Assistances.Buttons.Button.ButtonType.ClosingButton, null);
 
-                    BTWP4.AddAssistance(menuPlant, Assistances.Buttons.Button.ButtonType.ClosingButton, null);
-
                     AssistancesWatering.Add(BTWP4, false);
 
                     BTWP4.Init();
@@ -408,10 +384,7 @@ namespace MATCH
                     Assistances.AssistanceGradationExplicit BTWP3 = MATCH.Assistances.Factory.Instance.CreateAssistanceGradationExplicit("WateringThePlants-BTWP3");
                     BTWP3.transform.parent = transform;
 
-           
-                     BTWP3.AddAssistance(helpNeeded, Assistances.Buttons.Button.ButtonType.Yes, menuPlant);
-
-                    //BTWP3.AddAssistance(helpNeeded, Assistances.Buttons.Button.ButtonType.Yes, dontKnow);
+                    BTWP3.AddAssistance(helpNeeded, Assistances.Buttons.Button.ButtonType.Yes, dontKnow);
                     BTWP3.AddAssistance(helpNeeded, Assistances.Buttons.Button.ButtonType.No, letItGo);
                     BTWP3.AddAssistance(dontKnow, Assistances.Buttons.Button.ButtonType.Yes, letItGo);
                     BTWP3.AddAssistance(dontKnow, Assistances.Buttons.Button.ButtonType.No, sayWhatToDo);
@@ -420,7 +393,6 @@ namespace MATCH
 
                     BTWP3.AddAssistance(letItGo, Assistances.Buttons.Button.ButtonType.ClosingButton, null);
                     BTWP3.AddAssistance(someoneComing, Assistances.Buttons.Button.ButtonType.ClosingButton, null);
-                    BTWP3.AddAssistance(menuPlant, Assistances.Buttons.Button.ButtonType.ClosingButton, null);
 
                     AssistancesWatering.Add(BTWP3, false);
                     BTWP3.Init();
@@ -534,10 +506,10 @@ namespace MATCH
 
                 void ShowLightpathToPlant(Assistances.InteractionSurface plant)
                 {
-                    DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Called");
+                    DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name,
+                        DebugMessagesManager.MessageLevel.Info, "Called");
 
-                  
-                    Vector3[] corners = m_pathFinderEngine.ComputePath(FollowObject.transform, plant.transform);
+                    Vector3[] corners = PathFinderEngine.ComputePath(FollowObject.transform, plant.transform);
 
                     GameObject gameObjectForLine = new GameObject("Line for " + plant.name);
                     LineRenderer lineRenderer = gameObjectForLine.AddComponent<LineRenderer>();
