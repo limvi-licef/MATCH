@@ -223,6 +223,11 @@ namespace MATCH
                     return AddDecoratorsToDialog2(assistanceName, dialog);
                 }
 
+                public GradationVisual CreateAssistanceDialog(string assistanceName, Assistances.Dialogs.Dialog1 dialog)
+                {
+                    return AddDecoratorsToDialog1(assistanceName, dialog);
+                }
+
                 private GradationVisual AddDecoratorsToDialog1(string assistanceName, MATCH.Assistances.Dialogs.Dialog1 dialog)
                 {
                     GradationVisual toReturn = Assistances.Factory.Instance.CreateAssistanceGradationAttention(assistanceName);
