@@ -53,6 +53,8 @@ namespace MATCH
 
                 Assistances.InteractionSurface[] InteractionPlants = new Assistances.InteractionSurface[3];
 
+                bool LightPathShown = false;
+                float NextTimeCheck = 0f;
 
                 Dictionary<Assistances.AssistanceGradationExplicit, bool> AssistancesWatering;
 
@@ -60,10 +62,12 @@ namespace MATCH
 
                 Assistances.InteractionSurface FollowObject;
 
+
                 MATCH.Assistances.Dialogs.Dialog1 DialogAssistanceWaterHelp;
                 Assistances.GradationVisual.GradationVisual menuPlant;
 
-                PathFinding.PathFinding PathFinderEngine;
+                PathFinding.PathFinding m_pathFinderEngine;
+
 
                 public override void Awake()
                 {
@@ -98,6 +102,8 @@ namespace MATCH
 
                     // Initialize debug buttons
                     InitializeDebugButtons();
+
+                    m_pathFinderEngine = gameObject.AddComponent<PathFinding.PathFinding>();
                 }
 
                 protected override Root InitializeBehaviorTree()
@@ -238,9 +244,22 @@ namespace MATCH
                     menuPlant = Assistances.GradationVisual.Factory.Instance.CreateAssistanceDialog("WateringThePlants-BTWP4-1", DialogAssistanceWaterHelp);
                 }
 
+                private void Update()
+                {
+                    if (LightPathShown && Time.time > NextTimeCheck)
+                    {
+                        for (int i = 0; i < InteractionPlants.Length; i++)
+                        {
+                            updateLightPath(InteractionPlants[i]);
+                            NextTimeCheck += 5f;
+                        }
+                    }
+                }
+
                 //Is it 7pm?
                 Sequence AssistanceBTWP7()
                 {
+
                     Assistances.GradationVisual.GradationVisual alpha1 = Assistances.GradationVisual.Factory.Instance.CreateDialog2WithButtons("Practice-Alpha-1", "",
                         "Qu'est-ce qu'il est conseilé de faire à la fin de la journée lorsqu'il ne fait moins chaud?", "Commencer !", 
                         Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.ClosingButton, FollowObject.transform);
@@ -316,7 +335,19 @@ namespace MATCH
                     Assistances.GradationVisual.GradationVisual requestHelp = Assistances.GradationVisual.Factory.Instance.CreateAlreadyConfigured(Assistances.GradationVisual.Factory.AlreadyConfigured.DoYouNeedHelpDialog1,
                          "WateringThePlants-BTWP4", FollowObject.transform);
 
-                    
+
+                    Assistances.GradationVisual.GradationVisual dontKnow = Assistances.GradationVisual.Factory.Instance.CreateDialog2WithButtons("WateringThePlants-BTWP4-1", "",
+                        "Voulez vous savoir où sont vos plantes?", "Oui", delegate (System.Object o, EventArgs e)
+                        {
+                            for (int i = 0; i < InteractionPlants.Length; i++)
+                            {
+                                InteractionPlants[i].CallbackShow();
+                                ShowLightpathToPlant(InteractionPlants[i]);
+                            }
+                            LightPathShown = true;
+                            NextTimeCheck = Time.time + 5f;
+						}, Assistances.Buttons.Button.ButtonType.Yes,
+                        "Non", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.No, FollowObject.transform);
 
                     Assistances.GradationVisual.GradationVisual dontKnow = Assistances.GradationVisual.Factory.Instance.CreateDialog2WithButtons("WateringThePlants-BTWP4-1", "",
                         "Voulez vous savoir où sont vos plantes?", "Oui", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.Yes,
@@ -518,8 +549,9 @@ namespace MATCH
                 void ShowLightpathToPlant(Assistances.InteractionSurface plant)
                 {
                     DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Called");
-                   
-                    Vector3[] corners = PathFinderEngine.ComputePath(FollowObject.transform, plant.transform);
+
+                  
+                    Vector3[] corners = m_pathFinderEngine.ComputePath(FollowObject.transform, plant.transform);
 
                     GameObject gameObjectForLine = new GameObject("Line for " + plant.name);
                     LineRenderer lineRenderer = gameObjectForLine.AddComponent<LineRenderer>();
@@ -538,6 +570,13 @@ namespace MATCH
 
                         DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Corner : " + corner);
                     }
+                }
+
+                void updateLightPath(Assistances.InteractionSurface plant)
+                {
+                    GameObject gameObjectForLine = GameObject.Find("Line for " + plant.name);
+                    Destroy(gameObjectForLine);
+                    ShowLightpathToPlant(plant);
                 }
 
                 void ShowAssistanceHideOthers(Assistances.AssistanceGradationExplicit assistance)
