@@ -22520,8 +22520,8 @@ MonoBehaviour:
   aspectV: 1
   ignoreAngleClamp: 0
   ignoreDistanceClamp: 0
-  useFixedVerticalPosition: 0
-  fixedVerticalPosition: -0.4
+  useFixedVerticalPosition: 1
+  fixedVerticalPosition: 0.7
   orientToReferenceDirection: 0
 --- !u!114 &8757529998501104233
 MonoBehaviour:
