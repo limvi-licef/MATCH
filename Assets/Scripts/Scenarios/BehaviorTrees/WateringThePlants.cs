@@ -95,9 +95,11 @@ namespace MATCH
                     // Add button to restart scenario
                     MATCH.AdminMenu.Instance.AddButton("Watering the plants - restart scenario", delegate
                     {
+                        inf1.StopCounter();
+                        SetConditionsTo(false);
+                        UpdateConditionWithMatrix(ConditionBeginning);
                         for (int i = 0; i < InteractionPlants.Length; i++)
                         {
-                            inf1.StopCounter();
                             NextTimeCheck = 0f;
                             if (LightPathsShown[i])
                             {
@@ -112,9 +114,7 @@ namespace MATCH
                                 InteractionPlants[i].tag = "Untagged";
                                 InteractionPlants[i].SetColor(Utilities.Materials.Colors.GreenGlowing);
                             }
-
                         }
-                        SetConditionsTo(false);
                         MATCH.Utilities.Logger.Instance.Log(this.GetId(), MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, "----------Scenario restarted----------");
                     }, AdminMenu.Panels.Right);
 
