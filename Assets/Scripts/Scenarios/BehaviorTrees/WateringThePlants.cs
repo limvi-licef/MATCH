@@ -107,9 +107,9 @@ namespace MATCH
                                 GameObject gameObjectForLine = GameObject.Find("Line for " + InteractionPlants[i].name);
                                 Destroy(gameObjectForLine);
                             }
-                            if (InteractionPlants[i].tag == "Watered")
+                            if (InteractionPlants[i].CompareTag("Watered"))
                             {
-                                InteractionPlants[i].tag = "";
+                                InteractionPlants[i].tag = "Untagged";
                                 InteractionPlants[i].SetColor(Utilities.Materials.Colors.GreenGlowing);
                             }
 
