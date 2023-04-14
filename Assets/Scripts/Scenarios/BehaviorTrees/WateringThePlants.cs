@@ -204,45 +204,28 @@ namespace MATCH
                     InteractionSink.EventUserTouched += CallbackInteractionSurfaceSinkTouched;
 
                     DialogAssistanceWaterHelp = Assistances.Factory.Instance.CreateCheckListNoButton("", "Voici les plantes qu'il vous reste à arroser. Si vous touchez une des plantes, un chemin au sol vous y guidera.", FollowObject.transform);
-                    DialogAssistanceWaterHelp.gameObject.AddComponent<BoxCollider>();
 
                     DialogAssistanceWaterHelp.AddButton("Plante " + (1), false, 0.12f);
                     DialogAssistanceWaterHelp.AddButton("Plante " + (2), false, 0.12f);
                     DialogAssistanceWaterHelp.AddButton("Plante " + (3), false, 0.12f);
 
-                    DialogAssistanceWaterHelp.ButtonsController[0].EventButtonClicked += delegate (System.Object o, EventArgs e)
+                    for(int i = 0; i < DialogAssistanceWaterHelp.ButtonsController.Count; i++)
                     {
-                        if (DialogAssistanceWaterHelp.ButtonsController[0].IsChecked() == false)
+                        int plantId = i;
+                        DialogAssistanceWaterHelp.ButtonsController[plantId].EventButtonClicked += delegate (System.Object o, EventArgs e)
                         {
-                            InteractionPlant1.CallbackShow();
-                            ShowLightpathToPlant(InteractionPlant1);
-                            DialogAssistanceWaterHelp.ButtonsController[0].CheckButton(true);
-                            LightPathShown = true;
-                            NextTimeCheck = Time.time + 5f;
-                        }
-                    };
-                    DialogAssistanceWaterHelp.ButtonsController[1].EventButtonClicked += delegate (System.Object o, EventArgs e)
-                    {
-                        if (DialogAssistanceWaterHelp.ButtonsController[1].IsChecked() == false)
-                        {
-                            InteractionPlant2.CallbackShow();
-                            ShowLightpathToPlant(InteractionPlant2);
-                            DialogAssistanceWaterHelp.ButtonsController[1].CheckButton(true);
-                            LightPathShown = true;
-                            NextTimeCheck = Time.time + 5f;
-                        }
-                    };
-                    DialogAssistanceWaterHelp.ButtonsController[2].EventButtonClicked += delegate (System.Object o, EventArgs e)
-                    {
-                        if (DialogAssistanceWaterHelp.ButtonsController[2].IsChecked() == false)
-                        {
-                            InteractionPlant3.CallbackShow();
-                            ShowLightpathToPlant(InteractionPlant3);
-                            DialogAssistanceWaterHelp.ButtonsController[2].CheckButton(true);
-                            LightPathShown = true;
-                            NextTimeCheck = Time.time + 5f;
-                        }
-                    };
+                            UpdateTextAssistancesDebugWindow("i is : "+ plantId);
+                            if (DialogAssistanceWaterHelp.ButtonsController[plantId].IsChecked() == false)
+                            {
+                                
+                                InteractionPlants[plantId].CallbackShow();
+                                ShowLightpathToPlant(InteractionPlants[plantId]);
+                                DialogAssistanceWaterHelp.ButtonsController[plantId].CheckButton(true);
+                                LightPathShown = true;
+                                NextTimeCheck = Time.time + 5f;
+                            }
+                        };
+                    }
 
                     MenuPlant = Assistances.GradationVisual.Factory.Instance.CreateAssistanceDialog("WateringThePlants-BTWP4-1", DialogAssistanceWaterHelp);
                 }
@@ -535,8 +518,8 @@ namespace MATCH
                         if (o.Equals(interactionPlant))
                         {
                             interactionPlant.tag = "Watered";
-                            interactionPlant.SetColor(Utilities.Materials.Colors.OrangeGlowing);
-                            interactionPlant.ShowInteractionSurfaceTable(false);
+                            interactionPlant.SetColor(Utilities.Materials.Colors.CyanGlowing);
+                            //interactionPlant.ShowInteractionSurfaceTable(false);
                             GameObject gameObjectForLine = GameObject.Find("Line for " + interactionPlant.name);
                             Destroy(gameObjectForLine);
                         }
