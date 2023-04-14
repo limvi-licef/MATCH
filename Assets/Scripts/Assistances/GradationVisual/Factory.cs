@@ -67,11 +67,15 @@ namespace MATCH
                 public GradationVisual CreateExclamationMark(string name, Transform parent)
                 {
                     GradationVisual assistance = Assistances.Factory.Instance.CreateAssistanceGradationAttention(name);
-                    Assistances.Icon assistanceBase = Assistances.Factory.Instance.CreateIcon(true, new Vector3(0,0,0), true, parent, null);
-                    assistanceBase.name = name + "_base";  
-                    assistance.AddAssistance(Assistances.Decorators.Factory.Instance.CreateMaterial(assistanceBase, Utilities.Materials.Colors.WhiteMetallic));
+                    Assistances.Icon assistanceBase = Assistances.Factory.Instance.CreateIcon(true, new Vector3(0,0,0), true, parent, /*null*/Utilities.Materials.Icon.ExclamationMark);
+                    assistanceBase.name = name + "_base";
+                    Decorators.Icon assistance1 = (Decorators.Icon) assistance.AddAssistance(Assistances.Decorators.Factory.Instance.CreateIcon(assistanceBase, Utilities.Materials.Icon.Club));
+                    Decorators.Icon assistance2 = (Decorators.Icon) assistance.AddAssistance(Assistances.Decorators.Factory.Instance.CreateIcon(assistance1, Utilities.Materials.Icon.Club));
+                    assistance2.GetIcon().SetMaterial(Utilities.Materials.Colors.GreenGlowing);
+
+                    /*assistance.AddAssistance(Assistances.Decorators.Factory.Instance.CreateMaterial(assistanceBase, Utilities.Materials.Colors.WhiteMetallic));
                     assistance.AddAssistance(Assistances.Decorators.Factory.Instance.CreateMaterial(assistanceBase, Utilities.Materials.Colors.YellowGlowing));
-                    assistance.AddAssistance(Assistances.Decorators.Factory.Instance.CreateMaterial(assistanceBase, Utilities.Materials.Colors.RedGlowing));
+                    assistance.AddAssistance(Assistances.Decorators.Factory.Instance.CreateMaterial(assistanceBase, Utilities.Materials.Colors.RedGlowing));*/
 
                     assistance.transform.localPosition = new Vector3(0, 0, 0);
 
@@ -245,6 +249,7 @@ namespace MATCH
 
                     //For Test
                     Decorators.Icon decoratorIcon2 = (Decorators.Icon)Assistances.Decorators.Factory.Instance.CreateIcon(decorator1, MATCH.Utilities.Materials.Icon.Club);
+                    decoratorIcon2.GetIcon().SetMaterial(Utilities.Materials.Colors.GreenGlowing);
                     IPanel2 adapterIcon2 = Decorators.Adapters.Factory.Instance.CreateAdapterForIPanel2(decoratorIcon2, (IPanel2)decoratorIcon2.GetDecoratedAssistance());
 
                     Decorators.Arch decorator2a = (Decorators.Arch)Assistances.Decorators.Factory.Instance.CreateArch(adapterIcon2,true);
@@ -277,7 +282,7 @@ namespace MATCH
                     Decorators.BackgroundColorMessage2 decorator3a = (Decorators.BackgroundColorMessage2)Assistances.Decorators.Factory.Instance.CreateBackgroundMessage(adapterSound3, Utilities.Materials.Colors.PurpleGlowing);
 
 
-                    Decorators.Arch decoratorArch3 = (Decorators.Arch)Assistances.Decorators.Factory.Instance.CreateArch(decorator3a,false);
+                    Decorators.Arch decoratorArch3 = (Decorators.Arch)Assistances.Decorators.Factory.Instance.CreateArch(decorator3a,true);
                     /*IPanel2 adapterArch3 = new Adapters.IAssistanceToIPanel2(decoratorArch3, (IPanel2)decoratorArch3.GetDecoratedAssistance());*/
                     IPanel2 adapterArch3 = Decorators.Adapters.Factory.Instance.CreateAdapterForIPanel2(decoratorArch3, (IPanel2)decoratorArch3.GetDecoratedAssistance());
                     //------

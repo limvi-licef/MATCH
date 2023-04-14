@@ -33,7 +33,7 @@ namespace MATCH
     {
         public class Icon : Assistance, IBasic
         {
-            Transform Mat;
+            //Transform Mat;
             Transform IconObj;
 
             Vector3 IconObjScaleOrigin;
@@ -81,7 +81,7 @@ namespace MATCH
                         MATCH.Utilities.Utility.AdjustObjectHeightToHeadHeight(transform);
                     }
                     IconObj.gameObject.SetActive(true);
-                    DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Error, "Help buttons instanciated for " + gameObject.name);
+                    DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Help buttons instanciated for " + gameObject.name);
                     
                 }
                 else
@@ -166,16 +166,21 @@ namespace MATCH
 
             public void SetMaterial(string materialName)
             {
-                Renderer renderer = Mat.GetComponent<Renderer>();
-                if (renderer != null)
+                for(int i=0; i < IconObj.childCount; i++)
                 {
-                    //DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Material set to " + materialName);
-                    renderer.material = Resources.Load(materialName, typeof(Material)) as Material;
-                }
-                else
-                {
-                    DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Warning, "No renderer component for the IconObj - no action will be done");
-                }
+                    Transform child = IconObj.GetChild(i);
+                    Renderer renderer = child.GetComponent<Renderer>();
+
+                    if (renderer != null)
+                    {
+                        //DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Material set to " + materialName);
+                        renderer.material = Resources.Load(materialName, typeof(Material)) as Material;
+                    }
+                    else
+                    {
+                        DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Warning, "No renderer component for the IconObj - no action will be done");
+                    }
+                }                
             }
 
             public string getIconType()
