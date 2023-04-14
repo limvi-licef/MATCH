@@ -54,7 +54,7 @@ namespace MATCH
 
                 Assistances.InteractionSurface[] InteractionPlants = new Assistances.InteractionSurface[3];
 
-                bool LightPathShown = false;
+                bool[] LightPathsShown = new bool[3];
                 float NextTimeCheck = 0f;
 
                 Dictionary<Assistances.AssistanceGradationExplicit, bool> AssistancesWatering;
@@ -95,6 +95,25 @@ namespace MATCH
                     // Add button to restart scenario
                     MATCH.AdminMenu.Instance.AddButton("Watering the plants - restart scenario", delegate
                     {
+                        for (int i = 0; i < InteractionPlants.Length; i++)
+                        {
+                            inf1.StopCounter();
+                            NextTimeCheck = 0f;
+                            if (LightPathsShown[i])
+                            {
+                                DialogAssistanceWaterHelp.ButtonsController[i].CheckButton(false);
+                                InteractionPlants[i].CallbackShow();
+                                LightPathsShown[i] = false;
+                                GameObject gameObjectForLine = GameObject.Find("Line for " + InteractionPlants[i].name);
+                                Destroy(gameObjectForLine);
+                            }
+                            if (InteractionPlants[i].tag == "Watered")
+                            {
+                                InteractionPlants[i].tag = "";
+                                InteractionPlants[i].SetColor(Utilities.Materials.Colors.GreenGlowing);
+                            }
+
+                        }
                         SetConditionsTo(false);
                         MATCH.Utilities.Logger.Instance.Log(this.GetId(), MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, "----------Scenario restarted----------");
                     }, AdminMenu.Panels.Right);
@@ -217,11 +236,10 @@ namespace MATCH
                             UpdateTextAssistancesDebugWindow("i is : "+ plantId);
                             if (DialogAssistanceWaterHelp.ButtonsController[plantId].IsChecked() == false)
                             {
-                                
                                 InteractionPlants[plantId].CallbackShow();
                                 ShowLightpathToPlant(InteractionPlants[plantId]);
                                 DialogAssistanceWaterHelp.ButtonsController[plantId].CheckButton(true);
-                                LightPathShown = true;
+                                LightPathsShown[plantId] = true;
                                 NextTimeCheck = Time.time + 5f;
                             }
                         };
@@ -232,17 +250,16 @@ namespace MATCH
 
                 private void Update()
                 {
-                    if (LightPathShown && Time.time > NextTimeCheck)
+                    if (Array.Exists<bool>(LightPathsShown, element => element) && Time.time > NextTimeCheck)
                     {
                         for (int i = 0; i < InteractionPlants.Length; i++)
                         {
-                            if (InteractionPlants[i].GetComponentInChildren<BoundsControl>().enabled)
+                            if (InteractionPlants[i].GetComponentInChildren<BoundsControl>().enabled && InteractionPlants[i].tag != "Watered")
                             {
                                 updateLightPath(InteractionPlants[i]);
-                                NextTimeCheck += 5f;
-                            }
-                           
+                            }                           
                         }
+                        NextTimeCheck += 5f;
                     }
                 }
 
@@ -512,7 +529,6 @@ namespace MATCH
                 void CallbackInteractionSurfacePlantWatered(System.Object o, EventArgs e)
                 {
                     UpdateConditionWithMatrix(ConditionPlantWatered);
-
                     foreach (Assistances.InteractionSurface interactionPlant in InteractionPlants)
                     {
                         if (o.Equals(interactionPlant))
