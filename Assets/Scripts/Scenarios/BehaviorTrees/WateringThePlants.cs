@@ -306,8 +306,6 @@ namespace MATCH
                                 interactionPlant.EventUserTouched += CallbackInteractionSurfacePlantWatered;
                             }
 
-                            InteractionSink.EventUserTouched += CallbackInteractionSurfaceSinkTouchedAgain;
-
                             MATCH.Utilities.Logger.Instance.Log(this.GetId(), MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, "BTWP5");
 
                             InferenceManager.UnregisterInference(InferenceDidNotStartWatering);
@@ -518,12 +516,6 @@ namespace MATCH
                 void CallbackInteractionSurfaceSinkTouched(System.Object o, EventArgs e)
                 {
                     UpdateConditionWithMatrix(ConditionBottleFilled);
-                }
-
-                void CallbackInteractionSurfaceSinkTouchedAgain(System.Object o, EventArgs e)
-                {
-                    if (!InteractionPlants.Any(p => p.tag == "Watered"))
-                        UpdateConditionWithMatrix(ConditionHelpNeeded);
                 }
 
                 void CallbackInteractionSurfacePlantWatered(System.Object o, EventArgs e)
