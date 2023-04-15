@@ -67,7 +67,7 @@ namespace MATCH
                     }
                     else
                     {
-                        transform.Find("BackPlate").Find("Quad").GetComponent<Renderer>().material = Resources.Load(Utilities.Materials.Textures.HolographicBackPlate, typeof(Material)) as Material;
+                        transform.Find("BackPlate").Find("Quad").GetComponent<Renderer>().material = Resources.Load(Utilities.Materials.Colors.HolographicBackPlate, typeof(Material)) as Material;
                     }
                 }
 

@@ -90,7 +90,7 @@ namespace MATCH
 
                     Init();
 
-                    PathFinderEngine = gameObject.AddComponent<PathFinding.PathFinding>();
+                    PathFinderEngine = GameObject.Find("PathFinderEngine").GetComponent<PathFinding.PathFinding>();
 
                     // Add button to restart scenario
                     MATCH.AdminMenu.Instance.AddButton("Watering the plants - restart scenario", delegate
@@ -228,12 +228,14 @@ namespace MATCH
                     DialogAssistanceWaterHelp.AddButton("Plante " + (2), false, 0.12f);
                     DialogAssistanceWaterHelp.AddButton("Plante " + (3), false, 0.12f);
 
-                    for(int i = 0; i < DialogAssistanceWaterHelp.ButtonsController.Count; i++)
+                    for (int i = 0; i < DialogAssistanceWaterHelp.ButtonsController.Count; i++)
                     {
+
                         int plantId = i;
+                        
                         DialogAssistanceWaterHelp.ButtonsController[plantId].EventButtonClicked += delegate (System.Object o, EventArgs e)
                         {
-                            UpdateTextAssistancesDebugWindow("i is : "+ plantId);
+                            UpdateTextAssistancesDebugWindow("i is : " + plantId);
                             if (DialogAssistanceWaterHelp.ButtonsController[plantId].IsChecked() == false)
                             {
                                 InteractionPlants[plantId].CallbackShow();
@@ -341,16 +343,7 @@ namespace MATCH
 
 
                     Assistances.GradationVisual.GradationVisual dontKnow = Assistances.GradationVisual.Factory.Instance.CreateDialog2WithButtons("WateringThePlants-BTWP4-1", "",
-                        "Voulez vous savoir où sont vos plantes?", "Oui", delegate (System.Object o, EventArgs e)
-                        {
-                            //for (int i = 0; i < InteractionPlants.Length; i++)
-                            //{
-                            //    InteractionPlants[i].CallbackShow();
-                            //    ShowLightpathToPlant(InteractionPlants[i]);
-                            //}
-                            //LightPathShown = true;
-                            //NextTimeCheck = Time.time + 5f;
-						}, Assistances.Buttons.Button.ButtonType.Yes,
+                        "Voulez vous savoir où sont vos plantes?", "Oui", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.Yes,
                         "Non", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.No, FollowObject.transform);
 
 
@@ -439,7 +432,7 @@ namespace MATCH
                     Sequence temp = new Sequence(
                         new NPBehave.Action(() => {
                             ShowAssistanceHideOthers(BTWP3);
-                            BTWP3.RunAssistance();
+                            //BTWP3.RunAssistance();
                             AssistancesWatering[BTWP3] = true;
                             InferenceManager.UnregisterAllInferences();
                             UpdateTextAssistancesDebugWindow("Are you finished?");
