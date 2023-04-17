@@ -58,7 +58,7 @@ namespace MATCH
         public static AdminMenu Instance { get { return InstanceInternal; } }
 
         public GameObject RefButtonSwitch;
-        public GameObject RefButton;
+        //public GameObject RefButton;
         public GameObject RefInput;
 
         List<GameObject> Buttons;
@@ -83,8 +83,8 @@ namespace MATCH
                 HideAllCallbacks = new List<UnityEngine.Events.UnityAction>();
 
                 // Remove the canvas renderer from the buttons, to avoid the warning message from unity
-                DestroyImmediate(RefButton.transform.Find("IconAndText").Find("TextMeshPro").GetComponent<CanvasRenderer>(), true);
-                DestroyImmediate(RefButton.transform.Find("SeeItSayItLabel").Find("TextMeshPro").GetComponent<CanvasRenderer>(), true);
+                //DestroyImmediate(RefButton.transform.Find("IconAndText").Find("TextMeshPro").GetComponent<CanvasRenderer>(), true);
+                //DestroyImmediate(RefButton.transform.Find("SeeItSayItLabel").Find("TextMeshPro").GetComponent<CanvasRenderer>(), true);
                 DestroyImmediate(RefButtonSwitch.transform.Find("IconAndText").Find("TextMeshPro").GetComponent<CanvasRenderer>(), true);
                 DestroyImmediate(RefButtonSwitch.transform.Find("SeeItSayItLabel").Find("TextMeshPro").GetComponent<CanvasRenderer>(), true);
 
@@ -168,9 +168,12 @@ namespace MATCH
         /**
          * buttonType: used to manager internal functionalities. For instance, if "HideShow" type is selected, then the callback will also be added to a general "hide all" button.
          * */
-        public void AddSwitchButton(string text, UnityEngine.Events.UnityAction callback, Panels panel = Panels.Middle, ButtonType buttonType = ButtonType.Default)
+        public MATCH.Assistances.Buttons.Basic AddSwitchButton(string text, UnityEngine.Events.UnityAction callback, Panels panel = Panels.Middle, ButtonType buttonType = ButtonType.Default)
         {
-            Buttons.Add(Instantiate(RefButtonSwitch, PanelsStorage[panel]));
+            //Buttons.Add(Instantiate(RefButtonSwitch, PanelsStorage[panel]));
+            Transform button = Utilities.Materials.Prefabs.Load(Utilities.Materials.Prefabs.ButtonSwitch, PanelsStorage[panel]);
+            Buttons.Add(button.gameObject);
+
             Buttons.Last().GetComponent<Interactable>().GetReceiver<InteractableOnPressReceiver>().OnPress.AddListener(callback);
             Buttons.Last().GetComponent<Interactable>().GetReceiver<InteractableOnPressReceiver>().InteractionFilter = 0;
             Buttons.Last().transform.Find("IconAndText").Find("TextMeshPro").GetComponent<TextMeshPro>().SetText(text);
@@ -180,11 +183,16 @@ namespace MATCH
             {
                 HideAllCallbacks.Add(callback);
             }
+
+            return Buttons.Last().GetComponent<MATCH.Assistances.Buttons.Basic>();
         }
 
-        public void AddButton(string text, UnityEngine.Events.UnityAction callback, Panels panel = Panels.Middle)
+        public MATCH.Assistances.Buttons.Basic AddButton(string text, UnityEngine.Events.UnityAction callback, Panels panel = Panels.Middle)
         {
-            Buttons.Add(Instantiate(RefButton, PanelsStorage[panel]));
+            //Buttons.Add(Instantiate(RefButton, PanelsStorage[panel]));
+            Transform button = Utilities.Materials.Prefabs.Load(Utilities.Materials.Prefabs.Button, PanelsStorage[panel]);
+            //button.SetParent(PanelsStorage[panel]);
+            Buttons.Add(button.gameObject);
 
             Buttons.Last().GetComponent<ButtonConfigHelper>().IconStyle = ButtonIconStyle.None;
             Buttons.Last().GetComponent<ButtonConfigHelper>().SeeItSayItLabelEnabled = false;
@@ -192,6 +200,8 @@ namespace MATCH
             Buttons.Last().GetComponent<Interactable>().GetReceiver<InteractableOnPressReceiver>().InteractionFilter = 0;
             Buttons.Last().transform.Find("IconAndText").Find("TextMeshPro").GetComponent<TextMeshPro>().SetText(text);
             PanelsStorage[panel].GetComponent<GridObjectCollection>().UpdateCollection();
+
+            return Buttons.Last().GetComponent<MATCH.Assistances.Buttons.Basic>();
         }
 
         /**
@@ -215,7 +225,11 @@ namespace MATCH
             PanelsStorage[panel].GetComponent<GridObjectCollection>().UpdateCollection();
 
             // Manage the update button
-            Buttons.Add(Instantiate(RefButton, PanelsStorage[panel]));
+            //Buttons.Add(Instantiate(RefButton, PanelsStorage[panel]));
+            Transform button = Utilities.Materials.Prefabs.Load(Utilities.Materials.Prefabs.Button, PanelsStorage[panel]);
+            //button.SetParent(PanelsStorage[panel]);
+            Buttons.Add(button.gameObject);
+
             Buttons.Last().GetComponent<ButtonConfigHelper>().IconStyle = ButtonIconStyle.None;
             Buttons.Last().GetComponent<ButtonConfigHelper>().SeeItSayItLabelEnabled = false;
             Buttons.Last().GetComponent<Interactable>().GetReceiver<InteractableOnPressReceiver>().OnPress.AddListener(delegate()

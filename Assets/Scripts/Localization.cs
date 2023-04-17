@@ -14,18 +14,24 @@ limitations under the License.*/
 
 using UnityEngine;
 using UnityEngine.Localization.Settings;
+using System;
 
 namespace MATCH
 {
     public class Localization : MonoBehaviour
     {
+        Assistances.Buttons.Basic ButtonFrench;
+        Assistances.Buttons.Basic ButtonEnglish;
+
         // Start is called before the first frame update
         void Start()
         {
             LocalizationSettings.SelectedLocale = LocalizationSettings.AvailableLocales.Locales[1];
             
-            AdminMenu.Instance.AddButton("Passer en anglais", delegate () { ChangeLocaleToEnglish(); });
-            AdminMenu.Instance.AddButton("Passer en français", delegate () { ChangeLocaleToFrench(); });
+            ButtonEnglish = AdminMenu.Instance.AddButton("Passer en anglais", delegate () { ChangeLocaleToEnglish(); });
+            ButtonFrench = AdminMenu.Instance.AddButton("Passer en français", delegate () { ChangeLocaleToFrench(); });
+
+            ButtonFrench.CallbackSetButtonBackgroundGreen(this, EventArgs.Empty);
         }
 
         void ChangeLocaleToEnglish()

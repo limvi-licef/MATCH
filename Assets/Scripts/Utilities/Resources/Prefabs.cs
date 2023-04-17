@@ -56,9 +56,23 @@ namespace MATCH
 
                 public static string InferenceManager = Path + "Inferences/Manager";
 
-                public static Transform Load(string prefabPath)
+                public static string Button = Path + "Assistances/Buttons/Button";
+                public static string ButtonSwitch = Path + "Assistances/Buttons/ButtonSwitch";
+
+                public static Transform Load(string prefabPath, Transform parent = null)
                 {
-                    return UnityEngine.Object.Instantiate<Transform>(Resources.Load<Transform>(prefabPath));
+                    Transform toReturn;
+
+                    if (parent != null)
+                    {
+                        toReturn = UnityEngine.Object.Instantiate<Transform>(Resources.Load<Transform>(prefabPath), parent);
+                    }
+                    else
+                    {
+                        toReturn = UnityEngine.Object.Instantiate<Transform>(Resources.Load<Transform>(prefabPath));
+                    }
+
+                    return toReturn;
                 }
             } 
         }
