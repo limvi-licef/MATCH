@@ -78,7 +78,7 @@ namespace MATCH
                     BackgroundParent = gameObject.transform.Find("Dialog");
                     BackgroundMessage = BackgroundParent.Find("Modale-Support_Cube.010");
                     BackgroundIcon = BackgroundParent.Find("Modale-Rond_Cylinder.003");
-                    IconView = Assistances.Factory.Instance.CreateIcon(true, new Vector3(0, 0, 0), true, GetTransform(), MATCH.Utilities.Materials.Icon.ExclamationMark);
+                    IconView = Assistances.Factory.Instance.CreateIcon(true, new Vector3(0, 0, 0), true, GetTransform(), MATCH.Utilities.Materials.Icon.ExclamationMark, Utilities.Materials.Colors.WhiteMetallic);
                     IconView.SetScale(0.05f, 0.05f, 0.05f); // Set the scale to having tiny icon that feat in the circle
                     IconView.SetLocalPositionObject(0.1075f, 0.068f, -0.02f); //Set position to be in center of the circle
 

@@ -33,15 +33,17 @@ namespace MATCH
             {
                 IPanel2 PanelToDecorate;
                 Transform BackgroundIcon;
+                bool showBackground;
 
                 private void Awake()
                 {
                     BackgroundIcon = transform.Find("Modale-Rond_Cylinder.003");
                 }
 
-                public void SetAssistanceToDecorate(IPanel2 toDecorate)
+                public void SetAssistanceToDecorate(IPanel2 toDecorate, bool showBackgroundIcon)
                 {
                     PanelToDecorate = toDecorate;
+                    showBackground = showBackgroundIcon;
 
                     // Set the size of the background plate to fit the one of the decorated panel
                     name = PanelToDecorate.GetAssistance().name + "_decoratorBackgroundColorFor2";
@@ -84,7 +86,7 @@ namespace MATCH
                 {
                     BackgroundIcon.position = PanelToDecorate.GetBackgroundIcon().position;
                     BackgroundIcon.localScale = PanelToDecorate.GetBackgroundIcon().localScale;
-                    BackgroundIcon.gameObject.SetActive(true);
+                    BackgroundIcon.gameObject.SetActive(showBackground);
 
                     if (IsDisplayed == false)
                     {

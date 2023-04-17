@@ -91,14 +91,14 @@ namespace MATCH
                      return controller;
                  }*/
 
-                public MATCH.Assistances.Assistance CreateBackgroundIcon(MATCH.Assistances.IPanel2 panelToDecorate, string backgroundIconColor)
+                public MATCH.Assistances.Assistance CreateBackgroundIcon(MATCH.Assistances.IPanel2 panelToDecorate, string backgroundIconColor, bool showBackgroundIcon)
                 {
                     Transform view = Instantiate(Utilities.Materials.Prefabs.Load(Utilities.Materials.Prefabs.DecoratorBackgroundColorIcon2));
                     view.name = panelToDecorate.GetRootDecoratedAssistance().name;
                     //view.name = ((Assistance)panelToDecorate).name;
                     Assistances.Decorators.BackgroundColorIcon2 controller = view.gameObject.GetComponent<Assistances.Decorators.BackgroundColorIcon2>();
 
-                    controller.SetAssistanceToDecorate(panelToDecorate);
+                    controller.SetAssistanceToDecorate(panelToDecorate, showBackgroundIcon);
                     controller.GetBackgroundIcon().GetComponent<Renderer>().material = Utilities.Utility.LoadMaterial(backgroundIconColor);
 
                     return controller;
@@ -153,14 +153,14 @@ namespace MATCH
                     return controller;
                 }
 
-                public MATCH.Assistances.Assistance CreateIcon(MATCH.Assistances.IAssistance toDecorate, string IconType)
+                public MATCH.Assistances.Assistance CreateIcon(MATCH.Assistances.IAssistance toDecorate, string IconType, string IconColor)
                 {
                     Transform view = Utilities.Materials.Prefabs.Load(Utilities.Materials.Prefabs.DecoratorIcon);
                     view.name = toDecorate.GetAssistance().name;
 
                     Assistances.Decorators.Icon controller = view.GetComponent<Assistances.Decorators.Icon>();
 
-                    controller.SetAssistanceToDecorate(toDecorate,IconType);
+                    controller.SetAssistanceToDecorate(toDecorate,IconType, IconColor);
 
                     return controller;
                 }
