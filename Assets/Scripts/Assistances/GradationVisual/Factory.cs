@@ -67,11 +67,13 @@ namespace MATCH
                 public GradationVisual CreateExclamationMark(string name, Transform parent)
                 {
                     GradationVisual assistance = Assistances.Factory.Instance.CreateAssistanceGradationAttention(name);
-                    Assistances.Icon assistanceBase = Assistances.Factory.Instance.CreateIcon(true, new Vector3(0,0,0), true, parent, /*null*/Utilities.Materials.Icon.ExclamationMark, Utilities.Materials.Colors.WhiteMetallic);
+                    Assistances.Icon assistanceBase = Assistances.Factory.Instance.CreateIcon(true, new Vector3(0,0,0), new Vector3(0.5f,0.5f,0.5f), true, parent, /*null*/Utilities.Materials.Icon.ExclamationMark, Utilities.Materials.Colors.WhiteMetallic);
                     assistanceBase.name = name + "_base";
                     Decorators.Icon assistance1 = (Decorators.Icon) assistance.AddAssistance(Assistances.Decorators.Factory.Instance.CreateIcon(assistanceBase, Utilities.Materials.Icon.Club, Utilities.Materials.Colors.WhiteMetallic));
                     Decorators.Icon assistance2 = (Decorators.Icon) assistance.AddAssistance(Assistances.Decorators.Factory.Instance.CreateIcon(assistance1, Utilities.Materials.Icon.Club, Utilities.Materials.Colors.WhiteMetallic));
                     assistance2.GetIcon().SetMaterial(Utilities.Materials.Colors.GreenGlowing);
+                    Decorators.Icon assistance3 = (Decorators.Icon)assistance.AddAssistance(Assistances.Decorators.Factory.Instance.CreateIcon(assistance2, Utilities.Materials.Icon.Diamond, Utilities.Materials.Colors.CyanGlowing));
+                    //assistance2.GetIcon().SetMaterial(Utilities.Materials.Colors.GreenGlowing);
 
                     /*assistance.AddAssistance(Assistances.Decorators.Factory.Instance.CreateMaterial(assistanceBase, Utilities.Materials.Colors.WhiteMetallic));
                     assistance.AddAssistance(Assistances.Decorators.Factory.Instance.CreateMaterial(assistanceBase, Utilities.Materials.Colors.YellowGlowing));

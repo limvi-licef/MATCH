@@ -39,7 +39,7 @@ namespace MATCH
             Vector3 IconObjScaleOrigin;
 
             public EventHandler s_touched;
-            public string iconType ;
+            public string IconType ;
             MATCH.Assistances.Dialogs.Dialog1 Help;
 
             public bool AdjustHeightOnShow { private get; set; }
@@ -47,7 +47,7 @@ namespace MATCH
             private void Awake()
             {
                 // Initialize variables
-                IconObj = gameObject.transform.Find(iconType);
+                IconObj = gameObject.transform.Find(IconType);
 
             }
 
@@ -66,7 +66,7 @@ namespace MATCH
                 Help = Assistances.Factory.Instance.CreateButtons("", "Besoin d'aide?", buttonsText, buttonsCallback, buttonsType, transform);
                 Help.AdjustToHeight = false;
                 Help.gameObject.name = "Icon_help";
-                Help.GetTransform().localPosition = new Vector3(0, -0.1f, 0);
+                Help.GetTransform().localPosition = new Vector3(0, -0.4f, 0);
                                 
             }
 
@@ -76,13 +76,19 @@ namespace MATCH
 
                 if (IsDisplayed == false)
                 {
+                    gameObject.GetComponent<BoxCollider>().enabled = true;
+
                     if (AdjustHeightOnShow)
                     {
                         MATCH.Utilities.Utility.AdjustObjectHeightToHeadHeight(transform);
                     }
                     IconObj.gameObject.SetActive(true);
                     DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Help buttons instanciated for " + gameObject.name);
-                    
+
+                    IsDisplayed = true;
+                    args.Success = true;
+                    eventHandler?.Invoke(this, args);
+
                 }
                 else
                 {
@@ -98,13 +104,16 @@ namespace MATCH
 
                 if (IsDisplayed)
                 {
+                    gameObject.GetComponent<BoxCollider>().enabled = false;
+
                     if (withAnimation)
                     {
                         MATCH.Utilities.Utility.AnimateDisappearInPlace(IconObj.gameObject, IconObjScaleOrigin, delegate (System.Object o, EventArgs e)
                         {
                             IconObj.gameObject.transform.localScale = IconObjScaleOrigin;
                             IsDisplayed = false;
-                            this.gameObject.SetActive(false);
+                            //this.gameObject.SetActive(false);
+                            IconObj.gameObject.SetActive(false);
                             if (Help.IsDisplayed)
                             {
                                 ShowHelp(false, eventHandler, withAnimation);
@@ -118,7 +127,7 @@ namespace MATCH
                     }
                     else
                     {
-                        this.gameObject.SetActive(false);
+                        //this.gameObject.SetActive(false);
                         IconObj.gameObject.SetActive(false);
 
                         IconObj.gameObject.transform.localScale = IconObjScaleOrigin;
@@ -161,7 +170,7 @@ namespace MATCH
 
             public override Transform GetTransform()
             {
-                return IconObj;
+                return /*IconObj*/ transform;
             }
 
             public void SetMaterial(string materialName)
@@ -183,14 +192,14 @@ namespace MATCH
                 }                
             }
 
-            public string getIconType()
+            public string GetIconType()
             {
-                return iconType;
+                return IconType;
             }
 
-            public void setIconType(string newIcon)
+            public void SetIconType(string newIcon)
             {
-                IconObj = gameObject.transform.Find(newIcon);
+                IconObj = transform.Find("Child").Find(newIcon);
             }
             public void SetScale(float x, float y, float z)
             {

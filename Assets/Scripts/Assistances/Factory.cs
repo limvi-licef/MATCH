@@ -200,7 +200,7 @@ namespace MATCH
                 return cube;
             }
 
-            public Icon CreateIcon(bool adjustHeight, Vector3 localPosition, bool enableBillboard, Transform parent, string iconType, string material)
+            public Icon CreateIcon(bool adjustHeight, Vector3 localPosition, Vector3 scale, bool enableBillboard, Transform parent, string iconType, string material)
             {
                 Transform view = Utilities.Materials.Prefabs.Load(Utilities.Materials.Prefabs.AssistanceIcon).transform;
 
@@ -209,10 +209,11 @@ namespace MATCH
 
                 Icon controller = view.GetComponent<Icon>();
                 controller.AdjustHeightOnShow = adjustHeight;
-                controller.setIconType(iconType);
+                controller.SetIconType(iconType);
                 controller.SetMaterial(material);
                 controller.SetLocalPositionObject(localPosition);
                 controller.SetBillboard(enableBillboard);
+                controller.SetScale(scale);
 
                 return controller;
             }
