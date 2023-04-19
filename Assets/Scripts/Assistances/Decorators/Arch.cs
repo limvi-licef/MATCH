@@ -198,16 +198,27 @@ namespace MATCH
                         {
                             Utilities.EventHandlerArgs.Position pos = (Utilities.EventHandlerArgs.Position)e;
                             
-                            Vector3 PlayerPosFeet = pos.PositionWorld;
+                            Vector3 PlayerPosInFrontOfUser = pos.PositionWorld;
                             Vector3 FinalPos = PanelToDecorate.GetAssistance().GetTransform().position;
                             FinalPos.y = FinalPos.y - 0.2f; //end of the arch under the assistance to avoid hiding the text
 
-                            Vector3 LineUserAssistance = FinalPos - PlayerPosFeet;
+                            Vector3 LineUserAssistance = FinalPos - PlayerPosInFrontOfUser;
                             Vector3 NormalizedLine = new Vector3(-LineUserAssistance.z, 0, LineUserAssistance.x).normalized; //normalize the line in the xz plane
                             //Vector3 NormalizedLine = new Vector3(-LineUserAssistance.y, LineUserAssistance.x, 0).normalized; //normalizes the line for a vertical arch
-                            Vector3 CornerPoint = Vector3.Reflect(Camera.main.transform.position - PlayerPosFeet*1.25f, NormalizedLine) + PlayerPosFeet*1.25f; //1.25f so that the point is a little further
 
-                            points = MATCH.Utilities.Utility.CalculateBezierCurve(PlayerPosFeet, FinalPos, CornerPoint);
+                            Vector3 CornerPoint = Vector3.Reflect(Camera.main.transform.position - PlayerPosInFrontOfUser * 1.25f, NormalizedLine) + PlayerPosInFrontOfUser * 1.25f; //1.25f so that the point is a little further
+                            float distanceCornerUser = /*Vector3.Distance(Camera.main.transform.position, CornerPoint);*/ Mathf.Sqrt(Mathf.Pow(Camera.main.transform.position.x - CornerPoint.x, 2) + Mathf.Pow(Camera.main.transform.position.z - CornerPoint.z, 2));
+                            float distanceFrontAssistance = Mathf.Sqrt(Mathf.Pow(FinalPos.x - PlayerPosInFrontOfUser.x, 2) + Mathf.Pow(FinalPos.z - PlayerPosInFrontOfUser.z, 2));
+                            float distanceUserAssistance = Mathf.Sqrt(Mathf.Pow(Camera.main.transform.position.x - FinalPos.x, 2) + Mathf.Pow(Camera.main.transform.position.z - FinalPos.z, 2));
+
+                            if (distanceCornerUser > 0.5f || distanceFrontAssistance<distanceUserAssistance)
+                            {
+                                distanceCornerUser = 4f;
+                            }
+
+                            CornerPoint = Vector3.Reflect(Camera.main.transform.position - PlayerPosInFrontOfUser * 5f/distanceCornerUser, NormalizedLine) + PlayerPosInFrontOfUser * 5f/distanceCornerUser;
+
+                            points = MATCH.Utilities.Utility.CalculateBezierCurve(PlayerPosInFrontOfUser, FinalPos, CornerPoint);
                             lineRenderer.positionCount = points.Count;
                             for (int i = 0; i < points.Count; i++)
                             {

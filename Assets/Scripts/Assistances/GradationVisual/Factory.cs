@@ -273,7 +273,7 @@ namespace MATCH
                     //toReturn.AddAssistance(Assistances.Decorators.Factory.Instance.CreateEdge(dialog, Utilities.Materials.Colors.OrangeGlowing));
 
                     //For Test
-                    Decorators.Icon decoratorIcon3 =(Decorators.Icon)Assistances.Decorators.Factory.Instance.CreateIcon(decorator2, MATCH.Utilities.Materials.Icon.Diamond, Utilities.Materials.Colors.WhiteMetallic);
+                    Decorators.Icon decoratorIcon3 =(Decorators.Icon)Assistances.Decorators.Factory.Instance.CreateIcon(decorator2, MATCH.Utilities.Materials.Icon.Diamond, Utilities.Materials.Colors.Red);
                     IPanel2 adapterIcon3 = Decorators.Adapters.Factory.Instance.CreateAdapterForIPanel2(decoratorIcon3, (IPanel2)decoratorIcon3.GetDecoratedAssistance());
 
                     Decorators.Sound decoratorSound3 = (Decorators.Sound)Assistances.Decorators.Factory.Instance.CreateSound(adapterIcon3, MATCH.Utilities.Materials.Sounds.Debug, 0.5f);
