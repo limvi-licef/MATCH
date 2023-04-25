@@ -165,6 +165,17 @@ namespace MATCH
                     return toReturn;
                 }
 
+                public GradationVisual CreatePath(string assistanceName, string assistance, Transform start, Transform end, Transform parent)
+                {
+                    PathWithTextAndHelp controller = Assistances.Factory.Instance.CreateAssistancePath(assistanceName, start, end, parent);
+                    controller.SetDescription(assistance);
+
+                    GradationVisual toReturn = Assistances.Factory.Instance.CreateAssistanceGradationAttention(assistanceName);
+                    toReturn.AddAssistance(controller);
+
+                    return toReturn;
+                }
+
                 public GradationVisual CreateAlreadyConfigured(AlreadyConfigured type, string assistanceName, Transform parent)
                 {
                     GradationVisual toReturn = null;
@@ -216,6 +227,11 @@ namespace MATCH
                     Assistances.Dialogs.Dialog2 dialog = Assistances.Factory.Instance.CreateDialog2WithButtons(title, description, textButton1, callbackButton1, type1, textButton2, callbackButton2, type2, parent);
 
                     return AddDecoratorsToDialog2(assistanceName, dialog);
+                }
+
+                public GradationVisual CreateAssistanceDialog(string assistanceName, Assistances.Dialogs.Dialog1 dialog)
+                {
+                    return AddDecoratorsToDialog1(assistanceName, dialog);
                 }
 
                 private GradationVisual AddDecoratorsToDialog1(string assistanceName, MATCH.Assistances.Dialogs.Dialog1 dialog)

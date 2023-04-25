@@ -448,7 +448,9 @@ namespace MATCH
                     InferenceManager.UnregisterInference(InferenceFocusedOnObject);
                     InferenceManager.UnregisterInference(InferenceTimeDidNotComeToObject);
 
+
                     AreaObject.EventUserTouched -= CallbackPersonGrabbedObject;
+
 
                     // Register interences
                     InferenceObjectDetected = new Inferences.ObjectDetected("SortingObjectDetectionObject", CallbackObjectDetected, ObjectOfInterestName);

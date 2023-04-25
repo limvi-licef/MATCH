@@ -147,7 +147,7 @@ namespace MATCH
                 View.transform.localPosition = new Vector3(0, 0f, 0);
             }
 
-            void CallbackShow()
+            public void CallbackShow()
             {
                 //DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Warning, "Callback showing / hiding interaction surface called");
 
