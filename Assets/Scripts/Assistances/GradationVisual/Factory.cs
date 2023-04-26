@@ -253,9 +253,12 @@ namespace MATCH
 
                     //Premier niveau de gradation avec 2 décorateurs
                     Decorators.BackgroundColorIcon2 decorator1a = (Decorators.BackgroundColorIcon2)Assistances.Decorators.Factory.Instance.CreateBackgroundIcon(dialog, Utilities.Materials.Colors.Cyan,true);
+                    Decorators.LinePath decorator1b = (Decorators.LinePath)Assistances.Decorators.Factory.Instance.CreateLinePath(decorator1a, true);
+                    IPanel2 adapterLine = Decorators.Adapters.Factory.Instance.CreateAdapterForIPanel2(decorator1b, (IPanel2)decorator1b.GetDecoratedAssistance());
+
 
                     //For Test
-                    Decorators.Sound decoratorSound = (Decorators.Sound)Assistances.Decorators.Factory.Instance.CreateSound(decorator1a, MATCH.Utilities.Materials.Sounds.Debug,2.0f);
+                    Decorators.Sound decoratorSound = (Decorators.Sound)Assistances.Decorators.Factory.Instance.CreateSound(adapterLine, MATCH.Utilities.Materials.Sounds.Debug,2.0f);
                     /*IPanel2 adapterSound = new Adapters.IAssistanceToIPanel2(decoratorSound,(IPanel2)decoratorSound.GetDecoratedAssistance());*/
                     IPanel2 adapterSound = Decorators.Adapters.Factory.Instance.CreateAdapterForIPanel2(decoratorSound, (IPanel2)decoratorSound.GetDecoratedAssistance());
                     //------

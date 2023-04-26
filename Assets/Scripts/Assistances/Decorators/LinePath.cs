@@ -21,6 +21,8 @@ using UnityEngine;
 using System.Timers;
 using System.Reflection;
 using System.Linq;
+using static UnityEngine.UI.GridLayoutGroup;
+using MATCH.Scenarios.FiniteStateMachine;
 
 namespace MATCH
 {
@@ -28,12 +30,12 @@ namespace MATCH
     {
         namespace Decorators
         {
-            public class Arch : Assistance, IAssistance
+            public class LinePath : Assistance, IAssistance
             {
                 IAssistance PanelToDecorate;
                 //Transform LineView;
                 //LineToObject LineController;
-                bool IsArchVisible;
+                bool IsLineVisible;
 
                 List<Vector3> points = new List<Vector3>();
                 private Inferences.Manager InfManager;
@@ -41,19 +43,26 @@ namespace MATCH
 
                 private LineRenderer lineRenderer;
                 //private bool toShow=false;
+                PathFinding.PathFinding PathFinderEngine;
+                Assistances.InteractionSurface FollowObject;
+                
+
                 private void Awake()
                 {
+                    
                     //LineView = gameObject.transform.Find("Line");
                     //LineController = LineView.GetComponent<LineToObject>();
                     lineRenderer = GetComponent<LineRenderer>();
-                    lineRenderer.positionCount = 2;
-                    lineRenderer.SetPosition(0, Vector3.zero);
-                    lineRenderer.SetPosition(1, Vector3.zero);
-                    lineRenderer.startWidth = 0.1f;
-                    lineRenderer.endWidth = 0.1f;
+                    lineRenderer.startWidth = 0.017f;
+                    lineRenderer.endWidth = 0.017f;
+                    //lineRenderer.material = Resources.Load(Utilities.Materials.Colors.GreenGlowing, typeof(Material)) as Material;
+                    lineRenderer.positionCount = 0;
                     lineRenderer.startColor = Color.red;
                     lineRenderer.endColor = Color.red;
                     InfManager = Inferences.Factory.Instance.CreateManager(transform);
+                    PathFinderEngine = GameObject.Find("PathFinderEngine").GetComponent<PathFinding.PathFinding>();
+                    FollowObject = Assistances.InteractionSurfaceFollower.Instance.GetInteractionSurface();
+                    
 
                 }
 
@@ -64,19 +73,22 @@ namespace MATCH
 
                 public void Update()
                 {
-                
+                    if (IsLineVisible)
+                    {
+                        updateLightPath();
+                    }
                 }
 
 
                 public void SetAssistanceToDecorate(IAssistance toDecorate, bool archVisible)
                 {
                     PanelToDecorate = toDecorate;
-                    name = PanelToDecorate.GetAssistance().name + "_decoratorArch";             
+                    name = PanelToDecorate.GetAssistance().name + "_decoratorArch";
 
                     transform.parent = PanelToDecorate.GetRootDecoratedAssistance().GetTransform();
                     transform.localPosition = PanelToDecorate.GetRootDecoratedAssistance().GetTransform().localPosition;
 
-                    IsArchVisible = archVisible;
+                    IsLineVisible = archVisible;
 
                     Assistance temp = PanelToDecorate.GetRootDecoratedAssistance();
                     temp.EventHelpButtonClicked += delegate (System.Object o, EventArgs e)
@@ -93,7 +105,7 @@ namespace MATCH
                         PanelToDecorate.GetAssistance().Hide(delegate (System.Object o, EventArgs e)
                         {
                             GetArch().gameObject.SetActive(false);
-                            
+
 
                             IsDisplayed = false;
 
@@ -121,11 +133,7 @@ namespace MATCH
 
                             PanelToDecorate.GetArch().gameObject.SetActive(false); //The decorated panels transform become invisible
 
-                            if (IsArchVisible)
-                            {
-                                drawArch();
-                            }
-
+                            
                             callback?.Invoke(this, e);
                         }, withAnimation);
                     }
@@ -137,7 +145,7 @@ namespace MATCH
                             Utilities.EventHandlerArgs.Animation args = new Utilities.EventHandlerArgs.Animation();
 
                             PanelToDecorate.GetArch().gameObject.SetActive(false); //The decorated panels transform become invisible
-                   
+
                             args.Success = false;
                             callback?.Invoke(this, args);
                         }, withAnimation);
@@ -190,55 +198,33 @@ namespace MATCH
                     return PanelToDecorate.GetIcon();
                 }
 
+                 
 
-                private void drawArch()
+                void ShowLightpath()
                 {
-                    if (IsDisplayed)
+                    
+
+                    Vector3[] corners = PathFinderEngine.ComputePath(FollowObject.transform, GetRootDecoratedAssistance().GetTransform());
+
+                    GameObject gameObjectForLine = new GameObject("Line redering mdr");
+                    lineRenderer = gameObjectForLine.AddComponent<LineRenderer>();
+                    lineRenderer.positionCount = corners.Length;
+                    for (int i = 0; i < corners.Length; i++)
                     {
-                        MATCH.Assistances.InteractionSurfaceFollower.Instance.GetInteractionSurface().EventUserMoved += delegate (System.Object o, EventArgs e)
-                        {
-                            Utilities.EventHandlerArgs.Position pos = (Utilities.EventHandlerArgs.Position)e;
+                        Vector3 corner = corners[i];
 
-                            Vector3 PlayerPosInFrontOfUser = pos.PositionWorld;
-                            Vector3 FinalPos = PanelToDecorate.GetAssistance().GetTransform().position;
-                            FinalPos.y = FinalPos.y - 0.2f; //end of the arch under the assistance to avoid hiding the text
+                        lineRenderer.SetPosition(i, corner);
 
-                            Vector3 LineUserAssistance = FinalPos - PlayerPosInFrontOfUser;
-                            Vector3 NormalizedLine = new Vector3(-LineUserAssistance.z, 0, LineUserAssistance.x).normalized; //normalize the line in the xz plane
-                            //Vector3 NormalizedLine = new Vector3(-LineUserAssistance.y, LineUserAssistance.x, 0).normalized; //normalizes the line for a vertical arch
-
-
-                            Inferences.Timer temp = new Inferences.Timer("ArchUpdate", 1, delegate (System.Object oo, EventArgs ee)
-                            {
-                                ((Inferences.Timer)InfManager.GetInference("ArchUpdate")).StopCounter();
-                                InfManager.UnregisterInference("ArchUpdate");
-                                Vector3 CornerPoint = Vector3.Reflect(Camera.main.transform.position - PlayerPosInFrontOfUser * 1.25f, NormalizedLine) + PlayerPosInFrontOfUser * 1.25f; //1.25f so that the point is a little further
-                                float distanceCornerUser = /*Vector3.Distance(Camera.main.transform.position, CornerPoint);*/ Mathf.Sqrt(Mathf.Pow(Camera.main.transform.position.x - CornerPoint.x, 2) + Mathf.Pow(Camera.main.transform.position.z - CornerPoint.z, 2));
-                                float distanceFrontAssistance = Mathf.Sqrt(Mathf.Pow(FinalPos.x - PlayerPosInFrontOfUser.x, 2) + Mathf.Pow(FinalPos.z - PlayerPosInFrontOfUser.z, 2));
-                                float distanceUserAssistance = Mathf.Sqrt(Mathf.Pow(Camera.main.transform.position.x - FinalPos.x, 2) + Mathf.Pow(Camera.main.transform.position.z - FinalPos.z, 2));
-                            
-                            
-
-                                if (distanceCornerUser > 0.5f || distanceFrontAssistance < distanceUserAssistance)
-                                {
-                                    distanceCornerUser = 4f;
-                                }
-
-                                CornerPoint = Vector3.Reflect(Camera.main.transform.position - PlayerPosInFrontOfUser * 5f / distanceCornerUser, NormalizedLine) + PlayerPosInFrontOfUser * 5f / distanceCornerUser;
-                            
-                                points = MATCH.Utilities.Utility.CalculateBezierCurve(PlayerPosInFrontOfUser, FinalPos, CornerPoint);
-                                lineRenderer.positionCount = points.Count;
-                                for (int i = 0; i < points.Count; i++)
-                                {
-                                    lineRenderer.SetPosition(i, points[i]);
-                                }
-                            });
-
-
-                            InfManager.RegisterInference(temp);
-                            temp.StartCounter();
-                        };                    
+                        DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Corner : " + corner);
                     }
+                       
+                }
+
+                void updateLightPath()
+                {
+                    GameObject gameObjectForLine = GameObject.Find("Line redering mdr");
+                    Destroy(gameObjectForLine);
+                    ShowLightpath();
                 }
             }
         }

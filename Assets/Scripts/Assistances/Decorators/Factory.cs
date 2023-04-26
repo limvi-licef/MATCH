@@ -165,6 +165,18 @@ namespace MATCH
                     return controller;
                 }
 
+                public MATCH.Assistances.Assistance CreateLinePath(MATCH.Assistances.IAssistance toDecorate, bool IsLineVisible)
+                {
+                    Transform view = Utilities.Materials.Prefabs.Load(Utilities.Materials.Prefabs.DecoratorLine);
+                    view.name = toDecorate.GetAssistance().name;
+
+                    Assistances.Decorators.LinePath controller = view.GetComponent<Assistances.Decorators.LinePath>();
+
+                    controller.SetAssistanceToDecorate(toDecorate, IsLineVisible);
+
+                    return controller;
+                }
+
             }
         }
     }
