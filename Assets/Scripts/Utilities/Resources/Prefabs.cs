@@ -58,6 +58,7 @@ namespace MATCH
 
                 public static string Button = Path + "Assistances/Buttons/Button";
                 public static string ButtonSwitch = Path + "Assistances/Buttons/ButtonSwitch";
+                public static string ButtonIcon = Path + "Assistances/Buttons/ButtonIcon";
 
                 public static Transform Load(string prefabPath, Transform parent = null)
                 {

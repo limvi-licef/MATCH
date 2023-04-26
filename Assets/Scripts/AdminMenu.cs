@@ -57,7 +57,7 @@ namespace MATCH
 
         public static AdminMenu Instance { get { return InstanceInternal; } }
 
-        public GameObject RefButtonSwitch;
+        //public GameObject RefButtonSwitch;
         //public GameObject RefButton;
         public GameObject RefInput;
 
@@ -85,8 +85,8 @@ namespace MATCH
                 // Remove the canvas renderer from the buttons, to avoid the warning message from unity
                 //DestroyImmediate(RefButton.transform.Find("IconAndText").Find("TextMeshPro").GetComponent<CanvasRenderer>(), true);
                 //DestroyImmediate(RefButton.transform.Find("SeeItSayItLabel").Find("TextMeshPro").GetComponent<CanvasRenderer>(), true);
-                DestroyImmediate(RefButtonSwitch.transform.Find("IconAndText").Find("TextMeshPro").GetComponent<CanvasRenderer>(), true);
-                DestroyImmediate(RefButtonSwitch.transform.Find("SeeItSayItLabel").Find("TextMeshPro").GetComponent<CanvasRenderer>(), true);
+                //DestroyImmediate(RefButtonSwitch.transform.Find("IconAndText").Find("TextMeshPro").GetComponent<CanvasRenderer>(), true);
+                //DestroyImmediate(RefButtonSwitch.transform.Find("SeeItSayItLabel").Find("TextMeshPro").GetComponent<CanvasRenderer>(), true);
 
                 // Get children
                 PanelsStorage.Add(Panels.Middle, gameObject.transform.Find("PanelMiddle").Find("ButtonParent").transform);
@@ -96,6 +96,8 @@ namespace MATCH
                 InstanceInternal = this;
             }
         }
+
+        Assistances.Buttons.Basic Test;
 
         // Start is called before the first frame update
         void Start()
@@ -116,6 +118,15 @@ namespace MATCH
             // Hiding spongy
             AddSwitchButton("Spongy - hide", CallbackHideSpongy, Panels.Left, ButtonType.Hide);
 
+            /* Code test à placer dans Localisation. Ne pas oublier la ligne 100*/
+            Test = AddButtonIcon("Coucou!", Utilities.Materials.Textures.Congratulation, delegate {
+                MeshRenderer renderer = Test.transform.Find("IconAndText").Find("UIButtonSquareIcon").GetComponent<MeshRenderer>();
+                renderer.material = Resources.Load(Utilities.Materials.Textures.ArrowProgressive, typeof(Material)) as Material;
+
+                //AddButtonIcon("Coucou 2!", Utilities.Materials.Textures.ArrowProgressive, delegate { });
+            });
+            /*Fin code test*/
+            
 
             //AddText("Test", delegate() { });
         }
@@ -202,6 +213,31 @@ namespace MATCH
             PanelsStorage[panel].GetComponent<GridObjectCollection>().UpdateCollection();
 
             return Buttons.Last().GetComponent<MATCH.Assistances.Buttons.Basic>();
+        }
+
+        public MATCH.Assistances.Buttons.Basic AddButtonIcon(string text, Material icon, UnityEngine.Events.UnityAction callback, Panels panel = Panels.Middle)
+        {
+            //Buttons.Add(Instantiate(RefButton, PanelsStorage[panel]));
+            Transform button = Utilities.Materials.Prefabs.Load(Utilities.Materials.Prefabs.ButtonIcon, PanelsStorage[panel]);
+            //button.SetParent(PanelsStorage[panel]);
+            Buttons.Add(button.gameObject);
+
+            //Buttons.Last().GetComponent<ButtonConfigHelper>().IconQ = ButtonIconStyle.None;
+            MeshRenderer renderer = Buttons.Last().transform.Find("IconAndText").Find("UIButtonSquareIcon").GetComponent<MeshRenderer>();
+            //MeshRenderer renderer = Buttons.Last().transform.Find("Icon").GetComponent<MeshRenderer>();
+            renderer.material = icon;
+            Buttons.Last().GetComponent<ButtonConfigHelper>().SeeItSayItLabelEnabled = false;
+            Buttons.Last().GetComponent<Interactable>().GetReceiver<InteractableOnPressReceiver>().OnPress.AddListener(callback);
+            Buttons.Last().GetComponent<Interactable>().GetReceiver<InteractableOnPressReceiver>().InteractionFilter = 0;
+            Buttons.Last().transform.Find("IconAndText").Find("TextMeshPro").GetComponent<TextMeshPro>().SetText(text);
+            PanelsStorage[panel].GetComponent<GridObjectCollection>().UpdateCollection();
+
+            return Buttons.Last().GetComponent<MATCH.Assistances.Buttons.Basic>();
+        }
+
+            public MATCH.Assistances.Buttons.Basic AddButtonIcon(string text, string pathToIcon, UnityEngine.Events.UnityAction callback, Panels panel = Panels.Middle)
+        {
+            return AddButtonIcon(text, Resources.Load(pathToIcon, typeof(Material)) as Material, callback, panel);
         }
 
         /**
