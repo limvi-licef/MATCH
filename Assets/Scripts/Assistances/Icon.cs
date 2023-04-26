@@ -296,6 +296,11 @@ namespace MATCH
             {
                 return this;
             }
+
+            public Transform GetLinePath()
+            {
+                return null;
+            }
         }
     }
 }

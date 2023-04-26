@@ -37,6 +37,8 @@ namespace MATCH
             public Transform GetSound();
             public Transform GetArch();
             public Assistances.Icon GetIcon();
+
+            public Transform GetLinePath();
         }
     }
 }

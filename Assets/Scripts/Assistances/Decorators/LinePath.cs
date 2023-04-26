@@ -73,22 +73,22 @@ namespace MATCH
 
                 public void Update()
                 {
-                    if (IsLineVisible)
+                    if (IsDisplayed && IsLineVisible)
                     {
                         updateLightPath();
                     }
                 }
 
 
-                public void SetAssistanceToDecorate(IAssistance toDecorate, bool archVisible)
+                public void SetAssistanceToDecorate(IAssistance toDecorate, bool lineVisible)
                 {
                     PanelToDecorate = toDecorate;
-                    name = PanelToDecorate.GetAssistance().name + "_decoratorArch";
+                    name = PanelToDecorate.GetAssistance().name + "_decoratorLinePath";
 
                     transform.parent = PanelToDecorate.GetRootDecoratedAssistance().GetTransform();
                     transform.localPosition = PanelToDecorate.GetRootDecoratedAssistance().GetTransform().localPosition;
 
-                    IsLineVisible = archVisible;
+                    IsLineVisible = lineVisible;
 
                     Assistance temp = PanelToDecorate.GetRootDecoratedAssistance();
                     temp.EventHelpButtonClicked += delegate (System.Object o, EventArgs e)
@@ -104,7 +104,7 @@ namespace MATCH
                     {
                         PanelToDecorate.GetAssistance().Hide(delegate (System.Object o, EventArgs e)
                         {
-                            GetArch().gameObject.SetActive(false);
+                            GetLinePath().gameObject.SetActive(false);
 
 
                             IsDisplayed = false;
@@ -131,7 +131,7 @@ namespace MATCH
                         {
                             PanelToDecorate.GetRootDecoratedAssistance().Show(Utilities.Utility.GetEventHandlerEmpty(), false);
 
-                            PanelToDecorate.GetArch().gameObject.SetActive(false); //The decorated panels transform become invisible
+                            PanelToDecorate.GetLinePath().gameObject.SetActive(false); //The decorated panels transform become invisible
 
                             
                             callback?.Invoke(this, e);
@@ -144,7 +144,7 @@ namespace MATCH
                         {
                             Utilities.EventHandlerArgs.Animation args = new Utilities.EventHandlerArgs.Animation();
 
-                            PanelToDecorate.GetArch().gameObject.SetActive(false); //The decorated panels transform become invisible
+                            PanelToDecorate.GetLinePath().gameObject.SetActive(false); //The decorated panels transform become invisible
 
                             args.Success = false;
                             callback?.Invoke(this, args);
@@ -190,7 +190,7 @@ namespace MATCH
 
                 public Transform GetArch()
                 {
-                    return transform;
+                    return PanelToDecorate.GetArch();
                 }
 
                 public Assistances.Icon GetIcon()
@@ -198,16 +198,15 @@ namespace MATCH
                     return PanelToDecorate.GetIcon();
                 }
 
-                 
+                public Transform GetLinePath()
+                {
+                    return transform;
+                }
 
                 void ShowLightpath()
                 {
-                    
-
                     Vector3[] corners = PathFinderEngine.ComputePath(FollowObject.transform, GetRootDecoratedAssistance().GetTransform());
 
-                    GameObject gameObjectForLine = new GameObject("Line redering mdr");
-                    lineRenderer = gameObjectForLine.AddComponent<LineRenderer>();
                     lineRenderer.positionCount = corners.Length;
                     for (int i = 0; i < corners.Length; i++)
                     {
@@ -217,7 +216,30 @@ namespace MATCH
 
                         DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Corner : " + corner);
                     }
-                       
+                    /*
+                     DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name,
+                       DebugMessagesManager.MessageLevel.Info, "Called");
+
+                   Vector3[] corners = PathFinderEngine.ComputePath(FollowObject.transform, plant.transform);
+
+                   GameObject gameObjectForLine = new GameObject("Line for " + plant.name);
+                   LineRenderer lineRenderer = gameObjectForLine.AddComponent<LineRenderer>();
+                   lineRenderer.startWidth = 0.017f;
+                   lineRenderer.endWidth = 0.017f;
+                   lineRenderer.material = Resources.Load(Utilities.Materials.Colors.GreenGlowing, typeof(Material)) as Material;
+                   lineRenderer.positionCount = 0;
+
+                   lineRenderer.positionCount = corners.Length;
+
+                   for (int i = 0; i < corners.Length; i++)
+                   {
+                       Vector3 corner = corners[i];
+
+                       lineRenderer.SetPosition(i, corner);
+
+                       DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Corner : " + corner);
+                   }
+                     * */
                 }
 
                 void updateLightPath()

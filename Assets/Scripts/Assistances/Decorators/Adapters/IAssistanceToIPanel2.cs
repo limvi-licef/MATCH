@@ -116,6 +116,11 @@ namespace MATCH
                     {
                         return AssistanceToAdapt.GetIcon();
                     }
+
+                    public Transform GetLinePath()
+                    {
+                        return AssistanceToAdapt.GetLinePath();
+                    }
                 }
             }
         }

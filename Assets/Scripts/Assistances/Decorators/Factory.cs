@@ -141,14 +141,21 @@ namespace MATCH
                     return controller;
                 }
 
-                public MATCH.Assistances.Assistance CreateArch(MATCH.Assistances.IAssistance toDecorate, bool IsArchVisible)
+                public MATCH.Assistances.Assistance CreateArch(MATCH.Assistances.IAssistance toDecorate, string archMaterial)
                 {
+                    bool IsArchVisible = false;
                     Transform view = Utilities.Materials.Prefabs.Load(Utilities.Materials.Prefabs.DecoratorArch);
                     view.name = toDecorate.GetAssistance().name;
 
                     Assistances.Decorators.Arch controller = view.GetComponent<Assistances.Decorators.Arch>();
 
+                    if (archMaterial != null)
+                    {
+                        IsArchVisible = true;
+                    }
+
                     controller.SetAssistanceToDecorate(toDecorate, IsArchVisible);
+                    controller.GetArch().GetComponent<Renderer>().material = Utilities.Utility.LoadMaterial(archMaterial);
 
                     return controller;
                 }
@@ -165,14 +172,20 @@ namespace MATCH
                     return controller;
                 }
 
-                public MATCH.Assistances.Assistance CreateLinePath(MATCH.Assistances.IAssistance toDecorate, bool IsLineVisible)
+                public MATCH.Assistances.Assistance CreateLinePath(MATCH.Assistances.IAssistance toDecorate, string lineMaterial)
                 {
+                    bool IsLineVisible = false;
                     Transform view = Utilities.Materials.Prefabs.Load(Utilities.Materials.Prefabs.DecoratorLine);
                     view.name = toDecorate.GetAssistance().name;
 
+                    if (lineMaterial != null)
+                    {
+                        IsLineVisible = true;
+                    }
                     Assistances.Decorators.LinePath controller = view.GetComponent<Assistances.Decorators.LinePath>();
 
                     controller.SetAssistanceToDecorate(toDecorate, IsLineVisible);
+                    controller.GetLinePath().GetComponent<Renderer>().material = Utilities.Utility.LoadMaterial(lineMaterial);
 
                     return controller;
                 }

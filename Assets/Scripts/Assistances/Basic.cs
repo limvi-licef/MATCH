@@ -320,6 +320,12 @@ namespace MATCH
             {
                 return null;
             }
+
+            public Transform GetLinePath()
+            {
+                return null;
+            }
+
         }
     }
 }

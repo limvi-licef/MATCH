@@ -201,6 +201,11 @@ namespace MATCH
                 {
                     return PanelToDecorate.GetIcon();
                 }
+
+                public Transform GetLinePath()
+                {
+                    return PanelToDecorate.GetLinePath();
+                }
             }
         }
     }

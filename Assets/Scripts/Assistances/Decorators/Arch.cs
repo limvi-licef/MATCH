@@ -190,6 +190,10 @@ namespace MATCH
                     return PanelToDecorate.GetIcon();
                 }
 
+                public Transform GetLinePath()
+                {
+                    return PanelToDecorate.GetLinePath();
+                }
 
                 private void drawArch()
                 {

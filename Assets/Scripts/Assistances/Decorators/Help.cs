@@ -99,6 +99,11 @@ namespace MATCH
                 {
                     return AssistanceToDecorate.GetIcon();
                 }
+
+                public Transform GetLinePath()
+                {
+                    return AssistanceToDecorate.GetLinePath();
+                }
             }
         }
     }

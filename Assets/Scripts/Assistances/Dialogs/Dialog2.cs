@@ -42,6 +42,7 @@ namespace MATCH
                 Icon IconView;
                 Transform Sound;
                 Transform Arch;
+                Transform LinePath;
                 string IconType;
                 //List<Transform> ButtonsView;
                 //public List<Buttons.Basic> ButtonsController;
@@ -84,6 +85,7 @@ namespace MATCH
 
                     Sound = gameObject.transform.Find("Sound");
                     Arch = gameObject.transform.Find("Arch");
+                    LinePath = gameObject.transform.Find("LinePath");
 
                     // Initialize some values of the children
                     ButtonsParentScalingOriginal = ButtonsParentView.localScale;
@@ -425,6 +427,11 @@ namespace MATCH
                 public Assistances.Icon GetIcon()
                 {
                     return IconView;
+                }
+
+                public Transform GetLinePath()
+                {
+                    return LinePath;
                 }
             }
 

@@ -181,6 +181,11 @@ namespace MATCH
                 {
                     return IconView;
                 }
+
+                public Transform GetLinePath()
+                {
+                    return PanelToDecorate.GetLinePath();
+                }
             }
         }
     }
