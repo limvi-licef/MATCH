@@ -15478,7 +15478,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1847755099
 Transform:
   m_ObjectHideFlags: 0
@@ -15503,11 +15503,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 1847755098}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a002a87f8d853224e91394dfdfffd9f8, type: 3}
+  m_Script: {fileID: 11500000, guid: f52fd8e0c22d27540a01e7dee716b6df, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   SurfacesManager: {fileID: 1559778519}
-  Cube: {fileID: 7628620}
+  Cube: {fileID: 1572274198}
 --- !u!1 &1851939768
 GameObject:
   m_ObjectHideFlags: 0

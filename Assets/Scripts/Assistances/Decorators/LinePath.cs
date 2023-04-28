@@ -73,10 +73,10 @@ namespace MATCH
 
                 public void Update()
                 {
-                    if (IsDisplayed && IsLineVisible)
+                    /*if (IsDisplayed && IsLineVisible)
                     {
                         ShowLightpath();
-                    }
+                    }*/
                 }
 
 
@@ -133,6 +133,16 @@ namespace MATCH
 
                             PanelToDecorate.GetLinePath().gameObject.SetActive(false); //The decorated panels transform become invisible
 
+                            ShowLightpath();
+
+                            MATCH.Inferences.Timer temp = new MATCH.Inferences.Timer("tempTimer", 5, delegate (System.Object o, EventArgs e)
+                            {
+                                ShowLightpath();
+                                ((MATCH.Inferences.Timer)InfManager.GetInference("tempTimer")).StopCounter();
+                                ((MATCH.Inferences.Timer)InfManager.GetInference("tempTimer")).StartCounter();
+                            });
+                            InfManager.RegisterInference(temp);
+                            temp.StartCounter();
                             
                             callback?.Invoke(this, e);
                         }, withAnimation);
@@ -214,7 +224,7 @@ namespace MATCH
 
                         lineRenderer.SetPosition(i, corner);
 
-                        DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Corner : " + corner);
+                        //DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Corner : " + corner);
                     }
                     
                 }
