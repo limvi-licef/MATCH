@@ -75,7 +75,7 @@ namespace MATCH
                 {
                     if (IsDisplayed && IsLineVisible)
                     {
-                        updateLightPath();
+                        ShowLightpath();
                     }
                 }
 
@@ -216,37 +216,7 @@ namespace MATCH
 
                         DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Corner : " + corner);
                     }
-                    /*
-                     DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name,
-                       DebugMessagesManager.MessageLevel.Info, "Called");
-
-                   Vector3[] corners = PathFinderEngine.ComputePath(FollowObject.transform, plant.transform);
-
-                   GameObject gameObjectForLine = new GameObject("Line for " + plant.name);
-                   LineRenderer lineRenderer = gameObjectForLine.AddComponent<LineRenderer>();
-                   lineRenderer.startWidth = 0.017f;
-                   lineRenderer.endWidth = 0.017f;
-                   lineRenderer.material = Resources.Load(Utilities.Materials.Colors.GreenGlowing, typeof(Material)) as Material;
-                   lineRenderer.positionCount = 0;
-
-                   lineRenderer.positionCount = corners.Length;
-
-                   for (int i = 0; i < corners.Length; i++)
-                   {
-                       Vector3 corner = corners[i];
-
-                       lineRenderer.SetPosition(i, corner);
-
-                       DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Corner : " + corner);
-                   }
-                     * */
-                }
-
-                void updateLightPath()
-                {
-                    GameObject gameObjectForLine = GameObject.Find("Line redering mdr");
-                    Destroy(gameObjectForLine);
-                    ShowLightpath();
+                    
                 }
             }
         }

@@ -73,6 +73,7 @@ namespace MATCH
                     
                     //transform.parent = PanelToDecorate.GetRootDecoratedAssistance().GetTransform();
                     transform.localPosition = PanelToDecorate.GetRootDecoratedAssistance().GetTransform().localPosition;
+                    transform.position = PanelToDecorate.GetRootDecoratedAssistance().GetTransform().position;
 
                     Assistance temp = PanelToDecorate.GetRootDecoratedAssistance();
                     temp.EventHelpButtonClicked += delegate (System.Object o, EventArgs e)
