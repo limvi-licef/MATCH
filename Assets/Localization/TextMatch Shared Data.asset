@@ -16,7 +16,7 @@ MonoBehaviour:
   m_TableCollectionNameGuidString: b86564e182b53434c8d8706ccf6469b9
   m_Entries:
   - m_Id: 6755741696
-    m_Key: Bonjour
+    m_Key: CurrentLanguage
     m_Metadata:
       m_Items: []
   - m_Id: 348115440529408

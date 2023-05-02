@@ -19,7 +19,7 @@ MonoBehaviour:
     m_Items: []
   m_TableData:
   - m_Id: 6755741696
-    m_Localized: Bonjour
+    m_Localized: "Langue actuelle : Fran\xE7ais"
     m_Metadata:
       m_Items: []
   - m_Id: 348115440529408

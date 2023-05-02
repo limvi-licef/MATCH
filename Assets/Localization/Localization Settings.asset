@@ -47,7 +47,7 @@ MonoBehaviour:
       type: {class: LocalizedAssetDatabase, ns: UnityEngine.Localization.Settings, asm: Unity.Localization}
       data:
         m_DefaultTableReference:
-          m_TableCollectionName: 
+          m_TableCollectionName: AssetTable2
         m_CustomTableProvider:
           id: 6
         m_CustomTablePostprocessor:

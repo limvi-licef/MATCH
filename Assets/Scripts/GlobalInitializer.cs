@@ -1,4 +1,4 @@
-/*Copyright 2022 Guillaume Spalla
+/*Copyright 2022 Guillaume Spalla, Aurélie Le Guidec, Guillaume Merviel
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -21,6 +21,9 @@ using UnityEngine;
 using System.Timers;
 using System.Reflection;
 using System.Linq;
+using System.IO;
+using UnityEditor;
+using UnityEngine.SceneManagement;
 
 /**
  * This class allows to tune some initialization parameters following if the compilation is done in the editor or for the Hololens
@@ -33,6 +36,7 @@ namespace MATCH
         public GameObject VirtualRoom;
         public GameObject ObjectRecognition;
         public GameObject ObjectRecognitionInfoPanel;
+        Dictionary<String, String> ConfigParam; //Store all key values contained in the configuration file
 
         // Singleton
         private static GlobalInitializer _instance;
@@ -53,6 +57,8 @@ namespace MATCH
         // Start is called before the first frame update
         void Start()
         {
+            ConfigParam = new Dictionary<string, string>();
+            ReadConfigFile();
             //TodoList = MATCH.Assistances.Factory.Instance.CreateToDoList("Choses à faire", "", transform.parent); //create to do list
 
             // Tuning parameters following if the software runs on the Unity editor or the Hololens
@@ -104,6 +110,86 @@ namespace MATCH
             }
 
         }
+        /*
+         * Return the value corresponding to a key in the configParam dictionnary
+         */
+        public string GetConfigParam(string key)
+        {
+            return ConfigParam[key];
+        }
 
+        /*
+         * Change the value corresponding to a key in the dictionnary
+         */
+        public void SetConfigParam(string key, string value)
+        {
+            ConfigParam[key] = value;
+            RewriteConfigFile();
+        }
+
+        /*
+         * Read the configuration file and store every couple of data (Key/Value) in a dictionnary
+         */
+        void ReadConfigFile()
+        {
+            string line;
+            try
+            {
+                StreamReader sr = new StreamReader("Assets/Config.txt");
+                line = sr.ReadLine();
+                while (line !=null)
+                {
+                    string[] parts = line.Split('=');
+                    string paramName = parts[0].Trim();
+                    string paramValue = parts[1].Trim();
+
+                    ConfigParam.Add(paramName, paramValue);
+                    line = sr.ReadLine();
+                }
+                sr.Close();
+            }
+            catch (IOException e)
+            {
+            }
+        }
+
+        /**
+         * For each pair of value, write a line in a temporary file. This temporary file then replace the former configuration file.
+         */
+        public void RewriteConfigFile()
+        {
+            try
+            {
+                string tempFile = Path.GetTempFileName();
+                StreamWriter sw = new StreamWriter(tempFile);
+                foreach (KeyValuePair<string, string> entry in ConfigParam)
+                {
+                    sw.WriteLine(entry.Key + "=" + entry.Value);
+                }
+                sw.Close();
+
+                File.Delete("Assets/Config.txt");
+                File.Move(tempFile, "Assets/Config.txt");
+            }
+            catch (IOException e)
+            {
+            }
+        }
+
+        /*
+         * Restart Match by closing it, or by reloading the scene
+         */
+        public void RestartMatch()
+        {
+            if (Utilities.Utility.IsEditorSimulator() || Utilities.Utility.IsEditorGameView())
+            {
+                UnityEditor.EditorApplication.isPlaying = false;
+            }
+            else
+            {
+                Application.Quit();
+            }
+            //SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        }
     }
 }

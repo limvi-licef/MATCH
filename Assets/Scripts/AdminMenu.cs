@@ -97,7 +97,7 @@ namespace MATCH
             }
         }
 
-        Assistances.Buttons.Basic Test;
+        
 
         // Start is called before the first frame update
         void Start()
@@ -117,15 +117,6 @@ namespace MATCH
 
             // Hiding spongy
             AddSwitchButton("Spongy - hide", CallbackHideSpongy, Panels.Left, ButtonType.Hide);
-
-            /* Code test à placer dans Localisation. Ne pas oublier la ligne 100*/
-            Test = AddButtonIcon("Coucou!", Utilities.Materials.Textures.Congratulation, delegate {
-                MeshRenderer renderer = Test.transform.Find("IconAndText").Find("UIButtonSquareIcon").GetComponent<MeshRenderer>();
-                renderer.material = Resources.Load(Utilities.Materials.Textures.ArrowProgressive, typeof(Material)) as Material;
-
-                //AddButtonIcon("Coucou 2!", Utilities.Materials.Textures.ArrowProgressive, delegate { });
-            });
-            /*Fin code test*/
             
 
             //AddText("Test", delegate() { });

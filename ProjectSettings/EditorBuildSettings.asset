@@ -12,7 +12,7 @@ EditorBuildSettings:
     path: Assets/Scenes/MATCH.unity
     guid: fe427dbc86e4d3c408f710505c2344f9
   m_configObjects:
-    com.unity.addressableassets: {fileID: 11400000, guid: c1dc26d56cb1d9a41bf81759e8444088, type: 2}
+    com.unity.addressableassets: {fileID: 11400000, guid: 1b8deb8bc9e239749a4a52811ee3a9fb, type: 2}
     com.unity.localization.settings: {fileID: 11400000, guid: 34bc04d302712b043b7f42010b697fc4, type: 2}
     com.unity.xr.management.loader_settings: {fileID: 11400000, guid: 059a7a3802e1002479b8bb8ef9f20a47, type: 2}
     com.unity.xr.openxr.settings4: {fileID: 11400000, guid: 359d35bc5233ff146bce4931bf21af09, type: 2}
