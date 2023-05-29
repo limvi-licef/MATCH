@@ -33,16 +33,16 @@ namespace MATCH
     {
         public class SurfaceToProcess : Assistance, ISurface
         {
-            public int NumberOfCubesToAddInRow = 5;
-            public int NumberOfCubesToAddInColumn = 4;
+            private int NumberOfCubesToAddInRow = 5;
+            private int NumberOfCubesToAddInColumn = 4;
 
             public ProcessingSurfaceElement HologramToUseToPopulateSurfaceController;
 
             public event EventHandler EventSurfaceCleaned;
             public event EventHandler EventNewPartCleaned;
+            
 
             Dictionary<Tuple<float, float>, Tuple<ProcessingSurfaceElement, bool>> CubesTouched;
-
             private InteractionSurface SurfaceToPopulate;
 
             private MATCH.Assistances.Dialogs.Dialog1 Help;
@@ -50,7 +50,8 @@ namespace MATCH
             private void Awake()
             {
                 // Initialize the variables
-                CubesTouched = new Dictionary<Tuple<float, float>, Tuple<ProcessingSurfaceElement, bool>>();
+                    CubesTouched = new Dictionary<Tuple<float, float>, Tuple<ProcessingSurfaceElement, bool>>();
+
 
                 // Get child, i.e. the default hologram to use to populate the surface, in case the user did not provide one
                 if (HologramToUseToPopulateSurfaceController == null)
@@ -76,13 +77,56 @@ namespace MATCH
                 {
                     MATCH.DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, MATCH.DebugMessagesManager.MessageLevel.Error, "The m_hologramToUseToPopulateSurface object should have a MouseChallengeCleanTableHologramForSurfaceToClean component");
                 }
+
+                AdminMenu.Instance.AddSwitchButton("Show Surface To Process", delegate () 
+                {
+                    if (IsDisplayed)
+                    {
+                        Hide(Utilities.Utility.GetEventHandlerEmpty(),false);
+                    }
+                    else
+                    {
+                        Show(Utilities.Utility.GetEventHandlerEmpty(), false);
+                    }
+                });
+
+
+                // Set the number of squares displayed on the table (buttons in the cockpit)
+                AdminMenu.Instance.AddInputWithButton(NumberOfCubesToAddInColumn.ToString(), "Choose the number of columns : ", delegate (System.Object o, EventArgs e)
+                {
+                    Utilities.EventHandlerArgs.String arg = (Utilities.EventHandlerArgs.String)e;
+                    this.NumberOfCubesToAddInColumn = int.Parse(arg.m_text);
+                    Hide(Utilities.Utility.GetEventHandlerEmpty(), false);
+                    Show(Utilities.Utility.GetEventHandlerEmpty(), false);
+
+                });
+
+                AdminMenu.Instance.AddInputWithButton(NumberOfCubesToAddInRow.ToString(), "Choose the number of rows : ", delegate (System.Object o, EventArgs e)
+                {
+                    Utilities.EventHandlerArgs.String arg = (Utilities.EventHandlerArgs.String)e;
+                    this.NumberOfCubesToAddInRow = int.Parse(arg.m_text);
+                    Hide(Utilities.Utility.GetEventHandlerEmpty(), false);
+                    Show(Utilities.Utility.GetEventHandlerEmpty(), false);
+
+                });
+
+
+                
             }
 
             // Start is called before the first frame update
             void Start()
             {
-                
+
             }
+
+
+            public void SetNumberOfSquares(int NumberOfRows, int NumberOfColumns)
+            {
+                this.NumberOfCubesToAddInRow = NumberOfRows;
+                this.NumberOfCubesToAddInColumn = NumberOfColumns;
+            }
+
 
             public void SetColor(string colorName)
             {
@@ -139,7 +183,7 @@ namespace MATCH
                         Vector3 goLocalPosition = gameObject.transform.localPosition;
 
                         float goScaleX = 1.0f /*SurfaceToPopulate.GetLocalScale().x*/;
-                        float goScaleZ = 1.0f /*SurfaceToPopulate.GetLocalScale().z*/;
+                        float goScaleZ = 1.0f /*SurfaceToPopulate.GetLocalScale().z */;
 
                         //MouseDebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, MouseDebugMessagesManager.MessageLevel.Info, "Scaling of surface to populate: x=" + goScaleX + " z=" + goScaleZ);
 
@@ -149,12 +193,12 @@ namespace MATCH
                         float incrementX = goScaleX / NumberOfCubesToAddInColumn;
                         float incrementZ = goScaleZ / NumberOfCubesToAddInRow;
 
-                        for (posX = 0.0f; posX < goScaleX; posX += incrementX)
+                                                           for (posX = 0.0f; posX < goScaleX; posX += incrementX)
                         {
                             for (posZ = 0.0f; posZ < goScaleZ; posZ += incrementZ)
                             {
                                 GameObject tempView = Instantiate(HologramToUseToPopulateSurfaceController.gameObject);
-                                ProcessingSurfaceElement tempController = tempView.GetComponent<ProcessingSurfaceElement>();
+                                                 ProcessingSurfaceElement tempController = tempView.GetComponent<ProcessingSurfaceElement>();
                                 tempView.transform.SetParent(gameObject.transform, false);
                                 tempView.transform.localPosition = Vector3.zero;
                                 tempView.transform.localScale = new Vector3(incrementX, 0.01f, incrementZ);
@@ -185,6 +229,7 @@ namespace MATCH
                     eventHandler?.Invoke(this, args);
                 }
             }
+
 
             public void SetSurfaceToPopulate(InteractionSurface surfaceToPopulate)
             {
@@ -316,7 +361,8 @@ namespace MATCH
             {
                 return this;
             }
-        }
 
+        }
+       
     }
 }

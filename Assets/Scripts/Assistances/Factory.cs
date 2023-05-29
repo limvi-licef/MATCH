@@ -246,7 +246,7 @@ namespace MATCH
                 return controller;
             }
 
-            public SurfaceToProcess CreateSurfaceToProcess(Transform parent, InteractionSurface surfaceToPopulate)
+            public SurfaceToProcess CreateSurfaceToProcess(Transform parent, InteractionSurface surfaceToPopulate, int NumberOfRows = 5, int NumberOfColumns = 4)
             {
                 Transform view = Utilities.Materials.Prefabs.Load(Utilities.Materials.Prefabs.AssistanceSurfaceToProcess); //Instantiate(RefSurfaceToProcess.transform, parent);
                 view.parent = parent;
@@ -254,6 +254,7 @@ namespace MATCH
 
                 SurfaceToProcess controller = view.GetComponent<SurfaceToProcess>();
                 controller.SetSurfaceToPopulate(surfaceToPopulate);
+                controller.SetNumberOfSquares(NumberOfRows, NumberOfColumns);
 
                 return controller;
             }

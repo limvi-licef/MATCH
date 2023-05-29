@@ -1,4 +1,4 @@
-/*Copyright 2022 Guillaume Spalla
+/*Copyright 2022 Guillaume Spalla, Emma Foulon
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -20,6 +20,7 @@ using System;
 using System.Reflection;
 using TMPro;
 using Microsoft.MixedReality.Toolkit.UI;
+using Microsoft.MixedReality.Toolkit.Input;
 
 /**
  * For graphical details of the behavior tree implemented here, refer to the documentation
@@ -42,6 +43,7 @@ namespace MATCH
                 string ConditionCleaningInterrupted = "CleaningInterrupted";
                 string ConditionNewPartCleaned = "NewPartCleaned";
                 string ConditionProcessRelatedToNewPartsCleanedDone = "ProcessRelatedToNewPartsCleanedDone";
+                string ConditionTableTouchedButNoRag = "TableTouchedButNoRag";
 
                 string InferenceDidNotStartDusting = "DidNotStartCleaning";
                 string InferenceInterruptDusting = "InterruptedDusting";
@@ -51,6 +53,8 @@ namespace MATCH
                 // Interaction surface
                 Assistances.InteractionSurface InteractionSurfaceTable;
                 Assistances.InteractionSurface InteractionRag;
+
+                public event EventHandler TableTouchedEvent;
 
                 Dictionary<Assistances.AssistanceGradationExplicit, bool> AssistancesDusting;
 
@@ -113,23 +117,27 @@ namespace MATCH
                     AddCondition(ConditionCleaningInterrupted, false);
                     AddCondition(ConditionNewPartCleaned, false);
                     AddCondition(ConditionProcessRelatedToNewPartsCleanedDone, false);
+                    AddCondition(ConditionTableTouchedButNoRag, false);
                     int nbConditions = GetNumberOfConditions();
 
-                    AddConditionsUpdate(ConditionTableCleaned, new bool[] { true, false, false, false, false, false, false });
-                    AddConditionsUpdate(ConditionRagNotTakenButHelpReceived, new bool[] { false, true, false, false, false, false, false });
-                    AddConditionsUpdate(ConditionRagTaken, new bool[] { false, false, true, false, false, false, false });
-                    AddConditionsUpdate(ConditionDidNotStartCleaning, new bool[] { false, false, true, true, false, false, false });
-                    AddConditionsUpdate(ConditionCleaningInterrupted, new bool[] { false, false, true, false, true, false, false });
-                    AddConditionsUpdate(ConditionNewPartCleaned, new bool[] { false, false, true, false, false, true, false });
-                    AddConditionsUpdate(ConditionProcessRelatedToNewPartsCleanedDone, new bool[] { false, false, true, false, false, false, true });
+                    AddConditionsUpdate(ConditionTableCleaned, new bool[] { true, false, false, false, false, false, false, false });
+                    AddConditionsUpdate(ConditionRagNotTakenButHelpReceived, new bool[] { false, true, false, false, false, false, false, false });
+                    AddConditionsUpdate(ConditionRagTaken, new bool[] { false, false, true, false, false, false, false, false });
+                    AddConditionsUpdate(ConditionDidNotStartCleaning, new bool[] { false, false, true, true, false, false, false, false });
+                    AddConditionsUpdate(ConditionCleaningInterrupted, new bool[] { false, false, true, false, true, false, false, false });
+                    AddConditionsUpdate(ConditionNewPartCleaned, new bool[] { false, false, true, false, false, true, false, false });
+                    AddConditionsUpdate(ConditionProcessRelatedToNewPartsCleanedDone, new bool[] { false, false, true, false, false, false, true, false });
+                    AddConditionsUpdate(ConditionTableTouchedButNoRag, new bool[] { false, false, false, false, false, false, false, true });
 
                     // End of code generation using the EXCEL file
 
                     // Defining the BT
                     Selector srRagNotTaken = new Selector(
+                        new BlackboardCondition(ConditionTableTouchedButNoRag, Operator.IS_EQUAL, true, Stops.IMMEDIATE_RESTART, AssistanceIota()),
                         new BlackboardCondition(ConditionRagNotTakenButHelpReceived, Operator.IS_EQUAL, true, Stops.IMMEDIATE_RESTART, AssistanceEpsilon()),
                         AssistanceBeta()
                         );
+                    
 
                     Selector srTableNotCleaned = new Selector(
                         new BlackboardCondition(ConditionRagTaken, Operator.IS_EQUAL, false, Stops.IMMEDIATE_RESTART, srRagNotTaken),
@@ -230,7 +238,12 @@ namespace MATCH
                     InteractionRag = Assistances.Factory.Instance.CreateInteractionSurface("DustingTable - Rag", AdminMenu.Panels.Right, new Vector3(0.1f, 0.1f, 0.1f), new Vector3(-1.378f, -0.364f, 2.743f), Utilities.Materials.Colors.OrangeGlowing, false, true, Utilities.Utility.GetEventHandlerEmpty(), true, transform);
 
                     InteractionRag.EventUserTouched += CallbackInteractionSurfaceRagTouched;
+
+                    InteractionSurfaceTable.EventUserTouched += CallbackInteractionSurfaceTableTouched;
+
+
                 }
+
 
                 Sequence AssistanceBeta()
                 {
@@ -534,10 +547,53 @@ namespace MATCH
                     return temp;
                 }
 
+
+                Sequence AssistanceIota()
+                {
+                    Assistances.GradationVisual.GradationVisual iota1 = Assistances.GradationVisual.Factory.Instance.CreateDialog2WithButtons("DustingTable-Iota-1", "", "Vous devez d'abord prendre un chiffon pour nettoyer la table.", "Je sais!", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.Yes, "Je ne sais pas", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.No, InteractionSurfaceTable.transform);
+                    Assistances.GradationVisual.GradationVisual iota2 = Assistances.GradationVisual.Factory.Instance.CreateDialog2WithButtons("DustingTable-Iota-3", "", "Où trouvez-vous le chiffon habituellement?", "Je sais!", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.Yes, "Je ne sais pas", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.No, InteractionSurfaceTable.transform);
+                    Assistances.GradationVisual.GradationVisual iota3 = Assistances.GradationVisual.Factory.Instance.CreateArch("DustingTable-Iota-4", "Vous trouverez le chiffon au bout de cette arche", InteractionSurfaceTable.transform, InteractionRag.transform, InteractionSurfaceTable.transform);
+                    Assistances.GradationVisual.GradationVisual iota4 = Assistances.GradationVisual.Factory.Instance.CreateDialog2WithButtons("DustingTable-Iota-5", "", "Parfait! Nous vous laissons faire.", "Ok!", delegate (System.Object o, EventArgs e)
+                    {
+                        RegisterInferenceFarFromRag();
+                    }, Assistances.Buttons.Button.ButtonType.Yes, InteractionSurfaceTable.transform);
+
+
+                    Assistances.AssistanceGradationExplicit iota = MATCH.Assistances.Factory.Instance.CreateAssistanceGradationExplicit("Dusting - Iota");
+                    iota.transform.parent = transform;
+                    iota.AddAssistance(iota1, Assistances.Buttons.Button.ButtonType.Yes, iota4);
+                    iota.AddAssistance(iota1, Assistances.Buttons.Button.ButtonType.No, iota2);
+                    iota.AddAssistance(iota2, Assistances.Buttons.Button.ButtonType.Yes, iota4);
+                    iota.AddAssistance(iota2, Assistances.Buttons.Button.ButtonType.No, iota3);
+
+                    iota.Init();
+
+                    Sequence temp = new Sequence(
+                        new NPBehave.Action(() => {
+                            ShowAssistanceHideOthers(iota);
+                            iota.RunAssistance();
+                            AssistancesDusting[iota] = true;
+                            UpdateTextAssistancesDebugWindow("Iota");
+                            MATCH.Utilities.Logger.Instance.Log(this.GetId(), MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, "Iota");
+                            MATCH.DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, MATCH.DebugMessagesManager.MessageLevel.Info, "Iota triggered.");
+
+                        }),
+                        new WaitUntilStopped()
+                        );
+                    return temp;
+                }
+
+
                 void CallbackInteractionSurfaceRagTouched(System.Object o, EventArgs e)
                 {
                     InferenceManager.UnregisterInference(InferenceFarFromRag);
                     UpdateConditionWithMatrix(ConditionRagTaken);
+                }
+
+                public void CallbackInteractionSurfaceTableTouched(System.Object o, EventArgs e)
+                {
+                        MATCH.DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, MATCH.DebugMessagesManager.MessageLevel.Info, "Table touched.");
+                        UpdateCondition(ConditionTableTouchedButNoRag, true);
                 }
 
                 void RegisterInferenceFarFromRag()
