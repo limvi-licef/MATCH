@@ -172,7 +172,7 @@ namespace MATCH
                     return controller;
                 }
 
-                public MATCH.Assistances.Assistance CreateLinePath(MATCH.Assistances.IAssistance toDecorate, string lineMaterial)
+                public MATCH.Assistances.Assistance CreateLinePath(MATCH.Assistances.IAssistance toDecorate, string lineMaterial, bool heightToFollowInteractionSurface)
                 {
                     bool IsLineVisible = false;
                     Transform view = Utilities.Materials.Prefabs.Load(Utilities.Materials.Prefabs.DecoratorLine);
@@ -186,6 +186,32 @@ namespace MATCH
 
                     controller.SetAssistanceToDecorate(toDecorate, IsLineVisible);
                     controller.GetLinePath().GetComponent<Renderer>().material = Utilities.Utility.LoadMaterial(lineMaterial);
+
+                    controller.SetHeightToFollowInteractionSurface(heightToFollowInteractionSurface);
+
+                    return controller;
+                }
+
+                public MATCH.Assistances.Assistance CreateLinePathWithTexture(MATCH.Assistances.IAssistance toDecorate, string texture, float textureWidth, bool heightToFollowInteractionSurface)
+                {
+                    bool IsLineVisible = false;
+                    Transform view = Utilities.Materials.Prefabs.Load(Utilities.Materials.Prefabs.DecoratorLine);
+                    view.name = toDecorate.GetAssistance().name;
+
+                    if (texture != null)
+                    {
+                        IsLineVisible = true;
+                    }
+                    Assistances.Decorators.LinePath controller = view.GetComponent<Assistances.Decorators.LinePath>();
+
+                    controller.SetAssistanceToDecorate(toDecorate, IsLineVisible);
+                    controller.GetLinePath().GetComponent<Renderer>().material = Utilities.Utility.LoadMaterial(texture);
+
+                    LineRenderer line = controller.GetLinePath().GetComponent<LineRenderer>();
+                    line.textureMode = LineTextureMode.Tile;
+                    line.startWidth = textureWidth;
+                    line.endWidth = textureWidth;
+                    controller.SetHeightToFollowInteractionSurface(heightToFollowInteractionSurface);
 
                     return controller;
                 }

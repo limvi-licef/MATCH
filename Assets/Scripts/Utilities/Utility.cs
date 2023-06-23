@@ -231,6 +231,29 @@ namespace MATCH
                 return points;
 
             }
+
+            public struct Linear
+            {
+                public float a;
+                public float b;
+            }
+
+            public static Linear CalculateLinearCoefficients (float x1, float y1, float x2, float y2)
+            {
+                Linear toReturn;
+
+                toReturn.a = (y2 - y1) / (x2 - x1);
+                toReturn.b = y1 - toReturn.a * x1;
+
+                return toReturn;
+            }
+
+            public static float CalculateDistancePoints(Vector3 start, Vector3 end)
+            {
+                float toReturn = Mathf.Sqrt(Mathf.Pow(end.x - start.x, 2) + Mathf.Pow(end.y - start.y, 2) + Mathf.Pow(end.z - start.z, 2));
+
+                return toReturn;
+            }
         }
     }
 }

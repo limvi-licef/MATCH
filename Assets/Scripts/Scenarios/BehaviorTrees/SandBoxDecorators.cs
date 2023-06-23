@@ -51,13 +51,15 @@ namespace MATCH
 
                 Dictionary<Assistances.AssistanceGradationExplicit, bool> AssistancesDusting;
 
+                private bool IsStarted = false;
+
                 // Cube
                 public Utilities.EyeTrackerMRTKTest Cube;
 
                 public override void Awake()
                 {
                     base.Awake();
-                    SetId("Nettoyer la table");
+                    SetId("Sandbox decorators");
                     AssistancesDusting = new Dictionary<Assistances.AssistanceGradationExplicit, bool>();
                 }
 
@@ -76,7 +78,39 @@ namespace MATCH
 
                     // Initialize debug buttons
                     InitializeDebugButtons();
+
+                    IsStarted = true;
                 }
+
+                public void OnEnable()
+                {
+                    if (IsStarted)
+                    {
+                        DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name,
+                        DebugMessagesManager.MessageLevel.Info, "Test");
+
+
+                        // Initialize assistances
+                        //InitializeAssistances();
+
+                        base.StopTree();
+
+                        base.StartTree();
+
+                        // Call base function
+                        //base.Start();
+
+                        //Init();
+                    }
+                }
+
+                /*public void OnDisable()
+                {
+                    DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name,
+                        DebugMessagesManager.MessageLevel.Info, "Test");
+
+                    base.StopTree();
+                }*/
 
                 protected override Root InitializeBehaviorTree()
                 {

@@ -41,34 +41,40 @@ namespace MATCH
                 private Inferences.Manager InfManager;
                 //EventHandler classEvent;
 
-                private LineRenderer lineRenderer;
+                private LineRenderer Line;
                 //private bool toShow=false;
                 PathFinding.PathFinding PathFinderEngine;
                 Assistances.InteractionSurface FollowObject;
-                
+                private bool HeightToFollowInteractionSurface;
+
+                float Threshold = 3.0f;
 
                 private void Awake()
                 {
                     
                     //LineView = gameObject.transform.Find("Line");
                     //LineController = LineView.GetComponent<LineToObject>();
-                    lineRenderer = GetComponent<LineRenderer>();
-                    lineRenderer.startWidth = 0.017f;
-                    lineRenderer.endWidth = 0.017f;
+                    Line = GetComponent<LineRenderer>();
+                    Line.startWidth = 0.017f;
+                    Line.endWidth = 0.017f;
                     //lineRenderer.material = Resources.Load(Utilities.Materials.Colors.GreenGlowing, typeof(Material)) as Material;
-                    lineRenderer.positionCount = 0;
-                    lineRenderer.startColor = Color.red;
-                    lineRenderer.endColor = Color.red;
+                    Line.positionCount = 0;
+                    Line.startColor = Color.red;
+                    Line.endColor = Color.red;
                     InfManager = Inferences.Factory.Instance.CreateManager(transform);
                     PathFinderEngine = GameObject.Find("PathFinderEngine").GetComponent<PathFinding.PathFinding>();
                     FollowObject = Assistances.InteractionSurfaceFollower.Instance.GetInteractionSurface();
-                    
 
+                    HeightToFollowInteractionSurface = false;
                 }
 
                 public void Start()
                 {
-
+                    AdminMenu.Instance.AddInputWithButton(Threshold.ToString(), "Threshold compute LinePath", delegate (System.Object o, EventArgs e)
+                    {
+                        Utilities.EventHandlerArgs.String arg = (Utilities.EventHandlerArgs.String)e;
+                        Threshold = float.Parse(arg.m_text);
+                    }, AdminMenu.Panels.Right);
                 }
 
                 public void Update()
@@ -77,8 +83,52 @@ namespace MATCH
                     {
                         ShowLightpath();
                     }*/
+
+                    if (IsDisplayed)
+                    {
+                        float dist = CalculateMinDistance();
+                        if (dist > Threshold)
+                        {
+                            //Debug.Log("Faaaaaaaaaaaaarrrrrrrrrrrrrrrr ");
+                            //Debug.Log(dist + "Faaaaaaaaaaaaarrrrrrrrrrrrrrrr ");
+                            ShowLightpath();
+                        }
+                        /*else
+                        {
+                            Debug.Log(dist);
+                        }*/
+                    }
+
+
                 }
 
+                float CalculateMinDistance()
+                {
+                    float dMin = 10000;
+                    float d = -1;
+                    Vector3 corner;
+
+                    Vector3 cameraPos = Camera.main.transform.position;
+
+                    for (int i = 0; i < Line.positionCount; i++)
+                    {
+                        corner = Line.GetPosition(i);
+
+                        d = Utilities.Utility.CalculateDistancePoints(cameraPos, corner); //Mathf.Sqrt(Mathf.Pow(corner.x - cameraPos.x, 2) + Mathf.Pow(corner.y - cameraPos.y, 2) + Mathf.Pow(corner.z - cameraPos.z, 2));
+
+                        if (d < dMin)
+                        {
+                            dMin = d;
+                        }
+                    }
+
+                    return dMin;
+                }
+
+                public void SetHeightToFollowInteractionSurface(bool heightToFollow)
+                {
+                    HeightToFollowInteractionSurface = heightToFollow;
+                }
 
                 public void SetAssistanceToDecorate(IAssistance toDecorate, bool lineVisible)
                 {
@@ -135,15 +185,22 @@ namespace MATCH
 
                             ShowLightpath();
 
-                            MATCH.Inferences.Timer temp = new MATCH.Inferences.Timer("tempTimer", 5, delegate (System.Object o, EventArgs e)
+                            /*MATCH.Inferences.Timer temp = new MATCH.Inferences.Timer("tempTimer", 5, delegate (System.Object o, EventArgs e)
                             {
                                 ShowLightpath();
                                 ((MATCH.Inferences.Timer)InfManager.GetInference("tempTimer")).StopCounter();
                                 ((MATCH.Inferences.Timer)InfManager.GetInference("tempTimer")).StartCounter();
                             });
                             InfManager.RegisterInference(temp);
-                            temp.StartCounter();
-                            
+                            temp.StartCounter();*/
+
+
+                            /*MATCH.Inferences.DistanceLeaving test = new MATCH.Inferences.DistanceLeaving("testDistanceLeaving", delegate (System.Object o, EventArgs e)
+                            {
+                                DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Far from object");
+                            }, gameObject, 1.0f);
+                            InfManager.RegisterInference(test);*/
+
                             callback?.Invoke(this, e);
                         }, withAnimation);
                     }
@@ -215,18 +272,49 @@ namespace MATCH
 
                 void ShowLightpath()
                 {
-                    Vector3[] corners = PathFinderEngine.ComputePath(FollowObject.transform, GetRootDecoratedAssistance().GetTransform());
+                    IsDisplayed = false;
 
-                    lineRenderer.positionCount = corners.Length;
+                    /*Vector3 direction = Assistances.InteractionSurfaceFollower.Instance.transform.position - Camera.main.transform.position;
+                    direction.Normalize();
+                    Vector3 startPoint = direction * (float)1.2;*/
+                    Vector3 startPoint = /*Camera.main.transform.forward*/ Vector3.forward * (float)1.5;
+                    //Assistances.InteractionSurfaceFollower.Instance.transform.Find("Debug").transform.position = startPoint;
+                    //DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, " Camera: " + Camera.main.transform.position + " Follower: " + Assistances.InteractionSurfaceFollower.Instance.transform.position + " Normalized: " + direction + " Starting point : " + startPoint);
+                    //DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, );
+                    Vector3 startPointWorld = Camera.main.transform.TransformPoint(startPoint);
+
+
+                    DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, " Camera direction: " + Camera.main.transform.forward + " Starting point : " + startPoint + " " + startPointWorld);
+
+                    Line.useWorldSpace = true;
+
+                    Vector3[] corners = PathFinderEngine.ComputePath(/*FollowObject.transform*/ startPointWorld, GetRootDecoratedAssistance().GetTransform().position);
+
+                    
+
+                    Utilities.Utility.Linear coeff = Utilities.Utility.CalculateLinearCoefficients(0, /*corners[0].y*/Assistances.InteractionSurfaceFollower.Instance.transform.position.y, corners.Length - 1, /*corners[corners.Length-1].y*/ GetRootDecoratedAssistance().GetTransform().position.y);
+
+                    Line.positionCount = corners.Length;
                     for (int i = 0; i < corners.Length; i++)
                     {
                         Vector3 corner = corners[i];
 
-                        lineRenderer.SetPosition(i, corner);
+                        if (HeightToFollowInteractionSurface)
+                        {
+                            corner.y = coeff.a * i + coeff.b;// Assistances.InteractionSurfaceFollower.Instance.transform.position.y;
+                        }
+
+                        Line.SetPosition(i, corner);
 
                         //DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Corner : " + corner);
                     }
-                    
+
+                    /*MeshCollider meshCollider = gameObject.AddComponent<MeshCollider>();
+                    Mesh mesh = new Mesh();
+                    lineRenderer.BakeMesh(mesh);
+                    meshCollider.sharedMesh = mesh;*/
+
+                    IsDisplayed = true;
                 }
             }
         }

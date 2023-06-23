@@ -280,8 +280,33 @@ namespace MATCH
                     GradationVisual toReturn = Assistances.Factory.Instance.CreateAssistanceGradationAttention(assistanceName);
                     toReturn.name = assistanceName;
 
+                    Decorators.BackgroundColorIcon2 decorator1a = (Decorators.BackgroundColorIcon2)Assistances.Decorators.Factory.Instance.CreateBackgroundIcon(dialog, Utilities.Materials.Colors.Cyan, true);
+                    Decorators.Icon decoratorIcon1 = (Decorators.Icon)Assistances.Decorators.Factory.Instance.CreateIcon(decorator1a, Utilities.Materials.Icon.ExclamationMark, Utilities.Materials.Colors.WhiteMetallic);
+                    IPanel2 adapterIcon1 = Decorators.Adapters.Factory.Instance.CreateAdapterForIPanel2(decoratorIcon1, (IPanel2)decoratorIcon1.GetDecoratedAssistance());
+                    Decorators.BackgroundColorMessage2 decorator1 = (Decorators.BackgroundColorMessage2)Assistances.Decorators.Factory.Instance.CreateBackgroundMessage(adapterIcon1, Utilities.Materials.Colors.Cyan);
+                    toReturn.AddAssistance(decorator1);
+
+                    //Decorators.Icon decoratorIcon2 = (Decorators.Icon)Assistances.Decorators.Factory.Instance.CreateIcon(decorator1, MATCH.Utilities.Materials.Icon.Heart, Utilities.Materials.Colors.WhiteMetallic);
+                    //IPanel2 adapterIcon2 = Decorators.Adapters.Factory.Instance.CreateAdapterForIPanel2(decoratorIcon2, (IPanel2)decoratorIcon1.GetDecoratedAssistance());
+                    //Decorators.Sound decoratorSound2 = (Decorators.Sound)Assistances.Decorators.Factory.Instance.CreateSound(adapterIcon2, MATCH.Utilities.Materials.Sounds.Debug, 3.0f);
+                    //IPanel2 adapterSound2 = Decorators.Adapters.Factory.Instance.CreateAdapterForIPanel2(decoratorSound2, (IPanel2)decoratorSound2.GetDecoratedAssistance());
+                    //Decorators.BackgroundColorIcon2 decorator2 = (Decorators.BackgroundColorIcon2)Assistances.Decorators.Factory.Instance.CreateBackgroundIcon(adapterSound2, Utilities.Materials.Colors.Orange, true);
+                    //toReturn.AddAssistance(decorator2);
+
+                    /*Decorators.BackgroundColorIcon2 decorator2 = (Decorators.BackgroundColorIcon2)Assistances.Decorators.Factory.Instance.CreateBackgroundIcon(decorator1, Utilities.Materials.Colors.Orange, true);
+                    toReturn.AddAssistance(decorator2);
+
+                    Decorators.BackgroundColorMessage2 decorator3 = (Decorators.BackgroundColorMessage2)Decorators.Factory.Instance.CreateBackgroundMessage(decorator2, Utilities.Materials.Colors.Orange);
+                    toReturn.AddAssistance(decorator3);
+
+                    Decorators.LinePath decorator4 = (Decorators.LinePath)Decorators.Factory.Instance.CreateLinePath(decorator3, Utilities.Materials.Colors.Cyan, false);
+                    toReturn.AddAssistance(decorator4);*/
+
+                    Decorators.LinePath decorator5 = (Decorators.LinePath)Decorators.Factory.Instance.CreateLinePathWithTexture(decorator1, /*Utilities.Materials.Colors.Orange*/ Utilities.Materials.Textures.ArrowProgressive, 0.1f, true);
+                    toReturn.AddAssistance(decorator5);
+
                     //Premier niveau de gradation avec 2 décorateurs
-                    Decorators.BackgroundColorIcon2 decorator1a = (Decorators.BackgroundColorIcon2)Assistances.Decorators.Factory.Instance.CreateBackgroundIcon(dialog, Utilities.Materials.Colors.Cyan, false);
+                    /*Decorators.BackgroundColorIcon2 decorator1a = (Decorators.BackgroundColorIcon2)Assistances.Decorators.Factory.Instance.CreateBackgroundIcon(dialog, Utilities.Materials.Colors.Cyan, false);
                     Decorators.Icon decoratorIcon1 = (Decorators.Icon)Assistances.Decorators.Factory.Instance.CreateIcon(decorator1a, null, null);
                     IPanel2 adapterIcon1 = Decorators.Adapters.Factory.Instance.CreateAdapterForIPanel2(decoratorIcon1, (IPanel2)decoratorIcon1.GetDecoratedAssistance());
                     Decorators.BackgroundColorMessage2 decorator1 = (Decorators.BackgroundColorMessage2)Assistances.Decorators.Factory.Instance.CreateBackgroundMessage(adapterIcon1, Utilities.Materials.Colors.Cyan);
@@ -319,7 +344,7 @@ namespace MATCH
                     Decorators.Arch decoratorArch6 = (Decorators.Arch)Assistances.Decorators.Factory.Instance.CreateArch(adapterArch5, Utilities.Materials.Colors.Red);
                     //IPanel2 adapterArch6 = Decorators.Adapters.Factory.Instance.CreateAdapterForIPanel2(decoratorArch6, (IPanel2)decoratorArch6.GetDecoratedAssistance());
                     //Decorators.BackgroundColorMessage2 decorator6 = (Decorators.BackgroundColorMessage2)Assistances.Decorators.Factory.Instance.CreateBackgroundMessage(adapterArch6, Utilities.Materials.Colors.Orange);
-                    toReturn.AddAssistance(decoratorArch6);
+                    toReturn.AddAssistance(decoratorArch6);*/
 
                     return toReturn;
                 }
