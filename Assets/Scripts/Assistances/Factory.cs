@@ -1,4 +1,4 @@
-/*Copyright 2022 Guillaume Spalla, Louis Marquet
+/*Copyright 2022 Guillaume Spalla, Louis Marquet, Léri Lamour
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -21,6 +21,7 @@ using UnityEngine;
 using System.Timers;
 using System.Reflection;
 using System.Linq;
+using MATCH.Assistances.GradationVisual;
 
 namespace MATCH
 {
@@ -200,16 +201,20 @@ namespace MATCH
                 return cube;
             }
 
-            public ExclamationMark CreateExclamationMark(bool adjustHeight, Vector3 localPosition, bool enableBillboard, Transform parent)
+            public Icon CreateIcon(bool adjustHeight, Vector3 localPosition, Vector3 scale, bool enableBillboard, Transform parent, string iconType, string material)
             {
-                Transform view = Utilities.Materials.Prefabs.Load(Utilities.Materials.Prefabs.AssistanceExclamationMark).transform;
+                Transform view = Utilities.Materials.Prefabs.Load(Utilities.Materials.Prefabs.AssistanceIcon).transform;
+
                 view.parent = parent;
                 view.transform.localPosition = localPosition;
 
-                ExclamationMark controller = view.GetComponent<ExclamationMark>();
+                Icon controller = view.GetComponent<Icon>();
                 controller.AdjustHeightOnShow = adjustHeight;
+                controller.SetIconType(iconType);
+                controller.SetMaterial(material);
                 controller.SetLocalPositionObject(localPosition);
                 controller.SetBillboard(enableBillboard);
+                controller.SetScale(scale);
 
                 return controller;
             }
@@ -321,6 +326,18 @@ namespace MATCH
                 ArchWithTextAndHelp controller = view.GetComponent<ArchWithTextAndHelp>();
                 view.name = name;
                 controller.SetArchStartAndEndPoint(origin, target);
+
+                return controller;
+            }
+
+            public PathWithTextAndHelp CreateAssistancePath(string name, Transform origin, Transform target, Transform parent)
+            {
+                Transform view = Utilities.Materials.Prefabs.Load(Utilities.Materials.Prefabs.AssistanceLightPath);
+                view.parent = parent;
+
+                PathWithTextAndHelp controller = view.GetComponent<PathWithTextAndHelp>();
+                view.name = name;
+                controller.SetPathStartAndEndPoint(origin, target);
 
                 return controller;
             }

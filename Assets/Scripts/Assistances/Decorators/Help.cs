@@ -75,9 +75,34 @@ namespace MATCH
                     return AssistanceToDecorate.GetAssistance();
                 }
 
+                public Assistance GetRootDecoratedAssistance()
+                {
+                    return AssistanceToDecorate.GetRootDecoratedAssistance();
+                }
+
                 public Assistance GetDecoratedAssistance()
                 {
-                    return AssistanceToDecorate.GetDecoratedAssistance();
+                    return AssistanceToDecorate.GetAssistance();
+                }
+
+                public Transform GetSound()
+                {
+                    return AssistanceToDecorate.GetSound();
+                }
+
+                public Transform GetArch()
+                {
+                    return AssistanceToDecorate.GetArch();
+                }
+
+                public Assistances.Icon GetIcon()
+                {
+                    return AssistanceToDecorate.GetIcon();
+                }
+
+                public Transform GetLinePath()
+                {
+                    return AssistanceToDecorate.GetLinePath();
                 }
             }
         }

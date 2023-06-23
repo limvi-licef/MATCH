@@ -32,12 +32,28 @@ namespace MATCH
             public EventHandler EventResized;
             public EventHandler EventMoved;
 
+            Utilities.ObjectPositioningStorage ObstaclePositioningStorage;
+
             private void Awake()
             {
                 Cubes = new List<GameObject>();
+
+                ObstaclePositioningStorage = new Utilities.ObjectPositioningStorage("ObstaclesStorage.txt");
+                
             }
 
-            public void AddObstacle(string name, Vector3 scaling, Vector3 position, string color, bool navMeshTag, bool callbackOnTouch, Transform parent)
+            public void Start()
+            {
+                List<String> registeredObjectsIds = ObstaclePositioningStorage.GetObjetsRegisteredNames();
+                foreach (string id in registeredObjectsIds)
+                {
+                    Utilities.ObjectPositioningStorage.ObjectsInformation objectsInformation = ObstaclePositioningStorage.GetRegisteredObjectInformation(id);
+
+                    AddObstacle(id, objectsInformation.Scale, objectsInformation.Position,  Utilities.Materials.Colors.WhiteTransparent, true, false, true, transform);
+                }
+            }
+
+            public void AddObstacle(string name, Vector3 scaling, Vector3 position, string color, bool navMeshTag, bool callbackOnTouch, bool registerObject, Transform parent)
             {
                 GameObject cube = GameObject.CreatePrimitive(PrimitiveType.Cube);
 
@@ -98,6 +114,11 @@ namespace MATCH
                 });
 
                 Cubes.Add(cube);
+
+                if (registerObject)
+                {
+                    ObstaclePositioningStorage.RegisterObject(name, cube.transform, cube.transform);
+                }
             }
 
             public List<GameObject> GetObstacles()

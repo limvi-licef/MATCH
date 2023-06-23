@@ -116,6 +116,12 @@ namespace MATCH
             // Hiding spongy
             AddSwitchButton("Spongy - hide", CallbackHideSpongy, Panels.Left, ButtonType.Hide);
 
+            // Button to enable the Sandbox tutorial
+            AddSwitchButton("Enable sandbox", delegate
+            {
+                Transform sandbox = GameObject.Find("MATCH").transform.Find("Scenarios").Find("BehaviorTrees").Find("SandboxDecorators");
+                sandbox.gameObject.SetActive(!sandbox.gameObject.activeSelf);
+            }, Panels.Middle);
 
             //AddText("Test", delegate() { });
         }

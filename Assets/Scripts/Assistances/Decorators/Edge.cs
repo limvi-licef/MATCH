@@ -150,9 +150,14 @@ namespace MATCH
                     return this;//PanelToDecorate.GetAssistance();
                 }
 
+                public Assistance GetRootDecoratedAssistance()
+                {
+                    return PanelToDecorate.GetRootDecoratedAssistance();
+                }
+
                 public Assistance GetDecoratedAssistance()
                 {
-                    return PanelToDecorate.GetDecoratedAssistance();
+                    return PanelToDecorate.GetAssistance();
                 }
 
                 /*public void SetBackgroundColor(string colorName)
@@ -180,6 +185,26 @@ namespace MATCH
                 public Transform GetBackground()
                 {
                     return PanelToDecorate.GetBackground();
+                }
+
+                public Transform GetSound()
+                {
+                    return PanelToDecorate.GetSound();
+                }
+
+                public Transform GetArch()
+                {
+                    return PanelToDecorate.GetArch();
+                }
+
+                public Assistances.Icon GetIcon()
+                {
+                    return PanelToDecorate.GetIcon();
+                }
+
+                public Transform GetLinePath()
+                {
+                    return PanelToDecorate.GetLinePath();
                 }
             }
         }

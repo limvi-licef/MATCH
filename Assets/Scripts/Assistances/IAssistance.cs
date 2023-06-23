@@ -1,4 +1,4 @@
-/*Copyright 2022 Guillaume Spalla
+/*Copyright 2022 Guillaume Spalla, Louis Marquet, Léri Lamour
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -30,8 +30,15 @@ namespace MATCH
             /**
              * Way to make it mandatory to have every class using this interface to inherit from the abstract class Assistance
              * */
-            public Assistance GetDecoratedAssistance();
+            public Assistance GetRootDecoratedAssistance();
             public Assistance GetAssistance();
+            public Assistance GetDecoratedAssistance();
+
+            public Transform GetSound();
+            public Transform GetArch();
+            public Assistances.Icon GetIcon();
+
+            public Transform GetLinePath();
         }
     }
 }

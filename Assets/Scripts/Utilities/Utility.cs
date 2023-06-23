@@ -1,4 +1,4 @@
-/*Copyright 2022 Guillaume Spalla
+/*Copyright 2022 Guillaume Spalla, Louis Marquet, Léri Lamour
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -214,6 +214,46 @@ namespace MATCH
                 return false;
             }
 
+            public static List<Vector3> CalculateBezierCurve(Vector3 startPoint, Vector3 endPoint, Vector3 cornerPoint)
+            {
+                List<Vector3> points = new List<Vector3>();
+                
+                float t = 0.0f;
+                int nbPoints = 1000;
+
+                for (int i = 0; i < nbPoints; i++)
+                {
+                    t = (float)i / (float)nbPoints;
+
+                    points.Add((1.0f - t) * (1.0f - t) * startPoint + 2 * (1 - t) * t * cornerPoint + t * t * endPoint);
+                }
+
+                return points;
+
+            }
+
+            public struct Linear
+            {
+                public float a;
+                public float b;
+            }
+
+            public static Linear CalculateLinearCoefficients (float x1, float y1, float x2, float y2)
+            {
+                Linear toReturn;
+
+                toReturn.a = (y2 - y1) / (x2 - x1);
+                toReturn.b = y1 - toReturn.a * x1;
+
+                return toReturn;
+            }
+
+            public static float CalculateDistancePoints(Vector3 start, Vector3 end)
+            {
+                float toReturn = Mathf.Sqrt(Mathf.Pow(end.x - start.x, 2) + Mathf.Pow(end.y - start.y, 2) + Mathf.Pow(end.z - start.z, 2));
+
+                return toReturn;
+            }
         }
     }
 }
