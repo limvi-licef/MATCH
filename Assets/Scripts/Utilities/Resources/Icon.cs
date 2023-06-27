@@ -38,8 +38,6 @@ namespace MATCH
                 public static string Club = "club";
                 public static string Heart = "heart";
                 public static string Spade = "spade";
-
-                
             }
         }
     }

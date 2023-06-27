@@ -57,7 +57,6 @@ namespace MATCH
                 public static string FlowerPressed = PathUnified + "FlowerPressed";
                 public static string CleanTable = PathUnified + "CleanTable";
                 public static string CleanTablePressed = PathUnified + "CleanTablePressed";
-
             }
         }
     }

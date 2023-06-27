@@ -31,6 +31,12 @@ namespace MATCH
     {
         static class Utility
         {
+            public struct Linear
+            {
+                public float a;
+                public float b;
+            }
+
             // Utilities functions: to be moved to a dedicated namespace later?
             public static void AddTouchCallback(Transform transform, UnityEngine.Events.UnityAction callback)
             {
@@ -232,12 +238,6 @@ namespace MATCH
 
             }
 
-            public struct Linear
-            {
-                public float a;
-                public float b;
-            }
-
             public static Linear CalculateLinearCoefficients (float x1, float y1, float x2, float y2)
             {
                 Linear toReturn;
@@ -251,6 +251,32 @@ namespace MATCH
             public static float CalculateDistancePoints(Vector3 start, Vector3 end)
             {
                 float toReturn = Mathf.Sqrt(Mathf.Pow(end.x - start.x, 2) + Mathf.Pow(end.y - start.y, 2) + Mathf.Pow(end.z - start.z, 2));
+
+                return toReturn;
+            }
+
+            /**
+             * Returns in degree
+             */
+            public static float CalculateAngleInTriangle(Vector2 trianglePointA, Vector2 trianglePointB, Vector2 pointToFindAngle)
+            {
+                return Mathf.Rad2Deg * Mathf.Acos((Mathf.Pow(Vector2.Distance(trianglePointA, trianglePointB), 2) - Mathf.Pow(Vector2.Distance(pointToFindAngle, trianglePointA), 2) - Mathf.Pow(Vector2.Distance(pointToFindAngle, trianglePointB), 2)) / (-2 * Vector2.Distance(pointToFindAngle, trianglePointA) * Vector2.Distance(pointToFindAngle, trianglePointB)));
+            }
+
+            public static bool IsPointInTriangle(Vector2 trianglePointA, Vector2 trianglePointB, Vector2 trianglePointC, Vector2 pointToFindInTriangle)
+            {
+                bool toReturn = false;
+
+                float angleAB = CalculateAngleInTriangle(trianglePointA, trianglePointB, pointToFindInTriangle);
+                float angleAC = CalculateAngleInTriangle(trianglePointA, trianglePointC, pointToFindInTriangle);
+                float angleBC = CalculateAngleInTriangle(trianglePointB, trianglePointC, pointToFindInTriangle);
+
+                float totalAngles = angleAB + angleAC + angleBC;
+
+                if ( Mathf.RoundToInt(totalAngles) == 360)
+                {
+                    toReturn = true;
+                }
 
                 return toReturn;
             }

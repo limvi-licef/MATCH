@@ -209,8 +209,8 @@ namespace MATCH
                         });
 
                         //AssistancesDebugWindow.SetDescription("Eta");
-                        base.UpdateTextAssistancesDebugWindow("Eta");
-                        MATCH.Utilities.Logger.Instance.Log(this.GetId(), MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, "Eta");
+                        base.UpdateTextAssistancesDebugWindow("BTGradation - Eta");
+                        MATCH.Utilities.Logger.Instance.Log(this.GetId(), MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, "BTGradation - Eta");
                     }),
                     new WaitUntilStopped());
 
@@ -254,8 +254,8 @@ namespace MATCH
                             InfManager.RegisterInference(timer);
                             timer.StartCounter();
 
-                                UpdateTextAssistancesDebugWindow("Alpha");
-                                MATCH.Utilities.Logger.Instance.Log(this.GetId(), MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, "Alpha");
+                                UpdateTextAssistancesDebugWindow("BTGradation - Alpha");
+                                MATCH.Utilities.Logger.Instance.Log(this.GetId(), MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, "BTGradation - Alpha");
                             }
                         });
 
@@ -288,7 +288,7 @@ namespace MATCH
                                 InfManager.RegisterInference(timer);
                                 timer.StartCounter();
                                 InfManager.UnregisterInference(InferenceComingClose);
-                                AssistancesGradation.AssistanceCurrent.GetCurrentAssistance().ShowMovingHand(true);
+                                AssistancesGradation.AssistanceCurrent.GetCurrentAssistance().ShowMovingHand(false);
                             }, AssistancesGradation.AssistanceCurrent.GetCurrentAssistance().gameObject, DistanceFromObject);
 
                             InfManager.RegisterInference(distanceComing);
@@ -307,8 +307,8 @@ namespace MATCH
 
                         
 
-                        UpdateTextAssistancesDebugWindow("Beta");
-                        MATCH.Utilities.Logger.Instance.Log(this.GetId(), MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, "Beta");
+                        UpdateTextAssistancesDebugWindow("BTGradation - Beta");
+                        MATCH.Utilities.Logger.Instance.Log(this.GetId(), MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, "BTGradation - Beta");
                     })
                     );
 
@@ -320,8 +320,8 @@ namespace MATCH
                 Sequence temp = new Sequence(
                     new NPBehave.Action(() => {
                         AssistancesGradation.AssistanceCurrent.ShowNextGradation(Utilities.Utility.GetEventHandlerEmpty());
-                        UpdateTextAssistancesDebugWindow("Delta");
-                        MATCH.Utilities.Logger.Instance.Log(this.GetId(), MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, "Delta");
+                        UpdateTextAssistancesDebugWindow("BTGradation - Delta");
+                        MATCH.Utilities.Logger.Instance.Log(this.GetId(), MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, "BTGradation - Delta");
 
                         if (AssistancesGradation.AssistanceCurrent.IsLastGradationLevel() == false)
                         {
@@ -346,8 +346,8 @@ namespace MATCH
             {
                 Sequence temp = new Sequence(
                     new NPBehave.Action(() => {
-                        UpdateTextAssistancesDebugWindow("Gamma");
-                        MATCH.Utilities.Logger.Instance.Log(this.GetId(), MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, "Gamma");
+                        UpdateTextAssistancesDebugWindow("BTGradation - Gamma");
+                        MATCH.Utilities.Logger.Instance.Log(this.GetId(), MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, "BTGradation - Gamma");
                         AssistancesGradation.AssistanceCurrent.GetCurrentAssistance().ShowMovingHand(true);
                     }),
                     new WaitUntilStopped()
@@ -380,8 +380,8 @@ namespace MATCH
                             }
                         }
 
-                        UpdateTextAssistancesDebugWindow("Epsilon");
-                        MATCH.Utilities.Logger.Instance.Log(this.GetId(), MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, "Epsilon");
+                        UpdateTextAssistancesDebugWindow("BTGradation - Epsilon");
+                        MATCH.Utilities.Logger.Instance.Log(this.GetId(), MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, "BTGradation - Epsilon");
                     }),
                     new WaitUntilStopped()
                     );
@@ -395,8 +395,8 @@ namespace MATCH
                     new NPBehave.Action(() =>
                     {
                         AssistancesGradation.AssistanceCurrent.ShowHelpCurrentGradation(true, Utilities.Utility.GetEventHandlerEmpty());
-                        UpdateTextAssistancesDebugWindow("Zeta");
-                        MATCH.Utilities.Logger.Instance.Log(this.GetId(), MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, "Zeta");
+                        UpdateTextAssistancesDebugWindow("BTGradation - Zeta");
+                        MATCH.Utilities.Logger.Instance.Log(this.GetId(), MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, "BTGradation - Zeta");
                     }),
                     new WaitUntilStopped()
                     );

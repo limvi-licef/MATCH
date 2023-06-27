@@ -30,7 +30,7 @@ namespace MATCH
             public event EventHandler EventHelpButtonClicked; // Returns as argument a MATCH.Utilities.EventHandlerArgs.Button object, to inform about which button has been clicked
             public bool IsDisplayed { get; protected set; } = false; // Different from "activeself": in those assistances the parent component is alsways active, so "activeself" is not a good indicator to know if the assistance is shown or not. Use this function instead.
 
-            private GameObject Hand = null;
+            private Transform Hand = null;
 
             protected void OnHelpButtonClicked(Assistances.Buttons.Button.ButtonType type)
             {
@@ -71,25 +71,30 @@ namespace MATCH
             {
                 if (Hand == null)
                 {
-                    Hand = GameObject.CreatePrimitive(PrimitiveType.Cylinder);
+
+                    //Hand = GameObject.CreatePrimitive(PrimitiveType.Cylinder);
+                    Hand = Utilities.Materials.Prefabs.Load(Utilities.Materials.Prefabs.AssistanceHand);
                     Hand.gameObject.AddComponent<Assistances.GradationVisual.MovingObject>();
                     Hand.transform.parent = transform;
-                    Hand.transform.localScale = new Vector3(0.05f, 0.1f, 0.05f);
-                    Hand.SetActive(false);
+                    //Hand.transform.localScale = new Vector3(0.05f, 0.1f, 0.05f);
+                    Hand.GetComponent<Assistances.GradationVisual.MovingObject>().SetMoveShape(GradationVisual.MovingObject.MovingType.HalfCircle);
+                    Hand.gameObject.SetActive(false);
+
+                    Hand.transform.Rotate(0, 0, -22.5f);
 
                     Hand.transform.localPosition = transform.localPosition;
-                    Hand.transform.localPosition = new Vector3(Hand.transform.localPosition.x, Hand.transform.localPosition.y + 0.5f, Hand.transform.localPosition.z);
+                    Hand.transform.localPosition = new Vector3(Hand.transform.localPosition.x, Hand.transform.localPosition.y+0.3f, Hand.transform.localPosition.z);
                 }
 
                 if (show)
                 {
-                    Hand.SetActive(true);
+                    Hand.gameObject.SetActive(true);
                     // Start rotation
                     Hand.GetComponent<Assistances.GradationVisual.MovingObject>().StartMove(true);
                 }
                 else
                 {
-                    Hand.SetActive(false);
+                    Hand.gameObject.SetActive(false);
                 }
             }
         }

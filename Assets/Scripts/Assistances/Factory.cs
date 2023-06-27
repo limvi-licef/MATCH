@@ -178,6 +178,38 @@ namespace MATCH
                 return (Dialogs.Dialog2)controller;
             }
 
+            public Dialogs.Dialog2Contextualized CreateDialog2WithButtonsContextualized(string assistanceName, string title, string description, Transform contextObject, string textButton1, EventHandler callbackButton1, Assistances.Buttons.Button.ButtonType type1, string textButton2, EventHandler callbackButton2, Assistances.Buttons.Button.ButtonType type2, Transform parent)
+            {
+                Transform view = Utilities.Materials.Prefabs.Load(Utilities.Materials.Prefabs.AssistanceDialog2);
+                view.parent = parent;
+                view.localPosition = new Vector3(0, 0, 0);
+
+                Dialogs.Dialog2 controllerToRemove = view.GetComponent<Dialogs.Dialog2>();
+                DestroyImmediate(controllerToRemove);
+
+                Dialogs.Dialog2Contextualized controllerContextualized = view.gameObject.AddComponent<Dialogs.Dialog2Contextualized>();
+
+                float sizeDescriptionText = -0.0003f * description.Length + 0.17f;
+                controllerContextualized.SetDescription(description, contextObject, sizeDescriptionText);
+
+                Dialogs.Dialog2 controllerDialog2 = (Dialogs.Dialog2)controllerContextualized;
+
+                controllerDialog2.SetTitle(title, 0.15f);
+                //float sizeDescriptionText = -0.0005f * description.Length + 0.206f;
+                
+                //controllerDialog2.SetDescription(description, sizeDescriptionText);
+                controllerDialog2.EnableBillboard(true);
+
+                
+
+                Dialogs.Dialog controllerDialog = (Dialogs.Dialog)controllerDialog2;
+
+                Assistances.Factory.Instance.AddButton(ref controllerDialog, callbackButton1, textButton1, type1, true, ComputeFontSizeExp(textButton1.Length));
+                AddButton(ref controllerDialog, callbackButton2, textButton2, type2, true, ComputeFontSizeExp(textButton2.Length));
+
+                return controllerContextualized;
+            }
+
             public Basic CreateCube(string texture, Transform parent)
             {
                 Transform view = Utilities.Materials.Prefabs.Load(Utilities.Materials.Prefabs.AssistanceCube).transform;

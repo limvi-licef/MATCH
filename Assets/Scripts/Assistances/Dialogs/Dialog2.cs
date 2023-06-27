@@ -32,27 +32,21 @@ namespace MATCH
         {
             public class Dialog2 : Dialog, IPanel2
             {
-                //Transform ButtonsParentView;
-                //Transform RefButtonView;
-                Transform TitleView;
-                Transform DescriptionView;
-                Transform BackgroundParent;
-                Transform BackgroundMessage;
-                Transform BackgroundIcon;
-                Icon IconView;
-                Transform Sound;
-                Transform Arch;
-                Transform LinePath;
-                string IconType;
-                //List<Transform> ButtonsView;
-                //public List<Buttons.Basic> ButtonsController;
+                protected Transform TitleView;
+                protected Transform DescriptionView;
+                protected Transform BackgroundParent;
+                protected Transform BackgroundMessage;
+                protected Transform BackgroundIcon;
+                protected Icon IconView;
+                protected Transform Sound;
+                protected Transform Arch;
+                protected Transform LinePath;
+                protected string IconType;
 
-                //Vector3 ButtonsParentScalingOriginal;
-                Vector3 BackgroundScalingOriginal;
-                Vector3 TitleScalingOriginal;
-                Vector3 DescriptionScalingOriginal;
-                Vector3 IconScalingOriginal;
-                //List<Vector3> ButtonsScalingOriginal;
+                protected Vector3 BackgroundScalingOriginal;
+                protected Vector3 TitleScalingOriginal;
+                protected Vector3 DescriptionScalingOriginal;
+                protected Vector3 IconScalingOriginal;
 
                 public bool AdjustToHeight { get; set; } = true;
 
