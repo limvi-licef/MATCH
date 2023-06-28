@@ -274,7 +274,7 @@ namespace MATCH
 
                     //Qualitrème niveau de gradation
                     Decorators.LinePath decorator4 = (Decorators.LinePath)Decorators.Factory.Instance.CreateLinePathWithTexture(decorator3, /*Utilities.Materials.Colors.Orange*/ Utilities.Materials.Textures.ArrowProgressive, 0.1f, true);
-                    toReturn.AddAssistance(decorator3);
+                    toReturn.AddAssistance(decorator4);
 
                     return toReturn;
                 }

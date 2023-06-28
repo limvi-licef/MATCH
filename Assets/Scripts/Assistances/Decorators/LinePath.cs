@@ -47,7 +47,7 @@ namespace MATCH
                 Assistances.InteractionSurface FollowObject;
                 private bool HeightToFollowInteractionSurface;
 
-                float Threshold = 3.0f;
+                static public float Threshold = 3.0f;
 
                 private void Awake()
                 {
@@ -70,11 +70,11 @@ namespace MATCH
 
                 public void Start()
                 {
-                    AdminMenu.Instance.AddInputWithButton(Threshold.ToString(), "Threshold compute LinePath", delegate (System.Object o, EventArgs e)
+                    /*AdminMenu.Instance.AddInputWithButton(Threshold.ToString(), "Threshold compute LinePath", delegate (System.Object o, EventArgs e)
                     {
                         Utilities.EventHandlerArgs.String arg = (Utilities.EventHandlerArgs.String)e;
                         Threshold = float.Parse(arg.m_text);
-                    }, AdminMenu.Panels.Right);
+                    }, AdminMenu.Panels.Right);*/
                 }
 
                 public void Update()
