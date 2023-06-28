@@ -68,6 +68,8 @@ namespace MATCH
 
             float DistanceFromObject = 1.5f;
 
+            public static float FarFromAssistanceWhenLookingAtIt = 4.0f;
+
             public override void Awake()
             {
                 base.Awake();
@@ -129,11 +131,11 @@ namespace MATCH
                     UpdateConditionWithMatrix(ConditionWaitingSince30Seconds);
                 }, AdminMenu.Panels.Right);*/
 
-                AdminMenu.Instance.AddInputWithButton(DistanceFromObject.ToString(), "Distance from object for hand", delegate (System.Object o, EventArgs e)
+                /*AdminMenu.Instance.AddInputWithButton(DistanceFromObject.ToString(), "Distance from object for hand", delegate (System.Object o, EventArgs e)
                 {
                     Utilities.EventHandlerArgs.String arg = (Utilities.EventHandlerArgs.String)e;
                     DistanceFromObject = float.Parse(arg.m_text);
-                }, AdminMenu.Panels.Right);
+                }, AdminMenu.Panels.Right);*/
 
                 // To check if the description of the assistance windows is correctly updated
                 //AssistancesDebugWindow.SetDescription("Test for gradation explicit");
@@ -274,7 +276,7 @@ namespace MATCH
                     new NPBehave.Action(() => {
                         AssistancesGradation.AssistanceCurrent.ShowMinimalGradation(Utilities.Utility.GetEventHandlerEmpty());
 
-                        if (Utilities.Utility.CalculateDistancePoints(Camera.main.transform.position, AssistancesGradation.AssistanceCurrent.GetCurrentAssistance().transform.position) > 4.0f)
+                        if (Utilities.Utility.CalculateDistancePoints(Camera.main.transform.position, AssistancesGradation.AssistanceCurrent.GetCurrentAssistance().transform.position) > FarFromAssistanceWhenLookingAtIt)
                         {
                             UpdateConditionWithMatrix(ConditionIsFar);
 
