@@ -188,6 +188,7 @@ namespace MATCH
 
                     // Connections between states
                     s_inference19h00 += sStandBy.goToState(sHighlightGarbage);
+
                     garbageInteractionSurfaceController.EventUserTouched += sStandBy.goToState(/*sSuccess*/sGarbageGrabbed);
                     highlightGarbageController.s_touched += sHighlightGarbage.goToState(sSolution);
                     s_inference19h30 += sHighlightGarbage.goToState(sExclamationMark);
@@ -198,6 +199,7 @@ namespace MATCH
                     garbageInteractionSurfaceController.EventUserTouched += sExclamationMark.goToState(/*sSuccess*/sGarbageGrabbed);
                     garbageInteractionSurfaceController.EventUserTouched += sSolution.goToState(/*sSuccess*/sGarbageGrabbed);
                     doorInteractionSurfaceController.EventUserTouched += sGarbageGrabbed.goToState(sSuccess);
+
                     successController.s_touched += sSuccess.goToState(sStandBy);
 
                     m_gradationManager.setGradationInitial("StandBy");

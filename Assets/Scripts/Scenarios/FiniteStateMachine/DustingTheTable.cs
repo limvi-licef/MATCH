@@ -253,6 +253,7 @@ namespace MATCH
                     interactionRagController.EventUserTouched += sMessageCue.goToState(sSurfaceToClean);
                     interactionRagController.EventUserTouched += sArchToRag.goToState(sSurfaceToClean);
                     interactionRagController.EventUserTouched += sSolution.goToState(sSurfaceToClean);
+
                     m_assistanceSurfaceTouchedController.EventSurfaceCleaned += sSurfaceToClean.goToState(sSuccess);
                     m_successController.s_touched += sSuccess.goToState(sStandBy);
 
@@ -447,6 +448,7 @@ namespace MATCH
                         m_inferenceEngine.UnregisterInference("BackToTable");
                         m_inferenceEngine.UnregisterInference("BackToTableInternal");
                     };
+
                     interactionSurfaceRag.EventUserTouched += sRedSurface.goToState(sProcessSurface);
                     interactionSurfaceRag.EventUserTouched += sRedSurfaceAndExclamation.goToState(sProcessSurface);
                     interactionSurfaceRag.EventUserTouched += sFirstDialog.goToState(sProcessSurface);

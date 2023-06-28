@@ -1,4 +1,4 @@
-/*Copyright 2022 Guillaume Spalla
+/*Copyright 2022 Guillaume Spalla, Louis Marquet, Léri Lamour
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -32,23 +32,21 @@ namespace MATCH
         {
             public class Dialog2 : Dialog, IPanel2
             {
-                //Transform ButtonsParentView;
-                //Transform RefButtonView;
-                Transform TitleView;
-                Transform DescriptionView;
-                Transform BackgroundParent;
-                Transform BackgroundMessage;
-                Transform BackgroundIcon;
-                Transform IconView;
-                //List<Transform> ButtonsView;
-                //public List<Buttons.Basic> ButtonsController;
+                protected Transform TitleView;
+                protected Transform DescriptionView;
+                protected Transform BackgroundParent;
+                protected Transform BackgroundMessage;
+                protected Transform BackgroundIcon;
+                protected Icon IconView;
+                protected Transform Sound;
+                protected Transform Arch;
+                protected Transform LinePath;
+                protected string IconType;
 
-                //Vector3 ButtonsParentScalingOriginal;
-                Vector3 BackgroundScalingOriginal;
-                Vector3 TitleScalingOriginal;
-                Vector3 DescriptionScalingOriginal;
-                Vector3 IconScalingOriginal;
-                //List<Vector3> ButtonsScalingOriginal;
+                protected Vector3 BackgroundScalingOriginal;
+                protected Vector3 TitleScalingOriginal;
+                protected Vector3 DescriptionScalingOriginal;
+                protected Vector3 IconScalingOriginal;
 
                 public bool AdjustToHeight { get; set; } = true;
 
@@ -75,14 +73,20 @@ namespace MATCH
                     BackgroundParent = gameObject.transform.Find("Dialog");
                     BackgroundMessage = BackgroundParent.Find("Modale-Support_Cube.010");
                     BackgroundIcon = BackgroundParent.Find("Modale-Rond_Cylinder.003");
-                    IconView = gameObject.transform.Find("ExclamationMark");
+                    IconView = Assistances.Factory.Instance.CreateIcon(true, new Vector3(0, 0, 0), new Vector3(0.05f,0.05f,0.05f), true, GetTransform(), MATCH.Utilities.Materials.Icon.ExclamationMark, Utilities.Materials.Colors.WhiteMetallic);
+                    //IconView.SetScale(0.05f, 0.05f, 0.05f); // Set the scale to having tiny icon that feat in the circle
+                    IconView.SetLocalPositionObject(0.1075f, 0.068f, -0.02f); //Set position to be in center of the circle
+
+                    Sound = gameObject.transform.Find("Sound");
+                    Arch = gameObject.transform.Find("Arch");
+                    LinePath = gameObject.transform.Find("LinePath");
 
                     // Initialize some values of the children
                     ButtonsParentScalingOriginal = ButtonsParentView.localScale;
                     BackgroundScalingOriginal = BackgroundMessage.localScale;
                     TitleScalingOriginal = TitleView.localScale;
                     DescriptionScalingOriginal = DescriptionView.localScale;
-                    IconScalingOriginal = IconView.localScale;
+                    //IconScalingOriginal = IconView.GetChildTransform().localScale;
 
                     // Storing the original center and size of the box collider
                     BoxCollider box = transform.GetComponent<BoxCollider>();
@@ -223,7 +227,7 @@ namespace MATCH
                             ButtonsParentView.gameObject.SetActive(false);
                             BackgroundMessage.gameObject.SetActive(false);
                             BackgroundIcon.gameObject.SetActive(false);
-                            IconView.gameObject.SetActive(false);
+                            IconView.GetIconObjTransform().gameObject.SetActive(false);
                             IsDisplayed = false;
                             args.Success = true;
                             eventHandler?.Invoke(this, args);
@@ -273,7 +277,7 @@ namespace MATCH
                             BackgroundIcon.gameObject.SetActive(true);
                             BackgroundMessage.transform.localScale = BackgroundScalingOriginal;
                             BackgroundIcon.transform.localScale = BackgroundScalingOriginal;
-                            IconView.gameObject.SetActive(true);
+                            IconView.GetIconObjTransform().gameObject.SetActive(true);
 
                             TitleView.gameObject.SetActive(true);
                             DescriptionView.gameObject.SetActive(true);
@@ -379,9 +383,14 @@ namespace MATCH
                     return this;
                 }
 
-                Assistance IAssistance.GetDecoratedAssistance()
+                Assistance IAssistance.GetRootDecoratedAssistance()
                 {
                     return this; // Here there is no decorator, so we return the same assistance.
+                }
+
+                public Assistance GetDecoratedAssistance()
+                {
+                    return this;
                 }
 
                 public Transform GetBackground()
@@ -397,6 +406,26 @@ namespace MATCH
                 public Transform GetBackgroundMessage()
                 {
                     return BackgroundMessage;
+                }
+
+                public Transform GetSound()
+                {
+                    return Sound;
+                }
+
+                public Transform GetArch()
+                {
+                    return Arch;
+                }
+
+                public Assistances.Icon GetIcon()
+                {
+                    return IconView;
+                }
+
+                public Transform GetLinePath()
+                {
+                    return LinePath;
                 }
             }
 

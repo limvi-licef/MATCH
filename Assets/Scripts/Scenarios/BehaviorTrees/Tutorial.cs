@@ -154,6 +154,9 @@ namespace MATCH
 
                     alpha.AddAssistance(alpha1, Assistances.Buttons.Button.ButtonType.ClosingButton, null);
 
+                    //////////Line to delete [FOR TEST ONLY]
+                    alpha.AddAssistance(alpha1, Assistances.Buttons.Button.ButtonType.CustomChoice1, null);
+
                     AssistancesDusting.Add(alpha, false);
 
                     alpha.Init();

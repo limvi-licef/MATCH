@@ -60,6 +60,7 @@ namespace MATCH
             void IMixedRealityTouchHandler.OnTouchCompleted(HandTrackingInputEventData eventData) { }
             void IMixedRealityTouchHandler.OnTouchUpdated(HandTrackingInputEventData eventData) { }
         }
+
     }
 }
 

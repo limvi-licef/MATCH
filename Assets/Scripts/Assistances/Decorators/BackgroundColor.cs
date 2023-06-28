@@ -133,10 +133,15 @@ namespace MATCH
                     return this;
                 }
 
+                public Assistance GetRootDecoratedAssistance()
+                {
+                    return PanelToDecorate.GetRootDecoratedAssistance();
+                }
                 public Assistance GetDecoratedAssistance()
                 {
-                    return PanelToDecorate.GetDecoratedAssistance();
+                    return PanelToDecorate.GetAssistance();
                 }
+
 
                 public override bool IsDecorator()
                 {
@@ -146,6 +151,26 @@ namespace MATCH
                 public Transform GetBackground()
                 {
                     return BackgroundView;
+                }
+
+                public Transform GetSound()
+                {
+                    return PanelToDecorate.GetSound();
+                }
+
+                public Transform GetArch()
+                {
+                    return PanelToDecorate.GetArch();
+                }
+
+                public Assistances.Icon GetIcon()
+                {
+                    return PanelToDecorate.GetIcon();
+                }
+
+                public Transform GetLinePath()
+                {
+                    return PanelToDecorate.GetLinePath();
                 }
             }
         }

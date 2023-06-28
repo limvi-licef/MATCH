@@ -38,6 +38,7 @@ namespace MATCH
             {
                 // Get children and components
                 InteractionSurfaceView = transform.Find("AssistanceInteractionSurface");
+                InteractionSurfaceView.name = "PathInteractionSurface";
                 InteractionSurfaceController = InteractionSurfaceView.GetComponent<Assistances.InteractionSurface>();
                 ObstaclesManager = GetComponent<Obstacles>();
 
@@ -50,6 +51,7 @@ namespace MATCH
                 InteractionSurfaceController.ShowInteractionSurfaceTable(true);
                 InteractionSurfaceController.SetObjectResizable(true);
                 InteractionSurfaceController.SetPreventResizeY(true);
+                Utilities.WorldLockingToolsManager.Instance.RegisterObject(InteractionSurfaceView.name, InteractionSurfaceView, InteractionSurfaceController.GetInteractionSurface());
 
                 // Add component to the interaction surface to define walkable surface
                 InteractionSurfaceController.GetInteractionSurface().gameObject.AddComponent<NavMeshSourceTag>();
@@ -107,7 +109,7 @@ namespace MATCH
                     DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Warning, "Cannot compute the path");
                 }
 
-                DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Number of corner: " + path.corners.Length + " Start position: " + origin+ " Target position: " + destination);
+                //DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Number of corner: " + path.corners.Length + " Start position: " + origin+ " Target position: " + destination);
 
                 return path.corners;
             }
@@ -151,7 +153,7 @@ namespace MATCH
 
                 Vector3 scaling = new Vector3(0.1f, 0.1f, 0.1f);
 
-                ObstaclesManager.AddObstacle("Obstacle " + (ObstaclesManager.GetObstacles().Count + 1).ToString(), scaling, position, Utilities.Materials.Colors.WhiteTransparent, true, false, transform);
+                ObstaclesManager.AddObstacle("Obstacle " + (ObstaclesManager.GetObstacles().Count + 1).ToString(), scaling, position, Utilities.Materials.Colors.WhiteTransparent, true, false, true, transform);
             }
 
             void CallbackObstacleResizedOrMoved(System.Object sender, EventArgs e)

@@ -286,6 +286,11 @@ namespace MATCH
                 return this;
             }
 
+            public Assistance GetRootDecoratedAssistance()
+            {
+                return this;
+            }
+
             public Assistance GetDecoratedAssistance()
             {
                 return this;
@@ -300,6 +305,27 @@ namespace MATCH
             {
                 return ChildView.gameObject.activeSelf;
             }*/
+
+            public Transform GetSound()
+            {
+                return null;
+            }
+
+            public Transform GetArch()
+            {
+                return null;
+            }
+
+            public Assistances.Icon GetIcon()
+            {
+                return null;
+            }
+
+            public Transform GetLinePath()
+            {
+                return null;
+            }
+
         }
     }
 }

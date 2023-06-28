@@ -1,4 +1,4 @@
-/*Copyright 2022 Guillaume Spalla, Louis Marquet
+/*Copyright 2022 Guillaume Spalla, Louis Marquet, Léri Lamour
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -21,6 +21,7 @@ using UnityEngine;
 using System.Timers;
 using System.Reflection;
 using System.Linq;
+using MATCH.Assistances.GradationVisual;
 
 namespace MATCH
 {
@@ -177,6 +178,38 @@ namespace MATCH
                 return (Dialogs.Dialog2)controller;
             }
 
+            public Dialogs.Dialog2Contextualized CreateDialog2WithButtonsContextualized(string assistanceName, string title, string description, Transform contextObject, string textButton1, EventHandler callbackButton1, Assistances.Buttons.Button.ButtonType type1, string textButton2, EventHandler callbackButton2, Assistances.Buttons.Button.ButtonType type2, Transform parent)
+            {
+                Transform view = Utilities.Materials.Prefabs.Load(Utilities.Materials.Prefabs.AssistanceDialog2);
+                view.parent = parent;
+                view.localPosition = new Vector3(0, 0, 0);
+
+                Dialogs.Dialog2 controllerToRemove = view.GetComponent<Dialogs.Dialog2>();
+                DestroyImmediate(controllerToRemove);
+
+                Dialogs.Dialog2Contextualized controllerContextualized = view.gameObject.AddComponent<Dialogs.Dialog2Contextualized>();
+
+                float sizeDescriptionText = -0.0003f * description.Length + 0.17f;
+                controllerContextualized.SetDescription(description, contextObject, sizeDescriptionText);
+
+                Dialogs.Dialog2 controllerDialog2 = (Dialogs.Dialog2)controllerContextualized;
+
+                controllerDialog2.SetTitle(title, 0.15f);
+                //float sizeDescriptionText = -0.0005f * description.Length + 0.206f;
+                
+                //controllerDialog2.SetDescription(description, sizeDescriptionText);
+                controllerDialog2.EnableBillboard(true);
+
+                
+
+                Dialogs.Dialog controllerDialog = (Dialogs.Dialog)controllerDialog2;
+
+                Assistances.Factory.Instance.AddButton(ref controllerDialog, callbackButton1, textButton1, type1, true, ComputeFontSizeExp(textButton1.Length));
+                AddButton(ref controllerDialog, callbackButton2, textButton2, type2, true, ComputeFontSizeExp(textButton2.Length));
+
+                return controllerContextualized;
+            }
+
             public Basic CreateCube(string texture, Transform parent)
             {
                 Transform view = Utilities.Materials.Prefabs.Load(Utilities.Materials.Prefabs.AssistanceCube).transform;
@@ -200,16 +233,20 @@ namespace MATCH
                 return cube;
             }
 
-            public ExclamationMark CreateExclamationMark(bool adjustHeight, Vector3 localPosition, bool enableBillboard, Transform parent)
+            public Icon CreateIcon(bool adjustHeight, Vector3 localPosition, Vector3 scale, bool enableBillboard, Transform parent, string iconType, string material)
             {
-                Transform view = Utilities.Materials.Prefabs.Load(Utilities.Materials.Prefabs.AssistanceExclamationMark).transform;
+                Transform view = Utilities.Materials.Prefabs.Load(Utilities.Materials.Prefabs.AssistanceIcon).transform;
+
                 view.parent = parent;
                 view.transform.localPosition = localPosition;
 
-                ExclamationMark controller = view.GetComponent<ExclamationMark>();
+                Icon controller = view.GetComponent<Icon>();
                 controller.AdjustHeightOnShow = adjustHeight;
+                controller.SetIconType(iconType);
+                controller.SetMaterial(material);
                 controller.SetLocalPositionObject(localPosition);
                 controller.SetBillboard(enableBillboard);
+                controller.SetScale(scale);
 
                 return controller;
             }
@@ -246,7 +283,7 @@ namespace MATCH
                 return controller;
             }
 
-            public SurfaceToProcess CreateSurfaceToProcess(Transform parent, InteractionSurface surfaceToPopulate)
+            public SurfaceToProcess CreateSurfaceToProcess(Transform parent, InteractionSurface surfaceToPopulate, int NumberOfRows = 5, int NumberOfColumns = 4)
             {
                 Transform view = Utilities.Materials.Prefabs.Load(Utilities.Materials.Prefabs.AssistanceSurfaceToProcess); //Instantiate(RefSurfaceToProcess.transform, parent);
                 view.parent = parent;
@@ -254,6 +291,7 @@ namespace MATCH
 
                 SurfaceToProcess controller = view.GetComponent<SurfaceToProcess>();
                 controller.SetSurfaceToPopulate(surfaceToPopulate);
+                controller.SetNumberOfSquares(NumberOfRows, NumberOfColumns);
 
                 return controller;
             }
@@ -320,6 +358,18 @@ namespace MATCH
                 ArchWithTextAndHelp controller = view.GetComponent<ArchWithTextAndHelp>();
                 view.name = name;
                 controller.SetArchStartAndEndPoint(origin, target);
+
+                return controller;
+            }
+
+            public PathWithTextAndHelp CreateAssistancePath(string name, Transform origin, Transform target, Transform parent)
+            {
+                Transform view = Utilities.Materials.Prefabs.Load(Utilities.Materials.Prefabs.AssistanceLightPath);
+                view.parent = parent;
+
+                PathWithTextAndHelp controller = view.GetComponent<PathWithTextAndHelp>();
+                view.name = name;
+                controller.SetPathStartAndEndPoint(origin, target);
 
                 return controller;
             }
