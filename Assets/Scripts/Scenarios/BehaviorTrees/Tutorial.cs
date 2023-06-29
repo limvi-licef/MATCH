@@ -176,19 +176,48 @@ namespace MATCH
 
                 Sequence AssistanceBeta()
                 {
-                    Assistances.GradationVisual.GradationVisual beta1 = Assistances.GradationVisual.Factory.Instance.CreateExclamationMark("Tutorial-ExclamationMark", InteractionExclamationMark.transform);
+                    Assistances.GradationVisual.GradationVisual beta1 = Assistances.GradationVisual.Factory.Instance.CreateDialog2WithButtons("Tutorial-ExclamationMarkDialog", "", "Vous vous appretez à voir un point d'exclamation, appuyez sur SUIVANT pour le faire apparaître !", "SUIVANT", null, Assistances.Buttons.Button.ButtonType.Yes, InteractionSurfaceDialogs.transform);
+                    Assistances.GradationVisual.GradationVisual beta2 = Assistances.GradationVisual.Factory.Instance.CreateDialog2WithButtons("Tutorial-ExclamationMarkDialog-2", "", "Le voici ! Si vous n'y prêtez pas attention, le point d'exclamation va changer de couleur pour attirer votre attention ! Appuyez sur SUIVANT pour voir.", "SUIVANT", null, Assistances.Buttons.Button.ButtonType.Yes, InteractionSurfaceDialogs.transform);
+                    Assistances.GradationVisual.GradationVisual beta3 = Assistances.GradationVisual.Factory.Instance.CreateDialog2WithButtons("Tutorial-ExclamationMarkDialog-3", "", "Le point d'exclamation est maintenant orange. Si vous n'y prêtez toujours pas attention, il deviendra rouge et une flèche vous indiquera sa position. Appuyez sur SUIVANT pour voir.", "SUIVANT", null, Assistances.Buttons.Button.ButtonType.Yes, InteractionSurfaceDialogs.transform);
 
+                    Assistances.Icon assistanceBase = Assistances.Factory.Instance.CreateIcon(true, new Vector3(0, 0, 0), new Vector3(0.5f, 0.5f, 0.5f), true, InteractionExclamationMark.transform, /*null*/Utilities.Materials.Icon.ExclamationMark, Utilities.Materials.Colors.WhiteMetallic);
+                    
                     Assistances.AssistanceGradationExplicit beta = MATCH.Assistances.Factory.Instance.CreateAssistanceGradationExplicit("Tutorial-Beta");
-
-                    Assistances.IAssistance betaIAssistance = (Assistances.IAssistance)beta1.GetCurrentAssistance();
 
 
                     beta.transform.parent = transform;
-                    beta.AddAssistance(beta1, Assistances.Buttons.Button.ButtonType.ClosingButton, null);
+                    beta.AddAssistance(beta1, Assistances.Buttons.Button.ButtonType.Yes, beta2);
+                    beta.AddAssistance(beta2, Assistances.Buttons.Button.ButtonType.Yes, beta3);
 
                     AssistancesDusting.Add(beta, false);
 
+                    Assistances.IAssistance beta2IAssistance = (Assistances.IAssistance)beta1.GetCurrentAssistance();
+                    Assistances.Assistance beta2Assistance = (Assistances.Assistance)beta2IAssistance.GetRootDecoratedAssistance();
+
+                    Assistances.IAssistance beta3IAssistance = (Assistances.IAssistance)beta2.GetCurrentAssistance();
+                    Assistances.Assistance beta3Assistance = (Assistances.Assistance)beta3IAssistance.GetRootDecoratedAssistance();
+
+                    Assistances.IAssistance beta4IAssistance = (Assistances.IAssistance)beta3.GetCurrentAssistance();
+                    Assistances.Assistance beta4Assistance = (Assistances.Assistance)beta4IAssistance.GetRootDecoratedAssistance();
+
                     beta.Init();
+                    beta2Assistance.EventHelpButtonClicked += delegate (System.Object o, EventArgs e)
+                    {
+                        Utilities.EventHandlerArgs.Button button = (Utilities.EventHandlerArgs.Button)e;
+                        assistanceBase.Show(null, false);
+                    };
+
+                    beta3Assistance.EventHelpButtonClicked += delegate (System.Object o, EventArgs e)
+                    {
+                        Utilities.EventHandlerArgs.Button button = (Utilities.EventHandlerArgs.Button)e;
+                        assistanceBase.SetMaterial(Utilities.Materials.Colors.OrangeGlowing);
+                    };
+
+                    beta4Assistance.EventHelpButtonClicked += delegate (System.Object o, EventArgs e)
+                    {
+                        Utilities.EventHandlerArgs.Button button = (Utilities.EventHandlerArgs.Button)e;
+                        assistanceBase.SetMaterial(Utilities.Materials.Colors.RedGlowing);
+                    };
 
                     Sequence temp = new Sequence(
                         new NPBehave.Action(() => {
@@ -205,8 +234,6 @@ namespace MATCH
 
                 Sequence AssistanceGamma()
                 {
-                    /*Assistances.GradationVisual.GradationVisual betaBase = Assistances.GradationVisual.Factory.Instance.CreateDialogNoButton("Tutorial-Alpha-1", "", "Vous venez de découvrir la première interaction: toucher un bouton!\nMaintenant, vous allez voir un cube sur votre droite. Regardez le pendant quelques secondes pour passer à la suite.", InteractionSurfaceDialogs.transform);*/
-
                     Assistances.GradationVisual.GradationVisual gammaBase = Assistances.GradationVisual.Factory.Instance.CreateDialog2NoButton("Tutorial-Gamma-1", "", "Vous venez de découvrir la première interaction: toucher un bouton!\nMaintenant, vous allez voir un cube sur votre droite. Regardez le pendant quelques secondes pour passer à la suite.", InteractionSurfaceDialogs.transform);
 
                     Assistances.AssistanceGradationExplicit gamma = MATCH.Assistances.Factory.Instance.CreateAssistanceGradationExplicit("Tutorial-Gamma");
