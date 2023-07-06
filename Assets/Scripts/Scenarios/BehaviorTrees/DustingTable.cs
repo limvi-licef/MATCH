@@ -66,8 +66,14 @@ namespace MATCH
                     AssistancesDusting = new Dictionary<Assistances.AssistanceGradationExplicit, bool>();
 
                     //Load ontology
+                    DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Avant ontologie ");
                     Graph = new VDS.RDF.Graph();
+                    TextAsset test  = Resources.Load(Utilities.Materials.Ontology.Test) as TextAsset;
+                    //Graph.
+                    
                     VDS.RDF.Parsing.FileLoader.Load(Graph, Utilities.Materials.Ontology.Test);
+                    DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Après ontologie ");
+
                 }
 
 
@@ -218,7 +224,7 @@ namespace MATCH
                     }
                     else
                     {
-                        Debug.Log("Aucun résultat trouvé.");
+                        DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Aucun résultat trouvé.");
                     }
 
                     Assistances.GradationVisual.GradationVisual alpha1 = Assistances.GradationVisual.Factory.Instance.CreateDialog2WithButtons("DustingTable-Alpha-1", "", message, "Terminer", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.ClosingButton, InteractionSurfaceTable.transform);
