@@ -20,6 +20,8 @@ using System;
 using System.Reflection;
 using TMPro;
 using Microsoft.MixedReality.Toolkit.UI;
+using VDS;
+using VDS.RDF;
 
 /**
  * For graphical details of the behavior tree implemented here, refer to the documentation
@@ -54,12 +56,20 @@ namespace MATCH
 
                 Dictionary<Assistances.AssistanceGradationExplicit, bool> AssistancesDusting;
 
+                VDS.RDF.Graph Graph;
+
+
                 public override void Awake()
                 {
-                    base.Awake();
+                                                 base.Awake();
                     SetId("Nettoyer la table");
                     AssistancesDusting = new Dictionary<Assistances.AssistanceGradationExplicit, bool>();
+
+                    //Load ontology
+                    Graph = new VDS.RDF.Graph();
+                    VDS.RDF.Parsing.FileLoader.Load(Graph, Utilities.Materials.Ontology.Test);
                 }
+
 
                 public override void Start()
                 {
@@ -190,7 +200,28 @@ namespace MATCH
                 {
                     /*Assistances.GradationVisual.GradationVisual alpha1 = Assistances.Factory.Instance.CreateAssistanceGradationAttention("DustingTable-Beta-1");*/
 
-                    Assistances.GradationVisual.GradationVisual alpha1 = Assistances.GradationVisual.Factory.Instance.CreateDialog2WithButtons("DustingTable-Alpha-1", "", "Vous avez terminé l'activité! Félicitations!", "Terminer", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.ClosingButton, InteractionSurfaceTable.transform);
+                    VDS.RDF.Parsing.SparqlQueryParser testparser = new VDS.RDF.Parsing.SparqlQueryParser();
+                    VDS.RDF.Query.SparqlQuery testquery = testparser.ParseFromString("PREFIX mao: <https://ontology.staging.domus.usherbrooke.ca/MAO#> PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> PREFIX terms: <http://purl.org/dc/terms/>" +
+                        "SELECT ?message WHERE {?texte rdf:type mao:AssistanceAlpha . ?texte terms:title ?message}");
+
+                    VDS.RDF.Query.SparqlResultSet testresults = (VDS.RDF.Query.SparqlResultSet)Graph.ExecuteQuery(testquery.ToString());
+                    string message = "";
+
+                    if (testresults.Count > 0)
+                    {
+                        var result = testresults[0];
+                        string text = result.Value("message").ToString();
+                        char symbol = '^';
+
+                        int endIndex = text.IndexOf(symbol);
+                        message = text.Substring(0, endIndex);
+                    }
+                    else
+                    {
+                        Debug.Log("Aucun résultat trouvé.");
+                    }
+
+                    Assistances.GradationVisual.GradationVisual alpha1 = Assistances.GradationVisual.Factory.Instance.CreateDialog2WithButtons("DustingTable-Alpha-1", "", message, "Terminer", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.ClosingButton, InteractionSurfaceTable.transform);
 
                     /*Assistances.Basic assistanceBase = Assistances.Factory.Instance.CreateCube(Utilities.Materials.Colors.PurpleGlowing, InteractionSurfaceTable.transform);
                     assistanceBase.name = name + "_base";
