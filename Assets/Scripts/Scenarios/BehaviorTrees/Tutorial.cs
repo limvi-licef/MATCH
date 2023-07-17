@@ -378,28 +378,39 @@ namespace MATCH
 
                 Sequence AssistanceLota()
                 {
-                    Assistances.GradationVisual.GradationVisual lota1 = Assistances.GradationVisual.Factory.Instance.CreateDialog2WithButtons("Tutorial-LookAround-1", "", "Attention ! Des assistances peuvent etre à l'exterieur de votre champs de vision actuel. N'hésitez pas à regarder autour de vous pour etre sur de ne pas en rater !", "SUIVANT", null, Assistances.Buttons.Button.ButtonType.Yes, InteractionLookAround.transform);
+                    Assistances.GradationVisual.GradationVisual lota1 = Assistances.GradationVisual.Factory.Instance.CreateDialog2WithButtons("Tutorial-LookAround-1", "", "Attention ! Des assistances peuvent etre à l'exterieur de votre champs de vision actuel. N'hésitez pas à regarder autour de vous pour etre sur de ne pas en rater ! Appuyez sur suivant pour voir.", "SUIVANT", null, Assistances.Buttons.Button.ButtonType.Yes, InteractionLookAround.transform);
+                    Assistances.GradationVisual.GradationVisual lota2 = Assistances.GradationVisual.Factory.Instance.CreateDialog2WithButtons("Tutorial-LookAround-2", "", "Une forme est apparue hors de votre champs de vision. Cherchez la ! Une fois que vous l'aurez trouvée, appuyez sur SUIVANT pour continuer le tutoriel !", "SUIVANT", null, Assistances.Buttons.Button.ButtonType.Yes, InteractionLookAround.transform);
 
                     Assistances.Icon assistanceLosange = Assistances.Factory.Instance.CreateIcon(true, new Vector3(0, 0, 0), new Vector3(0.5f, 0.5f, 0.5f), true, InteractionLosange.transform, /*null*/Utilities.Materials.Icon.Diamond, Utilities.Materials.Colors.RedGlowing);
                     
                     Assistances.AssistanceGradationExplicit lota = MATCH.Assistances.Factory.Instance.CreateAssistanceGradationExplicit("Tutorial-Lota");
 
                     lota.transform.parent = transform;
-                    lota.AddAssistance(lota1, Assistances.Buttons.Button.ButtonType.Yes, null);
+                    lota.AddAssistance(lota1, Assistances.Buttons.Button.ButtonType.Yes, lota2);
+                    lota.AddAssistance(lota2, Assistances.Buttons.Button.ButtonType.Yes, null);
+
 
                     AssistancesDusting.Add(lota, false);
                     
                     Assistances.IAssistance lota1IAssistance = (Assistances.IAssistance)lota1.GetCurrentAssistance();
                     Assistances.Assistance lota1Assistance = (Assistances.Assistance)lota1IAssistance.GetRootDecoratedAssistance();
-                    
+
+                    Assistances.IAssistance lota2IAssistance = (Assistances.IAssistance)lota2.GetCurrentAssistance();
+                    Assistances.Assistance lota2Assistance = (Assistances.Assistance)lota2IAssistance.GetRootDecoratedAssistance();
+
 
                     lota.Init();
-                    
-                    //assistanceLosange.Show((Utilities.Utility.GetEventHandlerEmpty(), false);
-                    
-                    lota1Assistance.EventHelpButtonClicked += delegate(System.Object o, EventArgs e)
+
+
+                    lota1Assistance.EventHelpButtonClicked += delegate (System.Object o, EventArgs e)
                     {
-                            UpdateConditionWithMatrix(ConditionBeginningClicked);
+                        assistanceLosange.Show(Utilities.Utility.GetEventHandlerEmpty(), false);
+                    };
+
+                    lota2Assistance.EventHelpButtonClicked += delegate(System.Object o, EventArgs e)
+                    {
+                        assistanceLosange.Hide(Utilities.Utility.GetEventHandlerEmpty(), false);
+                        UpdateConditionWithMatrix(ConditionBeginningClicked);
                     };
 
                     Sequence temp = new Sequence(
