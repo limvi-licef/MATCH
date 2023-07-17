@@ -39,6 +39,12 @@
     
 
 
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MAO#containsEnvironmentElement -->
+
+    <owl:AnnotationProperty rdf:about="https://ontology.staging.domus.usherbrooke.ca/MAO#containsEnvironmentElement"/>
+    
+
+
     <!-- https://ontology.staging.domus.usherbrooke.ca/MAO#containsSomeTime -->
 
     <owl:AnnotationProperty rdf:about="https://ontology.staging.domus.usherbrooke.ca/MAO#containsSomeTime"/>
@@ -54,9 +60,57 @@
     
 
 
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MAO#hasAssociatedScript -->
+
+    <owl:AnnotationProperty rdf:about="https://ontology.staging.domus.usherbrooke.ca/MAO#hasAssociatedScript"/>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MAO#hasContent -->
+
+    <owl:AnnotationProperty rdf:about="https://ontology.staging.domus.usherbrooke.ca/MAO#hasContent"/>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MAO#hasLocation -->
+
+    <owl:AnnotationProperty rdf:about="https://ontology.staging.domus.usherbrooke.ca/MAO#hasLocation"/>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MAO#isAssociatedToEnvironmentElement -->
+
+    <owl:AnnotationProperty rdf:about="https://ontology.staging.domus.usherbrooke.ca/MAO#isAssociatedToEnvironmentElement"/>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MAO#isAssociatedToRoom -->
+
+    <owl:AnnotationProperty rdf:about="https://ontology.staging.domus.usherbrooke.ca/MAO#isAssociatedToRoom"/>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MAO#isLinkedToAssistance -->
+
+    <owl:AnnotationProperty rdf:about="https://ontology.staging.domus.usherbrooke.ca/MAO#isLinkedToAssistance"/>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MAO#preferredCommChannel -->
+
+    <owl:AnnotationProperty rdf:about="https://ontology.staging.domus.usherbrooke.ca/MAO#preferredCommChannel"/>
+    
+
+
     <!-- https://ontology.staging.domus.usherbrooke.ca/MAO#startedEvent -->
 
     <owl:AnnotationProperty rdf:about="https://ontology.staging.domus.usherbrooke.ca/MAO#startedEvent"/>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MAO#triggersAssistance -->
+
+    <owl:AnnotationProperty rdf:about="https://ontology.staging.domus.usherbrooke.ca/MAO#triggersAssistance"/>
     
 
 
@@ -71,45 +125,9 @@
     
 
 
-    <!-- https://ontology.staging.domus.usherbrooke.ca/MAO#canContainEnvironmentElement -->
-
-    <owl:ObjectProperty rdf:about="https://ontology.staging.domus.usherbrooke.ca/MAO#canContainEnvironmentElement"/>
-    
-
-
-    <!-- https://ontology.staging.domus.usherbrooke.ca/MAO#containsEnvironmentElement -->
-
-    <owl:ObjectProperty rdf:about="https://ontology.staging.domus.usherbrooke.ca/MAO#containsEnvironmentElement"/>
-    
-
-
-    <!-- https://ontology.staging.domus.usherbrooke.ca/MAO#hasAction -->
-
-    <owl:ObjectProperty rdf:about="https://ontology.staging.domus.usherbrooke.ca/MAO#hasAction"/>
-    
-
-
-    <!-- https://ontology.staging.domus.usherbrooke.ca/MAO#hasAssistance -->
-
-    <owl:ObjectProperty rdf:about="https://ontology.staging.domus.usherbrooke.ca/MAO#hasAssistance"/>
-    
-
-
-    <!-- https://ontology.staging.domus.usherbrooke.ca/MAO#hasAssistanceLevel -->
-
-    <owl:ObjectProperty rdf:about="https://ontology.staging.domus.usherbrooke.ca/MAO#hasAssistanceLevel"/>
-    
-
-
     <!-- https://ontology.staging.domus.usherbrooke.ca/MAO#hasAssistanceType -->
 
     <owl:ObjectProperty rdf:about="https://ontology.staging.domus.usherbrooke.ca/MAO#hasAssistanceType"/>
-    
-
-
-    <!-- https://ontology.staging.domus.usherbrooke.ca/MAO#hasAssociatedScript -->
-
-    <owl:ObjectProperty rdf:about="https://ontology.staging.domus.usherbrooke.ca/MAO#hasAssociatedScript"/>
     
 
 
@@ -118,12 +136,6 @@
     <owl:ObjectProperty rdf:about="https://ontology.staging.domus.usherbrooke.ca/MAO#hasCommunicationMode">
         <rdfs:subPropertyOf rdf:resource="http://www.w3.org/2002/07/owl#topObjectProperty"/>
     </owl:ObjectProperty>
-    
-
-
-    <!-- https://ontology.staging.domus.usherbrooke.ca/MAO#hasCondition -->
-
-    <owl:ObjectProperty rdf:about="https://ontology.staging.domus.usherbrooke.ca/MAO#hasCondition"/>
     
 
 
@@ -140,6 +152,12 @@
     <owl:ObjectProperty rdf:about="https://ontology.staging.domus.usherbrooke.ca/MAO#hasFirstName">
         <rdfs:subPropertyOf rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#hasName"/>
     </owl:ObjectProperty>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MAO#hasFirstObject -->
+
+    <owl:ObjectProperty rdf:about="https://ontology.staging.domus.usherbrooke.ca/MAO#hasFirstObject"/>
     
 
 
@@ -177,9 +195,15 @@
     
 
 
-    <!-- https://ontology.staging.domus.usherbrooke.ca/MAO#hasSetting -->
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MAO#hasRoom -->
 
-    <owl:ObjectProperty rdf:about="https://ontology.staging.domus.usherbrooke.ca/MAO#hasSetting"/>
+    <owl:ObjectProperty rdf:about="https://ontology.staging.domus.usherbrooke.ca/MAO#hasRoom"/>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MAO#hasSecondObject -->
+
+    <owl:ObjectProperty rdf:about="https://ontology.staging.domus.usherbrooke.ca/MAO#hasSecondObject"/>
     
 
 
@@ -189,21 +213,17 @@
     
 
 
-    <!-- https://ontology.staging.domus.usherbrooke.ca/MAO#hasTrigger -->
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MAO#isDisplayedHere -->
 
-    <owl:ObjectProperty rdf:about="https://ontology.staging.domus.usherbrooke.ca/MAO#hasTrigger"/>
+    <owl:ObjectProperty rdf:about="https://ontology.staging.domus.usherbrooke.ca/MAO#isDisplayedHere">
+        <rdfs:subPropertyOf rdf:resource="http://www.w3.org/2002/07/owl#topObjectProperty"/>
+    </owl:ObjectProperty>
     
 
 
-    <!-- https://ontology.staging.domus.usherbrooke.ca/MAO#isAssociatedToEnvironmentElement -->
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MAO#isLinkedToAssistance -->
 
-    <owl:ObjectProperty rdf:about="https://ontology.staging.domus.usherbrooke.ca/MAO#isAssociatedToEnvironmentElement"/>
-    
-
-
-    <!-- https://ontology.staging.domus.usherbrooke.ca/MAO#isAssociatedToRoom -->
-
-    <owl:ObjectProperty rdf:about="https://ontology.staging.domus.usherbrooke.ca/MAO#isAssociatedToRoom"/>
+    <owl:ObjectProperty rdf:about="https://ontology.staging.domus.usherbrooke.ca/MAO#isLinkedToAssistance"/>
     
 
 
@@ -234,6 +254,12 @@
     <!-- https://ontology.staging.domus.usherbrooke.ca/MAO#prefersThirdColor -->
 
     <owl:ObjectProperty rdf:about="https://ontology.staging.domus.usherbrooke.ca/MAO#prefersThirdColor"/>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MAO#triggersAssistance -->
+
+    <owl:ObjectProperty rdf:about="https://ontology.staging.domus.usherbrooke.ca/MAO#triggersAssistance"/>
     
 
 
@@ -311,14 +337,6 @@
     
 
 
-    <!-- https://ontology.staging.domus.usherbrooke.ca/MAO#AppliancesActions -->
-
-    <owl:Class rdf:about="https://ontology.staging.domus.usherbrooke.ca/MAO#AppliancesActions">
-        <rdfs:subClassOf rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#Task"/>
-    </owl:Class>
-    
-
-
     <!-- https://ontology.staging.domus.usherbrooke.ca/MAO#AppliancesStates -->
 
     <owl:Class rdf:about="https://ontology.staging.domus.usherbrooke.ca/MAO#AppliancesStates">
@@ -327,31 +345,39 @@
     
 
 
-    <!-- https://ontology.staging.domus.usherbrooke.ca/MAO#Armchair -->
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MAO#Arch -->
 
-    <owl:Class rdf:about="https://ontology.staging.domus.usherbrooke.ca/MAO#Armchair">
-        <rdfs:subClassOf rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#Furniture"/>
+    <owl:Class rdf:about="https://ontology.staging.domus.usherbrooke.ca/MAO#Arch">
+        <rdfs:subClassOf rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#Icons"/>
         <rdfs:subClassOf>
             <owl:Restriction>
-                <owl:onProperty rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#hasAction"/>
-                <owl:someValuesFrom rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#ArmchairActions"/>
+                <owl:onProperty rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#hasFirstObject"/>
+                <owl:allValuesFrom rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#EnvironmentElement"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#hasSecondObject"/>
+                <owl:allValuesFrom rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#EnvironmentElement"/>
             </owl:Restriction>
         </rdfs:subClassOf>
     </owl:Class>
     
 
 
-    <!-- https://ontology.staging.domus.usherbrooke.ca/MAO#ArmchairActions -->
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MAO#Armchair -->
 
-    <owl:Class rdf:about="https://ontology.staging.domus.usherbrooke.ca/MAO#ArmchairActions">
-        <rdfs:subClassOf rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#FurnitureActions"/>
+    <owl:Class rdf:about="https://ontology.staging.domus.usherbrooke.ca/MAO#Armchair">
+        <rdfs:subClassOf rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#Furniture"/>
     </owl:Class>
     
 
 
     <!-- https://ontology.staging.domus.usherbrooke.ca/MAO#Assistance -->
 
-    <owl:Class rdf:about="https://ontology.staging.domus.usherbrooke.ca/MAO#Assistance"/>
+    <owl:Class rdf:about="https://ontology.staging.domus.usherbrooke.ca/MAO#Assistance">
+        <rdfs:comment>Contains all of the info about the assistances such as their content and their container</rdfs:comment>
+    </owl:Class>
     
 
 
@@ -363,58 +389,10 @@
     
 
 
-    <!-- https://ontology.staging.domus.usherbrooke.ca/MAO#AssistanceAlpha -->
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MAO#AssistanceLists -->
 
-    <owl:Class rdf:about="https://ontology.staging.domus.usherbrooke.ca/MAO#AssistanceAlpha">
-        <rdfs:subClassOf rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#Text"/>
-    </owl:Class>
-    
-
-
-    <!-- https://ontology.staging.domus.usherbrooke.ca/MAO#AssistanceBeta -->
-
-    <owl:Class rdf:about="https://ontology.staging.domus.usherbrooke.ca/MAO#AssistanceBeta">
-        <rdfs:subClassOf rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#Text"/>
-    </owl:Class>
-    
-
-
-    <!-- https://ontology.staging.domus.usherbrooke.ca/MAO#AssistanceDelta -->
-
-    <owl:Class rdf:about="https://ontology.staging.domus.usherbrooke.ca/MAO#AssistanceDelta">
-        <rdfs:subClassOf rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#Text"/>
-    </owl:Class>
-    
-
-
-    <!-- https://ontology.staging.domus.usherbrooke.ca/MAO#AssistanceEpsilon -->
-
-    <owl:Class rdf:about="https://ontology.staging.domus.usherbrooke.ca/MAO#AssistanceEpsilon">
-        <rdfs:subClassOf rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#Text"/>
-    </owl:Class>
-    
-
-
-    <!-- https://ontology.staging.domus.usherbrooke.ca/MAO#AssistanceGamma -->
-
-    <owl:Class rdf:about="https://ontology.staging.domus.usherbrooke.ca/MAO#AssistanceGamma">
-        <rdfs:subClassOf rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#Text"/>
-    </owl:Class>
-    
-
-
-    <!-- https://ontology.staging.domus.usherbrooke.ca/MAO#AssistanceIota -->
-
-    <owl:Class rdf:about="https://ontology.staging.domus.usherbrooke.ca/MAO#AssistanceIota">
-        <rdfs:subClassOf rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#Text"/>
-    </owl:Class>
-    
-
-
-    <!-- https://ontology.staging.domus.usherbrooke.ca/MAO#AssistanceKappa -->
-
-    <owl:Class rdf:about="https://ontology.staging.domus.usherbrooke.ca/MAO#AssistanceKappa">
-        <rdfs:subClassOf rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#Text"/>
+    <owl:Class rdf:about="https://ontology.staging.domus.usherbrooke.ca/MAO#AssistanceLists">
+        <rdfs:comment>Contains the list of all the assistances according to their linked scenario</rdfs:comment>
     </owl:Class>
     
 
@@ -422,7 +400,7 @@
     <!-- https://ontology.staging.domus.usherbrooke.ca/MAO#AudioMessage -->
 
     <owl:Class rdf:about="https://ontology.staging.domus.usherbrooke.ca/MAO#AudioMessage">
-        <rdfs:subClassOf rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#LocutionaryAct"/>
+        <rdfs:subClassOf rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#Container"/>
     </owl:Class>
     
 
@@ -432,10 +410,7 @@
     <owl:Class rdf:about="https://ontology.staging.domus.usherbrooke.ca/MAO#Bathroom">
         <rdfs:subClassOf rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#Rooms"/>
         <rdfs:label>Bathroom</rdfs:label>
-        <containsSomeTime rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#Faucet"/>
-        <containsSomeTime rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#Shower"/>
-        <containsSomeTime rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#SinkBathroom"/>
-        <containsSomeTime rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#Toilet"/>
+        <hasLocation>dans la salle de bain</hasLocation>
     </owl:Class>
     
 
@@ -444,20 +419,6 @@
 
     <owl:Class rdf:about="https://ontology.staging.domus.usherbrooke.ca/MAO#Bed">
         <rdfs:subClassOf rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#Furniture"/>
-        <rdfs:subClassOf>
-            <owl:Restriction>
-                <owl:onProperty rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#hasAction"/>
-                <owl:someValuesFrom rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#BedActions"/>
-            </owl:Restriction>
-        </rdfs:subClassOf>
-    </owl:Class>
-    
-
-
-    <!-- https://ontology.staging.domus.usherbrooke.ca/MAO#BedActions -->
-
-    <owl:Class rdf:about="https://ontology.staging.domus.usherbrooke.ca/MAO#BedActions">
-        <rdfs:subClassOf rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#FurnitureActions"/>
     </owl:Class>
     
 
@@ -466,20 +427,6 @@
 
     <owl:Class rdf:about="https://ontology.staging.domus.usherbrooke.ca/MAO#BedSideTable">
         <rdfs:subClassOf rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#Furniture"/>
-        <rdfs:subClassOf>
-            <owl:Restriction>
-                <owl:onProperty rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#hasAction"/>
-                <owl:someValuesFrom rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#BedSideTableActions"/>
-            </owl:Restriction>
-        </rdfs:subClassOf>
-    </owl:Class>
-    
-
-
-    <!-- https://ontology.staging.domus.usherbrooke.ca/MAO#BedSideTableActions -->
-
-    <owl:Class rdf:about="https://ontology.staging.domus.usherbrooke.ca/MAO#BedSideTableActions">
-        <rdfs:subClassOf rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#FurnitureActions"/>
     </owl:Class>
     
 
@@ -489,9 +436,7 @@
     <owl:Class rdf:about="https://ontology.staging.domus.usherbrooke.ca/MAO#Bedroom">
         <rdfs:subClassOf rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#Rooms"/>
         <rdfs:label>Bedroom</rdfs:label>
-        <containsSomeTime rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#Bed"/>
-        <containsSomeTime rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#BedSideTable"/>
-        <containsSomeTime rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#RockingChair"/>
+        <hasLocation>dans la chambre</hasLocation>
     </owl:Class>
     
 
@@ -500,20 +445,6 @@
 
     <owl:Class rdf:about="https://ontology.staging.domus.usherbrooke.ca/MAO#Bin">
         <rdfs:subClassOf rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#Furniture"/>
-        <rdfs:subClassOf>
-            <owl:Restriction>
-                <owl:onProperty rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#hasAction"/>
-                <owl:someValuesFrom rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#BinActions"/>
-            </owl:Restriction>
-        </rdfs:subClassOf>
-    </owl:Class>
-    
-
-
-    <!-- https://ontology.staging.domus.usherbrooke.ca/MAO#BinActions -->
-
-    <owl:Class rdf:about="https://ontology.staging.domus.usherbrooke.ca/MAO#BinActions">
-        <rdfs:subClassOf rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#FurnitureActions"/>
     </owl:Class>
     
 
@@ -530,20 +461,14 @@
 
     <owl:Class rdf:about="https://ontology.staging.domus.usherbrooke.ca/MAO#Bookshelf">
         <rdfs:subClassOf rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#Furniture"/>
-        <rdfs:subClassOf>
-            <owl:Restriction>
-                <owl:onProperty rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#hasAction"/>
-                <owl:someValuesFrom rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#BookshelfActions"/>
-            </owl:Restriction>
-        </rdfs:subClassOf>
     </owl:Class>
     
 
 
-    <!-- https://ontology.staging.domus.usherbrooke.ca/MAO#BookshelfActions -->
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MAO#Calendar -->
 
-    <owl:Class rdf:about="https://ontology.staging.domus.usherbrooke.ca/MAO#BookshelfActions">
-        <rdfs:subClassOf rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#FurnitureActions"/>
+    <owl:Class rdf:about="https://ontology.staging.domus.usherbrooke.ca/MAO#Calendar">
+        <rdfs:subClassOf rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#Appliances"/>
     </owl:Class>
     
 
@@ -552,20 +477,6 @@
 
     <owl:Class rdf:about="https://ontology.staging.domus.usherbrooke.ca/MAO#Chair">
         <rdfs:subClassOf rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#Furniture"/>
-        <rdfs:subClassOf>
-            <owl:Restriction>
-                <owl:onProperty rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#hasAction"/>
-                <owl:someValuesFrom rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#ChairActions"/>
-            </owl:Restriction>
-        </rdfs:subClassOf>
-    </owl:Class>
-    
-
-
-    <!-- https://ontology.staging.domus.usherbrooke.ca/MAO#ChairActions -->
-
-    <owl:Class rdf:about="https://ontology.staging.domus.usherbrooke.ca/MAO#ChairActions">
-        <rdfs:subClassOf rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#FurnitureActions"/>
     </owl:Class>
     
 
@@ -601,7 +512,7 @@
         <rdfs:subClassOf>
             <owl:Restriction>
                 <owl:onProperty rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#hasCommunicationMode"/>
-                <owl:allValuesFrom rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#LocutionaryAct"/>
+                <owl:allValuesFrom rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#Container"/>
             </owl:Restriction>
         </rdfs:subClassOf>
     </owl:Class>
@@ -614,12 +525,6 @@
         <rdfs:subClassOf rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#Appliances"/>
         <rdfs:subClassOf>
             <owl:Restriction>
-                <owl:onProperty rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#hasAction"/>
-                <owl:someValuesFrom rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#ComputerActions"/>
-            </owl:Restriction>
-        </rdfs:subClassOf>
-        <rdfs:subClassOf>
-            <owl:Restriction>
                 <owl:onProperty rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#hasState"/>
                 <owl:someValuesFrom rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#StateComputer"/>
             </owl:Restriction>
@@ -628,18 +533,17 @@
     
 
 
-    <!-- https://ontology.staging.domus.usherbrooke.ca/MAO#ComputerActions -->
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MAO#Container -->
 
-    <owl:Class rdf:about="https://ontology.staging.domus.usherbrooke.ca/MAO#ComputerActions">
-        <rdfs:subClassOf rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#AppliancesActions"/>
-    </owl:Class>
-    
-
-
-    <!-- https://ontology.staging.domus.usherbrooke.ca/MAO#Condition -->
-
-    <owl:Class rdf:about="https://ontology.staging.domus.usherbrooke.ca/MAO#Condition">
+    <owl:Class rdf:about="https://ontology.staging.domus.usherbrooke.ca/MAO#Container">
         <rdfs:subClassOf rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#Assistance"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#isLinkedToAssistance"/>
+                <owl:someValuesFrom rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#Assistance"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:comment>Content of the message being sent</rdfs:comment>
     </owl:Class>
     
 
@@ -650,24 +554,10 @@
         <rdfs:subClassOf rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#Appliances"/>
         <rdfs:subClassOf>
             <owl:Restriction>
-                <owl:onProperty rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#hasAction"/>
-                <owl:someValuesFrom rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#CookerActions"/>
-            </owl:Restriction>
-        </rdfs:subClassOf>
-        <rdfs:subClassOf>
-            <owl:Restriction>
                 <owl:onProperty rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#hasState"/>
                 <owl:someValuesFrom rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#StateCooker"/>
             </owl:Restriction>
         </rdfs:subClassOf>
-    </owl:Class>
-    
-
-
-    <!-- https://ontology.staging.domus.usherbrooke.ca/MAO#CookerActions -->
-
-    <owl:Class rdf:about="https://ontology.staging.domus.usherbrooke.ca/MAO#CookerActions">
-        <rdfs:subClassOf rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#AppliancesActions"/>
     </owl:Class>
     
 
@@ -677,6 +567,7 @@
     <owl:Class rdf:about="https://ontology.staging.domus.usherbrooke.ca/MAO#Corridor">
         <rdfs:subClassOf rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#Rooms"/>
         <rdfs:label>Corridor</rdfs:label>
+        <hasLocation>dans le couloir</hasLocation>
     </owl:Class>
     
 
@@ -685,23 +576,9 @@
 
     <owl:Class rdf:about="https://ontology.staging.domus.usherbrooke.ca/MAO#Couch">
         <rdfs:subClassOf rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#Furniture"/>
-        <rdfs:subClassOf>
-            <owl:Restriction>
-                <owl:onProperty rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#hasAction"/>
-                <owl:someValuesFrom rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#CouchActions"/>
-            </owl:Restriction>
-        </rdfs:subClassOf>
         <rdfs:comment>The terms “sofa” and “couch” have two very different origins. The first one comes from the Arabic term “suffah” which describes a bench covered with blankets and cushions.The second one comes from the French “couche” and it’s a piece of furniture that was popularly used in the Victorian era.
 
 As for their structure and shape, sofas usually feature two armrests and a uniform back while couches generally feature one armrest or none at all and a tapered back.</rdfs:comment>
-    </owl:Class>
-    
-
-
-    <!-- https://ontology.staging.domus.usherbrooke.ca/MAO#CouchActions -->
-
-    <owl:Class rdf:about="https://ontology.staging.domus.usherbrooke.ca/MAO#CouchActions">
-        <rdfs:subClassOf rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#FurnitureActions"/>
     </owl:Class>
     
 
@@ -710,20 +587,6 @@ As for their structure and shape, sofas usually feature two armrests and a unifo
 
     <owl:Class rdf:about="https://ontology.staging.domus.usherbrooke.ca/MAO#Cupboards">
         <rdfs:subClassOf rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#Furniture"/>
-        <rdfs:subClassOf>
-            <owl:Restriction>
-                <owl:onProperty rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#hasAction"/>
-                <owl:someValuesFrom rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#CupboardsActions"/>
-            </owl:Restriction>
-        </rdfs:subClassOf>
-    </owl:Class>
-    
-
-
-    <!-- https://ontology.staging.domus.usherbrooke.ca/MAO#CupboardsActions -->
-
-    <owl:Class rdf:about="https://ontology.staging.domus.usherbrooke.ca/MAO#CupboardsActions">
-        <rdfs:subClassOf rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#FurnitureActions"/>
     </owl:Class>
     
 
@@ -732,20 +595,6 @@ As for their structure and shape, sofas usually feature two armrests and a unifo
 
     <owl:Class rdf:about="https://ontology.staging.domus.usherbrooke.ca/MAO#Desk">
         <rdfs:subClassOf rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#Furniture"/>
-        <rdfs:subClassOf>
-            <owl:Restriction>
-                <owl:onProperty rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#hasAction"/>
-                <owl:someValuesFrom rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#DeskActions"/>
-            </owl:Restriction>
-        </rdfs:subClassOf>
-    </owl:Class>
-    
-
-
-    <!-- https://ontology.staging.domus.usherbrooke.ca/MAO#DeskActions -->
-
-    <owl:Class rdf:about="https://ontology.staging.domus.usherbrooke.ca/MAO#DeskActions">
-        <rdfs:subClassOf rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#FurnitureActions"/>
     </owl:Class>
     
 
@@ -755,6 +604,9 @@ As for their structure and shape, sofas usually feature two armrests and a unifo
     <owl:Class rdf:about="https://ontology.staging.domus.usherbrooke.ca/MAO#DiningRoom">
         <rdfs:subClassOf rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#Rooms"/>
         <rdfs:label>Dining room</rdfs:label>
+        <containsEnvironmentElement rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#Table"/>
+        <containsSomeTime rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#Rag"/>
+        <hasLocation>dans la salle à manger</hasLocation>
     </owl:Class>
     
 
@@ -771,28 +623,14 @@ As for their structure and shape, sofas usually feature two armrests and a unifo
 
     <owl:Class rdf:about="https://ontology.staging.domus.usherbrooke.ca/MAO#DisplayCabinet">
         <rdfs:subClassOf rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#Furniture"/>
-        <rdfs:subClassOf>
-            <owl:Restriction>
-                <owl:onProperty rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#hasAction"/>
-                <owl:someValuesFrom rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#DisplayCabinetActions"/>
-            </owl:Restriction>
-        </rdfs:subClassOf>
     </owl:Class>
     
 
 
-    <!-- https://ontology.staging.domus.usherbrooke.ca/MAO#DisplayCabinetActions -->
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MAO#DustingTableAssistances -->
 
-    <owl:Class rdf:about="https://ontology.staging.domus.usherbrooke.ca/MAO#DisplayCabinetActions">
-        <rdfs:subClassOf rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#FurnitureActions"/>
-    </owl:Class>
-    
-
-
-    <!-- https://ontology.staging.domus.usherbrooke.ca/MAO#DustingTableSituations -->
-
-    <owl:Class rdf:about="https://ontology.staging.domus.usherbrooke.ca/MAO#DustingTableSituations">
-        <rdfs:subClassOf rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#Condition"/>
+    <owl:Class rdf:about="https://ontology.staging.domus.usherbrooke.ca/MAO#DustingTableAssistances">
+        <rdfs:subClassOf rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#AssistanceLists"/>
     </owl:Class>
     
 
@@ -800,6 +638,14 @@ As for their structure and shape, sofas usually feature two armrests and a unifo
     <!-- https://ontology.staging.domus.usherbrooke.ca/MAO#EnvironmentElement -->
 
     <owl:Class rdf:about="https://ontology.staging.domus.usherbrooke.ca/MAO#EnvironmentElement"/>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MAO#ExclamationMark -->
+
+    <owl:Class rdf:about="https://ontology.staging.domus.usherbrooke.ca/MAO#ExclamationMark">
+        <rdfs:subClassOf rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#Icons"/>
+    </owl:Class>
     
 
 
@@ -819,14 +665,6 @@ As for their structure and shape, sofas usually feature two armrests and a unifo
     
 
 
-    <!-- https://ontology.staging.domus.usherbrooke.ca/MAO#FaucetActions -->
-
-    <owl:Class rdf:about="https://ontology.staging.domus.usherbrooke.ca/MAO#FaucetActions">
-        <rdfs:subClassOf rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#SanitaryActions"/>
-    </owl:Class>
-    
-
-
     <!-- https://ontology.staging.domus.usherbrooke.ca/MAO#FirstName -->
 
     <owl:Class rdf:about="https://ontology.staging.domus.usherbrooke.ca/MAO#FirstName">
@@ -841,12 +679,6 @@ As for their structure and shape, sofas usually feature two armrests and a unifo
         <rdfs:subClassOf rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#Appliances"/>
         <rdfs:subClassOf>
             <owl:Restriction>
-                <owl:onProperty rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#hasAction"/>
-                <owl:someValuesFrom rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#FreezerActions"/>
-            </owl:Restriction>
-        </rdfs:subClassOf>
-        <rdfs:subClassOf>
-            <owl:Restriction>
                 <owl:onProperty rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#hasState"/>
                 <owl:someValuesFrom rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#StateFreezer"/>
             </owl:Restriction>
@@ -863,14 +695,6 @@ As for their structure and shape, sofas usually feature two armrests and a unifo
                 <owl:someValuesFrom rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#StateStorage"/>
             </owl:Restriction>
         </rdfs:subClassOf>
-    </owl:Class>
-    
-
-
-    <!-- https://ontology.staging.domus.usherbrooke.ca/MAO#FreezerActions -->
-
-    <owl:Class rdf:about="https://ontology.staging.domus.usherbrooke.ca/MAO#FreezerActions">
-        <rdfs:subClassOf rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#AppliancesActions"/>
     </owl:Class>
     
 
@@ -881,12 +705,6 @@ As for their structure and shape, sofas usually feature two armrests and a unifo
         <rdfs:subClassOf rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#Appliances"/>
         <rdfs:subClassOf>
             <owl:Restriction>
-                <owl:onProperty rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#hasAction"/>
-                <owl:someValuesFrom rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#FridgeActions"/>
-            </owl:Restriction>
-        </rdfs:subClassOf>
-        <rdfs:subClassOf>
-            <owl:Restriction>
                 <owl:onProperty rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#hasState"/>
                 <owl:someValuesFrom rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#StateFreezer"/>
             </owl:Restriction>
@@ -907,26 +725,10 @@ As for their structure and shape, sofas usually feature two armrests and a unifo
     
 
 
-    <!-- https://ontology.staging.domus.usherbrooke.ca/MAO#FridgeActions -->
-
-    <owl:Class rdf:about="https://ontology.staging.domus.usherbrooke.ca/MAO#FridgeActions">
-        <rdfs:subClassOf rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#AppliancesActions"/>
-    </owl:Class>
-    
-
-
     <!-- https://ontology.staging.domus.usherbrooke.ca/MAO#Furniture -->
 
     <owl:Class rdf:about="https://ontology.staging.domus.usherbrooke.ca/MAO#Furniture">
         <rdfs:subClassOf rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#EnvironmentElement"/>
-    </owl:Class>
-    
-
-
-    <!-- https://ontology.staging.domus.usherbrooke.ca/MAO#FurnitureActions -->
-
-    <owl:Class rdf:about="https://ontology.staging.domus.usherbrooke.ca/MAO#FurnitureActions">
-        <rdfs:subClassOf rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#Task"/>
     </owl:Class>
     
 
@@ -951,6 +753,21 @@ As for their structure and shape, sofas usually feature two armrests and a unifo
 
     <owl:Class rdf:about="https://ontology.staging.domus.usherbrooke.ca/MAO#Home">
         <rdfs:subClassOf rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#PhysicalPlace"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#hasRoom"/>
+                <owl:someValuesFrom rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#Rooms"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+    </owl:Class>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MAO#Icons -->
+
+    <owl:Class rdf:about="https://ontology.staging.domus.usherbrooke.ca/MAO#Icons">
+        <rdfs:subClassOf rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#VisualMessage"/>
+        <rdfs:comment>Contains assistances that are displayed for non blind people, for both those who know how to read and those who don&apos;t</rdfs:comment>
     </owl:Class>
     
 
@@ -974,20 +791,6 @@ As for their structure and shape, sofas usually feature two armrests and a unifo
 
     <owl:Class rdf:about="https://ontology.staging.domus.usherbrooke.ca/MAO#IroningTable">
         <rdfs:subClassOf rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#Furniture"/>
-        <rdfs:subClassOf>
-            <owl:Restriction>
-                <owl:onProperty rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#hasAction"/>
-                <owl:someValuesFrom rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#IroningTableActions"/>
-            </owl:Restriction>
-        </rdfs:subClassOf>
-    </owl:Class>
-    
-
-
-    <!-- https://ontology.staging.domus.usherbrooke.ca/MAO#IroningTableActions -->
-
-    <owl:Class rdf:about="https://ontology.staging.domus.usherbrooke.ca/MAO#IroningTableActions">
-        <rdfs:subClassOf rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#FurnitureActions"/>
     </owl:Class>
     
 
@@ -1004,17 +807,9 @@ As for their structure and shape, sofas usually feature two armrests and a unifo
 
     <owl:Class rdf:about="https://ontology.staging.domus.usherbrooke.ca/MAO#Kitchen">
         <rdfs:subClassOf rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#Rooms"/>
-        <rdfs:subClassOf>
-            <owl:Restriction>
-                <owl:onProperty rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#canContainEnvironmentElement"/>
-                <owl:someValuesFrom rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#Rag"/>
-            </owl:Restriction>
-        </rdfs:subClassOf>
         <rdfs:label>Kitchen</rdfs:label>
-        <containsSomeTime rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#Bin"/>
         <containsSomeTime rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#Rag"/>
-        <containsSomeTime rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#SinkKitchen"/>
-        <containsSomeTime rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#TapKitchen"/>
+        <hasLocation>dans la cuisine</hasLocation>
     </owl:Class>
     
 
@@ -1036,23 +831,8 @@ As for their structure and shape, sofas usually feature two armrests and a unifo
 
     <owl:Class rdf:about="https://ontology.staging.domus.usherbrooke.ca/MAO#LivingRoom">
         <rdfs:subClassOf rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#Rooms"/>
-        <rdfs:subClassOf>
-            <owl:Restriction>
-                <owl:onProperty rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#canContainEnvironmentElement"/>
-                <owl:someValuesFrom rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#Rag"/>
-            </owl:Restriction>
-        </rdfs:subClassOf>
         <rdfs:label>Living room</rdfs:label>
-        <containsSomeTime rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#Sofa"/>
-    </owl:Class>
-    
-
-
-    <!-- https://ontology.staging.domus.usherbrooke.ca/MAO#LocutionaryAct -->
-
-    <owl:Class rdf:about="https://ontology.staging.domus.usherbrooke.ca/MAO#LocutionaryAct">
-        <rdfs:subClassOf rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#Assistance"/>
-        <rdfs:comment>Content of the message being sent</rdfs:comment>
+        <hasLocation>dans le salon</hasLocation>
     </owl:Class>
     
 
@@ -1061,12 +841,6 @@ As for their structure and shape, sofas usually feature two armrests and a unifo
 
     <owl:Class rdf:about="https://ontology.staging.domus.usherbrooke.ca/MAO#Microwave">
         <rdfs:subClassOf rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#Appliances"/>
-        <rdfs:subClassOf>
-            <owl:Restriction>
-                <owl:onProperty rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#hasAction"/>
-                <owl:someValuesFrom rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#MicrowaveActions"/>
-            </owl:Restriction>
-        </rdfs:subClassOf>
         <rdfs:subClassOf>
             <owl:Restriction>
                 <owl:onProperty rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#hasState"/>
@@ -1083,10 +857,10 @@ As for their structure and shape, sofas usually feature two armrests and a unifo
     
 
 
-    <!-- https://ontology.staging.domus.usherbrooke.ca/MAO#MicrowaveActions -->
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MAO#MixedRealityHeadset -->
 
-    <owl:Class rdf:about="https://ontology.staging.domus.usherbrooke.ca/MAO#MicrowaveActions">
-        <rdfs:subClassOf rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#AppliancesActions"/>
+    <owl:Class rdf:about="https://ontology.staging.domus.usherbrooke.ca/MAO#MixedRealityHeadset">
+        <rdfs:subClassOf rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#EnvironmentElement"/>
     </owl:Class>
     
 
@@ -1122,6 +896,7 @@ As for their structure and shape, sofas usually feature two armrests and a unifo
 
     <owl:Class rdf:about="https://ontology.staging.domus.usherbrooke.ca/MAO#Pictogram">
         <rdfs:subClassOf rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#VisualMessage"/>
+        <rdfs:comment>Replaces text messages when the user does not know how to read for example</rdfs:comment>
     </owl:Class>
     
 
@@ -1138,20 +913,6 @@ As for their structure and shape, sofas usually feature two armrests and a unifo
 
     <owl:Class rdf:about="https://ontology.staging.domus.usherbrooke.ca/MAO#Rag">
         <rdfs:subClassOf rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#Appliances"/>
-        <rdfs:subClassOf>
-            <owl:Restriction>
-                <owl:onProperty rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#hasAction"/>
-                <owl:someValuesFrom rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#RagActions"/>
-            </owl:Restriction>
-        </rdfs:subClassOf>
-    </owl:Class>
-    
-
-
-    <!-- https://ontology.staging.domus.usherbrooke.ca/MAO#RagActions -->
-
-    <owl:Class rdf:about="https://ontology.staging.domus.usherbrooke.ca/MAO#RagActions">
-        <rdfs:subClassOf rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#AppliancesActions"/>
     </owl:Class>
     
 
@@ -1160,20 +921,6 @@ As for their structure and shape, sofas usually feature two armrests and a unifo
 
     <owl:Class rdf:about="https://ontology.staging.domus.usherbrooke.ca/MAO#RockingChair">
         <rdfs:subClassOf rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#Furniture"/>
-        <rdfs:subClassOf>
-            <owl:Restriction>
-                <owl:onProperty rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#hasAction"/>
-                <owl:someValuesFrom rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#RockingChairActions"/>
-            </owl:Restriction>
-        </rdfs:subClassOf>
-    </owl:Class>
-    
-
-
-    <!-- https://ontology.staging.domus.usherbrooke.ca/MAO#RockingChairActions -->
-
-    <owl:Class rdf:about="https://ontology.staging.domus.usherbrooke.ca/MAO#RockingChairActions">
-        <rdfs:subClassOf rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#FurnitureActions"/>
     </owl:Class>
     
 
@@ -1182,12 +929,6 @@ As for their structure and shape, sofas usually feature two armrests and a unifo
 
     <owl:Class rdf:about="https://ontology.staging.domus.usherbrooke.ca/MAO#Rooms">
         <rdfs:subClassOf rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#Home"/>
-        <rdfs:subClassOf>
-            <owl:Restriction>
-                <owl:onProperty rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#containsEnvironmentElement"/>
-                <owl:someValuesFrom rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#EnvironmentElement"/>
-            </owl:Restriction>
-        </rdfs:subClassOf>
     </owl:Class>
     
 
@@ -1275,14 +1016,6 @@ As for their structure and shape, sofas usually feature two armrests and a unifo
     
 
 
-    <!-- https://ontology.staging.domus.usherbrooke.ca/MAO#SanitaryActions -->
-
-    <owl:Class rdf:about="https://ontology.staging.domus.usherbrooke.ca/MAO#SanitaryActions">
-        <rdfs:subClassOf rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#Task"/>
-    </owl:Class>
-    
-
-
     <!-- https://ontology.staging.domus.usherbrooke.ca/MAO#Scenario -->
 
     <owl:Class rdf:about="https://ontology.staging.domus.usherbrooke.ca/MAO#Scenario">
@@ -1292,19 +1025,13 @@ As for their structure and shape, sofas usually feature two armrests and a unifo
                 <owl:allValuesFrom rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#Unit"/>
             </owl:Restriction>
         </rdfs:subClassOf>
-    </owl:Class>
-    
-
-
-    <!-- https://ontology.staging.domus.usherbrooke.ca/MAO#Scripts -->
-
-    <owl:Class rdf:about="https://ontology.staging.domus.usherbrooke.ca/MAO#Scripts">
         <rdfs:subClassOf>
             <owl:Restriction>
-                <owl:onProperty rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#hasCondition"/>
-                <owl:allValuesFrom rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#Condition"/>
+                <owl:onProperty rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#triggersAssistance"/>
+                <owl:allValuesFrom rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#AssistanceLists"/>
             </owl:Restriction>
         </rdfs:subClassOf>
+        <rdfs:comment>Contains all the scenarios</rdfs:comment>
     </owl:Class>
     
 
@@ -1313,20 +1040,6 @@ As for their structure and shape, sofas usually feature two armrests and a unifo
 
     <owl:Class rdf:about="https://ontology.staging.domus.usherbrooke.ca/MAO#Shelf">
         <rdfs:subClassOf rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#Furniture"/>
-        <rdfs:subClassOf>
-            <owl:Restriction>
-                <owl:onProperty rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#hasAction"/>
-                <owl:someValuesFrom rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#ShelfActions"/>
-            </owl:Restriction>
-        </rdfs:subClassOf>
-    </owl:Class>
-    
-
-
-    <!-- https://ontology.staging.domus.usherbrooke.ca/MAO#ShelfActions -->
-
-    <owl:Class rdf:about="https://ontology.staging.domus.usherbrooke.ca/MAO#ShelfActions">
-        <rdfs:subClassOf rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#FurnitureActions"/>
     </owl:Class>
     
 
@@ -1339,26 +1052,10 @@ As for their structure and shape, sofas usually feature two armrests and a unifo
     
 
 
-    <!-- https://ontology.staging.domus.usherbrooke.ca/MAO#ShowerActions -->
-
-    <owl:Class rdf:about="https://ontology.staging.domus.usherbrooke.ca/MAO#ShowerActions">
-        <rdfs:subClassOf rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#SanitaryActions"/>
-    </owl:Class>
-    
-
-
     <!-- https://ontology.staging.domus.usherbrooke.ca/MAO#SinkBathroom -->
 
     <owl:Class rdf:about="https://ontology.staging.domus.usherbrooke.ca/MAO#SinkBathroom">
         <rdfs:subClassOf rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#Sanitary"/>
-    </owl:Class>
-    
-
-
-    <!-- https://ontology.staging.domus.usherbrooke.ca/MAO#SinkBathroomActions -->
-
-    <owl:Class rdf:about="https://ontology.staging.domus.usherbrooke.ca/MAO#SinkBathroomActions">
-        <rdfs:subClassOf rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#SanitaryActions"/>
     </owl:Class>
     
 
@@ -1371,43 +1068,13 @@ As for their structure and shape, sofas usually feature two armrests and a unifo
     
 
 
-    <!-- https://ontology.staging.domus.usherbrooke.ca/MAO#SinkKitchenActions -->
-
-    <owl:Class rdf:about="https://ontology.staging.domus.usherbrooke.ca/MAO#SinkKitchenActions">
-        <rdfs:subClassOf rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#SanitaryActions"/>
-    </owl:Class>
-    
-
-
     <!-- https://ontology.staging.domus.usherbrooke.ca/MAO#Sofa -->
 
     <owl:Class rdf:about="https://ontology.staging.domus.usherbrooke.ca/MAO#Sofa">
         <rdfs:subClassOf rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#Furniture"/>
-        <rdfs:subClassOf>
-            <owl:Restriction>
-                <owl:onProperty rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#hasAction"/>
-                <owl:someValuesFrom rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#SofaActions"/>
-            </owl:Restriction>
-        </rdfs:subClassOf>
         <rdfs:comment>The terms “sofa” and “couch” have two very different origins. The first one comes from the Arabic term “suffah” which describes a bench covered with blankets and cushions.The second one comes from the French “couche” and it’s a piece of furniture that was popularly used in the Victorian era.
 
 As for their structure and shape, sofas usually feature two armrests and a uniform back while couches generally feature one armrest or none at all and a tapered back.</rdfs:comment>
-    </owl:Class>
-    
-
-
-    <!-- https://ontology.staging.domus.usherbrooke.ca/MAO#SofaActions -->
-
-    <owl:Class rdf:about="https://ontology.staging.domus.usherbrooke.ca/MAO#SofaActions">
-        <rdfs:subClassOf rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#FurnitureActions"/>
-    </owl:Class>
-    
-
-
-    <!-- https://ontology.staging.domus.usherbrooke.ca/MAO#SpeakerActions -->
-
-    <owl:Class rdf:about="https://ontology.staging.domus.usherbrooke.ca/MAO#SpeakerActions">
-        <rdfs:subClassOf rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#AppliancesActions"/>
     </owl:Class>
     
 
@@ -1537,24 +1204,10 @@ As for their structure and shape, sofas usually feature two armrests and a unifo
         <rdfs:subClassOf rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#Appliances"/>
         <rdfs:subClassOf>
             <owl:Restriction>
-                <owl:onProperty rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#hasAction"/>
-                <owl:someValuesFrom rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#StereoSystemActions"/>
-            </owl:Restriction>
-        </rdfs:subClassOf>
-        <rdfs:subClassOf>
-            <owl:Restriction>
                 <owl:onProperty rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#hasState"/>
                 <owl:someValuesFrom rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#StateStereo"/>
             </owl:Restriction>
         </rdfs:subClassOf>
-    </owl:Class>
-    
-
-
-    <!-- https://ontology.staging.domus.usherbrooke.ca/MAO#StereoSystemActions -->
-
-    <owl:Class rdf:about="https://ontology.staging.domus.usherbrooke.ca/MAO#StereoSystemActions">
-        <rdfs:subClassOf rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#AppliancesActions"/>
     </owl:Class>
     
 
@@ -1671,7 +1324,6 @@ As for their structure and shape, sofas usually feature two armrests and a unifo
     <owl:Class rdf:about="https://ontology.staging.domus.usherbrooke.ca/MAO#Storage">
         <rdfs:subClassOf rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#Rooms"/>
         <rdfs:label>Storage</rdfs:label>
-        <containsSomeTime rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#IroningTable"/>
     </owl:Class>
     
 
@@ -1680,20 +1332,6 @@ As for their structure and shape, sofas usually feature two armrests and a unifo
 
     <owl:Class rdf:about="https://ontology.staging.domus.usherbrooke.ca/MAO#StorageCabinet">
         <rdfs:subClassOf rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#Furniture"/>
-        <rdfs:subClassOf>
-            <owl:Restriction>
-                <owl:onProperty rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#hasAction"/>
-                <owl:someValuesFrom rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#StorageCabinetActions"/>
-            </owl:Restriction>
-        </rdfs:subClassOf>
-    </owl:Class>
-    
-
-
-    <!-- https://ontology.staging.domus.usherbrooke.ca/MAO#StorageCabinetActions -->
-
-    <owl:Class rdf:about="https://ontology.staging.domus.usherbrooke.ca/MAO#StorageCabinetActions">
-        <rdfs:subClassOf rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#FurnitureActions"/>
     </owl:Class>
     
 
@@ -1712,16 +1350,18 @@ As for their structure and shape, sofas usually feature two armrests and a unifo
     
 
 
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MAO#SurfaceToProcess -->
+
+    <owl:Class rdf:about="https://ontology.staging.domus.usherbrooke.ca/MAO#SurfaceToProcess">
+        <rdfs:subClassOf rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#Icons"/>
+    </owl:Class>
+    
+
+
     <!-- https://ontology.staging.domus.usherbrooke.ca/MAO#TV -->
 
     <owl:Class rdf:about="https://ontology.staging.domus.usherbrooke.ca/MAO#TV">
         <rdfs:subClassOf rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#Appliances"/>
-        <rdfs:subClassOf>
-            <owl:Restriction>
-                <owl:onProperty rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#hasAction"/>
-                <owl:someValuesFrom rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#TVActions"/>
-            </owl:Restriction>
-        </rdfs:subClassOf>
         <rdfs:subClassOf>
             <owl:Restriction>
                 <owl:onProperty rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#hasState"/>
@@ -1732,32 +1372,11 @@ As for their structure and shape, sofas usually feature two armrests and a unifo
     
 
 
-    <!-- https://ontology.staging.domus.usherbrooke.ca/MAO#TVActions -->
-
-    <owl:Class rdf:about="https://ontology.staging.domus.usherbrooke.ca/MAO#TVActions">
-        <rdfs:subClassOf rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#AppliancesActions"/>
-    </owl:Class>
-    
-
-
     <!-- https://ontology.staging.domus.usherbrooke.ca/MAO#Table -->
 
     <owl:Class rdf:about="https://ontology.staging.domus.usherbrooke.ca/MAO#Table">
         <rdfs:subClassOf rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#Furniture"/>
-        <rdfs:subClassOf>
-            <owl:Restriction>
-                <owl:onProperty rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#hasAction"/>
-                <owl:someValuesFrom rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#TableActions"/>
-            </owl:Restriction>
-        </rdfs:subClassOf>
-    </owl:Class>
-    
-
-
-    <!-- https://ontology.staging.domus.usherbrooke.ca/MAO#TableActions -->
-
-    <owl:Class rdf:about="https://ontology.staging.domus.usherbrooke.ca/MAO#TableActions">
-        <rdfs:subClassOf rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#FurnitureActions"/>
+        <hasAssociatedScript rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#dustingTable"/>
     </owl:Class>
     
 
@@ -1770,40 +1389,10 @@ As for their structure and shape, sofas usually feature two armrests and a unifo
     
 
 
-    <!-- https://ontology.staging.domus.usherbrooke.ca/MAO#TapActions -->
-
-    <owl:Class rdf:about="https://ontology.staging.domus.usherbrooke.ca/MAO#TapActions">
-        <rdfs:subClassOf rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#SanitaryActions"/>
-    </owl:Class>
-    
-
-
     <!-- https://ontology.staging.domus.usherbrooke.ca/MAO#TapKitchen -->
 
     <owl:Class rdf:about="https://ontology.staging.domus.usherbrooke.ca/MAO#TapKitchen">
         <rdfs:subClassOf rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#Sanitary"/>
-    </owl:Class>
-    
-
-
-    <!-- https://ontology.staging.domus.usherbrooke.ca/MAO#TapKitchenActions -->
-
-    <owl:Class rdf:about="https://ontology.staging.domus.usherbrooke.ca/MAO#TapKitchenActions">
-        <rdfs:subClassOf rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#SanitaryActions"/>
-    </owl:Class>
-    
-
-
-    <!-- https://ontology.staging.domus.usherbrooke.ca/MAO#Task -->
-
-    <owl:Class rdf:about="https://ontology.staging.domus.usherbrooke.ca/MAO#Task">
-        <rdfs:subClassOf rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#Scripts"/>
-        <rdfs:subClassOf>
-            <owl:Restriction>
-                <owl:onProperty rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#hasCondition"/>
-                <owl:someValuesFrom rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#Condition"/>
-            </owl:Restriction>
-        </rdfs:subClassOf>
     </owl:Class>
     
 
@@ -1822,24 +1411,10 @@ As for their structure and shape, sofas usually feature two armrests and a unifo
         <rdfs:subClassOf rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#Appliances"/>
         <rdfs:subClassOf>
             <owl:Restriction>
-                <owl:onProperty rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#hasAction"/>
-                <owl:someValuesFrom rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#TeapotActions"/>
-            </owl:Restriction>
-        </rdfs:subClassOf>
-        <rdfs:subClassOf>
-            <owl:Restriction>
                 <owl:onProperty rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#hasState"/>
                 <owl:someValuesFrom rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#StateTeapot"/>
             </owl:Restriction>
         </rdfs:subClassOf>
-    </owl:Class>
-    
-
-
-    <!-- https://ontology.staging.domus.usherbrooke.ca/MAO#TeapotActions -->
-
-    <owl:Class rdf:about="https://ontology.staging.domus.usherbrooke.ca/MAO#TeapotActions">
-        <rdfs:subClassOf rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#AppliancesActions"/>
     </owl:Class>
     
 
@@ -1850,12 +1425,6 @@ As for their structure and shape, sofas usually feature two armrests and a unifo
         <rdfs:subClassOf rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#VisualMessage"/>
         <rdfs:subClassOf>
             <owl:Restriction>
-                <owl:onProperty rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#hasTrigger"/>
-                <owl:someValuesFrom rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#Condition"/>
-            </owl:Restriction>
-        </rdfs:subClassOf>
-        <rdfs:subClassOf>
-            <owl:Restriction>
                 <owl:onProperty rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#hasAssistanceType"/>
                 <owl:allValuesFrom rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#AssistanceActType"/>
             </owl:Restriction>
@@ -1864,6 +1433,12 @@ As for their structure and shape, sofas usually feature two armrests and a unifo
             <owl:Restriction>
                 <owl:onProperty rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#hasIllocutionaryAct"/>
                 <owl:allValuesFrom rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#IllocutionaryAct"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#isDisplayedHere"/>
+                <owl:allValuesFrom rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#EnvironmentElement"/>
             </owl:Restriction>
         </rdfs:subClassOf>
         <rdfs:subClassOf>
@@ -1893,20 +1468,6 @@ As for their structure and shape, sofas usually feature two armrests and a unifo
 
     <owl:Class rdf:about="https://ontology.staging.domus.usherbrooke.ca/MAO#Toaster">
         <rdfs:subClassOf rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#Appliances"/>
-        <rdfs:subClassOf>
-            <owl:Restriction>
-                <owl:onProperty rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#hasAction"/>
-                <owl:someValuesFrom rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#ToasterActions"/>
-            </owl:Restriction>
-        </rdfs:subClassOf>
-    </owl:Class>
-    
-
-
-    <!-- https://ontology.staging.domus.usherbrooke.ca/MAO#ToasterActions -->
-
-    <owl:Class rdf:about="https://ontology.staging.domus.usherbrooke.ca/MAO#ToasterActions">
-        <rdfs:subClassOf rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#AppliancesActions"/>
     </owl:Class>
     
 
@@ -1915,14 +1476,6 @@ As for their structure and shape, sofas usually feature two armrests and a unifo
 
     <owl:Class rdf:about="https://ontology.staging.domus.usherbrooke.ca/MAO#Toilet">
         <rdfs:subClassOf rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#Sanitary"/>
-    </owl:Class>
-    
-
-
-    <!-- https://ontology.staging.domus.usherbrooke.ca/MAO#ToiletActions -->
-
-    <owl:Class rdf:about="https://ontology.staging.domus.usherbrooke.ca/MAO#ToiletActions">
-        <rdfs:subClassOf rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#SanitaryActions"/>
     </owl:Class>
     
 
@@ -2001,7 +1554,6 @@ As for their structure and shape, sofas usually feature two armrests and a unifo
     <owl:Class rdf:about="https://ontology.staging.domus.usherbrooke.ca/MAO#Veranda">
         <rdfs:subClassOf rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#Rooms"/>
         <rdfs:label>Veranda</rdfs:label>
-        <containsSomeTime rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#RockingChair"/>
     </owl:Class>
     
 
@@ -2009,7 +1561,7 @@ As for their structure and shape, sofas usually feature two armrests and a unifo
     <!-- https://ontology.staging.domus.usherbrooke.ca/MAO#VisualMessage -->
 
     <owl:Class rdf:about="https://ontology.staging.domus.usherbrooke.ca/MAO#VisualMessage">
-        <rdfs:subClassOf rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#LocutionaryAct"/>
+        <rdfs:subClassOf rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#Container"/>
     </owl:Class>
     
 
@@ -2028,24 +1580,10 @@ As for their structure and shape, sofas usually feature two armrests and a unifo
         <rdfs:subClassOf rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#Appliances"/>
         <rdfs:subClassOf>
             <owl:Restriction>
-                <owl:onProperty rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#hasAction"/>
-                <owl:someValuesFrom rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#WashingMachineActions"/>
-            </owl:Restriction>
-        </rdfs:subClassOf>
-        <rdfs:subClassOf>
-            <owl:Restriction>
                 <owl:onProperty rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#hasState"/>
                 <owl:someValuesFrom rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#StateWashingMachine"/>
             </owl:Restriction>
         </rdfs:subClassOf>
-    </owl:Class>
-    
-
-
-    <!-- https://ontology.staging.domus.usherbrooke.ca/MAO#WashingMachineActions -->
-
-    <owl:Class rdf:about="https://ontology.staging.domus.usherbrooke.ca/MAO#WashingMachineActions">
-        <rdfs:subClassOf rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#AppliancesActions"/>
     </owl:Class>
     
 
@@ -2055,7 +1593,6 @@ As for their structure and shape, sofas usually feature two armrests and a unifo
     <owl:Class rdf:about="https://ontology.staging.domus.usherbrooke.ca/MAO#WashingRoom">
         <rdfs:subClassOf rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#Rooms"/>
         <rdfs:label>Washing room</rdfs:label>
-        <containsSomeTime rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#WashingMachine"/>
     </owl:Class>
     
 
@@ -2073,6 +1610,14 @@ As for their structure and shape, sofas usually feature two armrests and a unifo
     
 
 
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MAO#WateringThePlantsAssistances -->
+
+    <owl:Class rdf:about="https://ontology.staging.domus.usherbrooke.ca/MAO#WateringThePlantsAssistances">
+        <rdfs:subClassOf rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#AssistanceLists"/>
+    </owl:Class>
+    
+
+
     <!-- 
     ///////////////////////////////////////////////////////////////////////////////////////
     //
@@ -2084,114 +1629,138 @@ As for their structure and shape, sofas usually feature two armrests and a unifo
     
 
 
-    <!-- https://ontology.staging.domus.usherbrooke.ca/MAO#assistanceTypeActionInitiation -->
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MAO#DOMUS -->
 
-    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MAO#assistanceTypeActionInitiation">
+    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MAO#DOMUS">
+        <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#Home"/>
+        <hasRoom rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#bathroom"/>
+        <hasRoom rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#diningRoom"/>
+        <hasRoom rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#kitchen"/>
+        <hasRoom rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#livingRoom"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MAO#DustingTableAssistances -->
+
+    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MAO#DustingTableAssistances"/>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MAO#actionInitiation -->
+
+    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MAO#actionInitiation">
         <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#AssistanceActType"/>
     </owl:NamedIndividual>
     
 
 
-    <!-- https://ontology.staging.domus.usherbrooke.ca/MAO#assistanceTypeAskingForAbstraction -->
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MAO#arch1 -->
 
-    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MAO#assistanceTypeAskingForAbstraction">
+    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MAO#arch1">
+        <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#Arch"/>
+        <hasFirstObject rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#mixedRealityHeadset"/>
+        <hasSecondObject rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#calendar"/>
+        <isLinkedToAssistance rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#assistanceKappaDT"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MAO#arch2 -->
+
+    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MAO#arch2">
+        <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#Arch"/>
+        <hasFirstObject rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#diningRoomTable"/>
+        <hasSecondObject rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#rag"/>
+        <isLinkedToAssistance rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#assistanceBetaDT"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MAO#askingForAbstraction -->
+
+    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MAO#askingForAbstraction">
         <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#AssistanceActType"/>
     </owl:NamedIndividual>
     
 
 
-    <!-- https://ontology.staging.domus.usherbrooke.ca/MAO#assistanceTypeChallenge -->
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MAO#assistanceAlphaDT -->
 
-    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MAO#assistanceTypeChallenge">
-        <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#AssistanceActType"/>
+    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MAO#assistanceAlphaDT">
+        <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#DustingTableAssistances"/>
     </owl:NamedIndividual>
     
 
 
-    <!-- https://ontology.staging.domus.usherbrooke.ca/MAO#assistanceTypeClarificationOfInstruction -->
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MAO#assistanceBetaDT -->
 
-    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MAO#assistanceTypeClarificationOfInstruction">
-        <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#AssistanceActType"/>
+    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MAO#assistanceBetaDT">
+        <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#DustingTableAssistances"/>
     </owl:NamedIndividual>
     
 
 
-    <!-- https://ontology.staging.domus.usherbrooke.ca/MAO#assistanceTypeGivingAClue -->
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MAO#assistanceDeltaDT -->
 
-    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MAO#assistanceTypeGivingAClue">
-        <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#AssistanceActType"/>
+    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MAO#assistanceDeltaDT">
+        <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#DustingTableAssistances"/>
     </owl:NamedIndividual>
     
 
 
-    <!-- https://ontology.staging.domus.usherbrooke.ca/MAO#assistanceTypeGivingTheAnswer -->
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MAO#assistanceEpsilonDT -->
 
-    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MAO#assistanceTypeGivingTheAnswer">
-        <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#AssistanceActType"/>
+    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MAO#assistanceEpsilonDT">
+        <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#DustingTableAssistances"/>
     </owl:NamedIndividual>
     
 
 
-    <!-- https://ontology.staging.domus.usherbrooke.ca/MAO#assistanceTypeMotivationalAssistance -->
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MAO#assistanceEtaDT -->
 
-    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MAO#assistanceTypeMotivationalAssistance">
-        <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#AssistanceActType"/>
+    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MAO#assistanceEtaDT">
+        <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#DustingTableAssistances"/>
     </owl:NamedIndividual>
     
 
 
-    <!-- https://ontology.staging.domus.usherbrooke.ca/MAO#assistanceTypePhysicalAssistance -->
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MAO#assistanceGammaDT -->
 
-    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MAO#assistanceTypePhysicalAssistance">
-        <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#AssistanceActType"/>
+    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MAO#assistanceGammaDT">
+        <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#DustingTableAssistances"/>
     </owl:NamedIndividual>
     
 
 
-    <!-- https://ontology.staging.domus.usherbrooke.ca/MAO#assistanceTypeReassurance -->
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MAO#assistanceIotaDT -->
 
-    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MAO#assistanceTypeReassurance">
-        <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#AssistanceActType"/>
+    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MAO#assistanceIotaDT">
+        <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#DustingTableAssistances"/>
     </owl:NamedIndividual>
     
 
 
-    <!-- https://ontology.staging.domus.usherbrooke.ca/MAO#assistanceTypeRecallAnElement -->
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MAO#assistanceKappaDT -->
 
-    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MAO#assistanceTypeRecallAnElement">
-        <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#AssistanceActType"/>
+    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MAO#assistanceKappaDT">
+        <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#DustingTableAssistances"/>
     </owl:NamedIndividual>
     
 
 
-    <!-- https://ontology.staging.domus.usherbrooke.ca/MAO#assistanceTypeRestart -->
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MAO#bathroom -->
 
-    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MAO#assistanceTypeRestart">
-        <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#AssistanceActType"/>
+    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MAO#bathroom">
+        <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#Bathroom"/>
     </owl:NamedIndividual>
     
 
 
-    <!-- https://ontology.staging.domus.usherbrooke.ca/MAO#assistanceTypeScaffholding -->
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MAO#bed -->
 
-    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MAO#assistanceTypeScaffholding">
-        <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#AssistanceActType"/>
-    </owl:NamedIndividual>
-    
-
-
-    <!-- https://ontology.staging.domus.usherbrooke.ca/MAO#assistanceTypeStimulateTheThoughtProcess -->
-
-    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MAO#assistanceTypeStimulateTheThoughtProcess">
-        <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#AssistanceActType"/>
-    </owl:NamedIndividual>
-    
-
-
-    <!-- https://ontology.staging.domus.usherbrooke.ca/MAO#assistanceTypeValidation -->
-
-    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MAO#assistanceTypeValidation">
-        <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#AssistanceActType"/>
+    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MAO#bed">
+        <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#Bed"/>
     </owl:NamedIndividual>
     
 
@@ -2204,25 +1773,47 @@ As for their structure and shape, sofas usually feature two armrests and a unifo
     
 
 
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MAO#calendar -->
+
+    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MAO#calendar">
+        <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#Calendar"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MAO#carryOutTheTask -->
+
+    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MAO#carryOutTheTask">
+        <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#Impairment"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MAO#challenge -->
+
+    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MAO#challenge">
+        <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#AssistanceActType"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MAO#clarificationOfInstruction -->
+
+    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MAO#clarificationOfInstruction">
+        <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#AssistanceActType"/>
+    </owl:NamedIndividual>
+    
+
+
     <!-- https://ontology.staging.domus.usherbrooke.ca/MAO#cleaningInterrupted -->
 
-    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MAO#cleaningInterrupted">
-        <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#DustingTableSituations"/>
-    </owl:NamedIndividual>
+    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MAO#cleaningInterrupted"/>
     
 
 
-    <!-- https://ontology.staging.domus.usherbrooke.ca/MAO#commissiveIndirectExplicit -->
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MAO#declaration -->
 
-    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MAO#commissiveIndirectExplicit">
-        <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#IllocutionaryAct"/>
-    </owl:NamedIndividual>
-    
-
-
-    <!-- https://ontology.staging.domus.usherbrooke.ca/MAO#declarationDirectExplicit -->
-
-    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MAO#declarationDirectExplicit">
+    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MAO#declaration">
         <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#IllocutionaryAct"/>
     </owl:NamedIndividual>
     
@@ -2230,9 +1821,7 @@ As for their structure and shape, sofas usually feature two armrests and a unifo
 
     <!-- https://ontology.staging.domus.usherbrooke.ca/MAO#didNotStartCleaning -->
 
-    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MAO#didNotStartCleaning">
-        <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#DustingTableSituations"/>
-    </owl:NamedIndividual>
+    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MAO#didNotStartCleaning"/>
     
 
 
@@ -2240,7 +1829,6 @@ As for their structure and shape, sofas usually feature two armrests and a unifo
 
     <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MAO#diningRoom">
         <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#DiningRoom"/>
-        <containsEnvironmentElement rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#diningRoomTable"/>
     </owl:NamedIndividual>
     
 
@@ -2249,39 +1837,6 @@ As for their structure and shape, sofas usually feature two armrests and a unifo
 
     <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MAO#diningRoomTable">
         <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#Table"/>
-        <hasAssociatedScript rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#dustingTable"/>
-    </owl:NamedIndividual>
-    
-
-
-    <!-- https://ontology.staging.domus.usherbrooke.ca/MAO#directiveDirectExplicit -->
-
-    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MAO#directiveDirectExplicit">
-        <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#IllocutionaryAct"/>
-    </owl:NamedIndividual>
-    
-
-
-    <!-- https://ontology.staging.domus.usherbrooke.ca/MAO#directiveDirectImplicit -->
-
-    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MAO#directiveDirectImplicit">
-        <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#IllocutionaryAct"/>
-    </owl:NamedIndividual>
-    
-
-
-    <!-- https://ontology.staging.domus.usherbrooke.ca/MAO#directiveIndirectExplicit -->
-
-    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MAO#directiveIndirectExplicit">
-        <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#IllocutionaryAct"/>
-    </owl:NamedIndividual>
-    
-
-
-    <!-- https://ontology.staging.domus.usherbrooke.ca/MAO#directiveIndirectImplicit -->
-
-    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MAO#directiveIndirectImplicit">
-        <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#IllocutionaryAct"/>
     </owl:NamedIndividual>
     
 
@@ -2290,24 +1845,120 @@ As for their structure and shape, sofas usually feature two armrests and a unifo
 
     <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MAO#dustingTable">
         <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#Scenario"/>
-        <isAssociatedToEnvironmentElement rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#rag"/>
-        <isAssociatedToRoom rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#diningRoom"/>
+        <triggersAssistance rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#DustingTableAssistances"/>
+        <isAssociatedToEnvironmentElement rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#Rag"/>
+        <isAssociatedToRoom rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#DiningRoom"/>
     </owl:NamedIndividual>
     
 
 
-    <!-- https://ontology.staging.domus.usherbrooke.ca/MAO#expressiveDirectExplicit -->
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MAO#emma -->
 
-    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MAO#expressiveDirectExplicit">
+    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MAO#emma">
+        <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#FirstName"/>
+        <rdfs:label>Emma</rdfs:label>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MAO#emmaFoulon -->
+
+    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MAO#emmaFoulon">
+        <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#UserProfile"/>
+        <hasFamilyName rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#foulon"/>
+        <hasFirstName rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#emma"/>
+        <prefersFirstColor rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#orange"/>
+        <prefersSecondColor rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#green"/>
+        <prefersThirdColor rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#purple"/>
+        <preferredCommChannel rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#VisualMessage"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MAO#exclamationMarkRag -->
+
+    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MAO#exclamationMarkRag">
+        <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#ExclamationMark"/>
+        <isDisplayedHere rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#rag"/>
+        <isLinkedToAssistance rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#assistanceEpsilonDT"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MAO#exclamationMarkTable -->
+
+    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MAO#exclamationMarkTable">
+        <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#ExclamationMark"/>
+        <hasAssistanceType rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#stimulateTheThoughtProcess"/>
+        <hasIllocutionaryAct rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#implicit1"/>
+        <isDisplayedHere rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#diningRoomTable"/>
+        <isLinkedToAssistance rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#assistanceBetaDT"/>
+        <isLinkedToImpairment rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#goalFormulation"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MAO#explicit1 -->
+
+    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MAO#explicit1">
         <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#IllocutionaryAct"/>
     </owl:NamedIndividual>
     
 
 
-    <!-- https://ontology.staging.domus.usherbrooke.ca/MAO#expressiveDirectImplicit -->
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MAO#explicit2 -->
 
-    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MAO#expressiveDirectImplicit">
+    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MAO#explicit2">
         <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#IllocutionaryAct"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MAO#explicit3 -->
+
+    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MAO#explicit3">
+        <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#IllocutionaryAct"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MAO#externalAssistance -->
+
+    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MAO#externalAssistance">
+        <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#AssistanceActType"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MAO#foulon -->
+
+    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MAO#foulon">
+        <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#FamilyName"/>
+        <rdfs:label>Foulon</rdfs:label>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MAO#givingAClue -->
+
+    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MAO#givingAClue">
+        <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#AssistanceActType"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MAO#givingTheAnswer -->
+
+    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MAO#givingTheAnswer">
+        <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#AssistanceActType"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MAO#goalFormulation -->
+
+    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MAO#goalFormulation">
+        <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#Impairment"/>
     </owl:NamedIndividual>
     
 
@@ -2320,20 +1971,65 @@ As for their structure and shape, sofas usually feature two armrests and a unifo
     
 
 
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MAO#implicit1 -->
+
+    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MAO#implicit1">
+        <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#IllocutionaryAct"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MAO#implicit2 -->
+
+    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MAO#implicit2">
+        <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#IllocutionaryAct"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MAO#implicit3 -->
+
+    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MAO#implicit3">
+        <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#IllocutionaryAct"/>
+    </owl:NamedIndividual>
+    
+
+
     <!-- https://ontology.staging.domus.usherbrooke.ca/MAO#kitchen -->
 
     <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MAO#kitchen">
         <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#Kitchen"/>
-        <containsEnvironmentElement rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#rag"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MAO#livingRoom -->
+
+    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MAO#livingRoom">
+        <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#LivingRoom"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MAO#mixedRealityHeadset -->
+
+    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MAO#mixedRealityHeadset">
+        <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#MixedRealityHeadset"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MAO#motivationalAssistance -->
+
+    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MAO#motivationalAssistance">
+        <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#AssistanceActType"/>
     </owl:NamedIndividual>
     
 
 
     <!-- https://ontology.staging.domus.usherbrooke.ca/MAO#newPartCleaned -->
 
-    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MAO#newPartCleaned">
-        <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#DustingTableSituations"/>
-    </owl:NamedIndividual>
+    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MAO#newPartCleaned"/>
     
 
 
@@ -2341,6 +2037,14 @@ As for their structure and shape, sofas usually feature two armrests and a unifo
 
     <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MAO#orange">
         <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#Colors"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MAO#physicalAssistance -->
+
+    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MAO#physicalAssistance">
+        <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#AssistanceActType"/>
     </owl:NamedIndividual>
     
 
@@ -2353,11 +2057,17 @@ As for their structure and shape, sofas usually feature two armrests and a unifo
     
 
 
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MAO#planification -->
+
+    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MAO#planification">
+        <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#Impairment"/>
+    </owl:NamedIndividual>
+    
+
+
     <!-- https://ontology.staging.domus.usherbrooke.ca/MAO#processRelatedToNewPartsCleanedDone -->
 
-    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MAO#processRelatedToNewPartsCleanedDone">
-        <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#DustingTableSituations"/>
-    </owl:NamedIndividual>
+    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MAO#processRelatedToNewPartsCleanedDone"/>
     
 
 
@@ -2373,23 +2083,34 @@ As for their structure and shape, sofas usually feature two armrests and a unifo
 
     <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MAO#rag">
         <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#Rag"/>
-        <hasAssociatedScript rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#dustingTable"/>
     </owl:NamedIndividual>
     
 
 
     <!-- https://ontology.staging.domus.usherbrooke.ca/MAO#ragNotTakenButHelpReceived -->
 
-    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MAO#ragNotTakenButHelpReceived">
-        <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#DustingTableSituations"/>
-    </owl:NamedIndividual>
+    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MAO#ragNotTakenButHelpReceived"/>
     
 
 
     <!-- https://ontology.staging.domus.usherbrooke.ca/MAO#ragTaken -->
 
-    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MAO#ragTaken">
-        <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#DustingTableSituations"/>
+    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MAO#ragTaken"/>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MAO#reassurance -->
+
+    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MAO#reassurance">
+        <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#AssistanceActType"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MAO#recallAnElement -->
+
+    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MAO#recallAnElement">
+        <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#AssistanceActType"/>
     </owl:NamedIndividual>
     
 
@@ -2402,137 +2123,445 @@ As for their structure and shape, sofas usually feature two armrests and a unifo
     
 
 
-    <!-- https://ontology.staging.domus.usherbrooke.ca/MAO#representativeDirectExplicit -->
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MAO#restart -->
 
-    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MAO#representativeDirectExplicit">
+    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MAO#restart">
+        <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#AssistanceActType"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MAO#scaffholding -->
+
+    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MAO#scaffholding">
+        <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#AssistanceActType"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MAO#stimulateTheThoughtProcess -->
+
+    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MAO#stimulateTheThoughtProcess">
+        <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#AssistanceActType"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MAO#stop -->
+
+    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MAO#stop">
+        <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#AssistanceActType"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MAO#subtle1 -->
+
+    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MAO#subtle1">
         <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#IllocutionaryAct"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MAO#subtle2 -->
+
+    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MAO#subtle2">
+        <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#IllocutionaryAct"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MAO#subtle3 -->
+
+    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MAO#subtle3">
+        <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#IllocutionaryAct"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MAO#surfaceToProcess1 -->
+
+    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MAO#surfaceToProcess1">
+        <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#SurfaceToProcess"/>
+        <isDisplayedHere rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#diningRoomTable"/>
+        <isLinkedToAssistance rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#assistanceEtaDT"/>
     </owl:NamedIndividual>
     
 
 
     <!-- https://ontology.staging.domus.usherbrooke.ca/MAO#tableCleaned -->
 
-    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MAO#tableCleaned">
-        <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#DustingTableSituations"/>
+    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MAO#tableCleaned"/>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MAO#textDTActivityFinishedCongrats -->
+
+    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MAO#textDTActivityFinishedCongrats">
+        <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#Text"/>
+        <hasAssistanceType rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#givingTheAnswer"/>
+        <hasIllocutionaryAct rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#explicit3"/>
+        <isDisplayedHere rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#mixedRealityHeadset"/>
+        <isLinkedToAssistance rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#assistanceAlphaDT"/>
+        <isLinkedToImpairment rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#verifyAttainmentOfTheInitialGoal"/>
+        <hasContent>En effet, vous avez terminé l&apos;activité. Félicitations !</hasContent>
     </owl:NamedIndividual>
     
 
 
-    <!-- https://ontology.staging.domus.usherbrooke.ca/MAO#textDTActivityToDoHere -->
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MAO#textDTAreYouSureAboutObject -->
 
-    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MAO#textDTActivityToDoHere">
-        <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#AssistanceBeta"/>
-        <rdfs:label>There is an activity to do here.</rdfs:label>
+    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MAO#textDTAreYouSureAboutObject">
+        <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#Text"/>
+        <hasAssistanceType rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#clarificationOfInstruction"/>
+        <hasIllocutionaryAct rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#implicit1"/>
+        <isDisplayedHere rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#diningRoomTable"/>
+        <isLinkedToAssistance rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#assistanceIotaDT"/>
+        <isLinkedToImpairment rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#carryOutTheTask"/>
+        <hasContent>Êtes-vous sûr que vous utilisez le bon objet pour nettoyer la table ?</hasContent>
     </owl:NamedIndividual>
     
 
 
-    <!-- https://ontology.staging.domus.usherbrooke.ca/MAO#textDTAreYouSure -->
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MAO#textDTAreYouSureActivityIsFinished -->
 
-    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MAO#textDTAreYouSure">
-        <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#AssistanceDelta"/>
-        <hasTrigger rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#cleaningInterrupted"/>
-        <rdfs:label>Are you sure ?</rdfs:label>
+    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MAO#textDTAreYouSureActivityIsFinished">
+        <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#Text"/>
+        <hasAssistanceType rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#recallAnElement"/>
+        <hasIllocutionaryAct rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#subtle1"/>
+        <isDisplayedHere rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#diningRoomTable"/>
+        <isLinkedToAssistance rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#assistanceDeltaDT"/>
+        <isLinkedToImpairment rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#carryOutTheTask"/>
+        <hasContent>Êtes-vous sûr d&apos;avoir terminé votre activité ?</hasContent>
     </owl:NamedIndividual>
     
 
 
-    <!-- https://ontology.staging.domus.usherbrooke.ca/MAO#textDTFindClothEndArch -->
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MAO#textDTAreYouSureUsingRag -->
 
-    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MAO#textDTFindClothEndArch">
-        <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#AssistanceBeta"/>
-        <rdfs:label>You will find the cloth at the end of this arch.</rdfs:label>
+    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MAO#textDTAreYouSureUsingRag">
+        <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#Text"/>
+        <hasAssistanceType rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#recallAnElement"/>
+        <hasIllocutionaryAct rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#subtle1"/>
+        <isDisplayedHere rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#diningRoomTable"/>
+        <isLinkedToAssistance rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#assistanceIotaDT"/>
+        <isLinkedToImpairment rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#carryOutTheTask"/>
+        <hasContent>Êtes-vous sûr que vous utilisez le bon chiffon pour nettoyer la table ?</hasContent>
     </owl:NamedIndividual>
     
 
 
-    <!-- https://ontology.staging.domus.usherbrooke.ca/MAO#textDTGreatWhereIsIt -->
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MAO#textDTCanFindItNearYou -->
 
-    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MAO#textDTGreatWhereIsIt">
-        <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#AssistanceBeta"/>
-        <rdfs:label>Great ! Do you know where it is ?</rdfs:label>
+    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MAO#textDTCanFindItNearYou">
+        <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#Text"/>
+        <hasAssistanceType rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#givingAClue"/>
+        <hasIllocutionaryAct rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#subtle2"/>
+        <isDisplayedHere rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#diningRoomTable"/>
+        <isLinkedToAssistance rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#assistanceBetaDT"/>
+        <isLinkedToImpairment rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#carryOutTheTask"/>
+        <hasContent>Vous pouvez le trouver proche de vous dans cette pièce.</hasContent>
     </owl:NamedIndividual>
     
 
 
-    <!-- https://ontology.staging.domus.usherbrooke.ca/MAO#textDTHaveYouFinished -->
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MAO#textDTDidYouLookWalls -->
 
-    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MAO#textDTHaveYouFinished">
-        <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#AssistanceDelta"/>
-        <hasTrigger rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#cleaningInterrupted"/>
-        <rdfs:comment rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#cleaningInterrupted"/>
-        <rdfs:label>Have you finished cleaning the table ?</rdfs:label>
+    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MAO#textDTDidYouLookWalls">
+        <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#Text"/>
+        <hasAssistanceType rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#givingAClue"/>
+        <hasIllocutionaryAct rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#subtle2"/>
+        <isDisplayedHere rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#mixedRealityHeadset"/>
+        <isLinkedToAssistance rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#assistanceKappaDT"/>
+        <isLinkedToImpairment rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#goalFormulation"/>
+        <hasContent>Avez-vous regardé sur les murs ?</hasContent>
     </owl:NamedIndividual>
     
 
 
-    <!-- https://ontology.staging.domus.usherbrooke.ca/MAO#textDTKnowWhichObject -->
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MAO#textDTDoYouKnowWhatToDo -->
 
-    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MAO#textDTKnowWhichObject">
-        <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#AssistanceBeta"/>
-        <rdfs:label>Do you know which object you need to dust the table ?</rdfs:label>
+    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MAO#textDTDoYouKnowWhatToDo">
+        <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#Text"/>
+        <hasAssistanceType rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#actionInitiation"/>
+        <hasIllocutionaryAct rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#subtle1"/>
+        <isDisplayedHere rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#diningRoomTable"/>
+        <isLinkedToAssistance rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#assistanceDeltaDT"/>
+        <isLinkedToImpairment rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#carryOutTheTask"/>
+        <hasContent>Savez-vous ce que vous devez faire pour réaliser votre activié ?</hasContent>
     </owl:NamedIndividual>
     
 
 
-    <!-- https://ontology.staging.domus.usherbrooke.ca/MAO#textDTMustCleanTable -->
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MAO#textDTDoYouKnowWhichActivity -->
 
-    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MAO#textDTMustCleanTable">
-        <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#AssistanceBeta"/>
-        <rdfs:label>You must clean the table.</rdfs:label>
+    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MAO#textDTDoYouKnowWhichActivity">
+        <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#Text"/>
+        <hasAssistanceType rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#stimulateTheThoughtProcess"/>
+        <hasIllocutionaryAct rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#implicit1"/>
+        <isDisplayedHere rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#mixedRealityHeadset"/>
+        <isLinkedToAssistance rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#assistanceKappaDT"/>
+        <isLinkedToImpairment rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#goalFormulation"/>
+        <hasContent>Savez-vous quelle activité vous devez réaliser dans cette pièce ?</hasContent>
     </owl:NamedIndividual>
     
 
 
-    <!-- https://ontology.staging.domus.usherbrooke.ca/MAO#textDTNeedHelp -->
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MAO#textDTDoYouRecallActivityGoal -->
 
-    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MAO#textDTNeedHelp">
-        <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#AssistanceDelta"/>
-        <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#AssistanceGamma"/>
-        <hasIllocutionaryAct rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#directiveIndirectImplicit"/>
-        <hasTrigger rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#cleaningInterrupted"/>
-        <hasTrigger rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#didNotStartCleaning"/>
-        <terms:title>Do you need some help ?</terms:title>
+    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MAO#textDTDoYouRecallActivityGoal">
+        <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#Text"/>
+        <hasAssistanceType rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#stimulateTheThoughtProcess"/>
+        <hasIllocutionaryAct rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#implicit3"/>
+        <isDisplayedHere rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#mixedRealityHeadset"/>
+        <isLinkedToAssistance rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#assistanceAlphaDT"/>
+        <isLinkedToImpairment rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#verifyAttainmentOfTheInitialGoal"/>
+        <hasContent>Est-ce que vous vous rappelez du but de l&apos;activité ?</hasContent>
     </owl:NamedIndividual>
     
 
 
-    <!-- https://ontology.staging.domus.usherbrooke.ca/MAO#textDTNeedRagWhereIsIt -->
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MAO#textDTFindDetailsAtTheEndOfArch -->
 
-    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MAO#textDTNeedRagWhereIsIt">
-        <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#AssistanceBeta"/>
-        <rdfs:label>You need to use the rag. Do you know where it is ?</rdfs:label>
+    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MAO#textDTFindDetailsAtTheEndOfArch">
+        <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#Text"/>
+        <hasAssistanceType rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#givingTheAnswer"/>
+        <hasIllocutionaryAct rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#explicit3"/>
+        <isDisplayedHere rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#mixedRealityHeadset"/>
+        <isLinkedToAssistance rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#assistanceKappaDT"/>
+        <isLinkedToImpairment rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#goalFormulation"/>
+        <hasContent>Vous trouverez les détails de l&apos;activité au bout de cette arche.</hasContent>
     </owl:NamedIndividual>
     
 
 
-    <!-- https://ontology.staging.domus.usherbrooke.ca/MAO#textDTNotCleanedEntirelyNeedHelp -->
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MAO#textDTHaveYouFinishedActivity -->
 
-    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MAO#textDTNotCleanedEntirelyNeedHelp">
-        <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#AssistanceDelta"/>
-        <hasTrigger rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#cleaningInterrupted"/>
-        <rdfs:label>Actually the table is not entirely dusted. Do you need some help to continue performing the task ?</rdfs:label>
+    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MAO#textDTHaveYouFinishedActivity">
+        <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#Text"/>
+        <hasAssistanceType rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#clarificationOfInstruction"/>
+        <hasIllocutionaryAct rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#implicit1"/>
+        <isDisplayedHere rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#mixedRealityHeadset"/>
+        <isLinkedToAssistance rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#assistanceAlphaDT"/>
+        <isLinkedToImpairment rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#verifyAttainmentOfTheInitialGoal"/>
+        <hasContent>Avez-vous terminé votre activité ?</hasContent>
     </owl:NamedIndividual>
     
 
 
-    <!-- https://ontology.staging.domus.usherbrooke.ca/MAO#textDTRagHere -->
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MAO#textDTHaveYouLookedLocation -->
 
-    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MAO#textDTRagHere">
-        <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#AssistanceEpsilon"/>
-        <hasTrigger rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#ragNotTakenButHelpReceived"/>
-        <rdfs:label>The rag is here !</rdfs:label>
+    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MAO#textDTHaveYouLookedLocation">
+        <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#Text"/>
+        <hasAssistanceType rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#stimulateTheThoughtProcess"/>
+        <hasIllocutionaryAct rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#subtle1"/>
+        <isDisplayedHere rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#diningRoomTable"/>
+        <isLinkedToAssistance rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#assistanceBetaDT"/>
+        <isLinkedToImpairment rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#carryOutTheTask"/>
+        <hasContent>Avez-vous regardé &lt;Location&gt; ?</hasContent>
     </owl:NamedIndividual>
     
 
 
-    <!-- https://ontology.staging.domus.usherbrooke.ca/MAO#textDTShouldStartCleaningWithRag -->
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MAO#textDTHowToKnowActivityIsFinished -->
 
-    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MAO#textDTShouldStartCleaningWithRag">
-        <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#AssistanceGamma"/>
-        <hasIllocutionaryAct rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#directiveDirectExplicit"/>
-        <hasTrigger rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#didNotStartCleaning"/>
-        <terms:title>You should start cleaning the table with the rag.</terms:title>
+    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MAO#textDTHowToKnowActivityIsFinished">
+        <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#Text"/>
+        <hasAssistanceType rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#stimulateTheThoughtProcess"/>
+        <hasIllocutionaryAct rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#implicit2"/>
+        <isDisplayedHere rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#mixedRealityHeadset"/>
+        <isLinkedToAssistance rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#assistanceAlphaDT"/>
+        <isLinkedToImpairment rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#verifyAttainmentOfTheInitialGoal"/>
+        <hasContent>Comment pouvez-vous savoir si vous avez terminé votre activité ?</hasContent>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MAO#textDTIsActivityFinished -->
+
+    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MAO#textDTIsActivityFinished">
+        <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#Text"/>
+        <hasAssistanceType rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#clarificationOfInstruction"/>
+        <hasIllocutionaryAct rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#implicit1"/>
+        <isDisplayedHere rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#diningRoomTable"/>
+        <isLinkedToAssistance rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#assistanceDeltaDT"/>
+        <isLinkedToImpairment rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#verifyAttainmentOfTheInitialGoal"/>
+        <hasContent>Avez-vous terminé votre activité ?</hasContent>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MAO#textDTNeedRagUnderThisMessage -->
+
+    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MAO#textDTNeedRagUnderThisMessage">
+        <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#Text"/>
+        <hasAssistanceType rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#givingTheAnswer"/>
+        <hasIllocutionaryAct rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#explicit3"/>
+        <isDisplayedHere rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#rag"/>
+        <isLinkedToAssistance rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#assistanceEpsilonDT"/>
+        <isLinkedToImpairment rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#carryOutTheTask"/>
+        <hasContent>Vous devez utiliser le chiffon sous ce message pour nettoyer la table.</hasContent>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MAO#textDTNeedToCleanTableWithRag -->
+
+    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MAO#textDTNeedToCleanTableWithRag">
+        <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#Text"/>
+        <hasAssistanceType rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#givingTheAnswer"/>
+        <hasIllocutionaryAct rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#implicit1"/>
+        <isDisplayedHere rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#diningRoomTable"/>
+        <isLinkedToAssistance rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#assistanceBetaDT"/>
+        <isLinkedToImpairment rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#planification"/>
+        <hasContent>Vous devez nettoyer la table avec un chiffon.</hasContent>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MAO#textDTNeedToDustTableUntilGreen -->
+
+    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MAO#textDTNeedToDustTableUntilGreen">
+        <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#Text"/>
+        <hasAssistanceType rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#givingTheAnswer"/>
+        <hasIllocutionaryAct rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#explicit3"/>
+        <isDisplayedHere rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#diningRoomTable"/>
+        <isLinkedToAssistance rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#assistanceGammaDT"/>
+        <isLinkedToImpairment rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#carryOutTheTask"/>
+        <hasContent>Vous devez épousseter la table avec le chiffon jusqu&apos;à ce que la surface soit entièrement verte.</hasContent>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MAO#textDTNeedToDustTableUntilGreenAlmostThere -->
+
+    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MAO#textDTNeedToDustTableUntilGreenAlmostThere">
+        <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#Text"/>
+        <hasAssistanceType rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#givingTheAnswer"/>
+        <hasAssistanceType rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#motivationalAssistance"/>
+        <hasIllocutionaryAct rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#explicit3"/>
+        <isDisplayedHere rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#diningRoomTable"/>
+        <isLinkedToAssistance rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#assistanceDeltaDT"/>
+        <isLinkedToImpairment rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#carryOutTheTask"/>
+        <hasContent>Vous devez épousseter la table avec un chiffon jusqu&apos;à ce que la surface soit entièrement verte. Vous êtes sur la bonne voie !</hasContent>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MAO#textDTNeededToCleanWithRagWhatDoYouThink -->
+
+    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MAO#textDTNeededToCleanWithRagWhatDoYouThink">
+        <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#Text"/>
+        <hasAssistanceType rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#clarificationOfInstruction"/>
+        <hasIllocutionaryAct rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#subtle3"/>
+        <isDisplayedHere rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#mixedRealityHeadset"/>
+        <isLinkedToAssistance rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#assistanceAlphaDT"/>
+        <isLinkedToImpairment rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#verifyAttainmentOfTheInitialGoal"/>
+        <hasContent>Vous deviez épousseter la table avec un chiffon. Qu&apos;en pensez vous ?</hasContent>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MAO#textDTNoIndeedWhereCanYouLook -->
+
+    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MAO#textDTNoIndeedWhereCanYouLook">
+        <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#Text"/>
+        <hasAssistanceType rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#actionInitiation"/>
+        <hasIllocutionaryAct rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#subtle3"/>
+        <isDisplayedHere rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#diningRoomTable"/>
+        <isLinkedToAssistance rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#assistanceIotaDT"/>
+        <isLinkedToImpairment rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#carryOutTheTask"/>
+        <hasContent>Non en effet. Où pouvez-vous regarder pour le trouver ?</hasContent>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MAO#textDTNotDoneNeedToDustUntilGreen -->
+
+    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MAO#textDTNotDoneNeedToDustUntilGreen">
+        <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#Text"/>
+        <hasAssistanceType rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#givingTheAnswer"/>
+        <hasIllocutionaryAct rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#explicit3"/>
+        <isDisplayedHere rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#diningRoomTable"/>
+        <isLinkedToAssistance rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#assistanceDeltaDT"/>
+        <isLinkedToImpairment rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#carryOutTheTask"/>
+        <hasContent>En réalité non. Vous devez épousseter la table avec le chiffon jusquà ce que la surface soit entièrement verte.</hasContent>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MAO#textDTNotRightRag -->
+
+    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MAO#textDTNotRightRag">
+        <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#Text"/>
+        <hasAssistanceType rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#actionInitiation"/>
+        <hasIllocutionaryAct rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#subtle2"/>
+        <isDisplayedHere rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#diningRoomTable"/>
+        <isLinkedToAssistance rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#assistanceIotaDT"/>
+        <isLinkedToImpairment rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#carryOutTheTask"/>
+        <hasContent>Ce n&apos;est pas le bon chiffon. L&apos;avez-vous cherché ?</hasContent>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MAO#textDTObjectYouNeedIsHere -->
+
+    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MAO#textDTObjectYouNeedIsHere">
+        <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#Text"/>
+        <hasAssistanceType rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#clarificationOfInstruction"/>
+        <hasIllocutionaryAct rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#subtle1"/>
+        <isDisplayedHere rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#rag"/>
+        <isLinkedToAssistance rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#assistanceEpsilonDT"/>
+        <isLinkedToImpairment rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#carryOutTheTask"/>
+        <hasContent>L&apos;objet dont vous avez besoin pour compléter votre activité est ici.</hasContent>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MAO#textDTOkWeLetYouDoIt -->
+
+    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MAO#textDTOkWeLetYouDoIt">
+        <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#Text"/>
+        <hasAssistanceType rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#stop"/>
+        <hasIllocutionaryAct rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#declaration"/>
+        <isDisplayedHere rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#diningRoomTable"/>
+        <isDisplayedHere rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#rag"/>
+        <isLinkedToAssistance rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#assistanceBetaDT"/>
+        <isLinkedToAssistance rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#assistanceDeltaDT"/>
+        <isLinkedToAssistance rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#assistanceEpsilonDT"/>
+        <isLinkedToAssistance rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#assistanceKappaDT"/>
+        <isLinkedToImpairment rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#carryOutTheTask"/>
+        <isLinkedToImpairment rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#goalFormulation"/>
+        <isLinkedToImpairment rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#planification"/>
+        <hasContent>Ok ! Nous vous laissons faire.</hasContent>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MAO#textDTPerfectDoYouThinkGoalReached -->
+
+    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MAO#textDTPerfectDoYouThinkGoalReached">
+        <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#Text"/>
+        <hasAssistanceType rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#clarificationOfInstruction"/>
+        <hasIllocutionaryAct rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#subtle2"/>
+        <isDisplayedHere rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#mixedRealityHeadset"/>
+        <isLinkedToAssistance rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#assistanceAlphaDT"/>
+        <isLinkedToImpairment rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#verifyAttainmentOfTheInitialGoal"/>
+        <hasContent>Parfait ! Pensez-vous que vous avez atteint ce but ?</hasContent>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MAO#textDTRagIsAtTheEndOfArch -->
+
+    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MAO#textDTRagIsAtTheEndOfArch">
+        <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#Text"/>
+        <hasAssistanceType rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#givingTheAnswer"/>
+        <hasIllocutionaryAct rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#explicit3"/>
+        <isDisplayedHere rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#diningRoomTable"/>
+        <isLinkedToAssistance rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#assistanceBetaDT"/>
+        <isLinkedToImpairment rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#carryOutTheTask"/>
+        <hasContent>Vous trouverez le chiffon au bout de cette flêche.</hasContent>
     </owl:NamedIndividual>
     
 
@@ -2540,40 +2569,143 @@ As for their structure and shape, sofas usually feature two armrests and a unifo
     <!-- https://ontology.staging.domus.usherbrooke.ca/MAO#textDTSomeoneIsComing -->
 
     <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MAO#textDTSomeoneIsComing">
-        <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#AssistanceEpsilon"/>
-        <hasTrigger rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#ragNotTakenButHelpReceived"/>
-        <rdfs:label>I cannot help you further. Someone is coming to help you.</rdfs:label>
+        <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#Text"/>
+        <hasAssistanceType rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#externalAssistance"/>
+        <hasIllocutionaryAct rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#declaration"/>
+        <isDisplayedHere rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#diningRoomTable"/>
+        <isDisplayedHere rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#rag"/>
+        <isLinkedToAssistance rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#assistanceEpsilonDT"/>
+        <isLinkedToAssistance rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#assistanceGammaDT"/>
+        <isLinkedToImpairment rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#carryOutTheTask"/>
+        <hasContent>Je ne peux pas plus vous aider. Quelqu&apos;un va venir vous voir.</hasContent>
     </owl:NamedIndividual>
     
 
 
-    <!-- https://ontology.staging.domus.usherbrooke.ca/MAO#textDTTableCleaned -->
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MAO#textDTWhatCanYouDoHere -->
 
-    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MAO#textDTTableCleaned">
-        <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#AssistanceAlpha"/>
-        <hasIllocutionaryAct rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#declarationDirectExplicit"/>
-        <hasTrigger rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#tableCleaned"/>
-        <terms:title>The table is cleaned. Thank you !</terms:title>
+    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MAO#textDTWhatCanYouDoHere">
+        <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#Text"/>
+        <hasAssistanceType rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#stimulateTheThoughtProcess"/>
+        <hasIllocutionaryAct rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#implicit2"/>
+        <isDisplayedHere rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#diningRoomTable"/>
+        <isLinkedToAssistance rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#assistanceBetaDT"/>
+        <isLinkedToImpairment rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#goalFormulation"/>
+        <hasContent>Que pouvez-vous faire ici ?</hasContent>
     </owl:NamedIndividual>
     
 
 
-    <!-- https://ontology.staging.domus.usherbrooke.ca/MAO#textDTWhatToDoWithRag -->
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MAO#textDTWhatCanYouDoKeepTableCleaned -->
 
-    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MAO#textDTWhatToDoWithRag">
-        <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#AssistanceGamma"/>
-        <hasIllocutionaryAct rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#directiveIndirectExplicit"/>
-        <hasTrigger rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#didNotStartCleaning"/>
-        <terms:title>What would you usually do now that you have the rag with you ?</terms:title>
+    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MAO#textDTWhatCanYouDoKeepTableCleaned">
+        <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#Text"/>
+        <hasAssistanceType rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#actionInitiation"/>
+        <hasIllocutionaryAct rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#subtle1"/>
+        <isDisplayedHere rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#diningRoomTable"/>
+        <isLinkedToAssistance rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#assistanceBetaDT"/>
+        <isLinkedToImpairment rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#goalFormulation"/>
+        <hasContent>Que pouvez-vous faire pour garder votre table propre ?</hasContent>
     </owl:NamedIndividual>
     
 
 
-    <!-- https://ontology.staging.domus.usherbrooke.ca/MAO#textDTWhereUsuallyFindIt -->
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MAO#textDTWhatCanYouDoWithRag -->
 
-    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MAO#textDTWhereUsuallyFindIt">
-        <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#AssistanceBeta"/>
-        <rdfs:label>Where do you usually find it ?</rdfs:label>
+    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MAO#textDTWhatCanYouDoWithRag">
+        <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#Text"/>
+        <hasAssistanceType rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#actionInitiation"/>
+        <hasIllocutionaryAct rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#implicit1"/>
+        <isDisplayedHere rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#diningRoomTable"/>
+        <isLinkedToAssistance rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#assistanceGammaDT"/>
+        <isLinkedToImpairment rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#carryOutTheTask"/>
+        <hasContent>Que pouvez-vous faire avec le chiffon ?</hasContent>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MAO#textDTWhatObjectToCleanTable -->
+
+    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MAO#textDTWhatObjectToCleanTable">
+        <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#Text"/>
+        <hasAssistanceType rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#actionInitiation"/>
+        <hasIllocutionaryAct rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#explicit3"/>
+        <isDisplayedHere rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#diningRoomTable"/>
+        <isLinkedToAssistance rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#assistanceBetaDT"/>
+        <isLinkedToImpairment rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#goalFormulation"/>
+        <hasContent>De quel objet avez-vous besoin pour nettoyer votre table ?</hasContent>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MAO#textDTWhatToDoCleanTable -->
+
+    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MAO#textDTWhatToDoCleanTable">
+        <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#Text"/>
+        <hasAssistanceType rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#actionInitiation"/>
+        <hasIllocutionaryAct rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#subtle2"/>
+        <isDisplayedHere rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#diningRoomTable"/>
+        <isLinkedToAssistance rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#assistanceBetaDT"/>
+        <isLinkedToImpairment rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#goalFormulation"/>
+        <hasContent>Que pouvez-vous faire pour nettoyer votre table ?</hasContent>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MAO#textDTWhereCanYouFindActivityDetails -->
+
+    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MAO#textDTWhereCanYouFindActivityDetails">
+        <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#Text"/>
+        <hasAssistanceType rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#actionInitiation"/>
+        <hasIllocutionaryAct rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#subtle1"/>
+        <isDisplayedHere rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#mixedRealityHeadset"/>
+        <isLinkedToAssistance rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#assistanceKappaDT"/>
+        <isLinkedToImpairment rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#goalFormulation"/>
+        <hasContent>Où pouvez-vous trouver les détails de l&apos;activité à faire ?</hasContent>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MAO#textDTWhereToLookfForTheRag -->
+
+    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MAO#textDTWhereToLookfForTheRag">
+        <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#Text"/>
+        <hasAssistanceType rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#actionInitiation"/>
+        <hasIllocutionaryAct rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#implicit1"/>
+        <isDisplayedHere rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#diningRoomTable"/>
+        <isLinkedToAssistance rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#assistanceBetaDT"/>
+        <isLinkedToImpairment rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#carryOutTheTask"/>
+        <hasContent>Où pouvez-vous regarder pour le trouver ?</hasContent>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MAO#textDTYesDoneActivityFinished -->
+
+    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MAO#textDTYesDoneActivityFinished">
+        <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#Text"/>
+        <hasAssistanceType rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#givingTheAnswer"/>
+        <hasIllocutionaryAct rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#explicit2"/>
+        <isDisplayedHere rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#mixedRealityHeadset"/>
+        <isLinkedToAssistance rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#assistanceAlphaDT"/>
+        <isLinkedToImpairment rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#verifyAttainmentOfTheInitialGoal"/>
+        <hasContent>Oui c&apos;est fait ! Vous avez terminé l&apos;activité !</hasContent>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MAO#validation -->
+
+    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MAO#validation">
+        <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#AssistanceActType"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MAO#verifyAttainmentOfTheInitialGoal -->
+
+    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MAO#verifyAttainmentOfTheInitialGoal">
+        <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MAO#Impairment"/>
     </owl:NamedIndividual>
     
 

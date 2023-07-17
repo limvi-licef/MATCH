@@ -314,7 +314,7 @@ namespace MATCH
                 }
 
                 return (Dialogs.Dialog1)controller;
-            }           
+            }
 
             private float ComputeFontSizeLinear(int textLength)
             {

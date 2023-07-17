@@ -217,7 +217,7 @@ namespace MATCH
 
                         // Display the text
                         BehaviorTreeDebugWindow.SetDescription(textToDisplay, 0.08f);
-                        Debug.Log(textToDisplay);
+                        //Debug.Log(textToDisplay);
                     }
                 }
 

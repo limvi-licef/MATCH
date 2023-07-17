@@ -425,7 +425,7 @@ namespace MATCH
              * The order you add the assistances is important: it determines their order of appearance
              * */
             public void AddAssistance(GradationVisual.GradationVisual assistance, Buttons.Button.ButtonType type, GradationVisual.GradationVisual assistanceTarget)
-            {
+            { //iota.AddAssistance(AssistancesDB.Iota[0], Assistances.Buttons.Button.ButtonType.Yes, AssistancesDB.Iota[1]);
                 if (AssistancesGradation == null)
                 {
                     AssistancesGradation = new StateMachine(assistance);
@@ -435,6 +435,16 @@ namespace MATCH
                 AssistancesGradation.AddAssistance(assistance, type, ref assistanceTarget);
             }
             
+            /*
+            public void ChangeAssistance(GradationVisual.GradationVisual assistance, Buttons.Button.ButtonType type, GradationVisual.GradationVisual assistanceTarget)
+            {
+                if (AssistancesGradation != null)
+                {
+                    ChangeAssistance(assistance, type, assistanceTarget);
+                }
+            }
+            */
+
             public void RunAssistance()
             {
                 StartTree();

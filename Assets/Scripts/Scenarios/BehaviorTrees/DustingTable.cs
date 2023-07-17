@@ -47,6 +47,7 @@ namespace MATCH
                 string ConditionNewPartCleaned = "NewPartCleaned";
                 string ConditionProcessRelatedToNewPartsCleanedDone = "ProcessRelatedToNewPartsCleanedDone";
                 string ConditionTableTouchedButNoRag = "TableTouchedButNoRag";
+                string ConditionUserInAnotherRoom = "UserInAnotherRoom";
 
                 string InferenceDidNotStartDusting = "DidNotStartCleaning";
                 string InferenceInterruptDusting = "InterruptedDusting";
@@ -57,36 +58,27 @@ namespace MATCH
                 Assistances.InteractionSurface InteractionSurfaceTable;
                 Assistances.InteractionSurface InteractionRag;
 
-                public event EventHandler TableTouchedEvent;
+                public event EventHandler EventUserInAnotherRoom;
+                private bool RightRoom;
+                private string ExpectedRoom;
 
                 Dictionary<Assistances.AssistanceGradationExplicit, bool> AssistancesDusting;
 
-                VDS.RDF.Graph Graph;
-
                 DustingTableAssistances AssistancesDB;
+
 
                 public override void Awake()
                 {
-                                                 base.Awake();
+                    base.Awake();
                     SetId("Nettoyer la table");
                     AssistancesDusting = new Dictionary<Assistances.AssistanceGradationExplicit, bool>();
-
-                    //Load ontology
-                    DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Avant ontologie ");
-                    Graph = new VDS.RDF.Graph();
-                    TextAsset test  = Resources.Load(Utilities.Materials.Ontology.Test) as TextAsset;
-                    //Graph.
-                    
-                    VDS.RDF.Parsing.FileLoader.Load(Graph, Utilities.Materials.Ontology.Test);
-                    DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Après ontologie ");
-
                 }
 
 
                 public override void Start()
                 {
                     Scenarios.Manager.Instance.addScenario(this);
-
+                    
                     // Initialize assistances
                     InitializeAssistances();
                     AssistancesDB = new DustingTableAssistances(InteractionSurfaceTable.transform, InteractionRag.transform);
@@ -122,55 +114,81 @@ namespace MATCH
 
                     // Initialize debug buttons
                     //InitializeDebugButtons();
+
+                    RightRoom = true;
+                    VDS.RDF.Query.SparqlResultSet results = MATCH.Managers.Rooms.Instance.RoomQueryResults("dustingTable");
+                    if (results.Count > 0)
+                    {
+                        var result = results[0];
+                        ExpectedRoom = result.Value("roomname").ToString();
+                        ExpectedRoom = MATCH.Utilities.Materials.Ontology.Instance.ShortenMessage(ExpectedRoom);
+                    }
+
                 }
 
-                protected override Root InitializeBehaviorTree()
+
+                
+                void Update()
                 {
-                    // Making the conditions update. SEE EXCEL SHEET TO GENERATE THE CODE BELOW
-                    AddCondition(ConditionTableCleaned, false);
-                    AddCondition(ConditionRagNotTakenButHelpReceived, false);
-                    AddCondition(ConditionRagTaken, false);
-                    AddCondition(ConditionDidNotStartCleaning, false);
-                    AddCondition(ConditionCleaningInterrupted, false);
-                    AddCondition(ConditionNewPartCleaned, false);
-                    AddCondition(ConditionProcessRelatedToNewPartsCleanedDone, false);
-                    AddCondition(ConditionTableTouchedButNoRag, false);
-                    int nbConditions = GetNumberOfConditions();
+                    //TriggerUserInAnotherRoom();
+                    UserHasChangedRoom(ref RightRoom, ExpectedRoom);
+                }
 
-                    AddConditionsUpdate(ConditionTableCleaned, new bool[]                           { true,  false, false, false, false, false, false, false });
-                    AddConditionsUpdate(ConditionRagNotTakenButHelpReceived, new bool[]             { false, true,  false, false, false, false, false, false });
-                    AddConditionsUpdate(ConditionRagTaken, new bool[]                               { false, false, true,  false, false, false, false, false });
-                    AddConditionsUpdate(ConditionDidNotStartCleaning, new bool[]                    { false, false, true,  true,  false, false, false, false });
-                    AddConditionsUpdate(ConditionCleaningInterrupted, new bool[]                    { false, false, true,  false, true,  false, false, false });
-                    AddConditionsUpdate(ConditionNewPartCleaned, new bool[]                         { false, false, true,  false, false, true,  false, false });
-                    AddConditionsUpdate(ConditionProcessRelatedToNewPartsCleanedDone, new bool[]    { false, false, true,  false, false, false, true,  false });
-                    AddConditionsUpdate(ConditionTableTouchedButNoRag, new bool[] { false, false, false, false, false, false, false, true });
 
-                    // End of code generation using the EXCEL file
 
-                    // Defining the BT
-                    Selector srRagNotTaken = new Selector(
-                        new BlackboardCondition(ConditionTableTouchedButNoRag, Operator.IS_EQUAL, true, Stops.IMMEDIATE_RESTART, AssistanceIota()),
-                        new BlackboardCondition(ConditionRagNotTakenButHelpReceived, Operator.IS_EQUAL, true, Stops.IMMEDIATE_RESTART, AssistanceEpsilon()),
-                        AssistanceBeta()
-                        );
-                    
 
-                    Selector srTableNotCleaned = new Selector(
-                        new BlackboardCondition(ConditionRagTaken, Operator.IS_EQUAL, false, Stops.IMMEDIATE_RESTART, srRagNotTaken),
-                        new Inverter(AssistanceEta()),
-                        new BlackboardCondition(ConditionDidNotStartCleaning, Operator.IS_EQUAL, true, Stops.IMMEDIATE_RESTART, AssistanceGamma()),
-                        new BlackboardCondition(ConditionNewPartCleaned, Operator.IS_EQUAL, true, Stops.IMMEDIATE_RESTART, AssistanceZeta()),
-                        new BlackboardCondition(ConditionProcessRelatedToNewPartsCleanedDone, Operator.IS_EQUAL, true, Stops.IMMEDIATE_RESTART, AssistanceTheta()),
-                        new BlackboardCondition(ConditionCleaningInterrupted, Operator.IS_EQUAL, true, Stops.IMMEDIATE_RESTART, AssistanceDelta()),
-                        new WaitUntilStopped()
-                        );
+                protected override Root InitializeBehaviorTree()
+                    {
+                        // Making the conditions update. SEE EXCEL SHEET TO GENERATE THE CODE BELOW
+                        AddCondition(ConditionTableCleaned, false);
+                        AddCondition(ConditionRagNotTakenButHelpReceived, false);
+                        AddCondition(ConditionRagTaken, false);
+                        AddCondition(ConditionDidNotStartCleaning, false);
+                        AddCondition(ConditionCleaningInterrupted, false);
+                        AddCondition(ConditionNewPartCleaned, false);
+                        AddCondition(ConditionProcessRelatedToNewPartsCleanedDone, false);
+                        AddCondition(ConditionTableTouchedButNoRag, false);
+                        AddCondition(ConditionUserInAnotherRoom, false);
+                        int nbConditions = GetNumberOfConditions();
 
-                    Selector srBegin = new Selector(
-                        new BlackboardCondition(ConditionTableCleaned, Operator.IS_EQUAL, true, Stops.IMMEDIATE_RESTART, AssistanceAlpha()),
-                        srTableNotCleaned);
+                        AddConditionsUpdate(ConditionTableCleaned, new bool[]                           { true,  false, false, false, false, false, false, false, false });
+                        AddConditionsUpdate(ConditionRagNotTakenButHelpReceived, new bool[]             { false, true,  false, false, false, false, false, false, false });
+                        AddConditionsUpdate(ConditionRagTaken, new bool[]                               { false, false, true,  false, false, false, false, false, false });
+                        AddConditionsUpdate(ConditionDidNotStartCleaning, new bool[]                    { false, false, true,  true,  false, false, false, false, false });
+                        AddConditionsUpdate(ConditionCleaningInterrupted, new bool[]                    { false, false, true,  false, true,  false, false, false, false });
+                        AddConditionsUpdate(ConditionNewPartCleaned, new bool[]                         { false, false, true,  false, false, true,  false, false, false });
+                        AddConditionsUpdate(ConditionProcessRelatedToNewPartsCleanedDone, new bool[]    { false, false, true,  false, false, false, true,  false, false });
+                        AddConditionsUpdate(ConditionTableTouchedButNoRag, new bool[]                   { false, false, false, false, false, false, false, true, false });
+                        AddConditionsUpdate(ConditionUserInAnotherRoom, new bool[]                      { false, false, false, false, false, false, false, false, true });
 
-                    Root tree = new Root(/*Conditions*/Getconditions(), srBegin);
+                        // End of code generation using the EXCEL file
+
+                        // Defining the BT
+                        Selector srRagNotTaken = new Selector(
+                            new BlackboardCondition(ConditionTableTouchedButNoRag, Operator.IS_EQUAL, true, Stops.IMMEDIATE_RESTART, AssistanceIota()),
+                            new BlackboardCondition(ConditionRagNotTakenButHelpReceived, Operator.IS_EQUAL, true, Stops.IMMEDIATE_RESTART, AssistanceEpsilon()),
+                            AssistanceBeta()
+                            );
+
+
+                        Selector srTableNotCleaned = new Selector(
+                            new BlackboardCondition(ConditionRagTaken, Operator.IS_EQUAL, false, Stops.IMMEDIATE_RESTART, srRagNotTaken),
+                            new Inverter(AssistanceEta()),
+                            new BlackboardCondition(ConditionDidNotStartCleaning, Operator.IS_EQUAL, true, Stops.IMMEDIATE_RESTART, AssistanceGamma()),
+                            new BlackboardCondition(ConditionNewPartCleaned, Operator.IS_EQUAL, true, Stops.IMMEDIATE_RESTART, AssistanceZeta()),
+                            new BlackboardCondition(ConditionProcessRelatedToNewPartsCleanedDone, Operator.IS_EQUAL, true, Stops.IMMEDIATE_RESTART, AssistanceTheta()),
+                            new BlackboardCondition(ConditionCleaningInterrupted, Operator.IS_EQUAL, true, Stops.IMMEDIATE_RESTART, AssistanceDelta()),
+                            new WaitUntilStopped()
+                            );
+
+                        Selector srBegin = new Selector(
+                            new BlackboardCondition(ConditionTableCleaned, Operator.IS_EQUAL, true, Stops.IMMEDIATE_RESTART, AssistanceAlpha()),
+                            new BlackboardCondition(ConditionUserInAnotherRoom, Operator.IS_EQUAL, true, Stops.IMMEDIATE_RESTART, AssistanceMu()),
+                            new BlackboardCondition(ConditionUserInAnotherRoom, Operator.IS_EQUAL, false, Stops.IMMEDIATE_RESTART, srTableNotCleaned)
+                            );
+
+                    Root tree = new Root(/*Conditions*/
+                    Getconditions(), srBegin);
 
                     return tree;
                 }
@@ -214,30 +232,6 @@ namespace MATCH
                 Sequence AssistanceAlpha()
                 {
                     /*Assistances.GradationVisual.GradationVisual alpha1 = Assistances.Factory.Instance.CreateAssistanceGradationAttention("DustingTable-Beta-1");*/
-
-                    VDS.RDF.Parsing.SparqlQueryParser testparser = new VDS.RDF.Parsing.SparqlQueryParser();
-                    VDS.RDF.Query.SparqlQuery testquery = testparser.ParseFromString("PREFIX mao: <https://ontology.staging.domus.usherbrooke.ca/MAO#> PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> PREFIX terms: <http://purl.org/dc/terms/>" +
-                        "SELECT ?message WHERE {?texte rdf:type mao:AssistanceAlpha . ?texte terms:title ?message}");
-
-                    VDS.RDF.Query.SparqlResultSet testresults = (VDS.RDF.Query.SparqlResultSet)Graph.ExecuteQuery(testquery.ToString());
-                    string message = "";
-
-                    if (testresults.Count > 0)
-                    {
-                        var result = testresults[0];
-                        string text = result.Value("message").ToString();
-                        char symbol = '^';
-
-                        int endIndex = text.IndexOf(symbol);
-                        message = text.Substring(0, endIndex);
-                    }
-                    else
-                    {
-                        DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Aucun résultat trouvé.");
-                    }
-
-                    Assistances.GradationVisual.GradationVisual alpha1 = Assistances.GradationVisual.Factory.Instance.CreateDialog2WithButtons("DustingTable-Alpha-1", "", message, "Terminer", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.ClosingButton, InteractionSurfaceTable.transform);
-
                     /*Assistances.GradationVisual.GradationVisual alpha1 = Assistances.GradationVisual.Factory.Instance.CreateDialog2WithButtons("DustingTable-Alpha-1", "", "Vous avez terminé l'activité! Félicitations!", "Terminer", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.ClosingButton, InteractionSurfaceTable.transform);*/
 
 
@@ -282,13 +276,29 @@ namespace MATCH
                             InferenceManager.UnregisterAllInferences();
                             UpdateTextAssistancesDebugWindow("Alpha");
                             MATCH.Utilities.Logger.Instance.Log(this.GetId(), MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, "Alpha");
+                            
                             OnChallengeSuccess();
+                            
+
                         }),
                         new WaitUntilStopped()
                         );
 
                     return temp;
                 }
+                /*
+                public void TriggerUserInAnotherRoom()
+                {
+                    if (MATCH.Managers.Rooms.Instance.IsUserInWrongRoom("dustingTable"))
+                    {
+                        EventUserInAnotherRoom?.Invoke(this, EventArgs.Empty);
+                    }
+                    else
+                    {
+                        UpdateCondition(ConditionUserInAnotherRoom, false);
+                    }
+                }
+                */
 
                 void InitializeAssistances()
                 {
@@ -301,9 +311,15 @@ namespace MATCH
 
                     InteractionSurfaceTable.EventUserTouched += CallbackInteractionSurfaceTableTouched;
 
+                    EventUserInAnotherRoom += CallbackUserInAnotherRoom;
+
+                    //EventUserInRightRoom += CallbackUserInRightRoom;
+
 
                 }
 
+
+                
 
                 Sequence AssistanceBeta()
                 {
@@ -793,6 +809,18 @@ namespace MATCH
 
                     Sequence temp = new Sequence(
                         new NPBehave.Action(() => {
+                            /*
+                            string userRoom = MATCH.Managers.Rooms.Instance.InWhatRoomIsUser();
+                            string message = MATCH.Managers.Rooms.Instance.ContextualizedRoomQuery("dustingTable", userRoom);
+
+                            //iota.get
+
+                            Assistances.GradationVisual.GradationVisual testGradVis = AssistancesDB.Iota[0];
+                            Assistances.IAssistance testAssistance = (Assistances.IAssistance) testGradVis.GetCurrentAssistance();
+                            Assistances.Dialogs.Dialog2 testDialog2 = (Assistances.Dialogs.Dialog2)testAssistance.GetRootDecoratedAssistance();
+                            testDialog2.SetDescription(message + Utilities.Materials.Ontology.Instance.AssistanceQuery("assistanceIotaDT", "implicit1", "carryOutTheTask", "clarificationOfInstruction"));
+                            */
+
                             ShowAssistanceHideOthers(iota);
                             iota.StopAssistance();
                             iota.RunAssistance();
@@ -800,6 +828,73 @@ namespace MATCH
                             UpdateTextAssistancesDebugWindow("Iota");
                             MATCH.Utilities.Logger.Instance.Log(this.GetId(), MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, "Iota");
                             MATCH.DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, MATCH.DebugMessagesManager.MessageLevel.Info, "Iota triggered.");
+
+                        }),
+                        new WaitUntilStopped()
+                        );
+                    return temp;
+                }
+                
+                public void UserHasChangedRoom(ref bool rightRoom, string expectedRoom)
+                {
+                        string userRoom = MATCH.Managers.Rooms.Instance.InWhatRoomIsUser();
+
+                        if (expectedRoom == userRoom && rightRoom == false)
+                        {
+                            rightRoom = true;
+                            UpdateCondition(ConditionUserInAnotherRoom, false);
+                        }
+                        if (expectedRoom != userRoom && rightRoom == true)
+                        {
+                            rightRoom = false;
+                            EventUserInAnotherRoom?.Invoke(this, EventArgs.Empty);
+
+                            string messageTest = MATCH.Utilities.Utility.Test(AssistancesDB, 0);
+                    }
+                }
+
+                Sequence AssistanceMu()
+                {
+                    Assistances.AssistanceGradationExplicit mu = Assistances.Factory.Instance.CreateAssistanceGradationExplicit("Dusting_Mu");
+                    mu.transform.parent = transform;
+
+                    mu.AddAssistance(AssistancesDB.Mu[0], Assistances.Buttons.Button.ButtonType.ClosingButton, null);
+
+                    AssistancesDusting.Add(mu, false);
+
+                    mu.Init();
+
+                    Sequence temp = new Sequence(
+                        new NPBehave.Action(() => {
+                            /*
+                            string userRoom = MATCH.Managers.Rooms.Instance.InWhatRoomIsUser();
+                            string message = MATCH.Managers.Rooms.Instance.ContextualizedRoomQuery("dustingTable", userRoom);
+
+                            MATCH.Utilities.Utility.PersonalizeRoomAssistance(AssistancesDB, 0, message);
+                            */
+                            /*
+                            Assistances.GradationVisual.GradationVisual testGradVis = AssistancesDB.Mu[0];
+                            Assistances.IAssistance testAssistance = (Assistances.IAssistance)testGradVis.GetCurrentAssistance();
+                            Assistances.Dialogs.Dialog2 testDialog2 = (Assistances.Dialogs.Dialog2)testAssistance.GetRootDecoratedAssistance();
+                            testDialog2.SetDescription(message);
+                            */
+
+                            Assistances.GradationVisual.GradationVisual testGradVis = AssistancesDB.Mu[0];
+                            Assistances.IAssistance testAssistance = (Assistances.IAssistance)testGradVis.GetCurrentAssistance();
+                            Assistances.Dialogs.Dialog2 testDialog2 = (Assistances.Dialogs.Dialog2)testAssistance.GetRootDecoratedAssistance();
+
+                            testDialog2.transform.localPosition = new Vector3(0, 0, 0);
+
+                            testDialog2.GetComponent<Billboard>().enabled = false;
+                            testDialog2.AdjustToHeight = false;
+
+                            ShowAssistanceHideOthers(mu);
+                            mu.StopAssistance();
+                            mu.RunAssistance();
+                            AssistancesDusting[mu] = true;
+                            UpdateTextAssistancesDebugWindow("Mu");
+                            MATCH.Utilities.Logger.Instance.Log(this.GetId(), MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, "Mu");
+                            MATCH.DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, MATCH.DebugMessagesManager.MessageLevel.Info, "Mu triggered.");
 
                         }),
                         new WaitUntilStopped()
@@ -820,6 +915,21 @@ namespace MATCH
                         UpdateCondition(ConditionTableTouchedButNoRag, true);
                 }
 
+                
+                public void CallbackUserInAnotherRoom(System.Object o, EventArgs e)
+                {
+                    //MATCH.DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, MATCH.DebugMessagesManager.MessageLevel.Info, "User in another room.");
+                    UpdateConditionWithMatrix(ConditionUserInAnotherRoom);
+                }
+
+                /*
+                public void CallbackUserInRightRoom(System.Object o, EventArgs e)
+                {
+                    //MATCH.DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, MATCH.DebugMessagesManager.MessageLevel.Info, "User in right room.");
+                    UpdateCondition(ConditionUserInAnotherRoom, false);
+                }
+                */
+
                 void RegisterInferenceFarFromRag()
                 {
                     DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Registering inference distance from rag with distance value: " + InferenceFarFromRagDistance);
@@ -831,6 +941,7 @@ namespace MATCH
                         UpdateConditionWithMatrix(ConditionRagNotTakenButHelpReceived);
                     }, InteractionRag.gameObject, InferenceFarFromRagDistance);
                 }
+
             }
 
             class DustingTableAssistances
@@ -854,81 +965,91 @@ namespace MATCH
                 public List<Assistances.GradationVisual.GradationVisual> Gamma;
                 public List<Assistances.GradationVisual.GradationVisual> Delta;
                 public List<Assistances.GradationVisual.GradationVisual> Alpha;
+                public List<Assistances.GradationVisual.GradationVisual> Mu;
 
                 public DustingTableAssistances(Transform parentTable, Transform parentRag)
                 {
                     Alpha = new List<Assistances.GradationVisual.GradationVisual>
                     {
-                        Assistances.GradationVisual.Factory.Instance.CreateDialog2WithButtons("DustingTable-Alpha-00", "", "Avez-vous terminé votre activité?", "Oui", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.Yes, "Non", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.No, MATCH.Assistances.InteractionSurfaceFollower.Instance.transform),
-                        Assistances.GradationVisual.Factory.Instance.CreateDialog2NoButton("DustingTable-Alpha-01", "", "En effet, vous avez terminé l'activité. Félicitations!", MATCH.Assistances.InteractionSurfaceFollower.Instance.transform),
-                        Assistances.GradationVisual.Factory.Instance.CreateDialog2WithButtons("DustingTable-Alpha-02", "", "Comment pouvez-vous savoir si vous avez terminé votre activité?", "Je sais", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.Yes, "Je ne sais pas", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.No, MATCH.Assistances.InteractionSurfaceFollower.Instance.transform),
-                        Assistances.GradationVisual.Factory.Instance.CreateDialog2WithButtons("DustingTable-Alpha-03", "", "Est-ce que vous vous rappelez du but de l'activité?", "Oui", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.Yes, "Non", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.No, MATCH.Assistances.InteractionSurfaceFollower.Instance.transform),
-                        Assistances.GradationVisual.Factory.Instance.CreateDialog2WithButtons("DustingTable-Alpha-04", "", "Vous deviez épousseter la table avec un chiffon. Qu'en pensez-vous?", "Oui c'est fait!", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.Yes, "Je ne sais pas", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.No, MATCH.Assistances.InteractionSurfaceFollower.Instance.transform),
-                        Assistances.GradationVisual.Factory.Instance.CreateDialog2NoButton("DustingTable-Alpha-05", "", "Oui c'est fait! Vous avez terminé l'activité!", MATCH.Assistances.InteractionSurfaceFollower.Instance.transform),
-                        Assistances.GradationVisual.Factory.Instance.CreateDialog2WithButtons("DustingTable-Alpha-06", "", "Parfait! Pensez-vousque vous avez atteint ce but?", "Oui!", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.Yes, "Je ne sais pas", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.No, MATCH.Assistances.InteractionSurfaceFollower.Instance.transform)
+                        Assistances.GradationVisual.Factory.Instance.CreateDialog2WithButtons("DustingTable-Alpha-00", "", /*"Avez-vous terminé votre activité?"*/ Utilities.Materials.Ontology.Instance.AssistanceQuery("assistanceAlphaDT", "implicit1", "verifyAttainmentOfTheInitialGoal", "clarificationOfInstruction"), "Oui", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.Yes, "Non", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.No, MATCH.Assistances.InteractionSurfaceFollower.Instance.transform),
+                        Assistances.GradationVisual.Factory.Instance.CreateDialog2NoButton("DustingTable-Alpha-01", "", /*"En effet, vous avez terminé l'activité. Félicitations!"*/ Utilities.Materials.Ontology.Instance.AssistanceQuery("assistanceAlphaDT", "explicit3", "verifyAttainmentOfTheInitialGoal", "givingTheAnswer"), MATCH.Assistances.InteractionSurfaceFollower.Instance.transform),
+                        Assistances.GradationVisual.Factory.Instance.CreateDialog2WithButtons("DustingTable-Alpha-02", "", /*"Comment pouvez-vous savoir si vous avez terminé votre activité?"*/ Utilities.Materials.Ontology.Instance.AssistanceQuery("assistanceAlphaDT", "implicit2", "verifyAttainmentOfTheInitialGoal", "stimulateTheThoughtProcess"), "Je sais", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.Yes, "Je ne sais pas", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.No, MATCH.Assistances.InteractionSurfaceFollower.Instance.transform),
+                        Assistances.GradationVisual.Factory.Instance.CreateDialog2WithButtons("DustingTable-Alpha-03", "", /*"Est-ce que vous vous rappelez du but de l'activité?"*/ Utilities.Materials.Ontology.Instance.AssistanceQuery("assistanceAlphaDT", "implicit3", "verifyAttainmentOfTheInitialGoal", "stimulateTheThoughtProcess"), "Oui", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.Yes, "Non", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.No, MATCH.Assistances.InteractionSurfaceFollower.Instance.transform),
+                        Assistances.GradationVisual.Factory.Instance.CreateDialog2WithButtons("DustingTable-Alpha-04", "", /*"Vous deviez épousseter la table avec un chiffon. Qu'en pensez-vous?"*/ Utilities.Materials.Ontology.Instance.AssistanceQuery("assistanceAlphaDT", "subtle3", "verifyAttainmentOfTheInitialGoal", "clarificationOfInstruction"), "Oui c'est fait!", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.Yes, "Je ne sais pas", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.No, MATCH.Assistances.InteractionSurfaceFollower.Instance.transform),
+                        Assistances.GradationVisual.Factory.Instance.CreateDialog2NoButton("DustingTable-Alpha-05", "", /*"Oui c'est fait! Vous avez terminé l'activité!"*/ Utilities.Materials.Ontology.Instance.AssistanceQuery("assistanceAlphaDT", "explicit2", "verifyAttainmentOfTheInitialGoal", "givingTheAnswer"), MATCH.Assistances.InteractionSurfaceFollower.Instance.transform),
+                        Assistances.GradationVisual.Factory.Instance.CreateDialog2WithButtons("DustingTable-Alpha-06", "", /*"Parfait! Pensez-vousque vous avez atteint ce but?"*/ Utilities.Materials.Ontology.Instance.AssistanceQuery("assistanceAlphaDT", "subtle2", "verifyAttainmentOfTheInitialGoal", "clarificationOfInstruction"), "Oui!", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.Yes, "Je ne sais pas", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.No, MATCH.Assistances.InteractionSurfaceFollower.Instance.transform)
                     };
 
                     Beta = new List<Assistances.GradationVisual.GradationVisual>
                     {
                     Assistances.GradationVisual.Factory.Instance.CreateExclamationMark("DustingTable-Beta-1", parentTable),
-                    Assistances.GradationVisual.Factory.Instance.CreateDialog2WithButtons("DustingTable-Beta-2", "", "Que pouvez-vous faire ici?", "Je sais!", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.Yes, "Je ne sais pas", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.No, parentTable),
-                    Assistances.GradationVisual.Factory.Instance.CreateDialog2WithButtons("DustingTable-Beta-3", "", "Que pouvez-vous faire pour garder votre table propre?", "Je sais!", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.Yes, "Je ne sais pas", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.No, parentTable),
-                    Assistances.GradationVisual.Factory.Instance.CreateDialog2WithButtons("DustingTable-Beta-4", "", "Que pouvez-vous faire pour nettoyer votre table?", "Je sais", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.Yes, "Je ne sais pas", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.No, parentTable),
-                    Assistances.GradationVisual.Factory.Instance.CreateDialog2WithButtons("DustingTable-Beta-4", "", "De quel objet avez-vous besoin pour nettoyer votre table?", "Je sais!", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.Yes, "Je ne sais pas", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.No, parentTable),
-                    Assistances.GradationVisual.Factory.Instance.CreateDialog2WithButtons("DustingTable-Beta-6", "", "Vous devez nettoyer la table avec un chiffon", "Je sais où le trouver!", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.Yes, "J'ai besoin d'aide", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.No, parentTable),
-                    Assistances.GradationVisual.Factory.Instance.CreateDialog2WithButtons("DustingTable-Beta-7", "", "Où pouvez-vous regarder pour le trouver?", "Je sais!", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.Yes, "Je ne sais pas", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.No, parentTable),
-                    Assistances.GradationVisual.Factory.Instance.CreateDialog2WithButtonsContextualized("DustingTable-Beta-8", "", "Avez-vous regardé <Location> ?", parentRag, "J'ai trouvé!", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.Yes, "Je n'ai pas trouvé", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.No, parentTable),
-                    Assistances.GradationVisual.Factory.Instance.CreateDialog2WithButtons("DustingTable-Beta-9", "", "Vous pouvez le trouver proche de vous dans cette pièce", "J'ai trouvé!", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.Yes, "Je ne l'ai pas trouvé", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.No, parentTable),
-                    Assistances.GradationVisual.Factory.Instance.CreateArch("DustingTable-Beta-10", "Vous trouverez le chiffon au bout de cette flèche", parentTable, parentRag, parentTable),
-                    Assistances.GradationVisual.Factory.Instance.CreateDialog2WithButtons("DustingTable-Beta-11", "", "Ok! Nous vous laissons faire", "Ok!", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.ClosingButton, parentTable)
+                    Assistances.GradationVisual.Factory.Instance.CreateDialog2WithButtons("DustingTable-Beta-2", "", /*"Que pouvez-vous faire ici?"*/ Utilities.Materials.Ontology.Instance.AssistanceQuery("assistanceBetaDT", "implicit2", "goalFormulation", "stimulateTheThoughtProcess"), "Je sais!", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.Yes, "Je ne sais pas", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.No, parentTable),
+                    Assistances.GradationVisual.Factory.Instance.CreateDialog2WithButtons("DustingTable-Beta-3", "", /*"Que pouvez-vous faire pour garder votre table propre?"*/ Utilities.Materials.Ontology.Instance.AssistanceQuery("assistanceBetaDT", "subtle1", "goalFormulation", "actionInitiation"), "Je sais!", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.Yes, "Je ne sais pas", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.No, parentTable),
+                    Assistances.GradationVisual.Factory.Instance.CreateDialog2WithButtons("DustingTable-Beta-4", "", /*"Que pouvez-vous faire pour nettoyer votre table?"*/ Utilities.Materials.Ontology.Instance.AssistanceQuery("assistanceBetaDT", "subtle2", "goalFormulation", "actionInitiation"), "Je sais", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.Yes, "Je ne sais pas", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.No, parentTable),
+                    Assistances.GradationVisual.Factory.Instance.CreateDialog2WithButtons("DustingTable-Beta-4", "", /*"De quel objet avez-vous besoin pour nettoyer votre table?"*/ Utilities.Materials.Ontology.Instance.AssistanceQuery("assistanceBetaDT", "explicit3", "goalFormulation", "actionInitiation"), "Je sais!", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.Yes, "Je ne sais pas", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.No, parentTable),
+                    Assistances.GradationVisual.Factory.Instance.CreateDialog2WithButtons("DustingTable-Beta-6", "", /*"Vous devez nettoyer la table avec un chiffon"*/ Utilities.Materials.Ontology.Instance.AssistanceQuery("assistanceBetaDT", "implicit1", "planification", "givingTheAnswer"), "Je sais où le trouver!", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.Yes, "J'ai besoin d'aide", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.No, parentTable),
+                    Assistances.GradationVisual.Factory.Instance.CreateDialog2WithButtons("DustingTable-Beta-7", "", /*"Où pouvez-vous regarder pour le trouver?"*/ Utilities.Materials.Ontology.Instance.AssistanceQuery("assistanceBetaDT", "implicit1", "carryOutTheTask", "actionInitiation"), "Je sais!", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.Yes, "Je ne sais pas", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.No, parentTable),
+                    Assistances.GradationVisual.Factory.Instance.CreateDialog2WithButtonsContextualized("DustingTable-Beta-8", "", /*"Avez-vous regardé <Location> ?"*/ Utilities.Materials.Ontology.Instance.AssistanceQuery("assistanceBetaDT", "subtle1", "carryOutTheTask", "stimulateTheThoughtProcess"), parentRag, "J'ai trouvé!", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.Yes, "Je n'ai pas trouvé", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.No, parentTable),
+                    Assistances.GradationVisual.Factory.Instance.CreateDialog2WithButtons("DustingTable-Beta-9", "", /*"Vous pouvez le trouver proche de vous dans cette pièce"*/ Utilities.Materials.Ontology.Instance.AssistanceQuery("assistanceBetaDT", "subtle2", "carryOutTheTask", "givingAClue"), "J'ai trouvé!", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.Yes, "Je ne l'ai pas trouvé", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.No, parentTable),
+                    Assistances.GradationVisual.Factory.Instance.CreateArch("DustingTable-Beta-10", /*"Vous trouverez le chiffon au bout de cette flèche"*/ Utilities.Materials.Ontology.Instance.AssistanceQuery("assistanceBetaDT", "explicit3", "carryOutTheTask", "givingTheAnswer"), parentTable, parentRag, parentTable),
+                    Assistances.GradationVisual.Factory.Instance.CreateDialog2WithButtons("DustingTable-Beta-11", "", /*"Ok! Nous vous laissons faire"*/ Utilities.Materials.Ontology.Instance.AssistanceQuery("assistanceBetaDT", "declaration", "planification", "stop"), "Ok!", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.ClosingButton, parentTable)
                     };
 
                     Gamma = new List<Assistances.GradationVisual.GradationVisual>
                     {
-                        Assistances.GradationVisual.Factory.Instance.CreateDialog2WithButtons("DustingTable-Gamma-00", "", "Que pouvez-vous faire avec le chiffon?", "Je sais!", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.Yes, "Je ne sais pas", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.No, parentTable),
-                        Assistances.GradationVisual.Factory.Instance.CreateDialog2WithButtons("DustingTable-Gamma-01", "", "Vous devez épousseter la table avec le chiffon jusqu'à que toute la surface de la table soit verte", "Ok!", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.ClosingButton, "J'ai besoin d'aide", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.No, parentTable),
-                        Assistances.GradationVisual.Factory.Instance.CreateDialog2NoButton("DustingTable-Gamma-02", "", "Je ne peux pas plus vous aider. Quelqu'un va venir vous voir", parentTable)
+                        Assistances.GradationVisual.Factory.Instance.CreateDialog2WithButtons("DustingTable-Gamma-00", "", /*"Que pouvez-vous faire avec le chiffon?"*/ Utilities.Materials.Ontology.Instance.AssistanceQuery("assistanceGammaDT", "implicit1", "carryOutTheTask", "actionInitiation"), "Je sais!", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.Yes, "Je ne sais pas", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.No, parentTable),
+                        Assistances.GradationVisual.Factory.Instance.CreateDialog2WithButtons("DustingTable-Gamma-01", "", /*"Vous devez épousseter la table avec le chiffon jusqu'à que toute la surface de la table soit verte"*/ Utilities.Materials.Ontology.Instance.AssistanceQuery("assistanceGammaDT", "explicit3", "carryOutTheTask", "givingTheAnswer"), "Ok!", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.ClosingButton, "J'ai besoin d'aide", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.No, parentTable),
+                        Assistances.GradationVisual.Factory.Instance.CreateDialog2NoButton("DustingTable-Gamma-02", "", /*"Je ne peux pas plus vous aider. Quelqu'un va venir vous voir"*/ Utilities.Materials.Ontology.Instance.AssistanceQuery("assistanceGammaDT", "declaration", "carryOutTheTask", "externalAssistance"), parentTable)
                     };
 
                     Delta = new List<Assistances.GradationVisual.GradationVisual>
                     {
-                        Assistances.GradationVisual.Factory.Instance.CreateDialog2WithButtons("DustingTable-Delta-00", "", "Avez-vous fini votre activité?", "Oui", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.Yes, "Non", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.No, parentTable),
-                        Assistances.GradationVisual.Factory.Instance.CreateDialog2WithButtons("DustingTable-Delta-01", "", "Savez-vous ce que vous devez faire pour réaliser votre activité?", "Oui", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.Yes, "Non", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.No, parentTable),
-                        Assistances.GradationVisual.Factory.Instance.CreateDialog2WithButtons("DustingTable-Delta-02", "", "Vous devez épousseter la table avec un chiffon jusqu'à ce que la surface soit entièrement verte. Vous êtes sur la bonne voie!", "Ok!", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.Yes, "J'ai besoin d'aide", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.No, parentTable),
-                        Assistances.GradationVisual.Factory.Instance.CreateDialog2WithButtons("DustingTable-Delta-03", "", "Êtes-vous sûr d'avoir terminé votre activité?", "Oui", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.Yes, "Non", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.No, parentTable),
-                        Assistances.GradationVisual.Factory.Instance.CreateDialog2WithButtons("DustingTable-Delta-04", "", "En réalité non. Vous devez épousseter la table avec le chiffon jusqu'à que la surface soit entièrement verte", "Ok!", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.ClosingButton, "J'ai besoin d'aide", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.No, parentTable),
-                        Assistances.GradationVisual.Factory.Instance.CreateDialog2WithButtons("DustingTable-Delta-05", "", "Ok! Nous vous laissons faire", "Ok!", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.ClosingButton, parentTable)
+                        Assistances.GradationVisual.Factory.Instance.CreateDialog2WithButtons("DustingTable-Delta-00", "", /*"Avez-vous fini votre activité?"*/ Utilities.Materials.Ontology.Instance.AssistanceQuery("assistanceDeltaDT", "implicit1", "verifyAttainmentOfTheInitialGoal", "clarificationOfInstruction"), "Oui", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.Yes, "Non", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.No, parentTable),
+                        Assistances.GradationVisual.Factory.Instance.CreateDialog2WithButtons("DustingTable-Delta-01", "", /*"Savez-vous ce que vous devez faire pour réaliser votre activité?"*/ Utilities.Materials.Ontology.Instance.AssistanceQuery("assistanceDeltaDT", "subtle1", "carryOutTheTask", "actionInitiation"), "Oui", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.Yes, "Non", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.No, parentTable),
+                        Assistances.GradationVisual.Factory.Instance.CreateDialog2WithButtons("DustingTable-Delta-02", "", /*"Vous devez épousseter la table avec un chiffon jusqu'à ce que la surface soit entièrement verte. Vous êtes sur la bonne voie!"*/ Utilities.Materials.Ontology.Instance.AssistanceQuery("assistanceDeltaDT", "explicit3", "verifyAttainmentOfTheInitialGoal", "motivationalAssistance"), "Ok!", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.Yes, "J'ai besoin d'aide", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.No, parentTable),
+                        Assistances.GradationVisual.Factory.Instance.CreateDialog2WithButtons("DustingTable-Delta-03", "", /*"Êtes-vous sûr d'avoir terminé votre activité?"*/ Utilities.Materials.Ontology.Instance.AssistanceQuery("assistanceDeltaDT", "subtle1", "carryOutTheTask", "recallAnElement"), "Oui", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.Yes, "Non", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.No, parentTable),
+                        Assistances.GradationVisual.Factory.Instance.CreateDialog2WithButtons("DustingTable-Delta-04", "", /*"En réalité non. Vous devez épousseter la table avec le chiffon jusqu'à que la surface soit entièrement verte"*/ Utilities.Materials.Ontology.Instance.AssistanceQuery("assistanceDeltaDT", "explicit3", "carryOutTheTask", "givingTheAnswer"), "Ok!", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.ClosingButton, "J'ai besoin d'aide", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.No, parentTable),
+                        Assistances.GradationVisual.Factory.Instance.CreateDialog2WithButtons("DustingTable-Delta-05", "", /*"Ok! Nous vous laissons faire"*/ Utilities.Materials.Ontology.Instance.AssistanceQuery("assistanceDeltaDT", "declaration", "carryOutTheTask", "stop"), "Ok!", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.ClosingButton, parentTable)
                     };
 
                     Epsilon = new List<Assistances.GradationVisual.GradationVisual>
                     {
                         Assistances.GradationVisual.Factory.Instance.CreateExclamationMark("DustingTable-Epsilon-00", parentRag),
-                        Assistances.GradationVisual.Factory.Instance.CreateDialog2WithButtons("DustingTable-Epsilon-01", "", "L'objet dont vous avez besoin pour compléter votre activité est ici", "Ok!", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.Yes, "Je ne comprends pas", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.No, parentRag),
-                        Assistances.GradationVisual.Factory.Instance.CreateDialog2WithButtons("DustingTable-Epsilon-02", "", "Vous devez utiliser le chiffon sous ce message pour nettoyer la table", "Ok!", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.Yes, "Je ne comprends pas", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.No, parentRag),
-                        Assistances.GradationVisual.Factory.Instance.CreateDialog2WithButtons("DustingTable-Epsilon-03", "", "Ok! Nous vous laissons faire", "Ok!", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.ClosingButton, parentRag),
-                        Assistances.GradationVisual.Factory.Instance.CreateDialog2NoButton("DustingTable-Epsilon-04", "", "Je ne peux pas plus vous aider. Quelqu'un va venir vous voir", parentRag)
+                        Assistances.GradationVisual.Factory.Instance.CreateDialog2WithButtons("DustingTable-Epsilon-01", "", /*"L'objet dont vous avez besoin pour compléter votre activité est ici"*/ Utilities.Materials.Ontology.Instance.AssistanceQuery("assistanceEpsilonDT", "subtle1", "carryOutTheTask", "clarificationOfInstruction"), "Ok!", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.Yes, "Je ne comprends pas", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.No, parentRag),
+                        Assistances.GradationVisual.Factory.Instance.CreateDialog2WithButtons("DustingTable-Epsilon-02", "", /*"Vous devez utiliser le chiffon sous ce message pour nettoyer la table"*/ Utilities.Materials.Ontology.Instance.AssistanceQuery("assistanceEpsilonDT", "explicit3", "carryOutTheTask", "givingTheAnswer"), "Ok!", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.Yes, "Je ne comprends pas", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.No, parentRag),
+                        Assistances.GradationVisual.Factory.Instance.CreateDialog2WithButtons("DustingTable-Epsilon-03", "", /*"Ok! Nous vous laissons faire"*/ Utilities.Materials.Ontology.Instance.AssistanceQuery("assistanceEpsilonDT", "declaration", "carryOutTheTask", "stop"), "Ok!", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.ClosingButton, parentRag),
+                        Assistances.GradationVisual.Factory.Instance.CreateDialog2NoButton("DustingTable-Epsilon-04", "", /*"Je ne peux pas plus vous aider. Quelqu'un va venir vous voir"*/ Utilities.Materials.Ontology.Instance.AssistanceQuery("assistanceEpsilonDT", "declaration", "carryOutTheTask", "externalAssistance"), parentRag)
                     };
 
                     Iota = new List<Assistances.GradationVisual.GradationVisual>
                     {
-                        Assistances.GradationVisual.Factory.Instance.CreateDialog2WithButtons("DustingTable-Iota-01", "", "Êtes-vous sûr que vous utilisez le bon objet pour nettoyer la table?", "Oui", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.Yes, "Je ne suis pas sûr", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.No, parentTable),
-                        Assistances.GradationVisual.Factory.Instance.CreateDialog2WithButtons("DustingTable-Iota-02", "", "Êtes-vous sûr que vous utilisez le chiffon pour nettoyer la table?", "Oui", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.Yes, "Je ne suis pas sûr", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.No, parentTable),
-                        Assistances.GradationVisual.Factory.Instance.CreateDialog2WithButtons("DustingTable-Iota-03", "", "Ce n'est pas le bon chiffon. L'avez-vous cherché?", "Oui", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.Yes, "Non", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.No, parentTable),
-                        Assistances.GradationVisual.Factory.Instance.CreateDialog2WithButtons("DustingTable-Iota-04", "", "Non en effet. Où pouvez-vous regarder pour le trouver?", "Je sais", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.Yes, "Je ne sais pas", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.No, parentTable)
+                        Assistances.GradationVisual.Factory.Instance.CreateDialog2WithButtons("DustingTable-Iota-01", "", /*"Êtes-vous sûr que vous utilisez le bon objet pour nettoyer la table?"*/ Utilities.Materials.Ontology.Instance.AssistanceQuery("assistanceIotaDT", "implicit1", "carryOutTheTask", "clarificationOfInstruction"), "Oui", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.Yes, "Je ne suis pas sûr", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.No, parentTable),
+                        Assistances.GradationVisual.Factory.Instance.CreateDialog2WithButtons("DustingTable-Iota-02", "", /*"Êtes-vous sûr que vous utilisez le chiffon pour nettoyer la table?"*/ Utilities.Materials.Ontology.Instance.AssistanceQuery("assistanceIotaDT", "subtle1", "carryOutTheTask", "recallAnElement"), "Oui", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.Yes, "Je ne suis pas sûr", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.No, parentTable),
+                        Assistances.GradationVisual.Factory.Instance.CreateDialog2WithButtons("DustingTable-Iota-03", "", /*"Ce n'est pas le bon chiffon. L'avez-vous cherché?"*/ Utilities.Materials.Ontology.Instance.AssistanceQuery("assistanceIotaDT", "subtle2", "carryOutTheTask", "actionInitiation"), "Oui", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.Yes, "Non", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.No, parentTable),
+                        Assistances.GradationVisual.Factory.Instance.CreateDialog2WithButtons("DustingTable-Iota-04", "", /*"Non en effet. Où pouvez-vous regarder pour le trouver?"*/ Utilities.Materials.Ontology.Instance.AssistanceQuery("assistanceIotaDT", "subtle3", "carryOutTheTask", "actionInitiation"), "Je sais", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.Yes, "Je ne sais pas", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.No, parentTable)
                     };
 
-                    
+                    string userRoom = MATCH.Managers.Rooms.Instance.InWhatRoomIsUser();
+                    string message = MATCH.Managers.Rooms.Instance.ContextualizedRoomQuery("dustingTable", userRoom);
 
-                    
+                    Mu = new List<Assistances.GradationVisual.GradationVisual>
+                    {
+                        Assistances.GradationVisual.Factory.Instance.CreateDialog2NoButton("DustingTable-Mu-01", "", message, MATCH.Assistances.InteractionSurfaceFollower.Instance.transform)
+                    };
+
+
+
+
 
                     /*Eta = new List<Assistances.GradationVisual.GradationVisual>
                     {
 
                     };*/
 
-                    
 
-                    
+
+
+
                 }
 
                 public void ReusableComponentBeta06(ref Assistances.AssistanceGradationExplicit assistanceToAdd)
@@ -970,6 +1091,7 @@ namespace MATCH
                 {
                     assistancetoAdd.AddAssistance(Gamma[2], Assistances.Buttons.Button.ButtonType.ClosingButton, null);
                 }
+
             }
         }
     }

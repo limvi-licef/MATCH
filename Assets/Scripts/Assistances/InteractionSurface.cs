@@ -154,6 +154,7 @@ namespace MATCH
                 ShowInteractionSurfaceTable(!(View.GetComponent<BoundsControl>().enabled));
             }
 
+
             public void ShowInteractionSurfaceTable(bool show)
             {
 
@@ -227,6 +228,7 @@ namespace MATCH
             {
                 EventUserTouched?.Invoke(this, EventArgs.Empty);
             }
+
         }
 
     }

@@ -101,7 +101,7 @@ namespace MATCH
                     }
 
                     string originalDescription = GetDescription();
-                    SetDescription(originalDescription.Replace("<Location>", toAdd));
+                      SetDescription(originalDescription.Replace("<Location>", toAdd));
 
                     base.Show(eventHandler, withAnimation);
                 }

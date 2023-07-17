@@ -1,4 +1,4 @@
-/*Copyright 2022 Guillaume Spalla
+/*Copyright 2022 Emma Foulon, Guillaume Spalla
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -28,25 +28,80 @@ using VDS.RDF;
 /**
  * Static class containing various utilities functions
  * */
+
 namespace MATCH
 {
     namespace Utilities
     {
         namespace Materials
         {
-            public static class Ontology
+            public class Ontology
             {
-                //static string Path = "MATCH/Ontology/";
+                public VDS.RDF.Graph Graph;
+                private static Ontology instance;
+
                 static string Path = "./Assets/Materials/Resources/MATCH/Ontology/";
                 public static string Test = Path + "Test.rdf";
+                /* private string OntologyPath = "./Assets/Materials/Resources/MATCH/Ontology/Test.rdf"; */
 
-                /*public static VDS.RDF.IGraph Load(string prefabPath)
+                private Ontology()
                 {
+                    // Load the ontology
+                    Graph = new VDS.RDF.Graph();
+                    VDS.RDF.Parsing.FileLoader.Load(Graph, Test);
+                }
+
+                public static Ontology Instance
+                {
+                    get
+                    {
+                        if (instance == null)
+                            instance = new Ontology();
+                        return instance;
+                    }
+                }
 
 
-                    //return Resources.Load<VDS.RDF.IGraph>(prefabPath);
-                }*/
-            } 
+                // Allows to display the message only, without the URI which always starts with ^
+                public string ShortenMessage(string longMessage)
+                {
+                    char symbol = '^';
+                    int endIndex = longMessage.IndexOf(symbol);
+                    longMessage = longMessage.Substring(0, endIndex);
+                    return longMessage;
+                }
+
+
+                // Make a simple query to get the assistance text message
+                public string AssistanceQuery(string assistanceName, string illocutionaryAct, string impairment, string assistanceType)
+                {
+                    VDS.RDF.Parsing.SparqlQueryParser parser = new VDS.RDF.Parsing.SparqlQueryParser();
+
+                    string sparqlQuery = $"PREFIX mao: <https://ontology.staging.domus.usherbrooke.ca/MAO#> PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>" +
+                                        $"SELECT ?message WHERE {{ ?texte rdf:type mao:Text . ?texte mao:isLinkedToAssistance mao:{assistanceName} . ?texte mao:hasIllocutionaryAct mao:{illocutionaryAct}. ?texte mao:isLinkedToImpairment mao:{impairment}. ?texte mao:hasAssistanceType mao:{assistanceType}. ?texte mao:hasContent ?message}}";
+
+                    VDS.RDF.Query.SparqlQuery query = parser.ParseFromString(sparqlQuery);
+
+                    VDS.RDF.Query.SparqlResultSet testresults = (VDS.RDF.Query.SparqlResultSet)Graph.ExecuteQuery(query.ToString());
+                    string message = "";
+
+                    if (testresults.Count > 0)
+                    {
+                        var result = testresults[0];
+                        string text = result.Value("message").ToString();
+                        message = ShortenMessage(text);
+                    }
+                    else
+                    {
+                        DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Aucun résultat trouvé.");
+                    }
+
+                    return message;
+
+
+                }
+            }
         }
     }
 }
+

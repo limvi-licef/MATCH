@@ -34,6 +34,7 @@ namespace MATCH
             public MATCH.Assistances.Dialogs.Dialog1 DebugPositioner;
 
             private ObjectPositioningStorage PositioningStorage;
+            public ObjectPositioningStorage GetPositioningStorage() { return PositioningStorage; }
 
             private void Awake()
             {

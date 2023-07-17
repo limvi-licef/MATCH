@@ -223,7 +223,7 @@ namespace MATCH
             public static List<Vector3> CalculateBezierCurve(Vector3 startPoint, Vector3 endPoint, Vector3 cornerPoint)
             {
                 List<Vector3> points = new List<Vector3>();
-                
+
                 float t = 0.0f;
                 int nbPoints = 1000;
 
@@ -238,7 +238,7 @@ namespace MATCH
 
             }
 
-            public static Linear CalculateLinearCoefficients (float x1, float y1, float x2, float y2)
+            public static Linear CalculateLinearCoefficients(float x1, float y1, float x2, float y2)
             {
                 Linear toReturn;
 
@@ -273,12 +273,63 @@ namespace MATCH
 
                 float totalAngles = angleAB + angleAC + angleBC;
 
-                if ( Mathf.RoundToInt(totalAngles) == 360)
+                if (Mathf.RoundToInt(totalAngles) == 360)
                 {
                     toReturn = true;
                 }
 
                 return toReturn;
+            }
+
+            /*
+            public static bool IsPointInRectangle(Vector2 rectanglePointA, Vector2 rectanglePointB, Vector2 rectanglePointC, Vector2 rectanglePointD, Vector2 userPosition)
+            {
+                bool toReturn = false;
+
+                float angleAB = CalculateAngleInTriangle(rectanglePointA, rectanglePointB, userPosition);
+                float angleBC = CalculateAngleInTriangle(rectanglePointB, rectanglePointC, userPosition);
+                float angleCD = CalculateAngleInTriangle(rectanglePointC, rectanglePointD, userPosition);
+                float angleDA = CalculateAngleInTriangle(rectanglePointD, rectanglePointA, userPosition);
+
+                float totalAngles = angleAB + angleBC + angleCD + angleDA;
+
+                if (Mathf.RoundToInt(totalAngles) == 360)
+                {
+                    toReturn = true;
+                }
+
+                return toReturn;
+            }
+            */
+
+            public static bool IsPointInRectangle(Vector2 rectanglePointA, Vector2 rectanglePointB, Vector2 rectanglePointC, Vector2 rectanglePointD, Vector2 userPosition)
+            {
+                float minX = Mathf.Min(rectanglePointA.x, rectanglePointB.x, rectanglePointC.x, rectanglePointD.x);
+                float maxX = Mathf.Max(rectanglePointA.x, rectanglePointB.x, rectanglePointC.x, rectanglePointD.x);
+                float minY = Mathf.Min(rectanglePointA.y, rectanglePointB.y, rectanglePointC.y, rectanglePointD.y);
+                float maxY = Mathf.Max(rectanglePointA.y, rectanglePointB.y, rectanglePointC.y, rectanglePointD.y);
+
+                bool isInsideX = (userPosition.x >= minX && userPosition.x <= maxX);
+                bool isInsideY = (userPosition.y >= minY && userPosition.y <= maxY);
+
+                return isInsideX && isInsideY;
+            }
+
+            public static void PersonalizeRoomAssistance(MATCH.Scenarios.BehaviorTrees.DustingTableAssistances assistance, Int32 numeroAssistance, string message)
+            {
+                Assistances.GradationVisual.GradationVisual testGradVis = assistance.Mu[numeroAssistance];
+                Assistances.IAssistance testAssistance = (Assistances.IAssistance)testGradVis.GetCurrentAssistance();
+                Assistances.Dialogs.Dialog2 testDialog2 = (Assistances.Dialogs.Dialog2)testAssistance.GetRootDecoratedAssistance();
+                testDialog2.SetDescription(message);
+            }
+
+            public static string Test(MATCH.Scenarios.BehaviorTrees.DustingTableAssistances assistance, Int32 numeroAssistance)
+            {
+                Assistances.GradationVisual.GradationVisual testGradVis = assistance.Mu[numeroAssistance];
+                Assistances.IAssistance testAssistance = (Assistances.IAssistance)testGradVis.GetCurrentAssistance();
+                Assistances.Dialogs.Dialog2 testDialog2 = (Assistances.Dialogs.Dialog2)testAssistance.GetRootDecoratedAssistance();
+                string message = testDialog2.GetDescription();
+                return message;
             }
         }
     }

@@ -57,6 +57,16 @@ namespace MATCH
                 //DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Adding button " + type.ToString() + " for assistance " + assistance.name);
             }
 
+            /*
+            public void ChangeAssistance(GradationVisual.GradationVisual assistance, Buttons.Button.ButtonType type, ref GradationVisual.GradationVisual assistanceTarget)
+            {
+                if (AssistanceGradation.ContainsKey(assistance) == true)
+                {
+                    AssistanceGradation[assistance] = new Dictionary<Buttons.Button.ButtonType, GradationVisual.GradationVisual>();
+                }
+            }
+            */
+
             public void BackToRoot()
             {
                 AssistanceCurrent = AssistanceRoot;
