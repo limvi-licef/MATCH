@@ -116,6 +116,36 @@ namespace MATCH
             // Hiding spongy
             AddSwitchButton("Spongy - hide", CallbackHideSpongy, Panels.Left, ButtonType.Hide);
 
+            // Button to enable various scenarios
+            AddSwitchButton("Enable scenario sandbox", delegate
+            {
+                Transform sandbox = GameObject.Find("MATCH").transform.Find("Scenarios").Find("BehaviorTrees").Find("SandboxDecorators");
+                sandbox.gameObject.SetActive(!sandbox.gameObject.activeSelf);
+            }, Panels.Middle);
+
+            AddSwitchButton("Enable scenario dusting table", delegate
+            {
+                Transform sandbox = GameObject.Find("MATCH").transform.Find("Scenarios").Find("BehaviorTrees").Find("DustingTable");
+                sandbox.gameObject.SetActive(!sandbox.gameObject.activeSelf);
+            }, Panels.Middle);
+
+            AddSwitchButton("Enable scenario tutorial", delegate
+            {
+                Transform sandbox = GameObject.Find("MATCH").transform.Find("Scenarios").Find("BehaviorTrees").Find("Tutorial");
+                sandbox.gameObject.SetActive(!sandbox.gameObject.activeSelf);
+            }, Panels.Middle);
+
+            AddInputWithButton(Assistances.Decorators.LinePath.Threshold.ToString(), "Threshold compute LinePath", delegate (System.Object o, EventArgs e)
+            {
+                Utilities.EventHandlerArgs.String arg = (Utilities.EventHandlerArgs.String)e;
+                Assistances.Decorators.LinePath.Threshold = float.Parse(arg.m_text);
+            }, AdminMenu.Panels.Middle);
+
+            AddInputWithButton(Assistances.AssistanceGradationExplicit.FarFromAssistanceWhenLookingAtIt.ToString(), "Threshold distance hand", delegate (System.Object o, EventArgs e)
+            {
+                Utilities.EventHandlerArgs.String arg = (Utilities.EventHandlerArgs.String)e;
+                Assistances.AssistanceGradationExplicit.FarFromAssistanceWhenLookingAtIt = float.Parse(arg.m_text);
+            }, AdminMenu.Panels.Middle);
 
             //AddText("Test", delegate() { });
         }

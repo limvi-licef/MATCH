@@ -76,7 +76,7 @@ PlayerSettings:
   androidFullscreenMode: 1
   defaultIsNativeResolution: 1
   macRetinaSupport: 1
-  runInBackground: 0
+  runInBackground: 1
   captureSingleScreen: 0
   muteOtherAudioSources: 0
   Prepare IOS For Recording: 0
@@ -275,6 +275,31 @@ PlayerSettings:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 3170939296398299673, guid: 359d35bc5233ff146bce4931bf21af09, type: 2}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 5662378212503586453, guid: 359d35bc5233ff146bce4931bf21af09, type: 2}
   - {fileID: -1907684654054695187, guid: 059a7a3802e1002479b8bb8ef9f20a47, type: 2}
   - {fileID: 0}
   metroInputSource: 0
@@ -717,6 +742,8 @@ PlayerSettings:
   platformCapabilities:
     WindowsStoreApps:
       GazeInput: True
+      PrivateNetworkClientServer: True
+      InternetClientServer: True
       SpatialPerception: True
       RemovableStorage: True
       InternetClient: True

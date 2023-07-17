@@ -1,4 +1,4 @@
-/*Copyright 2022 Guillaume Spalla
+/*Copyright 2022 Guillaume Spalla, Louis Marquet, Léri Lamour
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -31,6 +31,12 @@ namespace MATCH
     {
         static class Utility
         {
+            public struct Linear
+            {
+                public float a;
+                public float b;
+            }
+
             // Utilities functions: to be moved to a dedicated namespace later?
             public static void AddTouchCallback(Transform transform, UnityEngine.Events.UnityAction callback)
             {
@@ -214,6 +220,66 @@ namespace MATCH
                 return false;
             }
 
+            public static List<Vector3> CalculateBezierCurve(Vector3 startPoint, Vector3 endPoint, Vector3 cornerPoint)
+            {
+                List<Vector3> points = new List<Vector3>();
+                
+                float t = 0.0f;
+                int nbPoints = 1000;
+
+                for (int i = 0; i < nbPoints; i++)
+                {
+                    t = (float)i / (float)nbPoints;
+
+                    points.Add((1.0f - t) * (1.0f - t) * startPoint + 2 * (1 - t) * t * cornerPoint + t * t * endPoint);
+                }
+
+                return points;
+
+            }
+
+            public static Linear CalculateLinearCoefficients (float x1, float y1, float x2, float y2)
+            {
+                Linear toReturn;
+
+                toReturn.a = (y2 - y1) / (x2 - x1);
+                toReturn.b = y1 - toReturn.a * x1;
+
+                return toReturn;
+            }
+
+            public static float CalculateDistancePoints(Vector3 start, Vector3 end)
+            {
+                float toReturn = Mathf.Sqrt(Mathf.Pow(end.x - start.x, 2) + Mathf.Pow(end.y - start.y, 2) + Mathf.Pow(end.z - start.z, 2));
+
+                return toReturn;
+            }
+
+            /**
+             * Returns in degree
+             */
+            public static float CalculateAngleInTriangle(Vector2 trianglePointA, Vector2 trianglePointB, Vector2 pointToFindAngle)
+            {
+                return Mathf.Rad2Deg * Mathf.Acos((Mathf.Pow(Vector2.Distance(trianglePointA, trianglePointB), 2) - Mathf.Pow(Vector2.Distance(pointToFindAngle, trianglePointA), 2) - Mathf.Pow(Vector2.Distance(pointToFindAngle, trianglePointB), 2)) / (-2 * Vector2.Distance(pointToFindAngle, trianglePointA) * Vector2.Distance(pointToFindAngle, trianglePointB)));
+            }
+
+            public static bool IsPointInTriangle(Vector2 trianglePointA, Vector2 trianglePointB, Vector2 trianglePointC, Vector2 pointToFindInTriangle)
+            {
+                bool toReturn = false;
+
+                float angleAB = CalculateAngleInTriangle(trianglePointA, trianglePointB, pointToFindInTriangle);
+                float angleAC = CalculateAngleInTriangle(trianglePointA, trianglePointC, pointToFindInTriangle);
+                float angleBC = CalculateAngleInTriangle(trianglePointB, trianglePointC, pointToFindInTriangle);
+
+                float totalAngles = angleAB + angleAC + angleBC;
+
+                if ( Mathf.RoundToInt(totalAngles) == 360)
+                {
+                    toReturn = true;
+                }
+
+                return toReturn;
+            }
         }
     }
 }

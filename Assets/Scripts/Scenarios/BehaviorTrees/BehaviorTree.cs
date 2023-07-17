@@ -32,7 +32,7 @@ namespace MATCH
                 private NPBehave.Root Tree;
                 private Blackboard Conditions;
                 private List<string> ConditionsIds; // To ease browsing of Conditions with updating the matrix
-                private Dictionary<string, bool[]> ConditionsUpdate;
+                public Dictionary<string, bool[]> ConditionsUpdate;
 
                 private MATCH.Assistances.Dialogs.Dialog1 BehaviorTreeDebugWindow = null;
                 private MATCH.Assistances.Dialogs.Dialog1 AssistancesDebugWindow = null;
@@ -47,7 +47,7 @@ namespace MATCH
                 // Start is called before the first frame update
                 public virtual void Start()
                 {
-                    //InitializeDebugWindows();
+                    InitializeDebugWindows();
 
                     // Debug object to display the status of the BT conditions
                     /*BehaviorTreeDebugWindow.Show(Utilities.Utility.GetEventHandlerEmpty(), false);
@@ -199,6 +199,7 @@ namespace MATCH
                     if (AssistancesDebugWindow != null)
                     {
                         AssistancesDebugWindow.SetDescription(text);
+                        DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, text);
                     }
                 }
 
@@ -215,8 +216,8 @@ namespace MATCH
                         }
 
                         // Display the text
-                   
                         BehaviorTreeDebugWindow.SetDescription(textToDisplay, 0.08f);
+                        Debug.Log(textToDisplay);
                     }
                 }
 
