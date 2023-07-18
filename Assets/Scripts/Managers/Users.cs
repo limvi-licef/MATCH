@@ -48,7 +48,8 @@ namespace MATCH
             void Start()
             {
                 // To load a profile by default in case no profile is chosen manually on the cockpit
-                UserProfile = "https://ontology.staging.domus.usherbrooke.ca/MIRAO#emmaFoulon";
+                UserProfile = "emmaFoulon";
+                DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Profil par défaut : " + UserProfile);
 
                 VDS.RDF.Parsing.SparqlQueryParser parser = new VDS.RDF.Parsing.SparqlQueryParser();
                 VDS.RDF.Query.SparqlQuery query = parser.ParseFromString("PREFIX mirao: <https://ontology.staging.domus.usherbrooke.ca/MIRAO#> PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>" +
@@ -68,6 +69,11 @@ namespace MATCH
                         {
                             MATCH.DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, MATCH.DebugMessagesManager.MessageLevel.Info, "Ok profil.");
                             UserProfile = result.Value("a").ToString();
+                            char symbol = '#';
+                            int beginIndex = UserProfile.IndexOf(symbol);
+                            UserProfile = UserProfile.Substring(beginIndex + 1);
+                            DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Profil choisi : " + UserProfile);
+
                         }, MATCH.AdminMenu.Panels.Left);
                     }
                 }

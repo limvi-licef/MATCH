@@ -2468,7 +2468,7 @@ As for their structure and shape, sofas usually feature two armrests and a unifo
         <MIRAO:hasFamilyName rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#foulon"/>
         <MIRAO:hasFavoriteColor rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#orange"/>
         <MIRAO:hasFirstName rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#emma"/>
-        <MIRAO:preferredCommChannel rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#VisualMessage"/>
+        <MIRAO:preferredCommChannel rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#Text"/>
     </owl:NamedIndividual>
     
 
