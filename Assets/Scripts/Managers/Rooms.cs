@@ -28,7 +28,6 @@ namespace MATCH
         public class Rooms : MonoBehaviour
         {
             private static Rooms instance;
-            public string UserProfile;
 
             private Rooms()
             {
@@ -47,12 +46,10 @@ namespace MATCH
             // Start is called before the first frame update
             void Start()
             {
-                // To load a profile by default in case no profile is chosen manually on the cockpit
-                UserProfile = "https://ontology.staging.domus.usherbrooke.ca/MAO#emmaFoulon";
                 List<string> RoomList = MATCH.Utilities.WorldLockingToolsManager.Instance.GetPositioningStorage().GetObjetsRegisteredNames();
                     
                 VDS.RDF.Parsing.SparqlQueryParser parser = new VDS.RDF.Parsing.SparqlQueryParser();
-                VDS.RDF.Query.SparqlQuery query = parser.ParseFromString("PREFIX mao: <https://ontology.staging.domus.usherbrooke.ca/MAO#> PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> SELECT ?roomnames WHERE {?rooms rdfs:subClassOf mao:Rooms . ?rooms rdfs:label ?roomnames}");
+                VDS.RDF.Query.SparqlQuery query = parser.ParseFromString("PREFIX mirao: <https://ontology.staging.domus.usherbrooke.ca/MIRAO#> PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> SELECT ?roomnames WHERE {?rooms rdfs:subClassOf mirao:Rooms . ?rooms rdfs:label ?roomnames}");
                 VDS.RDF.Query.SparqlResultSet results = (VDS.RDF.Query.SparqlResultSet)MATCH.Utilities.Materials.Ontology.Instance.Graph.ExecuteQuery(query.ToString());
 
                 if (results != null)
@@ -84,27 +81,6 @@ namespace MATCH
                                 MATCH.Assistances.InteractionSurface test = MATCH.Assistances.Factory.Instance.CreateInteractionSurface(room, MATCH.AdminMenu.Panels.Right, new Vector3(1f, 0.01f, 0.8f), new Vector3(-0.4f, -1.6f, -4f), MATCH.Utilities.Materials.Colors.Cyan, true, true, MATCH.Utilities.Utility.GetEventHandlerEmpty(), true, transform);
                                 test.SetPreventResizeY(true);
                             }, MATCH.AdminMenu.Panels.Right);
-                        }
-                    }
-
-                    query = parser.ParseFromString("PREFIX mao: <https://ontology.staging.domus.usherbrooke.ca/MAO#> PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>" +
-                        "SELECT ?firstNameLabel ?familyNameLabel ?a WHERE {?a mao:hasFirstName ?firstName . ?firstName rdfs:label ?firstNameLabel . ?a mao:hasFamilyName ?familyName . ?familyName rdfs:label ?familyNameLabel}");
-                    results = (VDS.RDF.Query.SparqlResultSet)MATCH.Utilities.Materials.Ontology.Instance.Graph.ExecuteQuery(query.ToString());
-
-                    if (results != null)
-                    {
-                        foreach (VDS.RDF.Query.SparqlResult result in results)
-                        {
-                            string firstName = result.Value("firstNameLabel").ToString();
-                            firstName = MATCH.Utilities.Materials.Ontology.Instance.ShortenMessage(firstName);
-                            string familyName = result.Value("familyNameLabel").ToString();
-                            familyName = MATCH.Utilities.Materials.Ontology.Instance.ShortenMessage(familyName);
-                            string name = $"Choisir le profil de {firstName} {familyName}";
-                            MATCH.AdminMenu.Instance.AddButton(name, delegate ()
-                            {
-                                MATCH.DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, MATCH.DebugMessagesManager.MessageLevel.Info, "Ok profil.");
-                                UserProfile = result.Value("a").ToString();
-                            }, MATCH.AdminMenu.Panels.Left);
                         }
                     }
                 }
@@ -178,8 +154,8 @@ namespace MATCH
             {
                 VDS.RDF.Parsing.SparqlQueryParser parser = new VDS.RDF.Parsing.SparqlQueryParser();
 
-                string sparqlQuery = $"PREFIX mao: <https://ontology.staging.domus.usherbrooke.ca/MAO#> PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>" +
-                                    $"SELECT ?roomname ?place WHERE {{ mao:{scenario} mao:isAssociatedToRoom ?room . ?room rdfs:label ?roomname . ?room mao:hasLocation ?place}}";
+                string sparqlQuery = $"PREFIX mirao: <https://ontology.staging.domus.usherbrooke.ca/MIRAO#> PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>" +
+                                    $"SELECT ?roomname ?place WHERE {{ mirao:{scenario} mirao:isAssociatedToRoom ?room . ?room rdfs:label ?roomname . ?room mirao:hasLocation ?place}}";
 
                 VDS.RDF.Query.SparqlQuery query = parser.ParseFromString(sparqlQuery);
                 VDS.RDF.Query.SparqlResultSet results = (VDS.RDF.Query.SparqlResultSet)MATCH.Utilities.Materials.Ontology.Instance.Graph.ExecuteQuery(query.ToString());

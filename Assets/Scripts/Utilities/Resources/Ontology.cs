@@ -41,14 +41,14 @@ namespace MATCH
                 private static Ontology instance;
 
                 static string Path = "./Assets/Materials/Resources/MATCH/Ontology/";
-                public static string Test = Path + "Test.rdf";
-                /* private string OntologyPath = "./Assets/Materials/Resources/MATCH/Ontology/Test.rdf"; */
+                public static string MIRAO = Path + "MIRAO.rdf";
+                /* private string OntologyPath = "./Assets/Materials/Resources/MATCH/Ontology/MIRAO.rdf"; */
 
                 private Ontology()
                 {
                     // Load the ontology
                     Graph = new VDS.RDF.Graph();
-                    VDS.RDF.Parsing.FileLoader.Load(Graph, Test);
+                    VDS.RDF.Parsing.FileLoader.Load(Graph, MIRAO);
                 }
 
                 public static Ontology Instance
@@ -71,7 +71,7 @@ namespace MATCH
                     return longMessage;
                 }
 
-
+                /*
                 // Make a simple query to get the assistance text message
                 public string AssistanceQuery(string assistanceName, string illocutionaryAct, string impairment, string assistanceType)
                 {
@@ -97,9 +97,36 @@ namespace MATCH
                     }
 
                     return message;
-
-
                 }
+                */
+
+                // Make a simple query to get the assistance text message
+                public string AssistanceQuery(string assistanceName, string illocutionaryAct, string impairment, string assistanceType)
+                {
+                    VDS.RDF.Parsing.SparqlQueryParser parser = new VDS.RDF.Parsing.SparqlQueryParser();
+
+                    string sparqlQuery = $"PREFIX mirao: <https://ontology.staging.domus.usherbrooke.ca/MIRAO#> PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>" +
+                                        $"SELECT ?message WHERE {{ mirao:{MATCH.Managers.Users.Instance.UserProfile} mirao:preferredCommChannel ?modeComm . ?texte mirao:isLinkedToAssistance mirao:{assistanceName} . ?texte mirao:hasIllocutionaryAct mirao:{illocutionaryAct}. ?texte mirao:isLinkedToImpairment mirao:{impairment}. ?texte mirao:hasAssistanceType mirao:{assistanceType}. ?texte rdf:type ?modeComm . ?texte mirao:hasContent ?message}}";
+
+                    VDS.RDF.Query.SparqlQuery query = parser.ParseFromString(sparqlQuery);
+
+                    VDS.RDF.Query.SparqlResultSet results = (VDS.RDF.Query.SparqlResultSet)Graph.ExecuteQuery(query.ToString());
+                    string message = "";
+
+                    if (results.Count > 0)
+                    {
+                        var result = results[0];
+                        string text = result.Value("message").ToString();
+                        message = ShortenMessage(text);
+                    }
+                    else
+                    {
+                        DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Aucun résultat trouvé.");
+                    }
+
+                    return message;
+                }
+
             }
         }
     }
