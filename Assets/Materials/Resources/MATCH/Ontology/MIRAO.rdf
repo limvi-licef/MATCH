@@ -1,0 +1,3357 @@
+<?xml version="1.0"?>
+<rdf:RDF xmlns="https://ontology.staging.domus.usherbrooke.ca/MAO#"
+     xml:base="https://ontology.staging.domus.usherbrooke.ca/MAO"
+     xmlns:DUL="http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#"
+     xmlns:MAO="https://ontology.staging.domus.usherbrooke.ca/MAO#"
+     xmlns:owl="http://www.w3.org/2002/07/owl#"
+     xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+     xmlns:xml="http://www.w3.org/XML/1998/namespace"
+     xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+     xmlns:DUL1="http://www.loa-cnr.it/ontologies/DUL.owl#"
+     xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+     xmlns:MIRAO="https://ontology.staging.domus.usherbrooke.ca/MIRAO#"
+     xmlns:terms="http://purl.org/dc/terms/">
+    <owl:Ontology rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO">
+        <rdfs:comment>A simple family relationships ontology and associated instances. the description is of the family of Robert Stevens and the intention is to use the minimal of asserted relationships and the maximum of inference. To do this  I&apos;ve used role chains, nominals and properties hierarchies.</rdfs:comment>
+    </owl:Ontology>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Annotation properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://purl.org/dc/terms/title -->
+
+    <owl:AnnotationProperty rdf:about="http://purl.org/dc/terms/title"/>
+    
+
+
+    <!-- http://www.w3.org/2000/01/rdf-schema#comment -->
+
+    <owl:AnnotationProperty rdf:about="http://www.w3.org/2000/01/rdf-schema#comment"/>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#containsEnvironmentElement -->
+
+    <owl:AnnotationProperty rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#containsEnvironmentElement"/>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#containsSomeTime -->
+
+    <owl:AnnotationProperty rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#containsSomeTime"/>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#definition -->
+
+    <owl:AnnotationProperty rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#definition">
+        <rdfs:label>definition</rdfs:label>
+        <MIRAO:definition>The official definition, explaining the meaning of a class or property. Shall be Aristotelian, formalized and normalized. Can be augmented with colloquial definitions.</MIRAO:definition>
+    </owl:AnnotationProperty>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#hasAssociatedScript -->
+
+    <owl:AnnotationProperty rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#hasAssociatedScript"/>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#hasContent -->
+
+    <owl:AnnotationProperty rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#hasContent"/>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#hasLocation -->
+
+    <owl:AnnotationProperty rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#hasLocation"/>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#isAssociatedToEnvironmentElement -->
+
+    <owl:AnnotationProperty rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#isAssociatedToEnvironmentElement"/>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#isAssociatedToRoom -->
+
+    <owl:AnnotationProperty rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#isAssociatedToRoom"/>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#isLinkedToAssistance -->
+
+    <owl:AnnotationProperty rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#isLinkedToAssistance"/>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#preferredCommChannel -->
+
+    <owl:AnnotationProperty rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#preferredCommChannel"/>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#startedEvent -->
+
+    <owl:AnnotationProperty rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#startedEvent"/>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#triggersAssistance -->
+
+    <owl:AnnotationProperty rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#triggersAssistance"/>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Object Properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#associatesColorWithUrgency -->
+
+    <owl:ObjectProperty rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#associatesColorWithUrgency"/>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#findsColorAttractive -->
+
+    <owl:ObjectProperty rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#findsColorAttractive"/>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#hasAssistanceType -->
+
+    <owl:ObjectProperty rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#hasAssistanceType"/>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#hasAudioContent -->
+
+    <owl:ObjectProperty rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#hasAudioContent"/>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#hasCommunicationMode -->
+
+    <owl:ObjectProperty rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#hasCommunicationMode">
+        <rdfs:subPropertyOf rdf:resource="http://www.w3.org/2002/07/owl#topObjectProperty"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#hasFamilyName -->
+
+    <owl:ObjectProperty rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#hasFamilyName">
+        <rdfs:subPropertyOf rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#hasName"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#hasFavoriteColor -->
+
+    <owl:ObjectProperty rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#hasFavoriteColor"/>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#hasFirstName -->
+
+    <owl:ObjectProperty rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#hasFirstName">
+        <rdfs:subPropertyOf rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#hasName"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#hasFirstObject -->
+
+    <owl:ObjectProperty rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#hasFirstObject"/>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#hasFrequencyUnit -->
+
+    <owl:ObjectProperty rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#hasFrequencyUnit"/>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#hasIllocutionaryAct -->
+
+    <owl:ObjectProperty rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#hasIllocutionaryAct">
+        <rdfs:subPropertyOf rdf:resource="http://www.w3.org/2002/07/owl#topObjectProperty"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#hasImpairment -->
+
+    <owl:ObjectProperty rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#hasImpairment"/>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#hasMeasuringUnit -->
+
+    <owl:ObjectProperty rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#hasMeasuringUnit">
+        <rdfs:subPropertyOf rdf:resource="http://www.w3.org/2002/07/owl#topObjectProperty"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#hasName -->
+
+    <owl:ObjectProperty rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#hasName"/>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#hasRoom -->
+
+    <owl:ObjectProperty rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#hasRoom"/>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#hasSecondObject -->
+
+    <owl:ObjectProperty rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#hasSecondObject"/>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#hasState -->
+
+    <owl:ObjectProperty rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#hasState"/>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#hasTextContent -->
+
+    <owl:ObjectProperty rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#hasTextContent"/>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#isDisplayedHere -->
+
+    <owl:ObjectProperty rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#isDisplayedHere">
+        <rdfs:subPropertyOf rdf:resource="http://www.w3.org/2002/07/owl#topObjectProperty"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#isLinkedToAssistance -->
+
+    <owl:ObjectProperty rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#isLinkedToAssistance"/>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#isLinkedToImpairment -->
+
+    <owl:ObjectProperty rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#isLinkedToImpairment"/>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#preferredCommChannel -->
+
+    <owl:ObjectProperty rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#preferredCommChannel"/>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#triggersAssistance -->
+
+    <owl:ObjectProperty rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#triggersAssistance"/>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Data properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#hasDescription -->
+
+    <owl:DatatypeProperty rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#hasDescription">
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#hasFirstName -->
+
+    <owl:DatatypeProperty rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#hasFirstName"/>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#hasMaxValue -->
+
+    <owl:DatatypeProperty rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#hasMaxValue">
+        <rdfs:subPropertyOf rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#hasRangeValue"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#hasMinValue -->
+
+    <owl:DatatypeProperty rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#hasMinValue">
+        <rdfs:subPropertyOf rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#hasRangeValue"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#hasRangeValue -->
+
+    <owl:DatatypeProperty rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#hasRangeValue"/>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#hasType -->
+
+    <owl:DatatypeProperty rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#hasType">
+        <rdfs:subPropertyOf rdf:resource="http://www.w3.org/2002/07/owl#topDataProperty"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Classes
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#Appliances -->
+
+    <owl:Class rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#Appliances">
+        <rdfs:subClassOf rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#EnvironmentElement"/>
+    </owl:Class>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#AppliancesStates -->
+
+    <owl:Class rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#AppliancesStates">
+        <rdfs:subClassOf rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#State"/>
+    </owl:Class>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#Arch -->
+
+    <owl:Class rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#Arch">
+        <rdfs:subClassOf rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#Icons"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#hasFirstObject"/>
+                <owl:allValuesFrom rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#EnvironmentElement"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#hasSecondObject"/>
+                <owl:allValuesFrom rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#EnvironmentElement"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+    </owl:Class>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#Armchair -->
+
+    <owl:Class rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#Armchair">
+        <rdfs:subClassOf rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#Furniture"/>
+    </owl:Class>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#Assistance -->
+
+    <owl:Class rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#Assistance">
+        <rdfs:comment>Contains all of the info about the assistances such as their content and their container</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#AssistanceActType -->
+
+    <owl:Class rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#AssistanceActType">
+        <rdfs:subClassOf rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#Gradation"/>
+    </owl:Class>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#AssistanceAlphaDT -->
+
+    <owl:Class rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#AssistanceAlphaDT">
+        <rdfs:subClassOf rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#DustingTableAssistances"/>
+    </owl:Class>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#AssistanceBetaDT -->
+
+    <owl:Class rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#AssistanceBetaDT">
+        <rdfs:subClassOf rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#DustingTableAssistances"/>
+    </owl:Class>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#AssistanceDeltaDT -->
+
+    <owl:Class rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#AssistanceDeltaDT">
+        <rdfs:subClassOf rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#DustingTableAssistances"/>
+    </owl:Class>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#AssistanceEpsilonDT -->
+
+    <owl:Class rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#AssistanceEpsilonDT">
+        <rdfs:subClassOf rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#DustingTableAssistances"/>
+    </owl:Class>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#AssistanceEtaDT -->
+
+    <owl:Class rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#AssistanceEtaDT">
+        <rdfs:subClassOf rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#DustingTableAssistances"/>
+    </owl:Class>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#AssistanceGammaDT -->
+
+    <owl:Class rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#AssistanceGammaDT">
+        <rdfs:subClassOf rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#DustingTableAssistances"/>
+    </owl:Class>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#AssistanceIotaDT -->
+
+    <owl:Class rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#AssistanceIotaDT">
+        <rdfs:subClassOf rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#DustingTableAssistances"/>
+    </owl:Class>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#AssistanceKappaDT -->
+
+    <owl:Class rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#AssistanceKappaDT">
+        <rdfs:subClassOf rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#DustingTableAssistances"/>
+    </owl:Class>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#AssistanceLists -->
+
+    <owl:Class rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#AssistanceLists">
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#hasAudioContent"/>
+                <owl:allValuesFrom rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#Voice"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#hasTextContent"/>
+                <owl:allValuesFrom rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#Text"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:comment>Contains the list of all the assistances according to their linked scenario</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#AudioMessage -->
+
+    <owl:Class rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#AudioMessage">
+        <rdfs:subClassOf rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#Container"/>
+    </owl:Class>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#Bathroom -->
+
+    <owl:Class rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#Bathroom">
+        <rdfs:subClassOf rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#Rooms"/>
+        <rdfs:label>Bathroom</rdfs:label>
+        <MIRAO:hasLocation>dans la salle de bain</MIRAO:hasLocation>
+    </owl:Class>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#Bed -->
+
+    <owl:Class rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#Bed">
+        <rdfs:subClassOf rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#Furniture"/>
+    </owl:Class>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#BedSideTable -->
+
+    <owl:Class rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#BedSideTable">
+        <rdfs:subClassOf rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#Furniture"/>
+    </owl:Class>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#Bedroom -->
+
+    <owl:Class rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#Bedroom">
+        <rdfs:subClassOf rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#Rooms"/>
+        <rdfs:label>Bedroom</rdfs:label>
+        <MIRAO:hasLocation>dans la chambre</MIRAO:hasLocation>
+    </owl:Class>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#Bin -->
+
+    <owl:Class rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#Bin">
+        <rdfs:subClassOf rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#Furniture"/>
+    </owl:Class>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#BlockedState -->
+
+    <owl:Class rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#BlockedState">
+        <rdfs:subClassOf rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#StateOpenings"/>
+    </owl:Class>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#Bookshelf -->
+
+    <owl:Class rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#Bookshelf">
+        <rdfs:subClassOf rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#Furniture"/>
+    </owl:Class>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#Calendar -->
+
+    <owl:Class rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#Calendar">
+        <rdfs:subClassOf rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#Appliances"/>
+    </owl:Class>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#Chair -->
+
+    <owl:Class rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#Chair">
+        <rdfs:subClassOf rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#Furniture"/>
+    </owl:Class>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#CleanTableState -->
+
+    <owl:Class rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#CleanTableState">
+        <rdfs:subClassOf rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#StateTable"/>
+    </owl:Class>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#ClosedState -->
+
+    <owl:Class rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#ClosedState">
+        <rdfs:subClassOf rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#StateOpenings"/>
+    </owl:Class>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#Colors -->
+
+    <owl:Class rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#Colors">
+        <rdfs:subClassOf rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#Preference"/>
+    </owl:Class>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#CommunicationMode -->
+
+    <owl:Class rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#CommunicationMode">
+        <rdfs:subClassOf rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#Preference"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#hasCommunicationMode"/>
+                <owl:allValuesFrom rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#Container"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+    </owl:Class>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#Computer -->
+
+    <owl:Class rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#Computer">
+        <rdfs:subClassOf rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#Appliances"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#hasState"/>
+                <owl:someValuesFrom rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#StateComputer"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+    </owl:Class>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#Container -->
+
+    <owl:Class rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#Container">
+        <rdfs:subClassOf rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#Assistance"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#isLinkedToAssistance"/>
+                <owl:someValuesFrom rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#Assistance"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:comment>Content of the message being sent</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#Cooker -->
+
+    <owl:Class rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#Cooker">
+        <rdfs:subClassOf rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#Appliances"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#hasState"/>
+                <owl:someValuesFrom rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#StateCooker"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+    </owl:Class>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#Corridor -->
+
+    <owl:Class rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#Corridor">
+        <rdfs:subClassOf rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#Rooms"/>
+        <rdfs:label>Corridor</rdfs:label>
+        <MIRAO:hasLocation>dans le couloir</MIRAO:hasLocation>
+    </owl:Class>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#Couch -->
+
+    <owl:Class rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#Couch">
+        <rdfs:subClassOf rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#Furniture"/>
+        <rdfs:comment>The terms “sofa” and “couch” have two very different origins. The first one comes from the Arabic term “suffah” which describes a bench covered with blankets and cushions.The second one comes from the French “couche” and it’s a piece of furniture that was popularly used in the Victorian era.
+
+As for their structure and shape, sofas usually feature two armrests and a uniform back while couches generally feature one armrest or none at all and a tapered back.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#Cupboards -->
+
+    <owl:Class rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#Cupboards">
+        <rdfs:subClassOf rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#Furniture"/>
+    </owl:Class>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#Desk -->
+
+    <owl:Class rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#Desk">
+        <rdfs:subClassOf rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#Furniture"/>
+    </owl:Class>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#DiningRoom -->
+
+    <owl:Class rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#DiningRoom">
+        <rdfs:subClassOf rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#Rooms"/>
+        <rdfs:label>Dining room</rdfs:label>
+        <MIRAO:containsEnvironmentElement rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#Table"/>
+        <MIRAO:containsSomeTime rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#Rag"/>
+        <MIRAO:hasLocation>dans la salle à manger</MIRAO:hasLocation>
+    </owl:Class>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#DirtyTableState -->
+
+    <owl:Class rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#DirtyTableState">
+        <rdfs:subClassOf rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#StateTable"/>
+    </owl:Class>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#DisplayCabinet -->
+
+    <owl:Class rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#DisplayCabinet">
+        <rdfs:subClassOf rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#Furniture"/>
+    </owl:Class>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#DustingTableAssistances -->
+
+    <owl:Class rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#DustingTableAssistances">
+        <rdfs:subClassOf rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#AssistanceLists"/>
+    </owl:Class>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#EnvironmentElement -->
+
+    <owl:Class rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#EnvironmentElement"/>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#ExclamationMark -->
+
+    <owl:Class rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#ExclamationMark">
+        <rdfs:subClassOf rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#Icons"/>
+    </owl:Class>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#FamilyName -->
+
+    <owl:Class rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#FamilyName">
+        <rdfs:subClassOf rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#Name"/>
+    </owl:Class>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#Faucet -->
+
+    <owl:Class rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#Faucet">
+        <rdfs:subClassOf rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#Sanitary"/>
+    </owl:Class>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#FirstName -->
+
+    <owl:Class rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#FirstName">
+        <rdfs:subClassOf rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#Name"/>
+    </owl:Class>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#Freezer -->
+
+    <owl:Class rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#Freezer">
+        <rdfs:subClassOf rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#Appliances"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#hasState"/>
+                <owl:someValuesFrom rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#StateFreezer"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#hasState"/>
+                <owl:someValuesFrom rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#StateOpenings"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#hasState"/>
+                <owl:someValuesFrom rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#StateStorage"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+    </owl:Class>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#Fridge -->
+
+    <owl:Class rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#Fridge">
+        <rdfs:subClassOf rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#Appliances"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#hasState"/>
+                <owl:someValuesFrom rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#StateFreezer"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#hasState"/>
+                <owl:someValuesFrom rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#StateOpenings"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#hasState"/>
+                <owl:someValuesFrom rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#StateStorage"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+    </owl:Class>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#Furniture -->
+
+    <owl:Class rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#Furniture">
+        <rdfs:subClassOf rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#EnvironmentElement"/>
+    </owl:Class>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#FurnitureStates -->
+
+    <owl:Class rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#FurnitureStates">
+        <rdfs:subClassOf rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#State"/>
+    </owl:Class>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#Gradation -->
+
+    <owl:Class rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#Gradation">
+        <rdfs:subClassOf rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#Assistance"/>
+    </owl:Class>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#Home -->
+
+    <owl:Class rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#Home">
+        <rdfs:subClassOf rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#PhysicalPlace"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#hasRoom"/>
+                <owl:someValuesFrom rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#Rooms"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+    </owl:Class>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#Icons -->
+
+    <owl:Class rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#Icons">
+        <rdfs:subClassOf rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#VisualMessage"/>
+        <rdfs:comment>Contains assistances that are displayed for non blind people, for both those who know how to read and those who don&apos;t</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#IllocutionaryAct -->
+
+    <owl:Class rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#IllocutionaryAct">
+        <rdfs:subClassOf rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#Gradation"/>
+        <rdfs:comment>Meaning and intention behind the message</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#Impairment -->
+
+    <owl:Class rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#Impairment"/>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#IroningTable -->
+
+    <owl:Class rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#IroningTable">
+        <rdfs:subClassOf rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#Furniture"/>
+    </owl:Class>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#Jingle -->
+
+    <owl:Class rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#Jingle">
+        <rdfs:subClassOf rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#AudioMessage"/>
+    </owl:Class>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#Kitchen -->
+
+    <owl:Class rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#Kitchen">
+        <rdfs:subClassOf rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#Rooms"/>
+        <rdfs:label>Kitchen</rdfs:label>
+        <MIRAO:containsSomeTime rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#Rag"/>
+        <MIRAO:hasLocation>dans la cuisine</MIRAO:hasLocation>
+    </owl:Class>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#ListenStereoState -->
+
+    <owl:Class rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#ListenStereoState">
+        <owl:equivalentClass>
+            <owl:Class>
+                <owl:complementOf rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#StopStereoState"/>
+            </owl:Class>
+        </owl:equivalentClass>
+        <rdfs:subClassOf rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#StateStereo"/>
+    </owl:Class>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#LivingRoom -->
+
+    <owl:Class rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#LivingRoom">
+        <rdfs:subClassOf rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#Rooms"/>
+        <rdfs:label>Living room</rdfs:label>
+        <MIRAO:hasLocation>dans le salon</MIRAO:hasLocation>
+    </owl:Class>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#Microwave -->
+
+    <owl:Class rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#Microwave">
+        <rdfs:subClassOf rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#Appliances"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#hasState"/>
+                <owl:someValuesFrom rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#StateMicrowave"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#hasState"/>
+                <owl:someValuesFrom rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#StateOpenings"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+    </owl:Class>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#MixedRealityHeadset -->
+
+    <owl:Class rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#MixedRealityHeadset">
+        <rdfs:subClassOf rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#EnvironmentElement"/>
+    </owl:Class>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#Name -->
+
+    <owl:Class rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#Name">
+        <rdfs:subClassOf rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#UserProfile"/>
+    </owl:Class>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#OpenedState -->
+
+    <owl:Class rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#OpenedState">
+        <owl:equivalentClass>
+            <owl:Class>
+                <owl:complementOf rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#ClosedState"/>
+            </owl:Class>
+        </owl:equivalentClass>
+        <rdfs:subClassOf rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#StateOpenings"/>
+    </owl:Class>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#PhysicalPlace -->
+
+    <owl:Class rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#PhysicalPlace"/>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#Pictogram -->
+
+    <owl:Class rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#Pictogram">
+        <rdfs:subClassOf rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#VisualMessage"/>
+        <rdfs:comment>Replaces text messages when the user does not know how to read for example</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#Preference -->
+
+    <owl:Class rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#Preference">
+        <rdfs:subClassOf rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#UserProfile"/>
+    </owl:Class>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#Rag -->
+
+    <owl:Class rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#Rag">
+        <rdfs:subClassOf rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#Appliances"/>
+    </owl:Class>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#RockingChair -->
+
+    <owl:Class rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#RockingChair">
+        <rdfs:subClassOf rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#Furniture"/>
+    </owl:Class>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#Rooms -->
+
+    <owl:Class rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#Rooms">
+        <rdfs:subClassOf rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#Home"/>
+    </owl:Class>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#RunningComputerState -->
+
+    <owl:Class rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#RunningComputerState">
+        <owl:equivalentClass>
+            <owl:Class>
+                <owl:complementOf rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#StopComputerState"/>
+            </owl:Class>
+        </owl:equivalentClass>
+        <rdfs:subClassOf rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#StateComputer"/>
+        <owl:disjointWith rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#StopComputerState"/>
+    </owl:Class>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#RunningCookerState -->
+
+    <owl:Class rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#RunningCookerState">
+        <owl:equivalentClass>
+            <owl:Class>
+                <owl:complementOf rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#StopCookerState"/>
+            </owl:Class>
+        </owl:equivalentClass>
+        <rdfs:subClassOf rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#StateCooker"/>
+        <owl:disjointWith rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#StopCookerState"/>
+    </owl:Class>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#RunningFreezerState -->
+
+    <owl:Class rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#RunningFreezerState">
+        <rdfs:subClassOf rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#StateFreezer"/>
+    </owl:Class>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#RunningMicrowaveState -->
+
+    <owl:Class rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#RunningMicrowaveState">
+        <owl:equivalentClass>
+            <owl:Class>
+                <owl:complementOf rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#StopMicrowaveState"/>
+            </owl:Class>
+        </owl:equivalentClass>
+        <rdfs:subClassOf rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#StateMicrowave"/>
+    </owl:Class>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#RunningSpeakerState -->
+
+    <owl:Class rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#RunningSpeakerState">
+        <owl:equivalentClass>
+            <owl:Class>
+                <owl:complementOf rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#StopSpeakerState"/>
+            </owl:Class>
+        </owl:equivalentClass>
+        <rdfs:subClassOf rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#StateSpeaker"/>
+    </owl:Class>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#RunningTeapotState -->
+
+    <owl:Class rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#RunningTeapotState">
+        <owl:equivalentClass>
+            <owl:Class>
+                <owl:complementOf rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#StopTeapotState"/>
+            </owl:Class>
+        </owl:equivalentClass>
+        <rdfs:subClassOf rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#StateTeapot"/>
+    </owl:Class>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#Sanitary -->
+
+    <owl:Class rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#Sanitary">
+        <rdfs:subClassOf rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#EnvironmentElement"/>
+    </owl:Class>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#Scenario -->
+
+    <owl:Class rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#Scenario">
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#hasFrequencyUnit"/>
+                <owl:allValuesFrom rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#Unit"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#triggersAssistance"/>
+                <owl:allValuesFrom rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#AssistanceLists"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:comment>Contains all the scenarios</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#Shelf -->
+
+    <owl:Class rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#Shelf">
+        <rdfs:subClassOf rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#Furniture"/>
+    </owl:Class>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#Shower -->
+
+    <owl:Class rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#Shower">
+        <rdfs:subClassOf rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#Sanitary"/>
+    </owl:Class>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#SinkBathroom -->
+
+    <owl:Class rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#SinkBathroom">
+        <rdfs:subClassOf rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#Sanitary"/>
+    </owl:Class>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#SinkKitchen -->
+
+    <owl:Class rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#SinkKitchen">
+        <rdfs:subClassOf rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#Sanitary"/>
+    </owl:Class>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#Sofa -->
+
+    <owl:Class rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#Sofa">
+        <rdfs:subClassOf rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#Furniture"/>
+        <rdfs:comment>The terms “sofa” and “couch” have two very different origins. The first one comes from the Arabic term “suffah” which describes a bench covered with blankets and cushions.The second one comes from the French “couche” and it’s a piece of furniture that was popularly used in the Victorian era.
+
+As for their structure and shape, sofas usually feature two armrests and a uniform back while couches generally feature one armrest or none at all and a tapered back.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#StartWashingMachineState -->
+
+    <owl:Class rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#StartWashingMachineState">
+        <rdfs:subClassOf rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#StateWashingMachine"/>
+    </owl:Class>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#State -->
+
+    <owl:Class rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#State"/>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#StateComputer -->
+
+    <owl:Class rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#StateComputer">
+        <rdfs:subClassOf rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#AppliancesStates"/>
+    </owl:Class>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#StateCooker -->
+
+    <owl:Class rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#StateCooker">
+        <rdfs:subClassOf rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#AppliancesStates"/>
+    </owl:Class>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#StateFreezer -->
+
+    <owl:Class rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#StateFreezer">
+        <owl:equivalentClass rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#StateFridge"/>
+        <rdfs:subClassOf rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#AppliancesStates"/>
+    </owl:Class>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#StateFridge -->
+
+    <owl:Class rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#StateFridge">
+        <rdfs:subClassOf rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#AppliancesStates"/>
+    </owl:Class>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#StateMicrowave -->
+
+    <owl:Class rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#StateMicrowave">
+        <rdfs:subClassOf rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#AppliancesStates"/>
+    </owl:Class>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#StateOpenings -->
+
+    <owl:Class rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#StateOpenings">
+        <rdfs:subClassOf rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#AppliancesStates"/>
+    </owl:Class>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#StateSpeaker -->
+
+    <owl:Class rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#StateSpeaker">
+        <rdfs:subClassOf rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#AppliancesStates"/>
+    </owl:Class>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#StateStereo -->
+
+    <owl:Class rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#StateStereo">
+        <rdfs:subClassOf rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#AppliancesStates"/>
+    </owl:Class>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#StateStorage -->
+
+    <owl:Class rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#StateStorage">
+        <rdfs:subClassOf rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#AppliancesStates"/>
+    </owl:Class>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#StateTV -->
+
+    <owl:Class rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#StateTV">
+        <rdfs:subClassOf rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#AppliancesStates"/>
+    </owl:Class>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#StateTable -->
+
+    <owl:Class rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#StateTable">
+        <rdfs:subClassOf rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#FurnitureStates"/>
+    </owl:Class>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#StateTeapot -->
+
+    <owl:Class rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#StateTeapot">
+        <rdfs:subClassOf rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#AppliancesStates"/>
+    </owl:Class>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#StateWashingMachine -->
+
+    <owl:Class rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#StateWashingMachine">
+        <rdfs:subClassOf rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#AppliancesStates"/>
+    </owl:Class>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#StereoSystem -->
+
+    <owl:Class rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#StereoSystem">
+        <rdfs:subClassOf rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#Appliances"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#hasState"/>
+                <owl:someValuesFrom rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#StateStereo"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+    </owl:Class>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#StopComputerState -->
+
+    <owl:Class rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#StopComputerState">
+        <owl:equivalentClass>
+            <owl:Class>
+                <owl:complementOf rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#RunningComputerState"/>
+            </owl:Class>
+        </owl:equivalentClass>
+        <rdfs:subClassOf rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#StateComputer"/>
+    </owl:Class>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#StopCookerState -->
+
+    <owl:Class rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#StopCookerState">
+        <owl:equivalentClass>
+            <owl:Class>
+                <owl:complementOf rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#RunningCookerState"/>
+            </owl:Class>
+        </owl:equivalentClass>
+        <rdfs:subClassOf rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#StateCooker"/>
+    </owl:Class>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#StopFreezerState -->
+
+    <owl:Class rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#StopFreezerState">
+        <owl:equivalentClass>
+            <owl:Class>
+                <owl:complementOf rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#RunningFreezerState"/>
+            </owl:Class>
+        </owl:equivalentClass>
+        <rdfs:subClassOf rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#StateFreezer"/>
+    </owl:Class>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#StopMicrowaveState -->
+
+    <owl:Class rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#StopMicrowaveState">
+        <owl:equivalentClass>
+            <owl:Class>
+                <owl:complementOf rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#RunningMicrowaveState"/>
+            </owl:Class>
+        </owl:equivalentClass>
+        <rdfs:subClassOf rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#StateMicrowave"/>
+    </owl:Class>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#StopSpeakerState -->
+
+    <owl:Class rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#StopSpeakerState">
+        <owl:equivalentClass>
+            <owl:Class>
+                <owl:complementOf rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#RunningSpeakerState"/>
+            </owl:Class>
+        </owl:equivalentClass>
+        <rdfs:subClassOf rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#StateSpeaker"/>
+    </owl:Class>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#StopStereoState -->
+
+    <owl:Class rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#StopStereoState">
+        <rdfs:subClassOf rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#StateStereo"/>
+    </owl:Class>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#StopTVState -->
+
+    <owl:Class rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#StopTVState">
+        <owl:equivalentClass>
+            <owl:Class>
+                <owl:complementOf rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#WatchTVState"/>
+            </owl:Class>
+        </owl:equivalentClass>
+        <rdfs:subClassOf rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#StateTV"/>
+    </owl:Class>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#StopTeapotState -->
+
+    <owl:Class rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#StopTeapotState">
+        <rdfs:subClassOf rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#StateTeapot"/>
+    </owl:Class>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#StopWashingMachineState -->
+
+    <owl:Class rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#StopWashingMachineState">
+        <owl:equivalentClass>
+            <owl:Class>
+                <owl:complementOf rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#StartWashingMachineState"/>
+            </owl:Class>
+        </owl:equivalentClass>
+        <rdfs:subClassOf rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#StateWashingMachine"/>
+    </owl:Class>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#Storage -->
+
+    <owl:Class rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#Storage">
+        <rdfs:subClassOf rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#Rooms"/>
+        <rdfs:label>Storage</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#StorageCabinet -->
+
+    <owl:Class rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#StorageCabinet">
+        <rdfs:subClassOf rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#Furniture"/>
+    </owl:Class>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#StoreState -->
+
+    <owl:Class rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#StoreState">
+        <owl:equivalentClass>
+            <owl:Class>
+                <owl:complementOf rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#UnstoreState"/>
+            </owl:Class>
+        </owl:equivalentClass>
+        <rdfs:subClassOf rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#StateStorage"/>
+        <owl:disjointWith rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#UnstoreState"/>
+    </owl:Class>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#SurfaceToProcess -->
+
+    <owl:Class rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#SurfaceToProcess">
+        <rdfs:subClassOf rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#Icons"/>
+    </owl:Class>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#TV -->
+
+    <owl:Class rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#TV">
+        <rdfs:subClassOf rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#Appliances"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#hasState"/>
+                <owl:allValuesFrom rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#StateTV"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+    </owl:Class>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#Table -->
+
+    <owl:Class rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#Table">
+        <rdfs:subClassOf rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#Furniture"/>
+        <MIRAO:hasAssociatedScript rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#dustingTable"/>
+    </owl:Class>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#Tap -->
+
+    <owl:Class rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#Tap">
+        <rdfs:subClassOf rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#Sanitary"/>
+    </owl:Class>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#TapKitchen -->
+
+    <owl:Class rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#TapKitchen">
+        <rdfs:subClassOf rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#Sanitary"/>
+    </owl:Class>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#TaskSuccess -->
+
+    <owl:Class rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#TaskSuccess">
+        <rdfs:subClassOf rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#Preference"/>
+    </owl:Class>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#Teapot -->
+
+    <owl:Class rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#Teapot">
+        <rdfs:subClassOf rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#Appliances"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#hasState"/>
+                <owl:someValuesFrom rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#StateTeapot"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+    </owl:Class>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#Text -->
+
+    <owl:Class rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#Text">
+        <rdfs:subClassOf rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#VisualMessage"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#hasAssistanceType"/>
+                <owl:allValuesFrom rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#AssistanceActType"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#hasIllocutionaryAct"/>
+                <owl:allValuesFrom rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#IllocutionaryAct"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#isDisplayedHere"/>
+                <owl:allValuesFrom rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#EnvironmentElement"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#isLinkedToImpairment"/>
+                <owl:allValuesFrom rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#Impairment"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+    </owl:Class>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#Time -->
+
+    <owl:Class rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#Time">
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#hasMeasuringUnit"/>
+                <owl:someValuesFrom rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#Unit"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+    </owl:Class>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#Toaster -->
+
+    <owl:Class rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#Toaster">
+        <rdfs:subClassOf rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#Appliances"/>
+    </owl:Class>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#Toilet -->
+
+    <owl:Class rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#Toilet">
+        <rdfs:subClassOf rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#Sanitary"/>
+    </owl:Class>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#Unit -->
+
+    <owl:Class rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#Unit"/>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#UnstoreState -->
+
+    <owl:Class rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#UnstoreState">
+        <rdfs:subClassOf rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#StateStorage"/>
+    </owl:Class>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#UserProfile -->
+
+    <owl:Class rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#UserProfile">
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#associatesColorWithUrgency"/>
+                <owl:allValuesFrom rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#Colors"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#findsColorAttractive"/>
+                <owl:allValuesFrom rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#Colors"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#hasFamilyName"/>
+                <owl:allValuesFrom rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#FamilyName"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#hasFavoriteColor"/>
+                <owl:allValuesFrom rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#Colors"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#hasFirstName"/>
+                <owl:allValuesFrom rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#FirstName"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#hasImpairment"/>
+                <owl:allValuesFrom rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#Impairment"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#hasName"/>
+                <owl:allValuesFrom rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#Name"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#preferredCommChannel"/>
+                <owl:allValuesFrom rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#CommunicationMode"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+    </owl:Class>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#Veranda -->
+
+    <owl:Class rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#Veranda">
+        <rdfs:subClassOf rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#Rooms"/>
+        <rdfs:label>Veranda</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#VisualMessage -->
+
+    <owl:Class rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#VisualMessage">
+        <rdfs:subClassOf rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#Container"/>
+    </owl:Class>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#Voice -->
+
+    <owl:Class rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#Voice">
+        <rdfs:subClassOf rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#AudioMessage"/>
+    </owl:Class>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#WashingMachine -->
+
+    <owl:Class rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#WashingMachine">
+        <rdfs:subClassOf rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#Appliances"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#hasState"/>
+                <owl:someValuesFrom rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#StateWashingMachine"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+    </owl:Class>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#WashingRoom -->
+
+    <owl:Class rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#WashingRoom">
+        <rdfs:subClassOf rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#Rooms"/>
+        <rdfs:label>Washing room</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#WatchTVState -->
+
+    <owl:Class rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#WatchTVState">
+        <owl:equivalentClass>
+            <owl:Class>
+                <owl:complementOf rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#StopTVState"/>
+            </owl:Class>
+        </owl:equivalentClass>
+        <rdfs:subClassOf rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#StateTV"/>
+    </owl:Class>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#WateringThePlantsAssistances -->
+
+    <owl:Class rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#WateringThePlantsAssistances">
+        <rdfs:subClassOf rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#AssistanceLists"/>
+    </owl:Class>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Individuals
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#DOMUS -->
+
+    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#DOMUS">
+        <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#Home"/>
+        <MIRAO:hasRoom rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#bathroom"/>
+        <MIRAO:hasRoom rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#diningRoom"/>
+        <MIRAO:hasRoom rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#kitchen"/>
+        <MIRAO:hasRoom rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#livingRoom"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#DTactivityFinishedCongrats -->
+
+    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#DTactivityFinishedCongrats">
+        <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#AssistanceAlphaDT"/>
+        <MIRAO:hasAssistanceType rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#givingTheAnswer"/>
+        <MIRAO:hasIllocutionaryAct rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#explicit3"/>
+        <MIRAO:hasTextContent rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#textDTActivityFinishedCongrats"/>
+        <MIRAO:isDisplayedHere rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#mixedRealityHeadset"/>
+        <MIRAO:isLinkedToImpairment rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#verifyAttainmentOfTheInitialGoal"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#DTareYouSureAboutObject -->
+
+    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#DTareYouSureAboutObject">
+        <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#AssistanceIotaDT"/>
+        <MIRAO:hasAssistanceType rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#clarificationOfInstruction"/>
+        <MIRAO:hasIllocutionaryAct rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#implicit1"/>
+        <MIRAO:hasTextContent rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#textDTAreYouSureAboutObject"/>
+        <MIRAO:isDisplayedHere rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#diningRoomTable"/>
+        <MIRAO:isLinkedToImpairment rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#carryOutTheTask"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#DTareYouSureActivityIsFinished -->
+
+    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#DTareYouSureActivityIsFinished">
+        <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#AssistanceDeltaDT"/>
+        <MIRAO:hasAssistanceType rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#recallAnElement"/>
+        <MIRAO:hasIllocutionaryAct rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#subtle1"/>
+        <MIRAO:hasTextContent rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#textDTAreYouSureActivityIsFinished"/>
+        <MIRAO:isDisplayedHere rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#diningRoomTable"/>
+        <MIRAO:isLinkedToImpairment rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#carryOutTheTask"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#DTareYouSureUsingRag -->
+
+    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#DTareYouSureUsingRag">
+        <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#AssistanceIotaDT"/>
+        <MIRAO:hasAssistanceType rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#recallAnElement"/>
+        <MIRAO:hasIllocutionaryAct rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#subtle1"/>
+        <MIRAO:hasTextContent rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#textDTAreYouSureUsingRag"/>
+        <MIRAO:isDisplayedHere rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#diningRoomTable"/>
+        <MIRAO:isLinkedToImpairment rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#carryOutTheTask"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#DTcanFindItNearYou -->
+
+    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#DTcanFindItNearYou">
+        <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#AssistanceBetaDT"/>
+        <MIRAO:hasAssistanceType rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#givingAClue"/>
+        <MIRAO:hasIllocutionaryAct rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#subtle2"/>
+        <MIRAO:hasTextContent rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#textDTCanFindItNearYou"/>
+        <MIRAO:isDisplayedHere rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#diningRoomTable"/>
+        <MIRAO:isLinkedToImpairment rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#carryOutTheTask"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#DTdidYouLookWalls -->
+
+    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#DTdidYouLookWalls">
+        <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#AssistanceKappaDT"/>
+        <MIRAO:hasAssistanceType rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#givingAClue"/>
+        <MIRAO:hasIllocutionaryAct rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#subtle2"/>
+        <MIRAO:hasTextContent rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#textDTDidYouLookWalls"/>
+        <MIRAO:isDisplayedHere rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#mixedRealityHeadset"/>
+        <MIRAO:isLinkedToImpairment rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#goalFormulation"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#DTdoYouKnowWhatToDo -->
+
+    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#DTdoYouKnowWhatToDo">
+        <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#AssistanceDeltaDT"/>
+        <MIRAO:hasAssistanceType rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#actionInitiation"/>
+        <MIRAO:hasIllocutionaryAct rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#subtle1"/>
+        <MIRAO:hasTextContent rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#textDTDoYouKnowWhatToDo"/>
+        <MIRAO:isDisplayedHere rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#diningRoomTable"/>
+        <MIRAO:isLinkedToImpairment rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#carryOutTheTask"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#DTdoYouKnowWhichActivity -->
+
+    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#DTdoYouKnowWhichActivity">
+        <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#AssistanceKappaDT"/>
+        <MIRAO:hasAssistanceType rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#stimulateTheThoughtProcess"/>
+        <MIRAO:hasIllocutionaryAct rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#implicit1"/>
+        <MIRAO:hasTextContent rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#textDTDoYouKnowWhichActivity"/>
+        <MIRAO:isDisplayedHere rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#mixedRealityHeadset"/>
+        <MIRAO:isLinkedToImpairment rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#goalFormulation"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#DTdoYouRecallActivityGoal -->
+
+    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#DTdoYouRecallActivityGoal">
+        <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#AssistanceAlphaDT"/>
+        <MIRAO:hasAssistanceType rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#stimulateTheThoughtProcess"/>
+        <MIRAO:hasIllocutionaryAct rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#implicit3"/>
+        <MIRAO:hasTextContent rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#textDTDoYouRecallActivityGoal"/>
+        <MIRAO:isDisplayedHere rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#mixedRealityHeadset"/>
+        <MIRAO:isLinkedToImpairment rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#verifyAttainmentOfTheInitialGoal"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#DTfindDetailsAtTheEndOfArch -->
+
+    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#DTfindDetailsAtTheEndOfArch">
+        <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#AssistanceKappaDT"/>
+        <MIRAO:hasAssistanceType rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#givingTheAnswer"/>
+        <MIRAO:hasIllocutionaryAct rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#explicit3"/>
+        <MIRAO:hasTextContent rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#textDTFindDetailsAtTheEndOfArch"/>
+        <MIRAO:isDisplayedHere rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#mixedRealityHeadset"/>
+        <MIRAO:isLinkedToImpairment rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#goalFormulation"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#DThaveYouFinishedActivity -->
+
+    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#DThaveYouFinishedActivity">
+        <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#AssistanceAlphaDT"/>
+        <MIRAO:hasAssistanceType rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#clarificationOfInstruction"/>
+        <MIRAO:hasIllocutionaryAct rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#implicit1"/>
+        <MIRAO:hasTextContent rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#textDTHaveYouFinishedActivity"/>
+        <MIRAO:isDisplayedHere rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#mixedRealityHeadset"/>
+        <MIRAO:isLinkedToImpairment rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#verifyAttainmentOfTheInitialGoal"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#DThaveYouLookedLocation -->
+
+    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#DThaveYouLookedLocation">
+        <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#AssistanceBetaDT"/>
+        <MIRAO:hasAssistanceType rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#stimulateTheThoughtProcess"/>
+        <MIRAO:hasIllocutionaryAct rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#subtle1"/>
+        <MIRAO:hasTextContent rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#textDTHaveYouLookedLocation"/>
+        <MIRAO:isDisplayedHere rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#diningRoomTable"/>
+        <MIRAO:isLinkedToImpairment rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#carryOutTheTask"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#DThowToKnowActivityIsFinished -->
+
+    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#DThowToKnowActivityIsFinished">
+        <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#AssistanceAlphaDT"/>
+        <MIRAO:hasAssistanceType rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#stimulateTheThoughtProcess"/>
+        <MIRAO:hasIllocutionaryAct rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#implicit2"/>
+        <MIRAO:hasTextContent rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#textDTHowToKnowActivityIsFinished"/>
+        <MIRAO:isDisplayedHere rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#mixedRealityHeadset"/>
+        <MIRAO:isLinkedToImpairment rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#verifyAttainmentOfTheInitialGoal"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#DTisActivityFinished -->
+
+    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#DTisActivityFinished">
+        <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#AssistanceDeltaDT"/>
+        <MIRAO:hasAssistanceType rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#clarificationOfInstruction"/>
+        <MIRAO:hasIllocutionaryAct rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#implicit1"/>
+        <MIRAO:hasTextContent rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#textDTIsActivityFinished"/>
+        <MIRAO:isDisplayedHere rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#diningRoomTable"/>
+        <MIRAO:isLinkedToImpairment rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#verifyAttainmentOfTheInitialGoal"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#DTneedRagUnderThisMessage -->
+
+    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#DTneedRagUnderThisMessage">
+        <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#AssistanceEpsilonDT"/>
+        <MIRAO:hasAssistanceType rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#givingTheAnswer"/>
+        <MIRAO:hasIllocutionaryAct rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#explicit3"/>
+        <MIRAO:hasTextContent rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#textDTNeedRagUnderThisMessage"/>
+        <MIRAO:isDisplayedHere rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#rag"/>
+        <MIRAO:isLinkedToImpairment rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#carryOutTheTask"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#DTneedToCleanTableWithRag -->
+
+    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#DTneedToCleanTableWithRag">
+        <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#AssistanceBetaDT"/>
+        <MIRAO:hasAssistanceType rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#givingTheAnswer"/>
+        <MIRAO:hasIllocutionaryAct rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#implicit1"/>
+        <MIRAO:hasTextContent rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#textDTNeedToCleanTableWithRag"/>
+        <MIRAO:isDisplayedHere rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#diningRoomTable"/>
+        <MIRAO:isLinkedToImpairment rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#planification"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#DTneedToDustTableUntilGreen -->
+
+    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#DTneedToDustTableUntilGreen">
+        <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#AssistanceGammaDT"/>
+        <MIRAO:hasAssistanceType rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#givingTheAnswer"/>
+        <MIRAO:hasIllocutionaryAct rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#explicit3"/>
+        <MIRAO:hasTextContent rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#textDTNeedToDustTableUntilGreen"/>
+        <MIRAO:isDisplayedHere rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#diningRoomTable"/>
+        <MIRAO:isLinkedToImpairment rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#carryOutTheTask"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#DTneedToDustTableUntilGreenAlmostThere -->
+
+    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#DTneedToDustTableUntilGreenAlmostThere">
+        <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#AssistanceDeltaDT"/>
+        <MIRAO:hasAssistanceType rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#motivationalAssistance"/>
+        <MIRAO:hasIllocutionaryAct rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#explicit3"/>
+        <MIRAO:hasTextContent rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#textDTNeedToDustTableUntilGreenAlmostThere"/>
+        <MIRAO:isDisplayedHere rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#diningRoomTable"/>
+        <MIRAO:isLinkedToImpairment rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#carryOutTheTask"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#DTneededToCleanWithRagWhatDoYouThink -->
+
+    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#DTneededToCleanWithRagWhatDoYouThink">
+        <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#AssistanceAlphaDT"/>
+        <MIRAO:hasAssistanceType rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#clarificationOfInstruction"/>
+        <MIRAO:hasIllocutionaryAct rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#subtle3"/>
+        <MIRAO:hasTextContent rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#textDTNeededToCleanWithRagWhatDoYouThink"/>
+        <MIRAO:isDisplayedHere rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#mixedRealityHeadset"/>
+        <MIRAO:isLinkedToImpairment rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#verifyAttainmentOfTheInitialGoal"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#DTnoIndeedWhereCanYouLook -->
+
+    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#DTnoIndeedWhereCanYouLook">
+        <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#AssistanceIotaDT"/>
+        <MIRAO:hasAssistanceType rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#actionInitiation"/>
+        <MIRAO:hasIllocutionaryAct rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#subtle3"/>
+        <MIRAO:hasTextContent rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#textDTNoIndeedWhereCanYouLook"/>
+        <MIRAO:isDisplayedHere rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#diningRoomTable"/>
+        <MIRAO:isLinkedToImpairment rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#carryOutTheTask"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#DTnotDoneNeedToDustUntilGreen -->
+
+    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#DTnotDoneNeedToDustUntilGreen">
+        <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#AssistanceDeltaDT"/>
+        <MIRAO:hasAssistanceType rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#givingTheAnswer"/>
+        <MIRAO:hasIllocutionaryAct rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#explicit3"/>
+        <MIRAO:hasTextContent rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#textDTNotDoneNeedToDustUntilGreen"/>
+        <MIRAO:isDisplayedHere rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#diningRoomTable"/>
+        <MIRAO:isLinkedToImpairment rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#carryOutTheTask"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#DTnotRightRag -->
+
+    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#DTnotRightRag">
+        <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#AssistanceIotaDT"/>
+        <MIRAO:hasAssistanceType rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#actionInitiation"/>
+        <MIRAO:hasIllocutionaryAct rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#subtle2"/>
+        <MIRAO:hasTextContent rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#textDTNotRightRag"/>
+        <MIRAO:isDisplayedHere rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#diningRoomTable"/>
+        <MIRAO:isLinkedToImpairment rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#carryOutTheTask"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#DTobjectYouNeedIsHere -->
+
+    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#DTobjectYouNeedIsHere">
+        <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#AssistanceEpsilonDT"/>
+        <MIRAO:hasAssistanceType rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#clarificationOfInstruction"/>
+        <MIRAO:hasIllocutionaryAct rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#subtle1"/>
+        <MIRAO:hasTextContent rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#textDTObjectYouNeedIsHere"/>
+        <MIRAO:isDisplayedHere rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#rag"/>
+        <MIRAO:isLinkedToImpairment rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#carryOutTheTask"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#DTokWeLetYouDoIt -->
+
+    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#DTokWeLetYouDoIt">
+        <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#AssistanceBetaDT"/>
+        <MIRAO:hasAssistanceType rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#stop"/>
+        <MIRAO:hasIllocutionaryAct rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#declaration"/>
+        <MIRAO:hasTextContent rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#textDTOkWeLetYouDoIt"/>
+        <MIRAO:isDisplayedHere rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#diningRoomTable"/>
+        <MIRAO:isLinkedToImpairment rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#planification"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#DTokWeLetYouDoIt2 -->
+
+    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#DTokWeLetYouDoIt2">
+        <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#AssistanceDeltaDT"/>
+        <MIRAO:hasAssistanceType rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#stop"/>
+        <MIRAO:hasIllocutionaryAct rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#declaration"/>
+        <MIRAO:hasTextContent rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#textDTOkWeLetYouDoIt"/>
+        <MIRAO:isDisplayedHere rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#diningRoomTable"/>
+        <MIRAO:isLinkedToImpairment rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#carryOutTheTask"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#DTokWeLetYouDoIt3 -->
+
+    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#DTokWeLetYouDoIt3">
+        <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#AssistanceEpsilonDT"/>
+        <MIRAO:hasAssistanceType rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#stop"/>
+        <MIRAO:hasIllocutionaryAct rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#declaration"/>
+        <MIRAO:hasTextContent rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#textDTOkWeLetYouDoIt"/>
+        <MIRAO:isDisplayedHere rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#rag"/>
+        <MIRAO:isLinkedToImpairment rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#carryOutTheTask"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#DTokWeLetYouDoIt4 -->
+
+    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#DTokWeLetYouDoIt4">
+        <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#AssistanceKappaDT"/>
+        <MIRAO:hasAssistanceType rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#stop"/>
+        <MIRAO:hasIllocutionaryAct rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#declaration"/>
+        <MIRAO:hasTextContent rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#textDTOkWeLetYouDoIt"/>
+        <MIRAO:isDisplayedHere rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#mixedRealityHeadset"/>
+        <MIRAO:isLinkedToImpairment rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#goalFormulation"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#DTperfectDoYouThinkGoalReached -->
+
+    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#DTperfectDoYouThinkGoalReached">
+        <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#AssistanceAlphaDT"/>
+        <MIRAO:hasAssistanceType rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#clarificationOfInstruction"/>
+        <MIRAO:hasIllocutionaryAct rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#subtle2"/>
+        <MIRAO:hasTextContent rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#textDTPerfectDoYouThinkGoalReached"/>
+        <MIRAO:isDisplayedHere rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#mixedRealityHeadset"/>
+        <MIRAO:isLinkedToImpairment rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#verifyAttainmentOfTheInitialGoal"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#DTragIsAtTheEndOfArch -->
+
+    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#DTragIsAtTheEndOfArch">
+        <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#AssistanceBetaDT"/>
+        <MIRAO:hasAssistanceType rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#givingTheAnswer"/>
+        <MIRAO:hasIllocutionaryAct rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#explicit3"/>
+        <MIRAO:hasTextContent rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#textDTRagIsAtTheEndOfArch"/>
+        <MIRAO:isDisplayedHere rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#diningRoomTable"/>
+        <MIRAO:isLinkedToImpairment rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#carryOutTheTask"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#DTsomeoneIsComing -->
+
+    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#DTsomeoneIsComing">
+        <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#AssistanceEpsilonDT"/>
+        <MIRAO:hasTextContent rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#textDTSomeoneIsComing"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#DTsomeoneIsComing2 -->
+
+    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#DTsomeoneIsComing2">
+        <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#AssistanceGammaDT"/>
+        <MIRAO:hasAssistanceType rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#diningRoomTable"/>
+        <MIRAO:hasIllocutionaryAct rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#declaration"/>
+        <MIRAO:hasTextContent rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#textDTSomeoneIsComing"/>
+        <MIRAO:isDisplayedHere rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#diningRoomTable"/>
+        <MIRAO:isLinkedToImpairment rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#carryOutTheTask"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#DTwhatCanYouDoHere -->
+
+    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#DTwhatCanYouDoHere">
+        <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#AssistanceBetaDT"/>
+        <MIRAO:hasAssistanceType rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#stimulateTheThoughtProcess"/>
+        <MIRAO:hasIllocutionaryAct rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#implicit2"/>
+        <MIRAO:hasTextContent rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#textDTWhatCanYouDoHere"/>
+        <MIRAO:isDisplayedHere rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#diningRoomTable"/>
+        <MIRAO:isLinkedToImpairment rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#goalFormulation"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#DTwhatCanYouDoToKeepTableCleaned -->
+
+    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#DTwhatCanYouDoToKeepTableCleaned">
+        <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#AssistanceBetaDT"/>
+        <MIRAO:hasAssistanceType rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#actionInitiation"/>
+        <MIRAO:hasIllocutionaryAct rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#subtle1"/>
+        <MIRAO:hasTextContent rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#textDTWhatCanYouDoKeepTableCleaned"/>
+        <MIRAO:isDisplayedHere rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#diningRoomTable"/>
+        <MIRAO:isLinkedToImpairment rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#goalFormulation"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#DTwhatCanYouDoWithRag -->
+
+    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#DTwhatCanYouDoWithRag">
+        <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#AssistanceGammaDT"/>
+        <MIRAO:hasAssistanceType rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#actionInitiation"/>
+        <MIRAO:hasIllocutionaryAct rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#implicit1"/>
+        <MIRAO:hasTextContent rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#textDTWhatCanYouDoWithRag"/>
+        <MIRAO:isDisplayedHere rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#diningRoomTable"/>
+        <MIRAO:isLinkedToImpairment rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#carryOutTheTask"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#DTwhatObjectToCleanTable -->
+
+    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#DTwhatObjectToCleanTable">
+        <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#AssistanceBetaDT"/>
+        <MIRAO:hasAssistanceType rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#actionInitiation"/>
+        <MIRAO:hasIllocutionaryAct rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#explicit3"/>
+        <MIRAO:hasTextContent rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#textDTWhatObjectToCleanTable"/>
+        <MIRAO:isDisplayedHere rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#diningRoomTable"/>
+        <MIRAO:isLinkedToImpairment rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#goalFormulation"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#DTwhatToDoCleanTable -->
+
+    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#DTwhatToDoCleanTable">
+        <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#AssistanceBetaDT"/>
+        <MIRAO:hasAssistanceType rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#actionInitiation"/>
+        <MIRAO:hasIllocutionaryAct rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#subtle2"/>
+        <MIRAO:hasTextContent rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#textDTWhatToDoCleanTable"/>
+        <MIRAO:isDisplayedHere rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#diningRoomTable"/>
+        <MIRAO:isLinkedToImpairment rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#goalFormulation"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#DTwhereCanYouFindActivityDetails -->
+
+    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#DTwhereCanYouFindActivityDetails">
+        <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#AssistanceKappaDT"/>
+        <MIRAO:hasAssistanceType rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#actionInitiation"/>
+        <MIRAO:hasIllocutionaryAct rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#subtle1"/>
+        <MIRAO:hasTextContent rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#textDTWhereCanYouFindActivityDetails"/>
+        <MIRAO:isDisplayedHere rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#mixedRealityHeadset"/>
+        <MIRAO:isLinkedToImpairment rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#goalFormulation"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#DTwhereToLookForTheRag -->
+
+    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#DTwhereToLookForTheRag">
+        <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#AssistanceBetaDT"/>
+        <MIRAO:hasAssistanceType rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#actionInitiation"/>
+        <MIRAO:hasIllocutionaryAct rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#implicit1"/>
+        <MIRAO:hasTextContent rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#textDTWhereToLookfForTheRag"/>
+        <MIRAO:isDisplayedHere rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#diningRoomTable"/>
+        <MIRAO:isLinkedToImpairment rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#carryOutTheTask"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#DTyesDoneActivityFinished -->
+
+    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#DTyesDoneActivityFinished">
+        <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#AssistanceAlphaDT"/>
+        <MIRAO:hasAssistanceType rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#givingTheAnswer"/>
+        <MIRAO:hasIllocutionaryAct rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#explicit2"/>
+        <MIRAO:hasTextContent rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#textDTYesDoneActivityFinished"/>
+        <MIRAO:isDisplayedHere rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#mixedRealityHeadset"/>
+        <MIRAO:isLinkedToImpairment rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#verifyAttainmentOfTheInitialGoal"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#DustingTableAssistances -->
+
+    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#DustingTableAssistances"/>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#VisualMessage -->
+
+    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#VisualMessage"/>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#actionInitiation -->
+
+    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#actionInitiation">
+        <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#AssistanceActType"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#arch1 -->
+
+    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#arch1">
+        <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#Arch"/>
+        <MIRAO:hasFirstObject rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#mixedRealityHeadset"/>
+        <MIRAO:hasSecondObject rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#calendar"/>
+        <MIRAO:isLinkedToAssistance rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#assistanceKappaDT"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#arch2 -->
+
+    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#arch2">
+        <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#Arch"/>
+        <MIRAO:hasFirstObject rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#diningRoomTable"/>
+        <MIRAO:hasSecondObject rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#rag"/>
+        <MIRAO:isLinkedToAssistance rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#assistanceBetaDT"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#askingForAbstraction -->
+
+    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#askingForAbstraction">
+        <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#AssistanceActType"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#assistanceAlphaDT -->
+
+    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#assistanceAlphaDT">
+        <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#DustingTableAssistances"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#assistanceBetaDT -->
+
+    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#assistanceBetaDT">
+        <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#DustingTableAssistances"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#assistanceDeltaDT -->
+
+    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#assistanceDeltaDT">
+        <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#DustingTableAssistances"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#assistanceEpsilonDT -->
+
+    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#assistanceEpsilonDT">
+        <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#DustingTableAssistances"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#assistanceEtaDT -->
+
+    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#assistanceEtaDT">
+        <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#DustingTableAssistances"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#assistanceGammaDT -->
+
+    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#assistanceGammaDT">
+        <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#DustingTableAssistances"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#assistanceIotaDT -->
+
+    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#assistanceIotaDT">
+        <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#DustingTableAssistances"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#assistanceKappaDT -->
+
+    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#assistanceKappaDT">
+        <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#DustingTableAssistances"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#bathroom -->
+
+    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#bathroom">
+        <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#Bathroom"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#bed -->
+
+    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#bed">
+        <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#Bed"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#blue -->
+
+    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#blue">
+        <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#Colors"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#calendar -->
+
+    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#calendar">
+        <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#Calendar"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#carryOutTheTask -->
+
+    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#carryOutTheTask">
+        <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#Impairment"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#challenge -->
+
+    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#challenge">
+        <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#AssistanceActType"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#clarificationOfInstruction -->
+
+    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#clarificationOfInstruction">
+        <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#AssistanceActType"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#cleaningInterrupted -->
+
+    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#cleaningInterrupted"/>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#declaration -->
+
+    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#declaration">
+        <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#IllocutionaryAct"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#didNotStartCleaning -->
+
+    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#didNotStartCleaning"/>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#diningRoom -->
+
+    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#diningRoom">
+        <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#DiningRoom"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#diningRoomTable -->
+
+    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#diningRoomTable">
+        <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#Table"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#dustingTable -->
+
+    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#dustingTable">
+        <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#Scenario"/>
+        <MIRAO:triggersAssistance rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#DustingTableAssistances"/>
+        <MIRAO:isAssociatedToEnvironmentElement rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#Rag"/>
+        <MIRAO:isAssociatedToRoom rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#DiningRoom"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#emma -->
+
+    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#emma">
+        <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#FirstName"/>
+        <rdfs:label>Emma</rdfs:label>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#emmaFoulon -->
+
+    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#emmaFoulon">
+        <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#UserProfile"/>
+        <MIRAO:associatesColorWithUrgency rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#purple"/>
+        <MIRAO:findsColorAttractive rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#green"/>
+        <MIRAO:hasFamilyName rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#foulon"/>
+        <MIRAO:hasFavoriteColor rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#orange"/>
+        <MIRAO:hasFirstName rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#emma"/>
+        <MIRAO:preferredCommChannel rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#VisualMessage"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#exclamationMarkRag -->
+
+    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#exclamationMarkRag">
+        <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#ExclamationMark"/>
+        <MIRAO:isDisplayedHere rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#rag"/>
+        <MIRAO:isLinkedToAssistance rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#assistanceEpsilonDT"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#exclamationMarkTable -->
+
+    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#exclamationMarkTable">
+        <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#ExclamationMark"/>
+        <MIRAO:hasAssistanceType rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#stimulateTheThoughtProcess"/>
+        <MIRAO:hasIllocutionaryAct rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#implicit1"/>
+        <MIRAO:isDisplayedHere rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#diningRoomTable"/>
+        <MIRAO:isLinkedToAssistance rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#assistanceBetaDT"/>
+        <MIRAO:isLinkedToImpairment rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#goalFormulation"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#explicit1 -->
+
+    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#explicit1">
+        <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#IllocutionaryAct"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#explicit2 -->
+
+    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#explicit2">
+        <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#IllocutionaryAct"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#explicit3 -->
+
+    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#explicit3">
+        <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#IllocutionaryAct"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#externalAssistance -->
+
+    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#externalAssistance">
+        <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#AssistanceActType"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#foulon -->
+
+    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#foulon">
+        <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#FamilyName"/>
+        <rdfs:label>Foulon</rdfs:label>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#givingAClue -->
+
+    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#givingAClue">
+        <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#AssistanceActType"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#givingTheAnswer -->
+
+    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#givingTheAnswer">
+        <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#AssistanceActType"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#goalFormulation -->
+
+    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#goalFormulation">
+        <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#Impairment"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#green -->
+
+    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#green">
+        <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#Colors"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#implicit1 -->
+
+    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#implicit1">
+        <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#IllocutionaryAct"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#implicit2 -->
+
+    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#implicit2">
+        <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#IllocutionaryAct"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#implicit3 -->
+
+    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#implicit3">
+        <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#IllocutionaryAct"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#kitchen -->
+
+    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#kitchen">
+        <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#Kitchen"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#livingRoom -->
+
+    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#livingRoom">
+        <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#LivingRoom"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#mixedRealityHeadset -->
+
+    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#mixedRealityHeadset">
+        <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#MixedRealityHeadset"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#motivationalAssistance -->
+
+    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#motivationalAssistance">
+        <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#AssistanceActType"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#newPartCleaned -->
+
+    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#newPartCleaned"/>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#orange -->
+
+    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#orange">
+        <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#Colors"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#physicalAssistance -->
+
+    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#physicalAssistance">
+        <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#AssistanceActType"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#pink -->
+
+    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#pink">
+        <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#Colors"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#planification -->
+
+    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#planification">
+        <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#Impairment"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#processRelatedToNewPartsCleanedDone -->
+
+    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#processRelatedToNewPartsCleanedDone"/>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#purple -->
+
+    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#purple">
+        <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#Colors"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#rag -->
+
+    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#rag">
+        <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#Rag"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#ragNotTakenButHelpReceived -->
+
+    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#ragNotTakenButHelpReceived"/>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#ragTaken -->
+
+    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#ragTaken"/>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#reassurance -->
+
+    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#reassurance">
+        <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#AssistanceActType"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#recallAnElement -->
+
+    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#recallAnElement">
+        <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#AssistanceActType"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#red -->
+
+    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#red">
+        <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#Colors"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#restart -->
+
+    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#restart">
+        <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#AssistanceActType"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#scaffholding -->
+
+    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#scaffholding">
+        <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#AssistanceActType"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#stimulateTheThoughtProcess -->
+
+    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#stimulateTheThoughtProcess">
+        <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#AssistanceActType"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#stop -->
+
+    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#stop">
+        <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#AssistanceActType"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#subtle1 -->
+
+    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#subtle1">
+        <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#IllocutionaryAct"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#subtle2 -->
+
+    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#subtle2">
+        <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#IllocutionaryAct"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#subtle3 -->
+
+    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#subtle3">
+        <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#IllocutionaryAct"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#surfaceToProcess1 -->
+
+    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#surfaceToProcess1">
+        <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#SurfaceToProcess"/>
+        <MIRAO:isDisplayedHere rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#diningRoomTable"/>
+        <MIRAO:isLinkedToAssistance rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#assistanceEtaDT"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#tableCleaned -->
+
+    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#tableCleaned"/>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#textDTActivityFinishedCongrats -->
+
+    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#textDTActivityFinishedCongrats">
+        <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#Text"/>
+        <MIRAO:hasAssistanceType rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#givingTheAnswer"/>
+        <MIRAO:hasIllocutionaryAct rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#explicit3"/>
+        <MIRAO:isDisplayedHere rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#mixedRealityHeadset"/>
+        <MIRAO:isLinkedToAssistance rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#assistanceAlphaDT"/>
+        <MIRAO:isLinkedToImpairment rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#verifyAttainmentOfTheInitialGoal"/>
+        <MIRAO:hasContent>En effet, vous avez terminé l&apos;activité. Félicitations !</MIRAO:hasContent>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#textDTAreYouSureAboutObject -->
+
+    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#textDTAreYouSureAboutObject">
+        <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#Text"/>
+        <MIRAO:hasAssistanceType rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#clarificationOfInstruction"/>
+        <MIRAO:hasIllocutionaryAct rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#implicit1"/>
+        <MIRAO:isDisplayedHere rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#diningRoomTable"/>
+        <MIRAO:isLinkedToAssistance rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#assistanceIotaDT"/>
+        <MIRAO:isLinkedToImpairment rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#carryOutTheTask"/>
+        <MIRAO:hasContent>Êtes-vous sûr que vous utilisez le bon objet pour nettoyer la table ?</MIRAO:hasContent>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#textDTAreYouSureActivityIsFinished -->
+
+    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#textDTAreYouSureActivityIsFinished">
+        <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#Text"/>
+        <MIRAO:hasAssistanceType rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#recallAnElement"/>
+        <MIRAO:hasIllocutionaryAct rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#subtle1"/>
+        <MIRAO:isDisplayedHere rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#diningRoomTable"/>
+        <MIRAO:isLinkedToAssistance rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#assistanceDeltaDT"/>
+        <MIRAO:isLinkedToImpairment rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#carryOutTheTask"/>
+        <MIRAO:hasContent>Êtes-vous sûr d&apos;avoir terminé votre activité ?</MIRAO:hasContent>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#textDTAreYouSureUsingRag -->
+
+    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#textDTAreYouSureUsingRag">
+        <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#Text"/>
+        <MIRAO:hasAssistanceType rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#recallAnElement"/>
+        <MIRAO:hasIllocutionaryAct rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#subtle1"/>
+        <MIRAO:isDisplayedHere rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#diningRoomTable"/>
+        <MIRAO:isLinkedToAssistance rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#assistanceIotaDT"/>
+        <MIRAO:isLinkedToImpairment rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#carryOutTheTask"/>
+        <MIRAO:hasContent>Êtes-vous sûr que vous utilisez le bon chiffon pour nettoyer la table ?</MIRAO:hasContent>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#textDTCanFindItNearYou -->
+
+    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#textDTCanFindItNearYou">
+        <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#Text"/>
+        <MIRAO:hasAssistanceType rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#givingAClue"/>
+        <MIRAO:hasIllocutionaryAct rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#subtle2"/>
+        <MIRAO:isDisplayedHere rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#diningRoomTable"/>
+        <MIRAO:isLinkedToAssistance rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#assistanceBetaDT"/>
+        <MIRAO:isLinkedToImpairment rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#carryOutTheTask"/>
+        <MIRAO:hasContent>Vous pouvez le trouver proche de vous dans cette pièce.</MIRAO:hasContent>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#textDTDidYouLookWalls -->
+
+    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#textDTDidYouLookWalls">
+        <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#Text"/>
+        <MIRAO:hasAssistanceType rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#givingAClue"/>
+        <MIRAO:hasIllocutionaryAct rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#subtle2"/>
+        <MIRAO:isDisplayedHere rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#mixedRealityHeadset"/>
+        <MIRAO:isLinkedToAssistance rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#assistanceKappaDT"/>
+        <MIRAO:isLinkedToImpairment rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#goalFormulation"/>
+        <MIRAO:hasContent>Avez-vous regardé sur les murs ?</MIRAO:hasContent>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#textDTDoYouKnowWhatToDo -->
+
+    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#textDTDoYouKnowWhatToDo">
+        <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#Text"/>
+        <MIRAO:hasAssistanceType rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#actionInitiation"/>
+        <MIRAO:hasIllocutionaryAct rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#subtle1"/>
+        <MIRAO:isDisplayedHere rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#diningRoomTable"/>
+        <MIRAO:isLinkedToAssistance rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#assistanceDeltaDT"/>
+        <MIRAO:isLinkedToImpairment rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#carryOutTheTask"/>
+        <MIRAO:hasContent>Savez-vous ce que vous devez faire pour réaliser votre activié ?</MIRAO:hasContent>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#textDTDoYouKnowWhichActivity -->
+
+    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#textDTDoYouKnowWhichActivity">
+        <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#Text"/>
+        <MIRAO:hasAssistanceType rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#stimulateTheThoughtProcess"/>
+        <MIRAO:hasIllocutionaryAct rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#implicit1"/>
+        <MIRAO:isDisplayedHere rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#mixedRealityHeadset"/>
+        <MIRAO:isLinkedToAssistance rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#assistanceKappaDT"/>
+        <MIRAO:isLinkedToImpairment rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#goalFormulation"/>
+        <MIRAO:hasContent>Savez-vous quelle activité vous devez réaliser dans cette pièce ?</MIRAO:hasContent>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#textDTDoYouRecallActivityGoal -->
+
+    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#textDTDoYouRecallActivityGoal">
+        <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#Text"/>
+        <MIRAO:hasAssistanceType rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#stimulateTheThoughtProcess"/>
+        <MIRAO:hasIllocutionaryAct rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#implicit3"/>
+        <MIRAO:isDisplayedHere rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#mixedRealityHeadset"/>
+        <MIRAO:isLinkedToAssistance rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#assistanceAlphaDT"/>
+        <MIRAO:isLinkedToImpairment rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#verifyAttainmentOfTheInitialGoal"/>
+        <MIRAO:hasContent>Est-ce que vous vous rappelez du but de l&apos;activité ?</MIRAO:hasContent>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#textDTFindDetailsAtTheEndOfArch -->
+
+    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#textDTFindDetailsAtTheEndOfArch">
+        <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#Text"/>
+        <MIRAO:hasAssistanceType rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#givingTheAnswer"/>
+        <MIRAO:hasIllocutionaryAct rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#explicit3"/>
+        <MIRAO:isDisplayedHere rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#mixedRealityHeadset"/>
+        <MIRAO:isLinkedToAssistance rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#assistanceKappaDT"/>
+        <MIRAO:isLinkedToImpairment rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#goalFormulation"/>
+        <MIRAO:hasContent>Vous trouverez les détails de l&apos;activité au bout de cette arche.</MIRAO:hasContent>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#textDTHaveYouFinishedActivity -->
+
+    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#textDTHaveYouFinishedActivity">
+        <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#Text"/>
+        <MIRAO:hasAssistanceType rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#clarificationOfInstruction"/>
+        <MIRAO:hasIllocutionaryAct rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#implicit1"/>
+        <MIRAO:isDisplayedHere rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#mixedRealityHeadset"/>
+        <MIRAO:isLinkedToAssistance rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#assistanceAlphaDT"/>
+        <MIRAO:isLinkedToImpairment rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#verifyAttainmentOfTheInitialGoal"/>
+        <MIRAO:hasContent>Avez-vous terminé votre activité ?</MIRAO:hasContent>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#textDTHaveYouLookedLocation -->
+
+    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#textDTHaveYouLookedLocation">
+        <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#Text"/>
+        <MIRAO:hasAssistanceType rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#stimulateTheThoughtProcess"/>
+        <MIRAO:hasIllocutionaryAct rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#subtle1"/>
+        <MIRAO:isDisplayedHere rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#diningRoomTable"/>
+        <MIRAO:isLinkedToAssistance rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#assistanceBetaDT"/>
+        <MIRAO:isLinkedToImpairment rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#carryOutTheTask"/>
+        <MIRAO:hasContent>Avez-vous regardé &lt;Location&gt; ?</MIRAO:hasContent>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#textDTHowToKnowActivityIsFinished -->
+
+    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#textDTHowToKnowActivityIsFinished">
+        <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#Text"/>
+        <MIRAO:hasAssistanceType rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#stimulateTheThoughtProcess"/>
+        <MIRAO:hasIllocutionaryAct rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#implicit2"/>
+        <MIRAO:isDisplayedHere rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#mixedRealityHeadset"/>
+        <MIRAO:isLinkedToAssistance rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#assistanceAlphaDT"/>
+        <MIRAO:isLinkedToImpairment rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#verifyAttainmentOfTheInitialGoal"/>
+        <MIRAO:hasContent>Comment pouvez-vous savoir si vous avez terminé votre activité ?</MIRAO:hasContent>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#textDTIsActivityFinished -->
+
+    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#textDTIsActivityFinished">
+        <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#Text"/>
+        <MIRAO:hasAssistanceType rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#clarificationOfInstruction"/>
+        <MIRAO:hasIllocutionaryAct rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#implicit1"/>
+        <MIRAO:isDisplayedHere rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#diningRoomTable"/>
+        <MIRAO:isLinkedToAssistance rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#assistanceDeltaDT"/>
+        <MIRAO:isLinkedToImpairment rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#verifyAttainmentOfTheInitialGoal"/>
+        <MIRAO:hasContent>Avez-vous terminé votre activité ?</MIRAO:hasContent>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#textDTNeedRagUnderThisMessage -->
+
+    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#textDTNeedRagUnderThisMessage">
+        <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#Text"/>
+        <MIRAO:hasAssistanceType rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#givingTheAnswer"/>
+        <MIRAO:hasIllocutionaryAct rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#explicit3"/>
+        <MIRAO:isDisplayedHere rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#rag"/>
+        <MIRAO:isLinkedToAssistance rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#assistanceEpsilonDT"/>
+        <MIRAO:isLinkedToImpairment rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#carryOutTheTask"/>
+        <MIRAO:hasContent>Vous devez utiliser le chiffon sous ce message pour nettoyer la table.</MIRAO:hasContent>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#textDTNeedToCleanTableWithRag -->
+
+    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#textDTNeedToCleanTableWithRag">
+        <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#Text"/>
+        <MIRAO:hasAssistanceType rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#givingTheAnswer"/>
+        <MIRAO:hasIllocutionaryAct rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#implicit1"/>
+        <MIRAO:isDisplayedHere rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#diningRoomTable"/>
+        <MIRAO:isLinkedToAssistance rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#assistanceBetaDT"/>
+        <MIRAO:isLinkedToImpairment rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#planification"/>
+        <MIRAO:hasContent>Vous devez nettoyer la table avec un chiffon.</MIRAO:hasContent>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#textDTNeedToDustTableUntilGreen -->
+
+    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#textDTNeedToDustTableUntilGreen">
+        <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#Text"/>
+        <MIRAO:hasAssistanceType rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#givingTheAnswer"/>
+        <MIRAO:hasIllocutionaryAct rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#explicit3"/>
+        <MIRAO:isDisplayedHere rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#diningRoomTable"/>
+        <MIRAO:isLinkedToAssistance rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#assistanceGammaDT"/>
+        <MIRAO:isLinkedToImpairment rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#carryOutTheTask"/>
+        <MIRAO:hasContent>Vous devez épousseter la table avec le chiffon jusqu&apos;à ce que la surface soit entièrement verte.</MIRAO:hasContent>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#textDTNeedToDustTableUntilGreenAlmostThere -->
+
+    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#textDTNeedToDustTableUntilGreenAlmostThere">
+        <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#Text"/>
+        <MIRAO:hasAssistanceType rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#givingTheAnswer"/>
+        <MIRAO:hasAssistanceType rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#motivationalAssistance"/>
+        <MIRAO:hasIllocutionaryAct rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#explicit3"/>
+        <MIRAO:isDisplayedHere rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#diningRoomTable"/>
+        <MIRAO:isLinkedToAssistance rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#assistanceDeltaDT"/>
+        <MIRAO:isLinkedToImpairment rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#carryOutTheTask"/>
+        <MIRAO:hasContent>Vous devez épousseter la table avec un chiffon jusqu&apos;à ce que la surface soit entièrement verte. Vous êtes sur la bonne voie !</MIRAO:hasContent>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#textDTNeededToCleanWithRagWhatDoYouThink -->
+
+    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#textDTNeededToCleanWithRagWhatDoYouThink">
+        <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#Text"/>
+        <MIRAO:hasAssistanceType rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#clarificationOfInstruction"/>
+        <MIRAO:hasIllocutionaryAct rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#subtle3"/>
+        <MIRAO:isDisplayedHere rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#mixedRealityHeadset"/>
+        <MIRAO:isLinkedToAssistance rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#assistanceAlphaDT"/>
+        <MIRAO:isLinkedToImpairment rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#verifyAttainmentOfTheInitialGoal"/>
+        <MIRAO:hasContent>Vous deviez épousseter la table avec un chiffon. Qu&apos;en pensez vous ?</MIRAO:hasContent>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#textDTNoIndeedWhereCanYouLook -->
+
+    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#textDTNoIndeedWhereCanYouLook">
+        <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#Text"/>
+        <MIRAO:hasAssistanceType rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#actionInitiation"/>
+        <MIRAO:hasIllocutionaryAct rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#subtle3"/>
+        <MIRAO:isDisplayedHere rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#diningRoomTable"/>
+        <MIRAO:isLinkedToAssistance rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#assistanceIotaDT"/>
+        <MIRAO:isLinkedToImpairment rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#carryOutTheTask"/>
+        <MIRAO:hasContent>Non en effet. Où pouvez-vous regarder pour le trouver ?</MIRAO:hasContent>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#textDTNotDoneNeedToDustUntilGreen -->
+
+    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#textDTNotDoneNeedToDustUntilGreen">
+        <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#Text"/>
+        <MIRAO:hasAssistanceType rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#givingTheAnswer"/>
+        <MIRAO:hasIllocutionaryAct rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#explicit3"/>
+        <MIRAO:isDisplayedHere rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#diningRoomTable"/>
+        <MIRAO:isLinkedToAssistance rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#assistanceDeltaDT"/>
+        <MIRAO:isLinkedToImpairment rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#carryOutTheTask"/>
+        <MIRAO:hasContent>En réalité non. Vous devez épousseter la table avec le chiffon jusquà ce que la surface soit entièrement verte.</MIRAO:hasContent>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#textDTNotRightRag -->
+
+    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#textDTNotRightRag">
+        <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#Text"/>
+        <MIRAO:hasAssistanceType rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#actionInitiation"/>
+        <MIRAO:hasIllocutionaryAct rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#subtle2"/>
+        <MIRAO:isDisplayedHere rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#diningRoomTable"/>
+        <MIRAO:isLinkedToAssistance rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#assistanceIotaDT"/>
+        <MIRAO:isLinkedToImpairment rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#carryOutTheTask"/>
+        <MIRAO:hasContent>Ce n&apos;est pas le bon chiffon. L&apos;avez-vous cherché ?</MIRAO:hasContent>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#textDTObjectYouNeedIsHere -->
+
+    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#textDTObjectYouNeedIsHere">
+        <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#Text"/>
+        <MIRAO:hasAssistanceType rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#clarificationOfInstruction"/>
+        <MIRAO:hasIllocutionaryAct rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#subtle1"/>
+        <MIRAO:isDisplayedHere rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#rag"/>
+        <MIRAO:isLinkedToAssistance rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#assistanceEpsilonDT"/>
+        <MIRAO:isLinkedToImpairment rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#carryOutTheTask"/>
+        <MIRAO:hasContent>L&apos;objet dont vous avez besoin pour compléter votre activité est ici.</MIRAO:hasContent>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#textDTOkWeLetYouDoIt -->
+
+    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#textDTOkWeLetYouDoIt">
+        <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#Text"/>
+        <MIRAO:hasAssistanceType rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#stop"/>
+        <MIRAO:hasIllocutionaryAct rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#declaration"/>
+        <MIRAO:isDisplayedHere rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#diningRoomTable"/>
+        <MIRAO:isDisplayedHere rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#rag"/>
+        <MIRAO:isLinkedToAssistance rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#assistanceBetaDT"/>
+        <MIRAO:isLinkedToAssistance rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#assistanceDeltaDT"/>
+        <MIRAO:isLinkedToAssistance rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#assistanceEpsilonDT"/>
+        <MIRAO:isLinkedToAssistance rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#assistanceKappaDT"/>
+        <MIRAO:isLinkedToImpairment rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#carryOutTheTask"/>
+        <MIRAO:isLinkedToImpairment rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#goalFormulation"/>
+        <MIRAO:isLinkedToImpairment rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#planification"/>
+        <MIRAO:hasContent>Ok ! Nous vous laissons faire.</MIRAO:hasContent>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#textDTPerfectDoYouThinkGoalReached -->
+
+    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#textDTPerfectDoYouThinkGoalReached">
+        <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#Text"/>
+        <MIRAO:hasAssistanceType rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#clarificationOfInstruction"/>
+        <MIRAO:hasIllocutionaryAct rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#subtle2"/>
+        <MIRAO:isDisplayedHere rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#mixedRealityHeadset"/>
+        <MIRAO:isLinkedToAssistance rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#assistanceAlphaDT"/>
+        <MIRAO:isLinkedToImpairment rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#verifyAttainmentOfTheInitialGoal"/>
+        <MIRAO:hasContent>Parfait ! Pensez-vous que vous avez atteint ce but ?</MIRAO:hasContent>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#textDTRagIsAtTheEndOfArch -->
+
+    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#textDTRagIsAtTheEndOfArch">
+        <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#Text"/>
+        <MIRAO:hasAssistanceType rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#givingTheAnswer"/>
+        <MIRAO:hasIllocutionaryAct rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#explicit3"/>
+        <MIRAO:isDisplayedHere rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#diningRoomTable"/>
+        <MIRAO:isLinkedToAssistance rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#assistanceBetaDT"/>
+        <MIRAO:isLinkedToImpairment rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#carryOutTheTask"/>
+        <MIRAO:hasContent>Vous trouverez le chiffon au bout de cette flêche.</MIRAO:hasContent>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#textDTSomeoneIsComing -->
+
+    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#textDTSomeoneIsComing">
+        <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#Text"/>
+        <MIRAO:hasAssistanceType rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#externalAssistance"/>
+        <MIRAO:hasIllocutionaryAct rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#declaration"/>
+        <MIRAO:isDisplayedHere rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#diningRoomTable"/>
+        <MIRAO:isDisplayedHere rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#rag"/>
+        <MIRAO:isLinkedToAssistance rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#assistanceEpsilonDT"/>
+        <MIRAO:isLinkedToAssistance rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#assistanceGammaDT"/>
+        <MIRAO:isLinkedToImpairment rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#carryOutTheTask"/>
+        <MIRAO:hasContent>Je ne peux pas plus vous aider. Quelqu&apos;un va venir vous voir.</MIRAO:hasContent>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#textDTWhatCanYouDoHere -->
+
+    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#textDTWhatCanYouDoHere">
+        <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#Text"/>
+        <MIRAO:hasAssistanceType rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#stimulateTheThoughtProcess"/>
+        <MIRAO:hasIllocutionaryAct rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#implicit2"/>
+        <MIRAO:isDisplayedHere rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#diningRoomTable"/>
+        <MIRAO:isLinkedToAssistance rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#assistanceBetaDT"/>
+        <MIRAO:isLinkedToImpairment rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#goalFormulation"/>
+        <MIRAO:hasContent>Que pouvez-vous faire ici ?</MIRAO:hasContent>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#textDTWhatCanYouDoKeepTableCleaned -->
+
+    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#textDTWhatCanYouDoKeepTableCleaned">
+        <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#Text"/>
+        <MIRAO:hasAssistanceType rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#actionInitiation"/>
+        <MIRAO:hasIllocutionaryAct rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#subtle1"/>
+        <MIRAO:isDisplayedHere rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#diningRoomTable"/>
+        <MIRAO:isLinkedToAssistance rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#assistanceBetaDT"/>
+        <MIRAO:isLinkedToImpairment rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#goalFormulation"/>
+        <MIRAO:hasContent>Que pouvez-vous faire pour garder votre table propre ?</MIRAO:hasContent>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#textDTWhatCanYouDoWithRag -->
+
+    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#textDTWhatCanYouDoWithRag">
+        <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#Text"/>
+        <MIRAO:hasAssistanceType rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#actionInitiation"/>
+        <MIRAO:hasIllocutionaryAct rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#implicit1"/>
+        <MIRAO:isDisplayedHere rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#diningRoomTable"/>
+        <MIRAO:isLinkedToAssistance rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#assistanceGammaDT"/>
+        <MIRAO:isLinkedToImpairment rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#carryOutTheTask"/>
+        <MIRAO:hasContent>Que pouvez-vous faire avec le chiffon ?</MIRAO:hasContent>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#textDTWhatObjectToCleanTable -->
+
+    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#textDTWhatObjectToCleanTable">
+        <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#Text"/>
+        <MIRAO:hasAssistanceType rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#actionInitiation"/>
+        <MIRAO:hasIllocutionaryAct rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#explicit3"/>
+        <MIRAO:isDisplayedHere rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#diningRoomTable"/>
+        <MIRAO:isLinkedToAssistance rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#assistanceBetaDT"/>
+        <MIRAO:isLinkedToImpairment rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#goalFormulation"/>
+        <MIRAO:hasContent>De quel objet avez-vous besoin pour nettoyer votre table ?</MIRAO:hasContent>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#textDTWhatToDoCleanTable -->
+
+    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#textDTWhatToDoCleanTable">
+        <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#Text"/>
+        <MIRAO:hasAssistanceType rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#actionInitiation"/>
+        <MIRAO:hasIllocutionaryAct rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#subtle2"/>
+        <MIRAO:isDisplayedHere rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#diningRoomTable"/>
+        <MIRAO:isLinkedToAssistance rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#assistanceBetaDT"/>
+        <MIRAO:isLinkedToImpairment rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#goalFormulation"/>
+        <MIRAO:hasContent>Que pouvez-vous faire pour nettoyer votre table ?</MIRAO:hasContent>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#textDTWhereCanYouFindActivityDetails -->
+
+    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#textDTWhereCanYouFindActivityDetails">
+        <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#Text"/>
+        <MIRAO:hasAssistanceType rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#actionInitiation"/>
+        <MIRAO:hasIllocutionaryAct rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#subtle1"/>
+        <MIRAO:isDisplayedHere rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#mixedRealityHeadset"/>
+        <MIRAO:isLinkedToAssistance rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#assistanceKappaDT"/>
+        <MIRAO:isLinkedToImpairment rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#goalFormulation"/>
+        <MIRAO:hasContent>Où pouvez-vous trouver les détails de l&apos;activité à faire ?</MIRAO:hasContent>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#textDTWhereToLookfForTheRag -->
+
+    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#textDTWhereToLookfForTheRag">
+        <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#Text"/>
+        <MIRAO:hasAssistanceType rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#actionInitiation"/>
+        <MIRAO:hasIllocutionaryAct rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#implicit1"/>
+        <MIRAO:isDisplayedHere rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#diningRoomTable"/>
+        <MIRAO:isLinkedToAssistance rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#assistanceBetaDT"/>
+        <MIRAO:isLinkedToImpairment rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#carryOutTheTask"/>
+        <MIRAO:hasContent>Où pouvez-vous regarder pour le trouver ?</MIRAO:hasContent>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#textDTYesDoneActivityFinished -->
+
+    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#textDTYesDoneActivityFinished">
+        <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#Text"/>
+        <MIRAO:hasAssistanceType rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#givingTheAnswer"/>
+        <MIRAO:hasIllocutionaryAct rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#explicit2"/>
+        <MIRAO:isDisplayedHere rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#mixedRealityHeadset"/>
+        <MIRAO:isLinkedToAssistance rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#assistanceAlphaDT"/>
+        <MIRAO:isLinkedToImpairment rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#verifyAttainmentOfTheInitialGoal"/>
+        <MIRAO:hasContent>Oui c&apos;est fait ! Vous avez terminé l&apos;activité !</MIRAO:hasContent>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#validation -->
+
+    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#validation">
+        <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#AssistanceActType"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#verifyAttainmentOfTheInitialGoal -->
+
+    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#verifyAttainmentOfTheInitialGoal">
+        <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#Impairment"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#yellow -->
+
+    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#yellow">
+        <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#Colors"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Annotations
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    <rdf:Description rdf:about="http://www.domus.usherbrooke.ca/diy-aide/ontologies/2017/2/automation#673c482c-e4d1-4e78-a4a1-4ea241d5857f">
+        <rdfs:label>Domus Ontology</rdfs:label>
+    </rdf:Description>
+    <rdf:Description rdf:about="http://www.w3.org/2002/07/owl#MAO">
+        <rdfs:label>Domus Ontology</rdfs:label>
+    </rdf:Description>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // General axioms
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    <rdf:Description>
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#AllDisjointClasses"/>
+        <owl:members rdf:parseType="Collection">
+            <rdf:Description rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#BlockedState"/>
+            <rdf:Description rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#ClosedState"/>
+            <rdf:Description rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#OpenedState"/>
+        </owl:members>
+    </rdf:Description>
+</rdf:RDF>
+
+
+
+<!-- Generated by the OWL API (version 4.5.25.2023-02-15T19:15:49Z) https://github.com/owlcs/owlapi -->
+
