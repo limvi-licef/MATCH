@@ -286,19 +286,7 @@ namespace MATCH
 
                     return temp;
                 }
-                /*
-                public void TriggerUserInAnotherRoom()
-                {
-                    if (MATCH.Managers.Rooms.Instance.IsUserInWrongRoom("dustingTable"))
-                    {
-                        EventUserInAnotherRoom?.Invoke(this, EventArgs.Empty);
-                    }
-                    else
-                    {
-                        UpdateCondition(ConditionUserInAnotherRoom, false);
-                    }
-                }
-                */
+
 
                 void InitializeAssistances()
                 {

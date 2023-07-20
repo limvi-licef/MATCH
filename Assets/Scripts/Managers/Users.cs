@@ -29,6 +29,11 @@ namespace MATCH
         {
             private static Users instance;
             public string UserProfile;
+            public string FavoriteColor;
+            public string AttractiveColor;
+            public string EmergencyColor;
+            EventHandler EventUserButtonClicked;
+            //MATCH.Assistances.Buttons.Basic SelectedUserButton;
 
             private Users()
             {
@@ -47,9 +52,15 @@ namespace MATCH
             // Start is called before the first frame update
             void Start()
             {
+                //Buttons = new List<GameObject>();
                 // To load a profile by default in case no profile is chosen manually on the cockpit
                 UserProfile = "emmaFoulon";
+                FavoriteColor = "Cyan";
+                AttractiveColor = "Orange";
+                EmergencyColor = "Red";
                 DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Profil par défaut : " + UserProfile);
+
+                
 
                 VDS.RDF.Parsing.SparqlQueryParser parser = new VDS.RDF.Parsing.SparqlQueryParser();
                 VDS.RDF.Query.SparqlQuery query = parser.ParseFromString("PREFIX mirao: <https://ontology.staging.domus.usherbrooke.ca/MIRAO#> PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>" +
@@ -65,16 +76,62 @@ namespace MATCH
                         string familyName = result.Value("familyNameLabel").ToString();
                         familyName = MATCH.Utilities.Materials.Ontology.Instance.ShortenMessage(familyName);
                         string name = $"Choisir le profil de {firstName} {familyName}";
-                        MATCH.AdminMenu.Instance.AddButton(name, delegate ()
+                        MATCH.Assistances.Buttons.Basic newButton = MATCH.AdminMenu.Instance.AddButton(name, delegate() { }, /*delegate ()
                         {
-                            MATCH.DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, MATCH.DebugMessagesManager.MessageLevel.Info, "Ok profil.");
                             UserProfile = result.Value("a").ToString();
                             char symbol = '#';
                             int beginIndex = UserProfile.IndexOf(symbol);
                             UserProfile = UserProfile.Substring(beginIndex + 1);
                             DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Profil choisi : " + UserProfile);
 
-                        }, MATCH.AdminMenu.Panels.Left);
+                            ColorPreferencesQuery(UserProfile);
+                            //EventUserButtonClicked?.Invoke(this, EventArgs.Empty);
+                            //newButton.CallbackSetButtonBackgroundGreen;
+                            //transform.Find("BackPlate").Find("Quad").GetComponent<Renderer>().material = Resources.Load(Utilities.Materials.Colors.GreenGlowing, typeof(Material)) as Material;
+                            newButton.CallbackSetButtonBackgroundGreen(this, EventArgs.Empty);
+                        },*/ MATCH.AdminMenu.Panels.Left);
+
+                        newButton.EventButtonClicked += delegate (System.Object o, EventArgs e)
+                        {
+                            UserProfile = result.Value("a").ToString();
+                            char symbol = '#';
+                            int beginIndex = UserProfile.IndexOf(symbol);
+                            UserProfile = UserProfile.Substring(beginIndex + 1);
+                            DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Profil choisi : " + UserProfile);
+                            ColorPreferencesQuery(UserProfile);
+                            //EventUserButtonClicked?.Invoke(this, EventArgs.Empty);
+                            //newButton.CallbackSetButtonBackgroundGreen;
+                            //transform.Find("BackPlate").Find("Quad").GetComponent<Renderer>().material = Resources.Load(Utilities.Materials.Colors.GreenGlowing, typeof(Material)) as Material;
+                            newButton.CallbackSetButtonBackgroundGreen(this, EventArgs.Empty);
+                        };
+
+                        //EventUserButtonClicked += newButton.CallbackSetButtonBackgroundGreen;
+                    }
+                }
+            }
+
+
+
+            void ColorPreferencesQuery(string user)
+            {
+                VDS.RDF.Parsing.SparqlQueryParser parser = new VDS.RDF.Parsing.SparqlQueryParser();
+                VDS.RDF.Query.SparqlQuery query = parser.ParseFromString("PREFIX mirao: <https://ontology.staging.domus.usherbrooke.ca/MIRAO#> " +
+                    $"SELECT ?favoriteColorRef ?attractiveColorRef ?emergencyColorRef WHERE {{mirao:{UserProfile} mirao:hasFavoriteColor ?favoriteColor . ?favoriteColor mirao:hasColorReference ?favoriteColorRef . mirao:{UserProfile} mirao:findsColorAttractive ?attractiveColor . ?attractiveColor mirao:hasColorReference ?attractiveColorRef . mirao:{UserProfile} mirao:associatesColorWithUrgency ?emergencyColor . ?emergencyColor mirao:hasColorReference ?emergencyColorRef .}}");
+                VDS.RDF.Query.SparqlResultSet results = (VDS.RDF.Query.SparqlResultSet)MATCH.Utilities.Materials.Ontology.Instance.Graph.ExecuteQuery(query.ToString());
+
+                if (results != null)
+                {
+                    foreach (VDS.RDF.Query.SparqlResult result in results)
+                    {
+                        FavoriteColor = result.Value("favoriteColorRef").ToString();
+                        FavoriteColor = MATCH.Utilities.Materials.Ontology.Instance.ShortenMessage(FavoriteColor);
+                        AttractiveColor = result.Value("attractiveColorRef").ToString();
+                        AttractiveColor = MATCH.Utilities.Materials.Ontology.Instance.ShortenMessage(AttractiveColor);
+                        EmergencyColor = result.Value("emergencyColorRef").ToString();
+                        EmergencyColor = MATCH.Utilities.Materials.Ontology.Instance.ShortenMessage(EmergencyColor);
+                        DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Couleur préférée : " + FavoriteColor);
+                        DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Couleur attractive : " + AttractiveColor);
+                        DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Couleur associée à l'urgence : " + EmergencyColor);
                     }
                 }
             }

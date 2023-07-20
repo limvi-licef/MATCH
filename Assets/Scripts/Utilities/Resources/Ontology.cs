@@ -97,18 +97,18 @@ namespace MATCH
                     }
 
                     return message;
+                }
                 */
 
-                /*
-                // Make a simple query to get the assistance text message
                 public string AssistanceQuery(string assistanceName, string illocutionaryAct, string impairment, string assistanceType)
                 {
                     VDS.RDF.Parsing.SparqlQueryParser parser = new VDS.RDF.Parsing.SparqlQueryParser();
 
                     string sparqlQuery = $"PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> PREFIX mirao: <https://ontology.staging.domus.usherbrooke.ca/MIRAO#>" +
-                        $"SELECT ?message WHERE {{mirao:{MATCH.Managers.Users.Instance.UserProfile} mirao:preferredCommChannel ?modeComm . ?texte mirao:isLinkedToAssistance mirao:{assistanceName} . ?texte mirao:isLinkedToImpairment mirao:{impairment} . ?texte mirao:hasIllocutionaryAct mirao:{illocutionaryAct} . ?texte mirao:hasAssistanceType mirao:{assistanceType} . ?texte rdf:type ?modeComm . ?texte mirao:hasContent ?message}}";
-                    VDS.RDF.Query.SparqlQuery query = parser.ParseFromString(sparqlQuery);
 
+                        $"SELECT ?message WHERE {{mirao:{MATCH.Managers.Users.Instance.UserProfile} mirao:preferredCommChannel ?modeComm . ?assistance rdf:type mirao:{assistanceName} . ?assistance mirao:isLinkedToImpairment mirao:{impairment} . ?assistance mirao:hasIllocutionaryAct mirao:{illocutionaryAct} . ?assistance mirao:hasAssistanceType mirao:{assistanceType} . ?assistance ?a ?texte . ?texte rdf:type ?modeComm . ?texte mirao:hasContent ?message}}";
+                    
+                    VDS.RDF.Query.SparqlQuery query = parser.ParseFromString(sparqlQuery);
                     VDS.RDF.Query.SparqlResultSet results = (VDS.RDF.Query.SparqlResultSet)Graph.ExecuteQuery(query.ToString());
                     string message = "";
 
@@ -125,35 +125,6 @@ namespace MATCH
 
                     return message;
                 }
-                */
-
-                public string AssistanceQuery(string assistanceName, string illocutionaryAct, string impairment, string assistanceType)
-                {
-                    VDS.RDF.Parsing.SparqlQueryParser parser = new VDS.RDF.Parsing.SparqlQueryParser();
-
-                    string sparqlQuery = $"PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> PREFIX mirao: <https://ontology.staging.domus.usherbrooke.ca/MIRAO#>" +
-                        $"SELECT ?message WHERE {{mirao:{MATCH.Managers.Users.Instance.UserProfile} mirao:preferredCommChannel ?modeComm . ?assistance rdf:type mirao:{assistanceName} . ?assistance mirao:isLinkedToImpairment mirao:{impairment} . ?assistance mirao:hasIllocutionaryAct mirao:{illocutionaryAct} . ?assistance mirao:hasAssistanceType mirao:{assistanceType} . ?assistance ?A ?TEXTE . ?texte rdf:type ?modeComm . ?texte mirao:hasContent ?message}}";
-                    VDS.RDF.Query.SparqlQuery query = parser.ParseFromString(sparqlQuery);
-
-                    VDS.RDF.Query.SparqlResultSet results = (VDS.RDF.Query.SparqlResultSet)Graph.ExecuteQuery(query.ToString());
-                    string message = "";
-
-                    if (results.Count > 0)
-                    {
-                        var result = results[0];
-                        string text = result.Value("message").ToString();
-                        message = ShortenMessage(text);
-                    }
-                    else
-                    {
-                        DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Aucun résultat trouvé.");
-                    }
-
-                    return message;
-                }
-
-
-
             }
         }
     }

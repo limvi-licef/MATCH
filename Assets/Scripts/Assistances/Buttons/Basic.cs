@@ -51,8 +51,11 @@ namespace MATCH
                     //DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Called for Basic");
 
                     Interactable interactions = gameObject.GetComponent<Interactable>();
-                    interactions.AddReceiver<InteractableOnTouchReceiver>().OnTouchStart.AddListener(delegate () {
+                    /*interactions.AddReceiver<InteractableOnTouchReceiver>().OnTouchStart.AddListener(delegate () {
                         //DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Button clicked");
+                        OnButtonClicked();
+                    });*/
+                    interactions.AddReceiver<InteractableOnPressReceiver>().OnPress.AddListener(delegate () {
                         OnButtonClicked();
                     });
                 }

@@ -212,16 +212,19 @@ namespace MATCH
             }
         }
 
-        public void AddButton(string text, UnityEngine.Events.UnityAction callback, Panels panel = Panels.Middle)
+        public MATCH.Assistances.Buttons.Basic AddButton(string text, UnityEngine.Events.UnityAction callback, Panels panel = Panels.Middle)
         {
             Buttons.Add(Instantiate(RefButton, PanelsStorage[panel]));
 
+            Buttons.Last().AddComponent<MATCH.Assistances.Buttons.Basic>();
             Buttons.Last().GetComponent<ButtonConfigHelper>().IconStyle = ButtonIconStyle.None;
             Buttons.Last().GetComponent<ButtonConfigHelper>().SeeItSayItLabelEnabled = false;
             Buttons.Last().GetComponent<Interactable>().GetReceiver<InteractableOnPressReceiver>().OnPress.AddListener(callback);
             Buttons.Last().GetComponent<Interactable>().GetReceiver<InteractableOnPressReceiver>().InteractionFilter = 0;
             Buttons.Last().transform.Find("IconAndText").Find("TextMeshPro").GetComponent<TextMeshPro>().SetText(text);
             PanelsStorage[panel].GetComponent<GridObjectCollection>().UpdateCollection();
+           
+            return Buttons.Last().GetComponent<MATCH.Assistances.Buttons.Basic>();
         }
 
         /**

@@ -67,6 +67,12 @@
     
 
 
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#hasColorReference -->
+
+    <owl:AnnotationProperty rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#hasColorReference"/>
+    
+
+
     <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#hasContent -->
 
     <owl:AnnotationProperty rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#hasContent"/>
@@ -2233,18 +2239,6 @@ As for their structure and shape, sofas usually feature two armrests and a unifo
     
 
 
-    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#DustingTableAssistances -->
-
-    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#DustingTableAssistances"/>
-    
-
-
-    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#VisualMessage -->
-
-    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#VisualMessage"/>
-    
-
-
     <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#actionInitiation -->
 
     <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#actionInitiation">
@@ -2367,6 +2361,7 @@ As for their structure and shape, sofas usually feature two armrests and a unifo
 
     <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#blue">
         <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#Colors"/>
+        <MIRAO:hasColorReference>Blue</MIRAO:hasColorReference>
     </owl:NamedIndividual>
     
 
@@ -2403,9 +2398,12 @@ As for their structure and shape, sofas usually feature two armrests and a unifo
     
 
 
-    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#cleaningInterrupted -->
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#cyan -->
 
-    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#cleaningInterrupted"/>
+    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#cyan">
+        <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#Colors"/>
+        <MIRAO:hasColorReference>Cyan</MIRAO:hasColorReference>
+    </owl:NamedIndividual>
     
 
 
@@ -2414,12 +2412,6 @@ As for their structure and shape, sofas usually feature two armrests and a unifo
     <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#declaration">
         <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#IllocutionaryAct"/>
     </owl:NamedIndividual>
-    
-
-
-    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#didNotStartCleaning -->
-
-    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#didNotStartCleaning"/>
     
 
 
@@ -2443,7 +2435,6 @@ As for their structure and shape, sofas usually feature two armrests and a unifo
 
     <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#dustingTable">
         <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#Scenario"/>
-        <MIRAO:triggersAssistance rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#DustingTableAssistances"/>
         <MIRAO:isAssociatedToEnvironmentElement rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#Rag"/>
         <MIRAO:isAssociatedToRoom rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#DiningRoom"/>
     </owl:NamedIndividual>
@@ -2466,7 +2457,7 @@ As for their structure and shape, sofas usually feature two armrests and a unifo
         <MIRAO:associatesColorWithUrgency rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#purple"/>
         <MIRAO:findsColorAttractive rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#green"/>
         <MIRAO:hasFamilyName rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#foulon"/>
-        <MIRAO:hasFavoriteColor rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#orange"/>
+        <MIRAO:hasFavoriteColor rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#pink"/>
         <MIRAO:hasFirstName rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#emma"/>
         <MIRAO:preferredCommChannel rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#Text"/>
     </owl:NamedIndividual>
@@ -2565,6 +2556,7 @@ As for their structure and shape, sofas usually feature two armrests and a unifo
 
     <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#green">
         <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#Colors"/>
+        <MIRAO:hasColorReference>Green</MIRAO:hasColorReference>
     </owl:NamedIndividual>
     
 
@@ -2625,16 +2617,11 @@ As for their structure and shape, sofas usually feature two armrests and a unifo
     
 
 
-    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#newPartCleaned -->
-
-    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#newPartCleaned"/>
-    
-
-
     <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#orange -->
 
     <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#orange">
         <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#Colors"/>
+        <MIRAO:hasColorReference>Orange</MIRAO:hasColorReference>
     </owl:NamedIndividual>
     
 
@@ -2651,6 +2638,7 @@ As for their structure and shape, sofas usually feature two armrests and a unifo
 
     <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#pink">
         <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#Colors"/>
+        <MIRAO:hasColorReference>Pink</MIRAO:hasColorReference>
     </owl:NamedIndividual>
     
 
@@ -2663,16 +2651,11 @@ As for their structure and shape, sofas usually feature two armrests and a unifo
     
 
 
-    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#processRelatedToNewPartsCleanedDone -->
-
-    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#processRelatedToNewPartsCleanedDone"/>
-    
-
-
     <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#purple -->
 
     <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#purple">
         <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#Colors"/>
+        <MIRAO:hasColorReference>Purple</MIRAO:hasColorReference>
     </owl:NamedIndividual>
     
 
@@ -2682,18 +2665,6 @@ As for their structure and shape, sofas usually feature two armrests and a unifo
     <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#rag">
         <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#Rag"/>
     </owl:NamedIndividual>
-    
-
-
-    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#ragNotTakenButHelpReceived -->
-
-    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#ragNotTakenButHelpReceived"/>
-    
-
-
-    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#ragTaken -->
-
-    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#ragTaken"/>
     
 
 
@@ -2717,6 +2688,7 @@ As for their structure and shape, sofas usually feature two armrests and a unifo
 
     <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#red">
         <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#Colors"/>
+        <MIRAO:hasColorReference>Red</MIRAO:hasColorReference>
     </owl:NamedIndividual>
     
 
@@ -2784,12 +2756,6 @@ As for their structure and shape, sofas usually feature two armrests and a unifo
         <MIRAO:isDisplayedHere rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#diningRoomTable"/>
         <MIRAO:isLinkedToAssistance rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#assistanceEtaDT"/>
     </owl:NamedIndividual>
-    
-
-
-    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#tableCleaned -->
-
-    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#tableCleaned"/>
     
 
 
@@ -3308,10 +3274,20 @@ As for their structure and shape, sofas usually feature two armrests and a unifo
     
 
 
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#white -->
+
+    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#white">
+        <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#Colors"/>
+        <MIRAO:hasColorReference>White</MIRAO:hasColorReference>
+    </owl:NamedIndividual>
+    
+
+
     <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#yellow -->
 
     <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#yellow">
         <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#Colors"/>
+        <MIRAO:hasColorReference>Yellow</MIRAO:hasColorReference>
     </owl:NamedIndividual>
     
 

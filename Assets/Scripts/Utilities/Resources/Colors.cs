@@ -33,7 +33,7 @@ namespace MATCH
         {
             public static class Colors
             {
-                static string Path = "MATCH/Colors/";
+                public static string Path = "MATCH/Colors/";
 
                 public static string Cyan = Path + "Cyan";
                 public static string CyanGlowing = Path+"CyanGlowing";
@@ -48,6 +48,12 @@ namespace MATCH
                 public static string Red = Path + "Red";
                 public static string Red2 = Path + "Red2";
                 public static string HolographicBackPlate = Path + "HolographicBackPlate";
+                public static string Green = Path + "Green";
+                public static string Yellow = Path + "Yellow";
+                public static string Pink = Path + "Pink";
+                public static string Purple = Path + "Purple";
+                public static string White = Path + "White";
+                public static string Blue = Path + "Blue";
             }
         }
     }

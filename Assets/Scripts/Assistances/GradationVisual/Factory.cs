@@ -259,22 +259,32 @@ namespace MATCH
                     toReturn.name = assistanceName;
 
                     //Premier niveau de gradation avec 2 décorateurs
-                    Decorators.BackgroundColorIcon2 decorator1a = (Decorators.BackgroundColorIcon2)Assistances.Decorators.Factory.Instance.CreateBackgroundIcon(dialog, Utilities.Materials.Colors.Cyan,true);
-                    Decorators.BackgroundColorMessage2 decorator1 = (Decorators.BackgroundColorMessage2)Assistances.Decorators.Factory.Instance.CreateBackgroundMessage(decorator1a, Utilities.Materials.Colors.Cyan);
+                    string favoriteColor = /*"Utilities.Materials.Colors."*/ Utilities.Materials.Colors.Path + MATCH.Managers.Users.Instance.FavoriteColor;
+                    Decorators.BackgroundColorIcon2 decorator1a = (Decorators.BackgroundColorIcon2)Assistances.Decorators.Factory.Instance.CreateBackgroundIcon(dialog, favoriteColor, true);
+                    Decorators.BackgroundColorMessage2 decorator1 = (Decorators.BackgroundColorMessage2)Assistances.Decorators.Factory.Instance.CreateBackgroundMessage(decorator1a, favoriteColor);
+
+                    //Decorators.BackgroundColorIcon2 decorator1a = (Decorators.BackgroundColorIcon2)Assistances.Decorators.Factory.Instance.CreateBackgroundIcon(dialog, Utilities.Materials.Colors.Cyan, true);
+                    //Decorators.BackgroundColorMessage2 decorator1 = (Decorators.BackgroundColorMessage2)Assistances.Decorators.Factory.Instance.CreateBackgroundMessage(decorator1a, Utilities.Materials.Colors.Cyan);
                     toReturn.AddAssistance(decorator1);
 
                     //Deuxieme niveau de gradation
-                    Decorators.BackgroundColorIcon2 decorator2 = (Decorators.BackgroundColorIcon2)Assistances.Decorators.Factory.Instance.CreateBackgroundIcon(decorator1, Utilities.Materials.Colors.Orange,true);
-                    toReturn.AddAssistance(decorator2);
+                    string attractiveColor = Utilities.Materials.Colors.Path + MATCH.Managers.Users.Instance.AttractiveColor;
+                    Decorators.BackgroundColorIcon2 decorator2 = (Decorators.BackgroundColorIcon2)Assistances.Decorators.Factory.Instance.CreateBackgroundIcon(decorator1, attractiveColor, true);
+                    Decorators.BackgroundColorMessage2 decorator3 = (Decorators.BackgroundColorMessage2)Assistances.Decorators.Factory.Instance.CreateBackgroundMessage(decorator2, attractiveColor);
+                    //Decorators.BackgroundColorIcon2 decorator2 = (Decorators.BackgroundColorIcon2)Assistances.Decorators.Factory.Instance.CreateBackgroundIcon(decorator1, Utilities.Materials.Colors.Orange,true);
+                    toReturn.AddAssistance(decorator3);
 
                     //Troisieme niveau de gradation
                     //toReturn.AddAssistance(Assistances.Decorators.Factory.Instance.CreateEdge(dialog, Utilities.Materials.Colors.OrangeGlowing));
-                    Decorators.BackgroundColorMessage2 decorator3 = (Decorators.BackgroundColorMessage2)Assistances.Decorators.Factory.Instance.CreateBackgroundMessage(decorator2, Utilities.Materials.Colors.Orange);
-                    toReturn.AddAssistance(decorator3);
+                    string emergencyColor = Utilities.Materials.Colors.Path + MATCH.Managers.Users.Instance.EmergencyColor;
+                    Decorators.BackgroundColorIcon2 decorator4 = (Decorators.BackgroundColorIcon2)Assistances.Decorators.Factory.Instance.CreateBackgroundIcon(decorator3, emergencyColor, true);
+                    Decorators.BackgroundColorMessage2 decorator5 = (Decorators.BackgroundColorMessage2)Assistances.Decorators.Factory.Instance.CreateBackgroundMessage(decorator4, emergencyColor);
+                    //Decorators.BackgroundColorMessage2 decorator3 = (Decorators.BackgroundColorMessage2)Assistances.Decorators.Factory.Instance.CreateBackgroundMessage(decorator2, Utilities.Materials.Colors.Orange);
+                    toReturn.AddAssistance(decorator5);
 
                     //Qualitrème niveau de gradation
-                    Decorators.LinePath decorator4 = (Decorators.LinePath)Decorators.Factory.Instance.CreateLinePathWithTexture(decorator3, /*Utilities.Materials.Colors.Orange*/ Utilities.Materials.Textures.ArrowProgressive, 0.1f, true);
-                    toReturn.AddAssistance(decorator4);
+                    Decorators.LinePath decorator6 = (Decorators.LinePath)Decorators.Factory.Instance.CreateLinePathWithTexture(decorator4, /*Utilities.Materials.Colors.Orange*/ Utilities.Materials.Textures.ArrowProgressive, 0.1f, true);
+                    toReturn.AddAssistance(decorator6);
 
                     return toReturn;
                 }
