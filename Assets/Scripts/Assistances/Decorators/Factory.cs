@@ -76,6 +76,22 @@ namespace MATCH
 
                 }
 
+                /*
+                public MATCH.Assistances.Assistance CreatePictogram(MATCH.Assistances.IPanel2 panelToDecorate, string backgroundColor)
+                {
+                    Transform view = Instantiate(Utilities.Materials.Prefabs.Load(Utilities.Materials.Prefabs.AssistanceDialog2Pictogram));
+                    view.name = panelToDecorate.GetRootDecoratedAssistance().name;
+                    Assistances.Decorators.BackgroundColorMessage2 controller = view.gameObject.GetComponent<Assistances.Decorators.BackgroundColorMessage2>();
+
+                    controller.SetAssistanceToDecorate(panelToDecorate);
+                    controller.GetBackgroundMessage().GetComponent<Renderer>().material = Utilities.Utility.LoadMaterial(backgroundColor);
+
+                    return controller;
+
+                }
+                */
+
+
                 /*public MATCH.Assistances.Assistance CreateBackground(MATCH.Assistances.IPanel2 panelToDecorate, string backgroundMessageColor)
                  {
                      Transform view = Instantiate(Utilities.Materials.Prefabs.Load(Utilities.Materials.Prefabs.DecoratorBackgroundColorMessage2));

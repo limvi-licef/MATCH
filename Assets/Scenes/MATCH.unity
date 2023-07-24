@@ -6312,6 +6312,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   UserProfile: 
+  FavoriteColor: 
+  AttractiveColor: 
+  EmergencyColor: 
+  CommunicationMode: 
 --- !u!1 &862233114
 GameObject:
   m_ObjectHideFlags: 0

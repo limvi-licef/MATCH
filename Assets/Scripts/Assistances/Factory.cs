@@ -210,6 +210,32 @@ namespace MATCH
                 return controllerContextualized;
             }
 
+            public Dialogs.Dialog2Pictogram CreateDialog2PictogramNoButton(string pictogram, Transform parent)
+            {
+                Transform view = Utilities.Materials.Prefabs.Load(Utilities.Materials.Prefabs.AssistanceDialog2Pictogram);
+                view.parent = parent;
+                view.localPosition = new Vector3(0, 0, 0);
+
+                Dialogs.Dialog2Pictogram controller = view.GetComponent<Dialogs.Dialog2Pictogram>();
+                controller.SetPictogram(pictogram);
+                controller.EnableBillboard(true);
+
+                return controller;
+            }
+
+            public MATCH.Assistances.Dialogs.Dialog2Pictogram CreateDialog2PictogramWithButton(string assistanceName, string pictogram, string textButton1, EventHandler callbackButton1, Assistances.Buttons.Button.ButtonType type1, string textButton2, EventHandler callbackButton2, Assistances.Buttons.Button.ButtonType type2, Transform parent)
+            {
+                Assistances.Dialogs.Dialog2Pictogram controller = CreateDialog2PictogramNoButton(pictogram, parent);
+
+                Dialogs.Dialog controllerDialog = (Dialogs.Dialog)controller;
+
+                AddButton(ref controllerDialog, callbackButton1, textButton1, type1, true, ComputeFontSizeExp(textButton1.Length));
+                AddButton(ref controllerDialog, callbackButton2, textButton2, type2, true, ComputeFontSizeExp(textButton2.Length));
+
+                return controller;
+
+            }
+
             public Basic CreateCube(string texture, Transform parent)
             {
                 Transform view = Utilities.Materials.Prefabs.Load(Utilities.Materials.Prefabs.AssistanceCube).transform;
@@ -396,8 +422,20 @@ namespace MATCH
 
                 return controller;
             }
-        }
+            /*
+            
 
+            public Dialogs.Dialog2Pictogram CreateDialog2PictogramWithButtons(string title, string description, string textButton1, EventHandler callbackButton1, Assistances.Buttons.Button.ButtonType type1, string textButton2, EventHandler callbackButton2, Assistances.Buttons.Button.ButtonType type2, Transform parent)
+            {
+                Dialogs.Dialog controller = CreateDialog2PictogramNoButton(title, description, parent);
+
+                AddButton(ref controller, callbackButton1, textButton1, type1, true, ComputeFontSizeExp(textButton1.Length));
+                AddButton(ref controller, callbackButton2, textButton2, type2, true, ComputeFontSizeExp(textButton2.Length));
+
+                return (Dialogs.Dialog2Pictogram)controller;
+            }
+            */
+        }
     }
 }
 
