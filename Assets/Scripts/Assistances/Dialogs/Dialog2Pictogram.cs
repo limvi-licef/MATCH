@@ -60,6 +60,9 @@ namespace MATCH
                 protected override void Awake()
                 {
                     base.Awake();
+
+                    Pictogram = gameObject.transform.Find("Pictogram");
+
                     /*
                     // Instantiate variables
                     //ButtonsView = new List<Transform>();
@@ -83,7 +86,7 @@ namespace MATCH
                     Arch = gameObject.transform.Find("Arch");
                     LinePath = gameObject.transform.Find("LinePath");
 
-                    Pictogram = gameObject.transform.Find("Pictogram");
+                    
 
                     // Initialize some values of the children
                     ButtonsParentScalingOriginal = ButtonsParentView.localScale;
@@ -96,6 +99,8 @@ namespace MATCH
                     BoxCollider box = transform.GetComponent<BoxCollider>();
                     BoxColliderOriginalCenter = box.center;
                     BoxColliderOriginalSize = box.size;*/
+
+
                 }
 
                 /*public void Update()
@@ -143,7 +148,9 @@ namespace MATCH
 
                 public void SetPictogram(string pictogram)
                 {
-                    Pictogram.GetComponent<MeshRenderer>().material = Utilities.Utility.LoadMaterial(pictogram);
+                    MeshRenderer meshRenderer = Pictogram.GetComponent<MeshRenderer>();
+
+                    meshRenderer.material = Utilities.Utility.LoadMaterial(pictogram);
                 }
 
 
@@ -258,7 +265,14 @@ namespace MATCH
                 {
                     Pictogram.gameObject.SetActive(true);
 
-                    base.Show(eventHandler, withAnimation);
+                    base.Show(delegate(System.Object o, EventArgs e)
+                    {
+                        TitleView.gameObject.SetActive(false);
+                        DescriptionView.gameObject.SetActive(false);
+                        eventHandler?.Invoke(o, e);
+                    }, withAnimation);
+
+                    
 
                     /*Utilities.EventHandlerArgs.Animation args = new Utilities.EventHandlerArgs.Animation();
 
