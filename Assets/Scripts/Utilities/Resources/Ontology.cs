@@ -1,4 +1,4 @@
-/*Copyright 2022 Emma Foulon, Guillaume Spalla
+/*Copyright 2022 Guillaume Spalla, Emma Foulon
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -71,6 +71,14 @@ namespace MATCH
                     return longMessage;
                 }
 
+                public string ShortenMessage2(string longMessage)
+                {
+                    char symbol = '#';
+                    int beginIndex = longMessage.IndexOf(symbol);
+                    longMessage = longMessage.Substring(beginIndex + 1);
+                    return longMessage;
+                }
+
                 /*
                 // Make a simple query to get the assistance text message
                 public string AssistanceQuery(string assistanceName, string illocutionaryAct, string impairment, string assistanceType)
@@ -104,8 +112,8 @@ namespace MATCH
                 {
                     VDS.RDF.Parsing.SparqlQueryParser parser = new VDS.RDF.Parsing.SparqlQueryParser();
 
+                    // Query to find the assistance text according to the user's profile and the assistance gradation
                     string sparqlQuery = $"PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> PREFIX mirao: <https://ontology.staging.domus.usherbrooke.ca/MIRAO#>" +
-
                         $"SELECT ?message WHERE {{mirao:{MATCH.Managers.Users.Instance.UserProfile} mirao:preferredCommChannel ?modeComm . ?assistance rdf:type mirao:{assistanceName} . ?assistance mirao:isLinkedToImpairment mirao:{impairment} . ?assistance mirao:hasIllocutionaryAct mirao:{illocutionaryAct} . ?assistance mirao:hasAssistanceType mirao:{assistanceType} . ?assistance ?a ?texte . ?texte rdf:type ?modeComm . ?texte mirao:hasContent ?message}}";
                     
                     VDS.RDF.Query.SparqlQuery query = parser.ParseFromString(sparqlQuery);

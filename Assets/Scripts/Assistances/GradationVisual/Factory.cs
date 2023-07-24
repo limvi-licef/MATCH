@@ -369,6 +369,60 @@ namespace MATCH
 
                     return toReturn;
                 }
+
+                public GradationVisual CreatePictogramNoButton(string assistanceName, string title, string description, Transform parent, string picto)
+                {
+                    Assistances.Dialogs.Dialog2 dialog = Assistances.Factory.Instance.CreateDialog2NoButton(title, description, parent);
+
+                    return AddDecoratorsToPictogram(assistanceName, dialog, picto);
+                }
+
+                public GradationVisual CreatePictogramWithButtons(string assistanceName, string title, string description, string textButton1, EventHandler callbackButton1, Assistances.Buttons.Button.ButtonType type1, string textButton2, EventHandler callbackButton2, Assistances.Buttons.Button.ButtonType type2, Transform parent, string name, string illocutionaryAct, string impairment, string assistanceType)
+                {
+                    string picto = Utilities.Materials.Ontology.Instance.AssistanceQuery(name, illocutionaryAct, impairment, assistanceType);
+                    //Assistances.Dialogs.Dialog2 dialog = Assistances.Factory.Instance.CreateDialog2WithButtons(title, description, textButton1, callbackButton1, type1, textButton2, callbackButton2, type2, parent);
+
+                    string pictogram = Utilities.Materials.Pictograms.Path + picto;
+
+                    Assistances.Dialogs.Dialog2Pictogram dialog = Assistances.Factory.Instance.CreateDialog2PictogramWithButton(assistanceName, pictogram, textButton1, callbackButton1, type1, textButton2, callbackButton2, type2, parent);
+
+                    Assistances.Dialogs.Dialog2 dialog2 = (Assistances.Dialogs.Dialog2)dialog;
+
+                    //return AddDecoratorsToPictogram(assistanceName, dialog, picto);
+                    return AddDecoratorsToDialog2(assistanceName, dialog2);
+                }
+
+
+                GradationVisual AddDecoratorsToPictogram(string assistanceName, MATCH.Assistances.Dialogs.Dialog2 dialog, string picto)
+                {
+                    GradationVisual toReturn = Assistances.Factory.Instance.CreateAssistanceGradationAttention(assistanceName);
+                    toReturn.name = assistanceName;
+
+                    //Premier niveau de gradation avec 2 décorateurs
+                    string pictogram = Utilities.Materials.Pictograms.Path + picto;
+                    string favoriteColor = Utilities.Materials.Colors.Path + MATCH.Managers.Users.Instance.FavoriteColor;
+                    Decorators.BackgroundColorIcon2 decorator1a = (Decorators.BackgroundColorIcon2)Assistances.Decorators.Factory.Instance.CreateBackgroundIcon(dialog, favoriteColor, true);
+                    Decorators.BackgroundColorMessage2 decorator1 = (Decorators.BackgroundColorMessage2)Assistances.Decorators.Factory.Instance.CreateBackgroundMessage(decorator1a, pictogram);
+                    toReturn.AddAssistance(decorator1);
+
+                    //Deuxieme niveau de gradation
+                    string attractiveColor = Utilities.Materials.Colors.Path + MATCH.Managers.Users.Instance.AttractiveColor;
+                    Decorators.BackgroundColorIcon2 decorator2 = (Decorators.BackgroundColorIcon2)Assistances.Decorators.Factory.Instance.CreateBackgroundIcon(decorator1, attractiveColor, true);
+                    Decorators.BackgroundColorMessage2 decorator3 = (Decorators.BackgroundColorMessage2)Assistances.Decorators.Factory.Instance.CreateBackgroundMessage(decorator2, pictogram);
+                    toReturn.AddAssistance(decorator3);
+
+                    //Troisieme niveau de gradation
+                    string emergencyColor = Utilities.Materials.Colors.Path + MATCH.Managers.Users.Instance.EmergencyColor;
+                    Decorators.BackgroundColorIcon2 decorator4 = (Decorators.BackgroundColorIcon2)Assistances.Decorators.Factory.Instance.CreateBackgroundIcon(decorator3, emergencyColor, true);
+                    Decorators.BackgroundColorMessage2 decorator5 = (Decorators.BackgroundColorMessage2)Assistances.Decorators.Factory.Instance.CreateBackgroundMessage(decorator4, pictogram);
+                    toReturn.AddAssistance(decorator5);
+
+                    //Qualitrème niveau de gradation
+                    Decorators.LinePath decorator6 = (Decorators.LinePath)Decorators.Factory.Instance.CreateLinePathWithTexture(decorator4, /*Utilities.Materials.Colors.Orange*/ Utilities.Materials.Textures.ArrowProgressive, 0.1f, true);
+                    toReturn.AddAssistance(decorator6);
+
+                    return toReturn;
+                }
             }
         }
     }

@@ -60,6 +60,7 @@ namespace MATCH
                 public static string AssistanceHand = Path + "Assistances/Hand";
                 public static string AssistanceIcon = Path + "Assistances/Icon";
                 public static string AssistanceDialog2 = Path + "Assistances/Dialogs/Dialog2";
+                public static string AssistanceDialog2Pictogram = Path + "Assistances/Dialogs/Dialog2Pictogram";
 
                 public static string InferenceManager = Path + "Inferences/Manager";
 
