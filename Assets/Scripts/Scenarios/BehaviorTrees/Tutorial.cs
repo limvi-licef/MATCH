@@ -204,8 +204,8 @@ namespace MATCH
                 Sequence AssistanceBeta()
                 {
                     Assistances.GradationVisual.GradationVisual beta1 = Assistances.GradationVisual.Factory.Instance.CreateDialog2WithButtons("Tutorial-ExclamationMarkDialog", "", "Vous vous appretez à voir un point d'exclamation. Celui-ci a pour but de vous assister dans votre quotidien en vous guidant vers certaines taches à réaliser, appuyez sur SUIVANT pour le faire apparaître !", "SUIVANT", null, Assistances.Buttons.Button.ButtonType.Yes, InteractionSurfaceDialogs.transform);
-                    Assistances.GradationVisual.GradationVisual beta2 = Assistances.GradationVisual.Factory.Instance.CreateDialog2WithButtons("Tutorial-ExclamationMarkDialog-2", "", "Il vient d'apparaitre sur ma droite ! Si vous n'y prêtez pas attention, le point d'exclamation va changer de couleur pour attirer un peu plus votre attention ! Appuyez sur SUIVANT pour voir.", "SUIVANT", null, Assistances.Buttons.Button.ButtonType.Yes, InteractionSurfaceDialogs.transform);
-                    Assistances.GradationVisual.GradationVisual beta3 = Assistances.GradationVisual.Factory.Instance.CreateDialog2WithButtons("Tutorial-ExclamationMarkDialog-3", "", "Le point d'exclamation est maintenant orange. Si vous n'y prêtez toujours pas attention, il deviendra rouge. Appuyez sur SUIVANT pour voir.", "SUIVANT", null, Assistances.Buttons.Button.ButtonType.Yes, InteractionSurfaceDialogs.transform);
+                    Assistances.GradationVisual.GradationVisual beta2 = Assistances.GradationVisual.Factory.Instance.CreateDialog2WithButtons("Tutorial-ExclamationMarkDialog-2", "", "Il vient d'apparaitre sur ma droite ! Si vous ne le regardez pas, le point d'exclamation va changer de couleur pour attirer un peu plus votre attention ! Appuyez sur SUIVANT pour voir.", "SUIVANT", null, Assistances.Buttons.Button.ButtonType.Yes, InteractionSurfaceDialogs.transform);
+                    Assistances.GradationVisual.GradationVisual beta3 = Assistances.GradationVisual.Factory.Instance.CreateDialog2WithButtons("Tutorial-ExclamationMarkDialog-3", "", "Le point d'exclamation est maintenant orange. Si vous ne le regardez toujours pas, il deviendra rouge. Appuyez sur SUIVANT pour voir.", "SUIVANT", null, Assistances.Buttons.Button.ButtonType.Yes, InteractionSurfaceDialogs.transform);
                     Assistances.GradationVisual.GradationVisual beta4 = Assistances.GradationVisual.Factory.Instance.CreateDialog2WithButtons("Tutorial-ExclamationMarkDialog-4", "", "Le point d'exclamation est maintenant rouge. D'autres types d'assistances sont disponibles, appuyez sur SUIVANT pour continuer le tutoriel !", "SUIVANT", null, Assistances.Buttons.Button.ButtonType.Yes, InteractionSurfaceDialogs.transform);
 
 
@@ -321,7 +321,7 @@ namespace MATCH
                                 //decorator5.Show(Utilities.Utility.GetEventHandlerEmpty(), false);
                                 decorator4.GetAssistance().gameObject.SetActive(false);
 
-                            }, eta2.gameObject, 0.2F);
+                            }, /*eta2.gameObject*/((IAssistance)eta2.GetCurrentAssistance()).GetDecoratedAssistance().gameObject, 2F);
                         
                     };
                     
