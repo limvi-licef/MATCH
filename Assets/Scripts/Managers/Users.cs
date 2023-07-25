@@ -62,10 +62,14 @@ namespace MATCH
                 EmergencyColor = "Red";
 
                 // Query to list all of the users registered in the ontology
-                VDS.RDF.Parsing.SparqlQueryParser parser = new VDS.RDF.Parsing.SparqlQueryParser();
-                VDS.RDF.Query.SparqlQuery query = parser.ParseFromString("PREFIX mirao: <https://ontology.staging.domus.usherbrooke.ca/MIRAO#> PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>" +
-                    "SELECT ?firstNameLabel ?familyNameLabel ?a WHERE {?a mirao:hasFirstName ?firstName . ?firstName rdfs:label ?firstNameLabel . ?a mirao:hasFamilyName ?familyName . ?familyName rdfs:label ?familyNameLabel}");
-                VDS.RDF.Query.SparqlResultSet results = (VDS.RDF.Query.SparqlResultSet)MATCH.Utilities.Materials.Ontology.Instance.Graph.ExecuteQuery(query.ToString());
+                //VDS.RDF.Parsing.SparqlQueryParser parser = new VDS.RDF.Parsing.SparqlQueryParser();
+                /*VDS.RDF.Query.SparqlQuery query = parser.ParseFromString("PREFIX mirao: <https://ontology.staging.domus.usherbrooke.ca/MIRAO#> PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>" +
+                    "SELECT ?firstNameLabel ?familyNameLabel ?a WHERE {?a mirao:hasFirstName ?firstName . ?firstName rdfs:label ?firstNameLabel . ?a mirao:hasFamilyName ?familyName . ?familyName rdfs:label ?familyNameLabel}");*/
+                //VDS.RDF.Query.SparqlResultSet results = (VDS.RDF.Query.SparqlResultSet)MATCH.Utilities.Materials.Ontology.Instance.GetGraph().ExecuteQuery(query.ToString());
+
+                string query = "PREFIX mirao: <https://ontology.staging.domus.usherbrooke.ca/MIRAO#> PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>" +
+                "SELECT ?firstNameLabel ?familyNameLabel ?a WHERE {?a mirao:hasFirstName ?firstName . ?firstName rdfs:label ?firstNameLabel . ?a mirao:hasFamilyName ?familyName . ?familyName rdfs:label ?familyNameLabel}";
+                VDS.RDF.Query.SparqlResultSet results = MATCH.Utilities.Materials.Ontology.Instance.ExecuteQuery(query);
 
                 if (results != null)
                 {
@@ -98,10 +102,14 @@ namespace MATCH
             void ColorPreferencesQuery(string user)
             {
                 // Query to get the user's favorite color, attractive color and emergency related color
-                VDS.RDF.Parsing.SparqlQueryParser parser = new VDS.RDF.Parsing.SparqlQueryParser();
-                VDS.RDF.Query.SparqlQuery query = parser.ParseFromString("PREFIX mirao: <https://ontology.staging.domus.usherbrooke.ca/MIRAO#> " +
+                //VDS.RDF.Parsing.SparqlQueryParser parser = new VDS.RDF.Parsing.SparqlQueryParser();
+                /*VDS.RDF.Query.SparqlQuery query = parser.ParseFromString("PREFIX mirao: <https://ontology.staging.domus.usherbrooke.ca/MIRAO#> " +
                     $"SELECT ?favoriteColorRef ?attractiveColorRef ?emergencyColorRef WHERE {{mirao:{UserProfile} mirao:hasFavoriteColor ?favoriteColor . ?favoriteColor mirao:hasColorReference ?favoriteColorRef . mirao:{UserProfile} mirao:findsColorAttractive ?attractiveColor . ?attractiveColor mirao:hasColorReference ?attractiveColorRef . mirao:{UserProfile} mirao:associatesColorWithUrgency ?emergencyColor . ?emergencyColor mirao:hasColorReference ?emergencyColorRef .}}");
-                VDS.RDF.Query.SparqlResultSet results = (VDS.RDF.Query.SparqlResultSet)MATCH.Utilities.Materials.Ontology.Instance.Graph.ExecuteQuery(query.ToString());
+                VDS.RDF.Query.SparqlResultSet results = (VDS.RDF.Query.SparqlResultSet)MATCH.Utilities.Materials.Ontology.Instance.GetGraph().ExecuteQuery(query.ToString());*/
+
+                string query = "PREFIX mirao: <https://ontology.staging.domus.usherbrooke.ca/MIRAO#> " +
+                    $"SELECT ?favoriteColorRef ?attractiveColorRef ?emergencyColorRef WHERE {{mirao:{UserProfile} mirao:hasFavoriteColor ?favoriteColor . ?favoriteColor mirao:hasColorReference ?favoriteColorRef . mirao:{UserProfile} mirao:findsColorAttractive ?attractiveColor . ?attractiveColor mirao:hasColorReference ?attractiveColorRef . mirao:{UserProfile} mirao:associatesColorWithUrgency ?emergencyColor . ?emergencyColor mirao:hasColorReference ?emergencyColorRef .}}";
+                VDS.RDF.Query.SparqlResultSet results = MATCH.Utilities.Materials.Ontology.Instance.ExecuteQuery(query);
 
                 if (results != null)
                 {
@@ -123,14 +131,15 @@ namespace MATCH
 
             void CommunicationModeQuery()
             {
-                VDS.RDF.Parsing.SparqlQueryParser parser = new VDS.RDF.Parsing.SparqlQueryParser();
+                //VDS.RDF.Parsing.SparqlQueryParser parser = new VDS.RDF.Parsing.SparqlQueryParser();
 
                 // Query to find the user's favorite type of communication
-                string sparqlQuery = $"PREFIX mirao: <https://ontology.staging.domus.usherbrooke.ca/MIRAO#>" +
+                string query = $"PREFIX mirao: <https://ontology.staging.domus.usherbrooke.ca/MIRAO#>" +
                     $"SELECT ?modeComm WHERE {{mirao:{MATCH.Managers.Users.Instance.UserProfile} mirao:preferredCommChannel ?modeComm}}";
 
-                VDS.RDF.Query.SparqlQuery query = parser.ParseFromString(sparqlQuery);
-                VDS.RDF.Query.SparqlResultSet results = (VDS.RDF.Query.SparqlResultSet)MATCH.Utilities.Materials.Ontology.Instance.Graph.ExecuteQuery(query.ToString());
+                //VDS.RDF.Query.SparqlQuery query = parser.ParseFromString(sparqlQuery);
+                //VDS.RDF.Query.SparqlResultSet results = (VDS.RDF.Query.SparqlResultSet)MATCH.Utilities.Materials.Ontology.Instance.GetGraph().ExecuteQuery(query.ToString());
+                VDS.RDF.Query.SparqlResultSet results = MATCH.Utilities.Materials.Ontology.Instance.ExecuteQuery(query);
 
                 if (results.Count > 0)
                 {

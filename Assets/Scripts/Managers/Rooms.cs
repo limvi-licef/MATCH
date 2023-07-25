@@ -48,11 +48,12 @@ namespace MATCH
             {
                 // List the already existing rooms
                 List<string> RoomList = MATCH.Utilities.WorldLockingToolsManager.Instance.GetPositioningStorage().GetObjetsRegisteredNames();
-                
+
                 // Query to get all the rooms from the ontology
-                VDS.RDF.Parsing.SparqlQueryParser parser = new VDS.RDF.Parsing.SparqlQueryParser();
-                VDS.RDF.Query.SparqlQuery query = parser.ParseFromString("PREFIX mirao: <https://ontology.staging.domus.usherbrooke.ca/MIRAO#> PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> SELECT ?roomnames WHERE {?rooms rdfs:subClassOf mirao:Rooms . ?rooms rdfs:label ?roomnames}");
-                VDS.RDF.Query.SparqlResultSet results = (VDS.RDF.Query.SparqlResultSet)MATCH.Utilities.Materials.Ontology.Instance.Graph.ExecuteQuery(query.ToString());
+                //VDS.RDF.Parsing.SparqlQueryParser parser = new VDS.RDF.Parsing.SparqlQueryParser();
+                //VDS.RDF.Query.SparqlQuery query = parser.ParseFromString("PREFIX mirao: <https://ontology.staging.domus.usherbrooke.ca/MIRAO#> PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> SELECT ?roomnames WHERE {?rooms rdfs:subClassOf mirao:Rooms . ?rooms rdfs:label ?roomnames}");
+                string query = "PREFIX mirao: <https://ontology.staging.domus.usherbrooke.ca/MIRAO#> PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> SELECT ?roomnames WHERE {?rooms rdfs:subClassOf mirao:Rooms . ?rooms rdfs:label ?roomnames}";
+                VDS.RDF.Query.SparqlResultSet results = MATCH.Utilities.Materials.Ontology.Instance.ExecuteQuery(query);//(VDS.RDF.Query.SparqlResultSet)MATCH.Utilities.Materials.Ontology.Instance.GetGraph().ExecuteQuery(query.ToString());
 
                 if (results != null)
                 {
@@ -156,14 +157,14 @@ namespace MATCH
 
             public VDS.RDF.Query.SparqlResultSet RoomQueryResults(string scenario)
             {
-                VDS.RDF.Parsing.SparqlQueryParser parser = new VDS.RDF.Parsing.SparqlQueryParser();
+                //VDS.RDF.Parsing.SparqlQueryParser parser = new VDS.RDF.Parsing.SparqlQueryParser();
 
                 // Query to find the room the task has to be performed in
                 string sparqlQuery = $"PREFIX mirao: <https://ontology.staging.domus.usherbrooke.ca/MIRAO#> PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>" +
                                     $"SELECT ?roomname ?place WHERE {{ mirao:{scenario} mirao:isAssociatedToRoom ?room . ?room rdfs:label ?roomname . ?room mirao:hasLocation ?place}}";
 
-                VDS.RDF.Query.SparqlQuery query = parser.ParseFromString(sparqlQuery);
-                VDS.RDF.Query.SparqlResultSet results = (VDS.RDF.Query.SparqlResultSet)MATCH.Utilities.Materials.Ontology.Instance.Graph.ExecuteQuery(query.ToString());
+                //VDS.RDF.Query.SparqlQuery query = parser.ParseFromString(sparqlQuery);
+                VDS.RDF.Query.SparqlResultSet results = MATCH.Utilities.Materials.Ontology.Instance.ExecuteQuery(sparqlQuery/*query.ToString()*/); /*(VDS.RDF.Query.SparqlResultSet)MATCH.Utilities.Materials.Ontology.Instance.GetGraph().ExecuteQuery(query.ToString());*/
                 return results;
             }
 

@@ -37,18 +37,37 @@ namespace MATCH
         {
             public class Ontology
             {
-                public VDS.RDF.Graph Graph;
+                private VDS.RDF.Graph Graph;
                 private static Ontology instance;
 
-                static string Path = "./Assets/Materials/Resources/MATCH/Ontology/";
-                public static string MIRAO = Path + "MIRAO.rdf";
+                //static string Path = "./Assets/Materials/Resources/MATCH/Ontology/";
+                
                 /* private string OntologyPath = "./Assets/Materials/Resources/MATCH/Ontology/MIRAO.rdf"; */
 
                 private Ontology()
                 {
+                    string MIRAO = "MATCH/Ontology/MIRAO";
+
                     // Load the ontology
                     Graph = new VDS.RDF.Graph();
-                    VDS.RDF.Parsing.FileLoader.Load(Graph, MIRAO);
+                    //VDS.RDF.Parsing.FileLoader.Load(Graph, MIRAO);
+                    var text = Resources.Load<TextAsset>(MIRAO);
+                    string data = text.ToString();
+                    VDS.RDF.Parsing.StringParser.Parse(Graph, data);
+
+                }
+
+                /*public VDS.RDF.Graph GetGraph()
+                {
+                    return Graph;
+                }*/
+
+                public VDS.RDF.Query.SparqlResultSet ExecuteQuery(string query)
+                {
+                    VDS.RDF.Parsing.SparqlQueryParser parser = new VDS.RDF.Parsing.SparqlQueryParser();
+                    VDS.RDF.Query.SparqlQuery queryProcessed = parser.ParseFromString(query);
+
+                    return (VDS.RDF.Query.SparqlResultSet)Graph.ExecuteQuery(query);
                 }
 
                 public static Ontology Instance
