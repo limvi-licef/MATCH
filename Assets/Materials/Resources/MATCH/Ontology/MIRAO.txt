@@ -109,12 +109,6 @@
     
 
 
-    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#startedEvent -->
-
-    <owl:AnnotationProperty rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#startedEvent"/>
-    
-
-
     <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#triggersAssistance -->
 
     <owl:AnnotationProperty rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#triggersAssistance"/>
@@ -153,14 +147,6 @@
     <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#hasAudioContent -->
 
     <owl:ObjectProperty rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#hasAudioContent"/>
-    
-
-
-    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#hasCommunicationMode -->
-
-    <owl:ObjectProperty rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#hasCommunicationMode">
-        <rdfs:subPropertyOf rdf:resource="http://www.w3.org/2002/07/owl#topObjectProperty"/>
-    </owl:ObjectProperty>
     
 
 
@@ -495,6 +481,12 @@
         </rdfs:subClassOf>
         <rdfs:subClassOf>
             <owl:Restriction>
+                <owl:onProperty rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#hasPictogramContent"/>
+                <owl:allValuesFrom rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#Pictogram"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
                 <owl:onProperty rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#hasTextContent"/>
                 <owl:allValuesFrom rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#Text"/>
             </owl:Restriction>
@@ -630,12 +622,6 @@
 
     <owl:Class rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#Container">
         <rdfs:subClassOf rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#Assistance"/>
-        <rdfs:subClassOf>
-            <owl:Restriction>
-                <owl:onProperty rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#isLinkedToAssistance"/>
-                <owl:someValuesFrom rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#Assistance"/>
-            </owl:Restriction>
-        </rdfs:subClassOf>
         <rdfs:comment>Content of the message being sent</rdfs:comment>
     </owl:Class>
     
@@ -1522,30 +1508,6 @@ As for their structure and shape, sofas usually feature two armrests and a unifo
 
     <owl:Class rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#Text">
         <rdfs:subClassOf rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#VisualMessage"/>
-        <rdfs:subClassOf>
-            <owl:Restriction>
-                <owl:onProperty rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#hasAssistanceType"/>
-                <owl:allValuesFrom rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#AssistanceActType"/>
-            </owl:Restriction>
-        </rdfs:subClassOf>
-        <rdfs:subClassOf>
-            <owl:Restriction>
-                <owl:onProperty rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#hasIllocutionaryAct"/>
-                <owl:allValuesFrom rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#IllocutionaryAct"/>
-            </owl:Restriction>
-        </rdfs:subClassOf>
-        <rdfs:subClassOf>
-            <owl:Restriction>
-                <owl:onProperty rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#isDisplayedHere"/>
-                <owl:allValuesFrom rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#EnvironmentElement"/>
-            </owl:Restriction>
-        </rdfs:subClassOf>
-        <rdfs:subClassOf>
-            <owl:Restriction>
-                <owl:onProperty rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#isLinkedToImpairment"/>
-                <owl:allValuesFrom rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#Impairment"/>
-            </owl:Restriction>
-        </rdfs:subClassOf>
     </owl:Class>
     
 
@@ -2290,65 +2252,49 @@ As for their structure and shape, sofas usually feature two armrests and a unifo
 
     <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#assistanceAlphaDT -->
 
-    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#assistanceAlphaDT">
-        <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#DustingTableAssistances"/>
-    </owl:NamedIndividual>
+    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#assistanceAlphaDT"/>
     
 
 
     <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#assistanceBetaDT -->
 
-    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#assistanceBetaDT">
-        <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#DustingTableAssistances"/>
-    </owl:NamedIndividual>
+    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#assistanceBetaDT"/>
     
 
 
     <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#assistanceDeltaDT -->
 
-    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#assistanceDeltaDT">
-        <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#DustingTableAssistances"/>
-    </owl:NamedIndividual>
+    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#assistanceDeltaDT"/>
     
 
 
     <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#assistanceEpsilonDT -->
 
-    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#assistanceEpsilonDT">
-        <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#DustingTableAssistances"/>
-    </owl:NamedIndividual>
+    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#assistanceEpsilonDT"/>
     
 
 
     <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#assistanceEtaDT -->
 
-    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#assistanceEtaDT">
-        <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#DustingTableAssistances"/>
-    </owl:NamedIndividual>
+    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#assistanceEtaDT"/>
     
 
 
     <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#assistanceGammaDT -->
 
-    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#assistanceGammaDT">
-        <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#DustingTableAssistances"/>
-    </owl:NamedIndividual>
+    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#assistanceGammaDT"/>
     
 
 
     <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#assistanceIotaDT -->
 
-    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#assistanceIotaDT">
-        <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#DustingTableAssistances"/>
-    </owl:NamedIndividual>
+    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#assistanceIotaDT"/>
     
 
 
     <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#assistanceKappaDT -->
 
-    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#assistanceKappaDT">
-        <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#DustingTableAssistances"/>
-    </owl:NamedIndividual>
+    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#assistanceKappaDT"/>
     
 
 
@@ -2451,6 +2397,7 @@ As for their structure and shape, sofas usually feature two armrests and a unifo
         <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#Scenario"/>
         <MIRAO:isAssociatedToEnvironmentElement rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#Rag"/>
         <MIRAO:isAssociatedToRoom rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#DiningRoom"/>
+        <MIRAO:triggersAssistance rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#DustingTableAssistances"/>
     </owl:NamedIndividual>
     
 

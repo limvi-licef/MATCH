@@ -41,8 +41,9 @@ namespace MATCH
                 private static Ontology instance;
 
                 //static string Path = "./Assets/Materials/Resources/MATCH/Ontology/";
-                
+
                 /* private string OntologyPath = "./Assets/Materials/Resources/MATCH/Ontology/MIRAO.rdf"; */
+                string MIRAO = "MATCH/Ontology/MIRAO";
 
                 private Ontology()
                 {
@@ -68,6 +69,7 @@ namespace MATCH
                     VDS.RDF.Query.SparqlQuery queryProcessed = parser.ParseFromString(query);
 
                     return (VDS.RDF.Query.SparqlResultSet)Graph.ExecuteQuery(query);
+
                 }
 
                 public static Ontology Instance
