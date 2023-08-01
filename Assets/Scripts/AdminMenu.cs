@@ -123,9 +123,9 @@ namespace MATCH
                 sandbox.gameObject.SetActive(!sandbox.gameObject.activeSelf);
             }, Panels.Middle);
 
-            AddSwitchButton("Enable scenario dusting table", delegate
+            AddSwitchButton("Enable scenario dusting table ontology", delegate
             {
-                Transform sandbox = GameObject.Find("MATCH").transform.Find("Scenarios").Find("BehaviorTrees").Find("DustingTable");
+                Transform sandbox = GameObject.Find("MATCH").transform.Find("Scenarios").Find("BehaviorTrees").Find("DustingTableOntology");
                 sandbox.gameObject.SetActive(!sandbox.gameObject.activeSelf);
             }, Panels.Middle);
 

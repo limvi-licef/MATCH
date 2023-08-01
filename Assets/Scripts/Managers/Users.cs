@@ -1,4 +1,4 @@
-/*Copyright 2022 Guillaume Spalla, Emma Foulon
+/*Copyright 2022 Emma Foulon, Guillaume Spalla
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -52,7 +52,7 @@ namespace MATCH
             void Start()
             {
                 // Load a profile by default in case no profile is chosen manually on the cockpit
-                UserProfile = "emmaFoulon";
+                UserProfile = "johnDoe";
                 DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Profil par défaut : " + UserProfile);
                 CommunicationMode = "Text";
 

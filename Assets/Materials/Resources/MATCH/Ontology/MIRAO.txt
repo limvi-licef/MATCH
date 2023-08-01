@@ -2200,6 +2200,12 @@ As for their structure and shape, sofas usually feature two armrests and a unifo
     
 
 
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#DustingTableAssistances -->
+
+    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#DustingTableAssistances"/>
+    
+
+
     <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#Pictogram -->
 
     <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#Pictogram"/>
@@ -2391,36 +2397,22 @@ As for their structure and shape, sofas usually feature two armrests and a unifo
     
 
 
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#doe -->
+
+    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#doe">
+        <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#FamilyName"/>
+        <rdfs:label>Doe</rdfs:label>
+    </owl:NamedIndividual>
+    
+
+
     <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#dustingTable -->
 
     <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#dustingTable">
         <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#Scenario"/>
+        <MIRAO:triggersAssistance rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#DustingTableAssistances"/>
         <MIRAO:isAssociatedToEnvironmentElement rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#Rag"/>
         <MIRAO:isAssociatedToRoom rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#DiningRoom"/>
-        <MIRAO:triggersAssistance rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#DustingTableAssistances"/>
-    </owl:NamedIndividual>
-    
-
-
-    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#emma -->
-
-    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#emma">
-        <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#FirstName"/>
-        <rdfs:label>Emma</rdfs:label>
-    </owl:NamedIndividual>
-    
-
-
-    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#emmaFoulon -->
-
-    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#emmaFoulon">
-        <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#UserProfile"/>
-        <MIRAO:associatesColorWithUrgency rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#purple"/>
-        <MIRAO:findsColorAttractive rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#green"/>
-        <MIRAO:hasFamilyName rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#foulon"/>
-        <MIRAO:hasFavoriteColor rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#pink"/>
-        <MIRAO:hasFirstName rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#emma"/>
-        <MIRAO:preferredCommChannel rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#Text"/>
     </owl:NamedIndividual>
     
 
@@ -2480,15 +2472,6 @@ As for their structure and shape, sofas usually feature two armrests and a unifo
     
 
 
-    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#foulon -->
-
-    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#foulon">
-        <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#FamilyName"/>
-        <rdfs:label>Foulon</rdfs:label>
-    </owl:NamedIndividual>
-    
-
-
     <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#givingAClue -->
 
     <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#givingAClue">
@@ -2542,6 +2525,29 @@ As for their structure and shape, sofas usually feature two armrests and a unifo
 
     <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#implicit3">
         <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#IllocutionaryAct"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#john -->
+
+    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#john">
+        <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#FirstName"/>
+        <rdfs:label>John</rdfs:label>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#johnDoe -->
+
+    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#johnDoe">
+        <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#UserProfile"/>
+        <MIRAO:associatesColorWithUrgency rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#purple"/>
+        <MIRAO:findsColorAttractive rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#green"/>
+        <MIRAO:hasFamilyName rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#doe"/>
+        <MIRAO:hasFavoriteColor rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#pink"/>
+        <MIRAO:hasFirstName rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#john"/>
+        <MIRAO:preferredCommChannel rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#Text"/>
     </owl:NamedIndividual>
     
 

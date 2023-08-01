@@ -8328,7 +8328,7 @@ GameObject:
   - component: {fileID: 1035375383}
   - component: {fileID: 1035375384}
   m_Layer: 0
-  m_Name: DustingTable
+  m_Name: DustingTableOntology
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -8360,7 +8360,29 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5b52ec13ec1ae1c40adcafc2c31ac90c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ScenarioId: 
+  ConditionsIds: []
+  BehaviorTreeDebugWindow: {fileID: 0}
+  AssistancesDebugWindow: {fileID: 0}
+  InferenceManager: {fileID: 0}
   SurfacesManager: {fileID: 1559778519}
+  ConditionTableCleaned: TableCleaned
+  ConditionRagNotTakenButHelpReceived: RagNotTakenButHelpReceived
+  ConditionRagTaken: RagTaken
+  ConditionDidNotStartCleaning: DidNotStartCleaning
+  ConditionCleaningInterrupted: CleaningInterrupted
+  ConditionNewPartCleaned: NewPartCleaned
+  ConditionProcessRelatedToNewPartsCleanedDone: ProcessRelatedToNewPartsCleanedDone
+  ConditionTableTouchedButNoRag: TableTouchedButNoRag
+  ConditionUserInAnotherRoom: UserInAnotherRoom
+  InferenceDidNotStartDusting: DidNotStartCleaning
+  InferenceInterruptDusting: InterruptedDusting
+  InferenceFarFromRag: FarFromRag
+  InferenceFarFromRagDistance: 4
+  InteractionSurfaceTable: {fileID: 0}
+  InteractionRag: {fileID: 0}
+  RightRoom: 0
+  ExpectedRoom: 
 --- !u!1001 &1036810239
 PrefabInstance:
   m_ObjectHideFlags: 0
