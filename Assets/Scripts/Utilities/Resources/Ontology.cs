@@ -43,7 +43,7 @@ namespace MATCH
                 //static string Path = "./Assets/Materials/Resources/MATCH/Ontology/";
 
                 /* private string OntologyPath = "./Assets/Materials/Resources/MATCH/Ontology/MIRAO.rdf"; */
-                string MIRAO = "MATCH/Ontology/MIRAO";
+                //string MIRAO = "MATCH/Ontology/MIRAO";
 
                 private Ontology()
                 {
@@ -149,7 +149,22 @@ namespace MATCH
                     }
                     else
                     {
-                        DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Aucun résultat trouvé.");
+                        sparqlQuery = $"PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> PREFIX mirao: <https://ontology.staging.domus.usherbrooke.ca/MIRAO#>" +
+                        $"SELECT ?message WHERE {{?assistance rdf:type mirao:{assistanceName} . ?assistance mirao:isLinkedToImpairment mirao:{impairment} . ?assistance mirao:hasIllocutionaryAct mirao:{illocutionaryAct} . ?assistance mirao:hasAssistanceType mirao:{assistanceType} . ?assistance ?a ?texte . ?texte rdf:type mirao:Text . ?texte mirao:hasContent ?message}}";
+
+                        query = parser.ParseFromString(sparqlQuery);
+                        results = (VDS.RDF.Query.SparqlResultSet)Graph.ExecuteQuery(query.ToString());
+
+                        if (results.Count > 0)
+                        {
+                            var result = results[0];
+                            string text = result.Value("message").ToString();
+                            message = ShortenMessage(text);
+                        }
+                        else
+                        {
+                            DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Aucun résultat trouvé.");
+                        }
                     }
 
                     return message;

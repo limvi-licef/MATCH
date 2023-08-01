@@ -6,7 +6,7 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 0
-    path: Assets/MX_Context_Awareness.unity
+    path: 
     guid: 23dafe5bb908672419b54c75c53f5bff
   - enabled: 1
     path: Assets/Scenes/MATCH.unity

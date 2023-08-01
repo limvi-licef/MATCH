@@ -165,6 +165,7 @@ namespace MATCH
 
                         // Defining the BT
                         Selector srRagNotTaken = new Selector(
+                            new BlackboardCondition(ConditionUserInAnotherRoom, Operator.IS_EQUAL, true, Stops.IMMEDIATE_RESTART, AssistanceMu()),
                             new BlackboardCondition(ConditionTableTouchedButNoRag, Operator.IS_EQUAL, true, Stops.IMMEDIATE_RESTART, AssistanceIota()),
                             new BlackboardCondition(ConditionRagNotTakenButHelpReceived, Operator.IS_EQUAL, true, Stops.IMMEDIATE_RESTART, AssistanceEpsilon()),
                             AssistanceBeta()
@@ -183,8 +184,7 @@ namespace MATCH
 
                         Selector srBegin = new Selector(
                             new BlackboardCondition(ConditionTableCleaned, Operator.IS_EQUAL, true, Stops.IMMEDIATE_RESTART, AssistanceAlpha()),
-                            new BlackboardCondition(ConditionUserInAnotherRoom, Operator.IS_EQUAL, true, Stops.IMMEDIATE_RESTART, AssistanceMu()),
-                            new BlackboardCondition(ConditionUserInAnotherRoom, Operator.IS_EQUAL, false, Stops.IMMEDIATE_RESTART, srTableNotCleaned)
+                            new BlackboardCondition(ConditionTableCleaned, Operator.IS_EQUAL, false, Stops.IMMEDIATE_RESTART, srTableNotCleaned)
                             );
 
                     Root tree = new Root(/*Conditions*/
@@ -907,7 +907,8 @@ namespace MATCH
                 public void CallbackUserInAnotherRoom(System.Object o, EventArgs e)
                 {
                     //MATCH.DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, MATCH.DebugMessagesManager.MessageLevel.Info, "User in another room.");
-                    UpdateConditionWithMatrix(ConditionUserInAnotherRoom);
+                    //UpdateConditionWithMatrix(ConditionUserInAnotherRoom);
+                    UpdateCondition(ConditionUserInAnotherRoom, true);
                 }
 
                 /*
