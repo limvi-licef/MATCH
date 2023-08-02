@@ -595,14 +595,15 @@ namespace MATCH
                     Assistances.SurfaceToProcess assistanceSurfaceToClean =
                         Assistances.Factory.Instance.CreateSurfaceToProcess(InteractionSurfaceToClean.transform,
                             InteractionSurfaceToClean, 3, 4);
-                    
-                    
+
+
                     Assistances.GradationVisual.GradationVisual kappa1 = Assistances.GradationVisual.Factory.Instance.CreateDialog2WithButtons("Tutorial-cleaningSurface-1", "", "Vous êtes arrivés à la derniere étape de ce tutoriel bravo ! Lorsque vous appuierez sur SUIVANT, vous ferez apparaitre une nouvelle assistance.", "SUIVANT",
                         delegate(object sender, EventArgs args)
                         {
                             assistanceSurfaceToClean.Show(Utilities.Utility.GetEventHandlerEmpty(), false);
                         }
                         , Assistances.Buttons.Button.ButtonType.Yes, MATCH.Assistances.InteractionSurfaceFollower.Instance.transform);
+                    //Assistances.Dialogs.Dialog2 dialog1 =  Assistances.Factory.Instance.CreateDialog2NoButton("", "Vous êtes arrivés à la derniere étape de ce tutoriel bravo ! Lorsque vous appuierez sur SUIVANT, vous ferez apparaitre une nouvelle assistance.", InteractionSurfaceToClean.transform) ;
                     Assistances.GradationVisual.GradationVisual kappa2 = Assistances.GradationVisual.Factory.Instance.CreateDialog2NoButton("Tutorial-cleaningSurface-2", "", "Voici une surface bleue ! Appuyez sur un de ses carrés !",  InteractionSurfaceToCleanDialog.transform);
 
                     Assistances.IAssistance kappa1IAssistance = (Assistances.IAssistance)kappa1.GetCurrentAssistance();
@@ -610,15 +611,19 @@ namespace MATCH
                     
                     Assistances.IAssistance kappa2IAssistance = (Assistances.IAssistance)kappa2.GetCurrentAssistance();
                     Assistances.Assistance kappa2Assistance = (Assistances.Assistance)kappa2IAssistance.GetRootDecoratedAssistance();
-                    
-                    
+
+                    Assistances.AssistanceGradationExplicit kappa = MATCH.Assistances.Factory.Instance.CreateAssistanceGradationExplicit("Tutorial-Kappa");
+
                     assistanceSurfaceToClean.EventNewPartCleaned += delegate(object sender, EventArgs args)
                     {
                         if (!surfaceTouched)
                         {
-                            kappa1Assistance.Hide(Utilities.Utility.GetEventHandlerEmpty());
-                            kappa2Assistance.Show(Utilities.Utility.GetEventHandlerEmpty());
-                            surfaceTouched = true;
+                            kappa.StopAssistance();
+                            //dialog1.Hide(Utilities.Utility.GetEventHandlerEmpty(), false);
+                            //kappa1IAssistance.GetAssistance().Hide(Utilities.Utility.GetEventHandlerEmpty());                            
+                            //kappa1Assistance.Hide(Utilities.Utility.GetEventHandlerEmpty());
+                            //kappa2Assistance.Show(Utilities.Utility.GetEventHandlerEmpty());
+                            //surfaceTouched = true;
                         }
                     };
                     
@@ -627,7 +632,7 @@ namespace MATCH
                         UpdateConditionWithMatrix(ConditionPenGrabbed);
                     };
                     
-                    Assistances.AssistanceGradationExplicit kappa = MATCH.Assistances.Factory.Instance.CreateAssistanceGradationExplicit("Tutorial-Kappa");
+                    
                     kappa.transform.parent = transform;
 
                     kappa.AddAssistance(kappa1, Assistances.Buttons.Button.ButtonType.Yes, kappa2);
@@ -641,6 +646,7 @@ namespace MATCH
                     Sequence temp = new Sequence(
                         new NPBehave.Action(() => {
                             ShowAssistanceHideOthers(kappa);
+                            //dialog1.Show(Utilities.Utility.GetEventHandlerEmpty(), false);
                             InferenceManager.UnregisterAllInferences();
                             UpdateTextAssistancesDebugWindow("Kappa");
                             MATCH.Utilities.Logger.Instance.Log(this.GetId(), MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, "Kappa");
