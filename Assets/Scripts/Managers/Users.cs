@@ -52,14 +52,10 @@ namespace MATCH
             void Start()
             {
                 // Load a profile by default in case no profile is chosen manually on the cockpit
-                UserProfile = "johnDoe";
+                UserProfile = "defaultProfile";
                 DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Profil par défaut : " + UserProfile);
-                CommunicationMode = "Text";
-
-                // Load default colors for the assistance messages
-                FavoriteColor = "Cyan";
-                AttractiveColor = "Orange";
-                EmergencyColor = "Red";
+                ColorPreferencesQuery(UserProfile);
+                CommunicationModeQuery();
 
                 // Query to list all of the users registered in the ontology
                 //VDS.RDF.Parsing.SparqlQueryParser parser = new VDS.RDF.Parsing.SparqlQueryParser();

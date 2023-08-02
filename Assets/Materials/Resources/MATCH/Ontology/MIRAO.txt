@@ -2380,6 +2380,28 @@ As for their structure and shape, sofas usually feature two armrests and a unifo
     
 
 
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#default -->
+
+    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#default">
+        <rdfs:label>Default</rdfs:label>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#defaultProfile -->
+
+    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#defaultProfile">
+        <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#UserProfile"/>
+        <MIRAO:associatesColorWithUrgency rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#red"/>
+        <MIRAO:findsColorAttractive rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#orange"/>
+        <MIRAO:hasFamilyName rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#profile"/>
+        <MIRAO:hasFavoriteColor rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#cyan"/>
+        <MIRAO:hasFirstName rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#default"/>
+        <MIRAO:preferredCommChannel rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#Text"/>
+    </owl:NamedIndividual>
+    
+
+
     <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#diningRoom -->
 
     <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#diningRoom">
@@ -2654,6 +2676,14 @@ As for their structure and shape, sofas usually feature two armrests and a unifo
 
     <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#planification">
         <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#Impairment"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#profile -->
+
+    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#profile">
+        <rdfs:label>Profile</rdfs:label>
     </owl:NamedIndividual>
     
 
