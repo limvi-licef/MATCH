@@ -213,7 +213,9 @@ namespace MATCH
 
 
                     Assistances.Icon assistanceExclamation = Assistances.Factory.Instance.CreateIcon(true, new Vector3(0, 0, 0), new Vector3(0.15f, 0.15f, 0.15f), true, InteractionExclamationMark.transform, /*null*/Utilities.Materials.Icon.ExclamationMark, Utilities.Materials.Colors.WhiteMetallic);
-                    
+                    assistanceExclamation.transform.Find("Child").localPosition = new Vector3(0, (float)0.33, 0);
+
+
                     Assistances.AssistanceGradationExplicit beta = MATCH.Assistances.Factory.Instance.CreateAssistanceGradationExplicit("Tutorial-Beta");
 
                     beta.transform.parent = transform;
