@@ -150,6 +150,12 @@
     
 
 
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#hasDisplayer -->
+
+    <owl:ObjectProperty rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#hasDisplayer"/>
+    
+
+
     <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#hasElementType -->
 
     <owl:ObjectProperty rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#hasElementType"/>
@@ -362,26 +368,6 @@
     
 
 
-    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#Arch -->
-
-    <owl:Class rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#Arch">
-        <rdfs:subClassOf rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#Icons"/>
-        <rdfs:subClassOf>
-            <owl:Restriction>
-                <owl:onProperty rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#hasFirstObject"/>
-                <owl:allValuesFrom rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#EnvironmentElement"/>
-            </owl:Restriction>
-        </rdfs:subClassOf>
-        <rdfs:subClassOf>
-            <owl:Restriction>
-                <owl:onProperty rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#hasSecondObject"/>
-                <owl:allValuesFrom rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#EnvironmentElement"/>
-            </owl:Restriction>
-        </rdfs:subClassOf>
-    </owl:Class>
-    
-
-
     <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#Armchair -->
 
     <owl:Class rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#Armchair">
@@ -492,6 +478,14 @@
             </owl:Restriction>
         </rdfs:subClassOf>
         <rdfs:comment>Contains the list of all the assistances according to their linked scenario</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#AudioDisplayer -->
+
+    <owl:Class rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#AudioDisplayer">
+        <rdfs:subClassOf rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#Displayer"/>
     </owl:Class>
     
 
@@ -706,6 +700,12 @@ As for their structure and shape, sofas usually feature two armrests and a unifo
     
 
 
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#Displayer -->
+
+    <owl:Class rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#Displayer"/>
+    
+
+
     <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#DustingTableAssistances -->
 
     <owl:Class rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#DustingTableAssistances">
@@ -729,14 +729,6 @@ As for their structure and shape, sofas usually feature two armrests and a unifo
                 <owl:allValuesFrom rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#ElementType"/>
             </owl:Restriction>
         </rdfs:subClassOf>
-    </owl:Class>
-    
-
-
-    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#ExclamationMark -->
-
-    <owl:Class rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#ExclamationMark">
-        <rdfs:subClassOf rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#Icons"/>
     </owl:Class>
     
 
@@ -854,11 +846,10 @@ As for their structure and shape, sofas usually feature two armrests and a unifo
     
 
 
-    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#Icons -->
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#IconDisplayer -->
 
-    <owl:Class rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#Icons">
-        <rdfs:subClassOf rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#VisualMessage"/>
-        <rdfs:comment>Contains assistances that are displayed for non blind people, for both those who know how to read and those who don&apos;t</rdfs:comment>
+    <owl:Class rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#IconDisplayer">
+        <rdfs:subClassOf rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#Displayer"/>
     </owl:Class>
     
 
@@ -981,6 +972,14 @@ As for their structure and shape, sofas usually feature two armrests and a unifo
 
     <owl:Class rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#Pictogram">
         <rdfs:subClassOf rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#VisualMessage"/>
+    </owl:Class>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#PictogramDisplayer -->
+
+    <owl:Class rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#PictogramDisplayer">
+        <rdfs:subClassOf rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#Displayer"/>
     </owl:Class>
     
 
@@ -1435,14 +1434,6 @@ As for their structure and shape, sofas usually feature two armrests and a unifo
     
 
 
-    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#SurfaceToProcess -->
-
-    <owl:Class rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#SurfaceToProcess">
-        <rdfs:subClassOf rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#Icons"/>
-    </owl:Class>
-    
-
-
     <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#TV -->
 
     <owl:Class rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#TV">
@@ -1508,6 +1499,20 @@ As for their structure and shape, sofas usually feature two armrests and a unifo
 
     <owl:Class rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#Text">
         <rdfs:subClassOf rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#VisualMessage"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#hasDisplayer"/>
+                <owl:allValuesFrom rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#TextDisplayer"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+    </owl:Class>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#TextDisplayer -->
+
+    <owl:Class rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#TextDisplayer">
+        <rdfs:subClassOf rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#Displayer"/>
     </owl:Class>
     
 
@@ -2226,10 +2231,17 @@ As for their structure and shape, sofas usually feature two armrests and a unifo
     
 
 
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#arch -->
+
+    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#arch">
+        <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#IconDisplayer"/>
+    </owl:NamedIndividual>
+    
+
+
     <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#arch1 -->
 
     <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#arch1">
-        <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#Arch"/>
         <MIRAO:hasFirstObject rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#mixedRealityHeadset"/>
         <MIRAO:hasSecondObject rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#calendar"/>
         <MIRAO:isLinkedToAssistance rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#assistanceKappaDT"/>
@@ -2240,7 +2252,6 @@ As for their structure and shape, sofas usually feature two armrests and a unifo
     <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#arch2 -->
 
     <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#arch2">
-        <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#Arch"/>
         <MIRAO:hasFirstObject rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#diningRoomTable"/>
         <MIRAO:hasSecondObject rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#rag"/>
         <MIRAO:isLinkedToAssistance rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#assistanceBetaDT"/>
@@ -2301,6 +2312,14 @@ As for their structure and shape, sofas usually feature two armrests and a unifo
     <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#assistanceKappaDT -->
 
     <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#assistanceKappaDT"/>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#audio -->
+
+    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#audio">
+        <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#AudioDisplayer"/>
+    </owl:NamedIndividual>
     
 
 
@@ -2402,6 +2421,22 @@ As for their structure and shape, sofas usually feature two armrests and a unifo
     
 
 
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#dialog2 -->
+
+    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#dialog2">
+        <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#TextDisplayer"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#dialog2Pictogram -->
+
+    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#dialog2Pictogram">
+        <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#PictogramDisplayer"/>
+    </owl:NamedIndividual>
+    
+
+
     <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#diningRoom -->
 
     <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#diningRoom">
@@ -2439,10 +2474,17 @@ As for their structure and shape, sofas usually feature two armrests and a unifo
     
 
 
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#exclamationMark -->
+
+    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#exclamationMark">
+        <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#IconDisplayer"/>
+    </owl:NamedIndividual>
+    
+
+
     <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#exclamationMarkRag -->
 
     <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#exclamationMarkRag">
-        <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#ExclamationMark"/>
         <MIRAO:isDisplayedHere rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#rag"/>
         <MIRAO:isLinkedToAssistance rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#assistanceEpsilonDT"/>
     </owl:NamedIndividual>
@@ -2452,7 +2494,6 @@ As for their structure and shape, sofas usually feature two armrests and a unifo
     <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#exclamationMarkTable -->
 
     <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#exclamationMarkTable">
-        <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#ExclamationMark"/>
         <MIRAO:hasAssistanceType rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#stimulateTheThoughtProcess"/>
         <MIRAO:hasIllocutionaryAct rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#implicit1"/>
         <MIRAO:isDisplayedHere rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#diningRoomTable"/>
@@ -2658,6 +2699,7 @@ As for their structure and shape, sofas usually feature two armrests and a unifo
 
     <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#pictoDTareYouSureAboutObject">
         <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#Pictogram"/>
+        <MIRAO:hasDisplayer rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#dialog2Pictogram"/>
         <MIRAO:hasContent>pictoDTAreYouSureAboutObject</MIRAO:hasContent>
     </owl:NamedIndividual>
     
@@ -2796,10 +2838,17 @@ As for their structure and shape, sofas usually feature two armrests and a unifo
     
 
 
+    <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#surfaceToProcess -->
+
+    <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#surfaceToProcess">
+        <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#IconDisplayer"/>
+    </owl:NamedIndividual>
+    
+
+
     <!-- https://ontology.staging.domus.usherbrooke.ca/MIRAO#surfaceToProcess1 -->
 
     <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#surfaceToProcess1">
-        <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#SurfaceToProcess"/>
         <MIRAO:isDisplayedHere rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#diningRoomTable"/>
         <MIRAO:isLinkedToAssistance rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#assistanceEtaDT"/>
     </owl:NamedIndividual>
@@ -2819,6 +2868,7 @@ As for their structure and shape, sofas usually feature two armrests and a unifo
 
     <owl:NamedIndividual rdf:about="https://ontology.staging.domus.usherbrooke.ca/MIRAO#textDTAreYouSureAboutObject">
         <rdf:type rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#Text"/>
+        <MIRAO:hasDisplayer rdf:resource="https://ontology.staging.domus.usherbrooke.ca/MIRAO#dialog2"/>
         <MIRAO:hasContent>Êtes-vous sûr que vous utilisez le bon objet pour nettoyer la table ?</MIRAO:hasContent>
     </owl:NamedIndividual>
     
