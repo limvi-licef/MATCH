@@ -60,7 +60,7 @@ namespace MATCH
                     foreach (VDS.RDF.Query.SparqlResult result in results)
                     {
                         string room = result.Value("roomnames").ToString();
-                        room = MATCH.Utilities.Materials.Ontology.Instance.ShortenMessage(room); // Get the room name only, and not the whole URI
+                        room = MATCH.Utilities.Materials.Ontology.Instance.ShortenMessageForProperties(room); // Get the room name only, and not the whole URI
                         bool roomExists = false;
 
                         foreach (string existingRoom in RoomList)
@@ -68,7 +68,7 @@ namespace MATCH
 
                             if (existingRoom == room)
                             {
-                                // If the room already exists, display an interaction surface
+                                // If the room already exists, display an interaction surface. As the room is registered to the wolrd locking tool during creation, it will be moved and scaled to the registered positions.
                                 roomExists = true;
                                 MATCH.Assistances.InteractionSurface test = MATCH.Assistances.Factory.Instance.CreateInteractionSurface(room, MATCH.AdminMenu.Panels.Right, new Vector3(1f, 0.01f, 0.8f), new Vector3(-0.4f, -1.6f, -4f), MATCH.Utilities.Materials.Colors.Cyan, true, true, MATCH.Utilities.Utility.GetEventHandlerEmpty(), true, transform);
                                 test.SetPreventResizeY(true);
@@ -123,43 +123,16 @@ namespace MATCH
                     }
                 }
 
+                // The content of the message does not care, what it important is that it does not correspond to the name of a room.
                 return "Aucune pièce ne correspond à l'emplacement de l'utilisateur.";
             }
-
-            /*
-            public bool IsUserInWrongRoom(string scenario)
-            {
-                VDS.RDF.Query.SparqlResultSet results = RoomQueryResults(scenario); // Find the room the user has to be in to do the task
-                string room = InWhatRoomIsUser(); // Find what room the user is in
-
-                if (results.Count > 0)
-                {
-                    var result = results[0];
-                    string expectedRoom = result.Value("roomname").ToString();
-                    expectedRoom = MATCH.Utilities.Materials.Ontology.Instance.ShortenMessage(expectedRoom);
-                    if (expectedRoom.ToLower() == room.ToLower())
-                    {
-                        return false; // If the user is in the right room to perform the task
-                    }
-                    else
-                    {
-                        return true; // If the user is not in the room where the task should be performed
-                    }
-                }
-                else
-                {
-                    DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Aucun résultat trouvé.");
-                }
-
-                return true;
-            }
-            */
 
             public VDS.RDF.Query.SparqlResultSet RoomQueryResults(string scenario)
             {
                 //VDS.RDF.Parsing.SparqlQueryParser parser = new VDS.RDF.Parsing.SparqlQueryParser();
 
                 // Query to find the room the task has to be performed in
+                // This request returns two parameters: roomname (name of the room where the user has to perform the activity); place (sentence to include in the assistance message allowing to give the right pronoun associated with the gender of the room - important in french because it can be "le salon" or "la cuisine").
                 string sparqlQuery = $"PREFIX mirao: <https://ontology.staging.domus.usherbrooke.ca/MIRAO#> PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>" +
                                     $"SELECT ?roomname ?place WHERE {{ mirao:{scenario} mirao:isAssociatedToRoom ?room . ?room rdfs:label ?roomname . ?room mirao:hasLocation ?place}}";
 
@@ -168,35 +141,40 @@ namespace MATCH
                 return results;
             }
 
-
-            public string ContextualizedRoomQuery(string scenario, string room)
+            /**
+             * Input: scenario as named in the ontology, for instance "dustingTable".
+             * Return: contextualized assistance to inform the user where he should perform the activity; if no room is attached to the scenario, returns an error message starting with "Error"
+             * */
+            public string ContextualizedRoomQuery(string scenario)
             {
                 VDS.RDF.Query.SparqlResultSet results = RoomQueryResults(scenario);
-                
+
+                string toReturn;
+
                 if (results.Count > 0)
                 {
                     var result = results[0];
                     string expectedRoom = result.Value("roomname").ToString(); // The room where the activity needs to be done, for example "kitchen"
-                    expectedRoom = MATCH.Utilities.Materials.Ontology.Instance.ShortenMessage(expectedRoom);
+                    expectedRoom = MATCH.Utilities.Materials.Ontology.Instance.ShortenMessageForProperties(expectedRoom);
                     string location = result.Value("place").ToString(); // The location of the activity, for example "in the kitchen" (allows to avoid the gender of the rooms' nouns)
-                    location = MATCH.Utilities.Materials.Ontology.Instance.ShortenMessage(location);
+                    location = MATCH.Utilities.Materials.Ontology.Instance.ShortenMessageForProperties(location);
 
-                    if (expectedRoom.ToLower() == room.ToLower())
+                    /*if (expectedRoom.ToLower() == room.ToLower())
                     {
                         return "Vous êtes dans la bonne pièce pour réaliser la tâche."; // (not displayed, just for testing)
                     }
                     else
-                    {
-                        return $"Vous devriez être {location}."; // Tells the user in which room he should be to perform his activity
-                    }
+                    {*/
+                        toReturn = $"Vous devriez être {location}."; // Tells the user in which room he should be to perform his activity
+                    //}
                 }
                 else
                 {
                     DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Aucun résultat trouvé.");
+                    toReturn = "Error - No room found in the ontology";
                 }
 
-                return "Rien";
-                
+                return toReturn;
             }
 
         }

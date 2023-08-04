@@ -63,15 +63,6 @@ namespace MATCH
                     return Graph;
                 }*/
 
-                public VDS.RDF.Query.SparqlResultSet ExecuteQuery(string query)
-                {
-                    VDS.RDF.Parsing.SparqlQueryParser parser = new VDS.RDF.Parsing.SparqlQueryParser();
-                    VDS.RDF.Query.SparqlQuery queryProcessed = parser.ParseFromString(query);
-
-                    return (VDS.RDF.Query.SparqlResultSet)Graph.ExecuteQuery(query);
-
-                }
-
                 public static Ontology Instance
                 {
                     get
@@ -82,9 +73,23 @@ namespace MATCH
                     }
                 }
 
+                /**
+                 * Input: SPARQL query
+                 * */
+                public VDS.RDF.Query.SparqlResultSet ExecuteQuery(string query)
+                {
+                    VDS.RDF.Parsing.SparqlQueryParser parser = new VDS.RDF.Parsing.SparqlQueryParser();
+                    VDS.RDF.Query.SparqlQuery queryProcessed = parser.ParseFromString(query);
 
-                // Allows to display the message only, without the URI which always starts with ^
-                public string ShortenMessage(string longMessage)
+                    return (VDS.RDF.Query.SparqlResultSet)Graph.ExecuteQuery(query);
+
+                }
+
+                /*
+                 * Allows to return the expected result from the property, i.e. without the URI which always starts with ^
+                 * Input: result of the query
+                 * */
+                public string ShortenMessageForProperties(string longMessage)
                 {
                     char symbol = '^';
                     int endIndex = longMessage.IndexOf(symbol);
@@ -92,7 +97,11 @@ namespace MATCH
                     return longMessage;
                 }
 
-                public string ShortenMessage2(string longMessage)
+                /*
+                 * Allows to display the name of the element, without the URI ending with #
+                 * Input: result of the query
+                 * */
+                public string ShortenMessageForElementName(string longMessage)
                 {
                     char symbol = '#';
                     int beginIndex = longMessage.IndexOf(symbol);
@@ -100,57 +109,28 @@ namespace MATCH
                     return longMessage;
                 }
 
-                /*
-                // Make a simple query to get the assistance text message
                 public string AssistanceQuery(string assistanceName, string illocutionaryAct, string impairment, string assistanceType)
                 {
                     VDS.RDF.Parsing.SparqlQueryParser parser = new VDS.RDF.Parsing.SparqlQueryParser();
 
-                    string sparqlQuery = $"PREFIX mirao: <https://ontology.staging.domus.usherbrooke.ca/MIRAO#> PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>" +
-                                        $"SELECT ?message WHERE {{ ?texte rdf:type mirao:Text . ?texte mirao:isLinkedToAssistance mirao:{assistanceName} . ?texte mirao:hasIllocutionaryAct mirao:{illocutionaryAct}. ?texte mirao:isLinkedToImpairment mirao:{impairment}. ?texte mirao:hasAssistanceType mirao:{assistanceType}. ?texte mirao:hasContent ?message}}";
-
-                    VDS.RDF.Query.SparqlQuery query = parser.ParseFromString(sparqlQuery);
-
-                    VDS.RDF.Query.SparqlResultSet testresults = (VDS.RDF.Query.SparqlResultSet)Graph.ExecuteQuery(query.ToString());
-                    string message = "";
-
-                    if (testresults.Count > 0)
-                    {
-                        var result = testresults[0];
-                        string text = result.Value("message").ToString();
-                        message = ShortenMessage(text);
-                    }
-                    else
-                    {
-                        DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Aucun résultat trouvé.");
-                    }
-
-                    return message;
-                }
-                */
-
-                public string AssistanceQuery(string assistanceName, string illocutionaryAct, string impairment, string assistanceType)
-                {
-                    VDS.RDF.Parsing.SparqlQueryParser parser = new VDS.RDF.Parsing.SparqlQueryParser();
-
-                    // Query to find the assistance text according to the user's profile and the assistance gradation
+                    // Query to find the assistance text according to the user's profile and the assistance gradation, using the preferred communication channel for the user
                     string sparqlQuery = $"PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> PREFIX mirao: <https://ontology.staging.domus.usherbrooke.ca/MIRAO#>" +
-                        $"SELECT ?message WHERE {{mirao:{MATCH.Managers.Users.Instance.UserProfile} mirao:preferredCommChannel ?modeComm . ?assistance rdf:type mirao:{assistanceName} . ?assistance mirao:isLinkedToImpairment mirao:{impairment} . ?assistance mirao:hasIllocutionaryAct mirao:{illocutionaryAct} . ?assistance mirao:hasAssistanceType mirao:{assistanceType} . ?assistance ?a ?texte . ?texte rdf:type ?modeComm . ?texte mirao:hasContent ?message}}";
+                        $"SELECT ?message WHERE {{mirao:{MATCH.Managers.Users.Instance.UserProfile} mirao:preferredCommChannel ?modeComm . ?assistance rdf:type mirao:{assistanceName} . ?assistance mirao:isLinkedToImpairment mirao:{impairment} . ?assistance mirao:hasIllocutionaryAct mirao:{illocutionaryAct} . ?assistance mirao:hasAssistanceType mirao:{assistanceType} . ?assistance ?a ?text . ?text rdf:type ?modeComm . ?text mirao:hasContent ?message}}";
                     
                     VDS.RDF.Query.SparqlQuery query = parser.ParseFromString(sparqlQuery);
                     VDS.RDF.Query.SparqlResultSet results = (VDS.RDF.Query.SparqlResultSet)Graph.ExecuteQuery(query.ToString());
                     string message = "";
 
                     if (results.Count > 0)
-                    {
+                    { // In the case there is an element assosciated to the preferred communication channel of the user, we return this message.
                         var result = results[0];
                         string text = result.Value("message").ToString();
-                        message = ShortenMessage(text);
+                        message = ShortenMessageForProperties(text);
                     }
                     else
-                    {
+                    { // If there is no element associated to the preferred communication channel of the user, we return the message associated to the default communication channel, i.e. text communication channel.
                         sparqlQuery = $"PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> PREFIX mirao: <https://ontology.staging.domus.usherbrooke.ca/MIRAO#>" +
-                        $"SELECT ?message WHERE {{?assistance rdf:type mirao:{assistanceName} . ?assistance mirao:isLinkedToImpairment mirao:{impairment} . ?assistance mirao:hasIllocutionaryAct mirao:{illocutionaryAct} . ?assistance mirao:hasAssistanceType mirao:{assistanceType} . ?assistance ?a ?texte . ?texte rdf:type mirao:Text . ?texte mirao:hasContent ?message}}";
+                        $"SELECT ?message WHERE {{?assistance rdf:type mirao:{assistanceName} . ?assistance mirao:isLinkedToImpairment mirao:{impairment} . ?assistance mirao:hasIllocutionaryAct mirao:{illocutionaryAct} . ?assistance mirao:hasAssistanceType mirao:{assistanceType} . ?assistance ?a ?text . ?text rdf:type mirao:Text . ?text mirao:hasContent ?message}}";
 
                         query = parser.ParseFromString(sparqlQuery);
                         results = (VDS.RDF.Query.SparqlResultSet)Graph.ExecuteQuery(query.ToString());
@@ -159,7 +139,7 @@ namespace MATCH
                         {
                             var result = results[0];
                             string text = result.Value("message").ToString();
-                            message = ShortenMessage(text);
+                            message = ShortenMessageForProperties(text);
                         }
                         else
                         {

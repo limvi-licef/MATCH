@@ -323,14 +323,14 @@ namespace MATCH
                 testDialog2.SetDescription(message);
             }
 
-            public static string Test(MATCH.Scenarios.BehaviorTrees.DustingTableAssistances assistance, Int32 numeroAssistance)
+            /*public static string Test(MATCH.Scenarios.BehaviorTrees.DustingTableAssistances assistance, Int32 numeroAssistance)
             {
                 Assistances.GradationVisual.GradationVisual testGradVis = assistance.Mu[numeroAssistance];
                 Assistances.IAssistance testAssistance = (Assistances.IAssistance)testGradVis.GetCurrentAssistance();
                 Assistances.Dialogs.Dialog2 testDialog2 = (Assistances.Dialogs.Dialog2)testAssistance.GetRootDecoratedAssistance();
                 string message = testDialog2.GetDescription();
                 return message;
-            }
+            }*/
         }
     }
 }

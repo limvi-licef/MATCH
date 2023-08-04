@@ -28,6 +28,7 @@ namespace MATCH
         public class Users : MonoBehaviour
         {
             private static Users instance;
+            //Todo: change public to private class variables
             public string UserProfile;
             public string FavoriteColor;
             public string AttractiveColor;
@@ -54,15 +55,12 @@ namespace MATCH
                 // Load a profile by default in case no profile is chosen manually on the cockpit
                 UserProfile = "defaultProfile";
                 DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Profil par défaut : " + UserProfile);
+                
+                //Todo: have one function for both. As UserProfile is a class variable, it might not be necessary to have it as a parameter of the function next line
                 ColorPreferencesQuery(UserProfile);
                 CommunicationModeQuery();
 
                 // Query to list all of the users registered in the ontology
-                //VDS.RDF.Parsing.SparqlQueryParser parser = new VDS.RDF.Parsing.SparqlQueryParser();
-                /*VDS.RDF.Query.SparqlQuery query = parser.ParseFromString("PREFIX mirao: <https://ontology.staging.domus.usherbrooke.ca/MIRAO#> PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>" +
-                    "SELECT ?firstNameLabel ?familyNameLabel ?a WHERE {?a mirao:hasFirstName ?firstName . ?firstName rdfs:label ?firstNameLabel . ?a mirao:hasFamilyName ?familyName . ?familyName rdfs:label ?familyNameLabel}");*/
-                //VDS.RDF.Query.SparqlResultSet results = (VDS.RDF.Query.SparqlResultSet)MATCH.Utilities.Materials.Ontology.Instance.GetGraph().ExecuteQuery(query.ToString());
-
                 string query = "PREFIX mirao: <https://ontology.staging.domus.usherbrooke.ca/MIRAO#> PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>" +
                 "SELECT ?firstNameLabel ?familyNameLabel ?a WHERE {?a mirao:hasFirstName ?firstName . ?firstName rdfs:label ?firstNameLabel . ?a mirao:hasFamilyName ?familyName . ?familyName rdfs:label ?familyNameLabel}";
                 VDS.RDF.Query.SparqlResultSet results = MATCH.Utilities.Materials.Ontology.Instance.ExecuteQuery(query);
@@ -72,9 +70,9 @@ namespace MATCH
                     foreach (VDS.RDF.Query.SparqlResult result in results)
                     {
                         string firstName = result.Value("firstNameLabel").ToString();
-                        firstName = MATCH.Utilities.Materials.Ontology.Instance.ShortenMessage(firstName);
+                        firstName = MATCH.Utilities.Materials.Ontology.Instance.ShortenMessageForProperties(firstName);
                         string familyName = result.Value("familyNameLabel").ToString();
-                        familyName = MATCH.Utilities.Materials.Ontology.Instance.ShortenMessage(familyName);
+                        familyName = MATCH.Utilities.Materials.Ontology.Instance.ShortenMessageForProperties(familyName);
                         string name = $"Choisir le profil de {firstName} {familyName}";
 
                         // Create a button for each user
@@ -84,7 +82,7 @@ namespace MATCH
                         newButton.EventButtonClicked += delegate (System.Object o, EventArgs e)
                         {
                             UserProfile = result.Value("a").ToString();
-                            UserProfile = MATCH.Utilities.Materials.Ontology.Instance.ShortenMessage2(UserProfile); // To get the name only, not the whole URI
+                            UserProfile = MATCH.Utilities.Materials.Ontology.Instance.ShortenMessageForElementName(UserProfile); // To get the name only, not the whole URI
                             DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Profil choisi : " + UserProfile);
                             ColorPreferencesQuery(UserProfile); // To query the user's color preferences
                             CommunicationModeQuery(); // To query the user's favorite communication mode
@@ -98,11 +96,6 @@ namespace MATCH
             void ColorPreferencesQuery(string user)
             {
                 // Query to get the user's favorite color, attractive color and emergency related color
-                //VDS.RDF.Parsing.SparqlQueryParser parser = new VDS.RDF.Parsing.SparqlQueryParser();
-                /*VDS.RDF.Query.SparqlQuery query = parser.ParseFromString("PREFIX mirao: <https://ontology.staging.domus.usherbrooke.ca/MIRAO#> " +
-                    $"SELECT ?favoriteColorRef ?attractiveColorRef ?emergencyColorRef WHERE {{mirao:{UserProfile} mirao:hasFavoriteColor ?favoriteColor . ?favoriteColor mirao:hasColorReference ?favoriteColorRef . mirao:{UserProfile} mirao:findsColorAttractive ?attractiveColor . ?attractiveColor mirao:hasColorReference ?attractiveColorRef . mirao:{UserProfile} mirao:associatesColorWithUrgency ?emergencyColor . ?emergencyColor mirao:hasColorReference ?emergencyColorRef .}}");
-                VDS.RDF.Query.SparqlResultSet results = (VDS.RDF.Query.SparqlResultSet)MATCH.Utilities.Materials.Ontology.Instance.GetGraph().ExecuteQuery(query.ToString());*/
-
                 string query = "PREFIX mirao: <https://ontology.staging.domus.usherbrooke.ca/MIRAO#> " +
                     $"SELECT ?favoriteColorRef ?attractiveColorRef ?emergencyColorRef WHERE {{mirao:{UserProfile} mirao:hasFavoriteColor ?favoriteColor . ?favoriteColor mirao:hasColorReference ?favoriteColorRef . mirao:{UserProfile} mirao:findsColorAttractive ?attractiveColor . ?attractiveColor mirao:hasColorReference ?attractiveColorRef . mirao:{UserProfile} mirao:associatesColorWithUrgency ?emergencyColor . ?emergencyColor mirao:hasColorReference ?emergencyColorRef .}}";
                 VDS.RDF.Query.SparqlResultSet results = MATCH.Utilities.Materials.Ontology.Instance.ExecuteQuery(query);
@@ -112,11 +105,11 @@ namespace MATCH
                     foreach (VDS.RDF.Query.SparqlResult result in results)
                     {
                         FavoriteColor = result.Value("favoriteColorRef").ToString();
-                        FavoriteColor = MATCH.Utilities.Materials.Ontology.Instance.ShortenMessage(FavoriteColor);
+                        FavoriteColor = MATCH.Utilities.Materials.Ontology.Instance.ShortenMessageForProperties(FavoriteColor);
                         AttractiveColor = result.Value("attractiveColorRef").ToString();
-                        AttractiveColor = MATCH.Utilities.Materials.Ontology.Instance.ShortenMessage(AttractiveColor);
+                        AttractiveColor = MATCH.Utilities.Materials.Ontology.Instance.ShortenMessageForProperties(AttractiveColor);
                         EmergencyColor = result.Value("emergencyColorRef").ToString();
-                        EmergencyColor = MATCH.Utilities.Materials.Ontology.Instance.ShortenMessage(EmergencyColor);
+                        EmergencyColor = MATCH.Utilities.Materials.Ontology.Instance.ShortenMessageForProperties(EmergencyColor);
                         DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Couleur préférée : " + FavoriteColor);
                         DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Couleur attractive : " + AttractiveColor);
                         DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Couleur associée à l'urgence : " + EmergencyColor);
@@ -141,7 +134,7 @@ namespace MATCH
                 {
                     var result = results[0];
                     MATCH.Managers.Users.Instance.CommunicationMode = result.Value("modeComm").ToString(); ;
-                    MATCH.Managers.Users.Instance.CommunicationMode = MATCH.Utilities.Materials.Ontology.Instance.ShortenMessage2(MATCH.Managers.Users.Instance.CommunicationMode);
+                    MATCH.Managers.Users.Instance.CommunicationMode = MATCH.Utilities.Materials.Ontology.Instance.ShortenMessageForElementName(MATCH.Managers.Users.Instance.CommunicationMode);
                 }
                 else
                 {

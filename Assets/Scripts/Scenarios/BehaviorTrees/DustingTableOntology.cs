@@ -80,7 +80,7 @@ namespace MATCH
                     Scenarios.Manager.Instance.addScenario(this);
                     
                     // Initialize assistances
-                    InitializeAssistances();
+                    InitializeInteractionSurfaces();
                     AssistancesDB = new DustingTableAssistances(InteractionSurfaceTable.transform, InteractionRag.transform);
 
                     // Initialize inference manager
@@ -121,7 +121,7 @@ namespace MATCH
                     {
                         var result = results[0];
                         ExpectedRoom = result.Value("roomname").ToString();
-                        ExpectedRoom = MATCH.Utilities.Materials.Ontology.Instance.ShortenMessage(ExpectedRoom);
+                        ExpectedRoom = MATCH.Utilities.Materials.Ontology.Instance.ShortenMessageForProperties(ExpectedRoom);
                     }
 
                 }
@@ -288,7 +288,7 @@ namespace MATCH
                 }
 
 
-                void InitializeAssistances()
+                void InitializeInteractionSurfaces()
                 {
                     InteractionSurfaceTable = Assistances.Factory.Instance.CreateInteractionSurface("DustingTable - Table", AdminMenu.Panels.Right, new Vector3(1.1f, 0.02f, 0.7f), new Vector3(-0.447f, -0.406f, 0.009f), Utilities.Materials.Colors.CyanGlowing, false, true, Utilities.Utility.GetEventHandlerEmpty(), true, transform);
                     //InteractionSurfaceTable.ShowInteractionSurfaceTable(false);
@@ -837,7 +837,7 @@ namespace MATCH
                             rightRoom = false;
                             EventUserInAnotherRoom?.Invoke(this, EventArgs.Empty);
 
-                            string messageTest = MATCH.Utilities.Utility.Test(AssistancesDB, 0);
+                            //string messageTest = MATCH.Utilities.Utility.Test(AssistancesDB, 0);
                     }
                 }
 
@@ -1022,8 +1022,7 @@ namespace MATCH
                             Assistances.GradationVisual.Factory.Instance.CreateDialog2WithButtons("DustingTable-Iota-04", "", /*"Non en effet. Où pouvez-vous regarder pour le trouver?"*/ Utilities.Materials.Ontology.Instance.AssistanceQuery("AssistanceIotaDT", "subtle3", "carryOutTheTask", "actionInitiation"), "Je sais", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.Yes, "Je ne sais pas", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.No, parentTable)
                         };
 
-                        string userRoom = MATCH.Managers.Rooms.Instance.InWhatRoomIsUser();
-                        string message = MATCH.Managers.Rooms.Instance.ContextualizedRoomQuery("dustingTable", userRoom);
+                        string message = MATCH.Managers.Rooms.Instance.ContextualizedRoomQuery("dustingTable");
 
                         Mu = new List<Assistances.GradationVisual.GradationVisual>
                         {
@@ -1099,8 +1098,7 @@ namespace MATCH
                             Assistances.GradationVisual.Factory.Instance.CreateDialog2WithButtons("DustingTable-Iota-04", "", /*"Non en effet. Où pouvez-vous regarder pour le trouver?"*/ Utilities.Materials.Ontology.Instance.AssistanceQuery("AssistanceIotaDT", "subtle3", "carryOutTheTask", "actionInitiation"), "Je sais", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.Yes, "Je ne sais pas", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.No, parentTable)
                         };
 
-                        string userRoom = MATCH.Managers.Rooms.Instance.InWhatRoomIsUser();
-                        string message = MATCH.Managers.Rooms.Instance.ContextualizedRoomQuery("dustingTable", userRoom);
+                        string message = MATCH.Managers.Rooms.Instance.ContextualizedRoomQuery("dustingTable");
 
                         Mu = new List<Assistances.GradationVisual.GradationVisual>
                         {
