@@ -57,6 +57,7 @@ Here are the steps to make the project running:
 - Get the project and make sure you use the main branch
 - Open the projet with Unity 2020.3.37f1. 
 - If not opened, open the MATCH scene
+- Make sure the ontology has a **.txt extention** (i.e. not .rdf or .owl)
 - Run it in the editor or export it to the Hololens. If you run it in the editor, a "virtual room" is enable to give a bit of context. If you export it for the hololens, do not forget to configure the export correctly with the "universal windows platform" (see the section "Configure your project for Windows Mixed Reality" of [this tutorial](https://docs.microsoft.com/en-us/learn/modules/learn-mrtk-tutorials/1-3-exercise-configure-unity-for-windows-mixed-reality?ns-enrollment-type=learningpath&ns-enrollment-id=learn.azure.beginner-hololens-2-tutorials&tabs=openxr)).
 
 ### How to use it?
