@@ -208,6 +208,22 @@ namespace MATCH
                     return toReturn;
                 }
 
+                public GradationVisual CreateDialog2WithLinePath(string assistanceName, string title, string description, IAssistance lineDestination, Transform parent)
+                {
+                    GradationVisual toReturn = Assistances.Factory.Instance.CreateAssistanceGradationAttention(assistanceName);
+                    toReturn.name = assistanceName;
+
+                    Assistances.Dialogs.Dialog2 dialog = Assistances.Factory.Instance.CreateDialog2NoButton(title, description, parent);
+                    Assistance dialogBackground = Assistances.Decorators.Factory.Instance.CreateBackgroundMessage(dialog, Utilities.Materials.Colors.Cyan);
+                    //dialog.event
+                    // Todo: finalize this by making it appearing with the new event "EventOnShow"
+                    Decorators.LinePath decorator = (Decorators.LinePath)Decorators.Factory.Instance.CreateLinePathWithTexture(lineDestination, Utilities.Materials.Colors.Cyan, 0.039f, true);
+                    
+                    toReturn.AddAssistance(decorator);
+
+                    return toReturn;
+                }
+
                 public GradationVisual CreateDialog2NoButton(string assistanceName, string title, string description, Transform parent)
                 {
                     Assistances.Dialogs.Dialog2 dialog = Assistances.Factory.Instance.CreateDialog2NoButton(title, description, parent);
