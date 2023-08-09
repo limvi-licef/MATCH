@@ -408,7 +408,7 @@ namespace MATCH
                 {
                     Assistances.Decorators.LinePath lineDecorator = new Assistances.Decorators.LinePath();
                     Assistances.GradationVisual.GradationVisual lota0 = Assistances.GradationVisual.Factory.Instance.CreateDialog2WithButtons("Tutorial-LookAround-1", "", "En appuyant sur SUIVANT, vous passerez à la suite du tutoriel, une flêche va vous y guider !.", "SUIVANT", null, Assistances.Buttons.Button.ButtonType.Yes, MATCH.Assistances.InteractionSurfaceFollower.Instance.transform);
-                    Assistances.GradationVisual.GradationVisual lota1 = Assistances.GradationVisual.Factory.Instance.CreateDialog2WithButtons("Tutorial-LookAround-1", "", "Attention ! Des assistances peuvent etre à l'exterieur de votre champs de vision actuel. N'hésitez pas à regarder autour de vous pour etre sur de ne pas en rater ! Appuyez sur SUIVANT pour voir.", "SUIVANT", null, Assistances.Buttons.Button.ButtonType.Yes, InteractionLookAround.transform);
+                    Assistances.GradationVisual.GradationVisual lota1 = Assistances.GradationVisual.Factory.Instance.CreateDialog2WithButtons("Tutorial-LookAround-1", "", "Attention ! Des assistances peuvent etre à l'exterieur de votre champs de vision actuel. N'hésitez pas à regarder autour de vous ou à tourner sur vous-même, pour etre sur de ne pas en rater ! Appuyez sur SUIVANT pour voir.", "SUIVANT", null, Assistances.Buttons.Button.ButtonType.Yes, InteractionLookAround.transform);
                     Assistances.GradationVisual.GradationVisual lota2 = Assistances.GradationVisual.Factory.Instance.CreateDialog2WithButtons("Tutorial-LookAround-2", "", "Une forme est apparue hors de votre champs de vision. Cherchez la ! Une fois que vous l'aurez trouvée, appuyez sur SUIVANT pour continuer le tutoriel !", "SUIVANT", null, Assistances.Buttons.Button.ButtonType.Yes, InteractionLookAround.transform);
                     
 
@@ -481,7 +481,7 @@ namespace MATCH
 
                 Sequence AssistanceGamma()
                 {
-                    Assistances.GradationVisual.GradationVisual gammaBase = Assistances.GradationVisual.Factory.Instance.CreateDialog2NoButton("Tutorial-Gamma-1", "", "Vous venez de découvrir la première interaction: toucher un bouton!\nMaintenant, vous allez voir un cube sur votre droite. Regardez le pendant quelques secondes pour passer à la suite.", InteractionSurfaceDialogs.transform);
+                    Assistances.GradationVisual.GradationVisual gammaBase = Assistances.GradationVisual.Factory.Instance.CreateDialog2NoButton("Tutorial-Gamma-1", "", "Très bien ! Maintenant, vous allez voir un cube sur votre droite. Regardez le pendant quelques secondes pour passer à la suite.", InteractionSurfaceDialogs.transform);
 
                     Assistances.AssistanceGradationExplicit gamma = MATCH.Assistances.Factory.Instance.CreateAssistanceGradationExplicit("Tutorial-Gamma");
                     gamma.transform.parent = transform;
