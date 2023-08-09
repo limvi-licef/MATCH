@@ -284,7 +284,7 @@ namespace MATCH
                     Vector3 startPointWorld = Camera.main.transform.TransformPoint(startPoint);
 
 
-                    DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, " Camera direction: " + Camera.main.transform.forward + " Starting point : " + startPoint + " " + startPointWorld);
+                    //DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, " Camera direction: " + Camera.main.transform.forward + " Starting point : " + startPoint + " " + startPointWorld);
 
                     Line.useWorldSpace = true;
 

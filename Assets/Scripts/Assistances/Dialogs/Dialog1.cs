@@ -47,6 +47,7 @@ namespace MATCH
                 Vector3 TitleScalingOriginal;
                 Vector3 DescriptionScalingOriginal;
                 //List<Vector3> ButtonsScalingOriginal;
+                protected Transform LinePath;
 
                 public bool AdjustToHeight { get; set; } = true;
 
@@ -80,6 +81,8 @@ namespace MATCH
                     BoxCollider box = transform.GetComponent<BoxCollider>();
                     BoxColliderOriginalCenter = box.center;
                     BoxColliderOriginalSize = box.size;
+
+                    LinePath = gameObject.transform.Find("LinePath");
                 }
 
                 public void SetTitle(string text, float fontSize = -1.0f)
@@ -384,7 +387,7 @@ namespace MATCH
 
                 public Transform GetLinePath()
                 {
-                    return null;
+                    return LinePath;
                 }
             }
         }

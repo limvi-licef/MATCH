@@ -78,6 +78,7 @@ namespace MATCH
                     assistance.AddAssistance(Assistances.Decorators.Factory.Instance.CreateMaterial(assistanceBase, Utilities.Materials.Colors.WhiteMetallic));
                     assistance.AddAssistance(Assistances.Decorators.Factory.Instance.CreateMaterial(assistanceBase, Utilities.Materials.Colors.YellowGlowing));
                     assistance.AddAssistance(Assistances.Decorators.Factory.Instance.CreateMaterial(assistanceBase, Utilities.Materials.Colors.RedGlowing));
+                    assistance.AddAssistance(Assistances.Decorators.Factory.Instance.CreateLinePathWithTexture(assistanceBase, Utilities.Materials.Colors.Cyan, 0.039f, true));
 
                     assistance.transform.localPosition = new Vector3(0, 0, 0);
 
@@ -214,12 +215,27 @@ namespace MATCH
                     toReturn.name = assistanceName;
 
                     Assistances.Dialogs.Dialog2 dialog = Assistances.Factory.Instance.CreateDialog2NoButton(title, description, parent);
-                    Assistance dialogBackground = Assistances.Decorators.Factory.Instance.CreateBackgroundMessage(dialog, Utilities.Materials.Colors.Cyan);
+                    Decorators.BackgroundColorMessage2 dialogBackground = (Decorators.BackgroundColorMessage2)Assistances.Decorators.Factory.Instance.CreateBackgroundMessage(dialog, Utilities.Materials.Colors.Cyan);
+                    Decorators.BackgroundColorIcon2 dialogIcon = (Decorators.BackgroundColorIcon2)Assistances.Decorators.Factory.Instance.CreateBackgroundIcon(dialogBackground, Utilities.Materials.Colors.Cyan, true);
                     //dialog.event
                     // Todo: finalize this by making it appearing with the new event "EventOnShow"
-                    Decorators.LinePath decorator = (Decorators.LinePath)Decorators.Factory.Instance.CreateLinePathWithTexture(lineDestination, Utilities.Materials.Colors.Cyan, 0.039f, true);
+
+                    //Decorators.LinePath decorator = (Decorators.LinePath)Decorators.Factory.Instance.CreateLinePathWithTexture(lineDestination, Utilities.Materials.Colors.Cyan, 0.039f, true);
+
+                    GradationVisual test = CreatePath(assistanceName + "_Path", "test", MATCH.Assistances.InteractionSurfaceFollower.Instance.transform, lineDestination.GetAssistance().transform, parent);
+
+                    dialogIcon.EventIsShown += delegate (System.Object o, EventArgs e)
+                    {
+                        //decorator.Show(Utilities.Utility.GetEventHandlerEmpty(), false);
+                        test.
+                    };
+
+                    dialogIcon.EventIsHidden += delegate (System.Object o, EventArgs e)
+                    {//lineDestination.GetLinePath().
+                        decorator.Hide(Utilities.Utility.GetEventHandlerEmpty(), false);
+                    };
                     
-                    toReturn.AddAssistance(decorator);
+                    toReturn.AddAssistance(dialogIcon);
 
                     return toReturn;
                 }
@@ -289,7 +305,7 @@ namespace MATCH
                     toReturn.AddAssistance(decorator3);
 
                     //Qualitrème niveau de gradation
-                    Decorators.LinePath decorator4 = (Decorators.LinePath)Decorators.Factory.Instance.CreateLinePathWithTexture(decorator3, /*Utilities.Materials.Colors.Orange*/ Utilities.Materials.Textures.ArrowProgressive, 0.1f, true);
+                    Decorators.LinePath decorator4 = (Decorators.LinePath)Decorators.Factory.Instance.CreateLinePathWithTexture(decorator3, /*Utilities.Materials.Colors.Orange*/ /*Utilities.Materials.Textures.ArrowProgressive*/ Utilities.Materials.Colors.CyanGlowing, /*0.1f*/ 0.039f, true);
                     toReturn.AddAssistance(decorator4);
 
                     return toReturn;

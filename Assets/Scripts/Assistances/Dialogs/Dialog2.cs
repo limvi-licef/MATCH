@@ -135,66 +135,6 @@ namespace MATCH
                     component.SetText(text);
                 }
 
-
-
-                /**
-                 * If fontSize < 0.0f, means keep the default value of the button's size. Hence the default value.
-                 * */
-                /*public Buttons.Basic AddButton(string text, bool autoScaling, float fontSize = -1.0f)
-                {
-                    // Instantiate the button
-                    Transform view = Instantiate(RefButtonView, ButtonsParentView);
-                    view.name = text;
-                    ButtonConfigHelper configHelper = view.GetComponent<ButtonConfigHelper>();
-                    configHelper.MainLabelText = text;
-                    TextMeshPro tmp = view.Find("IconAndText").Find("TextMeshPro").GetComponent<TextMeshPro>();
-
-                    // Get the text mesh pro component to set the fontsize
-                    if (fontSize > 0.0f)
-                    {
-                        tmp.fontSize = fontSize;
-                    }
-
-                    // Store the button
-                    ButtonsView.Add(view);
-                    Buttons.Basic controller = view.GetComponent<Buttons.Basic>();
-                    ButtonsController.Add(controller); // Only for the ease of use, nothing special here.
-
-                    // Locate button
-                    float scalingx = 1.0f;
-                    if (autoScaling)
-                    {
-                        scalingx = 1.0f / (float)(ButtonsView.Count());
-                        tmp.margin = new Vector4(tmp.margin.x * scalingx, tmp.margin.y, tmp.margin.z * scalingx, tmp.margin.w);
-                    }
-
-
-                    foreach (Transform b in ButtonsView)
-                    {
-                        b.localScale = new Vector3(scalingx, b.localScale.y, b.localScale.z);
-                        Transform textButton = b.Find("IconAndText");
-                        textButton.localScale = new Vector3(1.0f / scalingx, textButton.localScale.y, textButton.localScale.z);
-
-                        // Update the boxcollider
-                        BoxCollider collider = b.GetComponent<BoxCollider>();
-                        collider.size = new Vector3(0.18f, collider.size.y, 0.05f);
-                    }
-
-                    // Store button scaling
-                    ButtonsScalingOriginal.Add(ButtonsView.Last().localScale);
-
-                    // Enable button
-                    ButtonsView.Last().gameObject.SetActive(true);
-
-                    ButtonsParentView.GetComponent<GridObjectCollection>().UpdateCollection();
-
-                    // Calling the assistancecallback
-                    controller.EventButtonClicked += CButtonHelp;
-
-                    // Return
-                    return controller;
-                }*/
-
                 public override void Hide(EventHandler eventHandler, bool withAnimation)
                 {
                     Utilities.EventHandlerArgs.Animation args = new Utilities.EventHandlerArgs.Animation();
@@ -210,6 +150,7 @@ namespace MATCH
                                 IsDisplayed = false;
                                 args.Success = true;
                                 eventHandler?.Invoke(this, args);
+                                OnIsHidden(this, args);
                             });
 
                             Utilities.Utility.AnimateDisappearInPlace(DescriptionView.gameObject, DescriptionScalingOriginal);
@@ -231,12 +172,14 @@ namespace MATCH
                             IsDisplayed = false;
                             args.Success = true;
                             eventHandler?.Invoke(this, args);
+                            OnIsHidden(this, args);
                         }
                     }
                     else
                     {
                         args.Success = false;
                         eventHandler?.Invoke(this, args);
+                        OnIsHidden(this, args);
                     }
                 }
 
@@ -268,7 +211,7 @@ namespace MATCH
 
                                 args.Success = true;
                                 eventHandler?.Invoke(this, args);
-
+                                OnIsShown(this, args);
                             });
                         }
                         else
@@ -285,6 +228,7 @@ namespace MATCH
 
                             args.Success = true;
                             eventHandler?.Invoke(this, args);
+                            OnIsShown(this, args);
                         }
 
 
@@ -293,6 +237,7 @@ namespace MATCH
                     {
                         args.Success = false;
                         eventHandler?.Invoke(this, args);
+                        OnIsShown(this, args);
                     }
                 }
 

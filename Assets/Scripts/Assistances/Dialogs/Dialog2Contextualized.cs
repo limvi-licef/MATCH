@@ -89,11 +89,11 @@ namespace MATCH
                     }
                     else if (Utilities.Utility.IsPointInTriangle(pointAR, pointCR, pointU, pointToFind))
                     {
-                        toAdd = "sur votre gauche";
+                        toAdd = "sur votre droite";
                     }
                     else if (Utilities.Utility.IsPointInTriangle(pointBR, pointDR, pointU, pointToFind))
                     {
-                        toAdd = "sur votre droite";
+                        toAdd = "sur votre gauche";
                     }
                     else if (Utilities.Utility.IsPointInTriangle(pointDR, pointCR, pointU, pointToFind))
                     {

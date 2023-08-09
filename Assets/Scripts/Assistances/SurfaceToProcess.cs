@@ -208,7 +208,7 @@ namespace MATCH
                                 tempView.transform.localPosition = new Vector3(posXP, /*goLocalPosition.y + 1.0f*/0.0f, posZP);
 
                                 BoxCollider box = tempView.GetComponent<BoxCollider>();
-                                box.size = new Vector3(box.size.x, 1000, box.size.z);
+                                box.size = new Vector3(box.size.x, /*1000*/box.size.y, box.size.z);
 
                                 ProcessingSurfaceElement cubeInteractions = tempView.GetComponent<ProcessingSurfaceElement>();
                                 cubeInteractions.CubeTouchedEvent += CubeTouched;
@@ -240,7 +240,7 @@ namespace MATCH
             {
                 ProcessingSurfaceElement tempCube = (ProcessingSurfaceElement)sender;
 
-                MATCH.DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, MATCH.DebugMessagesManager.MessageLevel.Info, "Cube touched. Position: " + tempCube.transform.localPosition.x.ToString() + " " + tempCube.transform.localPosition.z.ToString());
+                //MethodBase.GetCurrentMethod().Name, MATCH.DebugMessagesManager.MessageLevel.Info, "Cube touched. Position: " + tempCube.transform.localPosition.x.ToString() + " " + tempCube.transform.localPosition.z.ToString());
 
                 Tuple<float, float> tempTuple = new Tuple<float, float>(tempCube.transform.localPosition.x, tempCube.transform.localPosition.z);
 
@@ -265,13 +265,13 @@ namespace MATCH
 
                 if (allCubesTouched)
                 {
-                    MATCH.DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, MATCH.DebugMessagesManager.MessageLevel.Info, "All cubes touched !!!!");
+                    //MATCH.DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, MATCH.DebugMessagesManager.MessageLevel.Info, "All cubes touched !!!!");
                     EventSurfaceCleaned?.Invoke(this, EventArgs.Empty);
 
                 }
                 else
                 {
-                    MATCH.DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, MATCH.DebugMessagesManager.MessageLevel.Info, "Still some work to do ...");
+                    //MATCH.DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, MATCH.DebugMessagesManager.MessageLevel.Info, "Still some work to do ...");
                 }
             }
 

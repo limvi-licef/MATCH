@@ -28,6 +28,8 @@ namespace MATCH
         public abstract class Assistance: MonoBehaviour
         {
             public event EventHandler EventHelpButtonClicked; // Returns as argument a MATCH.Utilities.EventHandlerArgs.Button object, to inform about which button has been clicked
+            public event EventHandler EventIsShown; // Emitted when the assistance is shown. Does not replace the event handler, comes with it.
+            public event EventHandler EventIsHidden; // Emitted when the assistance is hidden. Does not replace the event handler, comes with it.
             public bool IsDisplayed { get; protected set; } = false; // Different from "activeself": in those assistances the parent component is alsways active, so "activeself" is not a good indicator to know if the assistance is shown or not. Use this function instead.
 
             private Transform Hand = null;
@@ -39,6 +41,26 @@ namespace MATCH
                 args.ButtonType = type;
 
                 EventHelpButtonClicked?.Invoke(this, args);
+            }
+
+            /**
+             * Should be called by each assistance inheriting from this abstract class
+             * caller: assistance calling this function
+             * args: arguments to embed during the event call
+             * */
+            protected void OnIsShown (Assistance caller, EventArgs args)
+            {
+                EventIsShown?.Invoke(caller, args);
+            }
+
+            /**
+             * Should be called by each assistance inheriting from this abstract class
+             * caller: assistance calling this function
+             * args: arguments to embed during the event call
+             * */
+            protected void OnIsHidden(Assistance caller, EventArgs args)
+            {
+                EventIsHidden?.Invoke(caller, args);
             }
 
             public abstract void Show(EventHandler callback, bool withAnimation = true);

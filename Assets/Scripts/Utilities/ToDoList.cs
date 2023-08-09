@@ -43,6 +43,12 @@ namespace MATCH
                 AdminMenu.Instance.AddSwitchButton("Lock To Do List", CallbackLockToDo);
                 InitializeTodoList();
             }
+
+            public Assistances.Dialogs.Dialog1 GetAssistance()
+            {
+                return ToDo;
+            }
+
             void InitializeTodoList()
             {
                 // First: check if some scenarios have been added, and if yes, add them to the GUI

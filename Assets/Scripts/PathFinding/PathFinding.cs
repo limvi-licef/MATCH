@@ -101,12 +101,12 @@ namespace MATCH
 
             public Vector3[] ComputePath(Vector3 origin, Vector3 destination)
             {
-                DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Number of registered meshes: " + UnityEngine.AI.NavMesh.GetSettingsCount());
+                //DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Number of registered meshes: " + UnityEngine.AI.NavMesh.GetSettingsCount());
 
                 NavMeshPath path = new NavMeshPath();
                 if (UnityEngine.AI.NavMesh.CalculatePath(origin, destination, UnityEngine.AI.NavMesh.AllAreas, path) == false)
                 {
-                    DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Warning, "Cannot compute the path");
+                    //DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Warning, "Cannot compute the path");
                 }
 
                 //DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Number of corner: " + path.corners.Length + " Start position: " + origin+ " Target position: " + destination);
@@ -158,7 +158,7 @@ namespace MATCH
 
             void CallbackObstacleResizedOrMoved(System.Object sender, EventArgs e)
             {
-                DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Called");
+                //DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Called");
 
                 GameObject cube = (GameObject)sender;
                 Transform interactionSurface = InteractionSurfaceController.GetInteractionSurface();

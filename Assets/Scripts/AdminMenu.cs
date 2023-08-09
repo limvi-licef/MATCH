@@ -69,6 +69,8 @@ namespace MATCH
         TouchScreenKeyboard Keyboard;
         GameObject ModifiedByKeyboard;
 
+        bool HandRayButtonShow = true;
+
         private void Awake()
         {
             if (InstanceInternal != null && InstanceInternal != this)
@@ -147,7 +149,29 @@ namespace MATCH
                 Assistances.AssistanceGradationExplicit.FarFromAssistanceWhenLookingAtIt = float.Parse(arg.m_text);
             }, AdminMenu.Panels.Middle);
 
+            AddInputWithButton(Assistances.AssistanceGradationExplicit.DelayBeforeShowingHelp.ToString(), "Delay before showing help", delegate (System.Object o, EventArgs e)
+            {
+                Utilities.EventHandlerArgs.String arg = (Utilities.EventHandlerArgs.String)e;
+                Assistances.AssistanceGradationExplicit.DelayBeforeShowingHelp = int.Parse(arg.m_text);
+            }, AdminMenu.Panels.Middle);
+
             //AddText("Test", delegate() { });
+
+            AddSwitchButton("Hide hand ray", delegate ()
+            {
+                if (HandRayButtonShow)
+                {
+                    PointerUtils.SetHandRayPointerBehavior(PointerBehavior.AlwaysOff);
+                    HandRayButtonShow = false;
+                }
+                else
+                {
+                    PointerUtils.SetHandRayPointerBehavior(PointerBehavior.AlwaysOn);
+                    HandRayButtonShow = true;
+                }
+
+                
+            }, Panels.Middle);
         }
 
         private void Update()

@@ -71,6 +71,7 @@ namespace MATCH
                             IsDisplayed = false;
 
                             callback?.Invoke(o, e);
+                            OnIsHidden(this, e);
                         }, withAnimation);
 
                     }
@@ -79,6 +80,7 @@ namespace MATCH
                         Utilities.EventHandlerArgs.Animation args = new Utilities.EventHandlerArgs.Animation();
                         args.Success = false;
                         callback?.Invoke(this, args);
+                        OnIsHidden(this, args);
                     }
                 }
 
@@ -102,6 +104,7 @@ namespace MATCH
                             transform.rotation = PanelToDecorate.GetBackground().rotation;
 
                             callback?.Invoke(this, e);
+                            OnIsShown(this, e);
                         }, withAnimation);
                     }
                     else
@@ -113,6 +116,7 @@ namespace MATCH
                             PanelToDecorate.GetBackgroundIcon().gameObject.SetActive(false);
                             args.Success = false;
                             callback?.Invoke(this, args);
+                            OnIsShown(this, args);
                         }, withAnimation);
                     }
                 }

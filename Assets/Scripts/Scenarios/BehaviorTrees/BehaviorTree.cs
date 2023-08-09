@@ -199,7 +199,7 @@ namespace MATCH
                     if (AssistancesDebugWindow != null)
                     {
                         AssistancesDebugWindow.SetDescription(text);
-                        DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, text);
+                        //DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, text);
                     }
                 }
 
@@ -217,7 +217,7 @@ namespace MATCH
 
                         // Display the text
                         BehaviorTreeDebugWindow.SetDescription(textToDisplay, 0.08f);
-                        Debug.Log(textToDisplay);
+                        //Debug.Log(textToDisplay);
                     }
                 }
 
