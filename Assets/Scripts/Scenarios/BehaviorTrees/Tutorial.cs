@@ -154,23 +154,23 @@ namespace MATCH
 
                 void InitializeAssistances()
                 {
-                    InteractionSurfaceDialogs = Assistances.Factory.Instance.CreateInteractionSurface("Tutorial-Dialogs", AdminMenu.Panels.Right, new Vector3(1.1f, 0.02f, 0.7f), new Vector3(-0.447f, -0.406f, 0.009f), Utilities.Materials.Colors.CyanGlowing, false, true, Utilities.Utility.GetEventHandlerEmpty(), true, transform);
+                    InteractionSurfaceDialogs = Assistances.Factory.Instance.CreateInteractionSurface("Tutorial-Dialogs (CYAN)", AdminMenu.Panels.Right, new Vector3(1.1f, 0.02f, 0.7f), new Vector3(-0.447f, -0.406f, 0.009f), Utilities.Materials.Colors.CyanGlowing, false, true, Utilities.Utility.GetEventHandlerEmpty(), true, transform);
                     
-                    InteractionCube = Assistances.Factory.Instance.CreateInteractionSurface("Tutorial-Cube", AdminMenu.Panels.Right, new Vector3(0.1f, 0.02f, 0.1f), new Vector3(-0.9f, -0.406f, -0.7f), Utilities.Materials.Colors.OrangeGlowing, false, true, Utilities.Utility.GetEventHandlerEmpty(), true, transform);
+                    InteractionCube = Assistances.Factory.Instance.CreateInteractionSurface("Tutorial-Cube (ORANGE)", AdminMenu.Panels.Right, new Vector3(0.1f, 0.02f, 0.1f), new Vector3(-0.9f, -0.406f, -0.7f), Utilities.Materials.Colors.OrangeGlowing, false, true, Utilities.Utility.GetEventHandlerEmpty(), true, transform);
 
-                    InteractionPen = Assistances.Factory.Instance.CreateInteractionSurface("Tutorial-Pen", AdminMenu.Panels.Right, new Vector3(0.1f, 0.1f, 0.1f), new Vector3(-0.1f, -0.406f, -0.7f), Utilities.Materials.Colors.PurpleGlowing, false, true, Utilities.Utility.GetEventHandlerEmpty(), true, transform);
+                    InteractionPen = Assistances.Factory.Instance.CreateInteractionSurface("Tutorial-Pen (VIOLET)", AdminMenu.Panels.Right, new Vector3(0.1f, 0.1f, 0.1f), new Vector3(-0.1f, -0.406f, -0.7f), Utilities.Materials.Colors.PurpleGlowing, false, true, Utilities.Utility.GetEventHandlerEmpty(), true, transform);
 
-                    InteractionExclamationMark = Assistances.Factory.Instance.CreateInteractionSurface("Tutorial-ExclamationMark", AdminMenu.Panels.Right, new Vector3(0.1f, 0.1f, 0.1f), new Vector3(0.4f, -0.406f, -0.7f), Utilities.Materials.Colors.RedGlowing, false, true, Utilities.Utility.GetEventHandlerEmpty(), true, transform);
+                    InteractionExclamationMark = Assistances.Factory.Instance.CreateInteractionSurface("Tutorial-ExclamationMark (ROUGE)", AdminMenu.Panels.Right, new Vector3(0.1f, 0.1f, 0.1f), new Vector3(0.4f, -0.406f, -0.7f), Utilities.Materials.Colors.RedGlowing, false, true, Utilities.Utility.GetEventHandlerEmpty(), true, transform);
                     
-                    InteractionLinePointB = Assistances.Factory.Instance.CreateInteractionSurface("Tutorial-Line", AdminMenu.Panels.Right, new Vector3(0.1f, 0.1f, 0.1f), new Vector3(0.4f, -0.406f, -0.7f), Utilities.Materials.Colors.GreenGlowing, false, true, Utilities.Utility.GetEventHandlerEmpty(), true, transform);
+                    InteractionLinePointB = Assistances.Factory.Instance.CreateInteractionSurface("Tutorial-Line (VERT)", AdminMenu.Panels.Right, new Vector3(0.1f, 0.1f, 0.1f), new Vector3(0.4f, -0.406f, -0.7f), Utilities.Materials.Colors.GreenGlowing, false, true, Utilities.Utility.GetEventHandlerEmpty(), true, transform);
                     
-                    InteractionLookAround = Assistances.Factory.Instance.CreateInteractionSurface("Tutorial-LookAround", AdminMenu.Panels.Right, new Vector3(0.1f, 0.1f, 0.1f), new Vector3(0.4f, -0.406f, -0.7f), Utilities.Materials.Colors.WhiteMetallic, false, true, Utilities.Utility.GetEventHandlerEmpty(), true, transform);
+                    InteractionLookAround = Assistances.Factory.Instance.CreateInteractionSurface("Tutorial-LookAround (BLANC)", AdminMenu.Panels.Right, new Vector3(0.1f, 0.1f, 0.1f), new Vector3(0.4f, -0.406f, -0.7f), Utilities.Materials.Colors.WhiteMetallic, false, true, Utilities.Utility.GetEventHandlerEmpty(), true, transform);
                     
-                    InteractionLosange = Assistances.Factory.Instance.CreateInteractionSurface("Tutorial-Losange", AdminMenu.Panels.Right, new Vector3(0.1f, 0.1f, 0.1f), new Vector3(0.4f, -0.406f, -0.7f), Utilities.Materials.Colors.YellowGlowing, false, true, Utilities.Utility.GetEventHandlerEmpty(), true, transform);
+                    InteractionLosange = Assistances.Factory.Instance.CreateInteractionSurface("Tutorial-Losange (JAUNE)", AdminMenu.Panels.Right, new Vector3(0.1f, 0.1f, 0.1f), new Vector3(0.4f, -0.406f, -0.7f), Utilities.Materials.Colors.YellowGlowing, false, true, Utilities.Utility.GetEventHandlerEmpty(), true, transform);
                     
-                    InteractionSurfaceToClean = Assistances.Factory.Instance.CreateInteractionSurface("Tutorial-SurfaceToClean", AdminMenu.Panels.Right, new Vector3(0.1f, 0.1f, 0.1f), new Vector3(0.4f, -0.406f, -0.7f), Utilities.Materials.Colors.YellowGlowing, false, true, Utilities.Utility.GetEventHandlerEmpty(), true, transform);
+                    InteractionSurfaceToClean = Assistances.Factory.Instance.CreateInteractionSurface("Tutorial-SurfaceToClean (CYAN)", AdminMenu.Panels.Right, new Vector3(0.1f, 0.1f, 0.1f), new Vector3(0.4f, -0.406f, -0.7f), Utilities.Materials.Colors.CyanGlowing, false, true, Utilities.Utility.GetEventHandlerEmpty(), true, transform);
                     
-                    InteractionSurfaceToCleanDialog = Assistances.Factory.Instance.CreateInteractionSurface("Tutorial-SurfaceToCleanDialog", AdminMenu.Panels.Right, new Vector3(0.1f, 0.1f, 0.1f), new Vector3(0.4f, -0.406f, -0.7f), Utilities.Materials.Colors.YellowGlowing, false, true, Utilities.Utility.GetEventHandlerEmpty(), true, transform);
+                    InteractionSurfaceToCleanDialog = Assistances.Factory.Instance.CreateInteractionSurface("Tutorial-SurfaceToCleanDialog (ORANGE)", AdminMenu.Panels.Right, new Vector3(0.1f, 0.1f, 0.1f), new Vector3(0.4f, -0.406f, -0.7f), Utilities.Materials.Colors.OrangeGlowing, false, true, Utilities.Utility.GetEventHandlerEmpty(), true, transform);
 
                 }
 
