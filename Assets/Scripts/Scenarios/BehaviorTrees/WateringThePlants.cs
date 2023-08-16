@@ -28,6 +28,7 @@ namespace MATCH
         {
             public class WateringThePlants : BehaviorTree
             {
+
                 private Inferences.Manager InferenceManager;
                 public Assistances.Surfaces.Manager SurfacesManager;
 
@@ -52,7 +53,7 @@ namespace MATCH
                 Assistances.InteractionSurface InteractionPlant2;
                 Assistances.InteractionSurface InteractionPlant3;
 
-                Assistances.InteractionSurface[] InteractionPlants = new Assistances.InteractionSurface[3];
+                List<Assistances.InteractionSurface> InteractionPlants = new List<Assistances.InteractionSurface>();
 
                 bool[] LightPathsShown = new bool[3];
                 float NextTimeCheck = 0f;
@@ -98,7 +99,7 @@ namespace MATCH
                         inf1.StopCounter();
                         SetConditionsTo(false);
                         UpdateConditionWithMatrix(ConditionBeginning);
-                        for (int i = 0; i < InteractionPlants.Length; i++)
+                        for (int i = 0; i < InteractionPlants.Count(); i++)
                         {
                             NextTimeCheck = 0f;
                             if (LightPathsShown[i])
@@ -136,12 +137,12 @@ namespace MATCH
 
                     int nbConditions = GetNumberOfConditions();
 
-                    AddConditionsUpdate(ConditionBeginning, new bool[]             { true, false, false, false, false, false });
-                    AddConditionsUpdate(ConditionBottleFilled, new bool[]          { false, true, false, false, false, false });
-                    AddConditionsUpdate(ConditionHelpNeeded, new bool[]            { false, false, true, false, false, false });
-                    AddConditionsUpdate(ConditionHelpRequestedAgain, new bool[]    { false, false, false, true, false, false });
-                    AddConditionsUpdate(ConditionPlantWatered, new bool[]          { false, false, false, false, true, false });
-                    AddConditionsUpdate(ConditionAllPlantsWatered, new bool[]      { false, false, false, false, false, true });
+                    AddConditionsUpdate(ConditionBeginning, new bool[] { true, false, false, false, false, false });
+                    AddConditionsUpdate(ConditionBottleFilled, new bool[] { false, true, false, false, false, false });
+                    AddConditionsUpdate(ConditionHelpNeeded, new bool[] { false, false, true, false, false, false });
+                    AddConditionsUpdate(ConditionHelpRequestedAgain, new bool[] { false, false, false, true, false, false });
+                    AddConditionsUpdate(ConditionPlantWatered, new bool[] { false, false, false, false, true, false });
+                    AddConditionsUpdate(ConditionAllPlantsWatered, new bool[] { false, false, false, false, false, true });
                     // End of code generation using the EXCEL file
 
                     UpdateConditionWithMatrix(ConditionBeginning);
@@ -218,7 +219,7 @@ namespace MATCH
                     InteractionPlant3 = Assistances.Factory.Instance.CreateInteractionSurface("Practice-Plant3", AdminMenu.Panels.Right, new Vector3(0.3f, 0.5f, 0.3f),
                          new Vector3(-7f, 0f, 0f), Utilities.Materials.Colors.GreenGlowing, false, true, Utilities.Utility.GetEventHandlerEmpty(), true, transform);
 
-                    InteractionPlants = new Assistances.InteractionSurface[]{ InteractionPlant1, InteractionPlant2, InteractionPlant3 };
+                    InteractionPlants = new Assistances.InteractionSurface[] { InteractionPlant1, InteractionPlant2, InteractionPlant3 };
 
                     InteractionSink.EventUserTouched += CallbackInteractionSurfaceSinkTouched;
 
@@ -232,7 +233,7 @@ namespace MATCH
                     {
 
                         int plantId = i;
-                        
+
                         DialogAssistanceWaterHelp.ButtonsController[plantId].EventButtonClicked += delegate (System.Object o, EventArgs e)
                         {
                             UpdateTextAssistancesDebugWindow("i is : " + plantId);
@@ -254,12 +255,12 @@ namespace MATCH
                 {
                     if (Array.Exists<bool>(LightPathsShown, element => element) && Time.time > NextTimeCheck)
                     {
-                        for (int i = 0; i < InteractionPlants.Length; i++)
+                        for (int i = 0; i < InteractionPlants.Count(); i++)
                         {
                             if (InteractionPlants[i].GetComponentInChildren<BoundsControl>().enabled && InteractionPlants[i].tag != "Watered")
                             {
                                 updateLightPath(InteractionPlants[i]);
-                            }                           
+                            }
                         }
                         NextTimeCheck += 5f;
                     }
@@ -270,9 +271,9 @@ namespace MATCH
                 {
 
                     Assistances.GradationVisual.GradationVisual alpha1 = Assistances.GradationVisual.Factory.Instance.CreateDialog2WithButtons("Practice-Alpha-1", "",
-                        "Qu'est-ce qu'il est conseilé de faire à la fin de la journée lorsqu'il ne fait moins chaud?", "Commencer !", 
+                        "Qu'est-ce qu'il est conseilé de faire à la fin de la journée lorsqu'il ne fait moins chaud?", "Commencer !",
                         Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.ClosingButton, FollowObject.transform);
-                 
+
                     Assistances.AssistanceGradationExplicit BTWP7 = MATCH.Assistances.Factory.Instance.CreateAssistanceGradationExplicit("ArroserLesPlantes-Alpha");
                     BTWP7.transform.parent = transform;
 
@@ -297,11 +298,11 @@ namespace MATCH
                 //Did the person fill the bottle to water the plants?
                 Sequence AssistanceBTWP5()
                 {
-                    
+
                     Sequence temp = new Sequence(
                         new NPBehave.Action(() => {
                             //ShowAssistanceHideOthers(btwp5);
-        
+
                             UpdateTextAssistancesDebugWindow("Bottle Filled");
                             foreach (Assistances.InteractionSurface interactionPlant in InteractionPlants)
                             {
@@ -314,7 +315,7 @@ namespace MATCH
 
                             inf1 = new Inferences.Timer(InferenceDidNotStartWatering, 15, delegate (System.Object oo, EventArgs ee)
                             {
-                                if (!InteractionPlants.Any(p=> p.CompareTag("Watered")))
+                                if (!InteractionPlants.Any(p => p.CompareTag("Watered")))
                                 {
                                     //Faire attention si on a 2 inférences avec le même nom (pour la même condition par exemple)
                                     UpdateConditionWithMatrix(ConditionHelpNeeded);
@@ -398,7 +399,7 @@ namespace MATCH
                 {
                     Assistances.GradationVisual.GradationVisual helpNeeded = Assistances.GradationVisual.Factory.Instance.CreateAlreadyConfigured(Assistances.GradationVisual.Factory.AlreadyConfigured.DoYouNeedHelpDialog1,
                        "WateringThePlants-BTWP3", FollowObject.transform);
-                    
+
                     Assistances.GradationVisual.GradationVisual dontKnow = Assistances.GradationVisual.Factory.Instance.CreateDialog2WithButtons("WateringThePlants-BTWP3-1", "",
                         "Saviez ce que vous êtier en train de faire?", "Oui", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.Yes,
                         "Non", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.No, FollowObject.transform);
@@ -407,7 +408,7 @@ namespace MATCH
                         "WateringThePlants-BTWP3-1", FollowObject.transform);
 
                     Assistances.GradationVisual.GradationVisual sayWhatToDo = Assistances.GradationVisual.Factory.Instance.CreateDialog2WithButtons("WateringThePlants-BTWP3-1", "",
-                        "Vous devez continuer à arroser les plantes", "Ok", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.Yes, "Je ne comprends pas", 
+                        "Vous devez continuer à arroser les plantes", "Ok", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.Yes, "Je ne comprends pas",
                         Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.No, FollowObject.transform);
 
                     Assistances.GradationVisual.GradationVisual someoneComing = Assistances.GradationVisual.Factory.Instance.CreateAlreadyConfigured(Assistances.GradationVisual.Factory.AlreadyConfigured.SomeoneComingToHelpDialog2, "WateringThePlants-BTWP8-3", FollowObject.transform);
@@ -436,7 +437,7 @@ namespace MATCH
                             AssistancesWatering[BTWP3] = true;
                             InferenceManager.UnregisterAllInferences();
                             UpdateTextAssistancesDebugWindow("Are you finished?");
-                            MATCH.Utilities.Logger.Instance.Log(this.GetId(), MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, " BTWP3 : Help need again");    
+                            MATCH.Utilities.Logger.Instance.Log(this.GetId(), MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, " BTWP3 : Help need again");
                         }),
                         new WaitUntilStopped()
                         );
@@ -450,19 +451,19 @@ namespace MATCH
                     Sequence temp = new Sequence(
                         new NPBehave.Action(() =>
                         {
-                          
+
                             //Arrêter l'inférence du timer ici
                             UpdateTextAssistancesDebugWindow("On Arrête l'inférence du timer ici");
                             inf1.StopCounter();
-                            
+
                             UpdateTextAssistancesDebugWindow("One plant watered");
                             InferenceManager.UnregisterInference(InferenceInterruptWatering);
 
                             //Démarrage du timer
                             inf1 = new Inferences.Timer(InferenceInterruptWatering, 15, delegate (System.Object oo, EventArgs ee)
                             {
-                                    UpdateConditionWithMatrix(ConditionHelpRequestedAgain);
-                                    InferenceManager.UnregisterInference(InferenceInterruptWatering);
+                                UpdateConditionWithMatrix(ConditionHelpRequestedAgain);
+                                InferenceManager.UnregisterInference(InferenceInterruptWatering);
                             });
                             InferenceManager.RegisterInference(inf1);
                             inf1.StartCounter();
@@ -586,6 +587,23 @@ namespace MATCH
                         }
                     }
                 }
+
+                void AddPlant()
+                {
+                    Assistances.InteractionSurface InteractionPlant = new Assistances.InteractionSurface();
+
+                    InteractionPlants.Add(InteractionPlant);
+
+                    //Add a button to the admin panel
+                    MATCH.AdminMenu.Instance.AddButton("Ajouter une plante", delegate () { }, AdminMenu.Panels.Middle);
+                }
+
+                void RemovePlant()
+                {
+                    if (InteractionPlants.Count() != 0)
+                        InteractionPlants.RemoveAt(InteractionPlants.Count() - 1);
+                }
+
             }
         }
     }
