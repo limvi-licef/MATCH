@@ -18,6 +18,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using Microsoft.MixedReality.Toolkit.UI;
 using UnityEngine;
 
 namespace MATCH
@@ -53,6 +54,9 @@ namespace MATCH
                 Assistances.InteractionSurface InteractionPlant2;
                 Assistances.InteractionSurface InteractionPlant3;
 
+                List<GameObject> Cubes;
+                public EventHandler EventResized;
+                public EventHandler EventMoved;
                 List<Assistances.InteractionSurface> InteractionPlants = new List<Assistances.InteractionSurface>();
 
                 bool[] LightPathsShown = new bool[3];
@@ -67,6 +71,8 @@ namespace MATCH
                 MATCH.Assistances.Dialogs.Dialog1 DialogAssistanceWaterHelp;
                 Assistances.GradationVisual.GradationVisual MenuPlant;
                 PathFinding.PathFinding PathFinderEngine;
+                
+                Utilities.ObjectPositioningStorage PlantsPositioningStorage;
 
 
                 public override void Awake()
@@ -74,11 +80,22 @@ namespace MATCH
                     base.Awake();
                     SetId("Arroser les plantes");
                     AssistancesWatering = new Dictionary<Assistances.AssistanceGradationExplicit, bool>();
+
+                    Cubes = new List<GameObject>();
+                    PlantsPositioningStorage = new Utilities.ObjectPositioningStorage("PlantsStorage.txt");
                 }
 
                 public override void Start()
                 {
                     Scenarios.Manager.Instance.addScenario(this);
+                    
+                    List<String> registeredObjectsIds = PlantsPositioningStorage.GetObjetsRegisteredNames();
+                    foreach (string id in registeredObjectsIds)
+                    {
+                        Utilities.ObjectPositioningStorage.ObjectsInformation objectsInformation = PlantsPositioningStorage.GetRegisteredObjectInformation(id);
+
+                        AddPlant(id, objectsInformation.Scale, objectsInformation.Position,  Utilities.Materials.Colors.WhiteTransparent, true, false, true, transform);
+                    }
 
                     // Initialize assistances
                     InitializeAssistances();
@@ -198,6 +215,14 @@ namespace MATCH
                         UpdateConditionWithMatrix(ConditionAllPlantsWatered);
                         UpdateCondition(ConditionAllPlantsWatered, false);
                     }, AdminMenu.Panels.Right);
+                    
+                    //Add a button to the admin panel
+                    MATCH.AdminMenu.Instance.AddButton("Ajouter une plante", delegate
+                    {
+                        AddPlant((InteractionPlants.Count + 1).ToString(), new Vector3(0.3f, 0.5f, 0.3f),
+                            new Vector3(-2.309f, 0.263f, 2.031f), Utilities.Materials.Colors.GreenGlowing, true, false,
+                            false, transform);
+                    }, AdminMenu.Panels.Middle);
 
                 }
 
@@ -219,12 +244,13 @@ namespace MATCH
                     InteractionPlant3 = Assistances.Factory.Instance.CreateInteractionSurface("Practice-Plant3", AdminMenu.Panels.Right, new Vector3(0.3f, 0.5f, 0.3f),
                          new Vector3(-7f, 0f, 0f), Utilities.Materials.Colors.GreenGlowing, false, true, Utilities.Utility.GetEventHandlerEmpty(), true, transform);
 
-                    InteractionPlants = new Assistances.InteractionSurface[] { InteractionPlant1, InteractionPlant2, InteractionPlant3 };
+                    InteractionPlants = new List<Assistances.InteractionSurface> { InteractionPlant1, InteractionPlant2, InteractionPlant3 };
 
                     InteractionSink.EventUserTouched += CallbackInteractionSurfaceSinkTouched;
 
                     DialogAssistanceWaterHelp = Assistances.Factory.Instance.CreateCheckListNoButton("", "Voici les plantes qu'il vous reste à arroser. Si vous touchez une des plantes, un chemin au sol vous y guidera.", FollowObject.transform);
 
+                    
                     DialogAssistanceWaterHelp.AddButton("Plante " + (1), false, 0.12f);
                     DialogAssistanceWaterHelp.AddButton("Plante " + (2), false, 0.12f);
                     DialogAssistanceWaterHelp.AddButton("Plante " + (3), false, 0.12f);
@@ -588,22 +614,79 @@ namespace MATCH
                     }
                 }
 
-                void AddPlant()
-                {
-                    Assistances.InteractionSurface InteractionPlant = new Assistances.InteractionSurface();
-
-                    InteractionPlants.Add(InteractionPlant);
-
-                    //Add a button to the admin panel
-                    MATCH.AdminMenu.Instance.AddButton("Ajouter une plante", delegate () { }, AdminMenu.Panels.Middle);
-                }
-
-                void RemovePlant()
+                public void RemovePlant()
                 {
                     if (InteractionPlants.Count() != 0)
                         InteractionPlants.RemoveAt(InteractionPlants.Count() - 1);
                 }
+                
+                public void AddPlant(string name, Vector3 scaling, Vector3 position, string color, bool navMeshTag, bool callbackOnTouch, bool registerObject, Transform parent)
+            {
+                GameObject cube = GameObject.CreatePrimitive(PrimitiveType.Cube);
 
+                // Set parent
+                cube.transform.parent = parent;
+
+                // Add buttons to interface
+                AdminMenu.Instance.AddButton("Plante " + name + " - Bring", delegate ()
+                {
+                    MATCH.Utilities.Utility.BringObject(cube.transform);
+                }, AdminMenu.Panels.Left);
+                AdminMenu.Instance.AddSwitchButton("Plante " + name + " - Hide", delegate ()
+                {
+                    MATCH.Utilities.Utility.ShowInteractionSurface(cube.transform, !cube.GetComponent<Renderer>().enabled);
+                }, AdminMenu.Panels.Left, AdminMenu.ButtonType.Hide);
+
+                // Set color
+                MATCH.Utilities.Utility.SetColor(cube.transform.transform, color);
+
+                // Set scaling and position
+                cube.transform.position = position;
+                cube.transform.localScale = scaling;
+
+                // Set the manipulation features
+                ObjectManipulator objectManipulator = cube.AddComponent<ObjectManipulator>();
+                cube.AddComponent<RotationAxisConstraint>().ConstraintOnRotation = Microsoft.MixedReality.Toolkit.Utilities.AxisFlags.XAxis | Microsoft.MixedReality.Toolkit.Utilities.AxisFlags.ZAxis;
+                BoundsControl boundsControl = cube.AddComponent<BoundsControl>();
+                boundsControl.ScaleHandlesConfig.ScaleBehavior = Microsoft.MixedReality.Toolkit.UI.BoundsControlTypes.HandleScaleMode.NonUniform;
+                boundsControl.TranslationHandlesConfig.ShowHandleForX = true;
+                boundsControl.TranslationHandlesConfig.ShowHandleForY = true;
+                boundsControl.TranslationHandlesConfig.ShowHandleForZ = true;
+
+                // Set optional features
+                if (navMeshTag)
+                {
+                    cube.AddComponent<NavMeshSourceTag>();
+                }
+
+                if (callbackOnTouch)
+                { // As we will be adding the MouseAssistanceBasic, it requires to encapsulate the cube in an empty gameobject, and to rename the cube "Child"
+                    GameObject child = cube;
+                    child.name = "Child";
+                    cube = new GameObject(name);
+                    child.transform.parent = cube.transform;
+
+                    cube.AddComponent<MATCH.Assistances.Basic>();
+                }
+
+                // Add the callbacks
+                boundsControl.ScaleStopped.AddListener(delegate
+                {
+                    EventResized?.Invoke(cube, EventArgs.Empty);
+                });
+
+                objectManipulator.OnManipulationEnded.AddListener(delegate (ManipulationEventData data)
+                {
+                    EventMoved?.Invoke(cube, EventArgs.Empty);
+                });
+
+                Cubes.Add(cube);
+
+                if (registerObject)
+                {
+                    PlantsPositioningStorage.RegisterObject(name, cube.transform, cube.transform);
+                }
+            }
             }
         }
     }
