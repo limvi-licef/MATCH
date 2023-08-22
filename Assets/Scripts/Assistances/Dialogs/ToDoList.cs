@@ -32,7 +32,7 @@ namespace MATCH
         {
 
 
-            public class Dialog1 : Dialog, IPanel
+            public class ToDoList : Dialog, IPanel
             {
                 Transform TitleView;
                 Transform DescriptionView;
@@ -48,6 +48,12 @@ namespace MATCH
                 Vector3 BoxColliderOriginalCenter;
                 Vector3 BoxColliderOriginalSize;
 
+                Transform ElementView;
+                Transform ElementRefView;
+                List<Transform> ElementsView;
+                List<Buttons.Basic> ElementsController;
+                Vector3 ElementOriginalScaling;
+
                 protected override void Awake()
                 {
                     base.Awake();
@@ -56,6 +62,8 @@ namespace MATCH
                     TitleView = transform.Find("TitleText");
                     DescriptionView = gameObject.transform.Find("DescriptionText");
                     BackgroundView = gameObject.transform.Find("ContentBackPlate");
+                    ElementView = transform.Find("ListElements");
+                    ElementRefView = ElementView.Find("Element");
 
                     // Initialize some values of the children
                     BackgroundScalingOriginal = BackgroundView.localScale;
@@ -68,6 +76,10 @@ namespace MATCH
                     BoxColliderOriginalSize = box.size;
 
                     LinePath = gameObject.transform.Find("LinePath");
+
+                    ElementsView = new List<Transform>();
+                    ElementsController = new List<Buttons.Basic>();
+                    ElementOriginalScaling = ElementView.localScale;
                 }
 
                 public void SetTitle(string text, float fontSize = -1.0f)
@@ -224,6 +236,64 @@ namespace MATCH
                         box.size = BoxColliderOriginalSize;
                         box.center = BoxColliderOriginalCenter;
                     }
+                }
+
+                /**
+                 * If fontSize< 0.0f, means keep the default value of the button's size. Hence the default value.
+                 * */
+                public Buttons.Basic AddElement(string text/*, EventHandler eventHandler*/, bool autoScaling, float fontSize = -1.0f)
+                {
+                    // Instantiate the button
+                    Transform view = Instantiate(ElementRefView, ElementView);
+                    view.name = text;
+                    ButtonConfigHelper configHelper = view.GetComponent<ButtonConfigHelper>();
+                    configHelper.MainLabelText = text;
+                    TextMeshPro tmp = view.Find("IconAndText").Find("TextMeshPro").GetComponent<TextMeshPro>();
+
+                    // Get the text mesh pro component to set the fontsize
+                    if (fontSize > 0.0f)
+                    {
+                        tmp.fontSize = fontSize;
+                    }
+
+                    // Store the button
+                    ElementsView.Add(view);
+                    Buttons.Basic controller = view.GetComponent<Buttons.Basic>();
+                    ElementsController.Add(controller); // Only for the ease of use, nothing special here.
+
+                    // Locate button
+                    float scalingx = 1.0f;
+                    if (autoScaling)
+                    {
+                        scalingx = 1.0f / (float)(ElementsView.Count());
+                        tmp.margin = new Vector4(tmp.margin.x * scalingx, tmp.margin.y, tmp.margin.z * scalingx, tmp.margin.w);
+                    }
+
+
+                    foreach (Transform b in ElementsView)
+                    {
+                        b.localScale = new Vector3(scalingx, b.localScale.y, b.localScale.z);
+                        Transform textButton = b.Find("IconAndText");
+                        textButton.localScale = new Vector3(1.0f / scalingx, textButton.localScale.y, textButton.localScale.z);
+
+                        // Update the boxcollider
+                        BoxCollider collider = b.GetComponent<BoxCollider>();
+                        collider.size = new Vector3(0.18f, collider.size.y, 0.05f);
+                    }
+
+                    // Store button scaling
+                    //ButtonsScalingOriginal.Add(ButtonsView.Last().localScale);
+
+                    // Enable button
+                    ElementsView.Last().gameObject.SetActive(true);
+
+                    ElementView.GetComponent<GridObjectCollection>().UpdateCollection();
+
+                    // Calling the assistancecallback
+                    controller.EventButtonClicked += CButtonHelp;
+
+                    // Return
+                    return controller;
                 }
 
                 public override Transform GetTransform()

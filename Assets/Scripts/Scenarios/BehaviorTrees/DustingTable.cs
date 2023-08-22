@@ -55,10 +55,12 @@ namespace MATCH
 
                 string InferenceDidNotGoToCalendar = "DidNotGoToCalendar";
                 string InferenceCloseToCalendar = "CloseToCalendar";
+                string InferenceCalendarHelp = "CalendarHelp";
 
                 // Interaction surface
                 Assistances.InteractionSurface InteractionSurfaceTable;
                 Assistances.InteractionSurface InteractionRag;
+                Assistances.InteractionSurface InteractionHelpToDoList;
 
                 public event EventHandler TableTouchedEvent;
 
@@ -67,7 +69,8 @@ namespace MATCH
                 DustingTableAssistances AssistancesDB;
 
                 //Transform ToDoListView;
-                Assistances.IAssistance ToDoList;
+                Assistances.IAssistance ToDoListView;
+                Utilities.ToDoList ToDoListController;
 
                 public override void Awake()
                 {
@@ -79,15 +82,15 @@ namespace MATCH
                 public override void Start()
                 {
 
-                    Utilities.ToDoList toDoList = transform.root.Find("ToDoList").GetComponent<Utilities.ToDoList>();
-                    ToDoList = toDoList.GetAssistance();
+                    ToDoListController = transform.root.Find("ToDoList").GetComponent<Utilities.ToDoList>();
+                    ToDoListView = ToDoListController.GetAssistance();
                     //ToDoList = toDoListView.GetComponent<Assistances.Dialogs.Dialog1>();
 
-                    Scenarios.Manager.Instance.addScenario(this);
+                    Scenarios.Manager.Instance.AddScenario(this);
 
                     // Initialize assistances
-                    InitializeAssistances();
-                    AssistancesDB = new DustingTableAssistances(InteractionSurfaceTable.transform, InteractionRag.transform, ToDoList);
+                    InitializeInteractionSurfaces();
+                    AssistancesDB = new DustingTableAssistances(InteractionSurfaceTable.transform, InteractionRag.transform, ToDoListView, InteractionHelpToDoList.transform);
 
                     // Initialize inference manager
                     InferenceManager = MATCH.Inferences.Factory.Instance.CreateManager(transform);
@@ -216,7 +219,7 @@ namespace MATCH
                     
                 }
 
-                void InitializeAssistances()
+                void InitializeInteractionSurfaces()
                 {
                     InteractionSurfaceTable = Assistances.Factory.Instance.CreateInteractionSurface("DustingTable - Table", AdminMenu.Panels.Right, new Vector3(1.1f, 0.02f, 0.7f), new Vector3(-0.447f, -0.406f, 0.009f), Utilities.Materials.Colors.CyanGlowing, false, true, Utilities.Utility.GetEventHandlerEmpty(), true, transform);
                     //InteractionSurfaceTable.ShowInteractionSurfaceTable(false);
@@ -226,6 +229,8 @@ namespace MATCH
                     InteractionRag.EventUserTouched += CallbackInteractionSurfaceRagTouched;
 
                     InteractionSurfaceTable.EventUserTouched += CallbackInteractionSurfaceTableTouched;
+
+                    InteractionHelpToDoList = Assistances.Factory.Instance.CreateInteractionSurface("DustingTable - Calendar help", AdminMenu.Panels.Right, new Vector3(1.1f, 0.02f, 0.7f), new Vector3(-0.447f, -0.406f, 0.009f), Utilities.Materials.Colors.RedGlowing, false, true, Utilities.Utility.GetEventHandlerEmpty(), true, transform);
                 }
 
                 void ShowAssistanceHideOthers(Assistances.AssistanceGradationExplicit assistance)
@@ -313,26 +318,36 @@ namespace MATCH
                     Sequence temp = new Sequence(
                          new NPBehave.Action(() =>
                          {
-                             Inferences.Timer infCalendarTimer = new Inferences.Timer(InferenceDidNotGoToCalendar, 15, delegate (System.Object oo, EventArgs ee)
+                             OnChallengeStart();
+
+                             Inferences.Timer infTimerNotCameToCalendar = new Inferences.Timer(InferenceDidNotGoToCalendar, 15, delegate (System.Object oo, EventArgs ee)
                              {
                                  UpdateConditionWithMatrix(ConditionDidNotGoToCalendar);
                                  InferenceManager.UnregisterInference(InferenceInterruptDusting);
                              });
 
-                            InferenceManager.RegisterInference(infCalendarTimer);
+                            InferenceManager.RegisterInference(infTimerNotCameToCalendar);
 
-                             infCalendarTimer.StartCounter();
+                             infTimerNotCameToCalendar.StartCounter();
 
-                             
+                             Inferences.Timer infTimerCalendarHelp = new Inferences.Timer(InferenceCalendarHelp, 15, delegate (System.Object oo, EventArgs ee)
+                             {
+                                 ((Inferences.Timer)InferenceManager.GetInference(InferenceCalendarHelp)).StopCounter();
+                                 SetConditionsTo(false);
+                                 InferenceManager.UnregisterInference(InferenceCalendarHelp);
+                             });
+
+                             InferenceManager.RegisterInference(infTimerCalendarHelp);
 
                              Inferences.DistanceComing distanceComing = new Inferences.DistanceComing(InferenceCloseToCalendar, delegate (System.Object o, EventArgs e)
                              {
-                                 infCalendarTimer.StopCounter();
+                                 infTimerNotCameToCalendar.StopCounter();
                                  InferenceManager.UnregisterInference(InferenceDidNotGoToCalendar);
                                  InferenceManager.UnregisterInference(InferenceCloseToCalendar);
-                                 SetConditionsTo(false);
+                                 //SetConditionsTo(false);
+                                 infTimerCalendarHelp.StartCounter();
 
-                             }, ToDoList.GetAssistance().gameObject, 2.0f);
+                             }, ToDoListView.GetAssistance().gameObject, 2.0f);
 
                              InferenceManager.RegisterInference(distanceComing);
                          }),
@@ -347,31 +362,15 @@ namespace MATCH
                     Assistances.AssistanceGradationExplicit assistanceBeta = MATCH.Assistances.Factory.Instance.CreateAssistanceGradationExplicit("DustingTable-Beta");
 
                     assistanceBeta.transform.parent = transform;
-                    //assistanceBeta.InfManager = InferenceManager;
-
-                    /*assistanceBeta.AddAssistance(AssistancesDB.Beta01, Assistances.Buttons.Button.ButtonType.Yes, AssistancesDB.Beta02);
-                    assistanceBeta.AddAssistance(AssistancesDB.Beta01, Assistances.Buttons.Button.ButtonType.No, AssistancesDB.Beta11);
-
-                    assistanceBeta.AddAssistance(AssistancesDB.Beta02, Assistances.Buttons.Button.ButtonType.Yes, AssistancesDB.Beta11);
-                    assistanceBeta.AddAssistance(AssistancesDB.Beta02, Assistances.Buttons.Button.ButtonType.No, AssistancesDB.Beta03);
-
-                    assistanceBeta.AddAssistance(AssistancesDB.Beta03, Assistances.Buttons.Button.ButtonType.Yes, AssistancesDB.Beta11);
-                    assistanceBeta.AddAssistance(AssistancesDB.Beta03, Assistances.Buttons.Button.ButtonType.No, AssistancesDB.Beta04);
-
-                    assistanceBeta.AddAssistance(AssistancesDB.Beta04, Assistances.Buttons.Button.ButtonType.Yes, AssistancesDB.Beta11);
-                    assistanceBeta.AddAssistance(AssistancesDB.Beta04, Assistances.Buttons.Button.ButtonType.No, AssistancesDB.Beta05);
-
-                    assistanceBeta.AddAssistance(AssistancesDB.Beta05, Assistances.Buttons.Button.ButtonType.Yes, AssistancesDB.Beta11);
-                    assistanceBeta.AddAssistance(AssistancesDB.Beta05, Assistances.Buttons.Button.ButtonType.No, AssistancesDB.Beta06);
-
-                    assistanceBeta.AddAssistance(AssistancesDB.Beta06, Assistances.Buttons.Button.ButtonType.Yes, AssistancesDB.Beta11);
-                    assistanceBeta.AddAssistance(AssistancesDB.Beta06, Assistances.Buttons.Button.ButtonType.No, AssistancesDB.Beta07);*/
 
                     assistanceBeta.AddAssistance(AssistancesDB.Beta[0], Assistances.Buttons.Button.ButtonType.Yes, AssistancesDB.Beta[1]);
                     assistanceBeta.AddAssistance(AssistancesDB.Beta[0], Assistances.Buttons.Button.ButtonType.No, AssistancesDB.Beta[10]);
 
-                    assistanceBeta.AddAssistance(AssistancesDB.Beta[1], Assistances.Buttons.Button.ButtonType.Yes, AssistancesDB.Beta[10]);
+                    assistanceBeta.AddAssistance(AssistancesDB.Beta[1], Assistances.Buttons.Button.ButtonType.Yes, AssistancesDB.Beta[11]);
                     assistanceBeta.AddAssistance(AssistancesDB.Beta[1], Assistances.Buttons.Button.ButtonType.No, AssistancesDB.Beta[2]);
+
+                    assistanceBeta.AddAssistance(AssistancesDB.Beta[11], Assistances.Buttons.Button.ButtonType.Yes, AssistancesDB.Beta[10]);
+                    assistanceBeta.AddAssistance(AssistancesDB.Beta[11], Assistances.Buttons.Button.ButtonType.No, AssistancesDB.Beta[2]);
 
                     assistanceBeta.AddAssistance(AssistancesDB.Beta[2], Assistances.Buttons.Button.ButtonType.Yes, AssistancesDB.Beta[10]);
                     assistanceBeta.AddAssistance(AssistancesDB.Beta[2], Assistances.Buttons.Button.ButtonType.No, AssistancesDB.Beta[3]);
@@ -396,93 +395,23 @@ namespace MATCH
 
                     Assistances.IAssistance beta10IAssistance = ((Assistances.IAssistance)AssistancesDB.Beta[10].GetCurrentAssistance());
                     Assistances.Dialogs.Dialog2 beta10Dialog2 = ((Assistances.Dialogs.Dialog2)beta10IAssistance.GetRootDecoratedAssistance());
-                    /*beta10Dialog2.ButtonsController.Last().EventButtonClicked += delegate (System.Object o, EventArgs e)
-                    {
-                        RegisterInferenceFarFromRag();
-                    };*/
+
                     beta10Dialog2.EventIsShown += delegate (System.Object o, EventArgs e)
                     {
                         RegisterInferenceFarFromRag();
                     };
 
-                    /*assistanceBeta.AddAssistance(AssistancesDB.Beta07, Assistances.Buttons.Button.ButtonType.Yes, AssistancesDB.Beta11);
-                    assistanceBeta.AddAssistance(AssistancesDB.Beta07, Assistances.Buttons.Button.ButtonType.No, AssistancesDB.Beta08);
-
-                    assistanceBeta.AddAssistance(AssistancesDB.Beta08, Assistances.Buttons.Button.ButtonType.Yes, AssistancesDB.Beta11);
-                    assistanceBeta.AddAssistance(AssistancesDB.Beta08, Assistances.Buttons.Button.ButtonType.No, AssistancesDB.Beta09);
-
-                    assistanceBeta.AddAssistance(AssistancesDB.Beta09, Assistances.Buttons.Button.ButtonType.Yes, AssistancesDB.Beta11);
-                    assistanceBeta.AddAssistance(AssistancesDB.Beta09, Assistances.Buttons.Button.ButtonType.No, AssistancesDB.Beta10);
-
-                    assistanceBeta.AddAssistance(AssistancesDB.Beta10, Assistances.Buttons.Button.ButtonType.ClosingButton, null);
-
-                    assistanceBeta.AddAssistance(AssistancesDB.Beta11, Assistances.Buttons.Button.ButtonType.ClosingButton, null);*/
-
                     AssistancesDusting.Add(assistanceBeta, false);
 
                     assistanceBeta.Init();
 
-
-                    // For assistance beta
-                    /*Assistances.GradationVisual.GradationVisual beta1 = Assistances.GradationVisual.Factory.Instance.CreateExclamationMark("DustingTable-Beta-1", InteractionSurfaceTable.transform);
-
-                    Assistances.GradationVisual.GradationVisual beta2 = Assistances.GradationVisual.Factory.Instance.CreateDialog2WithButtons("DustingTable-Beta-2", "", "Il y a une activité à faire ici", "Je sais!", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.Yes, "Je ne sais pas", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.No, InteractionSurfaceTable.transform);
-                    
-                    Assistances.GradationVisual.GradationVisual beta3 = Assistances.GradationVisual.Factory.Instance.CreateDialog2WithButtons("DustingTable-Beta-3", "", "Vous devez nettoyer la table", "Ok!", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.Yes, "J'ai besoin d'aide", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.No, InteractionSurfaceTable.transform);
-                    
-                    Assistances.GradationVisual.GradationVisual beta4 = Assistances.GradationVisual.Factory.Instance.CreateDialog2WithButtons("DustingTable-Beta-4", "", "Savez-vous de quel objet vous avez besoin pour nettoyer la table?", "Oui", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.Yes, "Non", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.No, InteractionSurfaceTable.transform);
-
-                    Assistances.GradationVisual.GradationVisual beta5 = Assistances.GradationVisual.Factory.Instance.CreateDialog2WithButtons("DustingTable-Beta-5", "", "Vous devez utiliser le chiffon. Savez-vous où il est?", "Oui", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.Yes, "Non", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.No, InteractionSurfaceTable.transform);
-
-                    Assistances.GradationVisual.GradationVisual beta6 = Assistances.GradationVisual.Factory.Instance.CreateDialog2WithButtons("DustingTable-Beta-6", "", "Où le trouvez-vous habituellement?", "Je sais!", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.Yes, "Je ne sais pas", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.No, InteractionSurfaceTable.transform);
-
-                    Assistances.GradationVisual.GradationVisual beta7 = Assistances.GradationVisual.Factory.Instance.CreateArch("DustingTable-Beta-7", "Vous trouverez le chiffon au bout de cette arche", InteractionSurfaceTable.transform, InteractionRag.transform, InteractionSurfaceTable.transform);
-
-                    Assistances.GradationVisual.GradationVisual beta8 = Assistances.GradationVisual.Factory.Instance.CreateDialog2WithButtons("DustingTable-Beta-8", "", "Parfait! Nous vous laissons faire.", "Ok!", delegate(System.Object o, EventArgs e)
-                    {
-                        RegisterInferenceFarFromRag();
-                    }, Assistances.Buttons.Button.ButtonType.Yes, InteractionSurfaceTable.transform);
-
-                    Assistances.GradationVisual.GradationVisual beta9 = Assistances.GradationVisual.Factory.Instance.CreateDialog2WithButtons("DustingTable-Beta-5", "", "Parfait! Savez-vous où il est?", "Oui", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.Yes, "Non", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.No, InteractionSurfaceTable.transform);
-
-                    Assistances.AssistanceGradationExplicit assistanceBeta = MATCH.Assistances.Factory.Instance.CreateAssistanceGradationExplicit("DustingTable-Beta");
-
-                    assistanceBeta.transform.parent = transform;
-                    //assistanceBeta.InfManager = InferenceManager;
-
-                    assistanceBeta.AddAssistance(beta1, Assistances.Buttons.Button.ButtonType.Yes, beta2);
-                    assistanceBeta.AddAssistance(beta1, Assistances.Buttons.Button.ButtonType.No, beta8);
-
-                    assistanceBeta.AddAssistance(beta2, Assistances.Buttons.Button.ButtonType.No, beta3);
-                    assistanceBeta.AddAssistance(beta2, Assistances.Buttons.Button.ButtonType.Yes, beta8);
-
-                    assistanceBeta.AddAssistance(beta3, Assistances.Buttons.Button.ButtonType.No, beta4);
-                    assistanceBeta.AddAssistance(beta3, Assistances.Buttons.Button.ButtonType.Yes, beta8);
-
-                    assistanceBeta.AddAssistance(beta4, Assistances.Buttons.Button.ButtonType.Yes, beta9);
-                    assistanceBeta.AddAssistance(beta4, Assistances.Buttons.Button.ButtonType.No, beta5);
-
-                    assistanceBeta.AddAssistance(beta9, Assistances.Buttons.Button.ButtonType.Yes, beta8);
-                    assistanceBeta.AddAssistance(beta9, Assistances.Buttons.Button.ButtonType.No, beta6);
-
-                    assistanceBeta.AddAssistance(beta5, Assistances.Buttons.Button.ButtonType.Yes, beta8);
-                    assistanceBeta.AddAssistance(beta5, Assistances.Buttons.Button.ButtonType.No, beta6);
-
-                    assistanceBeta.AddAssistance(beta6, Assistances.Buttons.Button.ButtonType.Yes, beta8);
-                    assistanceBeta.AddAssistance(beta6, Assistances.Buttons.Button.ButtonType.No, beta7);
-
-                    assistanceBeta.AddAssistance(beta8, Assistances.Buttons.Button.ButtonType.ClosingButton, null);
-
-                    AssistancesDusting.Add(assistanceBeta, false);
-
-                    assistanceBeta.Init();*/
-
                     Sequence temp = new Sequence(
                         new NPBehave.Action(() => {
-                            OnChallengeStart();
                             ShowAssistanceHideOthers(assistanceBeta); //assistanceBeta.RunAssistance();
                             UpdateTextAssistancesDebugWindow("Beta");
                             MATCH.Utilities.Logger.Instance.Log(this.GetId(), MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, "Beta");
+
+                            //ToDoListController.ShowHelp(true);
                             
                         }),
                         new WaitUntilStopped()
@@ -757,6 +686,21 @@ namespace MATCH
                     kappa.AddAssistance(AssistancesDB.Kappa[2], Assistances.Buttons.Button.ButtonType.Yes, AssistancesDB.Kappa[3]);
                     kappa.AddAssistance(AssistancesDB.Kappa[2], Assistances.Buttons.Button.ButtonType.No, AssistancesDB.Kappa[3]);
 
+                    kappa.AddAssistance(AssistancesDB.Kappa[3], Assistances.Buttons.Button.ButtonType.Undefined, null);
+                    kappa.AddAssistance(AssistancesDB.Kappa[4], Assistances.Buttons.Button.ButtonType.Undefined, null);
+
+                    AssistancesDB.Kappa[3].IsShown += delegate (System.Object o, EventArgs e)
+                    {
+                        DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Kappa > assistance 3: shown");
+                    };
+
+                    /*AssistancesDB.Kappa[4].IsHidden += delegate (System.Object o, EventArgs e)
+                    {
+                        DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Kappa > assistance 4: hidden");
+
+                        UpdateConditionWithMatrix(ConditionStandBy);
+                    };*/
+
                     AssistancesDusting.Add(kappa, false);
 
                     kappa.Init();
@@ -765,6 +709,8 @@ namespace MATCH
                     Sequence temp = new Sequence(
                          new NPBehave.Action(() =>
                          {
+                             
+
                              ShowAssistanceHideOthers(kappa);
                              kappa.StopAssistance();
                              kappa.RunAssistance();
@@ -873,28 +819,15 @@ namespace MATCH
 
             class DustingTableAssistances
             {
-                /*public Assistances.GradationVisual.GradationVisual Beta01;
-                public Assistances.GradationVisual.GradationVisual Beta02;
-                public Assistances.GradationVisual.GradationVisual Beta03;
-                public Assistances.GradationVisual.GradationVisual Beta04;
-                public Assistances.GradationVisual.GradationVisual Beta05;
-                public Assistances.GradationVisual.GradationVisual Beta06;
-                public Assistances.GradationVisual.GradationVisual Beta07;
-                public Assistances.GradationVisual.GradationVisual Beta08;
-                public Assistances.GradationVisual.GradationVisual Beta09;
-                public Assistances.GradationVisual.GradationVisual Beta10;
-                public Assistances.GradationVisual.GradationVisual Beta11;*/
-
                 public List<Assistances.GradationVisual.GradationVisual> Beta;
                 public List<Assistances.GradationVisual.GradationVisual> Iota;
                 public List<Assistances.GradationVisual.GradationVisual> Epsilon;
-                //public List<Assistances.GradationVisual.GradationVisual> Eta;
                 public List<Assistances.GradationVisual.GradationVisual> Gamma;
                 public List<Assistances.GradationVisual.GradationVisual> Delta;
                 public List<Assistances.GradationVisual.GradationVisual> Alpha;
                 public List<Assistances.GradationVisual.GradationVisual> Kappa;
 
-                public DustingTableAssistances(Transform parentTable, Transform parentRag, Assistances.IAssistance toDoList)
+                public DustingTableAssistances(Transform parentTable, Transform parentRag, Assistances.IAssistance toDoList, Transform parentHelpCalendar)
                 {
                     Alpha = new List<Assistances.GradationVisual.GradationVisual>
                     {
@@ -909,17 +842,18 @@ namespace MATCH
 
                     Beta = new List<Assistances.GradationVisual.GradationVisual>
                     {
-                    Assistances.GradationVisual.Factory.Instance.CreateExclamationMark("DustingTable-Beta-1", /*parentTable*/ toDoList.GetAssistance().transform),
-                    Assistances.GradationVisual.Factory.Instance.CreateDialog2WithButtons("DustingTable-Beta-2", "", "Que pouvez-vous faire ici?", "Je sais!", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.Yes, "Je ne sais pas", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.No, /*parentTable*/ toDoList.GetAssistance().transform),
-                    Assistances.GradationVisual.Factory.Instance.CreateDialog2WithButtons("DustingTable-Beta-3", "", "Que pouvez-vous faire pour garder votre table propre?", "Je sais!", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.Yes, "Je ne sais pas", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.No, /*parentTable*/ toDoList.GetAssistance().transform),
-                    Assistances.GradationVisual.Factory.Instance.CreateDialog2WithButtons("DustingTable-Beta-4", "", "Que pouvez-vous faire pour nettoyer votre table?", "Je sais", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.Yes, "Je ne sais pas", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.No, /*parentTable*/ toDoList.GetAssistance().transform),
-                    Assistances.GradationVisual.Factory.Instance.CreateDialog2WithButtons("DustingTable-Beta-4", "", "De quel objet avez-vous besoin pour nettoyer votre table?", "Je sais!", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.Yes, "Je ne sais pas", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.No, /*parentTable*/ toDoList.GetAssistance().transform),
-                    Assistances.GradationVisual.Factory.Instance.CreateDialog2WithButtons("DustingTable-Beta-6", "", "Vous devez nettoyer la table avec un chiffon", "Je sais où le trouver!", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.Yes, "J'ai besoin d'aide", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.No, /*parentTable*/ toDoList.GetAssistance().transform),
-                    Assistances.GradationVisual.Factory.Instance.CreateDialog2WithButtons("DustingTable-Beta-7", "", "Où pouvez-vous regarder pour le trouver?", "Je sais!", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.Yes, "Je ne sais pas", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.No, /*parentTable*/ toDoList.GetAssistance().transform),
-                    Assistances.GradationVisual.Factory.Instance.CreateDialog2WithButtonsContextualized("DustingTable-Beta-8", "", "Avez-vous regardé <Location> ?", parentRag, "J'ai trouvé!", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.Yes, "Je n'ai pas trouvé", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.No, /*parentTable*/ toDoList.GetAssistance().transform),
-                    Assistances.GradationVisual.Factory.Instance.CreateDialog2WithButtons("DustingTable-Beta-9", "", "Vous pouvez le trouver proche de vous dans cette pièce", "J'ai trouvé!", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.Yes, "Je ne l'ai pas trouvé", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.No, /*parentTable*/ toDoList.GetAssistance().transform),
+                    Assistances.GradationVisual.Factory.Instance.CreateExclamationMark("DustingTable-Beta-1", /*toDoList.GetAssistance().transform*/ parentHelpCalendar),
+                    Assistances.GradationVisual.Factory.Instance.CreateDialog2WithButtons("DustingTable-Beta-2", "", "Avez-vous compris la tâche que vous devez réaliser ici?", "Oui!", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.Yes, "Non", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.No, /*parentTable*/ /*toDoList.GetAssistance().transform*/ parentHelpCalendar),
+                    Assistances.GradationVisual.Factory.Instance.CreateDialog2WithButtons("DustingTable-Beta-3", "", "Que pouvez-vous faire pour garder votre table propre?", "Je sais!", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.Yes, "Je ne sais pas", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.No, /*parentTable*/ /*toDoList.GetAssistance().transform*/ parentHelpCalendar),
+                    Assistances.GradationVisual.Factory.Instance.CreateDialog2WithButtons("DustingTable-Beta-4", "", "Que pouvez-vous faire pour nettoyer votre table?", "Je sais", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.Yes, "Je ne sais pas", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.No, /*parentTable*/ /*toDoList.GetAssistance().transform*/ parentHelpCalendar),
+                    Assistances.GradationVisual.Factory.Instance.CreateDialog2WithButtons("DustingTable-Beta-4", "", "De quel objet avez-vous besoin pour nettoyer votre table?", "Je sais!", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.Yes, "Je ne sais pas", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.No, /*parentTable*/ /*toDoList.GetAssistance().transform*/ parentHelpCalendar),
+                    Assistances.GradationVisual.Factory.Instance.CreateDialog2WithButtons("DustingTable-Beta-6", "", "Vous devez nettoyer la table avec un chiffon", "Je sais où le trouver!", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.Yes, "J'ai besoin d'aide", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.No, /*parentTable*/ /*toDoList.GetAssistance().transform*/ parentHelpCalendar),
+                    Assistances.GradationVisual.Factory.Instance.CreateDialog2WithButtons("DustingTable-Beta-7", "", "Où pouvez-vous regarder pour le trouver?", "Je sais!", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.Yes, "Je ne sais pas", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.No, /*parentTable*/ /*toDoList.GetAssistance().transform*/ parentHelpCalendar),
+                    Assistances.GradationVisual.Factory.Instance.CreateDialog2WithButtonsContextualized("DustingTable-Beta-8", "", "Avez-vous regardé <Location> ?", parentRag, "J'ai trouvé!", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.Yes, "Je n'ai pas trouvé", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.No, /*parentTable*/ /*toDoList.GetAssistance().transform*/ parentHelpCalendar),
+                    Assistances.GradationVisual.Factory.Instance.CreateDialog2WithButtons("DustingTable-Beta-9", "", "Vous pouvez le trouver proche de vous dans cette pièce", "J'ai trouvé!", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.Yes, "Je ne l'ai pas trouvé", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.No, /*parentTable*/ /*toDoList.GetAssistance().transform*/ parentHelpCalendar),
                     Assistances.GradationVisual.Factory.Instance.CreateArch("DustingTable-Beta-10", "Vous trouverez le chiffon au bout de cette flèche", parentTable, parentRag, parentTable),
-                    Assistances.GradationVisual.Factory.Instance.CreateDialog2WithButtons("DustingTable-Beta-11", "", "Ok! Nous vous laissons faire", "Ok!", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.ClosingButton, /*parentTable*/ toDoList.GetAssistance().transform)
+                    Assistances.GradationVisual.Factory.Instance.CreateDialog2WithButtons("DustingTable-Beta-11", "", "Ok! Nous vous laissons faire", "Ok!", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.ClosingButton, /*parentTable*/ /*toDoList.GetAssistance().transform*/ parentHelpCalendar),
+                    Assistances.GradationVisual.Factory.Instance.CreateDialog2WithButtons("DustingTable-Beta-12", "", "Savez-vous comment réaliser cette activité?", "Oui", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.Yes, "Non", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.No, /*parentTable*/ /*toDoList.GetAssistance().transform*/ parentHelpCalendar)
                     };
 
                     Gamma = new List<Assistances.GradationVisual.GradationVisual>
@@ -961,8 +895,8 @@ namespace MATCH
                         Assistances.GradationVisual.Factory.Instance.CreateDialog2WithButtons("DustingTable-Kappa-00", "", "Savez-vous quelle activité vous avez à faire dans cette pièce?", "Oui", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.Yes, "Non", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.No, MATCH.Assistances.InteractionSurfaceFollower.Instance.transform),
                         Assistances.GradationVisual.Factory.Instance.CreateDialog2WithButtons("DustingTable-Kappa-01", "", "Où pouvez-vous trouver des détails sur l'activité à faire?", "Je sais", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.Yes, "Je ne sais pas", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.No, MATCH.Assistances.InteractionSurfaceFollower.Instance.transform),
                         Assistances.GradationVisual.Factory.Instance.CreateDialog2WithButtons("DustingTable-Kappa-02", "", "Avez-vous regardé sur les murs?", "Oui", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.Yes, "Non", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.No, MATCH.Assistances.InteractionSurfaceFollower.Instance.transform),
-                        //Assistances.GradationVisual.Factory.Instance.CreateArch("DustingTable-Kappa-03", "Vous trouverez les détails de l'activité au bout de cette arche", MATCH.Assistances.InteractionSurfaceFollower.Instance.transform, parentToDoList, MATCH.Assistances.InteractionSurfaceFollower.Instance.transform),
                         Assistances.GradationVisual.Factory.Instance.CreateDialog2WithLinePath("DustingTable-Kappa-03", "", "Vous trouverez les détails de l'activité au bout de la ligne", toDoList, MATCH.Assistances.InteractionSurfaceFollower.Instance.transform),
+                        //Assistances.GradationVisual.Factory.Instance.CreateArch("DustingTable-Kappa-03", "Vous trouverez les détails de l'activité au bout de cette arche", MATCH.Assistances.InteractionSurfaceFollower.Instance.transform, parentToDoList, MATCH.Assistances.InteractionSurfaceFollower.Instance.transform),
                         Assistances.GradationVisual.Factory.Instance.CreateDialog2WithButtons("DustingTable-Kappa-04", "", "Ok! Nous vous laissons faire", "Ok!", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.ClosingButton, MATCH.Assistances.InteractionSurfaceFollower.Instance.transform)
                     };
 

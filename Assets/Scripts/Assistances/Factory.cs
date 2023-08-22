@@ -296,11 +296,22 @@ namespace MATCH
                 return controller;
             }
 
-            public MATCH.Assistances.Dialogs.Dialog1 CreateToDoList(string title, string description, Transform parent)
+            public MATCH.Assistances.Dialogs.ToDoList CreateToDoList(string title, string description, Transform parent)
             {
                 InteractionSurface temp = CreateInteractionSurface("TodoList", AdminMenu.Panels.Left, new Vector3(0.7f, 0.02f, 0.05f), new Vector3(-1.949f, -0.523f, -2.753f), Utilities.Materials.Colors.Red2, false, true, Utilities.Utility.GetEventHandlerEmpty(), true, parent);
 
-                MATCH.Assistances.Dialogs.Dialog1 controller = InitializeDialog(DialogsTypes.TodoList, title, description, temp.transform);
+                //MATCH.Assistances.Dialogs.Dialog1 controller = InitializeDialog(DialogsTypes.TodoList, title, description, temp.transform);
+
+                Transform view = /*Instantiate(*/Utilities.Materials.Prefabs.Load(Utilities.Materials.Prefabs.AssistanceDialogToDoList).transform;
+                view.parent = temp.transform;
+                view.localPosition = new Vector3(0, 0, 0);
+
+                MATCH.Assistances.Dialogs.ToDoList controller = view.GetComponent<MATCH.Assistances.Dialogs.ToDoList>();
+                controller.SetTitle(title, 0.15f);
+                float sizeDescriptionText = -0.0005f * description.Length + 0.206f;
+                controller.SetDescription(description, sizeDescriptionText);
+                //controller.EnableBillboard(true);
+
                 controller.EnableBillboard(false);
                 return controller;
             }
@@ -362,14 +373,19 @@ namespace MATCH
                 return controller;
             }
 
-            public PathWithTextAndHelp CreateAssistancePath(string name, Transform origin, Transform target, Transform parent)
+            /**
+             * parent: is considered as the "origin", i.e. is where the text will be located and the beginning of the lighted path
+             * */
+            public PathWithTextAndHelp CreateAssistancePath(string name, string title, string description, Transform target, Transform parent)
             {
                 Transform view = Utilities.Materials.Prefabs.Load(Utilities.Materials.Prefabs.AssistanceLightPath);
                 view.parent = parent;
+                view.transform.localPosition = new Vector3(0, 0, 0);
 
                 PathWithTextAndHelp controller = view.GetComponent<PathWithTextAndHelp>();
                 view.name = name;
-                controller.SetPathStartAndEndPoint(origin, target);
+                controller.InitializeAssistance(title, description, target, parent);
+                //controller.SetPathStartAndEndPoint(origin, target);
 
                 return controller;
             }
@@ -393,6 +409,22 @@ namespace MATCH
 
                 controller.PathFindingEngine = PathFindingEngine;
                 controller.SetBeginAndEndObjects(objectBegin, objectEnd);
+
+                return controller;
+            }
+
+            /**
+             * In this case the follower is used as the origin object
+             * */
+            public Assistances.LightedPath CreatePathFindingWithFollowerBegin(string name, Transform objectEnd, Transform parent)
+            {
+                Transform view = /*Instantiate(*/Utilities.Materials.Prefabs.Load(Utilities.Materials.Prefabs.AssistanceLightPath);
+                view.parent = parent;
+
+                Assistances.LightedPath controller = view.GetComponent<Assistances.LightedPath>();
+
+                controller.PathFindingEngine = PathFindingEngine;
+                controller.SetEndObject(objectEnd);
 
                 return controller;
             }

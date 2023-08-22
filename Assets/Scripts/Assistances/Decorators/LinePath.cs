@@ -37,7 +37,7 @@ namespace MATCH
                 //LineToObject LineController;
                 bool IsLineVisible;
 
-                List<Vector3> points = new List<Vector3>();
+                List<Vector3> points;
                 private Inferences.Manager InfManager;
                 //EventHandler classEvent;
 
@@ -51,7 +51,7 @@ namespace MATCH
 
                 private void Awake()
                 {
-                    
+                    points = new List<Vector3>();
                     //LineView = gameObject.transform.Find("Line");
                     //LineController = LineView.GetComponent<LineToObject>();
                     Line = GetComponent<LineRenderer>();
@@ -79,30 +79,20 @@ namespace MATCH
 
                 public void Update()
                 {
-                    /*if (IsDisplayed && IsLineVisible)
-                    {
-                        ShowLightpath();
-                    }*/
-
                     if (IsDisplayed)
                     {
-                        float dist = CalculateMinDistance();
+                        // Allows to recalculate the line path if the person moves away from the line
+                        float dist = Utilities.Utility.CalculateMinDistanceOfALine(Line);
                         if (dist > Threshold)
                         {
-                            //Debug.Log("Faaaaaaaaaaaaarrrrrrrrrrrrrrrr ");
-                            //Debug.Log(dist + "Faaaaaaaaaaaaarrrrrrrrrrrrrrrr ");
                             ShowLightpath();
                         }
-                        /*else
-                        {
-                            Debug.Log(dist);
-                        }*/
                     }
 
 
                 }
 
-                float CalculateMinDistance()
+                /*float CalculateMinDistance()
                 {
                     float dMin = 10000;
                     float d = -1;
@@ -114,7 +104,7 @@ namespace MATCH
                     {
                         corner = Line.GetPosition(i);
 
-                        d = Utilities.Utility.CalculateDistancePoints(cameraPos, corner); //Mathf.Sqrt(Mathf.Pow(corner.x - cameraPos.x, 2) + Mathf.Pow(corner.y - cameraPos.y, 2) + Mathf.Pow(corner.z - cameraPos.z, 2));
+                        d = Utilities.Utility.CalculateDistancePoints(cameraPos, corner);
 
                         if (d < dMin)
                         {
@@ -123,7 +113,7 @@ namespace MATCH
                     }
 
                     return dMin;
-                }
+                }*/
 
                 public void SetHeightToFollowInteractionSurface(bool heightToFollow)
                 {
@@ -181,25 +171,15 @@ namespace MATCH
                         {
                             PanelToDecorate.GetRootDecoratedAssistance().Show(Utilities.Utility.GetEventHandlerEmpty(), false);
 
-                            PanelToDecorate.GetLinePath().gameObject.SetActive(false); //The decorated panels transform become invisible
+                            // This is in case the line path decorates a previous line path. In this case, the previous one is hidden
+                            Transform decoratedLinePath = PanelToDecorate.GetLinePath();
+
+                            if (decoratedLinePath != null)
+                            {
+                                decoratedLinePath.gameObject.SetActive(false); //The decorated panels transform become invisible
+                            }
 
                             ShowLightpath();
-
-                            /*MATCH.Inferences.Timer temp = new MATCH.Inferences.Timer("tempTimer", 5, delegate (System.Object o, EventArgs e)
-                            {
-                                ShowLightpath();
-                                ((MATCH.Inferences.Timer)InfManager.GetInference("tempTimer")).StopCounter();
-                                ((MATCH.Inferences.Timer)InfManager.GetInference("tempTimer")).StartCounter();
-                            });
-                            InfManager.RegisterInference(temp);
-                            temp.StartCounter();*/
-
-
-                            /*MATCH.Inferences.DistanceLeaving test = new MATCH.Inferences.DistanceLeaving("testDistanceLeaving", delegate (System.Object o, EventArgs e)
-                            {
-                                DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Far from object");
-                            }, gameObject, 1.0f);
-                            InfManager.RegisterInference(test);*/
 
                             callback?.Invoke(this, e);
                         }, withAnimation);
@@ -274,23 +254,13 @@ namespace MATCH
                 {
                     IsDisplayed = false;
 
-                    /*Vector3 direction = Assistances.InteractionSurfaceFollower.Instance.transform.position - Camera.main.transform.position;
-                    direction.Normalize();
-                    Vector3 startPoint = direction * (float)1.2;*/
-                    Vector3 startPoint = /*Camera.main.transform.forward*/ Vector3.forward * (float)1.5;
-                    //Assistances.InteractionSurfaceFollower.Instance.transform.Find("Debug").transform.position = startPoint;
-                    //DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, " Camera: " + Camera.main.transform.position + " Follower: " + Assistances.InteractionSurfaceFollower.Instance.transform.position + " Normalized: " + direction + " Starting point : " + startPoint);
-                    //DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, );
+                    Vector3 startPoint = Vector3.forward * (float)1.5;
+
                     Vector3 startPointWorld = Camera.main.transform.TransformPoint(startPoint);
-
-
-                    //DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, " Camera direction: " + Camera.main.transform.forward + " Starting point : " + startPoint + " " + startPointWorld);
 
                     Line.useWorldSpace = true;
 
                     Vector3[] corners = PathFinderEngine.ComputePath(/*FollowObject.transform*/ startPointWorld, GetRootDecoratedAssistance().GetTransform().position);
-
-                    
 
                     Utilities.Utility.Linear coeff = Utilities.Utility.CalculateLinearCoefficients(0, /*corners[0].y*/Assistances.InteractionSurfaceFollower.Instance.transform.position.y, corners.Length - 1, /*corners[corners.Length-1].y*/ GetRootDecoratedAssistance().GetTransform().position.y);
 
@@ -305,14 +275,7 @@ namespace MATCH
                         }
 
                         Line.SetPosition(i, corner);
-
-                        //DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Corner : " + corner);
                     }
-
-                    /*MeshCollider meshCollider = gameObject.AddComponent<MeshCollider>();
-                    Mesh mesh = new Mesh();
-                    lineRenderer.BakeMesh(mesh);
-                    meshCollider.sharedMesh = mesh;*/
 
                     IsDisplayed = true;
                 }

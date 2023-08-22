@@ -77,7 +77,7 @@ namespace MATCH
 
                 public override void Start()
                 {
-                    Scenarios.Manager.Instance.addScenario(this);
+                    Scenarios.Manager.Instance.AddScenario(this);
 
                     // Initialize assistances
                     InitializeAssistances();

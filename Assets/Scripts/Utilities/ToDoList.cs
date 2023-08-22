@@ -29,7 +29,7 @@ namespace MATCH
     {
         public class ToDoList : MonoBehaviour
         {
-            MATCH.Assistances.Dialogs.Dialog1 ToDo;
+            MATCH.Assistances.Dialogs.ToDoList ToDo;
             private void Awake()
             {
                 //create to do list
@@ -44,7 +44,7 @@ namespace MATCH
                 InitializeTodoList();
             }
 
-            public Assistances.Dialogs.Dialog1 GetAssistance()
+            public Assistances.Dialogs.ToDoList GetAssistance()
             {
                 return ToDo;
             }
@@ -59,7 +59,10 @@ namespace MATCH
                 }
 
                 // Second: be prepared in case new scenarios are added
-                MATCH.Scenarios.Manager.Instance.s_scenarioAdded += CallbackNewScenarioInManager;
+                MATCH.Scenarios.Manager.Instance.EventScenarioAdded += CallbackNewScenarioInManager;
+
+                // Add help buttons
+                ToDo.AddButton("Aide", true);
             }
             /**
              * return local date 
@@ -84,7 +87,7 @@ namespace MATCH
              * */
             void AddScenarioToGUI(MATCH.Scenarios.Scenario scenario)
             {
-                MATCH.Assistances.Buttons.Basic button = ToDo.AddButton(scenario.GetId(), true); //add button
+                MATCH.Assistances.Buttons.Basic button = ToDo.AddElement/*AddButton*/(scenario.GetId(), true); //add button
                 scenario.EventChallengeOnStart += button.CallbackSetButtonBackgroundCyan; //m_todo.callbackStartButton;
                 scenario.EventChallengeOnSuccess += button.CallbackSetButtonBackgroundGreen; //m_todo.callbackCheckButton;
                 scenario.EventChallengeOnStandBy += button.CallbackSetButtonBackgroundDefault; //m_todo.callbackCheckButton;
@@ -115,6 +118,12 @@ namespace MATCH
                 ToDo.SetDescription(textToDisplay, 0.1f);
                 //}
             }
+
+            public void ShowHelp(bool show)
+            {
+                ToDo.ShowHelp(show, Utilities.Utility.GetEventHandlerEmpty(), false);
+            }
+
         }
     }
 }

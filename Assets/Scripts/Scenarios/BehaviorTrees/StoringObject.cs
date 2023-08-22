@@ -147,7 +147,7 @@ namespace MATCH
                     Init();
                     InitializeInferences();
 
-                    Scenarios.Manager.Instance.addScenario(this);
+                    Scenarios.Manager.Instance.AddScenario(this);
 
                     
 

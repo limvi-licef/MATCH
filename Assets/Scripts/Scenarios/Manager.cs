@@ -31,32 +31,32 @@ namespace MATCH
     {
         public class Manager : MonoBehaviour
         {
-            private List<MATCH.Scenarios.Scenario> m_scenarios; //List of scenario
+            private List<MATCH.Scenarios.Scenario> Scenarios; //List of scenario
 
-            private static Manager _instance;
+            private static Manager InstanceInternal;
 
-            public static Manager Instance { get { return _instance; } }
+            public static Manager Instance { get { return InstanceInternal; } }
 
             private void Awake()
             {
-                if (_instance != null && _instance != this)
+                if (InstanceInternal != null && InstanceInternal != this)
                 {
                     Destroy(gameObject);
                 }
                 else
                 {
-                    m_scenarios = new List<MATCH.Scenarios.Scenario>();
+                    Scenarios = new List<MATCH.Scenarios.Scenario>();
 
-                    _instance = this;
+                    InstanceInternal = this;
                 }
             }
 
-            public EventHandler s_scenarioAdded;
+            public EventHandler EventScenarioAdded;
 
-            public void addScenario(MATCH.Scenarios.Scenario scenario)
+            public void AddScenario(MATCH.Scenarios.Scenario scenario)
             {
                 bool absent = true;
-                foreach (MATCH.Scenarios.Scenario challenge in m_scenarios)
+                foreach (MATCH.Scenarios.Scenario challenge in Scenarios)
                 {
                     if (challenge == scenario)
                     {
@@ -66,15 +66,15 @@ namespace MATCH
                 }
                 if (absent)
                 {
-                    m_scenarios.Add(scenario); //add scenario in the list of scenarios
+                    Scenarios.Add(scenario); //add scenario in the list of scenarios
                     Utilities.EventHandlerArgs.String arg = new Utilities.EventHandlerArgs.String(scenario.GetId()); //set a name to the scenario
-                    s_scenarioAdded?.Invoke(this, arg); //send information of new scenario => callback (MouseGlobalInitializer) => add new button (MouseAssistanceDialog)
+                    EventScenarioAdded?.Invoke(this, arg); //send information of new scenario => callback (MouseGlobalInitializer) => add new button (MouseAssistanceDialog)
                 }
             }
 
             public List<MATCH.Scenarios.Scenario> getScenarios()
             {
-                return m_scenarios;
+                return Scenarios;
             }
         }
     }

@@ -248,6 +248,29 @@ namespace MATCH
                 return toReturn;
             }
 
+            public static float CalculateMinDistanceOfALine(LineRenderer line)
+            {
+                float dMin = 10000;
+                float d = -1;
+                Vector3 corner;
+
+                Vector3 cameraPos = Camera.main.transform.position;
+
+                for (int i = 0; i < line.positionCount; i++)
+                {
+                    corner = line.GetPosition(i);
+
+                    d = Utilities.Utility.CalculateDistancePoints(cameraPos, corner);
+
+                    if (d < dMin)
+                    {
+                        dMin = d;
+                    }
+                }
+
+                return dMin;
+            }
+
             public static float CalculateDistancePoints(Vector3 start, Vector3 end)
             {
                 float toReturn = Mathf.Sqrt(Mathf.Pow(end.x - start.x, 2) + Mathf.Pow(end.y - start.y, 2) + Mathf.Pow(end.z - start.z, 2));

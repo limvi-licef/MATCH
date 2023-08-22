@@ -65,7 +65,7 @@ namespace MATCH
 
                 void InitializeScenario()
                 {
-                    Manager.Instance.addScenario(this);
+                    Manager.Instance.AddScenario(this);
 
                     //Surfaces
                     m_storage = Assistances.Factory.Instance.CreateInteractionSurface("Storage", default, new Vector3(0.4f, 0.4f, 0.4f), new Vector3(0f, 0f, 0.5f), Utilities.Materials.Colors.GreenGlowing, true, true, Utilities.Utility.GetEventHandlerEmpty(), true, transform);

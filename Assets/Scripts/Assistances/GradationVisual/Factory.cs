@@ -166,7 +166,7 @@ namespace MATCH
                     return toReturn;
                 }
 
-                public GradationVisual CreatePath(string assistanceName, string assistance, Transform start, Transform end, Transform parent)
+                /*public GradationVisual CreatePath(string assistanceName, string assistance, Transform start, Transform end, Transform parent)
                 {
                     PathWithTextAndHelp controller = Assistances.Factory.Instance.CreateAssistancePath(assistanceName, start, end, parent);
                     controller.SetDescription(assistance);
@@ -175,7 +175,7 @@ namespace MATCH
                     toReturn.AddAssistance(controller);
 
                     return toReturn;
-                }
+                }*/
 
                 public GradationVisual CreateAlreadyConfigured(AlreadyConfigured type, string assistanceName, Transform parent)
                 {
@@ -214,28 +214,33 @@ namespace MATCH
                     GradationVisual toReturn = Assistances.Factory.Instance.CreateAssistanceGradationAttention(assistanceName);
                     toReturn.name = assistanceName;
 
-                    Assistances.Dialogs.Dialog2 dialog = Assistances.Factory.Instance.CreateDialog2NoButton(title, description, parent);
+                    PathWithTextAndHelp assistance = Assistances.Factory.Instance.CreateAssistancePath(assistanceName + "Path", title, description, lineDestination.GetAssistance().transform, parent);
+
+                    toReturn.AddAssistance(assistance);
+
+                    /*Assistances.Dialogs.Dialog2 dialog = Assistances.Factory.Instance.CreateDialog2NoButton(title, description, parent);
                     Decorators.BackgroundColorMessage2 dialogBackground = (Decorators.BackgroundColorMessage2)Assistances.Decorators.Factory.Instance.CreateBackgroundMessage(dialog, Utilities.Materials.Colors.Cyan);
                     Decorators.BackgroundColorIcon2 dialogIcon = (Decorators.BackgroundColorIcon2)Assistances.Decorators.Factory.Instance.CreateBackgroundIcon(dialogBackground, Utilities.Materials.Colors.Cyan, true);
-                    //dialog.event
-                    // Todo: finalize this by making it appearing with the new event "EventOnShow"
 
-                    //Decorators.LinePath decorator = (Decorators.LinePath)Decorators.Factory.Instance.CreateLinePathWithTexture(lineDestination, Utilities.Materials.Colors.Cyan, 0.039f, true);
+                    Assistances.LightedPath path = Assistances.Factory.Instance.CreatePathFinding(assistanceName + "_Path", MATCH.Assistances.InteractionSurfaceFollower.Instance.transform, lineDestination.GetAssistance().transform, parent);
 
-                    GradationVisual test = CreatePath(assistanceName + "_Path", "test", MATCH.Assistances.InteractionSurfaceFollower.Instance.transform, lineDestination.GetAssistance().transform, parent);
-
-                    dialogIcon.EventIsShown += delegate (System.Object o, EventArgs e)
+                    //dialogIcon.EventIsShown += delegate (System.Object o, EventArgs e)
+                    toReturn.IsShown += delegate (System.Object o, EventArgs e)
                     {
                         //decorator.Show(Utilities.Utility.GetEventHandlerEmpty(), false);
-                        test.
+                        //test.ShowMinimalGradation(Utilities.Utility.GetEventHandlerEmpty());
+                        path.Show(Utilities.Utility.GetEventHandlerEmpty(), false);
                     };
 
-                    dialogIcon.EventIsHidden += delegate (System.Object o, EventArgs e)
+                    //dialogIcon.EventIsHidden += delegate (System.Object o, EventArgs e)
+                    toReturn.IsHidden += delegate (System.Object o, EventArgs e)
                     {//lineDestination.GetLinePath().
-                        decorator.Hide(Utilities.Utility.GetEventHandlerEmpty(), false);
+                        //decorator.Hide(Utilities.Utility.GetEventHandlerEmpty(), false);
+                        //test.HideCurrentGradation(Utilities.Utility.GetEventHandlerEmpty());
+                        path.Hide(Utilities.Utility.GetEventHandlerEmpty(), false);
                     };
                     
-                    toReturn.AddAssistance(dialogIcon);
+                    toReturn.AddAssistance(dialogIcon);*/
 
                     return toReturn;
                 }

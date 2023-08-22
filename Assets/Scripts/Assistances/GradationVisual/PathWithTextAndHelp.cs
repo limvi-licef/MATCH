@@ -11,19 +11,47 @@ namespace MATCH.Assistances.GradationVisual
         readonly Transform LineView;
         readonly Transform TextView;
 
-        readonly Dialogs.Dialog1 TextController;
+        //readonly Dialogs.Dialog1 TextController;
         readonly LineToObject LineController;
 
-        public void SetDescription(string text, float fontSize = -1.0f)
+        Assistances.Dialogs.Dialog2 Dialog;
+        Decorators.BackgroundColorMessage2 DialogBackground;
+        Decorators.BackgroundColorIcon2 DialogIcon;
+
+        Assistances.LightedPath Path;
+
+        private void Start()
         {
-            TextController.SetDescription(text, fontSize);
+            
         }
 
-        public void SetPathStartAndEndPoint(Transform origin, Transform target)
+        public void InitializeAssistance(string title, string description, Transform lineDestination, Transform parent)
+        {
+            this.transform.parent = parent;
+
+            //Dialog = Assistances.Factory.Instance.CreateAssistanceGradationAttention(assistanceName);
+            //toReturn.name = assistanceName;
+
+            //TextController.SetDescription(text, fontSize);
+
+            // Dialog
+            Assistances.Dialogs.Dialog2 dialog = Assistances.Factory.Instance.CreateDialog2NoButton(title, description, transform);
+            DialogBackground = (Decorators.BackgroundColorMessage2)Assistances.Decorators.Factory.Instance.CreateBackgroundMessage(dialog, Utilities.Materials.Colors.Cyan);
+            DialogIcon = (Decorators.BackgroundColorIcon2)Assistances.Decorators.Factory.Instance.CreateBackgroundIcon(DialogBackground, Utilities.Materials.Colors.Cyan, true);
+
+            //Transform destination = GameObject.Find("MATCH").transform.Find("Cube");
+            //Transform destination = MATCH.Assistances.InteractionSurfaceFollower.Instance.GetInteractionSurface().transform;
+
+            // Path
+            //Path = Assistances.Factory.Instance.CreatePathFinding(name + "_Path", destination, lineDestination, transform);
+            Path = Assistances.Factory.Instance.CreatePathFindingWithFollowerBegin(name + "_Path", lineDestination, transform);
+        }
+
+        /*public void SetPathStartAndEndPoint(Transform origin, Transform target)
         {
             LineController.PointOrigin = origin.position;
             LineController.PointEnd = target.position;
-        }
+        }*/
 
         public override Transform GetTransform()
         {
@@ -35,45 +63,69 @@ namespace MATCH.Assistances.GradationVisual
             return false;
         }
 
-        bool m_mutexHide = false;
-
         public override void Hide(EventHandler eventHandler, bool withAnimation)
         {
-            if (m_mutexHide == false)
-            {
-                m_mutexHide = true;
+            Utilities.EventHandlerArgs.Animation args = new Utilities.EventHandlerArgs.Animation();
 
-                TextController.Hide(/*eventHandler*/ delegate (System.Object o, EventArgs e)
+            if (IsDisplayed)
+            {
+                DialogIcon.Hide(delegate (System.Object o, EventArgs e)
+                {
+                    Path.Hide(Utilities.Utility.GetEventHandlerEmpty(), false);
+                    IsDisplayed = false;
+                    args.Success = true;
+                    eventHandler?.Invoke(this, args);
+                    OnIsHidden(this, args);
+                }, false);
+
+                /*TextController.Hide(delegate (System.Object o, EventArgs e)
                 {
                     // Hiding line
                     if (LineView.gameObject.activeSelf)
                     {
                         LineView.GetComponent<LineToObject>().hide(eventHandler); // The eventhandler being already called above, we do not want it to be called twice, as this could create strange behaviors.
-                        m_mutexHide = false;
+                        IsDisplayed = false;
                     }
                     else
                     {
                         DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Warning, "Line already hidden: nothing to do");
                         eventHandler?.Invoke(this, EventArgs.Empty);
-                        m_mutexHide = false;
+                        IsDisplayed = false;
                     }
-                }, withAnimation);
+                }, withAnimation);*/
             }
             else
             {
                 DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Warning, "Mutex locked - request ignored");
+                args.Success = false;
+                eventHandler?.Invoke(this, args);
+                OnIsHidden(this, args);
             }
         }
 
-        bool m_mutexShow = false;
+        //bool m_mutexShow = false;
 
         public override void Show(EventHandler eventHandler, bool withAnimation = true)
         {
-            if (m_mutexShow == false)
-            {
-                m_mutexShow = true;
+            Utilities.EventHandlerArgs.Animation args = new Utilities.EventHandlerArgs.Animation();
 
-                TextView.position = new Vector3(LineController.PointOrigin.x, Camera.main.transform.position.y, LineController.PointOrigin.z);
+            if (IsDisplayed == false)
+            {
+                // Disable the box collider: not needed here:
+                //transform.GetComponent<BoxCollider>().gameObject.SetActive(false);
+
+                //IsDisplayed = true;
+
+                DialogIcon.Show(delegate (System.Object o, EventArgs e)
+                {
+                    Path.Show(Utilities.Utility.GetEventHandlerEmpty(), false);
+                    IsDisplayed = true;
+                    args.Success = true;
+                    eventHandler?.Invoke(this, args);
+                    OnIsHidden(this, args);
+                }, false);
+
+                /*TextView.position = new Vector3(LineController.PointOrigin.x, Camera.main.transform.position.y, LineController.PointOrigin.z);
                 TextView.transform.LookAt(Camera.main.transform);
                 TextView.transform.Rotate(new Vector3(0, 1, 0), 180);
 
@@ -91,17 +143,20 @@ namespace MATCH.Assistances.GradationVisual
                 {
                     eventHandler?.Invoke(this, EventArgs.Empty);
                     m_mutexShow = false;
-                });
+                });*/
             }
             else
             {
                 DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Warning, "Mutex locked - request ignored");
+                args.Success = false;
+                eventHandler?.Invoke(this, args);
+                OnIsHidden(this, args);
             }
         }
 
         public override void ShowHelp(bool show, EventHandler callback, bool withAnimation)
         {
-            if (show)
+            /*if (show)
             {
                 Utilities.Utility.AdjustObjectHeightToHeadHeight(HelpController);
 
@@ -136,7 +191,7 @@ namespace MATCH.Assistances.GradationVisual
                     callback?.Invoke(this, EventArgs.Empty);
                 }
 
-            }
+            }*/
 
         }
     }

@@ -151,7 +151,7 @@ namespace MATCH
                 {
                     /** Initializing the assistances we will be needing **/
 
-                    Manager.Instance.addScenario(this);
+                    Manager.Instance.AddScenario(this);
 
                     // First interaction surface, i.e. for the table
                     GameObject interactionTableView = Instantiate(m_refInteractionSurface, gameObject.transform);
@@ -284,7 +284,7 @@ namespace MATCH
 
                 void InitializeScenariov2()
                 {
-                    Manager.Instance.addScenario(this);
+                    Manager.Instance.AddScenario(this);
 
                     // Interaction surface table
                     Assistances.InteractionSurface interactionSurfaceTable = Assistances.Factory.Instance.CreateInteractionSurface("table v2", AdminMenu.Panels.Middle, new Vector3(1.1f, 0.02f, 0.7f), new Vector3(0.8258258700370789f, 0.4396502375602722f, 2.451075315475464f), Utilities.Materials.Colors.CyanGlowing, true, true, Utilities.Utility.GetEventHandlerEmpty(), true, transform);
