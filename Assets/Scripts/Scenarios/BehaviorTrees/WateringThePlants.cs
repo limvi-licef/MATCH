@@ -221,7 +221,7 @@ namespace MATCH
                     {
                         AddPlant((InteractionPlants.Count + 1).ToString(), new Vector3(0.3f, 0.5f, 0.3f),
                             new Vector3(-2.309f, 0.263f, 2.031f), Utilities.Materials.Colors.GreenGlowing, true, false,
-                            false, transform);
+                            true, transform);
                     }, AdminMenu.Panels.Middle);
 
                 }
@@ -236,24 +236,25 @@ namespace MATCH
                     //à modifier les interactions
                     InteractionSink = Assistances.Factory.Instance.CreateInteractionSurface("Practice-Sink", AdminMenu.Panels.Right, new Vector3(0.6f, 0.1f, 0.4f),
                         new Vector3(-4.777f, 0.659f, 2.031f), Utilities.Materials.Colors.GreenGlowing, false, true, Utilities.Utility.GetEventHandlerEmpty(), true, transform);
-
+                    /*
                     InteractionPlant1 = Assistances.Factory.Instance.CreateInteractionSurface("Practice-Plant1", AdminMenu.Panels.Right, new Vector3(0.3f, 0.5f, 0.3f),
                         new Vector3(-2.309f, 0.263f, 2.031f), Utilities.Materials.Colors.GreenGlowing, false, true, Utilities.Utility.GetEventHandlerEmpty(), true, transform);
                     InteractionPlant2 = Assistances.Factory.Instance.CreateInteractionSurface("Practice-Plant2", AdminMenu.Panels.Right, new Vector3(0.3f, 0.5f, 0.3f),
                         new Vector3(2f, 0f, 0f), Utilities.Materials.Colors.GreenGlowing, false, true, Utilities.Utility.GetEventHandlerEmpty(), true, transform);
                     InteractionPlant3 = Assistances.Factory.Instance.CreateInteractionSurface("Practice-Plant3", AdminMenu.Panels.Right, new Vector3(0.3f, 0.5f, 0.3f),
                          new Vector3(-7f, 0f, 0f), Utilities.Materials.Colors.GreenGlowing, false, true, Utilities.Utility.GetEventHandlerEmpty(), true, transform);
+                    
 
-                    InteractionPlants = new List<Assistances.InteractionSurface> { InteractionPlant1, InteractionPlant2, InteractionPlant3 };
+                    InteractionPlants = new List<Assistances.InteractionSurface> { InteractionPlant1, InteractionPlant2, InteractionPlant3 };*/
 
                     InteractionSink.EventUserTouched += CallbackInteractionSurfaceSinkTouched;
 
                     DialogAssistanceWaterHelp = Assistances.Factory.Instance.CreateCheckListNoButton("", "Voici les plantes qu'il vous reste à arroser. Si vous touchez une des plantes, un chemin au sol vous y guidera.", FollowObject.transform);
 
-                    
+                    /*
                     DialogAssistanceWaterHelp.AddButton("Plante " + (1), false, 0.12f);
                     DialogAssistanceWaterHelp.AddButton("Plante " + (2), false, 0.12f);
-                    DialogAssistanceWaterHelp.AddButton("Plante " + (3), false, 0.12f);
+                    DialogAssistanceWaterHelp.AddButton("Plante " + (3), false, 0.12f);*/
 
                     for (int i = 0; i < DialogAssistanceWaterHelp.ButtonsController.Count; i++)
                     {
@@ -686,7 +687,8 @@ namespace MATCH
                 {
                     PlantsPositioningStorage.RegisterObject(name, cube.transform, cube.transform);
                 }
-            }
+                    DialogAssistanceWaterHelp.AddButton(name, false, 0.12f);
+                }
             }
         }
     }
