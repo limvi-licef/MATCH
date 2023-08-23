@@ -217,9 +217,11 @@ namespace MATCH
                     }, AdminMenu.Panels.Right);
                     
                     //Add a button to the admin panel
-                    MATCH.AdminMenu.Instance.AddButton("Ajouter une plante", delegate
+                    MATCH.AdminMenu.Instance.AddInputWithButton("Nom", "Ajouter une plante", delegate (System.Object o, EventArgs e)
                     {
-                        AddPlant((InteractionPlants.Count + 1).ToString(), new Vector3(0.3f, 0.5f, 0.3f),
+                        Utilities.EventHandlerArgs.String arg = (Utilities.EventHandlerArgs.String)e;
+                        
+                        AddPlant(arg.m_text, new Vector3(0.3f, 0.5f, 0.3f),
                             new Vector3(-2.309f, 0.263f, 2.031f), Utilities.Materials.Colors.GreenGlowing, true, false,
                             true, transform);
                     }, AdminMenu.Panels.Middle);
@@ -620,74 +622,92 @@ namespace MATCH
                     if (InteractionPlants.Count() != 0)
                         InteractionPlants.RemoveAt(InteractionPlants.Count() - 1);
                 }
-                
-                public void AddPlant(string name, Vector3 scaling, Vector3 position, string color, bool navMeshTag, bool callbackOnTouch, bool registerObject, Transform parent)
-            {
-                GameObject cube = GameObject.CreatePrimitive(PrimitiveType.Cube);
 
-                // Set parent
-                cube.transform.parent = parent;
-
-                // Add buttons to interface
-                AdminMenu.Instance.AddButton("Plante " + name + " - Bring", delegate ()
+                public void AddPlant(string name, Vector3 scaling, Vector3 position, string color, bool navMeshTag,
+                    bool callbackOnTouch, bool registerObject, Transform parent)
                 {
-                    MATCH.Utilities.Utility.BringObject(cube.transform);
-                }, AdminMenu.Panels.Left);
-                AdminMenu.Instance.AddSwitchButton("Plante " + name + " - Hide", delegate ()
-                {
-                    MATCH.Utilities.Utility.ShowInteractionSurface(cube.transform, !cube.GetComponent<Renderer>().enabled);
-                }, AdminMenu.Panels.Left, AdminMenu.ButtonType.Hide);
+                    GameObject cube = GameObject.CreatePrimitive(PrimitiveType.Cube);
 
-                // Set color
-                MATCH.Utilities.Utility.SetColor(cube.transform.transform, color);
+                    // Set parent
+                    cube.transform.parent = parent;
 
-                // Set scaling and position
-                cube.transform.position = position;
-                cube.transform.localScale = scaling;
+                    // Add buttons to interface
+                    AdminMenu.Instance.AddButton("Plante " + name + " - Bring",
+                        delegate() { MATCH.Utilities.Utility.BringObject(cube.transform); }, AdminMenu.Panels.Left);
+                    AdminMenu.Instance.AddSwitchButton("Plante " + name + " - Hide",
+                        delegate()
+                        {
+                            MATCH.Utilities.Utility.ShowInteractionSurface(cube.transform,
+                                !cube.GetComponent<Renderer>().enabled);
+                        }, AdminMenu.Panels.Left, AdminMenu.ButtonType.Hide);
 
-                // Set the manipulation features
-                ObjectManipulator objectManipulator = cube.AddComponent<ObjectManipulator>();
-                cube.AddComponent<RotationAxisConstraint>().ConstraintOnRotation = Microsoft.MixedReality.Toolkit.Utilities.AxisFlags.XAxis | Microsoft.MixedReality.Toolkit.Utilities.AxisFlags.ZAxis;
-                BoundsControl boundsControl = cube.AddComponent<BoundsControl>();
-                boundsControl.ScaleHandlesConfig.ScaleBehavior = Microsoft.MixedReality.Toolkit.UI.BoundsControlTypes.HandleScaleMode.NonUniform;
-                boundsControl.TranslationHandlesConfig.ShowHandleForX = true;
-                boundsControl.TranslationHandlesConfig.ShowHandleForY = true;
-                boundsControl.TranslationHandlesConfig.ShowHandleForZ = true;
+                    // Set color
+                    MATCH.Utilities.Utility.SetColor(cube.transform.transform, color);
 
-                // Set optional features
-                if (navMeshTag)
-                {
-                    cube.AddComponent<NavMeshSourceTag>();
-                }
+                    // Set scaling and position
+                    cube.transform.position = position;
+                    cube.transform.localScale = scaling;
 
-                if (callbackOnTouch)
-                { // As we will be adding the MouseAssistanceBasic, it requires to encapsulate the cube in an empty gameobject, and to rename the cube "Child"
-                    GameObject child = cube;
-                    child.name = "Child";
-                    cube = new GameObject(name);
-                    child.transform.parent = cube.transform;
+                    // Set the manipulation features
+                    ObjectManipulator objectManipulator = cube.AddComponent<ObjectManipulator>();
+                    cube.AddComponent<RotationAxisConstraint>().ConstraintOnRotation =
+                        Microsoft.MixedReality.Toolkit.Utilities.AxisFlags.XAxis |
+                        Microsoft.MixedReality.Toolkit.Utilities.AxisFlags.ZAxis;
+                    BoundsControl boundsControl = cube.AddComponent<BoundsControl>();
+                    boundsControl.ScaleHandlesConfig.ScaleBehavior = Microsoft.MixedReality.Toolkit.UI
+                        .BoundsControlTypes.HandleScaleMode.NonUniform;
+                    boundsControl.TranslationHandlesConfig.ShowHandleForX = true;
+                    boundsControl.TranslationHandlesConfig.ShowHandleForY = true;
+                    boundsControl.TranslationHandlesConfig.ShowHandleForZ = true;
 
-                    cube.AddComponent<MATCH.Assistances.Basic>();
-                }
+                    // Set optional features
+                    if (navMeshTag)
+                    {
+                        cube.AddComponent<NavMeshSourceTag>();
+                    }
 
-                // Add the callbacks
-                boundsControl.ScaleStopped.AddListener(delegate
-                {
-                    EventResized?.Invoke(cube, EventArgs.Empty);
-                });
+                    if (callbackOnTouch)
+                    {
+                        // As we will be adding the MouseAssistanceBasic, it requires to encapsulate the cube in an empty gameobject, and to rename the cube "Child"
+                        GameObject child = cube;
+                        child.name = "Child";
+                        cube = new GameObject(name);
+                        child.transform.parent = cube.transform;
 
-                objectManipulator.OnManipulationEnded.AddListener(delegate (ManipulationEventData data)
-                {
-                    EventMoved?.Invoke(cube, EventArgs.Empty);
-                });
+                        cube.AddComponent<MATCH.Assistances.Basic>();
+                    }
 
-                Cubes.Add(cube);
+                    // Add the callbacks
+                    boundsControl.ScaleStopped.AddListener(delegate { EventResized?.Invoke(cube, EventArgs.Empty); });
 
-                if (registerObject)
-                {
-                    PlantsPositioningStorage.RegisterObject(name, cube.transform, cube.transform);
-                }
+                    objectManipulator.OnManipulationEnded.AddListener(delegate(ManipulationEventData data)
+                    {
+                        EventMoved?.Invoke(cube, EventArgs.Empty);
+                    });
+
+                    Cubes.Add(cube);
+
+                    if (registerObject)
+                    {
+                        PlantsPositioningStorage.RegisterObject(name, cube.transform, cube.transform);
+                    }
+
                     DialogAssistanceWaterHelp.AddButton(name, false, 0.12f);
+
+                    /*int currentIndex = DialogAssistanceWaterHelp.ButtonsController.Count - 1;
+                        
+                    DialogAssistanceWaterHelp.ButtonsController[currentIndex].EventButtonClicked += delegate (System.Object o, EventArgs e)
+                    {
+                        UpdateTextAssistancesDebugWindow("i is : " + currentIndex);
+                        if (DialogAssistanceWaterHelp.ButtonsController[currentIndex].IsChecked() == false)
+                        {
+                            InteractionPlants[currentIndex].CallbackShow();
+                            ShowLightpathToPlant(InteractionPlants[currentIndex]);
+                            DialogAssistanceWaterHelp.ButtonsController[currentIndex].CheckButton(true);
+                            LightPathsShown[currentIndex] = true;
+                            NextTimeCheck = Time.time + 5f;
+                        }
+                    };*/
                 }
             }
         }
