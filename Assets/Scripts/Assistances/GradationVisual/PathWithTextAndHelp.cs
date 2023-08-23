@@ -45,6 +45,7 @@ namespace MATCH.Assistances.GradationVisual
             // Path
             //Path = Assistances.Factory.Instance.CreatePathFinding(name + "_Path", destination, lineDestination, transform);
             Path = Assistances.Factory.Instance.CreatePathFindingWithFollowerBegin(name + "_Path", lineDestination, transform);
+            Path.SetHeightToFollowInteractionSurface(true);
         }
 
         /*public void SetPathStartAndEndPoint(Transform origin, Transform target)
@@ -192,7 +193,12 @@ namespace MATCH.Assistances.GradationVisual
                 }
 
             }*/
+        }
 
+            public override void Emphasize(bool enable)
+        {
+            DialogBackground.Emphasize(enable);
+            DialogIcon.Emphasize(enable);
         }
     }
 }

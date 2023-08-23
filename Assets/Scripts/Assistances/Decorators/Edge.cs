@@ -140,10 +140,10 @@ namespace MATCH
                     throw new NotImplementedException();
                 }
 
-                public void EnableWeavingHand(bool enable)
+                /*public void EnableWeavingHand(bool enable)
                 {
                     PanelToDecorate.EnableWeavingHand(enable);
-                }
+                }*/
 
                 public Assistance GetAssistance()
                 {
@@ -205,6 +205,11 @@ namespace MATCH
                 public Transform GetLinePath()
                 {
                     return PanelToDecorate.GetLinePath();
+                }
+
+                public override void Emphasize(bool enable)
+                {
+                    PanelToDecorate.GetAssistance().Emphasize(enable);
                 }
             }
         }

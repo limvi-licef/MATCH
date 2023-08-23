@@ -107,7 +107,9 @@ namespace MATCH
                 public MATCH.Assistances.Assistance CreateMaterial(MATCH.Assistances.IBasic toDecorate, string material)
                 {
                     Transform view = Instantiate(RefMaterial.transform);
-                    view.name = ((Assistance)toDecorate).name;
+                    view.name = ((Assistance)toDecorate).name + "_material";
+                    view.parent = toDecorate.GetAssistance().transform.parent;
+                    view.transform.localPosition = new Vector3(0, 0, 0);
 
                     MATCH.Assistances.Decorators.Material controller = view.gameObject.GetComponent<MATCH.Assistances.Decorators.Material>();
                     controller.SetAssistanceToDecorate(toDecorate);
@@ -120,6 +122,9 @@ namespace MATCH
                 {
                     Transform view = Utilities.Materials.Prefabs.Load(Utilities.Materials.Prefabs.DecoratorEdge);
                     Assistances.Decorators.Edge controller = view.GetComponent<Assistances.Decorators.Edge>();
+                    view.name = ((Assistance)toDecorate).name + "_edge";
+                    view.parent = toDecorate.GetAssistance().transform.parent;
+                    view.transform.localPosition = new Vector3(0, 0, 0);
 
                     controller.SetAssistanceToDecorate((Assistances.IPanel)toDecorate);
                     controller.SetEdgeColor(edgeMaterial);
@@ -132,7 +137,9 @@ namespace MATCH
                 public MATCH.Assistances.Assistance CreateSound(MATCH.Assistances.IAssistance toDecorate, string soundPath, float timeBetweenSoundShots)
                 {
                     Transform view = Utilities.Materials.Prefabs.Load(Utilities.Materials.Prefabs.DecoratorSound);
-                    view.name = toDecorate.GetAssistance().name;
+                    view.name = toDecorate.GetAssistance().name + "_sound";
+                    view.parent = toDecorate.GetAssistance().transform.parent;
+                    view.transform.localPosition = new Vector3(0, 0, 0);
 
                     Assistances.Decorators.Sound controller = view.GetComponent<Assistances.Decorators.Sound>();
 
@@ -145,7 +152,9 @@ namespace MATCH
                 {
                     bool IsArchVisible = false;
                     Transform view = Utilities.Materials.Prefabs.Load(Utilities.Materials.Prefabs.DecoratorArch);
-                    view.name = toDecorate.GetAssistance().name;
+                    view.name = toDecorate.GetAssistance().name + "_arch";
+                    view.parent = toDecorate.GetAssistance().transform.parent;
+                    view.transform.localPosition = new Vector3(0, 0, 0);
 
                     Assistances.Decorators.Arch controller = view.GetComponent<Assistances.Decorators.Arch>();
 
@@ -163,7 +172,9 @@ namespace MATCH
                 public MATCH.Assistances.Assistance CreateIcon(MATCH.Assistances.IAssistance toDecorate, string IconType, string IconColor)
                 {
                     Transform view = Utilities.Materials.Prefabs.Load(Utilities.Materials.Prefabs.DecoratorIcon);
-                    view.name = toDecorate.GetAssistance().name;
+                    view.name = toDecorate.GetAssistance().name + "_icon";
+                    view.parent = toDecorate.GetAssistance().transform.parent;
+                    view.transform.localPosition = new Vector3(0, 0, 0);
 
                     Assistances.Decorators.Icon controller = view.GetComponent<Assistances.Decorators.Icon>();
 
@@ -176,7 +187,9 @@ namespace MATCH
                 {
                     bool IsLineVisible = false;
                     Transform view = Utilities.Materials.Prefabs.Load(Utilities.Materials.Prefabs.DecoratorLine);
-                    view.name = toDecorate.GetAssistance().name;
+                    view.name = toDecorate.GetAssistance().name + "_linePath";
+                    view.parent = toDecorate.GetAssistance().transform.parent;
+                    view.transform.localPosition = new Vector3(0, 0, 0);
 
                     if (lineMaterial != null)
                     {
@@ -196,7 +209,9 @@ namespace MATCH
                 {
                     bool IsLineVisible = false;
                     Transform view = Utilities.Materials.Prefabs.Load(Utilities.Materials.Prefabs.DecoratorLine);
-                    view.name = toDecorate.GetAssistance().name;
+                    view.name = toDecorate.GetAssistance().name + "_linePathWithTexture";
+                    view.parent = toDecorate.GetAssistance().transform.parent;
+                    view.transform.localPosition = new Vector3(0, 0, 0);
 
                     if (texture != null)
                     {

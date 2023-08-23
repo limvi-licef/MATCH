@@ -59,7 +59,7 @@ namespace MATCH
 
                     if (IconColor != null && IconType != null)
                     {
-                        IconView = Assistances.Factory.Instance.CreateIcon(true, new Vector3(0, 0, 0), new Vector3(1,1,1), true, transform /*GetTransform()*/, IconType, IconColor);
+                        IconView = Assistances.Factory.Instance.CreateIcon(true, new Vector3(0, 0, 0), new Vector3(1, 1, 1), true, transform /*GetTransform()*/, IconType, IconColor);
                         IconView.SetScale(PanelToDecorate.GetIcon().GetScale());
                         IconView.SetLocalPositionObject(PanelToDecorate.GetIcon().GetLocalPositionObject());
                     }
@@ -112,11 +112,11 @@ namespace MATCH
                             IconView.GetIconObjTransform().gameObject.SetActive(true);
                             IconView.GetTransform().GetComponent<BoxCollider>().enabled = false;
                             PanelToDecorate.GetIcon().GetIconObjTransform().gameObject.SetActive(false); //The decorated panels transform become invisible
-                            //PanelToDecorate.GetIcon().transform.GetComponent<BoxCollider>().enabled = false;
+                                                                                                         //PanelToDecorate.GetIcon().transform.GetComponent<BoxCollider>().enabled = false;
 
                             //IconView.SetScale(0.05f, 0.05f, 0.05f); // Set the scale to having tiny icon that feat in the circle ! This rescale is just for the dialog2
                             //IconView.SetLocalPositionObject(0.1075f, 0.068f, -0.02f); //Set position to be in center of the circle
-                            
+
 
                             callback?.Invoke(this, e);
                         }, withAnimation);
@@ -185,6 +185,29 @@ namespace MATCH
                 public Transform GetLinePath()
                 {
                     return PanelToDecorate.GetLinePath();
+                }
+
+                public override void Emphasize(bool enable)
+                {
+                    if (enable)
+                    {
+                        Utilities.Emphasize emphasize = gameObject.AddComponent<Utilities.Emphasize>();
+
+                        emphasize.AddMaterial(IconView.GetIconObjTransform());
+                        emphasize.EnableEmphasize(true);
+
+                    }
+                    else
+                    {
+                        Utilities.Emphasize emphasize = null;
+
+                        if (gameObject.TryGetComponent<Utilities.Emphasize>(out emphasize))
+                        {
+                            emphasize.EnableEmphasize(false);
+
+                            Destroy(emphasize);
+                        }
+                    }
                 }
             }
         }

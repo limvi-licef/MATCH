@@ -30,7 +30,7 @@ namespace MATCH
             //public void SetBackgroundColor(string colorName);
             //public void SetEdgeColor(string colorName);
             //public void SetEdgeThickness(float thickness);
-            public void EnableWeavingHand(bool enable);
+            //public void EnableWeavingHand(bool enable);
             public Transform GetBackground();
         }
     }

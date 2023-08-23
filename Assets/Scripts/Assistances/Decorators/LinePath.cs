@@ -279,6 +279,11 @@ namespace MATCH
 
                     IsDisplayed = true;
                 }
+
+                public override void Emphasize(bool enable)
+                {
+                    PanelToDecorate.GetAssistance().Emphasize(enable);
+                }
             }
         }
     }

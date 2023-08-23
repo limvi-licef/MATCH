@@ -118,10 +118,10 @@ namespace MATCH
                     PanelToDecorate.GetAssistance().ShowHelp(show, callback, withAnimation);
                 }
 
-                public void EnableWeavingHand(bool enable)
+                /*public void EnableWeavingHand(bool enable)
                 {
                     PanelToDecorate.EnableWeavingHand(enable);
-                }
+                }*/
 
                 public override Transform GetTransform()
                 {
@@ -171,6 +171,29 @@ namespace MATCH
                 public Transform GetLinePath()
                 {
                     return PanelToDecorate.GetLinePath();
+                }
+
+                public override void Emphasize(bool enable)
+                {
+                    if (enable)
+                    {
+                        Utilities.Emphasize emphasize = gameObject.AddComponent<Utilities.Emphasize>();
+
+                        emphasize.AddMaterial(BackgroundView);
+                        emphasize.EnableEmphasize(true);
+
+                    }
+                    else
+                    {
+                        Utilities.Emphasize emphasize = null;
+
+                        if (gameObject.TryGetComponent<Utilities.Emphasize>(out emphasize))
+                        {
+                            emphasize.EnableEmphasize(false);
+
+                            Destroy(emphasize);
+                        }
+                    }
                 }
             }
         }

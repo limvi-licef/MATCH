@@ -330,6 +330,11 @@ namespace MATCH
             {
                 return null;
             }
+
+            public override void Emphasize(bool enable)
+            {
+                DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Warning, "Not implemented yet");
+            }
         }
     }
 }

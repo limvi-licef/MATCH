@@ -86,11 +86,6 @@ namespace MATCH
                 dialog.ButtonsController.Last().Type = type;
             }
 
-            /*private void AddButton(ref Dialog dialog, EventHandler callback, string text, Assistances.Buttons.Button.ButtonType type, bool autoScaling, float fontSizeCoeffA, float fontSizeCoeffB)
-            {
-                AddButton(ref dialog, callback, text, type, autoScaling, fontSizeCoeffA * text.Length + fontSizeCoeffB);
-            }*/
-
             public MATCH.Assistances.Dialogs.Dialog1 CreateDialogNoButton(string title, string description, Transform parent)
             {
                 MATCH.Assistances.Dialogs.Dialog1 controller = InitializeDialog(DialogsTypes.Assistance, title, description, parent);
@@ -151,7 +146,6 @@ namespace MATCH
 
                 Dialogs.Dialog2 controller = view.GetComponent<Dialogs.Dialog2>();
                 controller.SetTitle(title, 0.15f);
-                //float sizeDescriptionText = -0.0005f * description.Length + 0.206f;
                 float sizeDescriptionText = -0.0003f * description.Length + 0.17f;
                 controller.SetDescription(description, sizeDescriptionText);
                 controller.EnableBillboard(true);

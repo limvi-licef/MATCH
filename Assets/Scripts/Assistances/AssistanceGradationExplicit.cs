@@ -277,7 +277,9 @@ namespace MATCH
                     new NPBehave.Action(() => {
                         AssistancesGradation.AssistanceCurrent.ShowMinimalGradation(Utilities.Utility.GetEventHandlerEmpty());
 
-                        if (Utilities.Utility.CalculateDistancePoints(Camera.main.transform.position, AssistancesGradation.AssistanceCurrent.GetCurrentAssistance().transform.position) > FarFromAssistanceWhenLookingAtIt)
+                        Vector3 worldPositionAssistanceBeta = AssistancesGradation.AssistanceCurrent.GetCurrentAssistance().transform.position;
+
+                        if (Utilities.Utility.CalculateDistancePoints(Camera.main.transform.position, worldPositionAssistanceBeta) > FarFromAssistanceWhenLookingAtIt)
                         {
                             UpdateConditionWithMatrix(ConditionIsFar);
 
@@ -291,7 +293,7 @@ namespace MATCH
                                 InfManager.RegisterInference(timer);
                                 timer.StartCounter();
                                 InfManager.UnregisterInference(InferenceComingClose);
-                                AssistancesGradation.AssistanceCurrent.GetCurrentAssistance().ShowMovingHand(false);
+                                AssistancesGradation.AssistanceCurrent.GetCurrentAssistance().Emphasize(false);
                             }, AssistancesGradation.AssistanceCurrent.GetCurrentAssistance().gameObject, DistanceFromObject);
 
                             InfManager.RegisterInference(distanceComing);
@@ -351,7 +353,7 @@ namespace MATCH
                     new NPBehave.Action(() => {
                         //UpdateTextAssistancesDebugWindow("BTGradation - Gamma");
                         MATCH.Utilities.Logger.Instance.Log(this.GetId(), MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, "BTGradation - Gamma");
-                        AssistancesGradation.AssistanceCurrent.GetCurrentAssistance().ShowMovingHand(true);
+                        AssistancesGradation.AssistanceCurrent.GetCurrentAssistance().Emphasize(true);
                     }),
                     new WaitUntilStopped()
                     );

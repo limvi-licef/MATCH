@@ -67,10 +67,10 @@ namespace MATCH
                         return AssistanceDecorated.GetBackground();
                     }
 
-                    public void EnableWeavingHand(bool enable)
+                    /*public void EnableWeavingHand(bool enable)
                     {
                         AssistanceDecorated.EnableWeavingHand(enable);
-                    }
+                    }*/
 
                     public Assistance GetRootDecoratedAssistance()
                     {
@@ -120,6 +120,11 @@ namespace MATCH
                     public Transform GetLinePath()
                     {
                         return AssistanceToAdapt.GetLinePath();
+                    }
+
+                    public override void Emphasize(bool enable)
+                    {
+                        GetAssistance().Emphasize(enable);
                     }
                 }
             }

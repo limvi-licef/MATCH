@@ -55,6 +55,9 @@ namespace MATCH
 
                 public event EventHandler EventPositionAdjustedToHead;
 
+                Material EmphasizeMaterialBackground;
+                Material EmphasizeMaterialIcon;
+
                 protected override void Awake()
                 {
                     base.Awake();
@@ -303,26 +306,6 @@ namespace MATCH
                     return false;
                 }
 
-                /*public void SetBackgroundColor(string colorName)
-                {
-                    BackgroundView.GetComponent<Renderer>().material = Resources.Load(colorName, typeof(Material)) as Material;
-                }*/
-
-                /*public void SetEdgeColor(string colorName)
-                {
-                    throw new NotImplementedException();
-                }*/
-
-                /*public void SetEdgeThickness(float thickness)
-                {
-                    throw new NotImplementedException();
-                }*/
-
-                public void EnableWeavingHand(bool enable)
-                {
-                    throw new NotImplementedException();
-                }
-
                 Assistance IAssistance.GetAssistance()
                 {
                     return this;
@@ -371,6 +354,30 @@ namespace MATCH
                 public Transform GetLinePath()
                 {
                     return LinePath;
+                }
+
+                public override void Emphasize(bool enable)
+                {
+                    if (enable)
+                    {
+                        Utilities.Emphasize emphasize = gameObject.AddComponent<Utilities.Emphasize>();
+
+                        emphasize.AddMaterial(BackgroundMessage);
+                        emphasize.AddMaterial(BackgroundIcon);
+                        emphasize.EnableEmphasize(true);
+
+                    }
+                    else
+                    {
+                        Utilities.Emphasize emphasize = null;
+
+                        if (gameObject.TryGetComponent<Utilities.Emphasize>(out emphasize))
+                        {
+                            emphasize.EnableEmphasize(false);
+
+                            Destroy(emphasize);
+                        }
+                    }
                 }
             }
 

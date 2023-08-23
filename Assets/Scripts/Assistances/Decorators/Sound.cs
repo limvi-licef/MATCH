@@ -189,6 +189,11 @@ namespace MATCH
                 {
                     return PanelToDecorate.GetLinePath();
                 }
+
+                public override void Emphasize(bool enable)
+                {
+                    PanelToDecorate.GetAssistance().Emphasize(enable);
+                }
             }
         }
     }

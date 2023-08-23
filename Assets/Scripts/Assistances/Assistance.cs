@@ -32,7 +32,7 @@ namespace MATCH
             public event EventHandler EventIsHidden; // Emitted when the assistance is hidden. Does not replace the event handler, comes with it.
             public bool IsDisplayed { get; protected set; } = false; // Different from "activeself": in those assistances the parent component is alsways active, so "activeself" is not a good indicator to know if the assistance is shown or not. Use this function instead.
 
-            private Transform Hand = null;
+            //private Transform Hand = null;
 
             protected void OnHelpButtonClicked(Assistances.Buttons.Button.ButtonType type)
             {
@@ -89,10 +89,12 @@ namespace MATCH
 
             public abstract bool IsDecorator(); // Must specify if the assistance is a decorator of another assistance or not
 
-            public void ShowMovingHand(bool show)
-            {
+            public abstract void Emphasize(bool enable);
+            /*{
                 if (Hand == null)
                 {
+
+
 
                     //Hand = GameObject.CreatePrimitive(PrimitiveType.Cylinder);
                     Hand = Utilities.Materials.Prefabs.Load(Utilities.Materials.Prefabs.AssistanceHand);
@@ -108,7 +110,7 @@ namespace MATCH
                     Hand.transform.localPosition = new Vector3(Hand.transform.localPosition.x, Hand.transform.localPosition.y+0.3f, Hand.transform.localPosition.z);
                 }
 
-                if (show)
+                if (emphasize)
                 {
                     Hand.gameObject.SetActive(true);
                     // Start rotation
@@ -118,7 +120,7 @@ namespace MATCH
                 {
                     Hand.gameObject.SetActive(false);
                 }
-            }
+            }*/
         }
 
     }

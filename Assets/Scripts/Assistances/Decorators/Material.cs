@@ -124,6 +124,11 @@ namespace MATCH
                 {
                     return AssistanceToDecorate.GetLinePath();
                 }
+
+                public override void Emphasize(bool enable)
+                {
+                    AssistanceToDecorate.GetAssistance().Emphasize(enable);
+                }
             }
         }
     }

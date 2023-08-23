@@ -321,6 +321,29 @@ namespace MATCH
                 {
                     return LinePath;
                 }
+
+                public override void Emphasize(bool enable)
+                {
+                    if (enable)
+                    {
+                        Utilities.Emphasize emphasize = gameObject.AddComponent<Utilities.Emphasize>();
+
+                        emphasize.AddMaterial(BackgroundView);
+                        emphasize.EnableEmphasize(true);
+
+                    }
+                    else
+                    {
+                        Utilities.Emphasize emphasize = null;
+
+                        if (gameObject.TryGetComponent<Utilities.Emphasize>(out emphasize))
+                        {
+                            emphasize.EnableEmphasize(false);
+
+                            Destroy(emphasize);
+                        }
+                    }
+                }
             }
         }
     }

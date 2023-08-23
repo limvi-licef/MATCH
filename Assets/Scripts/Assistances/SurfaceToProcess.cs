@@ -386,6 +386,33 @@ namespace MATCH
             {
                 return null;
             }
+
+            public override void Emphasize(bool enable)
+            {
+                if (enable)
+                {
+                    Utilities.Emphasize emphasize = gameObject.AddComponent<Utilities.Emphasize>();
+
+                    foreach (KeyValuePair<Tuple<float, float>, Tuple<ProcessingSurfaceElement, bool>> tempKeyValue in CubesTouched)
+                    {
+                        emphasize.AddMaterial(tempKeyValue.Value.Item1.transform);
+                    }
+
+                    emphasize.EnableEmphasize(true);
+
+                }
+                else
+                {
+                    Utilities.Emphasize emphasize = null;
+
+                    if (gameObject.TryGetComponent<Utilities.Emphasize>(out emphasize))
+                    {
+                        emphasize.EnableEmphasize(false);
+
+                        Destroy(emphasize);
+                    }
+                }
+            }
         }
     }
 }

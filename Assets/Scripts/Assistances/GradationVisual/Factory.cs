@@ -67,18 +67,13 @@ namespace MATCH
                 public GradationVisual CreateExclamationMark(string name, Transform parent)
                 {
                     GradationVisual assistance = Assistances.Factory.Instance.CreateAssistanceGradationAttention(name);
-                    Assistances.Icon assistanceBase = Assistances.Factory.Instance.CreateIcon(true, new Vector3(0,0,0), new Vector3(0.5f,0.5f,0.5f), true, parent, /*null*/Utilities.Materials.Icon.ExclamationMark, Utilities.Materials.Colors.WhiteMetallic);
+                    Assistances.Icon assistanceBase = Assistances.Factory.Instance.CreateIcon(true, new Vector3(0,0,0), new Vector3(0.5f,0.5f,0.5f), true, parent, /*null*/Utilities.Materials.Icon.ExclamationMark, Utilities.Materials.Colors.WhiteMetallicAdjustHSV);
                     assistanceBase.name = name + "_base";
-                    /*Decorators.Icon assistance1 = (Decorators.Icon) assistance.AddAssistance(Assistances.Decorators.Factory.Instance.CreateIcon(assistanceBase, Utilities.Materials.Icon.Club, Utilities.Materials.Colors.WhiteMetallic));
-                    Decorators.Icon assistance2 = (Decorators.Icon) assistance.AddAssistance(Assistances.Decorators.Factory.Instance.CreateIcon(assistance1, Utilities.Materials.Icon.Club, Utilities.Materials.Colors.WhiteMetallic));
-                    assistance2.GetIcon().SetMaterial(Utilities.Materials.Colors.GreenGlowing);
-                    Decorators.Icon assistance3 = (Decorators.Icon)assistance.AddAssistance(Assistances.Decorators.Factory.Instance.CreateIcon(assistance2, Utilities.Materials.Icon.Diamond, Utilities.Materials.Colors.CyanGlowing));
-                    //assistance2.GetIcon().SetMaterial(Utilities.Materials.Colors.GreenGlowing);*/
 
-                    assistance.AddAssistance(Assistances.Decorators.Factory.Instance.CreateMaterial(assistanceBase, Utilities.Materials.Colors.WhiteMetallic));
-                    assistance.AddAssistance(Assistances.Decorators.Factory.Instance.CreateMaterial(assistanceBase, Utilities.Materials.Colors.YellowGlowing));
-                    assistance.AddAssistance(Assistances.Decorators.Factory.Instance.CreateMaterial(assistanceBase, Utilities.Materials.Colors.RedGlowing));
-                    assistance.AddAssistance(Assistances.Decorators.Factory.Instance.CreateLinePathWithTexture(assistanceBase, Utilities.Materials.Colors.Cyan, 0.039f, true));
+                    assistance.AddAssistance(Assistances.Decorators.Factory.Instance.CreateMaterial(assistanceBase, Utilities.Materials.Colors.CyanAdjustHSV));
+                    assistance.AddAssistance(Assistances.Decorators.Factory.Instance.CreateMaterial(assistanceBase, Utilities.Materials.Colors.YellowAdjustHSV));
+                    assistance.AddAssistance(Assistances.Decorators.Factory.Instance.CreateMaterial(assistanceBase, Utilities.Materials.Colors.RedAdjustHSV));
+                    assistance.AddAssistance(Assistances.Decorators.Factory.Instance.CreateLinePathWithTexture(assistanceBase, Utilities.Materials.Colors.CyanAdjustHSV, 0.039f, true));
 
                     assistance.transform.localPosition = new Vector3(0, 0, 0);
 
@@ -296,21 +291,21 @@ namespace MATCH
                     toReturn.name = assistanceName;
 
                     //Premier niveau de gradation avec 2 décorateurs
-                    Decorators.BackgroundColorIcon2 decorator1a = (Decorators.BackgroundColorIcon2)Assistances.Decorators.Factory.Instance.CreateBackgroundIcon(dialog, Utilities.Materials.Colors.Cyan,true);
-                    Decorators.BackgroundColorMessage2 decorator1 = (Decorators.BackgroundColorMessage2)Assistances.Decorators.Factory.Instance.CreateBackgroundMessage(decorator1a, Utilities.Materials.Colors.Cyan);
+                    Decorators.BackgroundColorIcon2 decorator1a = (Decorators.BackgroundColorIcon2)Assistances.Decorators.Factory.Instance.CreateBackgroundIcon(dialog, Utilities.Materials.Colors.CyanAdjustHSV,true);
+                    Decorators.BackgroundColorMessage2 decorator1 = (Decorators.BackgroundColorMessage2)Assistances.Decorators.Factory.Instance.CreateBackgroundMessage(decorator1a, Utilities.Materials.Colors.CyanAdjustHSV);
                     toReturn.AddAssistance(decorator1);
 
                     //Deuxieme niveau de gradation
-                    Decorators.BackgroundColorIcon2 decorator2 = (Decorators.BackgroundColorIcon2)Assistances.Decorators.Factory.Instance.CreateBackgroundIcon(decorator1, Utilities.Materials.Colors.Orange,true);
+                    Decorators.BackgroundColorIcon2 decorator2 = (Decorators.BackgroundColorIcon2)Assistances.Decorators.Factory.Instance.CreateBackgroundIcon(decorator1, Utilities.Materials.Colors.OrangeAdjustHSV,true);
                     toReturn.AddAssistance(decorator2);
 
                     //Troisieme niveau de gradation
                     //toReturn.AddAssistance(Assistances.Decorators.Factory.Instance.CreateEdge(dialog, Utilities.Materials.Colors.OrangeGlowing));
-                    Decorators.BackgroundColorMessage2 decorator3 = (Decorators.BackgroundColorMessage2)Assistances.Decorators.Factory.Instance.CreateBackgroundMessage(decorator2, Utilities.Materials.Colors.Orange);
+                    Decorators.BackgroundColorMessage2 decorator3 = (Decorators.BackgroundColorMessage2)Assistances.Decorators.Factory.Instance.CreateBackgroundMessage(decorator2, Utilities.Materials.Colors.OrangeAdjustHSV);
                     toReturn.AddAssistance(decorator3);
 
                     //Qualitrème niveau de gradation
-                    Decorators.LinePath decorator4 = (Decorators.LinePath)Decorators.Factory.Instance.CreateLinePathWithTexture(decorator3, /*Utilities.Materials.Colors.Orange*/ /*Utilities.Materials.Textures.ArrowProgressive*/ Utilities.Materials.Colors.CyanGlowing, /*0.1f*/ 0.039f, true);
+                    Decorators.LinePath decorator4 = (Decorators.LinePath)Decorators.Factory.Instance.CreateLinePathWithTexture(decorator3, /*Utilities.Materials.Colors.Orange*/ /*Utilities.Materials.Textures.ArrowProgressive*/ Utilities.Materials.Colors.CyanAdjustHSV, /*0.1f*/ 0.039f, true);
                     toReturn.AddAssistance(decorator4);
 
                     return toReturn;

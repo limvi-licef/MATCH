@@ -215,6 +215,11 @@ namespace MATCH
             {
                 return false;
             }
+
+            public override void Emphasize(bool enable)
+            {
+                TextController.Emphasize(enable);
+            }
         }
 
     }
