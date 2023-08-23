@@ -267,6 +267,8 @@ PlayerSettings:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   metroInputSource: 0
   wsaTransparentSwapchain: 0
   m_HolographicPauseOnTrackingLoss: 1
@@ -686,12 +688,12 @@ PlayerSettings:
   m_RenderingPath: 1
   m_MobileRenderingPath: 1
   metroPackageName: MATCH
-  metroPackageVersion: 1.0.0.0
-  metroCertificatePath: Assets\WSATestCertificate.pfx
+  metroPackageVersion: 1.0.0.1
+  metroCertificatePath: Assets/WSATestCertificate.pfx
   metroCertificatePassword: 
-  metroCertificateSubject: DefaultCompany
-  metroCertificateIssuer: DefaultCompany
-  metroCertificateNotAfter: 009512748736d901
+  metroCertificateSubject: Laboratoire DOMUS - Guillaume Spalla
+  metroCertificateIssuer: Laboratoire DOMUS - Guillaume Spalla
+  metroCertificateNotAfter: 8088148c108dda01
   metroApplicationDescription: MATCH
   wsaImages: {}
   metroTileShortName: Mouse

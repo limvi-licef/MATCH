@@ -21,6 +21,7 @@ using UnityEngine;
 using System.Timers;
 using System.Reflection;
 using System.Linq;
+using MATCH.Assistances.GradationVisual;
 
 namespace MATCH
 {
@@ -320,6 +321,18 @@ namespace MATCH
                 ArchWithTextAndHelp controller = view.GetComponent<ArchWithTextAndHelp>();
                 view.name = name;
                 controller.SetArchStartAndEndPoint(origin, target);
+
+                return controller;
+            }
+
+            public PathWithTextAndHelp CreateAssistancePath(string name, Transform origin, Transform target, Transform parent)
+            {
+                Transform view = Utilities.Materials.Prefabs.Load(Utilities.Materials.Prefabs.AssistanceLightPath);
+                view.parent = parent;
+
+                PathWithTextAndHelp controller = view.GetComponent<PathWithTextAndHelp>();
+                view.name = name;
+                controller.SetPathStartAndEndPoint(origin, target);
 
                 return controller;
             }
