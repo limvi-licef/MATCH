@@ -64,7 +64,8 @@ namespace MATCH
             string InferenceTimerStart = "AssistanceGradationExplicit-Timer-Start";
             string InferenceTimer30Seconds = "AssistanceGradationExplicit-Timer-30-seconds";
             string InferenceComingClose = "AssistanceGradationExplicit-ComingClose";
-
+            //string InferenceFocusLost = "AssistanceGradationExplicit-FocusLost";
+            string InferenceLeftObject = "AssistanceGradationExplicit-LeftObject";
 
             float DistanceFromObject = 1.5f;
 
@@ -220,6 +221,20 @@ namespace MATCH
                 return temp;
             }
 
+            void RegisterInferenceFocus()
+            {
+                Inferences.ObjectFocused inf = new Inferences.ObjectFocused(InferenceFocused, delegate (System.Object o, EventArgs e)
+                {
+                    UpdateConditionWithMatrix(ConditionsIsFocused);
+                    InfManager.UnregisterInference(InferenceFocused);
+                    InfManager.UnregisterInference(InferenceTimer2Minutes);
+
+                    //InfManager.RegisterInference(infLostFocus);
+
+                }, AssistancesGradation.AssistanceCurrent.GetCurrentAssistance().GetTransform().gameObject, 1);
+                InfManager.RegisterInference(inf);
+            }
+
             private Sequence AssistanceAlpha()
             {
                 Sequence temp = new Sequence(
@@ -241,15 +256,19 @@ namespace MATCH
                         }
                         else
                         {
-                            Inferences.ObjectFocused inf = new Inferences.ObjectFocused(InferenceFocused, delegate (System.Object o, EventArgs e)
-                            {
-                                UpdateConditionWithMatrix(ConditionsIsFocused);
-                                InfManager.UnregisterInference(InferenceFocused);
-                                InfManager.UnregisterInference(InferenceTimer2Minutes);
-                            }, AssistancesGradation.AssistanceCurrent.GetCurrentAssistance().GetTransform().gameObject, 1);
-                            InfManager.RegisterInference(inf);
+                                /*Inferences. infLostFocus = new Inferences.ObjectLostFocused(InferenceFocusLost, delegate (System.Object o, EventArgs e)
+                                {
+                                    UpdateConditionWithMatrix(ConditionDisplayedSince2Minutes);
+                                    InfManager.UnregisterInference(InferenceFocusLost);
 
-                            Inferences.Timer timer = new Inferences.Timer(InferenceTimer2Minutes, 15, delegate (System.Object o, EventArgs e)
+                                }, AssistancesGradation.AssistanceCurrent.GetCurrentAssistance().GetTransform().gameObject);*/
+
+
+                                RegisterInferenceFocus();
+                            
+
+
+                                Inferences.Timer timer = new Inferences.Timer(InferenceTimer2Minutes, 15, delegate (System.Object o, EventArgs e)
                             { // Currently, manages only one level of visual gradation - to manage more than one, an extra level in the behavior tree might be required
                                 UpdateConditionWithMatrix(ConditionDisplayedSince2Minutes);
                                 InfManager.UnregisterInference(InferenceTimer2Minutes);
@@ -271,6 +290,19 @@ namespace MATCH
 
             }
 
+            void RegisterInferenceLeftObject()
+            {
+                Inferences.DistanceLeaving infLeftObject = new Inferences.DistanceLeaving(InferenceLeftObject, delegate (System.Object oo, EventArgs ee)
+                {
+                    InfManager.UnregisterInference(InferenceLeftObject);
+                    InfManager.UnregisterInference(InferenceTimer30Seconds);
+                    RegisterInferenceFocus();
+                    UpdateConditionWithMatrix(ConditionDisplayedSince2Minutes);
+
+                }, AssistancesGradation.AssistanceCurrent.GetCurrentAssistance().gameObject, DistanceFromObject+1.0f);
+                InfManager.RegisterInference(infLeftObject);
+            }
+
             private Sequence AssistanceBeta()
             {
                 Sequence temp = new Sequence(
@@ -285,6 +317,8 @@ namespace MATCH
 
                             Inferences.DistanceComing distanceComing = new Inferences.DistanceComing(InferenceComingClose, delegate (System.Object o, EventArgs e)
                             {
+                                RegisterInferenceLeftObject();
+
                                 Inferences.Timer timer = new Inferences.Timer(InferenceTimer30Seconds, 10, delegate (System.Object o, EventArgs e)
                                 {
                                     UpdateConditionWithMatrix(ConditionWaitingSince30Seconds);
@@ -324,6 +358,7 @@ namespace MATCH
             {
                 Sequence temp = new Sequence(
                     new NPBehave.Action(() => {
+                        AssistancesGradation.AssistanceCurrent.GetCurrentAssistance().ShowHelp(false, Utilities.Utility.GetEventHandlerEmpty(), false);
                         AssistancesGradation.AssistanceCurrent.ShowNextGradation(Utilities.Utility.GetEventHandlerEmpty());
                         //UpdateTextAssistancesDebugWindow("BTGradation - Delta");
                         MATCH.Utilities.Logger.Instance.Log(this.GetId(), MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, "BTGradation - Delta");
@@ -399,6 +434,8 @@ namespace MATCH
                 Sequence temp = new Sequence(
                     new NPBehave.Action(() =>
                     {
+                        RegisterInferenceLeftObject();
+
                         AssistancesGradation.AssistanceCurrent.ShowHelpCurrentGradation(true, Utilities.Utility.GetEventHandlerEmpty());
                         //UpdateTextAssistancesDebugWindow("BTGradation - Zeta");
                         MATCH.Utilities.Logger.Instance.Log(this.GetId(), MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, "BTGradation - Zeta");

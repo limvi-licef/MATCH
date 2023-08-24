@@ -45,7 +45,7 @@ namespace MATCH
             Dictionary<Tuple<float, float>, Tuple<ProcessingSurfaceElement, bool>> CubesTouched;
             private InteractionSurface SurfaceToPopulate;
 
-            private MATCH.Assistances.Dialogs.Dialog1 Help;
+            //private MATCH.Assistances.Dialogs.Dialog1 Help;
 
             private void Awake()
             {
@@ -69,8 +69,8 @@ namespace MATCH
                 List<Assistances.Buttons.Button.ButtonType> buttonsType = new List<Buttons.Button.ButtonType>();
                 buttonsType.Add(Buttons.Button.ButtonType.Yes);
                 buttonsType.Add(Buttons.Button.ButtonType.No);
-                Help = Assistances.Factory.Instance.CreateButtons("", "Besoin d'aide?", buttonsText, buttonsCallback, buttonsType, transform);
-                Help.GetTransform().localPosition = new Vector3(0, 0.2f, 0);
+                /*Help = Assistances.Factory.Instance.CreateButtons("", "Besoin d'aide?", buttonsText, buttonsCallback, buttonsType, transform);
+                Help.GetTransform().localPosition = new Vector3(0, 0.2f, 0);*/
 
                 // Sanity checks
                 if (HologramToUseToPopulateSurfaceController.GetComponent<ProcessingSurfaceElement>() == null)
@@ -326,7 +326,8 @@ namespace MATCH
 
             public override void ShowHelp(bool show, EventHandler callback, bool withAnimation)
             {
-                if (show)
+                DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "No help implemented for this assistance");
+                /*if (show)
                 {
                     if (Help.IsDisplayed == false)
                     {
@@ -339,7 +340,7 @@ namespace MATCH
                     {
                         Help.Hide(callback, withAnimation);
                     }
-                }
+                }*/
             }
 
             public override Transform GetTransform()

@@ -277,6 +277,9 @@ namespace MATCH
                         Line.SetPosition(i, corner);
                     }
 
+                    gameObject.SetActive(true);
+
+
                     IsDisplayed = true;
                 }
 

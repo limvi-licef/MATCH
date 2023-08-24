@@ -47,6 +47,7 @@ namespace MATCH
                 string ConditionTableTouchedButNoRag = "TableTouchedButNoRag";
                 string ConditionDidNotGoToCalendar = "DidNotGoToCalendar";
                 string ConditionStandBy = "StandBy";
+                string ConditionCloseToCalendar = "CloseToCalendar";
 
                 string InferenceDidNotStartDusting = "DidNotStartCleaning";
                 string InferenceInterruptDusting = "InterruptedDusting";
@@ -138,25 +139,28 @@ namespace MATCH
                     AddCondition(ConditionTableTouchedButNoRag, false);
                     AddCondition(ConditionDidNotGoToCalendar, false);
                     AddCondition(ConditionStandBy, true);
+                    AddCondition(ConditionCloseToCalendar, false);
 
                     int nbConditions = GetNumberOfConditions();
 
-                    AddConditionsUpdate(ConditionTableCleaned, new bool[]                           { true,  false, false, false, false, false, false, false, false, false });
-                    AddConditionsUpdate(ConditionRagNotTakenButHelpReceived, new bool[]             { false, true,  false, false, false, false, false, false, false, false });
-                    AddConditionsUpdate(ConditionRagTaken, new bool[]                               { false, false, true,  false, false, false, false, false, false, false });
-                    AddConditionsUpdate(ConditionDidNotStartCleaning, new bool[]                    { false, false, true,  true,  false, false, false, false, false, false });
-                    AddConditionsUpdate(ConditionCleaningInterrupted, new bool[]                    { false, false, true,  false, true,  false, false, false, false, false });
-                    AddConditionsUpdate(ConditionNewPartCleaned, new bool[]                         { false, false, true,  false, false, true,  false, false, false, false });
-                    AddConditionsUpdate(ConditionProcessRelatedToNewPartsCleanedDone, new bool[]    { false, false, true,  false, false, false, true,  false, false, false });
-                    AddConditionsUpdate(ConditionTableTouchedButNoRag, new bool[]                   { false, false, false, false, false, false, false, true,  false, false });
-                    AddConditionsUpdate(ConditionDidNotGoToCalendar, new bool[]                     { false, false, false,  false, false, false, false, false, true, false  });
-                    AddConditionsUpdate(ConditionStandBy, new bool[] { false, false, false, false, false, false, false, false, false, true });
+                    AddConditionsUpdate(ConditionTableCleaned, new bool[]                           { true,  false, false, false, false, false, false, false, false, false, false });
+                    AddConditionsUpdate(ConditionRagNotTakenButHelpReceived, new bool[]             { false, true,  false, false, false, false, false, false, false, false, false });
+                    AddConditionsUpdate(ConditionRagTaken, new bool[]                               { false, false, true,  false, false, false, false, false, false, false, false });
+                    AddConditionsUpdate(ConditionDidNotStartCleaning, new bool[]                    { false, false, true,  true,  false, false, false, false, false, false, false });
+                    AddConditionsUpdate(ConditionCleaningInterrupted, new bool[]                    { false, false, true,  false, true,  false, false, false, false, false, false });
+                    AddConditionsUpdate(ConditionNewPartCleaned, new bool[]                         { false, false, true,  false, false, true,  false, false, false, false, false });
+                    AddConditionsUpdate(ConditionProcessRelatedToNewPartsCleanedDone, new bool[]    { false, false, true,  false, false, false, true,  false, false, false, false });
+                    AddConditionsUpdate(ConditionTableTouchedButNoRag, new bool[]                   { false, false, false, false, false, false, false, true,  false, false, false });
+                    AddConditionsUpdate(ConditionDidNotGoToCalendar, new bool[]                     { false, false, false, false, false, false, false, false, true,  false, false  });
+                    AddConditionsUpdate(ConditionStandBy, new bool[]                                { false, false, false, false, false, false, false, false, false, true,  false });
+                    AddConditionsUpdate(ConditionCloseToCalendar, new bool[]                        { false, false, false, false, false, false, false, false, false, false, true });
 
                     // End of code generation using the EXCEL file
 
                     // Defining the BT
                     Selector srRagNotTaken = new Selector(
                         new BlackboardCondition(ConditionDidNotGoToCalendar, Operator.IS_EQUAL, true, Stops.IMMEDIATE_RESTART, AssistanceKappa()),
+                        new BlackboardCondition(ConditionCloseToCalendar, Operator.IS_EQUAL, true, Stops.IMMEDIATE_RESTART, AssistanceMu()),
                         new BlackboardCondition(ConditionTableTouchedButNoRag, Operator.IS_EQUAL, true, Stops.IMMEDIATE_RESTART, AssistanceIota()),
                         new BlackboardCondition(ConditionRagNotTakenButHelpReceived, Operator.IS_EQUAL, true, Stops.IMMEDIATE_RESTART, AssistanceEpsilon()),
                         AssistanceBeta()
@@ -323,21 +327,21 @@ namespace MATCH
                              Inferences.Timer infTimerNotCameToCalendar = new Inferences.Timer(InferenceDidNotGoToCalendar, 15, delegate (System.Object oo, EventArgs ee)
                              {
                                  UpdateConditionWithMatrix(ConditionDidNotGoToCalendar);
-                                 InferenceManager.UnregisterInference(InferenceInterruptDusting);
+                                 InferenceManager.UnregisterInference(/*InferenceInterruptDusting*/InferenceDidNotGoToCalendar);
                              });
 
                             InferenceManager.RegisterInference(infTimerNotCameToCalendar);
 
                              infTimerNotCameToCalendar.StartCounter();
 
-                             Inferences.Timer infTimerCalendarHelp = new Inferences.Timer(InferenceCalendarHelp, 15, delegate (System.Object oo, EventArgs ee)
+                             /*Inferences.Timer infTimerCalendarHelp = new Inferences.Timer(InferenceCalendarHelp, 15, delegate (System.Object oo, EventArgs ee)
                              {
                                  ((Inferences.Timer)InferenceManager.GetInference(InferenceCalendarHelp)).StopCounter();
                                  SetConditionsTo(false);
                                  InferenceManager.UnregisterInference(InferenceCalendarHelp);
-                             });
+                             });*/
 
-                             InferenceManager.RegisterInference(infTimerCalendarHelp);
+                             //InferenceManager.RegisterInference(infTimerCalendarHelp);
 
                              Inferences.DistanceComing distanceComing = new Inferences.DistanceComing(InferenceCloseToCalendar, delegate (System.Object o, EventArgs e)
                              {
@@ -345,7 +349,8 @@ namespace MATCH
                                  InferenceManager.UnregisterInference(InferenceDidNotGoToCalendar);
                                  InferenceManager.UnregisterInference(InferenceCloseToCalendar);
                                  //SetConditionsTo(false);
-                                 infTimerCalendarHelp.StartCounter();
+                                 UpdateConditionWithMatrix(ConditionCloseToCalendar);
+                                 //infTimerCalendarHelp.StartCounter();
 
                              }, ToDoListView.GetAssistance().gameObject, 2.0f);
 
@@ -566,26 +571,6 @@ namespace MATCH
 
                 Sequence AssistanceDelta()
                 {
-                    /*Assistances.GradationVisual.GradationVisual delta1 = Assistances.GradationVisual.Factory.Instance.CreateDialog2WithButtons("DustingTable-Delta-1", "", "Avez-vous fini de nettoyer la table?", "Oui!", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.Yes, "Non!", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.No, InteractionSurfaceTable.transform);
-                    Assistances.GradationVisual.GradationVisual delta2 = Assistances.GradationVisual.Factory.Instance.CreateDialog2WithButtons("DustingTable-Delta-2", "", "Êtes-vous sûr?", "Oui!", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.Yes, "Non ...", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.No, InteractionSurfaceTable.transform);
-                    Assistances.GradationVisual.GradationVisual delta3 = Assistances.GradationVisual.Factory.Instance.CreateDialog2WithButtons("DustingTable-Delta-3", "", "En fait, la table n'est pas entièrement dépoussiérée. Avez-vous besoin d'aide pour continuer à effectuer cette tâche ?", "Oui", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.Yes, "Non", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.No, InteractionSurfaceTable.transform);
-                    Assistances.GradationVisual.GradationVisual delta4 = Assistances.GradationVisual.Factory.Instance.CreateAlreadyConfigured(Assistances.GradationVisual.Factory.AlreadyConfigured.SomeoneComingToHelpDialog2, "DustingTable-Delta-4", InteractionSurfaceTable.transform);
-                    Assistances.GradationVisual.GradationVisual delta5 = Assistances.GradationVisual.Factory.Instance.CreateAlreadyConfigured(Assistances.GradationVisual.Factory.AlreadyConfigured.LetGoDialog2, "DustingTable-Delta-5", InteractionSurfaceTable.transform);
-                    Assistances.GradationVisual.GradationVisual delta6 = Assistances.GradationVisual.Factory.Instance.CreateAlreadyConfigured(Assistances.GradationVisual.Factory.AlreadyConfigured.DoYouNeedHelpDialog2, "DustingTable-Delta-6", InteractionSurfaceTable.transform);
-
-                    Assistances.AssistanceGradationExplicit delta = MATCH.Assistances.Factory.Instance.CreateAssistanceGradationExplicit("DustingTable-Delta");
-                    delta.transform.parent = transform;
-                    delta.AddAssistance(delta1, Assistances.Buttons.Button.ButtonType.Yes, delta2);
-                    delta.AddAssistance(delta1, Assistances.Buttons.Button.ButtonType.No, delta6);
-                    delta.AddAssistance(delta2, Assistances.Buttons.Button.ButtonType.Yes, delta3);
-                    delta.AddAssistance(delta2, Assistances.Buttons.Button.ButtonType.No, delta3);
-                    delta.AddAssistance(delta3, Assistances.Buttons.Button.ButtonType.Yes, delta4);
-                    delta.AddAssistance(delta3, Assistances.Buttons.Button.ButtonType.No, delta5);
-                    delta.AddAssistance(delta6, Assistances.Buttons.Button.ButtonType.Yes, delta4);
-                    delta.AddAssistance(delta6, Assistances.Buttons.Button.ButtonType.No, delta5);
-                    delta.AddAssistance(delta4, Assistances.Buttons.Button.ButtonType.ClosingButton, null);
-                    delta.AddAssistance(delta5, Assistances.Buttons.Button.ButtonType.ClosingButton, null);*/
-
                     Assistances.AssistanceGradationExplicit delta = MATCH.Assistances.Factory.Instance.CreateAssistanceGradationExplicit("DustingTable-Delta");
 
                     delta.AddAssistance(AssistancesDB.Delta[0], Assistances.Buttons.Button.ButtonType.No, AssistancesDB.Delta[1]);
@@ -615,10 +600,8 @@ namespace MATCH
 
                     Sequence temp = new Sequence(
                         new NPBehave.Action(() => {
-                            //ShowAssistanceHideOthers(delta);
                             delta.RunAssistance();
                             AssistancesDusting[delta] = true;
-                            //UpdateTextAssistancesDebugWindow("Delta");
                             MATCH.Utilities.Logger.Instance.Log(this.GetId(), MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, "Delta");
                         }),
                         new WaitUntilStopped());
@@ -628,33 +611,47 @@ namespace MATCH
 
                 Sequence AssistanceEta()
                 {
-                    Assistances.AssistanceGradationExplicit eta = MATCH.Assistances.Factory.Instance.CreateAssistanceGradationExplicit("Dusting - Eta");
-                    eta.transform.parent = transform;
+                    //Assistances.AssistanceGradationExplicit eta = MATCH.Assistances.Factory.Instance.CreateAssistanceGradationExplicit("Dusting - Eta");
+                    //eta.transform.parent = transform;
+
                     //eta.InfManager = InferenceManager;
 
-                    Assistances.GradationVisual.GradationVisual eta1 = Assistances.GradationVisual.Factory.Instance.CreateSurfaceToProcess("DustingTable-Eta-1", delegate(System.Object o, EventArgs e)
+                    /*Assistances.GradationVisual.GradationVisual eta1 = Assistances.GradationVisual.Factory.Instance.CreateSurfaceToProcess("DustingTable-Eta-1", delegate(System.Object o, EventArgs e)
                     {
-                        ShowAssistanceHideOthers(eta);
+                        //eta1.ShowMinimalGradation(Utilities.Utility.GetEventHandlerEmpty());
+                        ShowAssistanceHideOthers(null);
                         UpdateConditionWithMatrix(ConditionNewPartCleaned);
                     }, delegate(System.Object o, EventArgs e)
                     {
                         UpdateConditionWithMatrix(ConditionTableCleaned);
-                    }, InteractionSurfaceTable, InteractionSurfaceTable.transform);
+                    }, InteractionSurfaceTable, InteractionSurfaceTable.transform);*/
                     //eta1
 
+                    Assistances.SurfaceToProcess surface = Assistances.Factory.Instance.CreateSurfaceToProcess(InteractionSurfaceTable.transform, InteractionSurfaceTable);
+                    surface.EventSurfaceCleaned += delegate (System.Object o, EventArgs e)
+                    {
+                        UpdateConditionWithMatrix(ConditionTableCleaned);
+                    };
+                    surface.EventNewPartCleaned += delegate (System.Object o, EventArgs e)
+                    {
+                        surface.Show(Utilities.Utility.GetEventHandlerEmpty(), false);
+                        ShowAssistanceHideOthers(null);
+                        UpdateConditionWithMatrix(ConditionNewPartCleaned);
+                    };
 
                     /*Assistances.GradationVisual.GradationVisual beta2 = Assistances.GradationVisual.Factory.Instance.CreateDialogTwoButtons("DustingTable-Gamma-2", "", "Il y a une activité à faire ici", "Je sais!", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.Yes, "Je ne sais pas", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.No, InteractionSurfaceTable.transform);*/
 
-                    eta.AddAssistance(eta1, Assistances.Buttons.Button.ButtonType.Undefined, null);
+                    //eta.AddAssistance(eta1, Assistances.Buttons.Button.ButtonType.Undefined, null);
 
-                    AssistancesDusting.Add(eta, false);
+                    //AssistancesDusting.Add(eta, false);
 
-                    eta.Init();
+                    //eta.Init();
 
                     Sequence temp = new Sequence(
                         new NPBehave.Action(() =>
                         {
-                            ShowAssistanceHideOthers(eta);
+                            surface.Show(Utilities.Utility.GetEventHandlerEmpty(), false);
+                            ShowAssistanceHideOthers(/*eta*/ null);
                             OnChallengeStart();
                             Inferences.Timer inf = new Inferences.Timer(InferenceDidNotStartDusting, 15, delegate (System.Object o, EventArgs e)
                             {
@@ -791,9 +788,49 @@ namespace MATCH
                     return temp;
                 }
 
+                Sequence AssistanceMu()
+                {
+                    Sequence temp = new Sequence(
+                         new NPBehave.Action(() =>
+                         {
+                             ShowAssistanceHideOthers(null);
+
+                             Inferences.Timer infTimerCalendarHelp = new Inferences.Timer(InferenceCalendarHelp, 5, delegate (System.Object oo, EventArgs ee)
+                             {
+                                 ((Inferences.Timer)InferenceManager.GetInference(InferenceCalendarHelp)).StopCounter();
+                                 SetConditionsTo(false);
+                                 InferenceManager.UnregisterInference(InferenceCalendarHelp);
+                             });
+
+                             
+
+                             InferenceManager.RegisterInference(infTimerCalendarHelp);
+
+                             infTimerCalendarHelp.StartCounter();
+
+                             /*Inferences.DistanceComing distanceComing = new Inferences.DistanceComing(InferenceCloseToCalendar, delegate (System.Object o, EventArgs e)
+                             {
+                                 //infTimerNotCameToCalendar.StopCounter();
+                                 //InferenceManager.UnregisterInference(InferenceDidNotGoToCalendar);
+                                 //InferenceManager.UnregisterInference(InferenceCloseToCalendar);
+                                 //SetConditionsTo(false);
+                                 
+                                 
+
+                             }, ToDoListView.GetAssistance().gameObject, 2.0f);
+
+                             InferenceManager.RegisterInference(distanceComing);*/
+                         }),
+                    new WaitUntilStopped()
+                        );
+
+                    return temp;
+            }
+
 
                 void CallbackInteractionSurfaceRagTouched(System.Object o, EventArgs e)
                 {
+                    InferenceManager.UnregisterInference(InferenceDidNotGoToCalendar);
                     InferenceManager.UnregisterInference(InferenceFarFromRag);
                     UpdateConditionWithMatrix(ConditionRagTaken);
                 }
