@@ -23,35 +23,39 @@ namespace MATCH
             NavMeshDataInstance Instance;
             List<NavMeshBuildSource> Sources = new List<NavMeshBuildSource>();
 
-            Transform InteractionSurfaceView;
+            //Transform InteractionSurfaceView;
             Assistances.InteractionSurface InteractionSurfaceController;
 
             Obstacles ObstaclesManager;
 
             private void Awake()
             {
-
+                InteractionSurfaceController = null;
             }
 
             // Start is called before the first frame update
             IEnumerator Start()
             {
                 // Get children and components
-                InteractionSurfaceView = transform.Find("AssistanceInteractionSurface");
+                /*InteractionSurfaceView = transform.Find("AssistanceInteractionSurface");
                 InteractionSurfaceView.name = "PathInteractionSurface";
                 InteractionSurfaceController = InteractionSurfaceView.GetComponent<Assistances.InteractionSurface>();
-                ObstaclesManager = GetComponent<Obstacles>();
-
-                // Set admin buttons
-                AdminMenu.Instance.AddButton("Add obstacle", CallbackAddObstacle, AdminMenu.Panels.Left);
-                InteractionSurfaceController.SetAdminButtons("path surface");
-                InteractionSurfaceController.SetColor(Utilities.Materials.Colors.CyanGlowing);
+                
                 InteractionSurfaceView.position = new Vector3(0.3f, -0.16f, -5f);
                 InteractionSurfaceController.SetScaling(new Vector3(0.1f, 1f, 0.1f));
                 InteractionSurfaceController.ShowInteractionSurfaceTable(true);
                 InteractionSurfaceController.SetObjectResizable(true);
                 InteractionSurfaceController.SetPreventResizeY(true);
-                Utilities.WorldLockingToolsManager.Instance.RegisterObject(InteractionSurfaceView.name, InteractionSurfaceView, InteractionSurfaceController.GetInteractionSurface());
+                Utilities.WorldLockingToolsManager.Instance.RegisterObject(InteractionSurfaceView.name, InteractionSurfaceView, InteractionSurfaceController.GetInteractionSurface());*/
+                ObstaclesManager = GetComponent<Obstacles>();
+                InteractionSurfaceController = Assistances.Factory.Instance.CreateInteractionSurface("PathInteractionSurface", AdminMenu.Panels.Left, new Vector3(0.1f, 0.01f, 0.1f), new Vector3(0.3f, -0.16f, -5f), Utilities.Materials.Colors.CyanAdjustHSV, false, true, Utilities.Utility.GetEventHandlerEmpty(), true, transform);
+                InteractionSurfaceController.SetPreventResizeY(true);
+
+                // Set admin buttons
+                AdminMenu.Instance.AddButton("Add obstacle", CallbackAddObstacle, AdminMenu.Panels.Left);
+                InteractionSurfaceController.SetAdminButtons("path surface");
+                InteractionSurfaceController.SetColor(Utilities.Materials.Colors.CyanGlowing);
+                
 
                 // Add component to the interaction surface to define walkable surface
                 InteractionSurfaceController.GetInteractionSurface().gameObject.AddComponent<NavMeshSourceTag>();
@@ -70,8 +74,8 @@ namespace MATCH
 
             void OnEnable()
             {
-                InteractionSurfaceView = transform.Find("AssistanceInteractionSurface");
-                InteractionSurfaceController = InteractionSurfaceView.GetComponent<Assistances.InteractionSurface>();
+                /*InteractionSurfaceView = transform.Find("AssistanceInteractionSurface");
+                InteractionSurfaceController = InteractionSurfaceView.GetComponent<Assistances.InteractionSurface>();*/
 
                 // Construct and add navmesh
                 NavMesh = new NavMeshData();
@@ -123,7 +127,7 @@ namespace MATCH
             {
                 Vector3 center = new Vector3(0, 0, 0);
 
-                if (InteractionSurfaceController.GetInteractionSurface() != null)
+                if (InteractionSurfaceController != null && InteractionSurfaceController.GetInteractionSurface() != null)
                 {
                     center = InteractionSurfaceController.GetInteractionSurface().position; //new Vector3(1.0f, 0, 2.94f)
                                                                                               //MouseDebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, MouseDebugMessagesManager.MessageLevel.Info, "Center: " + center);

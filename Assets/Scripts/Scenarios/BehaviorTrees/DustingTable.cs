@@ -48,6 +48,7 @@ namespace MATCH
                 string ConditionDidNotGoToCalendar = "DidNotGoToCalendar";
                 string ConditionStandBy = "StandBy";
                 string ConditionCloseToCalendar = "CloseToCalendar";
+                string ConditionReceivedHelpForCalendarButNoAction = "ReceivedHelpForCalendarButDidNotTakeAction";
 
                 string InferenceDidNotStartDusting = "DidNotStartCleaning";
                 string InferenceInterruptDusting = "InterruptedDusting";
@@ -140,20 +141,22 @@ namespace MATCH
                     AddCondition(ConditionDidNotGoToCalendar, false);
                     AddCondition(ConditionStandBy, true);
                     AddCondition(ConditionCloseToCalendar, false);
+                    AddCondition(ConditionReceivedHelpForCalendarButNoAction, false);
 
                     int nbConditions = GetNumberOfConditions();
 
-                    AddConditionsUpdate(ConditionTableCleaned, new bool[]                           { true,  false, false, false, false, false, false, false, false, false, false });
-                    AddConditionsUpdate(ConditionRagNotTakenButHelpReceived, new bool[]             { false, true,  false, false, false, false, false, false, false, false, false });
-                    AddConditionsUpdate(ConditionRagTaken, new bool[]                               { false, false, true,  false, false, false, false, false, false, false, false });
-                    AddConditionsUpdate(ConditionDidNotStartCleaning, new bool[]                    { false, false, true,  true,  false, false, false, false, false, false, false });
-                    AddConditionsUpdate(ConditionCleaningInterrupted, new bool[]                    { false, false, true,  false, true,  false, false, false, false, false, false });
-                    AddConditionsUpdate(ConditionNewPartCleaned, new bool[]                         { false, false, true,  false, false, true,  false, false, false, false, false });
-                    AddConditionsUpdate(ConditionProcessRelatedToNewPartsCleanedDone, new bool[]    { false, false, true,  false, false, false, true,  false, false, false, false });
-                    AddConditionsUpdate(ConditionTableTouchedButNoRag, new bool[]                   { false, false, false, false, false, false, false, true,  false, false, false });
-                    AddConditionsUpdate(ConditionDidNotGoToCalendar, new bool[]                     { false, false, false, false, false, false, false, false, true,  false, false  });
-                    AddConditionsUpdate(ConditionStandBy, new bool[]                                { false, false, false, false, false, false, false, false, false, true,  false });
-                    AddConditionsUpdate(ConditionCloseToCalendar, new bool[]                        { false, false, false, false, false, false, false, false, false, false, true });
+                    AddConditionsUpdate(ConditionTableCleaned, new bool[]                           { true,  false, false, false, false, false, false, false, false, false, false, false });
+                    AddConditionsUpdate(ConditionRagNotTakenButHelpReceived, new bool[]             { false, true,  false, false, false, false, false, false, false, false, false, false });
+                    AddConditionsUpdate(ConditionRagTaken, new bool[]                               { false, false, true,  false, false, false, false, false, false, false, false, false });
+                    AddConditionsUpdate(ConditionDidNotStartCleaning, new bool[]                    { false, false, true,  true,  false, false, false, false, false, false, false, false });
+                    AddConditionsUpdate(ConditionCleaningInterrupted, new bool[]                    { false, false, true,  false, true,  false, false, false, false, false, false, false });
+                    AddConditionsUpdate(ConditionNewPartCleaned, new bool[]                         { false, false, true,  false, false, true,  false, false, false, false, false, false });
+                    AddConditionsUpdate(ConditionProcessRelatedToNewPartsCleanedDone, new bool[]    { false, false, true,  false, false, false, true,  false, false, false, false, false });
+                    AddConditionsUpdate(ConditionTableTouchedButNoRag, new bool[]                   { false, false, false, false, false, false, false, true,  false, false, false, false });
+                    AddConditionsUpdate(ConditionDidNotGoToCalendar, new bool[]                     { false, false, false, false, false, false, false, false, true,  false, false, false });
+                    AddConditionsUpdate(ConditionStandBy, new bool[]                                { false, false, false, false, false, false, false, false, false, true,  false, false });
+                    AddConditionsUpdate(ConditionCloseToCalendar, new bool[]                        { false, false, false, false, false, false, false, false, false, false, true,  false });
+                    AddConditionsUpdate(ConditionReceivedHelpForCalendarButNoAction, new bool[]     { false, false, false, false, false, false, false, false, false, false, false, true });
 
                     // End of code generation using the EXCEL file
 
@@ -161,6 +164,7 @@ namespace MATCH
                     Selector srRagNotTaken = new Selector(
                         new BlackboardCondition(ConditionDidNotGoToCalendar, Operator.IS_EQUAL, true, Stops.IMMEDIATE_RESTART, AssistanceKappa()),
                         new BlackboardCondition(ConditionCloseToCalendar, Operator.IS_EQUAL, true, Stops.IMMEDIATE_RESTART, AssistanceMu()),
+                        /*new BlackboardCondition(ConditionReceivedHelpForCalendarButNoAction, Operator.IS_EQUAL, true, Stops.IMMEDIATE_RESTART, AssistanceNu()),*/
                         new BlackboardCondition(ConditionTableTouchedButNoRag, Operator.IS_EQUAL, true, Stops.IMMEDIATE_RESTART, AssistanceIota()),
                         new BlackboardCondition(ConditionRagNotTakenButHelpReceived, Operator.IS_EQUAL, true, Stops.IMMEDIATE_RESTART, AssistanceEpsilon()),
                         AssistanceBeta()
@@ -691,12 +695,13 @@ namespace MATCH
                         DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Kappa > assistance 3: shown");
                     };
 
-                    /*AssistancesDB.Kappa[4].IsHidden += delegate (System.Object o, EventArgs e)
+                    AssistancesDB.Kappa[4].IsHidden += delegate (System.Object o, EventArgs e)
                     {
                         DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Kappa > assistance 4: hidden");
 
-                        UpdateConditionWithMatrix(ConditionStandBy);
-                    };*/
+                        //UpdateConditionWithMatrix(ConditionStandBy);
+                        SetConditionsTo(false);
+                    };
 
                     AssistancesDusting.Add(kappa, false);
 
@@ -827,6 +832,14 @@ namespace MATCH
                     return temp;
             }
 
+                /*Sequence AssistanceNu()
+                {
+                    Sequence nu;
+
+
+                    return nu;
+
+                }*/
 
                 void CallbackInteractionSurfaceRagTouched(System.Object o, EventArgs e)
                 {
@@ -869,7 +882,7 @@ namespace MATCH
                     Alpha = new List<Assistances.GradationVisual.GradationVisual>
                     {
                         Assistances.GradationVisual.Factory.Instance.CreateDialog2WithButtons("DustingTable-Alpha-00", "", "Avez-vous terminé votre activité?", "Oui", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.Yes, "Non", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.No, MATCH.Assistances.InteractionSurfaceFollower.Instance.transform),
-                        Assistances.GradationVisual.Factory.Instance.CreateDialog2NoButton("DustingTable-Alpha-01", "", "En effet, vous avez terminé l'activité. Félicitations!", MATCH.Assistances.InteractionSurfaceFollower.Instance.transform),
+                        Assistances.GradationVisual.Factory.Instance.CreateDialog2NoButton("DustingTable-Alpha-01", "", "En effet, vous avez terminé l'activité. Félicitations! Vous pouvez rendre le casque à la personne.", MATCH.Assistances.InteractionSurfaceFollower.Instance.transform),
                         Assistances.GradationVisual.Factory.Instance.CreateDialog2WithButtons("DustingTable-Alpha-02", "", "Comment pouvez-vous savoir si vous avez terminé votre activité?", "Je sais", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.Yes, "Je ne sais pas", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.No, MATCH.Assistances.InteractionSurfaceFollower.Instance.transform),
                         Assistances.GradationVisual.Factory.Instance.CreateDialog2WithButtons("DustingTable-Alpha-03", "", "Est-ce que vous vous rappelez du but de l'activité?", "Oui", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.Yes, "Non", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.No, MATCH.Assistances.InteractionSurfaceFollower.Instance.transform),
                         Assistances.GradationVisual.Factory.Instance.CreateDialog2WithButtons("DustingTable-Alpha-04", "", "Vous deviez épousseter la table avec un chiffon. Qu'en pensez-vous?", "Oui c'est fait!", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.Yes, "Je ne sais pas", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.No, MATCH.Assistances.InteractionSurfaceFollower.Instance.transform),

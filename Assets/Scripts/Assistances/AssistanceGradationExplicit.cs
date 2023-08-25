@@ -67,9 +67,9 @@ namespace MATCH
             //string InferenceFocusLost = "AssistanceGradationExplicit-FocusLost";
             string InferenceLeftObject = "AssistanceGradationExplicit-LeftObject";
 
-            float DistanceFromObject = 1.5f;
+            public static float DistanceFromObject = 1.5f;
 
-            public static float FarFromAssistanceWhenLookingAtIt = 4.0f;
+            //public static float FarFromAssistanceWhenLookingAtIt = 4.0f;
             public static int DelayBeforeShowingHelp = 3;
 
             public override void Awake()
@@ -221,6 +221,19 @@ namespace MATCH
                 return temp;
             }
 
+            void RegisterInferenceNoFocusFor15Seconds()
+            {
+                Inferences.Timer timer = new Inferences.Timer(InferenceTimer2Minutes, 15, delegate (System.Object o, EventArgs e)
+                {
+                    UpdateConditionWithMatrix(ConditionDisplayedSince2Minutes);
+                    InfManager.UnregisterInference(InferenceTimer2Minutes);
+                });
+                InfManager.RegisterInference(timer);
+                timer.StartCounter();
+
+                RegisterInferenceFocus(); // We also register this inference, so that if the object is focused, it will stop the timer and set the appropriate condition
+            }
+
             void RegisterInferenceFocus()
             {
                 Inferences.ObjectFocused inf = new Inferences.ObjectFocused(InferenceFocused, delegate (System.Object o, EventArgs e)
@@ -311,7 +324,7 @@ namespace MATCH
 
                         Vector3 worldPositionAssistanceBeta = AssistancesGradation.AssistanceCurrent.GetCurrentAssistance().transform.position;
 
-                        if (Utilities.Utility.CalculateDistancePoints(Camera.main.transform.position, worldPositionAssistanceBeta) > FarFromAssistanceWhenLookingAtIt)
+                        if (Utilities.Utility.CalculateDistancePoints(Camera.main.transform.position, worldPositionAssistanceBeta) > /*FarFromAssistanceWhenLookingAtIt*/ DistanceFromObject+1.0f)
                         {
                             UpdateConditionWithMatrix(ConditionIsFar);
 
@@ -386,6 +399,8 @@ namespace MATCH
             {
                 Sequence temp = new Sequence(
                     new NPBehave.Action(() => {
+                        RegisterInferenceNoFocusFor15Seconds();
+
                         //UpdateTextAssistancesDebugWindow("BTGradation - Gamma");
                         MATCH.Utilities.Logger.Instance.Log(this.GetId(), MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, "BTGradation - Gamma");
                         AssistancesGradation.AssistanceCurrent.GetCurrentAssistance().Emphasize(true);

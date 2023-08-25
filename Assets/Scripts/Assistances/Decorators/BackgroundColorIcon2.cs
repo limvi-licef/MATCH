@@ -86,7 +86,10 @@ namespace MATCH
 
                 public override void Show(EventHandler callback, bool withAnimation)
                 {
-                    BackgroundIcon.position = PanelToDecorate.GetBackgroundIcon().position;
+                    transform.localPosition = PanelToDecorate.GetBackground().localPosition;
+                    transform.localScale = PanelToDecorate.GetBackground().localScale;
+                    transform.rotation = PanelToDecorate.GetBackground().rotation;
+                    BackgroundIcon.localPosition = PanelToDecorate.GetBackgroundIcon().localPosition;
                     BackgroundIcon.localScale = PanelToDecorate.GetBackgroundIcon().localScale;
                     BackgroundIcon.gameObject.SetActive(showBackground);
 
@@ -99,9 +102,11 @@ namespace MATCH
                             PanelToDecorate.GetRootDecoratedAssistance().Show(Utilities.Utility.GetEventHandlerEmpty(), false);
                             PanelToDecorate.GetBackgroundIcon().gameObject.SetActive(false);
 
-                            transform.position = PanelToDecorate.GetBackground().position;
+                            transform.localPosition = PanelToDecorate.GetBackground().localPosition;
                             transform.localScale = PanelToDecorate.GetBackground().localScale;
                             transform.rotation = PanelToDecorate.GetBackground().rotation;
+                            BackgroundIcon.localPosition = PanelToDecorate.GetBackgroundIcon().localPosition;
+                            BackgroundIcon.localScale = PanelToDecorate.GetBackgroundIcon().localScale;
 
                             callback?.Invoke(this, e);
                             OnIsShown(this, e);

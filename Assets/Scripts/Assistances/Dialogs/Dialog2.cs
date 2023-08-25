@@ -78,7 +78,7 @@ namespace MATCH
                     BackgroundIcon = BackgroundParent.Find("Modale-Rond_Cylinder.003");
                     IconView = Assistances.Factory.Instance.CreateIcon(true, new Vector3(0, 0, 0), new Vector3(0.05f,0.05f,0.05f), true, GetTransform(), MATCH.Utilities.Materials.Icon.ExclamationMark, Utilities.Materials.Colors.WhiteMetallic);
                     //IconView.SetScale(0.05f, 0.05f, 0.05f); // Set the scale to having tiny icon that feat in the circle
-                    IconView.SetLocalPositionObject(0.1075f, 0.068f, -0.02f); //Set position to be in center of the circle
+                    IconView.SetLocalPositionObject(0.1224f, 0.0772f, -0.02f/*0.1075f, 0.068f, -0.02f*/); //Set position to be in center of the circle
 
                     Sound = gameObject.transform.Find("Sound");
                     Arch = gameObject.transform.Find("Arch");

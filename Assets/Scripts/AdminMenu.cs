@@ -143,10 +143,10 @@ namespace MATCH
                 Assistances.Decorators.LinePath.Threshold = float.Parse(arg.m_text);
             }, AdminMenu.Panels.Middle);
 
-            AddInputWithButton(Assistances.AssistanceGradationExplicit.FarFromAssistanceWhenLookingAtIt.ToString(), "Threshold distance hand", delegate (System.Object o, EventArgs e)
+            AddInputWithButton(Assistances.AssistanceGradationExplicit./*FarFromAssistanceWhenLookingAtIt*/DistanceFromObject.ToString(), "Threshold distance from object", delegate (System.Object o, EventArgs e)
             {
                 Utilities.EventHandlerArgs.String arg = (Utilities.EventHandlerArgs.String)e;
-                Assistances.AssistanceGradationExplicit.FarFromAssistanceWhenLookingAtIt = float.Parse(arg.m_text);
+                Assistances.AssistanceGradationExplicit./*FarFromAssistanceWhenLookingAtIt*/DistanceFromObject = float.Parse(arg.m_text);
             }, AdminMenu.Panels.Middle);
 
             AddInputWithButton(Assistances.AssistanceGradationExplicit.DelayBeforeShowingHelp.ToString(), "Delay before showing help", delegate (System.Object o, EventArgs e)
