@@ -74,7 +74,7 @@ namespace MATCH
                 void InitializeScenario()
                 {
 
-                    Manager.Instance.addScenario(this);
+                    Manager.Instance.AddScenario(this);
 
 
                     // Instanciate assistances

@@ -44,6 +44,7 @@ namespace MATCH
                 InteractionSurface controller = gameObject.GetComponent<InteractionSurface>();
 
                 //controller.SetAdminButtons(id, panel);
+                controller.SetAdminButtons("Interaction surface - Follower", AdminMenu.Panels.Middle);
                 controller.SetScaling(new Vector3(0.2f, 0.05f, 0.1f));
                 controller.SetColor(Utilities.Materials.Colors.GreenGlowing);
                 controller.SetObjectResizable(false);

@@ -87,7 +87,7 @@ namespace MATCH
 
                 public override void Start()
                 {
-                    Scenarios.Manager.Instance.addScenario(this);
+                    Scenarios.Manager.Instance.AddScenario(this);
                     
                     List<String> registeredObjectsIds = PlantsPositioningStorage.GetObjetsRegisteredNames();
                     foreach (string id in registeredObjectsIds)

@@ -286,6 +286,11 @@ namespace MATCH
                 return this;
             }
 
+            public Assistance GetRootDecoratedAssistance()
+            {
+                return this;
+            }
+
             public Assistance GetDecoratedAssistance()
             {
                 return this;
@@ -300,6 +305,49 @@ namespace MATCH
             {
                 return ChildView.gameObject.activeSelf;
             }*/
+
+            public Transform GetSound()
+            {
+                return null;
+            }
+
+            public Transform GetArch()
+            {
+                return null;
+            }
+
+            public Assistances.Icon GetIcon()
+            {
+                return null;
+            }
+
+            public Transform GetLinePath()
+            {
+                return null;
+            }
+
+            public override void Emphasize(bool enable)
+            {
+                if (enable)
+                {
+                    Utilities.Emphasize emphasize = gameObject.AddComponent<Utilities.Emphasize>();
+
+                    emphasize.AddMaterial(ChildView);
+                    emphasize.EnableEmphasize(true);
+
+                }
+                else
+                {
+                    Utilities.Emphasize emphasize = null;
+
+                    if (gameObject.TryGetComponent<Utilities.Emphasize>(out emphasize))
+                    {
+                        emphasize.EnableEmphasize(false);
+
+                        Destroy(emphasize);
+                    }
+                }
+            }
         }
     }
 }

@@ -34,19 +34,14 @@ namespace MATCH
 
             public class Dialog1 : Dialog, IPanel
             {
-                //Transform ButtonsParentView;
-                //Transform RefButtonView;
                 Transform TitleView;
                 Transform DescriptionView;
                 Transform BackgroundView;
-                //List<Transform> ButtonsView;
-                //public List<Buttons.Basic> ButtonsController;
 
-                //Vector3 ButtonsParentScalingOriginal;
                 Vector3 BackgroundScalingOriginal;
                 Vector3 TitleScalingOriginal;
                 Vector3 DescriptionScalingOriginal;
-                //List<Vector3> ButtonsScalingOriginal;
+                protected Transform LinePath;
 
                 public bool AdjustToHeight { get; set; } = true;
 
@@ -57,21 +52,12 @@ namespace MATCH
                 {
                     base.Awake();
 
-                    // Instantiate variables
-                    //ButtonsView = new List<Transform>();
-                    //ButtonsController = new List<Buttons.Basic>();
-                    //ButtonsScalingOriginal = new List<Vector3>();
-                    //m_adjustToHeight = true;
-
                     // Children
-                    //ButtonsParentView = transform.Find("ButtonParent");
-                    //RefButtonView = ButtonsParentView.Find("Button");
                     TitleView = transform.Find("TitleText");
                     DescriptionView = gameObject.transform.Find("DescriptionText");
                     BackgroundView = gameObject.transform.Find("ContentBackPlate");
 
                     // Initialize some values of the children
-                    //ButtonsParentScalingOriginal = ButtonsParentView.localScale;
                     BackgroundScalingOriginal = BackgroundView.localScale;
                     TitleScalingOriginal = TitleView.localScale;
                     DescriptionScalingOriginal = DescriptionView.localScale;
@@ -80,6 +66,8 @@ namespace MATCH
                     BoxCollider box = transform.GetComponent<BoxCollider>();
                     BoxColliderOriginalCenter = box.center;
                     BoxColliderOriginalSize = box.size;
+
+                    LinePath = gameObject.transform.Find("LinePath");
                 }
 
                 public void SetTitle(string text, float fontSize = -1.0f)
@@ -116,64 +104,6 @@ namespace MATCH
                     component.SetText(text);
                 }
 
-                /**
-                 * If fontSize < 0.0f, means keep the default value of the button's size. Hence the default value.
-                 * */
-                /*public Buttons.Basic AddButton(string text, bool autoScaling, float fontSize = -1.0f)
-                {
-                    // Instantiate the button
-                    Transform view = Instantiate(RefButtonView, ButtonsParentView);
-                    view.name = text;
-                    ButtonConfigHelper configHelper = view.GetComponent<ButtonConfigHelper>();
-                    configHelper.MainLabelText = text;
-                    TextMeshPro tmp = view.Find("IconAndText").Find("TextMeshPro").GetComponent<TextMeshPro>();
-
-                    // Get the text mesh pro component to set the fontsize
-                    if (fontSize > 0.0f)
-                    {
-                        tmp.fontSize = fontSize;
-                    }
-
-                    // Store the button
-                    ButtonsView.Add(view);
-                    Buttons.Basic controller = view.GetComponent<Buttons.Basic>();
-                    ButtonsController.Add(controller); // Only for the ease of use, nothing special here.
-
-                    // Locate button
-                    float scalingx = 1.0f;
-                    if (autoScaling)
-                    {
-                        scalingx = 1.0f / (float)(ButtonsView.Count());
-                        tmp.margin = new Vector4(tmp.margin.x * scalingx, tmp.margin.y, tmp.margin.z * scalingx, tmp.margin.w);
-                    }
-
-
-                    foreach (Transform b in ButtonsView)
-                    {
-                        b.localScale = new Vector3(scalingx, b.localScale.y, b.localScale.z);
-                        Transform textButton = b.Find("IconAndText");
-                        textButton.localScale = new Vector3(1.0f / scalingx, textButton.localScale.y, textButton.localScale.z);
-
-                        // Update the boxcollider
-                        BoxCollider collider = b.GetComponent<BoxCollider>();
-                        collider.size = new Vector3(0.18f, collider.size.y, 0.05f);
-                    }
-
-                    // Store button scaling
-                    ButtonsScalingOriginal.Add(ButtonsView.Last().localScale);
-
-                    // Enable button
-                    ButtonsView.Last().gameObject.SetActive(true);
-
-                    ButtonsParentView.GetComponent<GridObjectCollection>().UpdateCollection();
-
-                    // Calling the assistancecallback
-                    controller.EventButtonClicked += CButtonHelp;
-
-                    // Return
-                    return controller;
-                }*/
-
                 public override void Hide(EventHandler eventHandler, bool withAnimation)
                 {
                     Utilities.EventHandlerArgs.Animation args = new Utilities.EventHandlerArgs.Animation();
@@ -189,6 +119,7 @@ namespace MATCH
                                 IsDisplayed = false;
                                 args.Success = true;
                                 eventHandler?.Invoke(this, args);
+                                OnIsHidden(this, args);
                             });
 
                             Utilities.Utility.AnimateDisappearInPlace(DescriptionView.gameObject, DescriptionScalingOriginal);
@@ -206,12 +137,14 @@ namespace MATCH
                             IsDisplayed = false;
                             args.Success = true;
                             eventHandler?.Invoke(this, args);
+                            OnIsHidden(this, args);
                         }
                     }
                     else
                     {
                         args.Success = false;
                         eventHandler?.Invoke(this, args);
+                        OnIsHidden(this, args);
                     }
                 }
 
@@ -240,7 +173,7 @@ namespace MATCH
 
                                 args.Success = true;
                                 eventHandler?.Invoke(this, args);
-
+                                OnIsShown(this, args);
                             });
                         }
                         else
@@ -254,6 +187,7 @@ namespace MATCH
 
                             args.Success = true;
                             eventHandler?.Invoke(this, args);
+                            OnIsShown(this, args);
                         }
 
 
@@ -262,6 +196,7 @@ namespace MATCH
                     {
                         args.Success = false;
                         eventHandler?.Invoke(this, args);
+                        OnIsShown(this, args);
                     }
                 }
 
@@ -279,7 +214,7 @@ namespace MATCH
                     BoxCollider box = transform.GetComponent<BoxCollider>();
 
                     if (show)
-                    { // Modify the box cillider size and position so that the buttons can still be clicked
+                    { // Modify the box collider size and position so that the buttons can still be clicked
                         GridObjectCollection buttonsLayout = ButtonsParentView.GetComponent<GridObjectCollection>();
                         box.center = new Vector3(BackgroundView.localPosition.x, BackgroundView.localPosition.y + buttonsLayout.CellHeight, BackgroundView.localPosition.z);
                         box.size = new Vector3(box.size.x, BackgroundView.localScale.y - buttonsLayout.CellHeight, box.size.z);
@@ -352,6 +287,11 @@ namespace MATCH
                     return this;
                 }
 
+                public Assistance GetRootDecoratedAssistance()
+                {
+                    return this;
+                }
+
                 public Assistance GetDecoratedAssistance()
                 {
                     return this;
@@ -361,8 +301,50 @@ namespace MATCH
                 {
                     return BackgroundView;
                 }
-            }
 
+                public Transform GetSound()
+                {
+                    return null;
+                }
+
+                public Transform GetArch()
+                {
+                    return null;
+                }
+
+                public Assistances.Icon GetIcon()
+                {
+                    return null;
+                }
+
+                public Transform GetLinePath()
+                {
+                    return LinePath;
+                }
+
+                public override void Emphasize(bool enable)
+                {
+                    if (enable)
+                    {
+                        Utilities.Emphasize emphasize = gameObject.AddComponent<Utilities.Emphasize>();
+
+                        emphasize.AddMaterial(BackgroundView);
+                        emphasize.EnableEmphasize(true);
+
+                    }
+                    else
+                    {
+                        Utilities.Emphasize emphasize = null;
+
+                        if (gameObject.TryGetComponent<Utilities.Emphasize>(out emphasize))
+                        {
+                            emphasize.EnableEmphasize(false);
+
+                            Destroy(emphasize);
+                        }
+                    }
+                }
+            }
         }
     }
 }

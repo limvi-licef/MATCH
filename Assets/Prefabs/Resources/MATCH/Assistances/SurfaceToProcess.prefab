@@ -307,8 +307,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5a1f658cd615624458c44f2e7e2129ed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  NumberOfCubesToAddInRow: 5
-  NumberOfCubesToAddInColumn: 4
   HologramToUseToPopulateSurfaceController: {fileID: 0}
 --- !u!114 &5382968303955433141
 MonoBehaviour:
@@ -317,7 +315,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5382968303955433136}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 181cd563a8349c34ea8978b0bc8d9c7e, type: 3}
   m_Name: 

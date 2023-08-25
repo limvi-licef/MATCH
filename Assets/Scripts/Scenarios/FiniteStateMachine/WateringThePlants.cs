@@ -140,7 +140,7 @@ namespace MATCH
                  * */
                 void InitializeScenario()
                 {
-                    Manager.Instance.addScenario(this);
+                    Manager.Instance.AddScenario(this);
                     // Object required
                     m_pointOfReferenceForPaths = Instantiate(m_refInteractionSurface, transform);
                     Assistances.InteractionSurface interactionSurfaceController = m_pointOfReferenceForPaths.GetComponent<Assistances.InteractionSurface>();

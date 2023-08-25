@@ -38,7 +38,7 @@ namespace MATCH
 
             void IMixedRealityTouchHandler.OnTouchStarted(HandTrackingInputEventData eventData)
             {
-                DebugMessagesManager.Instance.displayMessage("MouseCubeInteractions", "IMixedRealityTouchHandler.OnTouchStarted", DebugMessagesManager.MessageLevel.Info, "Touched");
+                //DebugMessagesManager.Instance.displayMessage("MouseCubeInteractions", "IMixedRealityTouchHandler.OnTouchStarted", DebugMessagesManager.MessageLevel.Info, "Touched");
 
                 gameObject.GetComponent<Renderer>().material =  MatWhenTouched;
                 CubeTouchedEvent?.Invoke(this, EventArgs.Empty);
@@ -60,6 +60,7 @@ namespace MATCH
             void IMixedRealityTouchHandler.OnTouchCompleted(HandTrackingInputEventData eventData) { }
             void IMixedRealityTouchHandler.OnTouchUpdated(HandTrackingInputEventData eventData) { }
         }
+
     }
 }
 

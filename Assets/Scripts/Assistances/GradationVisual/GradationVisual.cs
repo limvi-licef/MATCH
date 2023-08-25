@@ -32,6 +32,8 @@ namespace MATCH
                 int GradationCurrent = -1;
 
                 public event EventHandler EventHelpClicked; // contains an argument which is an enum with the type of buttons clicked
+                public event EventHandler IsShown;
+                public event EventHandler IsHidden;
 
                 /*public AssistanceGradationAttention()
                 {
@@ -156,6 +158,7 @@ namespace MATCH
                             {
                                 GradationCurrent = 0;
                                 Gradation[GradationCurrent].Show(callback, false);
+                                IsShown?.Invoke(this, EventArgs.Empty);
                             }
                             else
                             {
@@ -174,6 +177,7 @@ namespace MATCH
                     if (GradationCurrent > -1)
                     {
                         Gradation[GradationCurrent].Hide(callback);
+                        IsHidden?.Invoke(this, EventArgs.Empty);
                         GradationCurrent = 0;
                     }
                     else

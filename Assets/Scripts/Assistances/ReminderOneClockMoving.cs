@@ -32,41 +32,41 @@ namespace MATCH
         {
 
 
-            Transform m_clockView; // Because we can have multiple clocks
+            Transform ClockView; // Because we can have multiple clocks
 
-            Transform m_hologramWindowReminderView;
-            MATCH.Assistances.Dialogs.Dialog1 m_dialogController;
+            Transform HologramWindowReminderView;
+            MATCH.Assistances.Dialogs.Dialog1 DialogController;
 
             public event EventHandler EventHologramClockTouched;
             public event EventHandler EventHologramWindowButtonOkTouched;
             public event EventHandler EventHologramWindowButtonBackTouched;
 
-            Vector3 m_positionLocalOrigin;
-            float m_yOffsetOrigin;
+            Vector3 PositionLocalOrigin;
+            float YOffsetOrigin;
 
             // As the clock does not have an attached script, storing the required information here
-            Vector3 m_clockScalingOriginal;
+            Vector3 ClockScalingOriginal;
             //Vector3 m_clockScalingReduced;
             //Vector3 m_clockOriginalPosition;
 
-            List<Transform> m_objectsToBeClose;
+            List<Transform> ObjectsToBeClose;
 
-            bool m_newObjectToFocus;
-            Transform m_newObjectToFocusTransform;
+            bool NewObjectToFocus;
+            Transform NewObjectToFocusTransform;
 
             private void Awake()
             {
                 DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Called");
 
                 // Initialize variables
-                m_objectsToBeClose = new List<Transform>();
+                ObjectsToBeClose = new List<Transform>();
 
-                m_positionLocalOrigin = transform.localPosition;
-                m_yOffsetOrigin = transform.localPosition.y;
+                PositionLocalOrigin = transform.localPosition;
+                YOffsetOrigin = transform.localPosition.y;
 
-                m_newObjectToFocus = false;
+                NewObjectToFocus = false;
 
-                m_newObjectToFocusTransform = null;
+                NewObjectToFocusTransform = null;
             }
 
             // Start is called before the first frame update
@@ -75,24 +75,24 @@ namespace MATCH
                 //MouseDebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, MouseDebugMessagesManager.MessageLevel.Info, "Called");
 
                 // Let's get the children
-                m_clockView = gameObject.transform.Find("Clock");
-                m_hologramWindowReminderView = gameObject.transform.Find("MouseAssistanceDialog"); //gameObject.transform.Find("Text");
-                m_dialogController = m_hologramWindowReminderView.GetComponent<MATCH.Assistances.Dialogs.Dialog1>();
-                m_dialogController.SetDescription("Très bien! J'apparaitrai de nouveau demain à la même heure. Est-ce que cela vous convient?", 0.15f);
-                m_dialogController.AddButton("Parfait!", true);
-                m_dialogController.ButtonsController[0].EventButtonClicked += new EventHandler(delegate (System.Object o, EventArgs e)
+                ClockView = gameObject.transform.Find("Clock");
+                HologramWindowReminderView = gameObject.transform.Find("MouseAssistanceDialog"); //gameObject.transform.Find("Text");
+                DialogController = HologramWindowReminderView.GetComponent<MATCH.Assistances.Dialogs.Dialog1>();
+                DialogController.SetDescription("Très bien! J'apparaitrai de nouveau demain à la même heure. Est-ce que cela vous convient?", 0.15f);
+                DialogController.AddButton("Parfait!", true);
+                DialogController.ButtonsController[0].EventButtonClicked += new EventHandler(delegate (System.Object o, EventArgs e)
                 {
                     EventHologramWindowButtonOkTouched?.Invoke(this, EventArgs.Empty);
                 });
-                m_dialogController.AddButton("Je me suis trompé de bouton! Revenir en arrière...", true);
-                m_dialogController.ButtonsController[1].EventButtonClicked += delegate
+                DialogController.AddButton("Je me suis trompé de bouton! Revenir en arrière...", true);
+                DialogController.ButtonsController[1].EventButtonClicked += delegate
                 {
                     EventHologramWindowButtonBackTouched?.Invoke(this, EventArgs.Empty);
                 };
 
 
                 // Getting informations related to the clock
-                m_clockScalingOriginal = new Vector3(0.1f, 0.1f, 0.1f); // harcoding the scaling like this might create some issues, but getting the scaling directly from the gameobject does not work with the Hololens (although it works here in Unity) 
+                ClockScalingOriginal = new Vector3(0.1f, 0.1f, 0.1f); // harcoding the scaling like this might create some issues, but getting the scaling directly from the gameobject does not work with the Hololens (although it works here in Unity) 
                 //m_clockScalingReduced = m_clockScalingOriginal / 3.0f;
                 //m_clockOriginalPosition = m_clockView.localPosition;
 
@@ -101,18 +101,18 @@ namespace MATCH
             // Update is called once per frame
             void Update()
             {
-                if (m_newObjectToFocus)
+                if (NewObjectToFocus)
                 {
-                    m_newObjectToFocus = false; // Managed so disable to avoid this to be called each time
+                    NewObjectToFocus = false; // Managed so disable to avoid this to be called each time
 
-                    gameObject.transform.position = m_newObjectToFocusTransform.position;
-                    m_positionLocalOrigin = gameObject.transform.localPosition;
+                    gameObject.transform.position = NewObjectToFocusTransform.position;
+                    PositionLocalOrigin = gameObject.transform.localPosition;
                 }
             }
 
             public void AddObjectToBeClose(Transform o) // The parent the clock will belong to
             {
-                m_objectsToBeClose.Add(o);
+                ObjectsToBeClose.Add(o);
 
                 Utilities.HologramInteractions interactions = o.gameObject.GetComponent<Utilities.HologramInteractions>();
 
@@ -145,23 +145,23 @@ namespace MATCH
 
                 DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Clock touched callback called");
 
-                MATCH.Utilities.Utility.AnimateDisappearInPlace(m_clockView.gameObject, new Vector3(0.1f, 0.1f, 0.1f), delegate
+                MATCH.Utilities.Utility.AnimateDisappearInPlace(ClockView.gameObject, new Vector3(0.1f, 0.1f, 0.1f), delegate
                 {
-                    m_hologramWindowReminderView.position = new Vector3(m_hologramWindowReminderView.position.x, m_clockView.position.y, m_hologramWindowReminderView.position.z);
+                    HologramWindowReminderView.position = new Vector3(HologramWindowReminderView.position.x, ClockView.position.y, HologramWindowReminderView.position.z);
 
-                    m_dialogController.Show(MATCH.Utilities.Utility.GetEventHandlerEmpty(), true);
+                    DialogController.Show(MATCH.Utilities.Utility.GetEventHandlerEmpty(), true);
                     EventHologramClockTouched?.Invoke(this, EventArgs.Empty);
                 });
             }
 
             void CallbackOnObjectFocus(System.Object sender, EventArgs e)
             {
-                if (m_clockView.gameObject.activeSelf)
+                if (ClockView.gameObject.activeSelf)
                 { // I.e. not active if the dialog is displayed
-                    if (m_newObjectToFocusTransform == null || (m_newObjectToFocusTransform.name != ((GameObject)sender).name))
+                    if (NewObjectToFocusTransform == null || (NewObjectToFocusTransform.name != ((GameObject)sender).name))
                     { // To avoid doing unnecessary processes if the situation did not change
-                        m_newObjectToFocusTransform = ((GameObject)sender).transform;
-                        m_newObjectToFocus = true;
+                        NewObjectToFocusTransform = ((GameObject)sender).transform;
+                        NewObjectToFocus = true;
                     }
                 }
             }
@@ -176,11 +176,11 @@ namespace MATCH
                     DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Mutex locked");
                     MutexHide = true;
 
-                    if (m_clockView.gameObject.activeSelf)
+                    if (ClockView.gameObject.activeSelf)
                     {
                         if (withAnimation)
                         {
-                            MATCH.Utilities.Utility.AnimateDisappearInPlace(m_clockView.gameObject, new Vector3(0.1f, 0.1f, 0.1f), delegate
+                            MATCH.Utilities.Utility.AnimateDisappearInPlace(ClockView.gameObject, new Vector3(0.1f, 0.1f, 0.1f), delegate
                             {
                                 DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Mutex unlocked - clock hidden");
                                 MutexHide = false;
@@ -189,8 +189,8 @@ namespace MATCH
                         }
                         else
                         {
-                            m_clockView.gameObject.SetActive(false);
-                            m_clockView.transform.localScale = new Vector3(0.1f, 0.1f, 0.1f);
+                            ClockView.gameObject.SetActive(false);
+                            ClockView.transform.localScale = new Vector3(0.1f, 0.1f, 0.1f);
                             MutexHide = false;
                             IsDisplayed = false;
                         }
@@ -198,7 +198,7 @@ namespace MATCH
                     }
                     else
                     { // Only two children for know so fine this way. But to be extended if it happens that more children are added in the future
-                        m_dialogController.Hide(delegate
+                        DialogController.Hide(delegate
                         {
                             DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Mutex unlocked - dialog hidden");
 
@@ -215,8 +215,8 @@ namespace MATCH
             bool ShowFirstTime = false;
             public override void Show(EventHandler eventHandler, bool withAnimation)
             {
-                m_clockScalingOriginal = new Vector3(0.1f, 0.1f, 0.1f);
-                DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Clock is going to appear to scaling: " + m_clockScalingOriginal);
+                ClockScalingOriginal = new Vector3(0.1f, 0.1f, 0.1f);
+                DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Clock is going to appear to scaling: " + ClockScalingOriginal);
 
                 if (MutexShow == false)
                 {
@@ -224,24 +224,24 @@ namespace MATCH
 
                     DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Mutex locked");
 
-                    MATCH.Utilities.Utility.AdjustObjectHeightToHeadHeight(transform, m_yOffsetOrigin);
+                    MATCH.Utilities.Utility.AdjustObjectHeightToHeadHeight(transform, YOffsetOrigin);
 
                     if (withAnimation)
                     {
-                        MATCH.Utilities.Animation animator = m_clockView.gameObject.AddComponent<MATCH.Utilities.Animation>();
-                        animator.AnimateAppearInPlaceToScaling(m_clockScalingOriginal, new EventHandler(delegate (System.Object oo, EventArgs ee)
+                        MATCH.Utilities.Animation animator = ClockView.gameObject.AddComponent<MATCH.Utilities.Animation>();
+                        animator.AnimateAppearInPlaceToScaling(ClockScalingOriginal, new EventHandler(delegate (System.Object oo, EventArgs ee)
                         {
                             eventHandler?.Invoke(this, EventArgs.Empty);
 
                             if (ShowFirstTime == false)
                             {
-                                Utilities.HologramInteractions temp = m_clockView.GetComponent<Utilities.HologramInteractions>();
+                                Utilities.HologramInteractions temp = ClockView.GetComponent<Utilities.HologramInteractions>();
                                 temp.EventTouched += CallbackOnClockTouched;
 
                                 ShowFirstTime = true;
                             }
 
-                            Destroy(m_clockView.gameObject.GetComponent<MATCH.Utilities.Animation>());
+                            Destroy(ClockView.gameObject.GetComponent<MATCH.Utilities.Animation>());
                             MutexShow = false;
                             IsDisplayed = true;
                         }
@@ -249,13 +249,13 @@ namespace MATCH
                     }
                     else
                     {
-                        m_clockView.gameObject.SetActive(true);
-                        m_clockView.transform.localScale = m_clockScalingOriginal;
+                        ClockView.gameObject.SetActive(true);
+                        ClockView.transform.localScale = ClockScalingOriginal;
                         eventHandler?.Invoke(this, EventArgs.Empty);
 
                             if (ShowFirstTime == false)
                             {
-                                Utilities.HologramInteractions temp = m_clockView.GetComponent<Utilities.HologramInteractions>();
+                                Utilities.HologramInteractions temp = ClockView.GetComponent<Utilities.HologramInteractions>();
                                 temp.EventTouched += CallbackOnClockTouched;
 
                                 ShowFirstTime = true;
@@ -291,12 +291,35 @@ namespace MATCH
             {
                 DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Changing position");
 
-                transform.localPosition = m_positionLocalOrigin;
+                transform.localPosition = PositionLocalOrigin;
             }
 
             public override bool IsDecorator()
             {
                 return false;
+            }
+
+            public override void Emphasize(bool enable)
+            {
+                if (enable)
+                {
+                    Utilities.Emphasize emphasize = gameObject.AddComponent<Utilities.Emphasize>();
+
+                    emphasize.AddMaterial(DialogController.transform);
+                    emphasize.EnableEmphasize(true);
+
+                }
+                else
+                {
+                    Utilities.Emphasize emphasize = null;
+
+                    if (gameObject.TryGetComponent<Utilities.Emphasize>(out emphasize))
+                    {
+                        emphasize.EnableEmphasize(false);
+
+                        Destroy(emphasize);
+                    }
+                }
             }
         }
 

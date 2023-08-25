@@ -1,4 +1,4 @@
-/*Copyright 2022 Guillaume Spalla
+/*Copyright 2022 Guillaume Spalla, Louis Marquet, Léri Lamour
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -32,23 +32,21 @@ namespace MATCH
         {
             public class Dialog2 : Dialog, IPanel2
             {
-                //Transform ButtonsParentView;
-                //Transform RefButtonView;
-                Transform TitleView;
-                Transform DescriptionView;
-                Transform BackgroundParent;
-                Transform BackgroundMessage;
-                Transform BackgroundIcon;
-                Transform IconView;
-                //List<Transform> ButtonsView;
-                //public List<Buttons.Basic> ButtonsController;
+                protected Transform TitleView;
+                protected Transform DescriptionView;
+                protected Transform BackgroundParent;
+                protected Transform BackgroundMessage;
+                protected Transform BackgroundIcon;
+                protected Icon IconView;
+                protected Transform Sound;
+                protected Transform Arch;
+                protected Transform LinePath;
+                protected string IconType;
 
-                //Vector3 ButtonsParentScalingOriginal;
-                Vector3 BackgroundScalingOriginal;
-                Vector3 TitleScalingOriginal;
-                Vector3 DescriptionScalingOriginal;
-                Vector3 IconScalingOriginal;
-                //List<Vector3> ButtonsScalingOriginal;
+                protected Vector3 BackgroundScalingOriginal;
+                protected Vector3 TitleScalingOriginal;
+                protected Vector3 DescriptionScalingOriginal;
+                protected Vector3 IconScalingOriginal;
 
                 public bool AdjustToHeight { get; set; } = true;
 
@@ -56,6 +54,9 @@ namespace MATCH
                 Vector3 BoxColliderOriginalSize;
 
                 public event EventHandler EventPositionAdjustedToHead;
+
+                Material EmphasizeMaterialBackground;
+                Material EmphasizeMaterialIcon;
 
                 protected override void Awake()
                 {
@@ -75,14 +76,20 @@ namespace MATCH
                     BackgroundParent = gameObject.transform.Find("Dialog");
                     BackgroundMessage = BackgroundParent.Find("Modale-Support_Cube.010");
                     BackgroundIcon = BackgroundParent.Find("Modale-Rond_Cylinder.003");
-                    IconView = gameObject.transform.Find("ExclamationMark");
+                    IconView = Assistances.Factory.Instance.CreateIcon(true, new Vector3(0, 0, 0), new Vector3(0.05f,0.05f,0.05f), true, GetTransform(), MATCH.Utilities.Materials.Icon.ExclamationMark, Utilities.Materials.Colors.WhiteMetallic);
+                    //IconView.SetScale(0.05f, 0.05f, 0.05f); // Set the scale to having tiny icon that feat in the circle
+                    IconView.SetLocalPositionObject(0.1224f, 0.0772f, -0.02f/*0.1075f, 0.068f, -0.02f*/); //Set position to be in center of the circle
+
+                    Sound = gameObject.transform.Find("Sound");
+                    Arch = gameObject.transform.Find("Arch");
+                    LinePath = gameObject.transform.Find("LinePath");
 
                     // Initialize some values of the children
                     ButtonsParentScalingOriginal = ButtonsParentView.localScale;
                     BackgroundScalingOriginal = BackgroundMessage.localScale;
                     TitleScalingOriginal = TitleView.localScale;
                     DescriptionScalingOriginal = DescriptionView.localScale;
-                    IconScalingOriginal = IconView.localScale;
+                    //IconScalingOriginal = IconView.GetChildTransform().localScale;
 
                     // Storing the original center and size of the box collider
                     BoxCollider box = transform.GetComponent<BoxCollider>();
@@ -131,66 +138,6 @@ namespace MATCH
                     component.SetText(text);
                 }
 
-
-
-                /**
-                 * If fontSize < 0.0f, means keep the default value of the button's size. Hence the default value.
-                 * */
-                /*public Buttons.Basic AddButton(string text, bool autoScaling, float fontSize = -1.0f)
-                {
-                    // Instantiate the button
-                    Transform view = Instantiate(RefButtonView, ButtonsParentView);
-                    view.name = text;
-                    ButtonConfigHelper configHelper = view.GetComponent<ButtonConfigHelper>();
-                    configHelper.MainLabelText = text;
-                    TextMeshPro tmp = view.Find("IconAndText").Find("TextMeshPro").GetComponent<TextMeshPro>();
-
-                    // Get the text mesh pro component to set the fontsize
-                    if (fontSize > 0.0f)
-                    {
-                        tmp.fontSize = fontSize;
-                    }
-
-                    // Store the button
-                    ButtonsView.Add(view);
-                    Buttons.Basic controller = view.GetComponent<Buttons.Basic>();
-                    ButtonsController.Add(controller); // Only for the ease of use, nothing special here.
-
-                    // Locate button
-                    float scalingx = 1.0f;
-                    if (autoScaling)
-                    {
-                        scalingx = 1.0f / (float)(ButtonsView.Count());
-                        tmp.margin = new Vector4(tmp.margin.x * scalingx, tmp.margin.y, tmp.margin.z * scalingx, tmp.margin.w);
-                    }
-
-
-                    foreach (Transform b in ButtonsView)
-                    {
-                        b.localScale = new Vector3(scalingx, b.localScale.y, b.localScale.z);
-                        Transform textButton = b.Find("IconAndText");
-                        textButton.localScale = new Vector3(1.0f / scalingx, textButton.localScale.y, textButton.localScale.z);
-
-                        // Update the boxcollider
-                        BoxCollider collider = b.GetComponent<BoxCollider>();
-                        collider.size = new Vector3(0.18f, collider.size.y, 0.05f);
-                    }
-
-                    // Store button scaling
-                    ButtonsScalingOriginal.Add(ButtonsView.Last().localScale);
-
-                    // Enable button
-                    ButtonsView.Last().gameObject.SetActive(true);
-
-                    ButtonsParentView.GetComponent<GridObjectCollection>().UpdateCollection();
-
-                    // Calling the assistancecallback
-                    controller.EventButtonClicked += CButtonHelp;
-
-                    // Return
-                    return controller;
-                }*/
-
                 public override void Hide(EventHandler eventHandler, bool withAnimation)
                 {
                     Utilities.EventHandlerArgs.Animation args = new Utilities.EventHandlerArgs.Animation();
@@ -206,6 +153,7 @@ namespace MATCH
                                 IsDisplayed = false;
                                 args.Success = true;
                                 eventHandler?.Invoke(this, args);
+                                OnIsHidden(this, args);
                             });
 
                             Utilities.Utility.AnimateDisappearInPlace(DescriptionView.gameObject, DescriptionScalingOriginal);
@@ -223,16 +171,18 @@ namespace MATCH
                             ButtonsParentView.gameObject.SetActive(false);
                             BackgroundMessage.gameObject.SetActive(false);
                             BackgroundIcon.gameObject.SetActive(false);
-                            IconView.gameObject.SetActive(false);
+                            IconView.GetIconObjTransform().gameObject.SetActive(false);
                             IsDisplayed = false;
                             args.Success = true;
                             eventHandler?.Invoke(this, args);
+                            OnIsHidden(this, args);
                         }
                     }
                     else
                     {
                         args.Success = false;
                         eventHandler?.Invoke(this, args);
+                        OnIsHidden(this, args);
                     }
                 }
 
@@ -264,7 +214,7 @@ namespace MATCH
 
                                 args.Success = true;
                                 eventHandler?.Invoke(this, args);
-
+                                OnIsShown(this, args);
                             });
                         }
                         else
@@ -273,7 +223,7 @@ namespace MATCH
                             BackgroundIcon.gameObject.SetActive(true);
                             BackgroundMessage.transform.localScale = BackgroundScalingOriginal;
                             BackgroundIcon.transform.localScale = BackgroundScalingOriginal;
-                            IconView.gameObject.SetActive(true);
+                            IconView.GetIconObjTransform().gameObject.SetActive(true);
 
                             TitleView.gameObject.SetActive(true);
                             DescriptionView.gameObject.SetActive(true);
@@ -281,6 +231,7 @@ namespace MATCH
 
                             args.Success = true;
                             eventHandler?.Invoke(this, args);
+                            OnIsShown(this, args);
                         }
 
 
@@ -289,6 +240,7 @@ namespace MATCH
                     {
                         args.Success = false;
                         eventHandler?.Invoke(this, args);
+                        OnIsShown(this, args);
                     }
                 }
 
@@ -354,34 +306,19 @@ namespace MATCH
                     return false;
                 }
 
-                /*public void SetBackgroundColor(string colorName)
-                {
-                    BackgroundView.GetComponent<Renderer>().material = Resources.Load(colorName, typeof(Material)) as Material;
-                }*/
-
-                /*public void SetEdgeColor(string colorName)
-                {
-                    throw new NotImplementedException();
-                }*/
-
-                /*public void SetEdgeThickness(float thickness)
-                {
-                    throw new NotImplementedException();
-                }*/
-
-                public void EnableWeavingHand(bool enable)
-                {
-                    throw new NotImplementedException();
-                }
-
                 Assistance IAssistance.GetAssistance()
                 {
                     return this;
                 }
 
-                Assistance IAssistance.GetDecoratedAssistance()
+                Assistance IAssistance.GetRootDecoratedAssistance()
                 {
                     return this; // Here there is no decorator, so we return the same assistance.
+                }
+
+                public Assistance GetDecoratedAssistance()
+                {
+                    return this;
                 }
 
                 public Transform GetBackground()
@@ -397,6 +334,50 @@ namespace MATCH
                 public Transform GetBackgroundMessage()
                 {
                     return BackgroundMessage;
+                }
+
+                public Transform GetSound()
+                {
+                    return Sound;
+                }
+
+                public Transform GetArch()
+                {
+                    return Arch;
+                }
+
+                public Assistances.Icon GetIcon()
+                {
+                    return IconView;
+                }
+
+                public Transform GetLinePath()
+                {
+                    return LinePath;
+                }
+
+                public override void Emphasize(bool enable)
+                {
+                    if (enable)
+                    {
+                        Utilities.Emphasize emphasize = gameObject.AddComponent<Utilities.Emphasize>();
+
+                        emphasize.AddMaterial(BackgroundMessage);
+                        emphasize.AddMaterial(BackgroundIcon);
+                        emphasize.EnableEmphasize(true);
+
+                    }
+                    else
+                    {
+                        Utilities.Emphasize emphasize = null;
+
+                        if (gameObject.TryGetComponent<Utilities.Emphasize>(out emphasize))
+                        {
+                            emphasize.EnableEmphasize(false);
+
+                            Destroy(emphasize);
+                        }
+                    }
                 }
             }
 

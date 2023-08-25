@@ -10,7 +10,7 @@ Material:
   m_Name: CyanGlowing
   m_Shader: {fileID: 4800000, guid: 5bdea20278144b11916d77503ba1467a, type: 3}
   m_ShaderKeywords: _BORDER_LIGHT _BORDER_LIGHT_USES_HOVER_COLOR _DISABLE_ALBEDO_MAP
-    _HOVER_LIGHT _INNER_GLOW _PROXIMITY_LIGHT
+    _INNER_GLOW
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 1
   m_DoubleSidedGI: 0
@@ -84,8 +84,8 @@ Material:
     - _BorderLightOpaqueAlpha: 1
     - _BorderLightReplacesAlbedo: 0
     - _BorderLightUsesHoverColor: 1
-    - _BorderMinValue: 0.066
-    - _BorderWidth: 0.04
+    - _BorderMinValue: 0.158
+    - _BorderWidth: 0.004
     - _BumpScale: 1
     - _ClippingBorder: 0
     - _ClippingBorderWidth: 0.025
@@ -122,7 +122,7 @@ Material:
     - _GlossMapScale: 1
     - _Glossiness: 0.5
     - _GlossyReflections: 1
-    - _HoverLight: 1
+    - _HoverLight: 0
     - _HoverLightOpaque: 0
     - _IgnoreZScale: 0
     - _IndependentCorners: 0
@@ -131,7 +131,7 @@ Material:
     - _InstancedColor: 0
     - _Iridescence: 0
     - _IridescenceAngle: -0.425
-    - _IridescenceIntensity: 0.572
+    - _IridescenceIntensity: 1
     - _IridescenceThreshold: 0.296
     - _Metallic: 0
     - _MipmapBias: -2
@@ -141,7 +141,7 @@ Material:
     - _NormalMapScale: 1
     - _OcclusionStrength: 1
     - _Parallax: 0.02
-    - _ProximityLight: 1
+    - _ProximityLight: 0
     - _ProximityLightSubtractive: 0
     - _ProximityLightTwoSided: 0
     - _Reflections: 0

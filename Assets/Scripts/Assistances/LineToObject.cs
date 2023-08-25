@@ -120,7 +120,7 @@ namespace MATCH
 
                         gameObject.SetActive(true);
 
-                        DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Drawing line with animation - Starting point: " + PointOrigin.ToString() + " Mid point: " + midPoint.ToString() + " End point: " + PointEnd.ToString());
+                        //DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Drawing line with animation - Starting point: " + PointOrigin.ToString() + " Mid point: " + midPoint.ToString() + " End point: " + PointEnd.ToString());
 
                         m_drawWithAnimationT = 0.0f;
                         m_drawWithAnimationStartingPoint = PointOrigin;
@@ -135,7 +135,7 @@ namespace MATCH
                     }
                     else
                     {
-                        DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Warning, "Line already shown - nothing to do");
+                        //DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Warning, "Line already shown - nothing to do");
                         m_mutexShow = false;
                         eventHandler?.Invoke(this, EventArgs.Empty);
                     }
