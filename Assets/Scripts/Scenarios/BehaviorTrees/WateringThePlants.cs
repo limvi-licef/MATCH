@@ -631,23 +631,22 @@ namespace MATCH
                     // Set parent
                     plant = Assistances.Factory.Instance.CreateInteractionSurface(name, AdminMenu.Panels.Right, new Vector3(1.1f, 0.02f, 0.7f), new Vector3(-0.447f, -0.406f, 0.009f), Utilities.Materials.Colors.CyanGlowing, false, true, Utilities.Utility.GetEventHandlerEmpty(), true, transform); ;
                     plant.gameObject.name = name;
-
                     // Add buttons to interface
                     AdminMenu.Instance.AddButton("Plante " + name + " - Bring",
                         delegate() { MATCH.Utilities.Utility.BringObject(plant.transform); }, AdminMenu.Panels.Left);
                     AdminMenu.Instance.AddSwitchButton("Plante " + name + " - Hide",
                         delegate()
                         {
-                            MATCH.Utilities.Utility.ShowInteractionSurface(plant.gameObject.transform,
+                            MATCH.Utilities.Utility.ShowInteractionSurface(plant.transform,
                                 !plant.gameObject.GetComponent<Renderer>().enabled);
                         }, AdminMenu.Panels.Left, AdminMenu.ButtonType.Hide);
 
                     // Set color
-                    MATCH.Utilities.Utility.SetColor(plant.gameObject.transform.transform, color);
+                    MATCH.Utilities.Utility.SetColor(plant.transform.transform, color);
 
                     // Set scaling and position
-                    plant.gameObject.transform.position = position;
-                    plant.gameObject.transform.localScale = scaling;
+                    plant.transform.position = position;
+                    plant.transform.localScale = scaling;
 
                     // Set the manipulation features
                     ObjectManipulator objectManipulator = plant.gameObject.AddComponent<ObjectManipulator>();
@@ -680,11 +679,11 @@ namespace MATCH
                     }
 
                     // Add the callbacks
-                    boundsControl.ScaleStopped.AddListener(delegate { EventResized?.Invoke(plant.gameObject, EventArgs.Empty); });
+                    boundsControl.ScaleStopped.AddListener(delegate { EventResized?.Invoke(plant, EventArgs.Empty); });
 
                     objectManipulator.OnManipulationEnded.AddListener(delegate(ManipulationEventData data)
                     {
-                        EventMoved?.Invoke(plant.gameObject, EventArgs.Empty);
+                        EventMoved?.Invoke(plant, EventArgs.Empty);
                     });
 
                     InteractionPlants.Add(plant);
