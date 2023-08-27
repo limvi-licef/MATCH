@@ -626,34 +626,35 @@ namespace MATCH
                 public void AddPlant(string name, Vector3 scaling, Vector3 position, string color, bool navMeshTag,
                     bool callbackOnTouch, bool registerObject, Transform parent)
                 {
-                    GameObject cube = GameObject.CreatePrimitive(PrimitiveType.Cube);
-
+                    Assistances.InteractionSurface plant = new Assistances.InteractionSurface();
+                    
                     // Set parent
-                    cube.transform.parent = parent;
+                    plant = Assistances.Factory.Instance.CreateInteractionSurface(name, AdminMenu.Panels.Right, new Vector3(1.1f, 0.02f, 0.7f), new Vector3(-0.447f, -0.406f, 0.009f), Utilities.Materials.Colors.CyanGlowing, false, true, Utilities.Utility.GetEventHandlerEmpty(), true, transform); ;
+                    plant.gameObject.name = name;
 
                     // Add buttons to interface
                     AdminMenu.Instance.AddButton("Plante " + name + " - Bring",
-                        delegate() { MATCH.Utilities.Utility.BringObject(cube.transform); }, AdminMenu.Panels.Left);
+                        delegate() { MATCH.Utilities.Utility.BringObject(plant.transform); }, AdminMenu.Panels.Left);
                     AdminMenu.Instance.AddSwitchButton("Plante " + name + " - Hide",
                         delegate()
                         {
-                            MATCH.Utilities.Utility.ShowInteractionSurface(cube.transform,
-                                !cube.GetComponent<Renderer>().enabled);
+                            MATCH.Utilities.Utility.ShowInteractionSurface(plant.gameObject.transform,
+                                !plant.gameObject.GetComponent<Renderer>().enabled);
                         }, AdminMenu.Panels.Left, AdminMenu.ButtonType.Hide);
 
                     // Set color
-                    MATCH.Utilities.Utility.SetColor(cube.transform.transform, color);
+                    MATCH.Utilities.Utility.SetColor(plant.gameObject.transform.transform, color);
 
                     // Set scaling and position
-                    cube.transform.position = position;
-                    cube.transform.localScale = scaling;
+                    plant.gameObject.transform.position = position;
+                    plant.gameObject.transform.localScale = scaling;
 
                     // Set the manipulation features
-                    ObjectManipulator objectManipulator = cube.AddComponent<ObjectManipulator>();
-                    cube.AddComponent<RotationAxisConstraint>().ConstraintOnRotation =
+                    ObjectManipulator objectManipulator = plant.gameObject.AddComponent<ObjectManipulator>();
+                    plant.gameObject.AddComponent<RotationAxisConstraint>().ConstraintOnRotation =
                         Microsoft.MixedReality.Toolkit.Utilities.AxisFlags.XAxis |
                         Microsoft.MixedReality.Toolkit.Utilities.AxisFlags.ZAxis;
-                    BoundsControl boundsControl = cube.AddComponent<BoundsControl>();
+                    BoundsControl boundsControl = plant.gameObject.AddComponent<BoundsControl>();
                     boundsControl.ScaleHandlesConfig.ScaleBehavior = Microsoft.MixedReality.Toolkit.UI
                         .BoundsControlTypes.HandleScaleMode.NonUniform;
                     boundsControl.TranslationHandlesConfig.ShowHandleForX = true;
@@ -663,38 +664,39 @@ namespace MATCH
                     // Set optional features
                     if (navMeshTag)
                     {
-                        cube.AddComponent<NavMeshSourceTag>();
+                        plant.gameObject.AddComponent<NavMeshSourceTag>();
                     }
 
                     if (callbackOnTouch)
                     {
                         // As we will be adding the MouseAssistanceBasic, it requires to encapsulate the cube in an empty gameobject, and to rename the cube "Child"
-                        GameObject child = cube;
+                        Assistances.InteractionSurface child = plant;
                         child.name = "Child";
-                        cube = new GameObject(name);
-                        child.transform.parent = cube.transform;
+                        plant = new Assistances.InteractionSurface();
+                        plant.gameObject.name = name;
+                        child.transform.parent = plant.transform;
 
-                        cube.AddComponent<MATCH.Assistances.Basic>();
+                        plant.gameObject.AddComponent<MATCH.Assistances.Basic>();
                     }
 
                     // Add the callbacks
-                    boundsControl.ScaleStopped.AddListener(delegate { EventResized?.Invoke(cube, EventArgs.Empty); });
+                    boundsControl.ScaleStopped.AddListener(delegate { EventResized?.Invoke(plant.gameObject, EventArgs.Empty); });
 
                     objectManipulator.OnManipulationEnded.AddListener(delegate(ManipulationEventData data)
                     {
-                        EventMoved?.Invoke(cube, EventArgs.Empty);
+                        EventMoved?.Invoke(plant.gameObject, EventArgs.Empty);
                     });
 
-                    Cubes.Add(cube);
+                    InteractionPlants.Add(plant);
 
                     if (registerObject)
                     {
-                        PlantsPositioningStorage.RegisterObject(name, cube.transform, cube.transform);
+                        PlantsPositioningStorage.RegisterObject(name, plant.transform, plant.transform);
                     }
 
                     DialogAssistanceWaterHelp.AddButton(name, false, 0.12f);
 
-                    /*int currentIndex = DialogAssistanceWaterHelp.ButtonsController.Count - 1;
+                    int currentIndex = DialogAssistanceWaterHelp.ButtonsController.Count - 1;
                         
                     DialogAssistanceWaterHelp.ButtonsController[currentIndex].EventButtonClicked += delegate (System.Object o, EventArgs e)
                     {
@@ -707,7 +709,7 @@ namespace MATCH
                             LightPathsShown[currentIndex] = true;
                             NextTimeCheck = Time.time + 5f;
                         }
-                    };*/
+                    };
                 }
             }
         }
