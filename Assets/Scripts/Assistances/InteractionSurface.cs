@@ -46,7 +46,7 @@ namespace MATCH
             public event EventHandler EventConfigMoved;
             public event EventHandler EventUserMoved; // Embeds a Utilities.EventHandlerArgs.Position containing the position of the interaction surface
 
-            string Color = Utilities.Materials.Colors.GreenGlowing; // Default color if the user does not set one
+            string Color;
 
             bool SurfaceInitialized;
 
@@ -56,6 +56,7 @@ namespace MATCH
             {
                 // Initialize variables
                 SurfaceInitialized = false;
+                string Color = Utilities.Materials.Colors.GreenGlowing; // Default color if the user does not set one
 
                 // Children
                 View = gameObject.transform.Find("InteractionSurfaceChild");

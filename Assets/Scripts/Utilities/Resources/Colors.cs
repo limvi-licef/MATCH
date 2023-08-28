@@ -50,7 +50,7 @@ namespace MATCH
                 public static string OrangeAdjustHSV = Path + "OrangeAdjustHSV";
                 public static string OrangeGlowing = Path + "OrangeGlowing";
 
-                public static string GreenGlowingAdjustHSV = Path + "GreenGlowingAdjustHSV";
+                public static string GreenGlowingAdjustHSV = Path + "GreenAdjustHSV";
                 public static string GreenGlowing = Path + "GreenGlowing";
 
                 public static string YellowAdjustHSV = Path + "YellowAdjustHSV";

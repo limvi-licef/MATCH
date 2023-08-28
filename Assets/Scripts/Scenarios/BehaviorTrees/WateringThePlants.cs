@@ -88,17 +88,19 @@ namespace MATCH
                 public override void Start()
                 {
                     Scenarios.Manager.Instance.AddScenario(this);
+
+                    // Initialize assistances
+                    InitializeAssistances();
                     
                     List<String> registeredObjectsIds = PlantsPositioningStorage.GetObjetsRegisteredNames();
                     foreach (string id in registeredObjectsIds)
                     {
                         Utilities.ObjectPositioningStorage.ObjectsInformation objectsInformation = PlantsPositioningStorage.GetRegisteredObjectInformation(id);
 
-                        AddPlant(id, objectsInformation.Scale, objectsInformation.Position,  Utilities.Materials.Colors.WhiteTransparent, true, false, true, transform);
+                        AddPlant(id, objectsInformation.Scale, objectsInformation.Position,  Utilities.Materials.Colors.GreenGlowingAdjustHSV, true, false, true, transform);
                     }
 
-                    // Initialize assistances
-                    InitializeAssistances();
+                    
 
                     // Initialize inference manager
                     InferenceManager = MATCH.Inferences.Factory.Instance.CreateManager(transform);
@@ -626,47 +628,50 @@ namespace MATCH
                 public void AddPlant(string name, Vector3 scaling, Vector3 position, string color, bool navMeshTag,
                     bool callbackOnTouch, bool registerObject, Transform parent)
                 {
-                    Assistances.InteractionSurface plant = new Assistances.InteractionSurface();
+                    Assistances.InteractionSurface plant;// = new Assistances.InteractionSurface();
                     
                     // Set parent
-                    plant = Assistances.Factory.Instance.CreateInteractionSurface(name, AdminMenu.Panels.Right, new Vector3(1.1f, 0.02f, 0.7f), new Vector3(-0.447f, -0.406f, 0.009f), Utilities.Materials.Colors.CyanGlowing, false, true, Utilities.Utility.GetEventHandlerEmpty(), true, transform); ;
-                    plant.gameObject.name = name;
+                    plant = Assistances.Factory.Instance.CreateInteractionSurface(name, AdminMenu.Panels.Right, /*new Vector3(1.1f, 0.02f, 0.7f)*/ scaling, /*new Vector3(-0.447f, -0.406f, 0.009f)*/ position, Utilities.Materials.Colors.GreenGlowingAdjustHSV, false, true, Utilities.Utility.GetEventHandlerEmpty(), false, transform);
+                    
+                    //plant.gameObject.name = name;
                     // Add buttons to interface
-                    AdminMenu.Instance.AddButton("Plante " + name + " - Bring",
+                    /*AdminMenu.Instance.AddButton("Plante " + name + " - Bring",
                         delegate() { MATCH.Utilities.Utility.BringObject(plant.transform); }, AdminMenu.Panels.Left);
                     AdminMenu.Instance.AddSwitchButton("Plante " + name + " - Hide",
                         delegate()
                         {
                             MATCH.Utilities.Utility.ShowInteractionSurface(plant.transform,
                                 !plant.gameObject.GetComponent<Renderer>().enabled);
-                        }, AdminMenu.Panels.Left, AdminMenu.ButtonType.Hide);
+                        }, AdminMenu.Panels.Left, AdminMenu.ButtonType.Hide);*/
 
                     // Set color
-                    MATCH.Utilities.Utility.SetColor(plant.transform.transform, color);
+                    //MATCH.Utilities.Utility.SetColor(plant.GetInteractionSurface().transform, color);
 
                     // Set scaling and position
-                    plant.transform.position = position;
-                    plant.transform.localScale = scaling;
+                    /*plant.transform.position = position;
+                    plant.transform.localScale = scaling;*/
+                    /*plant.GetInteractionSurface().transform.position = position;
+                    plant.GetInteractionSurface().transform.localScale = scaling;*/
 
                     // Set the manipulation features
-                    ObjectManipulator objectManipulator = plant.gameObject.AddComponent<ObjectManipulator>();
-                    plant.gameObject.AddComponent<RotationAxisConstraint>().ConstraintOnRotation =
-                        Microsoft.MixedReality.Toolkit.Utilities.AxisFlags.XAxis |
-                        Microsoft.MixedReality.Toolkit.Utilities.AxisFlags.ZAxis;
-                    BoundsControl boundsControl = plant.gameObject.AddComponent<BoundsControl>();
-                    boundsControl.ScaleHandlesConfig.ScaleBehavior = Microsoft.MixedReality.Toolkit.UI
-                        .BoundsControlTypes.HandleScaleMode.NonUniform;
-                    boundsControl.TranslationHandlesConfig.ShowHandleForX = true;
-                    boundsControl.TranslationHandlesConfig.ShowHandleForY = true;
-                    boundsControl.TranslationHandlesConfig.ShowHandleForZ = true;
+                    //ObjectManipulator objectManipulator = plant.gameObject.AddComponent<ObjectManipulator>();
+                    //plant.gameObject.AddComponent<RotationAxisConstraint>().ConstraintOnRotation =
+                    //Microsoft.MixedReality.Toolkit.Utilities.AxisFlags.XAxis |
+                    //Microsoft.MixedReality.Toolkit.Utilities.AxisFlags.ZAxis;
+                    //BoundsControl boundsControl = plant.gameObject.AddComponent<BoundsControl>();
+                    //boundsControl.ScaleHandlesConfig.ScaleBehavior = Microsoft.MixedReality.Toolkit.UI
+                    //  .BoundsControlTypes.HandleScaleMode.NonUniform;
+                    //boundsControl.TranslationHandlesConfig.ShowHandleForX = true;
+                    //boundsControl.TranslationHandlesConfig.ShowHandleForY = true;
+                    //boundsControl.TranslationHandlesConfig.ShowHandleForZ = true;
 
                     // Set optional features
                     if (navMeshTag)
                     {
-                        plant.gameObject.AddComponent<NavMeshSourceTag>();
+                        plant.GetInteractionSurface().gameObject.AddComponent<NavMeshSourceTag>();
                     }
 
-                    if (callbackOnTouch)
+                    /*if (callbackOnTouch)
                     {
                         // As we will be adding the MouseAssistanceBasic, it requires to encapsulate the cube in an empty gameobject, and to rename the cube "Child"
                         Assistances.InteractionSurface child = plant;
@@ -676,22 +681,26 @@ namespace MATCH
                         child.transform.parent = plant.transform;
 
                         plant.gameObject.AddComponent<MATCH.Assistances.Basic>();
-                    }
+                    }*/
 
                     // Add the callbacks
-                    boundsControl.ScaleStopped.AddListener(delegate { EventResized?.Invoke(plant, EventArgs.Empty); });
+                    plant.EventConfigScaled += delegate(System.Object o, EventArgs e) { EventResized?.Invoke(plant.GetInteractionSurface().transform, EventArgs.Empty); };
+                    //boundsControl.ScaleStopped.AddListener(delegate { EventResized?.Invoke(plant, EventArgs.Empty); });
 
-                    objectManipulator.OnManipulationEnded.AddListener(delegate(ManipulationEventData data)
+                    plant.EventConfigMoved += delegate (System.Object o, EventArgs e) { EventMoved?.Invoke(plant.GetInteractionSurface().transform, EventArgs.Empty); };
+                    /*objectManipulator.OnManipulationEnded.AddListener(delegate(ManipulationEventData data)
                     {
                         EventMoved?.Invoke(plant, EventArgs.Empty);
-                    });
+                    });*/
 
                     InteractionPlants.Add(plant);
 
                     if (registerObject)
                     {
-                        PlantsPositioningStorage.RegisterObject(name, plant.transform, plant.transform);
+                        PlantsPositioningStorage.RegisterObject(name, plant.transform, plant.GetInteractionSurface().transform);
                     }
+
+                    plant.GetInteractionSurface().GetComponent<BoundsControl>().enabled = false;
 
                     DialogAssistanceWaterHelp.AddButton(name, false, 0.12f);
 
