@@ -204,12 +204,12 @@ namespace MATCH
                     return toReturn;
                 }
 
-                public GradationVisual CreateDialog2WithLinePath(string assistanceName, string title, string description, IAssistance lineDestination, Transform parent)
+                public GradationVisual CreateDialog2WithLinePath(string assistanceName, string title, string description, Transform lineDestination, Transform parent)
                 {
                     GradationVisual toReturn = Assistances.Factory.Instance.CreateAssistanceGradationAttention(assistanceName);
                     toReturn.name = assistanceName;
 
-                    PathWithTextAndHelp assistance = Assistances.Factory.Instance.CreateAssistancePath(assistanceName + "Path", title, description, lineDestination.GetAssistance().transform, parent);
+                    PathWithTextAndHelp assistance = Assistances.Factory.Instance.CreateAssistancePath(assistanceName + "Path", title, description, lineDestination/*.GetAssistance().transform*/, parent);
 
                     toReturn.AddAssistance(assistance);
 

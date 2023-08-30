@@ -250,8 +250,8 @@ namespace MATCH
                     Assistances.IAssistance beta1IAssistance = (Assistances.IAssistance)beta1.GetCurrentAssistance();
                     Assistances.Assistance beta1Assistance = (Assistances.Assistance)beta1IAssistance.GetRootDecoratedAssistance();
 
-                    Assistances.IAssistance beta2IAssistance = (Assistances.IAssistance)beta2.GetCurrentAssistance();
-                    Assistances.Assistance beta2Assistance = (Assistances.Assistance)beta2IAssistance.GetRootDecoratedAssistance();
+                    Assistances.IAssistance beta2aIAssistance = (Assistances.IAssistance)beta2a.GetCurrentAssistance();
+                    Assistances.Assistance beta2aAssistance = (Assistances.Assistance)beta2aIAssistance.GetRootDecoratedAssistance();
 
                     Assistances.IAssistance beta3IAssistance = (Assistances.IAssistance)beta3.GetCurrentAssistance();
                     Assistances.Assistance beta3Assistance = (Assistances.Assistance)beta3IAssistance.GetRootDecoratedAssistance();
@@ -270,7 +270,7 @@ namespace MATCH
                         assistanceExclamation.Show(Utilities.Utility.GetEventHandlerEmpty(), false);
                     };
 
-                    beta2Assistance.EventHelpButtonClicked += delegate (System.Object o, EventArgs e)
+                    beta2aAssistance.EventHelpButtonClicked += delegate (System.Object o, EventArgs e)
                     {
                         assistanceExclamation.SetMaterial(Utilities.Materials.Colors.OrangeGlowing);
                     };

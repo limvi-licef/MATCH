@@ -59,6 +59,8 @@ namespace MATCH
                 string InferenceCloseToCalendar = "CloseToCalendar";
                 string InferenceCalendarHelp = "CalendarHelp";
 
+                string InferenceCloseToRag = "CloseToRag";
+
                 // Interaction surface
                 Assistances.InteractionSurface InteractionSurfaceTable;
                 Assistances.InteractionSurface InteractionRag;
@@ -399,7 +401,12 @@ namespace MATCH
                     Assistances.Dialogs.Dialog2 beta8Dialog2 = ((Assistances.Dialogs.Dialog2)beta8IAssistance.GetRootDecoratedAssistance());
                     beta8Dialog2.ButtonsController.Last().EventButtonClicked += delegate (System.Object o, EventArgs e)
                     {
-                        UpdateConditionWithMatrix(ConditionRagNotTakenButHelpReceived);
+                        Inferences.DistanceComing distanceComing = new Inferences.DistanceComing(InferenceCloseToRag, delegate (System.Object o, EventArgs e)
+                        {
+                            InferenceManager.UnregisterInference(InferenceCloseToRag);
+                            UpdateConditionWithMatrix(ConditionRagNotTakenButHelpReceived);
+                        }, InteractionRag.GetInteractionSurface().gameObject, 2.0f);
+                        InferenceManager.RegisterInference(distanceComing);
                     };
 
                     Assistances.IAssistance beta10IAssistance = ((Assistances.IAssistance)AssistancesDB.Beta[10].GetCurrentAssistance());
@@ -469,10 +476,11 @@ namespace MATCH
                     Sequence temp = new Sequence(
                         new NPBehave.Action(() =>
                         {
-                            //ShowAssistanceHideOthers(epsilon);
+                            ShowAssistanceHideOthers(epsilon);
                             InferenceManager.UnregisterInference(InferenceFarFromRag);
-                            epsilon.StopAssistance();
-                            epsilon.RunAssistance();
+                            //epsilon.StopAssistance();
+                            //epsilon.RunAssistance();
+
                             //UpdateTextAssistancesDebugWindow("Epsilon");
                             MATCH.Utilities.Logger.Instance.Log(this.GetId(), MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, "Epsilon");
                         
@@ -634,6 +642,7 @@ namespace MATCH
                     Assistances.SurfaceToProcess surface = Assistances.Factory.Instance.CreateSurfaceToProcess(InteractionSurfaceTable.transform, InteractionSurfaceTable);
                     surface.EventSurfaceCleaned += delegate (System.Object o, EventArgs e)
                     {
+                        surface.Hide(Utilities.Utility.GetEventHandlerEmpty(), false);
                         UpdateConditionWithMatrix(ConditionTableCleaned);
                     };
                     surface.EventNewPartCleaned += delegate (System.Object o, EventArgs e)
@@ -901,7 +910,8 @@ namespace MATCH
                     Assistances.GradationVisual.Factory.Instance.CreateDialog2WithButtons("DustingTable-Beta-7", "", "Où pouvez-vous regarder pour le trouver?", "Je sais!", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.Yes, "Je ne sais pas", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.No, /*parentTable*/ /*toDoList.GetAssistance().transform*/ parentHelpCalendar),
                     Assistances.GradationVisual.Factory.Instance.CreateDialog2WithButtonsContextualized("DustingTable-Beta-8", "", "Avez-vous regardé <Location> ?", parentRag, "J'ai trouvé!", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.Yes, "Je n'ai pas trouvé", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.No, /*parentTable*/ /*toDoList.GetAssistance().transform*/ parentHelpCalendar),
                     Assistances.GradationVisual.Factory.Instance.CreateDialog2WithButtons("DustingTable-Beta-9", "", "Vous pouvez le trouver proche de vous dans cette pièce", "J'ai trouvé!", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.Yes, "Je ne l'ai pas trouvé", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.No, /*parentTable*/ /*toDoList.GetAssistance().transform*/ parentHelpCalendar),
-                    Assistances.GradationVisual.Factory.Instance.CreateArch("DustingTable-Beta-10", "Vous trouverez le chiffon au bout de cette flèche", parentTable, parentRag, parentTable),
+                    //Assistances.GradationVisual.Factory.Instance.CreateArch("DustingTable-Beta-10", "Vous trouverez le chiffon au bout de cette flèche", parentTable, parentRag, parentTable),
+                    Assistances.GradationVisual.Factory.Instance.CreateDialog2WithLinePath("DustingTable-Beta-10", "", "Vous trouverez le chiffon au bout de cette flèche", parentRag, parentHelpCalendar),
                     Assistances.GradationVisual.Factory.Instance.CreateDialog2WithButtons("DustingTable-Beta-11", "", "Ok! Nous vous laissons faire", "Ok!", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.ClosingButton, /*parentTable*/ /*toDoList.GetAssistance().transform*/ parentHelpCalendar),
                     Assistances.GradationVisual.Factory.Instance.CreateDialog2WithButtons("DustingTable-Beta-12", "", "Savez-vous comment réaliser cette activité?", "Oui", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.Yes, "Non", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.No, /*parentTable*/ /*toDoList.GetAssistance().transform*/ parentHelpCalendar)
                     };
@@ -945,7 +955,7 @@ namespace MATCH
                         Assistances.GradationVisual.Factory.Instance.CreateDialog2WithButtons("DustingTable-Kappa-00", "", "Savez-vous quelle activité vous avez à faire dans cette pièce?", "Oui", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.Yes, "Non", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.No, MATCH.Assistances.InteractionSurfaceFollower.Instance.transform),
                         Assistances.GradationVisual.Factory.Instance.CreateDialog2WithButtons("DustingTable-Kappa-01", "", "Où pouvez-vous trouver des détails sur l'activité à faire?", "Je sais", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.Yes, "Je ne sais pas", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.No, MATCH.Assistances.InteractionSurfaceFollower.Instance.transform),
                         Assistances.GradationVisual.Factory.Instance.CreateDialog2WithButtons("DustingTable-Kappa-02", "", "Avez-vous regardé sur les murs?", "Oui", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.Yes, "Non", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.No, MATCH.Assistances.InteractionSurfaceFollower.Instance.transform),
-                        Assistances.GradationVisual.Factory.Instance.CreateDialog2WithLinePath("DustingTable-Kappa-03", "", "Vous trouverez les détails de l'activité au bout de la ligne", toDoList, MATCH.Assistances.InteractionSurfaceFollower.Instance.transform),
+                        Assistances.GradationVisual.Factory.Instance.CreateDialog2WithLinePath("DustingTable-Kappa-03", "", "Vous trouverez les détails de l'activité au bout de la ligne", toDoList.GetAssistance().transform, MATCH.Assistances.InteractionSurfaceFollower.Instance.transform),
                         //Assistances.GradationVisual.Factory.Instance.CreateArch("DustingTable-Kappa-03", "Vous trouverez les détails de l'activité au bout de cette arche", MATCH.Assistances.InteractionSurfaceFollower.Instance.transform, parentToDoList, MATCH.Assistances.InteractionSurfaceFollower.Instance.transform),
                         Assistances.GradationVisual.Factory.Instance.CreateDialog2WithButtons("DustingTable-Kappa-04", "", "Ok! Nous vous laissons faire", "Ok!", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.ClosingButton, MATCH.Assistances.InteractionSurfaceFollower.Instance.transform)
                     };

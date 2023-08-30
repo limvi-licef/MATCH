@@ -67,6 +67,7 @@ namespace MATCH
                 Help.AdjustToHeight = false;
                 Help.gameObject.name = "Icon_help";
                 Help.GetTransform().localPosition = new Vector3(0, -0.4f, 0);
+                Help.GetComponent<BoxCollider>().enabled = false;
                                 
             }
 
@@ -77,6 +78,7 @@ namespace MATCH
                 if (IsDisplayed == false)
                 {
                     gameObject.GetComponent<BoxCollider>().enabled = true;
+                    Help.GetComponent<BoxCollider>().enabled = true;
 
                     if (AdjustHeightOnShow)
                     {
@@ -105,6 +107,7 @@ namespace MATCH
                 if (IsDisplayed)
                 {
                     gameObject.GetComponent<BoxCollider>().enabled = false;
+                    Help.GetComponent<BoxCollider>().enabled = false;
 
                     if (withAnimation)
                     {

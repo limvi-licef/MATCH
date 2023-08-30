@@ -31,7 +31,7 @@ namespace MATCH
             public class Icon : Assistance, IAssistance
             {
                 IAssistance PanelToDecorate;
-                Assistances.Icon IconView;
+                Assistances.Icon IconController;
 
                 private void Awake()
                 {
@@ -59,13 +59,13 @@ namespace MATCH
 
                     if (IconColor != null && IconType != null)
                     {
-                        IconView = Assistances.Factory.Instance.CreateIcon(true, new Vector3(0, 0, 0), new Vector3(1, 1, 1), true, transform /*GetTransform()*/, IconType, IconColor);
-                        IconView.SetScale(PanelToDecorate.GetIcon().GetScale());
-                        IconView.SetLocalPositionObject(PanelToDecorate.GetIcon().GetLocalPositionObject());
+                        IconController = Assistances.Factory.Instance.CreateIcon(true, new Vector3(0, 0, 0), new Vector3(1, 1, 1), true, transform /*GetTransform()*/, IconType, IconColor);
+                        IconController.SetScale(PanelToDecorate.GetIcon().GetScale());
+                        IconController.SetLocalPositionObject(PanelToDecorate.GetIcon().GetLocalPositionObject());
                     }
                     else
                     {
-                        IconView = PanelToDecorate.GetIcon();
+                        IconController = PanelToDecorate.GetIcon();
                     }
 
                     Assistance temp = PanelToDecorate.GetRootDecoratedAssistance();
@@ -109,8 +109,8 @@ namespace MATCH
                         {
                             PanelToDecorate.GetRootDecoratedAssistance().Show(Utilities.Utility.GetEventHandlerEmpty(), false);
 
-                            IconView.GetIconObjTransform().gameObject.SetActive(true);
-                            IconView.GetTransform().GetComponent<BoxCollider>().enabled = false;
+                            IconController.GetIconObjTransform().gameObject.SetActive(true);
+                            IconController.GetTransform().GetComponent<BoxCollider>().enabled = false;
                             PanelToDecorate.GetIcon().GetIconObjTransform().gameObject.SetActive(false); //The decorated panels transform become invisible
                                                                                                          //PanelToDecorate.GetIcon().transform.GetComponent<BoxCollider>().enabled = false;
 
@@ -179,7 +179,7 @@ namespace MATCH
 
                 public Assistances.Icon GetIcon()
                 {
-                    return IconView;
+                    return IconController;
                 }
 
                 public Transform GetLinePath()
@@ -193,7 +193,7 @@ namespace MATCH
                     {
                         Utilities.Emphasize emphasize = gameObject.AddComponent<Utilities.Emphasize>();
 
-                        emphasize.AddMaterial(IconView.GetIconObjTransform());
+                        emphasize.AddMaterial(IconController.GetIconObjTransform());
                         emphasize.EnableEmphasize(true);
 
                     }
