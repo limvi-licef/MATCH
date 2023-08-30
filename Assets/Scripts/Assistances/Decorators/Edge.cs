@@ -128,7 +128,7 @@ namespace MATCH
                         EdgeLeft.gameObject.SetActive(true);
                         EdgeRight.gameObject.SetActive(true);
 
-                        DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Edges shown");
+                        DebugMessagesManager.Instance.DisplayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Edges shown");
 
                         callback?.Invoke(this, e);
                     }, withAnimation);
@@ -136,7 +136,7 @@ namespace MATCH
 
                 public override void ShowHelp(bool show, EventHandler callback, bool withAnimation)
                 {
-                    DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Warning, "Not implemented yet");
+                    DebugMessagesManager.Instance.DisplayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Warning, "Not implemented yet");
                     throw new NotImplementedException();
                 }
 

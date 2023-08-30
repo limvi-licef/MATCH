@@ -534,7 +534,7 @@ namespace MATCH
 
                 void ShowLightpathToPlant(Assistances.InteractionSurface plant)
                 {
-                    DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name,
+                    DebugMessagesManager.Instance.DisplayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name,
                         DebugMessagesManager.MessageLevel.Info, "Called");
 
                     Vector3[] corners = PathFinderEngine.ComputePath(FollowObject.transform, plant.transform);
@@ -554,7 +554,7 @@ namespace MATCH
 
                         lineRenderer.SetPosition(i, corner);
 
-                        DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Corner : " + corner);
+                        DebugMessagesManager.Instance.DisplayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Corner : " + corner);
                     }
                 }
 

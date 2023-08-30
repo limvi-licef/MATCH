@@ -82,11 +82,11 @@ namespace MATCH
 
                 InitialState = Manager.getInitialAssistance();
 
-                DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Original state: " + InitialState.getId());
+                DebugMessagesManager.Instance.DisplayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Original state: " + InitialState.getId());
                 DisplayStates(InitialState, 0);
                 //displayStatesV2();
 
-                DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Table surface should be touchable again");
+                DebugMessagesManager.Instance.DisplayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Table surface should be touchable again");
 
                 // Subscribing to the signal
                 Manager.s_newStateSelected += CallbackNewStateSelected;

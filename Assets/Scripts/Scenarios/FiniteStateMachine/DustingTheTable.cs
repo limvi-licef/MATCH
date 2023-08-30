@@ -351,7 +351,7 @@ namespace MATCH
                     MATCH.FiniteStateMachine.MouseUtilitiesGradationAssistance sStandBy = m_assistanceGradationManager.addNewAssistanceGradation("Stand-by");
                     sStandBy.addFunctionShow(delegate (EventHandler e, bool animate)
                     {
-                        DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Standby show function called");
+                        DebugMessagesManager.Instance.DisplayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Standby show function called");
 
                         OnChallengeStandBy();
 
@@ -437,7 +437,7 @@ namespace MATCH
                     // Connecting the states
                     s_time20h += delegate (System.Object o, EventArgs e)
                     {
-                        DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Inference 20h for cleaning table called");
+                        DebugMessagesManager.Instance.DisplayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Inference 20h for cleaning table called");
                     };
                     s_time20h += sStandBy.goToState(sRedSurface);
                     s_ignoreRedSurface += sRedSurface.goToState(sRedSurfaceAndExclamation);
@@ -484,7 +484,7 @@ namespace MATCH
                 {
                     m_assistancePicturalController.IncreaseGradation();
                     m_inferenceEngine.UnregisterInference("inferenceAssistancePicturalDistance");
-                    DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Called");
+                    DebugMessagesManager.Instance.DisplayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Called");
                 }
 
                 void SetStandByTransitions(MATCH.FiniteStateMachine.MouseUtilitiesGradationAssistance state)

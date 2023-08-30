@@ -45,7 +45,7 @@ public class MouseUtilitiesTimer : MonoBehaviour
 
             if (m_timerDurationInternal <= 0)
             {
-                MATCH.DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, MATCH.DebugMessagesManager.MessageLevel.Info, "Timer finished!");
+                MATCH.DebugMessagesManager.Instance.DisplayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, MATCH.DebugMessagesManager.MessageLevel.Info, "Timer finished!");
                
                 m_timerStart = false;
                 m_timerDurationInternal = m_timerDuration * 60;
@@ -62,11 +62,11 @@ public class MouseUtilitiesTimer : MonoBehaviour
             m_timerStart = true;
             m_timerDurationInternal = m_timerDuration * 60;
 
-            MATCH.DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, MATCH.DebugMessagesManager.MessageLevel.Info, "Timer started");
+            MATCH.DebugMessagesManager.Instance.DisplayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, MATCH.DebugMessagesManager.MessageLevel.Info, "Timer started");
         }
         else
         {
-            MATCH.DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, MATCH.DebugMessagesManager.MessageLevel.Warning, "Timer already running, so will not be started - please call again this function when this timer will be finished");
+            MATCH.DebugMessagesManager.Instance.DisplayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, MATCH.DebugMessagesManager.MessageLevel.Warning, "Timer already running, so will not be started - please call again this function when this timer will be finished");
         }
     }
 
@@ -79,7 +79,7 @@ public class MouseUtilitiesTimer : MonoBehaviour
         }
         else
         {
-            MATCH.DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, MATCH.DebugMessagesManager.MessageLevel.Warning, "No timer currently running, so nothing to do");
+            MATCH.DebugMessagesManager.Instance.DisplayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, MATCH.DebugMessagesManager.MessageLevel.Warning, "No timer currently running, so nothing to do");
         }
     }
 }

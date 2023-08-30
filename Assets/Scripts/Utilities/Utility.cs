@@ -46,7 +46,7 @@ namespace MATCH
 
                 if (interactable == null)
                 {
-                    DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Warning, "No interactable component to the gameobject: adding one");
+                    DebugMessagesManager.Instance.DisplayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Warning, "No interactable component to the gameobject: adding one");
 
                     interactable = gameObject.AddComponent<Interactable>();
                 }
@@ -55,7 +55,7 @@ namespace MATCH
 
                 if (receiver == null)
                 {
-                    DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Warning, "No touch receiver to the interactable gameobject: adding one");
+                    DebugMessagesManager.Instance.DisplayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Warning, "No touch receiver to the interactable gameobject: adding one");
 
                     receiver = interactable.AddReceiver<InteractableOnTouchReceiver>();
                 }
@@ -80,7 +80,7 @@ namespace MATCH
             {
                 return new EventHandler(delegate (System.Object o, EventArgs e)
                 {
-                    DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, debugMessage);
+                    DebugMessagesManager.Instance.DisplayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, debugMessage);
                 });
             }
 
@@ -209,15 +209,19 @@ namespace MATCH
             {
 #if UNITY_EDITOR
                 return !Application.isEditor;
-#endif
+#else
                 return false;
+#endif
+
             }
             public static bool IsEditorGameView()
             {
 #if UNITY_EDITOR
                 return Application.isEditor;
-#endif
+#else
                 return false;
+#endif
+
             }
 
             public static List<Vector3> CalculateBezierCurve(Vector3 startPoint, Vector3 endPoint, Vector3 cornerPoint)

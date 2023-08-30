@@ -77,7 +77,7 @@ namespace MATCH
             }
             void CallbackNewScenarioInManager(System.Object o, EventArgs e)
             {
-                DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Called");
+                DebugMessagesManager.Instance.DisplayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Called");
 
                 AddScenarioToGUI(MATCH.Scenarios.Manager.Instance.getScenarios().Last());
             }

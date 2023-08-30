@@ -75,7 +75,7 @@ namespace MATCH
                 // Sanity checks
                 if (HologramToUseToPopulateSurfaceController.GetComponent<ProcessingSurfaceElement>() == null)
                 {
-                    MATCH.DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, MATCH.DebugMessagesManager.MessageLevel.Error, "The m_hologramToUseToPopulateSurface object should have a MouseChallengeCleanTableHologramForSurfaceToClean component");
+                    MATCH.DebugMessagesManager.Instance.DisplayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, MATCH.DebugMessagesManager.MessageLevel.Error, "The m_hologramToUseToPopulateSurface object should have a MouseChallengeCleanTableHologramForSurfaceToClean component");
                 }
 
                 AdminMenu.Instance.AddSwitchButton("Show Surface To Process", delegate () 
@@ -163,7 +163,7 @@ namespace MATCH
                         }
                         else
                         {
-                            MATCH.DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, MATCH.DebugMessagesManager.MessageLevel.Warning, "At leat one cube is already displayed, so nothing to do");
+                            MATCH.DebugMessagesManager.Instance.DisplayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, MATCH.DebugMessagesManager.MessageLevel.Warning, "At leat one cube is already displayed, so nothing to do");
                             populateTable = false;
                         }
                     }
@@ -326,7 +326,7 @@ namespace MATCH
 
             public override void ShowHelp(bool show, EventHandler callback, bool withAnimation)
             {
-                DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "No help implemented for this assistance");
+                DebugMessagesManager.Instance.DisplayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "No help implemented for this assistance");
                 /*if (show)
                 {
                     if (Help.IsDisplayed == false)

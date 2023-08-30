@@ -67,7 +67,7 @@ namespace MATCH
                 public GradationVisual CreateExclamationMark(string name, Transform parent)
                 {
                     GradationVisual assistance = Assistances.Factory.Instance.CreateAssistanceGradationAttention(name);
-                    Assistances.Icon assistanceBase = Assistances.Factory.Instance.CreateIcon(true, new Vector3(0,0,0), new Vector3(0.5f,0.5f,0.5f), true, parent, /*null*/Utilities.Materials.Icon.ExclamationMark, Utilities.Materials.Colors.WhiteMetallicAdjustHSV);
+                    Assistances.Icon assistanceBase = Assistances.Factory.Instance.CreateIcon(true, new Vector3(0,0,0), new Vector3(0.3f,0.3f,0.3f), true, parent, /*null*/Utilities.Materials.Icon.ExclamationMark, Utilities.Materials.Colors.WhiteMetallicAdjustHSV);
                     assistanceBase.name = name + "_base";
 
                     assistance.AddAssistance(Assistances.Decorators.Factory.Instance.CreateMaterial(assistanceBase, Utilities.Materials.Colors.CyanAdjustHSV));

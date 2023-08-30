@@ -107,7 +107,7 @@ namespace MATCH
 
                 if (m_assistanceGradationIndexCurrent == nbGradations - 1)
                 {
-                    DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Warning, "Maximum gradation level reached");
+                    DebugMessagesManager.Instance.DisplayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Warning, "Maximum gradation level reached");
                     toReturn = true;
                 }
                 return toReturn;
@@ -129,7 +129,7 @@ namespace MATCH
 
                 if (m_assistanceGradationIndexCurrent == 0)
                 {
-                    DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Warning, "Minimum gradation level reached");
+                    DebugMessagesManager.Instance.DisplayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Warning, "Minimum gradation level reached");
 
                     toReturn = true;
                 }
@@ -141,7 +141,7 @@ namespace MATCH
             {
                 if (m_assistanceGradationIndexCurrent == 0)
                 { // If gradation is already to the minimum, then nothing to do
-                    DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Warning, "Gradation already at minimal level - nothing to do");
+                    DebugMessagesManager.Instance.DisplayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Warning, "Gradation already at minimal level - nothing to do");
                 }
                 else
                 {

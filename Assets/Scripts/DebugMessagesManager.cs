@@ -27,7 +27,7 @@ namespace MATCH
 {
     public class DebugMessagesManager : MonoBehaviour
     {
-        List<string> m_classNameFilter;
+        List<string> ClassNameFilter;
 
         public enum MessageLevel
         {
@@ -36,8 +36,8 @@ namespace MATCH
             Error
         }
 
-        public bool m_displayOnConsole;
-        public bool m_displayMessages; // True: messages displayed; False otherwise
+        public bool DisplayOnConsole;
+        public bool DisplayMessages; // True: messages displayed; False otherwise
 
         private static DebugMessagesManager _instance;
 
@@ -51,15 +51,9 @@ namespace MATCH
             }
             else
             {
-                m_classNameFilter = new List<string>();
+                ClassNameFilter = new List<string>();
 
-                // For now, filtering is hard coded
-                //m_classNameFilter.Add("MouseChallengeCleanTableReminderOneClockMoving");
-                //m_classNameFilter.Add("MouseUtilitiesGradationAssistanceManager");
-                /*m_classNameFilter.Add("MouseUtilitiesHolograms");
-                m_classNameFilter.Add("MouseCueing");*/
-
-                m_displayMessages = true;
+                DisplayMessages = true;
 
                 _instance = this;
             }
@@ -68,13 +62,14 @@ namespace MATCH
         // Start is called before the first frame update
         void Start()
         {
-            AdminMenu.Instance.AddButton("Debug window - Bring", callbackDebugBringWindow);
-            AdminMenu.Instance.AddButton("Debug window - Clear", callbackDebugClearWindow);
-            AdminMenu.Instance.AddSwitchButton("Debug window - Display in console", callbackDebugDisplayDebugInWindow);
+            AdminMenu.Instance.AddButton("Debug window - Bring", CallbackDebugBringWindow);
+            AdminMenu.Instance.AddButton("Debug window - Clear", CallbackDebugClearWindow);
+            AdminMenu.Instance.AddSwitchButton("Debug window - Display in console", CallbackDebugDisplayDebugInWindow);
+            AdminMenu.Instance.AddSwitchButton("Debug - Display messages", CallbackDisplayMessages);
 
-            if (m_classNameFilter.Count > 0)
+            if (ClassNameFilter.Count > 0)
             {
-                displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Warning, "Message filtering enabled. Only the messages from the following classes will be displayed: " + m_classNameFilter.ToString());
+                DisplayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Warning, "Message filtering enabled. Only the messages from the following classes will be displayed: " + ClassNameFilter.ToString());
             }
         }
 
@@ -84,72 +79,82 @@ namespace MATCH
 
         }
 
-        public void callbackDebugBringWindow()
+        void CallbackDebugBringWindow()
         {
             gameObject.transform.position = new Vector3(Camera.main.transform.position.x + 0.5f, Camera.main.transform.position.y, Camera.main.transform.position.z);
             gameObject.transform.LookAt(Camera.main.transform);
             gameObject.transform.Rotate(new Vector3(0, 1, 0), 180);
         }
 
-        public void callbackDebugClearWindow()
+        void CallbackDebugClearWindow()
         {
             TextMeshPro temp = gameObject.GetComponent<TextMeshPro>();
             temp.SetText("");
         }
 
-        public void callbackDebugDisplayDebugInWindow()
+        void CallbackDebugDisplayDebugInWindow()
         {
-            m_displayOnConsole = !m_displayOnConsole;
+            DisplayOnConsole = !DisplayOnConsole;
         }
 
-        public void displayMessage(string className, string functionName, MessageLevel messageLevel, string message)
+        void CallbackDisplayMessages()
         {
-            if (m_displayMessages)
-            {
-                if (m_classNameFilter.Count == 0 || m_classNameFilter.Contains(className))
+            DisplayMessages = !DisplayMessages;
+        }
+
+        public void DisplayMessage(string className, string functionName, MessageLevel messageLevel, string message)
+        {
+                if (DisplayMessages)
                 {
-                    // Building message
-                    string messageToDisplay = "[" + className + "::" + functionName + "] ";
-
-                    switch (messageLevel)
+                    if (ClassNameFilter.Count == 0 || ClassNameFilter.Contains(className))
                     {
-                        case MessageLevel.Info:
-                            messageToDisplay += "Info";
-                            break;
-                        case MessageLevel.Warning:
-                            messageToDisplay += "Warning";
-                            break;
-                        case MessageLevel.Error:
-                            messageToDisplay += "Error";
-                            break;
-                    }
+                        // Building message
+                        string messageToDisplay = "[" + className + "::" + functionName + "] ";
 
-                    messageToDisplay += " - " + message;
-
-                    // Message is processed differently following if we want to have it shown in the console or in the Hololens
-                    if (m_displayOnConsole)
-                    {
                         switch (messageLevel)
                         {
                             case MessageLevel.Info:
-                                Debug.Log(messageToDisplay);
+                                messageToDisplay += "Info";
                                 break;
                             case MessageLevel.Warning:
-                                Debug.LogWarning(messageToDisplay);
+                                messageToDisplay += "Warning";
                                 break;
                             case MessageLevel.Error:
-                                Debug.LogError(messageToDisplay);
+                                messageToDisplay += "Error";
                                 break;
                         }
-                    }
-                    else
-                    {
-                        TextMeshPro textMesh = gameObject.GetComponent<TextMeshPro>();
+
+                        messageToDisplay += " - " + message;
+
+                        // Message is processed differently following if we want to have it shown in the console or in the Hololens
+                        if (DisplayOnConsole)
+                        {
+                            switch (messageLevel)
+                            {
+                                case MessageLevel.Info:
+                                    Debug.Log(messageToDisplay);
+                                    break;
+                                case MessageLevel.Warning:
+                                    Debug.LogWarning(messageToDisplay);
+                                    break;
+                                case MessageLevel.Error:
+                                    Debug.LogError(messageToDisplay);
+                                    break;
+                            }
+                        }
+                        else
+                        {
+                        //TextMeshPro textMesh = gameObject.GetComponent<TextMeshPro>();
+                        Transform eyeScroll = transform.Find("Eye Scroll");
+                        Transform canvas = eyeScroll.Find("Canvas");
+                        Transform scrollView = canvas.Find("Scroll View");
+                        Transform viewport = scrollView.Find("Viewport");
+                        Transform textMeshPro = viewport.Find("TextMeshPro Text");
+                        TextMeshProUGUI textMesh = textMeshPro.GetComponent<TextMeshProUGUI>();
                         textMesh.SetText(textMesh.text + "\n" + messageToDisplay);
+                        }
                     }
                 }
             }
         }
     }
-
-}

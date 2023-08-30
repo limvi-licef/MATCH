@@ -20,6 +20,7 @@ using Microsoft.MixedReality.Toolkit.UI.BoundsControl;
 using Microsoft.MixedReality.Toolkit.Utilities.Solvers;
 using System.Reflection;
 using System;
+using System.Linq;
 
 namespace MATCH
 {
@@ -50,6 +51,8 @@ namespace MATCH
                     Utilities.ObjectPositioningStorage.ObjectsInformation objectsInformation = ObstaclePositioningStorage.GetRegisteredObjectInformation(id);
 
                     AddObstacle(id, objectsInformation.Scale, objectsInformation.Position,  Utilities.Materials.Colors.WhiteTransparent, true, false, true, transform);
+                    GameObject temp = Cubes.Last();
+                    MATCH.Utilities.Utility.ShowInteractionSurface(temp.transform, false);
                 }
             }
 

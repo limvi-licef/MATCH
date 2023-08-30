@@ -214,7 +214,7 @@ namespace MATCH
                 {
                     m_inferenceManager.UnregisterInference(m_inference19h00);
 
-                    DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Time 19h00 triggered");
+                    DebugMessagesManager.Instance.DisplayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Time 19h00 triggered");
 
                     s_inference19h00?.Invoke(this, EventArgs.Empty);
                 }
@@ -223,7 +223,7 @@ namespace MATCH
                 {
                     m_inferenceManager.UnregisterInference(m_inference19h30);
 
-                    DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Time 19h30 triggered");
+                    DebugMessagesManager.Instance.DisplayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Time 19h30 triggered");
 
                     s_inference19h30?.Invoke(this, EventArgs.Empty);
                 }

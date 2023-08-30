@@ -79,7 +79,7 @@ namespace MATCH
 
             public void CallbackOneMinuteTrigger()
             {
-                DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Callback one minute triggered called");
+                DebugMessagesManager.Instance.DisplayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Callback one minute triggered called");
 
                 m_timeOneMinuteTrigger = DateTime.Now;
                 m_useOneMinuteTrigger = true;

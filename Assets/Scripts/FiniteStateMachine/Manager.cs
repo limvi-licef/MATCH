@@ -158,7 +158,7 @@ namespace MATCH
                     }
                     else
                     {
-                        DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Warning, "Caller: " + caller.getId() + " is different from current state (" + m_gradationCurrent + ") so nothing will happen. This is labelled as a warning, by most likely this is a good safety thing.");
+                        DebugMessagesManager.Instance.DisplayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Warning, "Caller: " + caller.getId() + " is different from current state (" + m_gradationCurrent + ") so nothing will happen. This is labelled as a warning, by most likely this is a good safety thing.");
                     }
                 });
 
@@ -174,7 +174,7 @@ namespace MATCH
 
             public MouseUtilitiesGradationAssistanceIntermediateState addIntermediateState(string id, MouseUtilitiesGradationAssistance nextState)
             {
-                DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Called");
+                DebugMessagesManager.Instance.DisplayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Called");
 
                 if (/*m_assistanceIntermediateStates*/m_assistanceGradation.ContainsKey(id) == false)
                 {
@@ -201,7 +201,7 @@ namespace MATCH
                 }
                 else
                 {
-                    DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Warning, "Intermediate state already registered - returning the existing state");
+                    DebugMessagesManager.Instance.DisplayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Warning, "Intermediate state already registered - returning the existing state");
                 }
 
                 /*m_assistanceIntermediateStates*/
@@ -229,7 +229,7 @@ namespace MATCH
 
                 if (stateNext == null)
                 { // Means we have reached the last state of the state machine. So nothing to do excepted informing the user
-                    DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Warning, "The required next state " + idNext + " is not defined as a potentiel next state for the current state " + stateCurrent.getId() + ". Nothing will happen. This can be a normal behavior.");
+                    DebugMessagesManager.Instance.DisplayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Warning, "The required next state " + idNext + " is not defined as a potentiel next state for the current state " + stateCurrent.getId() + ". Nothing will happen. This can be a normal behavior.");
 
                     toReturn = true;
                 }
@@ -247,7 +247,7 @@ namespace MATCH
 
             void goToPreviousState()
             { // No arguments as previous state is known internally
-                DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Transitions from " + m_assistanceGradation[m_gradationCurrent].getId() + " to " + m_assistanceGradation[m_gradationPrevious].getId());
+                DebugMessagesManager.Instance.DisplayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Transitions from " + m_assistanceGradation[m_gradationCurrent].getId() + " to " + m_assistanceGradation[m_gradationPrevious].getId());
 
                 m_gradationNext = m_gradationPrevious; // Little trick to handle correctly the transition to the previous state, as next becomes current and current becomes previous.
 
@@ -284,7 +284,7 @@ namespace MATCH
             {
                 if (m_gradationInitial == "")
                 {
-                    DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Warning, "Initial state not set - however required. So nothing will happen.");
+                    DebugMessagesManager.Instance.DisplayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Warning, "Initial state not set - however required. So nothing will happen.");
                 }
                 else
                 {
@@ -488,7 +488,7 @@ namespace MATCH
 
                 if (m_statesThatHaveToCall.ContainsKey(state.getId()) == false)
                 {
-                    DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "New state added: " + state.getId());
+                    DebugMessagesManager.Instance.DisplayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "New state added: " + state.getId());
 
                     m_statesThatHaveToCall.Add(state.getId(), state);
                     m_statesWhoCalled.Add(state.getId(), false);
@@ -507,7 +507,7 @@ namespace MATCH
                 }
                 else
                 {
-                    DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Warning, "State already registered - returning the callback already registered for this state");
+                    DebugMessagesManager.Instance.DisplayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Warning, "State already registered - returning the callback already registered for this state");
                     callback = m_statesCallbacks[state.getId()];
                 }
 
@@ -516,7 +516,7 @@ namespace MATCH
 
             void tryTriggerNextState()
             {
-                DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Trying to trigger the next state");
+                DebugMessagesManager.Instance.DisplayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Trying to trigger the next state");
 
                 bool triggerNextState = true;
 
@@ -529,14 +529,14 @@ namespace MATCH
 
                     if (pair.Value == false)
                     {
-                        DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "State " + pair.Key + " NOT called");
+                        DebugMessagesManager.Instance.DisplayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "State " + pair.Key + " NOT called");
 
                         triggerNextState = false;
                         //break; // No need to continue the loop
                     }
                     else
                     {
-                        DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "State " + pair.Key + " called");
+                        DebugMessagesManager.Instance.DisplayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "State " + pair.Key + " called");
 
                         nbStatesCalled++;
                     }
@@ -549,13 +549,13 @@ namespace MATCH
                     MouseUtilisiesGradationAssistanceArgNextState temp = new MouseUtilisiesGradationAssistanceArgNextState();
                     temp.m_nextState = m_nextState.getId();
 
-                    DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "All intermediate states have called, going to the next state!");
+                    DebugMessagesManager.Instance.DisplayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "All intermediate states have called, going to the next state!");
 
                     s_eventNextState?.Invoke(this, temp);
                 }
                 else
                 {
-                    DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Cannot trigger the next state yet - Total number of registered states: " + totalNbStates + " number of states called so far : " + m_nbOfStatesCalled);
+                    DebugMessagesManager.Instance.DisplayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Cannot trigger the next state yet - Total number of registered states: " + totalNbStates + " number of states called so far : " + m_nbOfStatesCalled);
                 }
             }
 

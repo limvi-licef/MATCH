@@ -86,7 +86,7 @@ namespace MATCH
                 {
                     if (IsStarted)
                     {
-                        DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name,
+                        DebugMessagesManager.Instance.DisplayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name,
                         DebugMessagesManager.MessageLevel.Info, "Test");
 
 

@@ -89,15 +89,15 @@ namespace MATCH
             {
                 Utilities.EventHandlerArgs.Button args = (Utilities.EventHandlerArgs.Button)e;
 
-                DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Help button " + args.ButtonType.ToString() + " clicked for assistance " + AssistanceCurrent.name);
+                DebugMessagesManager.Instance.DisplayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Help button " + args.ButtonType.ToString() + " clicked for assistance " + AssistanceCurrent.name);
 
                 if(AssistanceGradation.ContainsKey(AssistanceCurrent))
                 {
-                    DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "The dictionary contains the assistance");
+                    DebugMessagesManager.Instance.DisplayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "The dictionary contains the assistance");
                 }
                 else
                 {
-                    DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "The dictionary DOES NOT contain the assistance");
+                    DebugMessagesManager.Instance.DisplayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "The dictionary DOES NOT contain the assistance");
                 }
 
                 Utilities.EventHandlerArgs.ButtonAndAssistanceGradationAttention argsToSend = new Utilities.EventHandlerArgs.ButtonAndAssistanceGradationAttention();                

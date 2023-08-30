@@ -180,7 +180,7 @@ namespace MATCH
                     }
                     else
                     {
-                        DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Warning, "Condition not present in the dictionary, nothing will be done");
+                        DebugMessagesManager.Instance.DisplayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Warning, "Condition not present in the dictionary, nothing will be done");
                     }
                 }
 

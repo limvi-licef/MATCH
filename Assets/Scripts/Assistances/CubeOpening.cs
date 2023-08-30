@@ -75,7 +75,7 @@ namespace MATCH
 
             void callbackCubeTouched()
             {
-                MATCH.DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, MATCH.DebugMessagesManager.MessageLevel.Info, "Cube touched");
+                MATCH.DebugMessagesManager.Instance.DisplayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, MATCH.DebugMessagesManager.MessageLevel.Info, "Cube touched");
 
                 if (m_animateCubeOnTouched)
                 {
@@ -114,13 +114,13 @@ namespace MATCH
             {
                 if (m_mutexClosingOngoing)
                 { // Do not accept a new request if the process of the current one is not yet finished
-                    MATCH.DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, MATCH.DebugMessagesManager.MessageLevel.Warning, "A request to close the cube is currently being processed. This one is ignored.");
+                    MATCH.DebugMessagesManager.Instance.DisplayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, MATCH.DebugMessagesManager.MessageLevel.Warning, "A request to close the cube is currently being processed. This one is ignored.");
                 }
                 else
                 {
                     m_mutexClosingOngoing = true; // Locking the mutex
 
-                    MATCH.DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, MATCH.DebugMessagesManager.MessageLevel.Info, "Closing cube ...");
+                    MATCH.DebugMessagesManager.Instance.DisplayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, MATCH.DebugMessagesManager.MessageLevel.Info, "Closing cube ...");
 
                     // Moving the parts
                     Vector3 worldDestPosLeftPart = gameObject.transform.TransformPoint(new Vector3(0.25f, 0.5f, 0f));
@@ -133,7 +133,7 @@ namespace MATCH
 
                     animatorLeftPart.AnimateMoveToPosition(worldDestPosLeftPart, MATCH.Utilities.Utility.GetEventHandlerEmpty());
                     animatorRightPart.AnimateMoveToPosition(worldDestPosRightPart, new EventHandler(delegate (System.Object o, EventArgs e) {
-                        MATCH.DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, MATCH.DebugMessagesManager.MessageLevel.Info, "Cube closed ");
+                        MATCH.DebugMessagesManager.Instance.DisplayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, MATCH.DebugMessagesManager.MessageLevel.Info, "Cube closed ");
                         callback?.Invoke(this, EventArgs.Empty);
                         m_mutexClosingOngoing = false; // Process finished: unlocking the mutex
                     }));
@@ -144,7 +144,7 @@ namespace MATCH
             {
                 transform.localScale = m_scalingOriginal;
 
-                MATCH.DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, MATCH.DebugMessagesManager.MessageLevel.Info, "Set scaling to original: " + transform.localScale.ToString());
+                MATCH.DebugMessagesManager.Instance.DisplayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, MATCH.DebugMessagesManager.MessageLevel.Info, "Set scaling to original: " + transform.localScale.ToString());
             }
 
             public void backupScaling()
@@ -157,7 +157,7 @@ namespace MATCH
             {
                 transform.localScale = m_scalingReduced;
 
-                MATCH.DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, MATCH.DebugMessagesManager.MessageLevel.Info, "Reducing scale to: " + m_scalingReduced.ToString());
+                MATCH.DebugMessagesManager.Instance.DisplayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, MATCH.DebugMessagesManager.MessageLevel.Info, "Reducing scale to: " + m_scalingReduced.ToString());
             }
 
             public void animateCubeOnTouch(bool animate)

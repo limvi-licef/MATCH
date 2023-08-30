@@ -22,11 +22,11 @@ public class MouseUtilitiesSpatialAwareness : MonoBehaviour
         //m_scenePlanes = new SurfaceMeshesToPlanes();
         if (SurfaceMeshesToPlanes.CanCreatePlanes)
         {
-            MATCH.DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, MATCH.DebugMessagesManager.MessageLevel.Info, "Things are ok for the system to create planes");
+            MATCH.DebugMessagesManager.Instance.DisplayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, MATCH.DebugMessagesManager.MessageLevel.Info, "Things are ok for the system to create planes");
         }
         else
         {
-            MATCH.DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, MATCH.DebugMessagesManager.MessageLevel.Warning, "Components are missing to create planes - see the documentation of SurfaceMeshesToPlanes.CanCreatePlanes for more information on the required packages");
+            MATCH.DebugMessagesManager.Instance.DisplayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, MATCH.DebugMessagesManager.MessageLevel.Warning, "Components are missing to create planes - see the documentation of SurfaceMeshesToPlanes.CanCreatePlanes for more information on the required packages");
         }
 
         

@@ -81,7 +81,7 @@ namespace MATCH
              * */
             protected void CButtonHelp(System.Object o, EventArgs e)
             {
-                DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Button clicked");
+                DebugMessagesManager.Instance.DisplayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Button clicked");
                 Utilities.EventHandlerArgs.Button args = (Utilities.EventHandlerArgs.Button)e;
 
                 OnHelpButtonClicked(args.ButtonType);

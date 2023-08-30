@@ -56,7 +56,7 @@ namespace MATCH
                 if(ObjectToFocus.TryGetComponent<EyeTrackingTarget>(out EyeTracker) == false)
                 {
                     //EyeTracker = ObjectToFocus.AddComponent<EyeTrackingTarget>();
-                    MATCH.DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, MATCH.DebugMessagesManager.MessageLevel.Error, "Cannot instanciate the inference, as the EyeTrackingTarget component is missing for the target object");
+                    MATCH.DebugMessagesManager.Instance.DisplayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, MATCH.DebugMessagesManager.MessageLevel.Error, "Cannot instanciate the inference, as the EyeTrackingTarget component is missing for the target object");
                 }
 
                 //EyeTracker = ObjectToFocus.GetComponent<EyeTrackingTarget>();
@@ -90,7 +90,7 @@ namespace MATCH
                     TimeSpan elapsed = DateTime.Now.Subtract(StartTime);
                     if (elapsed.Seconds >= SecondsToFocus)
                     {
-                        DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Callback object focused triggered");
+                        DebugMessagesManager.Instance.DisplayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Callback object focused triggered");
                         toReturn = true;
                     }
                 }
@@ -110,14 +110,14 @@ namespace MATCH
 
             void CallbackFocusOn(System.Object o, EventArgs e)
             {
-                DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Object focused on");
+                DebugMessagesManager.Instance.DisplayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Object focused on");
                 FocusOn = true;
                 StartTime = DateTime.Now;
             }
 
             void CallbackFocusOff(System.Object o, EventArgs e)
             {
-                DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Object not focused anymore");
+                DebugMessagesManager.Instance.DisplayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Object not focused anymore");
                 FocusOn = false;
             }
 
