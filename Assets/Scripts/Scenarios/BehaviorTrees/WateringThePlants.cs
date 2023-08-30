@@ -18,6 +18,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using MATCH.Assistances;
 using Microsoft.MixedReality.Toolkit.UI;
 using UnityEngine;
 
@@ -59,7 +60,12 @@ namespace MATCH
                 public EventHandler EventMoved;
                 List<Assistances.InteractionSurface> InteractionPlants = new List<Assistances.InteractionSurface>();
 
-                bool[] LightPathsShown = new bool[3];
+                //List<bool> LightPathsShown = new List<bool>();
+                private bool[] LightPathsShown = new bool[3];
+
+                private Dictionary<Assistances.InteractionSurface, bool> LightPathShownMap =
+                    new Dictionary<InteractionSurface, bool>();
+                
                 float NextTimeCheck = 0f;
 
                 Dictionary<Assistances.AssistanceGradationExplicit, bool> AssistancesWatering;
@@ -260,7 +266,7 @@ namespace MATCH
                     DialogAssistanceWaterHelp.AddButton("Plante " + (2), false, 0.12f);
                     DialogAssistanceWaterHelp.AddButton("Plante " + (3), false, 0.12f);*/
 
-                    for (int i = 0; i < DialogAssistanceWaterHelp.ButtonsController.Count; i++)
+                    /*for (int i = 0; i < DialogAssistanceWaterHelp.ButtonsController.Count; i++)
                     {
 
                         int plantId = i;
@@ -277,13 +283,14 @@ namespace MATCH
                                 NextTimeCheck = Time.time + 5f;
                             }
                         };
-                    }
+                    }*/
 
                     MenuPlant = Assistances.GradationVisual.Factory.Instance.CreateAssistanceDialog("WateringThePlants-BTWP4-1", DialogAssistanceWaterHelp);
                 }
 
                 private void Update()
                 {
+                    //TODO : 
                     if (Array.Exists<bool>(LightPathsShown, element => element) && Time.time > NextTimeCheck)
                     {
                         for (int i = 0; i < InteractionPlants.Count(); i++)
@@ -631,7 +638,7 @@ namespace MATCH
                     Assistances.InteractionSurface plant;// = new Assistances.InteractionSurface();
                     
                     // Set parent
-                    plant = Assistances.Factory.Instance.CreateInteractionSurface(name, AdminMenu.Panels.Right, /*new Vector3(1.1f, 0.02f, 0.7f)*/ scaling, /*new Vector3(-0.447f, -0.406f, 0.009f)*/ position, Utilities.Materials.Colors.GreenGlowingAdjustHSV, false, true, Utilities.Utility.GetEventHandlerEmpty(), false, transform);
+                    plant = Assistances.Factory.Instance.CreateInteractionSurface(name + " " + InteractionPlants.Count.ToString(), AdminMenu.Panels.Right, /*new Vector3(1.1f, 0.02f, 0.7f)*/ scaling, /*new Vector3(-0.447f, -0.406f, 0.009f)*/ position, Utilities.Materials.Colors.GreenGlowingAdjustHSV, false, true, Utilities.Utility.GetEventHandlerEmpty(), false, transform);
                     
                     //plant.gameObject.name = name;
                     // Add buttons to interface
@@ -697,11 +704,13 @@ namespace MATCH
 
                     if (registerObject)
                     {
-                        PlantsPositioningStorage.RegisterObject(name, plant.transform, plant.GetInteractionSurface().transform);
+                        PlantsPositioningStorage.RegisterObject(name + " " + InteractionPlants.Count.ToString(), plant.transform, plant.GetInteractionSurface().transform);
                     }
 
                     plant.GetInteractionSurface().GetComponent<BoundsControl>().enabled = false;
 
+                    LightPathShownMap.Add(plant, false);
+                    
                     DialogAssistanceWaterHelp.AddButton(name, false, 0.12f);
 
                     int currentIndex = DialogAssistanceWaterHelp.ButtonsController.Count - 1;
@@ -712,9 +721,9 @@ namespace MATCH
                         if (DialogAssistanceWaterHelp.ButtonsController[currentIndex].IsChecked() == false)
                         {
                             InteractionPlants[currentIndex].CallbackShow();
-                            ShowLightpathToPlant(InteractionPlants[currentIndex]);
+                            ShowLightpathToPlant(plant);
                             DialogAssistanceWaterHelp.ButtonsController[currentIndex].CheckButton(true);
-                            LightPathsShown[currentIndex] = true;
+                            LightPathShownMap[plant] = true;
                             NextTimeCheck = Time.time + 5f;
                         }
                     };
