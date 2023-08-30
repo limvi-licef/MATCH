@@ -290,7 +290,7 @@ namespace MATCH
 
                 private void Update()
                 {
-                    //TODO : 
+                    //TODO : Make this dynamic with LightPathShownMap
                     if (Array.Exists<bool>(LightPathsShown, element => element) && Time.time > NextTimeCheck)
                     {
                         for (int i = 0; i < InteractionPlants.Count(); i++)
