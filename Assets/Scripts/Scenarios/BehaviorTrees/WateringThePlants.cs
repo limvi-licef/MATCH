@@ -291,7 +291,7 @@ namespace MATCH
                 private void Update()
                 {
                     //TODO : Make this dynamic with LightPathShownMap
-                    if (Array.Exists<bool>(LightPathsShown, element => element) && Time.time > NextTimeCheck)
+                    /*if (Array.Exists<bool>(LightPathsShown, element => element) && Time.time > NextTimeCheck)
                     {
                         for (int i = 0; i < InteractionPlants.Count(); i++)
                         {
@@ -301,7 +301,7 @@ namespace MATCH
                             }
                         }
                         NextTimeCheck += 5f;
-                    }
+                    }*/
                 }
 
                 //Is it 7pm?
@@ -377,8 +377,8 @@ namespace MATCH
                 {
 
 
-                    Assistances.GradationVisual.GradationVisual requestHelp = Assistances.GradationVisual.Factory.Instance.CreateAlreadyConfigured(Assistances.GradationVisual.Factory.AlreadyConfigured.DoYouNeedHelpDialog1,
-                         "WateringThePlants-BTWP4", FollowObject.transform);
+                    Assistances.GradationVisual.GradationVisual requestHelp = Assistances.GradationVisual.Factory.Instance.CreateDialog2WithButtons("WateringThePlants-BTWP4", "", "Avez-vous besoin d'aide ?", "Oui",  null, Assistances.Buttons.Button.ButtonType.Yes,"Non",  null, Assistances.Buttons.Button.ButtonType.No, FollowObject.transform);
+
 
 
                     Assistances.GradationVisual.GradationVisual dontKnow = Assistances.GradationVisual.Factory.Instance.CreateDialog2WithButtons("WateringThePlants-BTWP4-1", "",
