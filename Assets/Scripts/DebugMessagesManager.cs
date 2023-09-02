@@ -43,6 +43,8 @@ namespace MATCH
 
         public static DebugMessagesManager Instance { get { return _instance; } }
 
+        private GameObject PanelToHide;
+
         private void Awake()
         {
             if (_instance != null && _instance != this)
@@ -62,15 +64,27 @@ namespace MATCH
         // Start is called before the first frame update
         void Start()
         {
+            PanelToHide = transform.Find("Eye Scroll").gameObject;
+
             AdminMenu.Instance.AddButton("Debug window - Bring", CallbackDebugBringWindow);
             AdminMenu.Instance.AddButton("Debug window - Clear", CallbackDebugClearWindow);
             AdminMenu.Instance.AddSwitchButton("Debug window - Display in console", CallbackDebugDisplayDebugInWindow);
             AdminMenu.Instance.AddSwitchButton("Debug - Display messages", CallbackDisplayMessages);
+            AdminMenu.Instance.AddSwitchButton("Debug - Hide window", delegate ()
+            {
+                
+                ShowWindow(!PanelToHide.activeSelf);
+            });
 
             if (ClassNameFilter.Count > 0)
             {
                 DisplayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Warning, "Message filtering enabled. Only the messages from the following classes will be displayed: " + ClassNameFilter.ToString());
             }
+        }
+
+        public void ShowWindow(bool show)
+        {
+            PanelToHide.SetActive(show);
         }
 
         // Update is called once per frame

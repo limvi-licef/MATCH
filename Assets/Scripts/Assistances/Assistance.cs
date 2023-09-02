@@ -90,37 +90,6 @@ namespace MATCH
             public abstract bool IsDecorator(); // Must specify if the assistance is a decorator of another assistance or not
 
             public abstract void Emphasize(bool enable);
-            /*{
-                if (Hand == null)
-                {
-
-
-
-                    //Hand = GameObject.CreatePrimitive(PrimitiveType.Cylinder);
-                    Hand = Utilities.Materials.Prefabs.Load(Utilities.Materials.Prefabs.AssistanceHand);
-                    Hand.gameObject.AddComponent<Assistances.GradationVisual.MovingObject>();
-                    Hand.transform.parent = transform;
-                    //Hand.transform.localScale = new Vector3(0.05f, 0.1f, 0.05f);
-                    Hand.GetComponent<Assistances.GradationVisual.MovingObject>().SetMoveShape(GradationVisual.MovingObject.MovingType.HalfCircle);
-                    Hand.gameObject.SetActive(false);
-
-                    Hand.transform.Rotate(0, 0, -22.5f);
-
-                    Hand.transform.localPosition = transform.localPosition;
-                    Hand.transform.localPosition = new Vector3(Hand.transform.localPosition.x, Hand.transform.localPosition.y+0.3f, Hand.transform.localPosition.z);
-                }
-
-                if (emphasize)
-                {
-                    Hand.gameObject.SetActive(true);
-                    // Start rotation
-                    Hand.GetComponent<Assistances.GradationVisual.MovingObject>().StartMove(true);
-                }
-                else
-                {
-                    Hand.gameObject.SetActive(false);
-                }
-            }*/
         }
 
     }

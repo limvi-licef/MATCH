@@ -90,6 +90,8 @@ namespace MATCH
                         material.SetFloat("_Hue", 0.0f);
                     }
                 }
+
+                MATCH.Utilities.Logger.Instance.Log("\t", MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, "Emphasize " + enable);
             }
 
             // Update is called once per frame

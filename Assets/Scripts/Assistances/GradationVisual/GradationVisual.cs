@@ -128,6 +128,8 @@ namespace MATCH
                         DebugMessagesManager.Instance.DisplayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Warning, "Maximum level of attention gradation reached");
                     }
 
+                    MATCH.Utilities.Logger.Instance.Log("\t", MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, "Gradation attention " + GradationCurrent);
+
                     return toReturn;
                 }
 
@@ -159,6 +161,7 @@ namespace MATCH
                                 GradationCurrent = 0;
                                 Gradation[GradationCurrent].Show(callback, false);
                                 IsShown?.Invoke(this, EventArgs.Empty);
+                                MATCH.Utilities.Logger.Instance.Log("\t", MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, "Gradation attention " + GradationCurrent + " (Minimal)");
                             }
                             else
                             {

@@ -26,25 +26,8 @@ namespace MATCH
     {
         public class AssistanceGradationExplicit : MATCH.Scenarios.BehaviorTrees.BehaviorTree
         {
-            //private Inferences.ObjectFocused InfFocusedOnAssistance;
-            //private Inferences.Timer InfTimer2Minutes;
             private Inferences.Manager InfManager;
-            //private Inferences.ObjectLostFocused InfFocusLost;
-            //private Inferences.DistanceComing InfIsClose;
-            //private Inferences.Timer InfTimer30Seconds;
-            //private Inferences.DistanceLeaving InfIsFar;
-
-            /*public enum AssistanceStatus
-            {
-                Stop = 0,
-                Run = 1,
-                Pause = 2
-            }*/
-
             private Assistances.StateMachine AssistancesGradation;
-            //int CurrentAssistanceIndex; // Index in the list AssistancesGradation
-
-            //AssistanceStatus Status;
 
             Utilities.EventHandlerArgs.ButtonAndAssistanceGradationAttention ArgsOnHelpButtonClicked;
 
@@ -64,12 +47,10 @@ namespace MATCH
             string InferenceTimerStart = "AssistanceGradationExplicit-Timer-Start";
             string InferenceTimer30Seconds = "AssistanceGradationExplicit-Timer-30-seconds";
             string InferenceComingClose = "AssistanceGradationExplicit-ComingClose";
-            //string InferenceFocusLost = "AssistanceGradationExplicit-FocusLost";
             string InferenceLeftObject = "AssistanceGradationExplicit-LeftObject";
 
             public static float DistanceFromObject = 1.5f;
 
-            //public static float FarFromAssistanceWhenLookingAtIt = 4.0f;
             public static int DelayBeforeShowingHelp = 3;
 
             public override void Awake()
@@ -80,9 +61,6 @@ namespace MATCH
                 InfManager = Inferences.Factory.Instance.CreateManager(transform);
 
                 AssistancesGradation = null;
-                //InfTimer2Minutes = new Inferences.Timer("AssistanceGradationExplicitTimer", 10, CallbackInterenceTimer);
-
-                //ArgsOnHelpButtonClicked = null;
             }
 
             public override void Start()

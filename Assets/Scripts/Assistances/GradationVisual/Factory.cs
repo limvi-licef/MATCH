@@ -204,38 +204,34 @@ namespace MATCH
                     return toReturn;
                 }
 
+                public GradationVisual CreateDialog2WithLinePath(string assistanceName, string title, string description, bool adjustToHeight, Transform lineDestination, Transform parent)
+                {
+                    GradationVisual toReturn = CreateDialog2WithLinePath(assistanceName, title, description, lineDestination, parent);
+
+                    Dialogs.Dialog2 dialog = ((Assistances.PathWithTextAndHelp)((Assistances.IAssistance)toReturn.GetCurrentAssistance()).GetRootDecoratedAssistance()).GetDialog2();
+                    dialog.AdjustToHeight = adjustToHeight;
+
+                    return toReturn;
+                }
+
                 public GradationVisual CreateDialog2WithLinePath(string assistanceName, string title, string description, Transform lineDestination, Transform parent)
                 {
                     GradationVisual toReturn = Assistances.Factory.Instance.CreateAssistanceGradationAttention(assistanceName);
                     toReturn.name = assistanceName;
 
-                    PathWithTextAndHelp assistance = Assistances.Factory.Instance.CreateAssistancePath(assistanceName + "Path", title, description, lineDestination/*.GetAssistance().transform*/, parent);
+                    PathWithTextAndHelp assistance = Assistances.Factory.Instance.CreateAssistancePath(assistanceName + "Path", title, description, lineDestination, parent);
 
                     toReturn.AddAssistance(assistance);
 
-                    /*Assistances.Dialogs.Dialog2 dialog = Assistances.Factory.Instance.CreateDialog2NoButton(title, description, parent);
-                    Decorators.BackgroundColorMessage2 dialogBackground = (Decorators.BackgroundColorMessage2)Assistances.Decorators.Factory.Instance.CreateBackgroundMessage(dialog, Utilities.Materials.Colors.Cyan);
-                    Decorators.BackgroundColorIcon2 dialogIcon = (Decorators.BackgroundColorIcon2)Assistances.Decorators.Factory.Instance.CreateBackgroundIcon(dialogBackground, Utilities.Materials.Colors.Cyan, true);
+                    return toReturn;
+                }
 
-                    Assistances.LightedPath path = Assistances.Factory.Instance.CreatePathFinding(assistanceName + "_Path", MATCH.Assistances.InteractionSurfaceFollower.Instance.transform, lineDestination.GetAssistance().transform, parent);
+                public GradationVisual CreateDialog2NoButton(string assistanceName, string title, string description, bool adjustToHeight, Transform parent)
+                {
+                    GradationVisual toReturn = CreateDialog2NoButton(assistanceName, title, description, parent);
 
-                    //dialogIcon.EventIsShown += delegate (System.Object o, EventArgs e)
-                    toReturn.IsShown += delegate (System.Object o, EventArgs e)
-                    {
-                        //decorator.Show(Utilities.Utility.GetEventHandlerEmpty(), false);
-                        //test.ShowMinimalGradation(Utilities.Utility.GetEventHandlerEmpty());
-                        path.Show(Utilities.Utility.GetEventHandlerEmpty(), false);
-                    };
-
-                    //dialogIcon.EventIsHidden += delegate (System.Object o, EventArgs e)
-                    toReturn.IsHidden += delegate (System.Object o, EventArgs e)
-                    {//lineDestination.GetLinePath().
-                        //decorator.Hide(Utilities.Utility.GetEventHandlerEmpty(), false);
-                        //test.HideCurrentGradation(Utilities.Utility.GetEventHandlerEmpty());
-                        path.Hide(Utilities.Utility.GetEventHandlerEmpty(), false);
-                    };
-                    
-                    toReturn.AddAssistance(dialogIcon);*/
+                    Dialogs.Dialog2 dialog = ((Dialogs.Dialog2)((Assistances.IAssistance)toReturn.GetCurrentAssistance()).GetRootDecoratedAssistance());
+                    dialog.AdjustToHeight = adjustToHeight;
 
                     return toReturn;
                 }
@@ -247,11 +243,31 @@ namespace MATCH
                     return AddDecoratorsToDialog2(assistanceName, dialog);
                 }
 
+                public GradationVisual CreateDialog2WithButtons(string assistanceName, string title, string description, bool adjustToHeight, string textButton1, EventHandler callbackButton1, Assistances.Buttons.Button.ButtonType type1, Transform parent)
+                {
+                    GradationVisual toReturn = CreateDialog2WithButtons(assistanceName, title, description, textButton1, callbackButton1, type1, parent);
+
+                    Dialogs.Dialog2 dialog = ((Dialogs.Dialog2)((Assistances.IAssistance)toReturn.GetCurrentAssistance()).GetRootDecoratedAssistance());
+                    dialog.AdjustToHeight = adjustToHeight;
+
+                    return toReturn;
+                }
+
                 public GradationVisual CreateDialog2WithButtons(string assistanceName, string title, string description, string textButton1, EventHandler callbackButton1, Assistances.Buttons.Button.ButtonType type1, Transform parent)
                 {
                     Assistances.Dialogs.Dialog2 dialog = Assistances.Factory.Instance.CreateDialog2WithButtons(title, description, textButton1, callbackButton1, type1, parent);
 
                     return AddDecoratorsToDialog2(assistanceName, dialog);
+                }
+
+                public GradationVisual CreateDialog2WithButtons(string assistanceName, string title, string description, bool adjustToHeight, string textButton1, EventHandler callbackButton1, Assistances.Buttons.Button.ButtonType type1, string textButton2, EventHandler callbackButton2, Assistances.Buttons.Button.ButtonType type2, Transform parent)
+                {
+                    GradationVisual toReturn = CreateDialog2WithButtons(assistanceName, title, description, textButton1, callbackButton1, type1, textButton2, callbackButton2, type2, parent);
+
+                    Dialogs.Dialog2 temp = ((Dialogs.Dialog2)((Assistances.IAssistance)toReturn.GetCurrentAssistance()).GetRootDecoratedAssistance());
+                    temp.AdjustToHeight = adjustToHeight;
+
+                    return toReturn;
                 }
 
                 public GradationVisual CreateDialog2WithButtons(string assistanceName, string title, string description, string textButton1, EventHandler callbackButton1, Assistances.Buttons.Button.ButtonType type1, string textButton2, EventHandler callbackButton2, Assistances.Buttons.Button.ButtonType type2, Transform parent)

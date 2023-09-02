@@ -112,7 +112,7 @@ namespace MATCH
             {
                 string date = System.DateTime.Now.ToString("D", new System.Globalization.CultureInfo("fr-FR"));
                 string hour = System.DateTime.Now.ToString("HH:mm");
-                string textToDisplay = "Date : " + date + "                              Heure : " + hour + "\nSaison : " + GetSeason(System.DateTime.Now) + "\n\nTâches à réaliser : ";
+                string textToDisplay = "Date : " + date + "                        Heure : " + hour + "\nSaison : " + GetSeason(System.DateTime.Now) + "\n\nTâches à réaliser : ";
                 //if (textToDisplay != TodoList.GetDescription())
                 //{ // To avoid updating the text at each frame
                 ToDo.SetDescription(textToDisplay, 0.1f);

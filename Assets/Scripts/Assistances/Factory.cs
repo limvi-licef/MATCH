@@ -414,6 +414,7 @@ namespace MATCH
             {
                 Transform view = /*Instantiate(*/Utilities.Materials.Prefabs.Load(Utilities.Materials.Prefabs.AssistanceLightPath);
                 view.parent = parent;
+                view.name = name;
 
                 Assistances.LightedPath controller = view.GetComponent<Assistances.LightedPath>();
 
