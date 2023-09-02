@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 6611718449979083622}
   - component: {fileID: -8090149474080268107}
   - component: {fileID: -2165688659877063646}
+  - component: {fileID: 6760185522088628507}
   m_Layer: 0
   m_Name: LightedPath
   m_TagString: Untagged
@@ -99,6 +100,19 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   eyeCursorSnapToTargetCenter: 0
+--- !u!65 &6760185522088628507
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 529143439257821013}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 0
+  serializedVersion: 2
+  m_Size: {x: 0.01, y: 0.01, z: 0.01}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &6602821520222924802
 GameObject:
   m_ObjectHideFlags: 0

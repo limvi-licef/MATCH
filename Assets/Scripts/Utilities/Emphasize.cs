@@ -37,7 +37,14 @@ namespace MATCH
             private void Awake()
             {
                 Hue = 0.0f;
-                ToAdd = 0.5f;
+                if (Utilities.Utility.IsEditorSimulator() || Utilities.Utility.IsEditorGameView())
+                {
+                    ToAdd = 0.5f;
+                }
+                else
+                { // Means running in the Hololens: the frame rate being lower, the value is higher, to have a faster color change
+                    ToAdd = 3.0f;
+                }
                 EmphasizeEnabled = false;
                 Materials = new List<Material>();
             }
@@ -83,6 +90,8 @@ namespace MATCH
                         material.SetFloat("_Hue", 0.0f);
                     }
                 }
+
+                MATCH.Utilities.Logger.Instance.Log("\t", MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, "Emphasize " + enable);
             }
 
             // Update is called once per frame

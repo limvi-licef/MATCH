@@ -59,11 +59,11 @@ namespace MATCH
             {
                 if (gradationToShow == Gradation.Delta)
                 {
-                    DebugMessagesManager.Instance.displayMessage("QAndDAssistances", "ShowOneHideOthers", DebugMessagesManager.MessageLevel.Info, "Showing assistance Delta");
+                    DebugMessagesManager.Instance.DisplayMessage("QAndDAssistances", "ShowOneHideOthers", DebugMessagesManager.MessageLevel.Info, "Showing assistance Delta");
                 }
                 if (gradationToShow == Gradation.Zeta)
                 {
-                    DebugMessagesManager.Instance.displayMessage("QAndDAssistances", "ShowOneHideOthers", DebugMessagesManager.MessageLevel.Info, "Showing assistance Zeta");
+                    DebugMessagesManager.Instance.DisplayMessage("QAndDAssistances", "ShowOneHideOthers", DebugMessagesManager.MessageLevel.Info, "Showing assistance Zeta");
                 }
 
                 int nbAssistances = AssistancesStorage.Count;
@@ -91,7 +91,7 @@ namespace MATCH
                         else
                         {
                             nbAssistancesProcessed++;
-                            DebugMessagesManager.Instance.displayMessage("QAndDAssistances", "ShowOneHideOthers", DebugMessagesManager.MessageLevel.Warning, "The assistance that should have been shown is apparently already shown, so nothing has been done");
+                            DebugMessagesManager.Instance.DisplayMessage("QAndDAssistances", "ShowOneHideOthers", DebugMessagesManager.MessageLevel.Warning, "The assistance that should have been shown is apparently already shown, so nothing has been done");
                         }
                     }
                     else
@@ -113,7 +113,7 @@ namespace MATCH
                         else
                         {
                             nbAssistancesProcessed++;
-                            DebugMessagesManager.Instance.displayMessage("QAndDAssistances", "ShowOneHideOthers", DebugMessagesManager.MessageLevel.Warning, assistance.Key + " was already hidden so nothing to do");
+                            DebugMessagesManager.Instance.DisplayMessage("QAndDAssistances", "ShowOneHideOthers", DebugMessagesManager.MessageLevel.Warning, assistance.Key + " was already hidden so nothing to do");
                         }
                     }
                 }
@@ -126,11 +126,11 @@ namespace MATCH
                 {
                     if (assistance.Key == Gradation.Alpha)
                     {
-                        DebugMessagesManager.Instance.displayMessage("QAndDAssistances", "Hideall", DebugMessagesManager.MessageLevel.Info, "Hiding assistance alpha (congratulation cube)");
+                        DebugMessagesManager.Instance.DisplayMessage("QAndDAssistances", "Hideall", DebugMessagesManager.MessageLevel.Info, "Hiding assistance alpha (congratulation cube)");
                     }
                     if (assistance.Key == Gradation.Delta)
                     {
-                        DebugMessagesManager.Instance.displayMessage("QAndDAssistances", "Hideall", DebugMessagesManager.MessageLevel.Info, "Hiding assistance delta");
+                        DebugMessagesManager.Instance.DisplayMessage("QAndDAssistances", "Hideall", DebugMessagesManager.MessageLevel.Info, "Hiding assistance delta");
                     }
 
                     if (assistance.Value.IsDisplayed/*IsActive()*/)
@@ -139,7 +139,7 @@ namespace MATCH
                     }
                     else
                     {
-                        DebugMessagesManager.Instance.displayMessage("QAndDAssistances", "Hideall", DebugMessagesManager.MessageLevel.Info, "The assistance is already hidden: nothing to do");
+                        DebugMessagesManager.Instance.DisplayMessage("QAndDAssistances", "Hideall", DebugMessagesManager.MessageLevel.Info, "The assistance is already hidden: nothing to do");
                     }
 
                         

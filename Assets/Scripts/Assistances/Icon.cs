@@ -67,6 +67,7 @@ namespace MATCH
                 Help.AdjustToHeight = false;
                 Help.gameObject.name = "Icon_help";
                 Help.GetTransform().localPosition = new Vector3(0, -0.4f, 0);
+                Help.GetComponent<BoxCollider>().enabled = false;
                                 
             }
 
@@ -77,13 +78,14 @@ namespace MATCH
                 if (IsDisplayed == false)
                 {
                     gameObject.GetComponent<BoxCollider>().enabled = true;
+                    Help.GetComponent<BoxCollider>().enabled = true;
 
                     if (AdjustHeightOnShow)
                     {
                         MATCH.Utilities.Utility.AdjustObjectHeightToHeadHeight(transform);
                     }
                     IconObj.gameObject.SetActive(true);
-                    DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Help buttons instanciated for " + gameObject.name);
+                    DebugMessagesManager.Instance.DisplayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Help buttons instanciated for " + gameObject.name);
 
                     IsDisplayed = true;
                     args.Success = true;
@@ -105,6 +107,7 @@ namespace MATCH
                 if (IsDisplayed)
                 {
                     gameObject.GetComponent<BoxCollider>().enabled = false;
+                    Help.GetComponent<BoxCollider>().enabled = false;
 
                     if (withAnimation)
                     {
@@ -154,7 +157,7 @@ namespace MATCH
 
             public override void ShowHelp(bool show, EventHandler callback, bool withAnimation)
             {
-                DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "ShowHelp function called for " + Help.name + " show=" + show.ToString());
+                DebugMessagesManager.Instance.DisplayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "ShowHelp function called for " + Help.name + " show=" + show.ToString());
                 if (show)
                 {
                     Help.Show(delegate (System.Object o, EventArgs e)
@@ -187,7 +190,7 @@ namespace MATCH
                     }
                     else
                     {
-                        DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Warning, "No renderer component for the IconObj - no action will be done");
+                        DebugMessagesManager.Instance.DisplayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Warning, "No renderer component for the IconObj - no action will be done");
                     }
                 }                
             }

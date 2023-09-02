@@ -101,7 +101,7 @@ namespace MATCH
 
                     sr.Close();
                 }
-                catch (Exception e)
+                catch (Exception)
                 {
                     //DebugPositioner.SetDescription("File does not exist", 0.2f);
                 }
@@ -227,7 +227,7 @@ namespace MATCH
                     sw.Close();
                     forDebug += "\nFile updated";
                 }
-                catch (Exception ee)
+                catch (Exception)
                 {
                     forDebug += "\nFile NOT updated";
                 }

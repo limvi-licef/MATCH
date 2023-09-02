@@ -56,7 +56,7 @@ namespace MATCH
 
             private void Awake()
             {
-                DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Called");
+                DebugMessagesManager.Instance.DisplayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Called");
 
                 // Initialize variables
                 ObjectsToBeClose = new List<Transform>();
@@ -143,7 +143,7 @@ namespace MATCH
             void CallbackOnClockTouched(System.Object sender, EventArgs e)
             {// If a clock is touched, all other clocks are hidden
 
-                DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Clock touched callback called");
+                DebugMessagesManager.Instance.DisplayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Clock touched callback called");
 
                 MATCH.Utilities.Utility.AnimateDisappearInPlace(ClockView.gameObject, new Vector3(0.1f, 0.1f, 0.1f), delegate
                 {
@@ -169,11 +169,11 @@ namespace MATCH
             bool MutexHide = false;
             public override void Hide(EventHandler e, bool withAnimation)
             {
-                DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Called");
+                DebugMessagesManager.Instance.DisplayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Called");
 
                 if (MutexHide == false)
                 {
-                    DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Mutex locked");
+                    DebugMessagesManager.Instance.DisplayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Mutex locked");
                     MutexHide = true;
 
                     if (ClockView.gameObject.activeSelf)
@@ -182,7 +182,7 @@ namespace MATCH
                         {
                             MATCH.Utilities.Utility.AnimateDisappearInPlace(ClockView.gameObject, new Vector3(0.1f, 0.1f, 0.1f), delegate
                             {
-                                DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Mutex unlocked - clock hidden");
+                                DebugMessagesManager.Instance.DisplayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Mutex unlocked - clock hidden");
                                 MutexHide = false;
                                 IsDisplayed = false;
                             });
@@ -200,7 +200,7 @@ namespace MATCH
                     { // Only two children for know so fine this way. But to be extended if it happens that more children are added in the future
                         DialogController.Hide(delegate
                         {
-                            DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Mutex unlocked - dialog hidden");
+                            DebugMessagesManager.Instance.DisplayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Mutex unlocked - dialog hidden");
 
                             MutexHide = false; //.unlockMutex();
                             e?.Invoke(this, EventArgs.Empty);
@@ -216,13 +216,13 @@ namespace MATCH
             public override void Show(EventHandler eventHandler, bool withAnimation)
             {
                 ClockScalingOriginal = new Vector3(0.1f, 0.1f, 0.1f);
-                DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Clock is going to appear to scaling: " + ClockScalingOriginal);
+                DebugMessagesManager.Instance.DisplayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Clock is going to appear to scaling: " + ClockScalingOriginal);
 
                 if (MutexShow == false)
                 {
                     MutexShow = true;
 
-                    DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Mutex locked");
+                    DebugMessagesManager.Instance.DisplayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Mutex locked");
 
                     MATCH.Utilities.Utility.AdjustObjectHeightToHeadHeight(transform, YOffsetOrigin);
 
@@ -268,7 +268,7 @@ namespace MATCH
                 }
                 else
                 {
-                    DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Mutex already locked - nothing to do");
+                    DebugMessagesManager.Instance.DisplayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Mutex already locked - nothing to do");
                 }
             }
 
@@ -277,7 +277,7 @@ namespace MATCH
              */
             public override void ShowHelp(bool show, EventHandler callback, bool withAnimation)
             {
-                DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Warning, "Not implemented yet");
+                DebugMessagesManager.Instance.DisplayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Warning, "Not implemented yet");
             }
 
             // Be aware that this function does not send the object back to its original position
@@ -289,7 +289,7 @@ namespace MATCH
 
             public void SetObjectToOriginalPosition()
             {
-                DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Changing position");
+                DebugMessagesManager.Instance.DisplayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Changing position");
 
                 transform.localPosition = PositionLocalOrigin;
             }

@@ -102,7 +102,7 @@ namespace MATCH
 
                 private void CHelpButtonClicked(System.Object o, EventArgs e)
                 {
-                    DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Help button clicked for assistance " + GetCurrentAssistance().name);
+                    DebugMessagesManager.Instance.DisplayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Help button clicked for assistance " + GetCurrentAssistance().name);
 
                     MATCH.Utilities.EventHandlerArgs.Button args = (Utilities.EventHandlerArgs.Button)e;
 
@@ -125,8 +125,10 @@ namespace MATCH
                     else
                     {
                         GradationCurrent--;
-                        DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Warning, "Maximum level of attention gradation reached");
+                        DebugMessagesManager.Instance.DisplayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Warning, "Maximum level of attention gradation reached");
                     }
+
+                    MATCH.Utilities.Logger.Instance.Log("\t", MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, "Gradation attention " + GradationCurrent);
 
                     return toReturn;
                 }
@@ -159,6 +161,7 @@ namespace MATCH
                                 GradationCurrent = 0;
                                 Gradation[GradationCurrent].Show(callback, false);
                                 IsShown?.Invoke(this, EventArgs.Empty);
+                                MATCH.Utilities.Logger.Instance.Log("\t", MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, "Gradation attention " + GradationCurrent + " (Minimal)");
                             }
                             else
                             {
@@ -168,7 +171,7 @@ namespace MATCH
                     }
                     else
                     {
-                        DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Warning, "No assistances to display. Please add assistances first.");
+                        DebugMessagesManager.Instance.DisplayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Warning, "No assistances to display. Please add assistances first.");
                     }
                 }
 
@@ -182,7 +185,7 @@ namespace MATCH
                     }
                     else
                     {
-                        DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Warning, "No assistances to hide. Please add assistances first.");
+                        DebugMessagesManager.Instance.DisplayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Warning, "No assistances to hide. Please add assistances first.");
                     }
                 }
 
@@ -195,7 +198,7 @@ namespace MATCH
                     }
                     else
                     {
-                        DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Warning, "No help to hide. Please add assistances first.");
+                        DebugMessagesManager.Instance.DisplayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Warning, "No help to hide. Please add assistances first.");
                     }
                 }
 

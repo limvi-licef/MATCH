@@ -74,7 +74,7 @@ public class MouseChallengeCleanTableReminderSeveralClocksFixed : MonoBehaviour
         m_gradationManager = transform.GetComponent<MATCH.FiniteStateMachine.VisualGradationManager>();
         if (m_gradationManager == null)
         {
-            MATCH.DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, MATCH.DebugMessagesManager.MessageLevel.Warning, "MouseUtilitiesGradationManager component not present in that gameobject, whereas it is required. The object will most likely not work properly");
+            MATCH.DebugMessagesManager.Instance.DisplayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, MATCH.DebugMessagesManager.MessageLevel.Warning, "MouseUtilitiesGradationManager component not present in that gameobject, whereas it is required. The object will most likely not work properly");
         }
         m_gradationManager.addNewAssistanceGradation("Default", CallbackGradationDefault);
         m_gradationManager.addNewAssistanceGradation("HighFollow", CallbackGradationHighFollow);
@@ -124,7 +124,7 @@ public class MouseChallengeCleanTableReminderSeveralClocksFixed : MonoBehaviour
 
         EventHologramClockTouched?.Invoke(this, EventArgs.Empty); // Informing the world that a clock has been touched
 
-        MATCH.DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, MATCH.DebugMessagesManager.MessageLevel.Info, "Called");
+        MATCH.DebugMessagesManager.Instance.DisplayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, MATCH.DebugMessagesManager.MessageLevel.Info, "Called");
     }
 
     void CallbackOnWindowOkButtonTouched()
@@ -139,11 +139,11 @@ public class MouseChallengeCleanTableReminderSeveralClocksFixed : MonoBehaviour
 
     public void Hide(EventHandler e)
     {
-        MATCH.DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, MATCH.DebugMessagesManager.MessageLevel.Info, "Called");
+        MATCH.DebugMessagesManager.Instance.DisplayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, MATCH.DebugMessagesManager.MessageLevel.Info, "Called");
 
         if (m_mutexHide.isLocked() == false)
         {
-            MATCH.DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, MATCH.DebugMessagesManager.MessageLevel.Info, "Mutex locked");
+            MATCH.DebugMessagesManager.Instance.DisplayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, MATCH.DebugMessagesManager.MessageLevel.Info, "Mutex locked");
             m_mutexHide.lockMutex();
 
             GameObject temp = null;
@@ -163,7 +163,7 @@ public class MouseChallengeCleanTableReminderSeveralClocksFixed : MonoBehaviour
                         if (clock == m_clocksView.Last())
                         {
                             m_mutexHide.unlockMutex();
-                            MATCH.DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, MATCH.DebugMessagesManager.MessageLevel.Info, "Mutex unlocked");
+                            MATCH.DebugMessagesManager.Instance.DisplayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, MATCH.DebugMessagesManager.MessageLevel.Info, "Mutex unlocked");
                         }
                     }));
                 }
@@ -175,7 +175,7 @@ public class MouseChallengeCleanTableReminderSeveralClocksFixed : MonoBehaviour
                 EventHandler[] eventHandlers = new EventHandler[] {new EventHandler(delegate (System.Object oe, EventArgs ee)
             {
                 m_mutexHide.unlockMutex();
-                MATCH.DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, MATCH.DebugMessagesManager.MessageLevel.Info, "Mutex unlocked");
+                MATCH.DebugMessagesManager.Instance.DisplayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, MATCH.DebugMessagesManager.MessageLevel.Info, "Mutex unlocked");
 
                 Destroy(temp.GetComponent<Animation>());
                 ResetObject();
@@ -186,21 +186,21 @@ public class MouseChallengeCleanTableReminderSeveralClocksFixed : MonoBehaviour
             }
             else
             {
-                MATCH.DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, MATCH.DebugMessagesManager.MessageLevel.Warning, "All objects are already hidden, so nothing do do excepting unlocking the mutex");
+                MATCH.DebugMessagesManager.Instance.DisplayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, MATCH.DebugMessagesManager.MessageLevel.Warning, "All objects are already hidden, so nothing do do excepting unlocking the mutex");
                 m_mutexHide.unlockMutex();
-                MATCH.DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, MATCH.DebugMessagesManager.MessageLevel.Warning, "Mutex unlocked");
+                MATCH.DebugMessagesManager.Instance.DisplayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, MATCH.DebugMessagesManager.MessageLevel.Warning, "Mutex unlocked");
             }
         }
         else
         {
-            MATCH.DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, MATCH.DebugMessagesManager.MessageLevel.Warning, "Mutex locked - Request ignored");
+            MATCH.DebugMessagesManager.Instance.DisplayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, MATCH.DebugMessagesManager.MessageLevel.Warning, "Mutex locked - Request ignored");
         }
     }
 
     bool m_mutexShow = false;
     public void Show(EventHandler eventHandler)
     {
-        MATCH.DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, MATCH.DebugMessagesManager.MessageLevel.Info, "Called");
+        MATCH.DebugMessagesManager.Instance.DisplayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, MATCH.DebugMessagesManager.MessageLevel.Info, "Called");
 
         if (m_mutexShow == false)
         {
@@ -215,7 +215,7 @@ public class MouseChallengeCleanTableReminderSeveralClocksFixed : MonoBehaviour
 
                     EventHandler[] eventHandlers = new EventHandler[] {new EventHandler(delegate (System.Object o, EventArgs e)
                     {
-                    MATCH.DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, MATCH.DebugMessagesManager.MessageLevel.Info, "Mutex unlocked");
+                    MATCH.DebugMessagesManager.Instance.DisplayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, MATCH.DebugMessagesManager.MessageLevel.Info, "Mutex unlocked");
 
                     Destroy(gameObject.GetComponent<Animation>());
     
@@ -223,7 +223,7 @@ public class MouseChallengeCleanTableReminderSeveralClocksFixed : MonoBehaviour
                         if (clock == m_clocksView.Last())
                         {
                             m_mutexShow = false;
-                            MATCH.DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, MATCH.DebugMessagesManager.MessageLevel.Info, "Mutex unlocked");
+                            MATCH.DebugMessagesManager.Instance.DisplayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, MATCH.DebugMessagesManager.MessageLevel.Info, "Mutex unlocked");
                         }
 
                     }), eventHandler };
@@ -236,7 +236,7 @@ public class MouseChallengeCleanTableReminderSeveralClocksFixed : MonoBehaviour
         }
         else
         {
-            MATCH.DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, MATCH.DebugMessagesManager.MessageLevel.Info, "Mutex already locked - nothing to do");
+            MATCH.DebugMessagesManager.Instance.DisplayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, MATCH.DebugMessagesManager.MessageLevel.Info, "Mutex already locked - nothing to do");
         }        
     }
 
@@ -309,7 +309,7 @@ public class MouseChallengeCleanTableReminderSeveralClocksFixed : MonoBehaviour
 
     public void SetObjectsToOriginalPosition()
     {
-        MATCH.DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, MATCH.DebugMessagesManager.MessageLevel.Info, "Changing position");
+        MATCH.DebugMessagesManager.Instance.DisplayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, MATCH.DebugMessagesManager.MessageLevel.Info, "Changing position");
 
         for (int i = 0; i < m_clocksView.Count; i++)
         {

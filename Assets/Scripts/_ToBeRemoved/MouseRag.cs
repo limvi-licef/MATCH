@@ -58,7 +58,7 @@ public class MouseRag : MonoBehaviour
 
     public void callbackHologramRagInteractionSurfaceMovedFinished()
     {
-        MATCH.DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, MATCH.DebugMessagesManager.MessageLevel.Info, "Called");
+        MATCH.DebugMessagesManager.Instance.DisplayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, MATCH.DebugMessagesManager.MessageLevel.Info, "Called");
 
         gameObject.transform.position = m_interactionSurfaceRagView.transform.position;
         m_interactionSurfaceRagView.transform.localPosition = new Vector3(0, 0f, 0);

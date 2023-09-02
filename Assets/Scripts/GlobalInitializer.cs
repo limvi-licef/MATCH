@@ -55,7 +55,10 @@ namespace MATCH
             }
             else
             { // Means running in the Hololens, so adjusting some parameters
-                DebugMessagesManager.Instance.m_displayOnConsole = false;
+                DebugMessagesManager.Instance.DisplayOnConsole = false;
+                DebugMessagesManager.Instance.DisplayMessages = false; // Means the software runs in the hololens, and for better performance, we disable the display of debug messages by default
+                DebugMessagesManager.Instance.ShowWindow(false); // Window is hidden by default if running on the hololens
+
                 //AdministrationMenu.MenuStatic = false;
                 AdminMenu.Instance.MenuStatic = false;
                 VirtualRoom.SetActive(false); // In the editor, the user does what he wants, but in the hololens, this should surely be disabled.

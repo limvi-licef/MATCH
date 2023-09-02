@@ -60,7 +60,7 @@ namespace MATCH
                     //s_buttonClicked?.Invoke(this, EventArgs.Empty);
                     OnButtonClicked();
 
-                    DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Clicked");
+                    DebugMessagesManager.Instance.DisplayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Clicked");
                 }
 
                 bool m_mutexShow = false;

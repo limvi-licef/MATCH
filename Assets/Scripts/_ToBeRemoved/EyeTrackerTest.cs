@@ -37,7 +37,7 @@ namespace MATCH
 
                 MATCH.Inferences.ObjectFocused objectFocused = new MATCH.Inferences.ObjectFocused("test", delegate (System.Object o, EventArgs e)
                 {
-                    MATCH.DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, MATCH.DebugMessagesManager.MessageLevel.Info, "Object focused on");
+                    MATCH.DebugMessagesManager.Instance.DisplayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, MATCH.DebugMessagesManager.MessageLevel.Info, "Object focused on");
 
                     renderer.material = MATCH.Utilities.Utility.LoadMaterial(MATCH.Utilities.Materials.Colors.PurpleGlowing);
                 }, gameObject, 3);
@@ -47,14 +47,14 @@ namespace MATCH
                 InteractionMATCH = gameObject.AddComponent<MATCH.Utilities.HologramInteractions>();
                 InteractionMATCH.EyeFocusOn += delegate (System.Object o, EventArgs e)
                 {
-                    MATCH.DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, MATCH.DebugMessagesManager.MessageLevel.Info, "Object focused on");
+                    MATCH.DebugMessagesManager.Instance.DisplayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, MATCH.DebugMessagesManager.MessageLevel.Info, "Object focused on");
 
                     renderer.material = MATCH.Utilities.Utility.LoadMaterial(MATCH.Utilities.Materials.Colors.CyanGlowing);
                 };
 
                 InteractionMATCH.EyeFocusOff += delegate (System.Object o, EventArgs e)
                 {
-                    MATCH.DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, MATCH.DebugMessagesManager.MessageLevel.Info, "Object focused off");
+                    MATCH.DebugMessagesManager.Instance.DisplayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, MATCH.DebugMessagesManager.MessageLevel.Info, "Object focused off");
 
                     renderer.material = MATCH.Utilities.Utility.LoadMaterial(MATCH.Utilities.Materials.Colors.OrangeGlowing);
                 };

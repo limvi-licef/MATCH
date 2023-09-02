@@ -57,7 +57,7 @@ namespace MATCH
                         //FileStream file = new FileStream(PathToFile, FileMode.Create, FileAccess.Write, FileShare.Write);
                         //StreamToFile = new StreamWriter(file);
                     }
-                    catch (Exception e)
+                    catch (Exception)
                     {
                         //DebugPositioner.SetDescription("File does not exist", 0.2f);
                     }
@@ -83,7 +83,7 @@ namespace MATCH
                     sw.Close();
                     DebugLogger.SetDescription("Last message logged: " + toLog);
                 }
-                catch (Exception ee)
+                catch (Exception)
                 {
                     DebugLogger.SetDescription("Error - message not logged");
                 }

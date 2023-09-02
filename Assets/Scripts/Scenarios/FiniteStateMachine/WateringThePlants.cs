@@ -106,7 +106,7 @@ namespace MATCH
                     { }, Utilities.Utility.GetEventHandlerEmpty(), true);
                     p.GetState().setFunctionHide(delegate (EventHandler e, bool animate)
                     {
-                        DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Called for plant index " + plantId);
+                        DebugMessagesManager.Instance.DisplayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Called for plant index " + plantId);
 
                         p.GetHighlight().Hide(Utilities.Utility.GetEventHandlerEmpty(), animate);
 
@@ -345,12 +345,12 @@ namespace MATCH
                     m_graphHelp.SetManager(m_stateMachineAssistanceWateringPlants);
                     m_plantsManager.DisplayGraphLastPlant();
 
-                    DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Current state: " + m_stateMachineMain.getGradationCurrent());
+                    DebugMessagesManager.Instance.DisplayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Current state: " + m_stateMachineMain.getGradationCurrent());
                 }
 
                 void DrawLineForPlant(int index)
                 {
-                    DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Called");
+                    DebugMessagesManager.Instance.DisplayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Called");
 
                     Plant p = m_plantsManager.GetPlant(index);
 
@@ -365,7 +365,7 @@ namespace MATCH
 
                         lineRenderer.SetPosition(i, corner);
 
-                        DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Corner : " + corner);
+                        DebugMessagesManager.Instance.DisplayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Corner : " + corner);
                     }
                 }
 
@@ -388,7 +388,7 @@ namespace MATCH
 
                 void CallbackWateringThePlants(System.Object o, EventArgs e)
                 {
-                    DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Called");
+                    DebugMessagesManager.Instance.DisplayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Called");
 
                     m_inferenceManager.UnregisterInference("19h watering plants");
                     s_inference19h00?.Invoke(o, e);
@@ -528,7 +528,7 @@ namespace MATCH
 
                     sDefault.addFunctionShow(delegate (EventHandler e, bool animate)
                     {
-                        DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Plant " + Id + " is going to default state");
+                        DebugMessagesManager.Instance.DisplayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Plant " + Id + " is going to default state");
                     }, Utilities.Utility.GetEventHandlerEmpty(), true);
 
                     sDefault.setFunctionHide(delegate (EventHandler e, bool animate)
@@ -538,7 +538,7 @@ namespace MATCH
 
                     sHighlight.addFunctionShow(delegate (EventHandler e, bool animate)
                     {
-                        DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Plant " + Id + " is going to be highlighted");
+                        DebugMessagesManager.Instance.DisplayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Plant " + Id + " is going to be highlighted");
 
                         Highlight.Show(Utilities.Utility.GetEventHandlerEmpty(), animate);
                     }, Utilities.Utility.GetEventHandlerEmpty(), true);
@@ -550,7 +550,7 @@ namespace MATCH
 
                     sHighlightWatered.addFunctionShow(delegate (EventHandler e, bool animate)
                     {
-                        DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Plant " + Id + " has been watered");
+                        DebugMessagesManager.Instance.DisplayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Plant " + Id + " has been watered");
 
                         Highlight.SetMaterial(Utilities.Materials.Colors.GreenGlowing);
                     }, Utilities.Utility.GetEventHandlerEmpty(), true);

@@ -243,7 +243,7 @@ namespace MATCH
                         }
                         else
                         { // Object is outside the interface surface, safe to reset the scenario
-                        DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Reset the storing object scenario " + name);
+                        DebugMessagesManager.Instance.DisplayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Reset the storing object scenario " + name);
 
                         //AssistancesGradation.HideAll();
                         HideAll();
@@ -649,7 +649,7 @@ namespace MATCH
                             */
                             if (ObjectSet == false) //If the AreaObject is not placed on the object
                             {
-                                DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Object detected and set!");
+                                DebugMessagesManager.Instance.DisplayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Object detected and set!");
                                 ObjectSet = true;
                                 CallBackSetAreaObject();
                                 InferenceManager.RegisterInference(InferenceTimeDidNotComeToObject);
@@ -671,7 +671,7 @@ namespace MATCH
 
                 void CallbackGameObjectDetectedInStorage(System.Object o, EventArgs e)
                 {
-                    DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Object stored!");
+                    DebugMessagesManager.Instance.DisplayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Object stored!");
 
                     /**
                      * Different code following if executed on the hololens or the editor
@@ -746,7 +746,7 @@ namespace MATCH
                         //InferenceManager.UnregisterInference(InferenceObjectOutAreaObject);
                     }
 
-                    DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Object grabbed");
+                    DebugMessagesManager.Instance.DisplayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Object grabbed");
                     //Conditions["PersonGrabbedObject"] = true;
                     UpdateCondition("PersonGrabbedObject", true);
                     UpdateCondition("PersonWatchedObject", false);
@@ -774,7 +774,7 @@ namespace MATCH
                     {
                         if (ObjectDetected)
                         {
-                            DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Object released");
+                            DebugMessagesManager.Instance.DisplayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Object released");
                             CallBackSetAreaObject(); // If this point is reached, that means the person released the object AND that the object has been detected, so the AreaObject is brought to the object's position.
 
                             UpdateCondition("PersonDroppedObjectOutsideStoringArea", true);
@@ -793,7 +793,7 @@ namespace MATCH
                 void CallbackPersonWatchedObject(System.Object o, EventArgs e)
                 {
                     InferenceManager.UnregisterInference(InferenceFocusedOnObject);
-                    DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Person focused on object for at 3 seconds");
+                    DebugMessagesManager.Instance.DisplayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Person focused on object for at 3 seconds");
                     //Conditions["PersonWatchedObject"] = true;
                     UpdateCondition("PersonWatchedObject", true);
                 }
@@ -801,7 +801,7 @@ namespace MATCH
                 void CallbackPersonDidNotComeToObject(System.Object o, EventArgs e)
                 {
                     InferenceManager.UnregisterInference(InferenceTimeDidNotComeToObject);
-                    DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Person didn't come to the object");
+                    DebugMessagesManager.Instance.DisplayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Person didn't come to the object");
                     //Conditions["PersonDidNotComeToObject"] = true;//!(bool)Conditions["PersonDidNotComeToObject"];
                     //Conditions["PersonCloseToObject"] = false;
                     UpdateCondition("PersonDidNotComeToObject", true);
