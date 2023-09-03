@@ -36,6 +36,7 @@ namespace MATCH
 
                 string ConditionBeginning = "Beginning";
                 string ConditionBottleFilled = "BottleFilled";
+                string ConditionLightPathToPlant = "LightPathToPlant";
                 string ConditionHelpNeeded = "HelpNeeded";
                 string ConditionHelpRequestedAgain = "HelpRequestedAgain";
                 string ConditionPlantWatered = "PlantWatered";
@@ -54,6 +55,7 @@ namespace MATCH
                 Assistances.InteractionSurface InteractionPlant1;
                 Assistances.InteractionSurface InteractionPlant2;
                 Assistances.InteractionSurface InteractionPlant3;
+                Assistances.InteractionSurface PlantSelectedForPath;
 
                 List<GameObject> Cubes;
                 public EventHandler EventResized;
@@ -154,6 +156,7 @@ namespace MATCH
                     // SEE EXCEL SHEET TO GENERATE THE CODE BELOW
                     AddCondition(ConditionBeginning, false);
                     AddCondition(ConditionBottleFilled, false);
+                    AddCondition(ConditionLightPathToPlant, false);
                     AddCondition(ConditionHelpNeeded, false);
                     AddCondition(ConditionHelpRequestedAgain, false);
                     AddCondition(ConditionPlantWatered, false);
@@ -162,12 +165,13 @@ namespace MATCH
 
                     int nbConditions = GetNumberOfConditions();
 
-                    AddConditionsUpdate(ConditionBeginning, new bool[] { true, false, false, false, false, false });
-                    AddConditionsUpdate(ConditionBottleFilled, new bool[] { false, true, false, false, false, false });
-                    AddConditionsUpdate(ConditionHelpNeeded, new bool[] { false, false, true, false, false, false });
-                    AddConditionsUpdate(ConditionHelpRequestedAgain, new bool[] { false, false, false, true, false, false });
-                    AddConditionsUpdate(ConditionPlantWatered, new bool[] { false, false, false, false, true, false });
-                    AddConditionsUpdate(ConditionAllPlantsWatered, new bool[] { false, false, false, false, false, true });
+                    AddConditionsUpdate(ConditionBeginning, new bool[] { true, false, false, false, false, false, false });
+                    AddConditionsUpdate(ConditionBottleFilled, new bool[] { false, true, false, false, false, false, false });
+                    AddConditionsUpdate(ConditionLightPathToPlant, new bool[] { false, false, true, false, false, false, false });
+                    AddConditionsUpdate(ConditionHelpNeeded, new bool[] { false, false, false, true, false, false, false });
+                    AddConditionsUpdate(ConditionHelpRequestedAgain, new bool[] { false, false, false, false, true, false, false });
+                    AddConditionsUpdate(ConditionPlantWatered, new bool[] { false, false, false, false, false, true, false });
+                    AddConditionsUpdate(ConditionAllPlantsWatered, new bool[] { false, false, false, false, false, false, true });
                     // End of code generation using the EXCEL file
 
                     UpdateConditionWithMatrix(ConditionBeginning);
@@ -176,6 +180,7 @@ namespace MATCH
                     Selector srPlantsNotWatered = new Selector(
                         new BlackboardCondition(ConditionBeginning, Operator.IS_EQUAL, true, Stops.IMMEDIATE_RESTART, AssistanceBTWP7()),
                         new BlackboardCondition(ConditionBottleFilled, Operator.IS_EQUAL, true, Stops.IMMEDIATE_RESTART, AssistanceBTWP5()),
+                        new BlackboardCondition(ConditionLightPathToPlant, Operator.IS_EQUAL, true, Stops.IMMEDIATE_RESTART, AssistanceBTWP8()),
                         new BlackboardCondition(ConditionHelpNeeded, Operator.IS_EQUAL, true, Stops.IMMEDIATE_RESTART, AssistanceBTWP4()),
                         new BlackboardCondition(ConditionHelpRequestedAgain, Operator.IS_EQUAL, true, Stops.IMMEDIATE_RESTART, AssistanceBTWP3()),
                         new BlackboardCondition(ConditionPlantWatered, Operator.IS_EQUAL, true, Stops.IMMEDIATE_RESTART, AssistanceBTWP2()),
@@ -245,6 +250,9 @@ namespace MATCH
 
                     //à modifier les interactions
                     InteractionSink = Assistances.Factory.Instance.CreateInteractionSurface("Practice-Sink", AdminMenu.Panels.Right, new Vector3(0.6f, 0.1f, 0.4f),
+                        new Vector3(-4.777f, 0.659f, 2.031f), Utilities.Materials.Colors.GreenGlowing, false, true, Utilities.Utility.GetEventHandlerEmpty(), true, transform);
+
+                    PlantSelectedForPath = Assistances.Factory.Instance.CreateInteractionSurface("SelectedPlant", AdminMenu.Panels.Right, new Vector3(0.6f, 0.1f, 0.4f),
                         new Vector3(-4.777f, 0.659f, 2.031f), Utilities.Materials.Colors.GreenGlowing, false, true, Utilities.Utility.GetEventHandlerEmpty(), true, transform);
                     /*
                     InteractionPlant1 = Assistances.Factory.Instance.CreateInteractionSurface("Practice-Plant1", AdminMenu.Panels.Right, new Vector3(0.3f, 0.5f, 0.3f),
@@ -545,6 +553,35 @@ namespace MATCH
                     return temp;
                 }
 
+                Sequence AssistanceBTWP8()
+                {
+                    MenuPlant.GetCurrentAssistance().Hide(Utilities.Utility.GetEventHandlerEmpty(), false);
+
+                    Assistances.PathWithTextAndHelp LightPath = Assistances.Factory.Instance.CreateAssistancePath("LightPath", "", "Suivez cette ligne pour arriver à votre " + PlantSelectedForPath.name + " !", PlantSelectedForPath.transform, transform);
+                    LightPath.Show(Utilities.Utility.GetEventHandlerEmpty());
+
+                    Assistances.AssistanceGradationExplicit gradationExplicit_BTWP8 = MATCH.Assistances.Factory.Instance.CreateAssistanceGradationExplicit("Watering-BTWP8");
+                    gradationExplicit_BTWP8.transform.parent = transform;
+
+
+                    AssistancesWatering.Add(gradationExplicit_BTWP8, false);
+
+                    gradationExplicit_BTWP8.Init();
+
+                    Sequence temp = new Sequence(
+                        new NPBehave.Action(() => {
+                            ShowAssistanceHideOthers(gradationExplicit_BTWP8);
+                            InferenceManager.UnregisterAllInferences();
+                            UpdateTextAssistancesDebugWindow("BTWP8");
+                            MATCH.Utilities.Logger.Instance.Log(this.GetId(), MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, "BTWP8");
+                            OnChallengeSuccess();
+                        }),
+                        new WaitUntilStopped()
+                        );
+
+                    return temp;
+                }
+
                 void CallbackInteractionSurfaceSinkTouched(System.Object o, EventArgs e)
                 {
                     UpdateConditionWithMatrix(ConditionBottleFilled);
@@ -720,10 +757,12 @@ namespace MATCH
                         UpdateTextAssistancesDebugWindow("i is : " + currentIndex);
                         if (DialogAssistanceWaterHelp.ButtonsController[currentIndex].IsChecked() == false)
                         {
-                            InteractionPlants[currentIndex].CallbackShow();
-                            ShowLightpathToPlant(plant);
+                            //InteractionPlants[currentIndex].CallbackShow();
+                            //ShowLightpathToPlant(plant);
                             DialogAssistanceWaterHelp.ButtonsController[currentIndex].CheckButton(true);
                             LightPathShownMap[plant] = true;
+                            PlantSelectedForPath = plant;
+                            UpdateConditionWithMatrix(ConditionLightPathToPlant);
                             NextTimeCheck = Time.time + 5f;
                         }
                     };
