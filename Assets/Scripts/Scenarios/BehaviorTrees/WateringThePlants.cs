@@ -555,26 +555,40 @@ namespace MATCH
 
                 Sequence AssistanceBTWP8()
                 {
-                    MenuPlant.GetCurrentAssistance().Hide(Utilities.Utility.GetEventHandlerEmpty(), false);
-
-                    Assistances.PathWithTextAndHelp LightPath = Assistances.Factory.Instance.CreateAssistancePath("LightPath", "", "Suivez cette ligne pour arriver à votre " + PlantSelectedForPath.name + " !", PlantSelectedForPath.transform, transform);
-                    LightPath.Show(Utilities.Utility.GetEventHandlerEmpty());
-
-                    Assistances.AssistanceGradationExplicit gradationExplicit_BTWP8 = MATCH.Assistances.Factory.Instance.CreateAssistanceGradationExplicit("Watering-BTWP8");
+                    Assistances.PathWithTextAndHelp LightPath = null;
+                    /*Assistances.AssistanceGradationExplicit gradationExplicit_BTWP8 = MATCH.Assistances.Factory.Instance.CreateAssistanceGradationExplicit("Watering-BTWP8");
                     gradationExplicit_BTWP8.transform.parent = transform;
 
 
                     AssistancesWatering.Add(gradationExplicit_BTWP8, false);
 
-                    gradationExplicit_BTWP8.Init();
+                    gradationExplicit_BTWP8.Init();*/
 
                     Sequence temp = new Sequence(
                         new NPBehave.Action(() => {
-                            ShowAssistanceHideOthers(gradationExplicit_BTWP8);
-                            InferenceManager.UnregisterAllInferences();
+                            //MenuPlant.GetCurrentAssistance().Hide(Utilities.Utility.GetEventHandlerEmpty(), false;
+                            MenuPlant.HideCurrentGradation(Utilities.Utility.GetEventHandlerEmpty());
+                            if(LightPath != null)
+                            {
+                                LightPath.Hide(delegate (System.Object o, EventArgs e)
+                                {
+                                    Destroy(LightPath);
+                                    LightPath = Assistances.Factory.Instance.CreateAssistancePath("LightPath", "", "Suivez cette ligne pour arriver à votre " + PlantSelectedForPath.name + " !", PlantSelectedForPath.transform, MATCH.Assistances.InteractionSurfaceFollower.Instance.transform);
+                                    LightPath.Show(Utilities.Utility.GetEventHandlerEmpty());
+                                }, false);
+                            }
+                            else
+                            {
+                                LightPath = Assistances.Factory.Instance.CreateAssistancePath("LightPath", "", "Suivez cette ligne pour arriver à votre " + PlantSelectedForPath.name + " !", PlantSelectedForPath.transform, MATCH.Assistances.InteractionSurfaceFollower.Instance.transform);
+                                LightPath.Show(Utilities.Utility.GetEventHandlerEmpty());
+                            }
+
+                            
+                            //ShowAssistanceHideOthers(gradationExplicit_BTWP8);
+                            //InferenceManager.UnregisterAllInferences();
                             UpdateTextAssistancesDebugWindow("BTWP8");
                             MATCH.Utilities.Logger.Instance.Log(this.GetId(), MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, "BTWP8");
-                            OnChallengeSuccess();
+                            //OnChallengeSuccess();
                         }),
                         new WaitUntilStopped()
                         );
