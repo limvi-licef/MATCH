@@ -46,6 +46,13 @@ namespace MATCH
 
             private void Awake()
             {
+                PathLine = transform.Find("Path").GetComponent<LineRenderer>();
+                PathLine.startWidth = 0.017f;
+                PathLine.endWidth = 0.017f;
+                PathLine.positionCount = 0;
+                PathLine.startColor = Color.cyan;
+                PathLine.endColor = Color.cyan;
+                PathLine.useWorldSpace = true;
                 HeightToFollowInteractionSurface = false;
                 ObjectBeginFollower = false;
             }
@@ -110,13 +117,13 @@ namespace MATCH
 
             private void Start()
             {
-                PathLine = transform.Find("Path").GetComponent<LineRenderer>();
+                /*PathLine = transform.Find("Path").GetComponent<LineRenderer>();
                 PathLine.startWidth = 0.017f;
                 PathLine.endWidth = 0.017f;
                 PathLine.positionCount = 0;
                 PathLine.startColor = Color.cyan;
                 PathLine.endColor = Color.cyan;
-                PathLine.useWorldSpace = true;
+                PathLine.useWorldSpace = true;*/
                 PathLine.GetComponent<Renderer>().material = Utilities.Utility.LoadMaterial(Utilities.Materials.Colors.Cyan);
 
                 //controller.SetHeightToFollowInteractionSurface(heightToFollowInteractionSurface);
