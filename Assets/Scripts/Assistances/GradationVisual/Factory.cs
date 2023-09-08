@@ -277,6 +277,15 @@ namespace MATCH
                     return AddDecoratorsToDialog2(assistanceName, dialog);
                 }
 
+                public GradationVisual CreateDialog2WithButtonsContextualized(string assistanceName, string title, string description, bool adjustToHeight, Transform contextObject, string textButton1, EventHandler callbackButton1, Assistances.Buttons.Button.ButtonType type1, string textButton2, EventHandler callbackButton2, Assistances.Buttons.Button.ButtonType type2, Transform parent)
+                {
+                    Dialogs.Dialog2 dialog = (Dialogs.Dialog2)Assistances.Factory.Instance.CreateDialog2WithButtonsContextualized(assistanceName, title, description, contextObject, textButton1, callbackButton1, type1, textButton2, callbackButton2, type2, parent);
+
+                    dialog.AdjustToHeight = adjustToHeight;
+
+                    return AddDecoratorsToDialog2(assistanceName, dialog);
+                }
+
                 public GradationVisual CreateDialog2WithButtonsContextualized(string assistanceName, string title, string description, Transform contextObject, string textButton1, EventHandler callbackButton1, Assistances.Buttons.Button.ButtonType type1, string textButton2, EventHandler callbackButton2, Assistances.Buttons.Button.ButtonType type2, Transform parent)
                 {
                     Dialogs.Dialog2 dialog = (Dialogs.Dialog2) Assistances.Factory.Instance.CreateDialog2WithButtonsContextualized(assistanceName, title, description, contextObject, textButton1, callbackButton1, type1, textButton2, callbackButton2, type2, parent);

@@ -143,6 +143,7 @@ namespace MATCH
                 Transform view = Utilities.Materials.Prefabs.Load(Utilities.Materials.Prefabs.AssistanceDialog2);
                 view.parent = parent;
                 view.localPosition = new Vector3(0, 0, 0);
+                view.localScale = new Vector3(1, 1, 1);
 
                 Dialogs.Dialog2 controller = view.GetComponent<Dialogs.Dialog2>();
                 controller.SetTitle(title, 0.15f);

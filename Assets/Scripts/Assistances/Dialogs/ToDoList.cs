@@ -54,6 +54,10 @@ namespace MATCH
                 List<Buttons.Basic> ElementsController;
                 Vector3 ElementOriginalScaling;
 
+                Transform AssistanceCanva;
+
+                public event EventHandler EventElementClicked;
+
                 protected override void Awake()
                 {
                     base.Awake();
@@ -80,6 +84,8 @@ namespace MATCH
                     ElementsView = new List<Transform>();
                     ElementsController = new List<Buttons.Basic>();
                     ElementOriginalScaling = ElementView.localScale;
+
+                    AssistanceCanva = transform.Find("AssistanceCanva");
                 }
 
                 public void SetTitle(string text, float fontSize = -1.0f)
@@ -290,7 +296,11 @@ namespace MATCH
                     ElementView.GetComponent<GridObjectCollection>().UpdateCollection();
 
                     // Calling the assistancecallback
-                    controller.EventButtonClicked += CButtonHelp;
+                    controller.EventButtonClicked += /*CButtonHelp*/ delegate (System.Object o, EventArgs e)
+                    {
+                        //ShowHelp(true, Utilities.Utility.GetEventHandlerEmpty(), false);
+                        EventElementClicked?.Invoke(controller, EventArgs.Empty);
+                    };
 
                     // Return
                     return controller;
@@ -413,6 +423,16 @@ namespace MATCH
                             Destroy(emphasize);
                         }
                     }
+                }
+
+                public Transform GetAssistanceCanva()
+                {
+                    return AssistanceCanva;
+                }
+
+                public void ShowAssistanceCanva(bool show)
+                {
+                    AssistanceCanva.Find("Background").gameObject.SetActive(show);
                 }
             }
         }

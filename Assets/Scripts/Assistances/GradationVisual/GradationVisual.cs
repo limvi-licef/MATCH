@@ -40,6 +40,8 @@ namespace MATCH
 
                 }*/
 
+                AudioSource SoundSource;
+
                 private void Awake()
                 {
                     Gradation = new List<Assistance>();
@@ -48,6 +50,7 @@ namespace MATCH
                 private void Start()
                 {
                     //DebugMessagesManager.Instance.displayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Called");
+                    SoundSource = GetComponent<AudioSource>();
                 }
 
                 /*
@@ -105,6 +108,9 @@ namespace MATCH
                     DebugMessagesManager.Instance.DisplayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Help button clicked for assistance " + GetCurrentAssistance().name);
 
                     MATCH.Utilities.EventHandlerArgs.Button args = (Utilities.EventHandlerArgs.Button)e;
+
+                    AudioClip audioClip = MATCH.Utilities.Materials.Sounds.Load(MATCH.Utilities.Materials.Sounds.MRTK_ButtonPress);
+                    SoundSource.PlayOneShot(audioClip);
 
                     EventHelpClicked?.Invoke(this, e);
                 }
