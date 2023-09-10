@@ -37,6 +37,7 @@ namespace MATCH
                 string ConditionBeginning = "Beginning";
                 string ConditionBottleFilled = "BottleFilled";
                 string ConditionLightPathToPlant = "LightPathToPlant";
+                string ConditionWateringAPlant = "WateringAPlant";
                 string ConditionHelpNeeded = "HelpNeeded";
                 string ConditionHelpRequestedAgain = "HelpRequestedAgain";
                 string ConditionPlantWatered = "PlantWatered";
@@ -157,6 +158,7 @@ namespace MATCH
                     AddCondition(ConditionBeginning, false);
                     AddCondition(ConditionBottleFilled, false);
                     AddCondition(ConditionLightPathToPlant, false);
+                    AddCondition(ConditionWateringAPlant, false);
                     AddCondition(ConditionHelpNeeded, false);
                     AddCondition(ConditionHelpRequestedAgain, false);
                     AddCondition(ConditionPlantWatered, false);
@@ -165,13 +167,14 @@ namespace MATCH
 
                     int nbConditions = GetNumberOfConditions();
 
-                    AddConditionsUpdate(ConditionBeginning, new bool[] { true, false, false, false, false, false, false });
-                    AddConditionsUpdate(ConditionBottleFilled, new bool[] { false, true, false, false, false, false, false });
-                    AddConditionsUpdate(ConditionLightPathToPlant, new bool[] { false, false, true, false, false, false, false });
-                    AddConditionsUpdate(ConditionHelpNeeded, new bool[] { false, false, false, true, false, false, false });
-                    AddConditionsUpdate(ConditionHelpRequestedAgain, new bool[] { false, false, false, false, true, false, false });
-                    AddConditionsUpdate(ConditionPlantWatered, new bool[] { false, false, false, false, false, true, false });
-                    AddConditionsUpdate(ConditionAllPlantsWatered, new bool[] { false, false, false, false, false, false, true });
+                    AddConditionsUpdate(ConditionBeginning, new bool[] { true, false, false, false, false, false, false, false });
+                    AddConditionsUpdate(ConditionBottleFilled, new bool[] { false, true, false, false, false, false, false, false });
+                    AddConditionsUpdate(ConditionLightPathToPlant, new bool[] { false, false, true, false, false, false, false, false });
+                    AddConditionsUpdate(ConditionWateringAPlant, new bool[] { false, false, false, true, false, false, false, false });
+                    AddConditionsUpdate(ConditionHelpNeeded, new bool[] { false, false, false, false, true, false, false, false });
+                    AddConditionsUpdate(ConditionHelpRequestedAgain, new bool[] { false, false, false, false, false, true, false, false });
+                    AddConditionsUpdate(ConditionPlantWatered, new bool[] { false, false, false, false, false, false, true, false });
+                    AddConditionsUpdate(ConditionAllPlantsWatered, new bool[] { false, false, false, false, false, false, false, true });
                     // End of code generation using the EXCEL file
 
                     UpdateConditionWithMatrix(ConditionBeginning);
@@ -181,6 +184,7 @@ namespace MATCH
                         new BlackboardCondition(ConditionBeginning, Operator.IS_EQUAL, true, Stops.IMMEDIATE_RESTART, AssistanceBTWP7()),
                         new BlackboardCondition(ConditionBottleFilled, Operator.IS_EQUAL, true, Stops.IMMEDIATE_RESTART, AssistanceBTWP5()),
                         new BlackboardCondition(ConditionLightPathToPlant, Operator.IS_EQUAL, true, Stops.IMMEDIATE_RESTART, AssistanceBTWP8()),
+                        new BlackboardCondition(ConditionWateringAPlant, Operator.IS_EQUAL, true, Stops.IMMEDIATE_RESTART, AssistanceBTWP9()),
                         new BlackboardCondition(ConditionHelpNeeded, Operator.IS_EQUAL, true, Stops.IMMEDIATE_RESTART, AssistanceBTWP4()),
                         new BlackboardCondition(ConditionHelpRequestedAgain, Operator.IS_EQUAL, true, Stops.IMMEDIATE_RESTART, AssistanceBTWP3()),
                         new BlackboardCondition(ConditionPlantWatered, Operator.IS_EQUAL, true, Stops.IMMEDIATE_RESTART, AssistanceBTWP2()),
@@ -566,6 +570,7 @@ namespace MATCH
 
                     Sequence temp = new Sequence(
                         new NPBehave.Action(() => {
+
                             //MenuPlant.GetCurrentAssistance().Hide(Utilities.Utility.GetEventHandlerEmpty(), false;
                             MenuPlant.HideCurrentGradation(Utilities.Utility.GetEventHandlerEmpty());
                             if(LightPath != null)
@@ -583,11 +588,44 @@ namespace MATCH
                                 LightPath.Show(Utilities.Utility.GetEventHandlerEmpty());
                             }
 
-                            
+                            MATCH.Inferences.Factory.Instance.CreateDistanceComingInferenceOneShot(InferenceManager, "1",
+                            delegate (object o, EventArgs e)
+                            {
+                                LightPath.Hide(Utilities.Utility.GetEventHandlerEmpty(), false);
+                                UpdateConditionWithMatrix(ConditionWateringAPlant);
+                            }, PlantSelectedForPath.gameObject, 1.3F);
+
+
                             //ShowAssistanceHideOthers(gradationExplicit_BTWP8);
                             //InferenceManager.UnregisterAllInferences();
                             UpdateTextAssistancesDebugWindow("BTWP8");
                             MATCH.Utilities.Logger.Instance.Log(this.GetId(), MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, "BTWP8");
+                            //OnChallengeSuccess();
+                        }),
+                        new WaitUntilStopped()
+                        );
+
+                    return temp;
+                }
+
+                Sequence AssistanceBTWP9()
+                {
+
+
+                    Sequence temp = new Sequence(
+                        new NPBehave.Action(() => {
+                            //ShowAssistanceHideOthers(gradationExplicit_BTWP9);
+                            //InferenceManager.UnregisterAllInferences();
+
+                            MATCH.Inferences.Factory.Instance.CreateDistanceLeavingInferenceOneShot(InferenceManager, "1",
+                            delegate (object o, EventArgs e)
+                            {
+                                UpdateConditionWithMatrix(ConditionBottleFilled);
+                            }, PlantSelectedForPath.gameObject, 5F);
+
+
+                            UpdateTextAssistancesDebugWindow("BTWP9");
+                            MATCH.Utilities.Logger.Instance.Log(this.GetId(), MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, "BTWP9");
                             //OnChallengeSuccess();
                         }),
                         new WaitUntilStopped()
