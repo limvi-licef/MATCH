@@ -293,7 +293,7 @@ namespace MATCH
                         };
                     }*/
 
-                    MenuPlant = Assistances.GradationVisual.Factory.Instance.CreateAssistanceDialog("WateringThePlants-BTWP4-1", DialogAssistanceWaterHelp);
+//                    MenuPlant = Assistances.GradationVisual.Factory.Instance.CreateAssistanceDialog("WateringThePlants-BTWP4-1", DialogAssistanceWaterHelp);
                 }
 
                 private void Update()
@@ -403,6 +403,9 @@ namespace MATCH
 
                     Assistances.GradationVisual.GradationVisual someoneComing = Assistances.GradationVisual.Factory.Instance.CreateAlreadyConfigured(Assistances.GradationVisual.Factory.AlreadyConfigured.SomeoneComingToHelpDialog2, "Watering-BTWP4-3", FollowObject.transform);
 
+                    MenuPlant = Assistances.Factory.Instance.CreateAssistanceGradationAttention("Menu Plant"); //Assistances.GradationVisual.Factory.Instance.CreateAssistanceDialog("WateringThePlants-BTWP4-1", DialogAssistanceWaterHelp);
+                    MenuPlant.AddAssistance(DialogAssistanceWaterHelp);
+
                     Assistances.AssistanceGradationExplicit BTWP4 = MATCH.Assistances.Factory.Instance.CreateAssistanceGradationExplicit("WateringThePlants-BTWP4");
 
                     BTWP4.transform.parent = transform;
@@ -443,7 +446,7 @@ namespace MATCH
                 //Did the person already request help to find the location of the plants?
                 Sequence AssistanceBTWP3()
                 {
-                    Assistances.GradationVisual.GradationVisual helpNeeded = Assistances.GradationVisual.Factory.Instance.CreateAlreadyConfigured(Assistances.GradationVisual.Factory.AlreadyConfigured.DoYouNeedHelpDialog1,
+                    Assistances.GradationVisual.GradationVisual helpNeeded = Assistances.GradationVisual.Factory.Instance.CreateAlreadyConfigured(Assistances.GradationVisual.Factory.AlreadyConfigured.DoYouNeedHelpDialog2,
                        "WateringThePlants-BTWP3", FollowObject.transform);
 
                     Assistances.GradationVisual.GradationVisual dontKnow = Assistances.GradationVisual.Factory.Instance.CreateDialog2WithButtons("WateringThePlants-BTWP3-1", "",
@@ -689,7 +692,7 @@ namespace MATCH
                     Assistances.InteractionSurface plant;// = new Assistances.InteractionSurface();
                     
                     // Set parent
-                    plant = Assistances.Factory.Instance.CreateInteractionSurface(name + " " + InteractionPlants.Count.ToString(), AdminMenu.Panels.Right, /*new Vector3(1.1f, 0.02f, 0.7f)*/ scaling, /*new Vector3(-0.447f, -0.406f, 0.009f)*/ position, Utilities.Materials.Colors.GreenGlowingAdjustHSV, false, true, Utilities.Utility.GetEventHandlerEmpty(), false, transform);
+                    plant = Assistances.Factory.Instance.CreateInteractionSurface(name, AdminMenu.Panels.Right, /*new Vector3(1.1f, 0.02f, 0.7f)*/ scaling, /*new Vector3(-0.447f, -0.406f, 0.009f)*/ position, Utilities.Materials.Colors.GreenGlowingAdjustHSV, false, true, Utilities.Utility.GetEventHandlerEmpty(), false, transform);
                     
                     //plant.gameObject.name = name;
                     // Add buttons to interface
@@ -755,7 +758,7 @@ namespace MATCH
 
                     if (registerObject)
                     {
-                        PlantsPositioningStorage.RegisterObject(name + " " + InteractionPlants.Count.ToString(), plant.transform, plant.GetInteractionSurface().transform);
+                        PlantsPositioningStorage.RegisterObject(name, plant.transform, plant.GetInteractionSurface().transform);
                     }
 
                     plant.GetInteractionSurface().GetComponent<BoundsControl>().enabled = false;
