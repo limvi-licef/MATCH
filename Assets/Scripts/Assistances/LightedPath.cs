@@ -41,6 +41,9 @@ namespace MATCH
             private Vector3[] PathPoints;
 
             private LineRenderer PathLine;
+            private Material PathLineMaterial;
+            private string PathLinePulseDistanceProperty = "_PulseDistance";
+            private float PathLinePulseDistanceToAdd;
 
             private bool HeightToFollowInteractionSurface;
 
@@ -55,6 +58,15 @@ namespace MATCH
                 PathLine.useWorldSpace = true;
                 HeightToFollowInteractionSurface = false;
                 ObjectBeginFollower = false;
+
+                if (Utilities.Utility.IsEditorSimulator() || Utilities.Utility.IsEditorGameView())
+                {
+                    PathLinePulseDistanceToAdd = 0.001f;
+                }
+                else
+                { // Means running in the Hololens: the frame rate being lower, the value is higher, to have a faster color change
+                    PathLinePulseDistanceToAdd = 0.05f;
+                }
             }
 
             public void SetHeightToFollowInteractionSurface(bool heightToFollow)
@@ -66,11 +78,23 @@ namespace MATCH
             {
                 if (IsDisplayed)
                 {
+                    // Determine if the line needs to be recomputed
                     float dist = Utilities.Utility.CalculateMinDistanceOfALine(PathLine);
                     if (dist > Threshold)
                     {
                         ShowLinePath();
                     }
+
+                    // Move the pulse
+                    for (int i = 1; i < 4; i++)
+                    {
+                        PathLineMaterial.SetFloat(PathLinePulseDistanceProperty+i, PathLineMaterial.GetFloat(PathLinePulseDistanceProperty+i) + PathLinePulseDistanceToAdd);
+                        if (PathLineMaterial.GetFloat(PathLinePulseDistanceProperty+i) >= 0.98f)
+                        {
+                            PathLineMaterial.SetFloat(PathLinePulseDistanceProperty+i, 0.0f);
+                        }
+                    }
+                    
                 }
             }
 
@@ -84,7 +108,7 @@ namespace MATCH
 
                 if (ObjectBeginFollower)
                 {
-                    Vector3 startPoint = Vector3.forward * (float)1.5;
+                    Vector3 startPoint = Vector3.forward * (float)1;
 
                     positionBegining = Camera.main.transform.TransformPoint(startPoint);
                 }
@@ -110,6 +134,12 @@ namespace MATCH
                     PathLine.SetPosition(i, corner);
                 }
 
+                for (int i = 1; i < 4; i ++)
+                {
+                    PathLineMaterial.SetFloat(PathLinePulseDistanceProperty+i, 0.3f*i-0.3f); // Pulse is initialized at the beginning of the line
+                }
+                
+
                 PathLine.gameObject.SetActive(true);
 
                 IsDisplayed = true;
@@ -117,14 +147,16 @@ namespace MATCH
 
             private void Start()
             {
-                /*PathLine = transform.Find("Path").GetComponent<LineRenderer>();
+                PathLine = transform.Find("Path").GetComponent<LineRenderer>();
                 PathLine.startWidth = 0.017f;
                 PathLine.endWidth = 0.017f;
                 PathLine.positionCount = 0;
                 PathLine.startColor = Color.cyan;
                 PathLine.endColor = Color.cyan;
-                PathLine.useWorldSpace = true;*/
-                PathLine.GetComponent<Renderer>().material = Utilities.Utility.LoadMaterial(Utilities.Materials.Colors.Cyan);
+
+                PathLine.useWorldSpace = true;
+                PathLine.GetComponent<Renderer>().material = Utilities.Utility.LoadMaterial(Utilities.Materials.Colors.CyanPulse);
+                PathLineMaterial = PathLine.GetComponent<Renderer>().material;
 
                 //controller.SetHeightToFollowInteractionSurface(heightToFollowInteractionSurface);
             }

@@ -143,6 +143,7 @@ namespace MATCH
                 Transform view = Utilities.Materials.Prefabs.Load(Utilities.Materials.Prefabs.AssistanceDialog2);
                 view.parent = parent;
                 view.localPosition = new Vector3(0, 0, 0);
+                view.localScale = new Vector3(1, 1, 1);
 
                 Dialogs.Dialog2 controller = view.GetComponent<Dialogs.Dialog2>();
                 controller.SetTitle(title, 0.15f);
@@ -177,6 +178,7 @@ namespace MATCH
                 Transform view = Utilities.Materials.Prefabs.Load(Utilities.Materials.Prefabs.AssistanceDialog2);
                 view.parent = parent;
                 view.localPosition = new Vector3(0, 0, 0);
+                view.localScale = new Vector3(1, 1, 1);
 
                 Dialogs.Dialog2 controllerToRemove = view.GetComponent<Dialogs.Dialog2>();
                 DestroyImmediate(controllerToRemove);
@@ -301,6 +303,7 @@ namespace MATCH
                 view.localPosition = new Vector3(0, 0, 0);
 
                 MATCH.Assistances.Dialogs.ToDoList controller = view.GetComponent<MATCH.Assistances.Dialogs.ToDoList>();
+                controller.AdjustToHeight = false;
                 controller.SetTitle(title, 0.15f);
                 float sizeDescriptionText = -0.0005f * description.Length + 0.206f;
                 controller.SetDescription(description, sizeDescriptionText);
@@ -375,6 +378,7 @@ namespace MATCH
                 Transform view = Utilities.Materials.Prefabs.Load(Utilities.Materials.Prefabs.AssistanceLightPath);
                 view.parent = parent;
                 view.transform.localPosition = new Vector3(0, 0, 0);
+                view.transform.localScale = new Vector3(1, 1, 1);
 
                 PathWithTextAndHelp controller = view.GetComponent<PathWithTextAndHelp>();
                 view.name = name;

@@ -32,11 +32,6 @@ namespace MATCH
         {
             public class Dialog2Contextualized : Dialog2, IPanel2
             {
-                /*public enum Context
-                {
-                    LocationRelativeToTheUser = 0
-                }*/
-
                 Transform ContextObject;
 
                 protected override void Awake()
@@ -53,13 +48,6 @@ namespace MATCH
 
                 public override void Show(EventHandler eventHandler, bool withAnimation)
                 {
-                    /*Vector3 userPos = Camera.main.transform.position;
-                    Vector2 pointA = new Vector2(userPos.x - 10, userPos.z + 10);
-                    Vector2 pointB = new Vector2(userPos.x + 10, userPos.z + 10);
-                    Vector2 pointC = new Vector2(userPos.x - 10, userPos.z - 10);
-                    Vector2 pointD = new Vector2(userPos.x + 10, userPos.z - 10);
-                    Vector2 pointU = new Vector2(userPos.x, userPos.z); // "U" for user, i.e. user's position*/
-
                     Vector3 userPos = Camera.main.transform.position;
                     Vector3 userDirection = Camera.main.transform.forward;
                     Vector3 directionDefault = new Vector3(0, 0, 1);

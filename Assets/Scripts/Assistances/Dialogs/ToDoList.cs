@@ -53,6 +53,11 @@ namespace MATCH
                 List<Transform> ElementsView;
                 List<Buttons.Basic> ElementsController;
                 Vector3 ElementOriginalScaling;
+                Vector3 AssistanceCanvaScalingOriginal;
+
+                Transform AssistanceCanva;
+
+                public event EventHandler EventElementClicked;
 
                 protected override void Awake()
                 {
@@ -80,6 +85,9 @@ namespace MATCH
                     ElementsView = new List<Transform>();
                     ElementsController = new List<Buttons.Basic>();
                     ElementOriginalScaling = ElementView.localScale;
+
+                    AssistanceCanva = transform.Find("AssistanceCanva");
+                    AssistanceCanvaScalingOriginal = AssistanceCanva.localScale;
                 }
 
                 public void SetTitle(string text, float fontSize = -1.0f)
@@ -139,6 +147,8 @@ namespace MATCH
                             Utilities.Utility.AnimateDisappearInPlace(ButtonsParentView.gameObject, ButtonsParentScalingOriginal);
 
                             Utilities.Utility.AnimateDisappearInPlace(BackgroundView.gameObject, BackgroundScalingOriginal);
+                            Utilities.Utility.AnimateDisappearInPlace(AssistanceCanva.gameObject, AssistanceCanvaScalingOriginal);
+                            
                         }
                         else
                         {
@@ -146,6 +156,8 @@ namespace MATCH
                             DescriptionView.gameObject.SetActive(false);
                             ButtonsParentView.gameObject.SetActive(false);
                             BackgroundView.gameObject.SetActive(false);
+                            AssistanceCanva.gameObject.SetActive(false);
+                            ElementView.gameObject.SetActive(false);
                             IsDisplayed = false;
                             args.Success = true;
                             eventHandler?.Invoke(this, args);
@@ -196,6 +208,9 @@ namespace MATCH
                             TitleView.gameObject.SetActive(true);
                             DescriptionView.gameObject.SetActive(true);
                             IsDisplayed = true;
+
+                            AssistanceCanva.gameObject.SetActive(true);
+                            ElementView.gameObject.SetActive(true);
 
                             args.Success = true;
                             eventHandler?.Invoke(this, args);
@@ -290,7 +305,11 @@ namespace MATCH
                     ElementView.GetComponent<GridObjectCollection>().UpdateCollection();
 
                     // Calling the assistancecallback
-                    controller.EventButtonClicked += CButtonHelp;
+                    controller.EventButtonClicked += /*CButtonHelp*/ delegate (System.Object o, EventArgs e)
+                    {
+                        //ShowHelp(true, Utilities.Utility.GetEventHandlerEmpty(), false);
+                        EventElementClicked?.Invoke(controller, EventArgs.Empty);
+                    };
 
                     // Return
                     return controller;
@@ -413,6 +432,16 @@ namespace MATCH
                             Destroy(emphasize);
                         }
                     }
+                }
+
+                public Transform GetAssistanceCanva()
+                {
+                    return AssistanceCanva;
+                }
+
+                public void ShowAssistanceCanva(bool show)
+                {
+                    AssistanceCanva.Find("Background").gameObject.SetActive(show);
                 }
             }
         }

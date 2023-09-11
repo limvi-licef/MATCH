@@ -53,6 +53,8 @@ namespace MATCH
 
             public static int DelayBeforeShowingHelp = 3;
 
+            public static int DelayBeforeNextAttractiveGradation = 7;
+
             public override void Awake()
             {
                 base.Awake();
@@ -201,7 +203,7 @@ namespace MATCH
 
             void RegisterInferenceNoFocusFor15Seconds()
             {
-                Inferences.Timer timer = new Inferences.Timer(InferenceTimer2Minutes, 15, delegate (System.Object o, EventArgs e)
+                Inferences.Timer timer = new Inferences.Timer(InferenceTimer2Minutes, DelayBeforeNextAttractiveGradation, delegate (System.Object o, EventArgs e)
                 {
                     UpdateConditionWithMatrix(ConditionDisplayedSince2Minutes);
                     InfManager.UnregisterInference(InferenceTimer2Minutes);
@@ -259,7 +261,7 @@ namespace MATCH
                             
 
 
-                                Inferences.Timer timer = new Inferences.Timer(InferenceTimer2Minutes, 15, delegate (System.Object o, EventArgs e)
+                                Inferences.Timer timer = new Inferences.Timer(InferenceTimer2Minutes, DelayBeforeNextAttractiveGradation, delegate (System.Object o, EventArgs e)
                             { // Currently, manages only one level of visual gradation - to manage more than one, an extra level in the behavior tree might be required
                                 UpdateConditionWithMatrix(ConditionDisplayedSince2Minutes);
                                 InfManager.UnregisterInference(InferenceTimer2Minutes);
@@ -357,7 +359,7 @@ namespace MATCH
                         if (AssistancesGradation.AssistanceCurrent.IsLastGradationLevel() == false)
                         {
                             UpdateCondition(ConditionDisplayedSince2Minutes, false);
-                            Inferences.Timer timer = new Inferences.Timer(InferenceTimer2Minutes, 15, delegate (System.Object o, EventArgs e)
+                            Inferences.Timer timer = new Inferences.Timer(InferenceTimer2Minutes, DelayBeforeNextAttractiveGradation, delegate (System.Object o, EventArgs e)
                             { 
                                 UpdateConditionWithMatrix(ConditionDisplayedSince2Minutes);
 

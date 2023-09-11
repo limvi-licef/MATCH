@@ -7,8 +7,8 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: CyanAdjustHSV
-  m_Shader: {fileID: 4800000, guid: 74f05e21aa126fa42bddb186aa8850e5, type: 3}
+  m_Name: CyanPulse
+  m_Shader: {fileID: 4800000, guid: b1abf383b4dbbd54ba6d9df6756d2c95, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 0
   m_EnableInstancingVariants: 0
@@ -45,7 +45,7 @@ Material:
         m_Offset: {x: 0, y: 0}
     - _MainTex:
         m_Texture: {fileID: 0}
-        m_Scale: {x: 0, y: 0}
+        m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MetallicGlossMap:
         m_Texture: {fileID: 0}
@@ -72,7 +72,7 @@ Material:
     - _Cull: 2
     - _Cutoff: 0.5
     - _DetailNormalMapScale: 1
-    - _Distance: 50
+    - _Distance: 55.3
     - _DistortionBlend: 0.5
     - _DistortionEnabled: 0
     - _DistortionStrength: 1
@@ -81,17 +81,23 @@ Material:
     - _EmissionEnabled: 0
     - _EnableExternalAlpha: 0
     - _FlipbookMode: 0
+    - _Frequency: 1
     - _GlossMapScale: 1
     - _Glossiness: 0.5
     - _GlossyReflections: 1
-    - _Height: 0
-    - _Hue: -3
+    - _Hue: 6
     - _LightingEnabled: 0
     - _Metallic: 0.5
+    - _MinPulseVal: 0.5
     - _Mode: 0
     - _OcclusionStrength: 1
     - _Parallax: 0.02
-    - _PulseDistance: 0.531
+    - _PulseDistance: 1
+    - _PulseDistance1: 0
+    - _PulseDistance2: 0.32
+    - _PulseDistance3: 0.6
+    - _PulseDistance4: 0.9
+    - _PulseLength: 0.006
     - _Saturation: 1.01
     - _SmoothnessTextureChannel: 0
     - _SoftParticlesEnabled: 0
@@ -104,14 +110,13 @@ Material:
     m_Colors:
     - _CameraFadeParams: {r: 0, g: Infinity, b: 0, a: 0}
     - _Color: {r: 0.05057721, g: 0.9622642, b: 0.9622642, a: 1}
-    - _Color1: {r: 0.042719785, g: 0.990566, b: 0.90567577, a: 1}
-    - _Color2: {r: 0.85882354, g: 0, b: 0.009275195, a: 1}
     - _ColorAddSubDiff: {r: 0, g: 0, b: 0, a: 0}
-    - _ColorBase: {r: 0.5, g: 0.5, b: 0.5, a: 1}
-    - _ColorMain: {r: 0, g: 1, b: 0.880723, a: 1}
-    - _ColorPulse: {r: 1, g: 1, b: 1, a: 1}
+    - _ColorBase: {r: 0, g: 1, b: 0.9294118, a: 1}
+    - _ColorMain: {r: 0.9433962, g: 0.06738541, b: 0.06738541, a: 1}
+    - _ColorPulse: {r: 0, g: 0.5729537, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _Flip: {r: 1, g: 1, b: 1, a: 1}
+    - _GlowColor: {r: 1, g: 1, b: 1, a: 1}
     - _RendererColor: {r: 1, g: 1, b: 1, a: 1}
     - _SoftParticleFadeParams: {r: 0, g: 0, b: 0, a: 0}
   m_BuildTextureStacks: []

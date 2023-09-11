@@ -36,6 +36,8 @@ namespace MATCH
                 static string Path = "MATCH/Sounds/";
 
                 public static string Debug = Path + "DEBUG_SON";
+                public static string MRTK_ButtonPress = Path + "MRTK_ButtonPress";
+                public static string MRTK_ButtonUnpress = Path + "MRTK_ButtonUnpress";
                 public static AudioClip Load(string audioPath)
                 {
                     return (Resources.Load<AudioClip>(audioPath));
