@@ -58,6 +58,7 @@ namespace MATCH
                 PathLine.useWorldSpace = true;
                 HeightToFollowInteractionSurface = false;
                 ObjectBeginFollower = false;
+                PathLineMaterial = PathLine.GetComponent<Renderer>().material;
 
                 if (Utilities.Utility.IsEditorSimulator() || Utilities.Utility.IsEditorGameView())
                 {
@@ -147,7 +148,6 @@ namespace MATCH
 
             private void Start()
             {
-                PathLine = transform.Find("Path").GetComponent<LineRenderer>();
                 PathLine.startWidth = 0.017f;
                 PathLine.endWidth = 0.017f;
                 PathLine.positionCount = 0;
@@ -156,7 +156,6 @@ namespace MATCH
 
                 PathLine.useWorldSpace = true;
                 PathLine.GetComponent<Renderer>().material = Utilities.Utility.LoadMaterial(Utilities.Materials.Colors.CyanPulse);
-                PathLineMaterial = PathLine.GetComponent<Renderer>().material;
 
                 //controller.SetHeightToFollowInteractionSurface(heightToFollowInteractionSurface);
             }

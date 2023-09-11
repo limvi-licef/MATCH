@@ -567,6 +567,8 @@ namespace MATCH
 
                     gradationExplicit_BTWP8.Init();*/
 
+                    LightPath = Assistances.Factory.Instance.CreateAssistancePath("LightPath", "", "Suivez cette ligne pour arriver à votre " + PlantSelectedForPath.name + " !", PlantSelectedForPath.transform, MATCH.Assistances.InteractionSurfaceFollower.Instance.transform);
+
                     Sequence temp = new Sequence(
                         new NPBehave.Action(() => {
                             //MenuPlant.GetCurrentAssistance().Hide(Utilities.Utility.GetEventHandlerEmpty(), false;
@@ -575,14 +577,16 @@ namespace MATCH
                             {
                                 LightPath.Hide(delegate (System.Object o, EventArgs e)
                                 {
-                                    Destroy(LightPath);
-                                    LightPath = Assistances.Factory.Instance.CreateAssistancePath("LightPath", "", "Suivez cette ligne pour arriver à votre " + PlantSelectedForPath.name + " !", PlantSelectedForPath.transform, MATCH.Assistances.InteractionSurfaceFollower.Instance.transform);
+                                    //Destroy(LightPath);
+                                    //LightPath = Assistances.Factory.Instance.CreateAssistancePath("LightPath", "", "Suivez cette ligne pour arriver à votre " + PlantSelectedForPath.name + " !", PlantSelectedForPath.transform, MATCH.Assistances.InteractionSurfaceFollower.Instance.transform);
+                                    LightPath.InitializeAssistance("", "Suivez cette ligne pour arriver à votre " + PlantSelectedForPath.name + " !", PlantSelectedForPath.transform, MATCH.Assistances.InteractionSurfaceFollower.Instance.transform);
                                     LightPath.Show(Utilities.Utility.GetEventHandlerEmpty());
                                 }, false);
                             }
                             else
                             {
-                                LightPath = Assistances.Factory.Instance.CreateAssistancePath("LightPath", "", "Suivez cette ligne pour arriver à votre " + PlantSelectedForPath.name + " !", PlantSelectedForPath.transform, MATCH.Assistances.InteractionSurfaceFollower.Instance.transform);
+                                //LightPath = Assistances.Factory.Instance.CreateAssistancePath("LightPath", "", "Suivez cette ligne pour arriver à votre " + PlantSelectedForPath.name + " !", PlantSelectedForPath.transform, MATCH.Assistances.InteractionSurfaceFollower.Instance.transform);
+                                LightPath.InitializeAssistance("", "Suivez cette ligne pour arriver à votre " + PlantSelectedForPath.name + " !", PlantSelectedForPath.transform, MATCH.Assistances.InteractionSurfaceFollower.Instance.transform);
                                 LightPath.Show(Utilities.Utility.GetEventHandlerEmpty());
                             }
 
@@ -592,7 +596,7 @@ namespace MATCH
                             UpdateTextAssistancesDebugWindow("BTWP8");
                             MATCH.Utilities.Logger.Instance.Log(this.GetId(), MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, "BTWP8");
                             //OnChallengeSuccess();
-                        }),
+                            }), 
                         new WaitUntilStopped()
                         );
 
