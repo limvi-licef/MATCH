@@ -66,15 +66,17 @@ namespace MATCH
                 Assistances.InteractionSurface InteractionSurfaceTable;
                 Assistances.InteractionSurface InteractionRag;
                 Assistances.InteractionSurface InteractionHelpToDoList;
+                Assistances.InteractionSurface InteractionSponge;
 
-                public event EventHandler TableTouchedEvent;
+                //public event EventHandler TableTouchedEvent;
 
                 Dictionary<Assistances.AssistanceGradationExplicit, bool> AssistancesDusting;
+                Dictionary<Utilities.Utility.GreekAlphabet, Assistances.AssistanceGradationExplicit> AssistancesDustingById;
 
                 DustingTableAssistances AssistancesDB;
 
                 //Transform ToDoListView;
-                Assistances.IAssistance ToDoListView;
+                Assistances.Dialogs.ToDoList ToDoListView;
                 Utilities.ToDoList ToDoListController;
                 Transform ToDoListAssistanceCanva;
 
@@ -83,6 +85,7 @@ namespace MATCH
                     base.Awake();
                     SetId("Epousseter la table");
                     AssistancesDusting = new Dictionary<Assistances.AssistanceGradationExplicit, bool>();
+                    AssistancesDustingById = new Dictionary<Utilities.Utility.GreekAlphabet, Assistances.AssistanceGradationExplicit>();
                 }
 
                 public override void Start()
@@ -90,6 +93,7 @@ namespace MATCH
 
                     ToDoListController = transform.root.Find("ToDoList").GetComponent<Utilities.ToDoList>();
                     ToDoListView = ToDoListController.GetAssistance();
+                    ToDoListView.Show(Utilities.Utility.GetEventHandlerEmpty(), false);
                     //ToDoList = toDoListView.GetComponent<Assistances.Dialogs.Dialog1>();
                     ToDoListAssistanceCanva = ToDoListController.GetAssistance().GetAssistanceCanva();
 
@@ -252,6 +256,9 @@ namespace MATCH
                     InteractionSurfaceTable.EventUserTouched += CallbackInteractionSurfaceTableTouched;
 
                     InteractionHelpToDoList = Assistances.Factory.Instance.CreateInteractionSurface("DustingTable - Calendar help", AdminMenu.Panels.Right, new Vector3(1.1f, 0.02f, 0.7f), new Vector3(-0.447f, -0.406f, 0.009f), Utilities.Materials.Colors.RedGlowing, false, true, Utilities.Utility.GetEventHandlerEmpty(), true, transform);
+
+                    InteractionSponge = Assistances.Factory.Instance.CreateInteractionSurface("DustingTable - Sponge", AdminMenu.Panels.Right, new Vector3(0.1f, 0.1f, 0.1f), new Vector3(-1.378f, -0.364f, 2.743f), Utilities.Materials.Colors.GreenGlowing, false, true, Utilities.Utility.GetEventHandlerEmpty(), true, transform);
+                    InteractionSponge.EventUserTouched += CallbackInteractionSurfaceRagTouched;
                 }
 
                 void ShowAssistanceHideOthers(Assistances.AssistanceGradationExplicit assistance)
@@ -302,6 +309,7 @@ namespace MATCH
                     alpha.AddAssistance(AssistancesDB.Alpha[6], Assistances.Buttons.Button.ButtonType.No, AssistancesDB.Alpha[5]);
 
                     AssistancesDusting.Add(alpha, false);
+                    AssistancesDustingById.Add(Utilities.Utility.GreekAlphabet.Alpha, alpha);
 
                     alpha.Init();
 
@@ -346,7 +354,11 @@ namespace MATCH
                                  InferenceManager.UnregisterInference(InferenceDidNotGoToCalendar);
                                  InferenceManager.UnregisterInference(InferenceCloseToCalendar);
                                  //SetConditionsTo(false);
-                                 UpdateConditionWithMatrix(ConditionCloseToCalendar);
+                                 /*if (AssistancesDusting[AssistancesDustingById[Utilities.Utility.GreekAlphabet.Beta]] == false)
+                                 {*/
+                                     UpdateConditionWithMatrix(ConditionCloseToCalendar);
+                                 //}
+                                 
                                  //infTimerCalendarHelp.StartCounter();
 
                              }, ToDoListView.GetAssistance().gameObject, 2.0f);
@@ -410,6 +422,7 @@ namespace MATCH
                     };
 
                     AssistancesDusting.Add(assistanceBeta, false);
+                    AssistancesDustingById.Add(Utilities.Utility.GreekAlphabet.Beta, assistanceBeta);
 
                     assistanceBeta.Init();
 
@@ -454,6 +467,7 @@ namespace MATCH
                     };
 
                     AssistancesDusting.Add(epsilon, false);
+                    AssistancesDustingById.Add(Utilities.Utility.GreekAlphabet.Epsilon, epsilon);
 
                     epsilon.Init();
 
@@ -484,6 +498,7 @@ namespace MATCH
                     AssistancesDB.ReusableComponentGamma01(ref gamma);
 
                     AssistancesDusting.Add(gamma, false);
+                    AssistancesDustingById.Add(Utilities.Utility.GreekAlphabet.Gamma, gamma);
 
                     gamma.Init();
 
@@ -576,6 +591,7 @@ namespace MATCH
                     delta.AddAssistance(AssistancesDB.Delta[5], Assistances.Buttons.Button.ButtonType.ClosingButton, null);
 
                     AssistancesDusting.Add(delta, false);
+                    AssistancesDustingById.Add(Utilities.Utility.GreekAlphabet.Delta, delta);
 
                     delta.Init();
 
@@ -655,10 +671,12 @@ namespace MATCH
                         DebugMessagesManager.Instance.DisplayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Info, "Kappa > assistance 4: hidden");
 
                         //UpdateConditionWithMatrix(ConditionStandBy);
+                        InferenceManager.UnregisterInference(InferenceCloseToCalendar);
                         SetConditionsTo(false);
                     };
 
                     AssistancesDusting.Add(kappa, false);
+                    AssistancesDustingById.Add(Utilities.Utility.GreekAlphabet.Kappa, kappa);
 
                     kappa.Init();
 
@@ -705,6 +723,7 @@ namespace MATCH
                     iota.AddAssistance(AssistancesDB.Iota[3], Assistances.Buttons.Button.ButtonType.No, AssistancesDB.Iota[4]);
 
                     AssistancesDusting.Add(iota, false);
+                    AssistancesDustingById.Add(Utilities.Utility.GreekAlphabet.Iota, iota);
 
                     iota.Init();
 
@@ -761,6 +780,11 @@ namespace MATCH
                     return temp;
                 }
 
+                /*Inferences.Factory.Instance.CreateDistanceLeavingInferenceOneShot(InferenceManager, "leavingCalendar", delegate (System.Object oo, EventArgs ee)
+                                     {
+                                         ToDoListController.GetAssistance().ShowAssistanceCanva(false);
+            }, ToDoListView.gameObject);*/
+
                 Sequence AssistanceXi()
                 {
                     // Disable billboard for these assistance as they are linked to the todolist
@@ -775,17 +799,48 @@ namespace MATCH
                         try
                         {
                             xi0Dialog2 = (Assistances.Dialogs.Dialog2)xi0IAssistance.GetRootDecoratedAssistance();
+                            xi0Dialog2.EventIsShown += delegate (System.Object o, EventArgs e)
+                            {
+                                xi0IAssistance.GetIcon().Hide(Utilities.Utility.GetEventHandlerEmpty(), false);
+                                xi0Dialog2.GetBackgroundIcon().gameObject.SetActive(false);
+                                //xi0Dialog2.GetIcon().Hide(Utilities.Utility.GetEventHandlerEmpty(), false);
+                            };
                         }
                         catch
                         {
                             // So far you did not find it clean? Well, the best part comes ... 
-                            { // If this is not a Dialog2, most likely it is a PathWithTextAndHelp ^^
+                            try { // If this is not a Dialog2, most likely it is a PathWithTextAndHelp ^^
                                 xi0Dialog2 = ((Assistances.PathWithTextAndHelp)xi0IAssistance.GetRootDecoratedAssistance()).GetDialog2();
+                                xi0IAssistance.GetRootDecoratedAssistance().transform.localRotation = Quaternion.Euler(0, 0, 0);
+                                //xi0Dialog2.transform.localRotation = Quaternion.Euler(new Vector3(0, 180, 0)); // 180 degree rotation because ... it does not appear correctly rotated. This code is dirty, I want to show respect to it.
+                            }
+                            catch
+                            {
+                                //xi0Dialog2 = (Assistances.Dialogs.Dialog2)(((Assistances.Dialogs.Dialog2Contextualized)xi0IAssistance.GetRootDecoratedAssistance()));
                             }
                         }
 
-                        xi0Dialog2.EnableBillboard(false);
-                        xi0Dialog2.transform.localPosition = new Vector3(0, 0.20f, 0);
+                        string descriptionTemp = xi0Dialog2.GetDescription();
+
+                        if (xi0Dialog2!= null)
+                        {
+                            xi0Dialog2.EnableBillboard(false);
+                            xi0Dialog2.transform.localPosition = new Vector3(0, 0.0f, 0);
+                            // To integrate better the dialog2 in the background of the todolist, hide the icon, and make it bigger
+                            /*xi0Dialog2.GetIcon().Hide(Utilities.Utility.GetEventHandlerEmpty(), false);
+                            xi0Dialog2.EventIsShown += delegate (System.Object o, EventArgs e)
+                            {
+                                xi0Dialog2.GetIcon().Hide(Utilities.Utility.GetEventHandlerEmpty(), false);
+                            };*/
+                            xi0Dialog2.transform.localScale = xi0Dialog2.transform.localScale * 2.5f;
+                           
+                            foreach(Assistances.Buttons.Basic button in xi0Dialog2.ButtonsController)
+                            {
+                                BoxCollider boxCollider = button.GetComponent<BoxCollider>();
+                                boxCollider.size = new Vector3(boxCollider.size.x, boxCollider.size.y, 10);
+                                boxCollider.center = new Vector3(boxCollider.center.x, boxCollider.center.y, -5);
+                            }
+                        }
                     }
 
                     Assistances.AssistanceGradationExplicit xi = Assistances.Factory.Instance.CreateAssistanceGradationExplicit("Dusting_Xi");
@@ -832,6 +887,7 @@ namespace MATCH
                     };
 
                     AssistancesDusting.Add(xi, false);
+                    AssistancesDustingById.Add(Utilities.Utility.GreekAlphabet.Xi, xi);
 
                     xi.Init();
 
@@ -969,19 +1025,20 @@ namespace MATCH
 
                     Xi = new List<Assistances.GradationVisual.GradationVisual>
                     {
-                        Assistances.GradationVisual.Factory.Instance.CreateDialog2WithButtons("DustingTable-Xi-00", "", "Avez-vous besoin d'aide?", false, "Oui", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.Yes, "Non", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.No, toDoListAssistanceCanva),
-                        Assistances.GradationVisual.Factory.Instance.CreateDialog2WithButtons("DustingTable-Xi-01", "", "Avez-vous compris la tâche que vous devez réaliser ici?", false, "Oui!", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.Yes, "Non", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.No, toDoListAssistanceCanva),
-                        Assistances.GradationVisual.Factory.Instance.CreateDialog2WithButtons("DustingTable-Xi-02", "", "Que pouvez-vous faire pour garder votre table propre?", false, "Je sais!", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.Yes, "Je ne sais pas", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.No, toDoListAssistanceCanva),
-                        Assistances.GradationVisual.Factory.Instance.CreateDialog2WithButtons("DustingTable-Xi-03", "", "Que pouvez-vous faire pour nettoyer votre table?", false, "Je sais", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.Yes, "Je ne sais pas", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.No, toDoListAssistanceCanva),
-                        Assistances.GradationVisual.Factory.Instance.CreateDialog2WithButtons("DustingTable-Xi-04", "", "De quel objet avez-vous besoin pour nettoyer votre table?", false, "Je sais!", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.Yes, "Je ne sais pas", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.No, toDoListAssistanceCanva),
-                        Assistances.GradationVisual.Factory.Instance.CreateDialog2WithButtons("DustingTable-Xi-05", "", "Vous devez nettoyer la table avec un chiffon", false, "Je sais où le trouver!", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.Yes, "J'ai besoin d'aide", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.No, toDoListAssistanceCanva),
-                        Assistances.GradationVisual.Factory.Instance.CreateDialog2WithButtons("DustingTable-Xi-06", "", "Où pouvez-vous regarder pour le trouver?", false, "Je sais!", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.Yes, "Je ne sais pas", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.No, toDoListAssistanceCanva),
-                        Assistances.GradationVisual.Factory.Instance.CreateDialog2WithButtonsContextualized("DustingTable-Xi-07", "", "Avez-vous regardé <Location> ?", false, parentRag, "J'ai trouvé!", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.Yes, "Je n'ai pas trouvé", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.No, toDoListAssistanceCanva),
-                        Assistances.GradationVisual.Factory.Instance.CreateDialog2WithButtons("DustingTable-Xi-08", "", "Vous pouvez le trouver proche de vous dans cette pièce", false, "J'ai trouvé!", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.Yes, "Je ne l'ai pas trouvé", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.No, toDoListAssistanceCanva),
+                        Assistances.GradationVisual.Factory.Instance.CreateDialog2WithButtonsWithoutIcon("DustingTable-Xi-00", "", "Avez-vous besoin d'aide?", false, "Oui", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.Yes, "Non", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.No, toDoListAssistanceCanva),
+                        //Assistances.GradationVisual.Factory.Instance.CreateDialogTwoButtons("DustingTable-Xi-00", "", "Avez-vous besoin d'aide?", "Oui", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.Yes, "Non", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.No, toDoListAssistanceCanva),
+                        Assistances.GradationVisual.Factory.Instance.CreateDialog2WithButtonsWithoutIcon("DustingTable-Xi-01", "", "Avez-vous compris la tâche que vous devez réaliser ici?", false, "Oui!", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.Yes, "Non", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.No, toDoListAssistanceCanva),
+                        Assistances.GradationVisual.Factory.Instance.CreateDialog2WithButtonsWithoutIcon("DustingTable-Xi-02", "", "Que pouvez-vous faire pour garder votre table propre?", false, "Je sais!", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.Yes, "Je ne sais pas", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.No, toDoListAssistanceCanva),
+                        Assistances.GradationVisual.Factory.Instance.CreateDialog2WithButtonsWithoutIcon("DustingTable-Xi-03", "", "Que pouvez-vous faire pour nettoyer votre table?", false, "Je sais", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.Yes, "Je ne sais pas", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.No, toDoListAssistanceCanva),
+                        Assistances.GradationVisual.Factory.Instance.CreateDialog2WithButtonsWithoutIcon("DustingTable-Xi-04", "", "De quel objet avez-vous besoin pour nettoyer votre table?", false, "Je sais!", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.Yes, "Je ne sais pas", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.No, toDoListAssistanceCanva),
+                        Assistances.GradationVisual.Factory.Instance.CreateDialog2WithButtonsWithoutIcon("DustingTable-Xi-05", "", "Vous devez nettoyer la table avec un chiffon", false, "Je sais où le trouver!", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.Yes, "J'ai besoin d'aide", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.No, toDoListAssistanceCanva),
+                        Assistances.GradationVisual.Factory.Instance.CreateDialog2WithButtonsWithoutIcon("DustingTable-Xi-06", "", "Où pouvez-vous regarder pour le trouver?", false, "Je sais!", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.Yes, "Je ne sais pas", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.No, toDoListAssistanceCanva),
+                        Assistances.GradationVisual.Factory.Instance.CreateDialog2WithButtonsWithoutIconContextualized("DustingTable-Xi-07", "", "Avez-vous regardé <Location> ?", false, parentRag, "J'ai trouvé!", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.Yes, "Je n'ai pas trouvé", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.No, toDoListAssistanceCanva),
+                        Assistances.GradationVisual.Factory.Instance.CreateDialog2WithButtonsWithoutIcon("DustingTable-Xi-08", "", "Vous pouvez le trouver proche de vous dans cette pièce", false, "J'ai trouvé!", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.Yes, "Je ne l'ai pas trouvé", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.No, toDoListAssistanceCanva),
                         //Assistances.GradationVisual.Factory.Instance.CreateArch("DustingTable-Beta-10", "Vous trouverez le chiffon au bout de cette flèche", parentTable, parentRag, parentTable),
-                        Assistances.GradationVisual.Factory.Instance.CreateDialog2WithLinePath("DustingTable-Xi-09", "", "Vous trouverez le chiffon au bout de cette flèche", false, parentRag, toDoListAssistanceCanva),
-                        Assistances.GradationVisual.Factory.Instance.CreateDialog2WithButtons("DustingTable-Xi-10", "", "Ok! Nous vous laissons faire", false, "Ok!", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.ClosingButton, toDoListAssistanceCanva),
-                        Assistances.GradationVisual.Factory.Instance.CreateDialog2WithButtons("DustingTable-Xi-11", "", "Savez-vous comment réaliser cette activité?", false, "Oui", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.Yes, "Non", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.No, toDoListAssistanceCanva)
+                        Assistances.GradationVisual.Factory.Instance.CreateDialog2WithoutIconWithLinePath("DustingTable-Xi-09", "", "Vous trouverez le chiffon au bout de cette flèche", false, parentRag, toDoListAssistanceCanva),
+                        Assistances.GradationVisual.Factory.Instance.CreateDialog2WithButtonsWithoutIcon("DustingTable-Xi-10", "", "Ok! Nous vous laissons faire", false, "Ok!", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.ClosingButton, toDoListAssistanceCanva),
+                        Assistances.GradationVisual.Factory.Instance.CreateDialog2WithButtonsWithoutIcon("DustingTable-Xi-11", "", "Savez-vous comment réaliser cette activité?", false, "Oui", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.Yes, "Non", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.No, toDoListAssistanceCanva)
                     };
                 }
 

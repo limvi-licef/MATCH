@@ -89,6 +89,10 @@ namespace MATCH
                     // Initialize Losange
                     Diamond = Assistances.Factory.Instance.CreateIcon(true, new Vector3(0, 0, 0), new Vector3(0.5f, 0.5f, 0.5f), true, InteractionDiamond.transform, /*null*/Utilities.Materials.Icon.Diamond, Utilities.Materials.Colors.RedGlowing);
 
+                    // Disable todolist: we do not want it to be displayed while the person does the tutorial
+                    MATCH.Utilities.ToDoList toDoList = transform.root.Find("ToDoList").GetComponent<Utilities.ToDoList>();
+                    toDoList.GetAssistance().Hide(Utilities.Utility.GetEventHandlerEmpty(), false);
+
                     // Call base function
                     base.Start();
 
@@ -297,7 +301,7 @@ namespace MATCH
 
                     beta5Assistance.EventHelpButtonClicked += delegate (System.Object o, EventArgs e)
                     {
-                        assistanceExclamation.ShowHelp(true, Utilities.Utility.GetEventHandlerEmpty(), true);
+                        assistanceExclamation.ShowHelp(true, Utilities.Utility.GetEventHandlerEmpty(), false);
                         
 
                         assistanceExclamation.EventHelpButtonClicked += delegate(object sender, EventArgs args)

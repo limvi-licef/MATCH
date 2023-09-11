@@ -214,6 +214,18 @@ namespace MATCH
                     return toReturn;
                 }
 
+                public GradationVisual CreateDialog2WithoutIconWithLinePath(string assistanceName, string title, string description, bool adjustToHeight, Transform lineDestination, Transform parent)
+                {
+                    GradationVisual toReturn = CreateDialog2WithLinePath(assistanceName, title, description, adjustToHeight, lineDestination, parent); 
+
+                    Dialogs.Dialog2 dialog = ((Assistances.PathWithTextAndHelp)((Assistances.IAssistance)toReturn.GetCurrentAssistance())).GetDialog2();
+                    Assistances.Decorators.Factory.Instance.CreateBackgroundIcon(dialog, Utilities.Materials.Colors.GreenGlowing, false);
+                    //dialog.GetBackgroundIcon().gameObject.SetActive(false);
+                    //dialog.GetIcon().gameObject.SetActive(false);
+
+                    return toReturn;
+                }
+
                 public GradationVisual CreateDialog2WithLinePath(string assistanceName, string title, string description, Transform lineDestination, Transform parent)
                 {
                     GradationVisual toReturn = Assistances.Factory.Instance.CreateAssistanceGradationAttention(assistanceName);
@@ -253,11 +265,35 @@ namespace MATCH
                     return toReturn;
                 }
 
+                public GradationVisual CreateDialog2WithButtonsWithoutIcon(string assistanceName, string title, string description, bool adjustToHeight, string textButton1, EventHandler callbackButton1, Assistances.Buttons.Button.ButtonType type1, Transform parent)
+                {
+                    GradationVisual toReturn = CreateDialog2WithButtonsWithoutIcon(assistanceName, title, description, textButton1, callbackButton1, type1, parent);
+
+                    Dialogs.Dialog2 dialog = ((Dialogs.Dialog2)((Assistances.IAssistance)toReturn.GetCurrentAssistance()).GetRootDecoratedAssistance());
+                    dialog.AdjustToHeight = adjustToHeight;
+
+                    return toReturn;
+                }
+
                 public GradationVisual CreateDialog2WithButtons(string assistanceName, string title, string description, string textButton1, EventHandler callbackButton1, Assistances.Buttons.Button.ButtonType type1, Transform parent)
                 {
                     Assistances.Dialogs.Dialog2 dialog = Assistances.Factory.Instance.CreateDialog2WithButtons(title, description, textButton1, callbackButton1, type1, parent);
 
                     return AddDecoratorsToDialog2(assistanceName, dialog);
+                }
+
+                public GradationVisual CreateDialog2WithButtonsWithoutIcon(string assistanceName, string title, string description, string textButton1, EventHandler callbackButton1, Assistances.Buttons.Button.ButtonType type1, Transform parent)
+                {
+                    Assistances.Dialogs.Dialog2 dialog = Assistances.Factory.Instance.CreateDialog2WithButtons(title, description, textButton1, callbackButton1, type1, parent);
+
+                    return AddDecoratorsToDialog2WithoutIcon(assistanceName, dialog);
+                }
+
+                public GradationVisual CreateDialog2WithButtonsWithoutIcon(string assistanceName, string title, string description, string textButton1, EventHandler callbackButton1, Assistances.Buttons.Button.ButtonType type1, string textButton2, EventHandler callbackButton2, Assistances.Buttons.Button.ButtonType type2, Transform parent)
+                {
+                    Assistances.Dialogs.Dialog2 dialog = Assistances.Factory.Instance.CreateDialog2WithButtons(title, description, textButton1, callbackButton1, type1, textButton2, callbackButton2, type2, parent);
+
+                    return AddDecoratorsToDialog2WithoutIcon(assistanceName, dialog);
                 }
 
                 public GradationVisual CreateDialog2WithButtons(string assistanceName, string title, string description, bool adjustToHeight, string textButton1, EventHandler callbackButton1, Assistances.Buttons.Button.ButtonType type1, string textButton2, EventHandler callbackButton2, Assistances.Buttons.Button.ButtonType type2, Transform parent)
@@ -286,11 +322,37 @@ namespace MATCH
                     return AddDecoratorsToDialog2(assistanceName, dialog);
                 }
 
+                public GradationVisual CreateDialog2WithButtonsWithoutIconContextualized(string assistanceName, string title, string description, bool adjustToHeight, Transform contextObject, string textButton1, EventHandler callbackButton1, Assistances.Buttons.Button.ButtonType type1, string textButton2, EventHandler callbackButton2, Assistances.Buttons.Button.ButtonType type2, Transform parent)
+                {
+                    Dialogs.Dialog2 dialog = (Dialogs.Dialog2)Assistances.Factory.Instance.CreateDialog2WithButtonsContextualized(assistanceName, title, description, contextObject, textButton1, callbackButton1, type1, textButton2, callbackButton2, type2, parent);
+
+                    dialog.AdjustToHeight = adjustToHeight;
+
+                    return AddDecoratorsToDialog2WithoutIcon(assistanceName, dialog);
+                }
+
                 public GradationVisual CreateDialog2WithButtonsContextualized(string assistanceName, string title, string description, Transform contextObject, string textButton1, EventHandler callbackButton1, Assistances.Buttons.Button.ButtonType type1, string textButton2, EventHandler callbackButton2, Assistances.Buttons.Button.ButtonType type2, Transform parent)
                 {
                     Dialogs.Dialog2 dialog = (Dialogs.Dialog2) Assistances.Factory.Instance.CreateDialog2WithButtonsContextualized(assistanceName, title, description, contextObject, textButton1, callbackButton1, type1, textButton2, callbackButton2, type2, parent);
 
                     return AddDecoratorsToDialog2(assistanceName, dialog);
+                }
+
+                public GradationVisual CreateDialog2WithButtonsWithoutIconContextualized(string assistanceName, string title, string description, Transform contextObject, string textButton1, EventHandler callbackButton1, Assistances.Buttons.Button.ButtonType type1, string textButton2, EventHandler callbackButton2, Assistances.Buttons.Button.ButtonType type2, Transform parent)
+                {
+                    Dialogs.Dialog2 dialog = (Dialogs.Dialog2)Assistances.Factory.Instance.CreateDialog2WithButtonsContextualized(assistanceName, title, description, contextObject, textButton1, callbackButton1, type1, textButton2, callbackButton2, type2, parent);
+
+                    return AddDecoratorsToDialog2WithoutIcon(assistanceName, dialog);
+                }
+
+                public GradationVisual CreateDialog2WithButtonsWithoutIcon(string assistanceName, string title, string description, bool adjustToHeight, string textButton1, EventHandler callbackButton1, Assistances.Buttons.Button.ButtonType type1, string textButton2, EventHandler callbackButton2, Assistances.Buttons.Button.ButtonType type2, Transform parent)
+                {
+                    GradationVisual toReturn = CreateDialog2WithButtonsWithoutIcon(assistanceName, title, description, textButton1, callbackButton1, type1, textButton2, callbackButton2, type2, parent);
+
+                    Dialogs.Dialog2 temp = ((Dialogs.Dialog2)((Assistances.IAssistance)toReturn.GetCurrentAssistance()).GetRootDecoratedAssistance());
+                    temp.AdjustToHeight = adjustToHeight;
+
+                    return toReturn;
                 }
 
                 public GradationVisual CreateAssistanceDialog(string assistanceName, Assistances.Dialogs.Dialog1 dialog)
@@ -327,6 +389,32 @@ namespace MATCH
                     //Troisieme niveau de gradation
                     //toReturn.AddAssistance(Assistances.Decorators.Factory.Instance.CreateEdge(dialog, Utilities.Materials.Colors.OrangeGlowing));
                     Decorators.BackgroundColorMessage2 decorator3 = (Decorators.BackgroundColorMessage2)Assistances.Decorators.Factory.Instance.CreateBackgroundMessage(decorator2, Utilities.Materials.Colors.OrangeAdjustHSV);
+                    toReturn.AddAssistance(decorator3);
+
+                    //Qualitrème niveau de gradation
+                    Decorators.LinePath decorator4 = (Decorators.LinePath)Decorators.Factory.Instance.CreateLinePathWithTexture(decorator3, /*Utilities.Materials.Colors.Orange*/ /*Utilities.Materials.Textures.ArrowProgressive*/ Utilities.Materials.Colors.CyanAdjustHSV, /*0.1f*/ 0.039f, true);
+                    toReturn.AddAssistance(decorator4);
+
+                    return toReturn;
+                }
+
+                private GradationVisual AddDecoratorsToDialog2WithoutIcon(string assistanceName, MATCH.Assistances.Dialogs.Dialog2 dialog)
+                {
+                    GradationVisual toReturn = Assistances.Factory.Instance.CreateAssistanceGradationAttention(assistanceName);
+                    toReturn.name = assistanceName;
+
+                    //First level of gradation with 2 decorators
+                    Decorators.BackgroundColorIcon2 decorator1a = (Decorators.BackgroundColorIcon2)Assistances.Decorators.Factory.Instance.CreateBackgroundIcon(dialog, Utilities.Materials.Colors.CyanAdjustHSV, false);
+                    Decorators.BackgroundColorMessage2 decorator1 = (Decorators.BackgroundColorMessage2)Assistances.Decorators.Factory.Instance.CreateBackgroundMessage(decorator1a, Utilities.Materials.Colors.CyanAdjustHSV);
+                    toReturn.AddAssistance(decorator1);
+
+                    //Deuxieme niveau de gradation
+                    //Decorators.BackgroundColorIcon2 decorator2 = (Decorators.BackgroundColorIcon2)Assistances.Decorators.Factory.Instance.CreateBackgroundIcon(decorator1, Utilities.Materials.Colors.OrangeAdjustHSV, true);
+                    //toReturn.AddAssistance(decorator2);
+
+                    //Troisieme niveau de gradation
+                    //toReturn.AddAssistance(Assistances.Decorators.Factory.Instance.CreateEdge(dialog, Utilities.Materials.Colors.OrangeGlowing));
+                    Decorators.BackgroundColorMessage2 decorator3 = (Decorators.BackgroundColorMessage2)Assistances.Decorators.Factory.Instance.CreateBackgroundMessage(decorator1, Utilities.Materials.Colors.OrangeAdjustHSV);
                     toReturn.AddAssistance(decorator3);
 
                     //Qualitrème niveau de gradation

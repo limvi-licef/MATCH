@@ -38,6 +38,7 @@ namespace MATCH
                 public static string Cyan = Path + "Cyan";
                 public static string CyanAdjustHSV = Path + "CyanAdjustHSV";
                 public static string CyanGlowing = Path+"CyanGlowing";
+                public static string CyanPulse = Path + "CyanPulse";
 
                 public static string Red = Path + "Red";
                 public static string Red2 = Path + "Red2";

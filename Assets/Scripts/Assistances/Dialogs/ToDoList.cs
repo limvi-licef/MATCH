@@ -53,6 +53,7 @@ namespace MATCH
                 List<Transform> ElementsView;
                 List<Buttons.Basic> ElementsController;
                 Vector3 ElementOriginalScaling;
+                Vector3 AssistanceCanvaScalingOriginal;
 
                 Transform AssistanceCanva;
 
@@ -86,6 +87,7 @@ namespace MATCH
                     ElementOriginalScaling = ElementView.localScale;
 
                     AssistanceCanva = transform.Find("AssistanceCanva");
+                    AssistanceCanvaScalingOriginal = AssistanceCanva.localScale;
                 }
 
                 public void SetTitle(string text, float fontSize = -1.0f)
@@ -145,6 +147,8 @@ namespace MATCH
                             Utilities.Utility.AnimateDisappearInPlace(ButtonsParentView.gameObject, ButtonsParentScalingOriginal);
 
                             Utilities.Utility.AnimateDisappearInPlace(BackgroundView.gameObject, BackgroundScalingOriginal);
+                            Utilities.Utility.AnimateDisappearInPlace(AssistanceCanva.gameObject, AssistanceCanvaScalingOriginal);
+                            
                         }
                         else
                         {
@@ -152,6 +156,8 @@ namespace MATCH
                             DescriptionView.gameObject.SetActive(false);
                             ButtonsParentView.gameObject.SetActive(false);
                             BackgroundView.gameObject.SetActive(false);
+                            AssistanceCanva.gameObject.SetActive(false);
+                            ElementView.gameObject.SetActive(false);
                             IsDisplayed = false;
                             args.Success = true;
                             eventHandler?.Invoke(this, args);
@@ -202,6 +208,9 @@ namespace MATCH
                             TitleView.gameObject.SetActive(true);
                             DescriptionView.gameObject.SetActive(true);
                             IsDisplayed = true;
+
+                            AssistanceCanva.gameObject.SetActive(true);
+                            ElementView.gameObject.SetActive(true);
 
                             args.Success = true;
                             eventHandler?.Invoke(this, args);
