@@ -81,7 +81,8 @@ namespace MATCH
                     float scalingx = 1.0f;
                     if (autoScaling)
                     {
-                        scalingx = 1.0f / (float)(ButtonsView.Count());
+                        //scalingx = 1.0f / (float)(ButtonsView.Count());
+                        scalingx = (1.0f- (0.1f*((float)(ButtonsView.Count()-1.0f)))) / (float)(ButtonsView.Count()); // New formula to have a small space between button
                         tmp.margin = new Vector4(tmp.margin.x * scalingx, tmp.margin.y, tmp.margin.z * scalingx, tmp.margin.w);
                     }
 
@@ -91,6 +92,11 @@ namespace MATCH
                         b.localScale = new Vector3(scalingx, b.localScale.y, b.localScale.z);
                         Transform textButton = b.Find("IconAndText");
                         textButton.localScale = new Vector3(1.0f / scalingx, textButton.localScale.y, textButton.localScale.z);
+                        Transform tmp2 = textButton.Find("TextMeshPro");
+                        RectTransform rectTransform = tmp2.GetComponent<RectTransform>();
+                        //rectTransform.rect.Set(rectTransform.rect.x, rectTransform.rect.y, rectTransform.rect.width * scalingx, rectTransform.rect.height);
+                        rectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, rectTransform.rect.width * scalingx);
+
 
                         // Update the boxcollider
                         BoxCollider collider = b.GetComponent<BoxCollider>();

@@ -163,6 +163,7 @@ namespace MATCH
                             Utilities.Utility.AnimateDisappearInPlace(BackgroundMessage.gameObject, BackgroundScalingOriginal);
                             Utilities.Utility.AnimateDisappearInPlace(BackgroundIcon.gameObject, BackgroundScalingOriginal);
                             Utilities.Utility.AnimateDisappearInPlace(IconView.gameObject, IconScalingOriginal);
+                            //IconView.Hide(Utilities.Utility.GetEventHandlerEmpty(), false);
                         }
                         else
                         {
@@ -172,6 +173,7 @@ namespace MATCH
                             BackgroundMessage.gameObject.SetActive(false);
                             BackgroundIcon.gameObject.SetActive(false);
                             IconView.GetIconObjTransform().gameObject.SetActive(false);
+                            //IconView.Hide(Utilities.Utility.GetEventHandlerEmpty(), false);
                             IsDisplayed = false;
                             args.Success = true;
                             eventHandler?.Invoke(this, args);
@@ -208,6 +210,7 @@ namespace MATCH
                                 Utilities.Utility.AnimateAppearInPlace(TitleView.gameObject);
                                 Utilities.Utility.AnimateAppearInPlace(DescriptionView.gameObject);
                                 Utilities.Utility.AnimateAppearInPlace(IconView.gameObject);
+                                //IconView.Hide(Utilities.Utility.GetEventHandlerEmpty(), true);
                                 Utilities.Utility.AnimateAppearInPlace(BackgroundIcon.gameObject);
 
                                 IsDisplayed = true;
@@ -224,6 +227,7 @@ namespace MATCH
                             BackgroundMessage.transform.localScale = BackgroundScalingOriginal;
                             BackgroundIcon.transform.localScale = BackgroundScalingOriginal;
                             IconView.GetIconObjTransform().gameObject.SetActive(true);
+                            //IconView.Hide(Utilities.Utility.GetEventHandlerEmpty(), true);
 
                             TitleView.gameObject.SetActive(true);
                             DescriptionView.gameObject.SetActive(true);

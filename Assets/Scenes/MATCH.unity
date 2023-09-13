@@ -2340,16 +2340,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7f817ae3dd432c8429186c2746512e39, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  limitPanning: 1
-  rectTransfToNavigate: {fileID: 1662416667}
-  refToViewPort: {fileID: 1282388864}
-  autoGazeScrollIsActive: 1
-  scrollSpeedHorizontal: 0
-  scrollSpeedVertical: 0.3
-  minDistFromCenterForAutoScroll: {x: 0.2, y: 0.2}
-  useSkimProofing: 1
-  skimProofUpdateSpeed: 5
-  customStartPos: {x: 0, y: 0}
 --- !u!114 &194410558
 MonoBehaviour:
   m_ObjectHideFlags: 0

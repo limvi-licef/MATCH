@@ -69,7 +69,7 @@ namespace MATCH
             /**
              * True: show; False: hide
              * */
-            public abstract void ShowHelp(bool show, EventHandler callback, bool withAnimation=true);
+            public abstract void ShowHelp(bool show, EventHandler callback, bool withAnimation=false);
 
             /**
              * Return the Transform associated to the assistance

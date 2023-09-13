@@ -31,6 +31,35 @@ namespace MATCH
     {
         static class Utility
         {
+            public enum GreekAlphabet
+            {
+                Alpha = 0,
+                Beta = 1,
+                Gamma = 2,
+                Delta = 3,
+                Epsilon = 4,
+                Zeta = 5,
+                Eta = 6,
+                Theta = 7,
+                Iota = 8,
+                Kappa = 9,
+                Lambda = 10,
+                Mu = 11,
+                Nu = 12,
+                Xi = 13,
+                Omicron = 14,
+                Pi = 15,
+                Rho = 16,
+                Sigma = 17,
+                Tau = 18,
+                Upsilon = 19,
+                Phi = 20,
+                Chi = 21,
+                Psi = 22,
+                Omega = 23
+            }
+
+
             public struct Linear
             {
                 public float a;

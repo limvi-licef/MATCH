@@ -884,6 +884,14 @@ PrefabInstance:
       propertyPath: m_LocalScale.x
       value: 6
       objectReference: {fileID: 0}
+    - target: {fileID: 2975148661001560990, guid: 4f44c0d070528944c9bff425c6932763, type: 3}
+      propertyPath: ButtonPressed.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2975148661001560990, guid: 4f44c0d070528944c9bff425c6932763, type: 3}
+      propertyPath: ButtonReleased.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3126786008848669196, guid: 4f44c0d070528944c9bff425c6932763, type: 3}
       propertyPath: m_Name
       value: Button
@@ -917,12 +925,24 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 3126786009469193212, guid: 4f44c0d070528944c9bff425c6932763, type: 3}
+      propertyPath: m_margin.w
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3126786009469193212, guid: 4f44c0d070528944c9bff425c6932763, type: 3}
       propertyPath: m_margin.x
-      value: -0.06709327
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3126786009469193212, guid: 4f44c0d070528944c9bff425c6932763, type: 3}
+      propertyPath: m_margin.y
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3126786009469193212, guid: 4f44c0d070528944c9bff425c6932763, type: 3}
       propertyPath: m_margin.z
-      value: -0.069740914
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3126786009469193212, guid: 4f44c0d070528944c9bff425c6932763, type: 3}
+      propertyPath: m_lineSpacing
+      value: -60
       objectReference: {fileID: 0}
     - target: {fileID: 3126786009469193212, guid: 4f44c0d070528944c9bff425c6932763, type: 3}
       propertyPath: m_textAlignment
@@ -959,6 +979,22 @@ PrefabInstance:
     - target: {fileID: 3126786009469193212, guid: 4f44c0d070528944c9bff425c6932763, type: 3}
       propertyPath: m_textInfo.characterCount
       value: 18
+      objectReference: {fileID: 0}
+    - target: {fileID: 3126786009469193215, guid: 4f44c0d070528944c9bff425c6932763, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0.18
+      objectReference: {fileID: 0}
+    - target: {fileID: 3126786009469193215, guid: 4f44c0d070528944c9bff425c6932763, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0.025
+      objectReference: {fileID: 0}
+    - target: {fileID: 3126786009469193215, guid: 4f44c0d070528944c9bff425c6932763, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3126786009469193215, guid: 4f44c0d070528944c9bff425c6932763, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3126786010441234080, guid: 4f44c0d070528944c9bff425c6932763, type: 3}
       propertyPath: m_IsActive
