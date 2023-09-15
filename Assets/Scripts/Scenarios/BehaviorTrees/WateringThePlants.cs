@@ -35,6 +35,7 @@ namespace MATCH
                 public Assistances.Surfaces.Manager SurfacesManager;
 
                 string ConditionBeginning = "Beginning";
+                string ConditionBottleNotFilled = "BottleNotFilled";
                 string ConditionBottleFilled = "BottleFilled";
                 string ConditionLightPathToPlant = "LightPathToPlant";
                 string ConditionWateringAPlant = "WateringAPlant";
@@ -47,6 +48,7 @@ namespace MATCH
                 float InferenceFarFromBottleDistance = 4.0f;
                 string InferenceDidNotStartWatering = "DidNotStartWatering";
                 string InferenceInterruptWatering = "InterruptedWatering";
+                string InferenceDidNotFillBottle = "DidNotFillBottle";
 
                 // Interaction surface
                 Assistances.InteractionSurface InteractionSurfaceDialogs;
@@ -74,6 +76,7 @@ namespace MATCH
                 Dictionary<Assistances.AssistanceGradationExplicit, bool> AssistancesWatering;
 
                 Inferences.Timer inf1;
+                Inferences.Timer TimerToFillTheBottle;
 
                 Assistances.InteractionSurface FollowObject;
 
@@ -156,6 +159,7 @@ namespace MATCH
                     // Making the conditions update.
                     // SEE EXCEL SHEET TO GENERATE THE CODE BELOW
                     AddCondition(ConditionBeginning, false);
+                    AddCondition(ConditionBottleNotFilled, false);
                     AddCondition(ConditionBottleFilled, false);
                     AddCondition(ConditionLightPathToPlant, false);
                     AddCondition(ConditionWateringAPlant, false);
@@ -167,14 +171,15 @@ namespace MATCH
 
                     int nbConditions = GetNumberOfConditions();
 
-                    AddConditionsUpdate(ConditionBeginning, new bool[] { true, false, false, false, false, false, false, false });
-                    AddConditionsUpdate(ConditionBottleFilled, new bool[] { false, true, false, false, false, false, false, false });
-                    AddConditionsUpdate(ConditionLightPathToPlant, new bool[] { false, false, true, false, false, false, false, false });
-                    AddConditionsUpdate(ConditionWateringAPlant, new bool[] { false, false, false, true, false, false, false, false });
-                    AddConditionsUpdate(ConditionHelpNeeded, new bool[] { false, false, false, false, true, false, false, false });
-                    AddConditionsUpdate(ConditionHelpRequestedAgain, new bool[] { false, false, false, false, false, true, false, false });
-                    AddConditionsUpdate(ConditionPlantWatered, new bool[] { false, false, false, false, false, false, true, false });
-                    AddConditionsUpdate(ConditionAllPlantsWatered, new bool[] { false, false, false, false, false, false, false, true });
+                    AddConditionsUpdate(ConditionBeginning, new bool[] { true, false, false, false, false, false, false, false, false });
+                    AddConditionsUpdate(ConditionBottleNotFilled, new bool[] { false, true, false, false, false, false, false, false, false });
+                    AddConditionsUpdate(ConditionBottleFilled, new bool[] { false, false, true, false, false, false, false, false, false });
+                    AddConditionsUpdate(ConditionLightPathToPlant, new bool[] { false, false, false, true, false, false, false, false, false });
+                    AddConditionsUpdate(ConditionWateringAPlant, new bool[] { false, false, false, false, true, false, false, false, false });
+                    AddConditionsUpdate(ConditionHelpNeeded, new bool[] { false, false, false, false, false, true, false, false, false });
+                    AddConditionsUpdate(ConditionHelpRequestedAgain, new bool[] { false, false, false, false, false, false, true, false, false });
+                    AddConditionsUpdate(ConditionPlantWatered, new bool[] { false, false, false, false, false, false, false, true, false });
+                    AddConditionsUpdate(ConditionAllPlantsWatered, new bool[] { false, false, false, false, false, false, false, false, true });
                     // End of code generation using the EXCEL file
 
                     UpdateConditionWithMatrix(ConditionBeginning);
@@ -182,6 +187,7 @@ namespace MATCH
                     //Defining the BT
                     Selector srPlantsNotWatered = new Selector(
                         new BlackboardCondition(ConditionBeginning, Operator.IS_EQUAL, true, Stops.IMMEDIATE_RESTART, AssistanceBTWP7()),
+                        new BlackboardCondition(ConditionBottleNotFilled, Operator.IS_EQUAL, true, Stops.IMMEDIATE_RESTART, AssistanceBTWP10()),
                         new BlackboardCondition(ConditionBottleFilled, Operator.IS_EQUAL, true, Stops.IMMEDIATE_RESTART, AssistanceBTWP5()),
                         new BlackboardCondition(ConditionLightPathToPlant, Operator.IS_EQUAL, true, Stops.IMMEDIATE_RESTART, AssistanceBTWP8()),
                         new BlackboardCondition(ConditionWateringAPlant, Operator.IS_EQUAL, true, Stops.IMMEDIATE_RESTART, AssistanceBTWP9()),
@@ -324,6 +330,7 @@ namespace MATCH
                         "Qu'est-ce qu'il est conseilé de faire à la fin de la journée lorsqu'il ne fait moins chaud?", "Commencer !",
                         Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.ClosingButton, FollowObject.transform);
 
+
                     Assistances.AssistanceGradationExplicit BTWP7 = MATCH.Assistances.Factory.Instance.CreateAssistanceGradationExplicit("ArroserLesPlantes-Alpha");
                     BTWP7.transform.parent = transform;
 
@@ -337,6 +344,15 @@ namespace MATCH
                         new NPBehave.Action(() => {
                             ShowAssistanceHideOthers(BTWP7);
                             UpdateTextAssistancesDebugWindow("Is it 7pm?");
+                            TimerToFillTheBottle = new Inferences.Timer(InferenceDidNotFillBottle, 15, delegate (System.Object oo, EventArgs ee)
+                            {
+                                UpdateConditionWithMatrix(ConditionBottleNotFilled);
+                            });
+                            InferenceManager.RegisterInference(TimerToFillTheBottle);
+                            TimerToFillTheBottle.StartCounter();
+
+
+
                             MATCH.Utilities.Logger.Instance.Log(this.GetId(), MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, "BTWP7");
                         }),
                         new WaitUntilStopped()
@@ -388,7 +404,6 @@ namespace MATCH
                 Sequence AssistanceBTWP4()
                 {
 
-
                     Assistances.GradationVisual.GradationVisual requestHelp = Assistances.GradationVisual.Factory.Instance.CreateDialog2WithButtons("WateringThePlants-BTWP4", "", "Avez-vous besoin d'aide ?", "Oui",  null, Assistances.Buttons.Button.ButtonType.Yes,"Non",  null, Assistances.Buttons.Button.ButtonType.No, FollowObject.transform);
 
 
@@ -434,6 +449,7 @@ namespace MATCH
                     Sequence temp = new Sequence(
                         new NPBehave.Action(() =>
                         {
+
                             ShowAssistanceHideOthers(BTWP4);
                             BTWP4.RunAssistance();
                             //AssistancesWatering[BTWP4] = true;
@@ -508,6 +524,7 @@ namespace MATCH
                             //Arrêter l'inférence du timer ici
                             UpdateTextAssistancesDebugWindow("On Arrête l'inférence du timer ici");
                             inf1.StopCounter();
+                            TimerToFillTheBottle.StopCounter();
 
                             UpdateTextAssistancesDebugWindow("One plant watered");
                             InferenceManager.UnregisterInference(InferenceInterruptWatering);
@@ -595,12 +612,16 @@ namespace MATCH
                                 LightPath.Show(Utilities.Utility.GetEventHandlerEmpty());
                             }
 
-                            MATCH.Inferences.Factory.Instance.CreateDistanceComingInferenceOneShot(InferenceManager, "1",
-                            delegate (object o, EventArgs e)
+                            for (int i = 0; i < InteractionPlants.Count(); i++)
                             {
-                                LightPath.Hide(Utilities.Utility.GetEventHandlerEmpty(), false);
-                                UpdateConditionWithMatrix(ConditionWateringAPlant);
-                            }, PlantSelectedForPath.gameObject, 1.3F);
+                                MATCH.Inferences.Factory.Instance.CreateDistanceComingInferenceOneShot(InferenceManager, i.ToString(),
+                                delegate (object o, EventArgs e)
+                                {
+                                    LightPath.Hide(Utilities.Utility.GetEventHandlerEmpty(), false);
+                                    UpdateConditionWithMatrix(ConditionWateringAPlant);
+                                }, InteractionPlants[i].gameObject, 1.3F);
+                            }
+                                
 
 
                             //ShowAssistanceHideOthers(gradationExplicit_BTWP8);
@@ -623,16 +644,47 @@ namespace MATCH
                         new NPBehave.Action(() => {
                             //ShowAssistanceHideOthers(gradationExplicit_BTWP9);
                             //InferenceManager.UnregisterAllInferences();
-
-                            MATCH.Inferences.Factory.Instance.CreateDistanceLeavingInferenceOneShot(InferenceManager, "1",
+                            for(int i = 0; i < InteractionPlants.Count(); i++)
+                            {
+                                MATCH.Inferences.Factory.Instance.CreateDistanceLeavingInferenceOneShot(InferenceManager, i.ToString(),
                             delegate (object o, EventArgs e)
                             {
                                 UpdateConditionWithMatrix(ConditionBottleFilled);
-                            }, PlantSelectedForPath.gameObject, 5F);
+                            }, InteractionPlants[i].gameObject, 5F);
+
+                            }
+                                
 
 
                             UpdateTextAssistancesDebugWindow("BTWP9");
                             MATCH.Utilities.Logger.Instance.Log(this.GetId(), MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, "BTWP9");
+                            //OnChallengeSuccess();
+                        }),
+                        new WaitUntilStopped()
+                        );
+
+                    return temp;
+                }
+
+                Sequence AssistanceBTWP10()
+                {
+
+                    Assistances.GradationVisual.GradationVisual exclamationMark = Assistances.GradationVisual.Factory.Instance.CreateExclamationMark("Practice-Exclamation", InteractionSink.transform);
+
+                    Assistances.AssistanceGradationExplicit gradationExplicit_BTWP10 = MATCH.Assistances.Factory.Instance.CreateAssistanceGradationExplicit("Watering-BTWP1");
+                    gradationExplicit_BTWP10.transform.parent = transform;
+
+                    gradationExplicit_BTWP10.AddAssistance(exclamationMark, Assistances.Buttons.Button.ButtonType.ClosingButton, null);
+
+                    AssistancesWatering.Add(gradationExplicit_BTWP10, false);
+
+                    gradationExplicit_BTWP10.Init();
+
+                    Sequence temp = new Sequence(
+                        new NPBehave.Action(() => {
+                            ShowAssistanceHideOthers(gradationExplicit_BTWP10);
+                            UpdateTextAssistancesDebugWindow("BTWP10");
+                            MATCH.Utilities.Logger.Instance.Log(this.GetId(), MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, "BTWP10");
                             //OnChallengeSuccess();
                         }),
                         new WaitUntilStopped()
@@ -819,7 +871,7 @@ namespace MATCH
                             //InteractionPlants[currentIndex].CallbackShow();
                             //ShowLightpathToPlant(plant);
                             DialogAssistanceWaterHelp.ButtonsController[currentIndex].CheckButton(true);
-                            LightPathShownMap[plant] = true;
+                            //LightPathShownMap[plant] = true;
                             PlantSelectedForPath = plant;
                             UpdateConditionWithMatrix(ConditionLightPathToPlant);
                             NextTimeCheck = Time.time + 5f;
