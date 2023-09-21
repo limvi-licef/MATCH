@@ -1,4 +1,4 @@
-﻿/*Copyright 2023 Rémi Létourneau, Pierre-Daniel Godfrey, Brian Biswas
+﻿/*Copyright 2023 Rémi Létourneau, Pierre-Daniel Godfrey, Brian Biswas, Hicham Moustaqim
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -35,10 +35,19 @@ namespace MATCH
                 public Assistances.Surfaces.Manager SurfacesManager;
 
                 string ConditionBeginning = "Beginning";
+
+                //Condition activated when the user  didn't go to fill the bottle
                 string ConditionBottleNotFilled = "BottleNotFilled";
+
                 string ConditionBottleFilled = "BottleFilled";
+
+                //Condition activated when the user selected a plant to water in the checklist
                 string ConditionLightPathToPlant = "LightPathToPlant";
+
+                //Condition activated when the user is near a plant to water
                 string ConditionWateringAPlant = "WateringAPlant";
+
+
                 string ConditionHelpNeeded = "HelpNeeded";
                 string ConditionHelpRequestedAgain = "HelpRequestedAgain";
                 string ConditionPlantWatered = "PlantWatered";
@@ -51,13 +60,10 @@ namespace MATCH
                 string InferenceDidNotFillBottle = "DidNotFillBottle";
 
                 // Interaction surface
-                Assistances.InteractionSurface InteractionSurfaceDialogs;
-                Assistances.InteractionSurface InteractionBottle;
-
                 Assistances.InteractionSurface InteractionSink;
-                Assistances.InteractionSurface InteractionPlant1;
-                Assistances.InteractionSurface InteractionPlant2;
-                Assistances.InteractionSurface InteractionPlant3;
+                Assistances.InteractionSurface InteractionSurfaceDialogs;
+
+                //Interaction surface of the selected plant in the checklist
                 Assistances.InteractionSurface PlantSelectedForPath;
 
                 List<GameObject> Cubes;
@@ -65,10 +71,8 @@ namespace MATCH
                 public EventHandler EventMoved;
                 List<Assistances.InteractionSurface> InteractionPlants = new List<Assistances.InteractionSurface>();
 
-                //List<bool> LightPathsShown = new List<bool>();
-                private bool[] LightPathsShown = new bool[3];
-
-                private Dictionary<Assistances.InteractionSurface, bool> LightPathShownMap =
+                //Dictionary with (key = plant, value = is plant watered ? (bool))
+                private Dictionary<Assistances.InteractionSurface, bool> PlantsWatered =
                     new Dictionary<InteractionSurface, bool>();
                 
                 float NextTimeCheck = 0f;
@@ -76,6 +80,8 @@ namespace MATCH
                 Dictionary<Assistances.AssistanceGradationExplicit, bool> AssistancesWatering;
 
                 Inferences.Timer inf1;
+
+                //Timer inference that activates the "ConditionBottleFilled" condition
                 Inferences.Timer TimerToFillTheBottle;
 
                 Assistances.InteractionSurface FollowObject;
@@ -93,7 +99,6 @@ namespace MATCH
                     SetId("Arroser les plantes");
                     AssistancesWatering = new Dictionary<Assistances.AssistanceGradationExplicit, bool>();
 
-                    Cubes = new List<GameObject>();
                     PlantsPositioningStorage = new Utilities.ObjectPositioningStorage("PlantsStorage.txt");
                 }
 
@@ -104,6 +109,7 @@ namespace MATCH
                     // Initialize assistances
                     InitializeAssistances();
                     
+                    //Charging plants that already exist.
                     List<String> registeredObjectsIds = PlantsPositioningStorage.GetObjetsRegisteredNames();
                     foreach (string id in registeredObjectsIds)
                     {
@@ -125,7 +131,7 @@ namespace MATCH
                     PathFinderEngine = GameObject.Find("PathFinderEngine").GetComponent<PathFinding.PathFinding>();
 
                     // Add button to restart scenario
-                    MATCH.AdminMenu.Instance.AddButton("Watering the plants - restart scenario", delegate
+                    /*MATCH.AdminMenu.Instance.AddButton("Watering the plants - restart scenario", delegate
                     {
                         inf1.StopCounter();
                         SetConditionsTo(false);
@@ -148,7 +154,7 @@ namespace MATCH
                             }
                         }
                         MATCH.Utilities.Logger.Instance.Log(this.GetId(), MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, "----------Scenario restarted----------");
-                    }, AdminMenu.Panels.Right);
+                    }, AdminMenu.Panels.Right);*/
 
                     // Initialize debug buttons
                     InitializeDebugButtons();
@@ -264,62 +270,17 @@ namespace MATCH
 
                     PlantSelectedForPath = Assistances.Factory.Instance.CreateInteractionSurface("SelectedPlant", AdminMenu.Panels.Right, new Vector3(0.6f, 0.1f, 0.4f),
                         new Vector3(-4.777f, 0.659f, 2.031f), Utilities.Materials.Colors.GreenGlowing, false, true, Utilities.Utility.GetEventHandlerEmpty(), true, transform);
-                    /*
-                    InteractionPlant1 = Assistances.Factory.Instance.CreateInteractionSurface("Practice-Plant1", AdminMenu.Panels.Right, new Vector3(0.3f, 0.5f, 0.3f),
-                        new Vector3(-2.309f, 0.263f, 2.031f), Utilities.Materials.Colors.GreenGlowing, false, true, Utilities.Utility.GetEventHandlerEmpty(), true, transform);
-                    InteractionPlant2 = Assistances.Factory.Instance.CreateInteractionSurface("Practice-Plant2", AdminMenu.Panels.Right, new Vector3(0.3f, 0.5f, 0.3f),
-                        new Vector3(2f, 0f, 0f), Utilities.Materials.Colors.GreenGlowing, false, true, Utilities.Utility.GetEventHandlerEmpty(), true, transform);
-                    InteractionPlant3 = Assistances.Factory.Instance.CreateInteractionSurface("Practice-Plant3", AdminMenu.Panels.Right, new Vector3(0.3f, 0.5f, 0.3f),
-                         new Vector3(-7f, 0f, 0f), Utilities.Materials.Colors.GreenGlowing, false, true, Utilities.Utility.GetEventHandlerEmpty(), true, transform);
                     
-
-                    InteractionPlants = new List<Assistances.InteractionSurface> { InteractionPlant1, InteractionPlant2, InteractionPlant3 };*/
 
                     InteractionSink.EventUserTouched += CallbackInteractionSurfaceSinkTouched;
 
                     DialogAssistanceWaterHelp = Assistances.Factory.Instance.CreateCheckListNoButton("", "Voici les plantes qu'il vous reste à arroser. Si vous touchez une des plantes, un chemin au sol vous y guidera.", FollowObject.transform);
 
-                    /*
-                    DialogAssistanceWaterHelp.AddButton("Plante " + (1), false, 0.12f);
-                    DialogAssistanceWaterHelp.AddButton("Plante " + (2), false, 0.12f);
-                    DialogAssistanceWaterHelp.AddButton("Plante " + (3), false, 0.12f);*/
-
-                    /*for (int i = 0; i < DialogAssistanceWaterHelp.ButtonsController.Count; i++)
-                    {
-
-                        int plantId = i;
-
-                        DialogAssistanceWaterHelp.ButtonsController[plantId].EventButtonClicked += delegate (System.Object o, EventArgs e)
-                        {
-                            UpdateTextAssistancesDebugWindow("i is : " + plantId);
-                            if (DialogAssistanceWaterHelp.ButtonsController[plantId].IsChecked() == false)
-                            {
-                                InteractionPlants[plantId].CallbackShow();
-                                ShowLightpathToPlant(InteractionPlants[plantId]);
-                                DialogAssistanceWaterHelp.ButtonsController[plantId].CheckButton(true);
-                                LightPathsShown[plantId] = true;
-                                NextTimeCheck = Time.time + 5f;
-                            }
-                        };
-                    }*/
-
-//                    MenuPlant = Assistances.GradationVisual.Factory.Instance.CreateAssistanceDialog("WateringThePlants-BTWP4-1", DialogAssistanceWaterHelp);
                 }
 
                 private void Update()
                 {
-                    //TODO : Make this dynamic with LightPathShownMap
-                    /*if (Array.Exists<bool>(LightPathsShown, element => element) && Time.time > NextTimeCheck)
-                    {
-                        for (int i = 0; i < InteractionPlants.Count(); i++)
-                        {
-                            if (InteractionPlants[i].GetComponentInChildren<BoundsControl>().enabled && InteractionPlants[i].tag != "Watered")
-                            {
-                                updateLightPath(InteractionPlants[i]);
-                            }
-                        }
-                        NextTimeCheck += 5f;
-                    }*/
+
                 }
 
                 //Is it 7pm?
@@ -367,7 +328,8 @@ namespace MATCH
 
                     Sequence temp = new Sequence(
                         new NPBehave.Action(() => {
-                            //ShowAssistanceHideOthers(btwp5);
+                            TimerToFillTheBottle.StopCounter();
+                            ShowAssistanceHideOthers(null);
 
                             UpdateTextAssistancesDebugWindow("Bottle Filled");
                             foreach (Assistances.InteractionSurface interactionPlant in InteractionPlants)
@@ -577,37 +539,29 @@ namespace MATCH
                     return temp;
                 }
 
+                //Condition to guide the user to the selected plant.
                 Sequence AssistanceBTWP8()
                 {
                     Assistances.PathWithTextAndHelp LightPath = null;
-                    /*Assistances.AssistanceGradationExplicit gradationExplicit_BTWP8 = MATCH.Assistances.Factory.Instance.CreateAssistanceGradationExplicit("Watering-BTWP8");
-                    gradationExplicit_BTWP8.transform.parent = transform;
 
-
-                    AssistancesWatering.Add(gradationExplicit_BTWP8, false);
-
-                    gradationExplicit_BTWP8.Init();*/
 
                     LightPath = Assistances.Factory.Instance.CreateAssistancePath("LightPath", "", "Suivez cette ligne pour arriver à votre " + PlantSelectedForPath.name + " !", PlantSelectedForPath.transform, MATCH.Assistances.InteractionSurfaceFollower.Instance.transform);
 
                     Sequence temp = new Sequence(
                         new NPBehave.Action(() => {
 
-                            //MenuPlant.GetCurrentAssistance().Hide(Utilities.Utility.GetEventHandlerEmpty(), false;
                             MenuPlant.HideCurrentGradation(Utilities.Utility.GetEventHandlerEmpty());
+
                             if(LightPath != null)
                             {
                                 LightPath.Hide(delegate (System.Object o, EventArgs e)
                                 {
-                                    //Destroy(LightPath);
-                                    //LightPath = Assistances.Factory.Instance.CreateAssistancePath("LightPath", "", "Suivez cette ligne pour arriver à votre " + PlantSelectedForPath.name + " !", PlantSelectedForPath.transform, MATCH.Assistances.InteractionSurfaceFollower.Instance.transform);
                                     LightPath.InitializeAssistance("", "Suivez cette ligne pour arriver à votre " + PlantSelectedForPath.name + " !", PlantSelectedForPath.transform, MATCH.Assistances.InteractionSurfaceFollower.Instance.transform);
                                     LightPath.Show(Utilities.Utility.GetEventHandlerEmpty());
                                 }, false);
                             }
                             else
                             {
-                                //LightPath = Assistances.Factory.Instance.CreateAssistancePath("LightPath", "", "Suivez cette ligne pour arriver à votre " + PlantSelectedForPath.name + " !", PlantSelectedForPath.transform, MATCH.Assistances.InteractionSurfaceFollower.Instance.transform);
                                 LightPath.InitializeAssistance("", "Suivez cette ligne pour arriver à votre " + PlantSelectedForPath.name + " !", PlantSelectedForPath.transform, MATCH.Assistances.InteractionSurfaceFollower.Instance.transform);
                                 LightPath.Show(Utilities.Utility.GetEventHandlerEmpty());
                             }
@@ -622,13 +576,9 @@ namespace MATCH
                                 }, InteractionPlants[i].gameObject, 1.3F);
                             }
                                 
-
-
-                            //ShowAssistanceHideOthers(gradationExplicit_BTWP8);
-                            //InferenceManager.UnregisterAllInferences();
                             UpdateTextAssistancesDebugWindow("BTWP8");
                             MATCH.Utilities.Logger.Instance.Log(this.GetId(), MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, "BTWP8");
-                            //OnChallengeSuccess();
+
                             }), 
                         new WaitUntilStopped()
                         );
@@ -636,29 +586,26 @@ namespace MATCH
                     return temp;
                 }
 
+                //When the user is watering a plant.
                 Sequence AssistanceBTWP9()
                 {
 
-
                     Sequence temp = new Sequence(
                         new NPBehave.Action(() => {
-                            //ShowAssistanceHideOthers(gradationExplicit_BTWP9);
-                            //InferenceManager.UnregisterAllInferences();
+
                             for(int i = 0; i < InteractionPlants.Count(); i++)
                             {
                                 MATCH.Inferences.Factory.Instance.CreateDistanceLeavingInferenceOneShot(InferenceManager, i.ToString(),
-                            delegate (object o, EventArgs e)
-                            {
-                                UpdateConditionWithMatrix(ConditionBottleFilled);
-                            }, InteractionPlants[i].gameObject, 5F);
+                                delegate (object o, EventArgs e)
+                                {
+                                    UpdateConditionWithMatrix(ConditionBottleFilled);
+                                }, InteractionPlants[i].gameObject, 5F);
 
                             }
-                                
-
 
                             UpdateTextAssistancesDebugWindow("BTWP9");
                             MATCH.Utilities.Logger.Instance.Log(this.GetId(), MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, "BTWP9");
-                            //OnChallengeSuccess();
+
                         }),
                         new WaitUntilStopped()
                         );
@@ -666,6 +613,7 @@ namespace MATCH
                     return temp;
                 }
 
+                // Condition displaying an exclamation mark above the sink if the user didn't go fill the bottle.
                 Sequence AssistanceBTWP10()
                 {
 
@@ -685,7 +633,6 @@ namespace MATCH
                             ShowAssistanceHideOthers(gradationExplicit_BTWP10);
                             UpdateTextAssistancesDebugWindow("BTWP10");
                             MATCH.Utilities.Logger.Instance.Log(this.GetId(), MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, "BTWP10");
-                            //OnChallengeSuccess();
                         }),
                         new WaitUntilStopped()
                         );
@@ -774,12 +721,15 @@ namespace MATCH
                     }
                 }
 
+                // Function used to remove the last plant.
                 public void RemovePlant()
                 {
                     if (InteractionPlants.Count() != 0)
                         InteractionPlants.RemoveAt(InteractionPlants.Count() - 1);
                 }
 
+
+                // Function used to create the plants.
                 public void AddPlant(string name, Vector3 scaling, Vector3 position, string color, bool navMeshTag,
                     bool callbackOnTouch, bool registerObject, Transform parent)
                 {
@@ -787,38 +737,6 @@ namespace MATCH
                     
                     // Set parent
                     plant = Assistances.Factory.Instance.CreateInteractionSurface(name, AdminMenu.Panels.Right, /*new Vector3(1.1f, 0.02f, 0.7f)*/ scaling, /*new Vector3(-0.447f, -0.406f, 0.009f)*/ position, Utilities.Materials.Colors.GreenGlowingAdjustHSV, false, true, Utilities.Utility.GetEventHandlerEmpty(), false, transform);
-                    
-                    //plant.gameObject.name = name;
-                    // Add buttons to interface
-                    /*AdminMenu.Instance.AddButton("Plante " + name + " - Bring",
-                        delegate() { MATCH.Utilities.Utility.BringObject(plant.transform); }, AdminMenu.Panels.Left);
-                    AdminMenu.Instance.AddSwitchButton("Plante " + name + " - Hide",
-                        delegate()
-                        {
-                            MATCH.Utilities.Utility.ShowInteractionSurface(plant.transform,
-                                !plant.gameObject.GetComponent<Renderer>().enabled);
-                        }, AdminMenu.Panels.Left, AdminMenu.ButtonType.Hide);*/
-
-                    // Set color
-                    //MATCH.Utilities.Utility.SetColor(plant.GetInteractionSurface().transform, color);
-
-                    // Set scaling and position
-                    /*plant.transform.position = position;
-                    plant.transform.localScale = scaling;*/
-                    /*plant.GetInteractionSurface().transform.position = position;
-                    plant.GetInteractionSurface().transform.localScale = scaling;*/
-
-                    // Set the manipulation features
-                    //ObjectManipulator objectManipulator = plant.gameObject.AddComponent<ObjectManipulator>();
-                    //plant.gameObject.AddComponent<RotationAxisConstraint>().ConstraintOnRotation =
-                    //Microsoft.MixedReality.Toolkit.Utilities.AxisFlags.XAxis |
-                    //Microsoft.MixedReality.Toolkit.Utilities.AxisFlags.ZAxis;
-                    //BoundsControl boundsControl = plant.gameObject.AddComponent<BoundsControl>();
-                    //boundsControl.ScaleHandlesConfig.ScaleBehavior = Microsoft.MixedReality.Toolkit.UI
-                    //  .BoundsControlTypes.HandleScaleMode.NonUniform;
-                    //boundsControl.TranslationHandlesConfig.ShowHandleForX = true;
-                    //boundsControl.TranslationHandlesConfig.ShowHandleForY = true;
-                    //boundsControl.TranslationHandlesConfig.ShowHandleForZ = true;
 
                     // Set optional features
                     if (navMeshTag)
@@ -826,27 +744,9 @@ namespace MATCH
                         plant.GetInteractionSurface().gameObject.AddComponent<NavMeshSourceTag>();
                     }
 
-                    /*if (callbackOnTouch)
-                    {
-                        // As we will be adding the MouseAssistanceBasic, it requires to encapsulate the cube in an empty gameobject, and to rename the cube "Child"
-                        Assistances.InteractionSurface child = plant;
-                        child.name = "Child";
-                        plant = new Assistances.InteractionSurface();
-                        plant.gameObject.name = name;
-                        child.transform.parent = plant.transform;
-
-                        plant.gameObject.AddComponent<MATCH.Assistances.Basic>();
-                    }*/
-
                     // Add the callbacks
                     plant.EventConfigScaled += delegate(System.Object o, EventArgs e) { EventResized?.Invoke(plant.GetInteractionSurface().transform, EventArgs.Empty); };
-                    //boundsControl.ScaleStopped.AddListener(delegate { EventResized?.Invoke(plant, EventArgs.Empty); });
-
                     plant.EventConfigMoved += delegate (System.Object o, EventArgs e) { EventMoved?.Invoke(plant.GetInteractionSurface().transform, EventArgs.Empty); };
-                    /*objectManipulator.OnManipulationEnded.AddListener(delegate(ManipulationEventData data)
-                    {
-                        EventMoved?.Invoke(plant, EventArgs.Empty);
-                    });*/
 
                     InteractionPlants.Add(plant);
 
@@ -857,21 +757,19 @@ namespace MATCH
 
                     plant.GetInteractionSurface().GetComponent<BoundsControl>().enabled = false;
 
-                    LightPathShownMap.Add(plant, false);
+                    PlantsWatered.Add(plant, false);
                     
                     DialogAssistanceWaterHelp.AddButton(name, false, 0.12f);
 
                     int currentIndex = DialogAssistanceWaterHelp.ButtonsController.Count - 1;
                         
+                    // Adding the plant to the checklist
                     DialogAssistanceWaterHelp.ButtonsController[currentIndex].EventButtonClicked += delegate (System.Object o, EventArgs e)
                     {
                         UpdateTextAssistancesDebugWindow("i is : " + currentIndex);
                         if (DialogAssistanceWaterHelp.ButtonsController[currentIndex].IsChecked() == false)
                         {
-                            //InteractionPlants[currentIndex].CallbackShow();
-                            //ShowLightpathToPlant(plant);
                             DialogAssistanceWaterHelp.ButtonsController[currentIndex].CheckButton(true);
-                            //LightPathShownMap[plant] = true;
                             PlantSelectedForPath = plant;
                             UpdateConditionWithMatrix(ConditionLightPathToPlant);
                             NextTimeCheck = Time.time + 5f;
