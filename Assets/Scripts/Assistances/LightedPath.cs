@@ -58,7 +58,7 @@ namespace MATCH
                 }
                 else
                 { // Means running in the Hololens: the frame rate being lower, the value is higher, to have a faster color change
-                    PathLinePulseDistanceToAdd = 0.05f;
+                    PathLinePulseDistanceToAdd = 0.003f;
                 }
             }
 
@@ -127,6 +127,7 @@ namespace MATCH
                     PathLine.SetPosition(i, corner);
                 }
 
+                PathLineMaterial.SetFloat("_PulseLength", 0.006f);
                 for (int i = 1; i < 4; i ++)
                 {
                     PathLineMaterial.SetFloat(PathLinePulseDistanceProperty+i, 0.3f*i-0.3f); // Pulse is initialized at the beginning of the line
@@ -141,8 +142,8 @@ namespace MATCH
             private void Start()
             {
                 PathLine = transform.Find("Path").GetComponent<LineRenderer>();
-                PathLine.startWidth = 0.017f;
-                PathLine.endWidth = 0.017f;
+                PathLine.startWidth = 0.023f;//0.017f;
+                PathLine.endWidth = 0.023f;//0.017f;
                 PathLine.positionCount = 0;
                 PathLine.startColor = Color.cyan;
                 PathLine.endColor = Color.cyan;

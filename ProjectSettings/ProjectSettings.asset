@@ -13,7 +13,7 @@ PlayerSettings:
   useOnDemandResources: 0
   accelerometerFrequency: 60
   companyName: Laboratoire DOMUS - Guillaume Spalla
-  productName: MATCH-Home
+  productName: MATCH-CRIUGM
   defaultCursor: {fileID: 0}
   cursorHotspot: {x: 0, y: 0}
   m_SplashScreenBackgroundColor: {r: 0.13725491, g: 0.12156863, b: 0.1254902, a: 1}
@@ -136,6 +136,27 @@ PlayerSettings:
     Others: 1
   bundleVersion: 0.3
   preloadedAssets:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
@@ -773,14 +794,14 @@ PlayerSettings:
     WSA: 6
   m_RenderingPath: 1
   m_MobileRenderingPath: 1
-  metroPackageName: MATCH-Home
+  metroPackageName: MATCH-CRIUGM
   metroPackageVersion: 1.0.0.0
   metroCertificatePath: Assets/WSATestCertificate.pfx
   metroCertificatePassword: 
   metroCertificateSubject: Laboratoire DOMUS - Guillaume Spalla
   metroCertificateIssuer: Laboratoire DOMUS - Guillaume Spalla
   metroCertificateNotAfter: 803170e7c095da01
-  metroApplicationDescription: MATCH-Home
+  metroApplicationDescription: MATCH-CRIUGM
   wsaImages: {}
   metroTileShortName: Mouse
   metroTileShowName: 0

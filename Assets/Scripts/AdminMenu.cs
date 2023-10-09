@@ -224,28 +224,43 @@ namespace MATCH
          * */
         public void AddSwitchButton(string text, UnityEngine.Events.UnityAction callback, Panels panel = Panels.Middle, ButtonType buttonType = ButtonType.Default)
         {
-            Buttons.Add(Instantiate(RefButtonSwitch, PanelsStorage[panel]));
-            Buttons.Last().GetComponent<Interactable>().GetReceiver<InteractableOnPressReceiver>().OnPress.AddListener(callback);
-            Buttons.Last().GetComponent<Interactable>().GetReceiver<InteractableOnPressReceiver>().InteractionFilter = 0;
-            Buttons.Last().transform.Find("IconAndText").Find("TextMeshPro").GetComponent<TextMeshPro>().SetText(text);
-            PanelsStorage[panel].GetComponent<GridObjectCollection>().UpdateCollection();
-
-            if (buttonType == ButtonType.Hide)
+            try
             {
-                HideAllCallbacks.Add(callback);
+                Buttons.Add(Instantiate(RefButtonSwitch, PanelsStorage[panel]));
+                Buttons.Last().GetComponent<Interactable>().GetReceiver<InteractableOnPressReceiver>().OnPress.AddListener(callback);
+                Buttons.Last().GetComponent<Interactable>().GetReceiver<InteractableOnPressReceiver>().InteractionFilter = 0;
+                Buttons.Last().transform.Find("IconAndText").Find("TextMeshPro").GetComponent<TextMeshPro>().SetText(text);
+                PanelsStorage[panel].GetComponent<GridObjectCollection>().UpdateCollection();
+
+                if (buttonType == ButtonType.Hide)
+                {
+                    HideAllCallbacks.Add(callback);
+                }
             }
+            catch(Exception e)
+            {
+                DebugMessagesManager.Instance.DisplayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Warning, "Cannot add button. Most likely because the participant mode is running and thus this AdminMenu is disabled");
+            }
+            
         }
 
         public void AddButton(string text, UnityEngine.Events.UnityAction callback, Panels panel = Panels.Middle)
         {
-            Buttons.Add(Instantiate(RefButton, PanelsStorage[panel]));
+            try
+            {
+                Buttons.Add(Instantiate(RefButton, PanelsStorage[panel]));
 
-            Buttons.Last().GetComponent<ButtonConfigHelper>().IconStyle = ButtonIconStyle.None;
-            Buttons.Last().GetComponent<ButtonConfigHelper>().SeeItSayItLabelEnabled = false;
-            Buttons.Last().GetComponent<Interactable>().GetReceiver<InteractableOnPressReceiver>().OnPress.AddListener(callback);
-            Buttons.Last().GetComponent<Interactable>().GetReceiver<InteractableOnPressReceiver>().InteractionFilter = 0;
-            Buttons.Last().transform.Find("IconAndText").Find("TextMeshPro").GetComponent<TextMeshPro>().SetText(text);
-            PanelsStorage[panel].GetComponent<GridObjectCollection>().UpdateCollection();
+                Buttons.Last().GetComponent<ButtonConfigHelper>().IconStyle = ButtonIconStyle.None;
+                Buttons.Last().GetComponent<ButtonConfigHelper>().SeeItSayItLabelEnabled = false;
+                Buttons.Last().GetComponent<Interactable>().GetReceiver<InteractableOnPressReceiver>().OnPress.AddListener(callback);
+                Buttons.Last().GetComponent<Interactable>().GetReceiver<InteractableOnPressReceiver>().InteractionFilter = 0;
+                Buttons.Last().transform.Find("IconAndText").Find("TextMeshPro").GetComponent<TextMeshPro>().SetText(text);
+                PanelsStorage[panel].GetComponent<GridObjectCollection>().UpdateCollection();
+            }
+            catch (Exception e)
+            {
+                DebugMessagesManager.Instance.DisplayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Warning, "Cannot add button. Most likely because the participant mode is running and thus this AdminMenu is disabled");
+            }
         }
 
         /**
@@ -253,33 +268,40 @@ namespace MATCH
          */
         public void AddInputWithButton(string textInput, string textButton, EventHandler callbackButton, Panels panel = Panels.Middle)
         {
-            // Manage the input text
-            GameObject input = Instantiate(RefInput, PanelsStorage[panel]);
-            Buttons.Add(input);
-            Buttons.Last().AddComponent<BoxCollider>();
-            Interactable interactions = Buttons.Last().AddComponent<Interactable>();
-            interactions.OnClick.AddListener(delegate ()
+            try
             {
-                ModifiedByKeyboard = input;
-                Keyboard = TouchScreenKeyboard.Open("", TouchScreenKeyboardType.NumberPad, false);
-            });
+                // Manage the input text
+                GameObject input = Instantiate(RefInput, PanelsStorage[panel]);
+                Buttons.Add(input);
+                Buttons.Last().AddComponent<BoxCollider>();
+                Interactable interactions = Buttons.Last().AddComponent<Interactable>();
+                interactions.OnClick.AddListener(delegate ()
+                {
+                    ModifiedByKeyboard = input;
+                    Keyboard = TouchScreenKeyboard.Open("", TouchScreenKeyboardType.NumberPad, false);
+                });
 
-            TextMesh textMesh = Buttons.Last().GetComponent<TextMesh>();
-            textMesh.text = textInput;
-            PanelsStorage[panel].GetComponent<GridObjectCollection>().UpdateCollection();
+                TextMesh textMesh = Buttons.Last().GetComponent<TextMesh>();
+                textMesh.text = textInput;
+                PanelsStorage[panel].GetComponent<GridObjectCollection>().UpdateCollection();
 
-            // Manage the update button
-            Buttons.Add(Instantiate(RefButton, PanelsStorage[panel]));
-            Buttons.Last().GetComponent<ButtonConfigHelper>().IconStyle = ButtonIconStyle.None;
-            Buttons.Last().GetComponent<ButtonConfigHelper>().SeeItSayItLabelEnabled = false;
-            Buttons.Last().GetComponent<Interactable>().GetReceiver<InteractableOnPressReceiver>().OnPress.AddListener(delegate()
+                // Manage the update button
+                Buttons.Add(Instantiate(RefButton, PanelsStorage[panel]));
+                Buttons.Last().GetComponent<ButtonConfigHelper>().IconStyle = ButtonIconStyle.None;
+                Buttons.Last().GetComponent<ButtonConfigHelper>().SeeItSayItLabelEnabled = false;
+                Buttons.Last().GetComponent<Interactable>().GetReceiver<InteractableOnPressReceiver>().OnPress.AddListener(delegate ()
+                {
+                    Utilities.EventHandlerArgs.String arg = new Utilities.EventHandlerArgs.String(textMesh.text);
+                    callbackButton?.Invoke(this, arg);
+                });
+                Buttons.Last().GetComponent<Interactable>().GetReceiver<InteractableOnPressReceiver>().InteractionFilter = 0;
+                Buttons.Last().transform.Find("IconAndText").Find("TextMeshPro").GetComponent<TextMeshPro>().SetText(textButton);
+                PanelsStorage[panel].GetComponent<GridObjectCollection>().UpdateCollection();
+            }
+            catch (Exception e)
             {
-                Utilities.EventHandlerArgs.String arg = new Utilities.EventHandlerArgs.String(textMesh.text);
-                callbackButton?.Invoke(this, arg);
-            });
-            Buttons.Last().GetComponent<Interactable>().GetReceiver<InteractableOnPressReceiver>().InteractionFilter = 0;
-            Buttons.Last().transform.Find("IconAndText").Find("TextMeshPro").GetComponent<TextMeshPro>().SetText(textButton);
-            PanelsStorage[panel].GetComponent<GridObjectCollection>().UpdateCollection();
+                DebugMessagesManager.Instance.DisplayMessage(MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, DebugMessagesManager.MessageLevel.Warning, "Cannot add button. Most likely because the participant mode is running and thus this AdminMenu is disabled");
+            }
         }
 
         public void CallbackCubeTouched()

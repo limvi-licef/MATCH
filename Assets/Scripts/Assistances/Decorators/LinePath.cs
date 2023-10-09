@@ -42,6 +42,10 @@ namespace MATCH
                 //EventHandler classEvent;
 
                 private LineRenderer Line;
+                private UnityEngine.Material PathLineMaterial;
+                private string PathLinePulseDistanceProperty = "_PulseDistance";
+                private float PathLinePulseDistanceToAdd;
+
                 //private bool toShow=false;
                 PathFinding.PathFinding PathFinderEngine;
                 Assistances.InteractionSurface FollowObject;
@@ -55,8 +59,8 @@ namespace MATCH
                     //LineView = gameObject.transform.Find("Line");
                     //LineController = LineView.GetComponent<LineToObject>();
                     Line = GetComponent<LineRenderer>();
-                    Line.startWidth = 0.017f;
-                    Line.endWidth = 0.017f;
+                    Line.startWidth = 0.023f;//0.017f;
+                    Line.endWidth = 0.023f; //0.017f;
                     //lineRenderer.material = Resources.Load(Utilities.Materials.Colors.GreenGlowing, typeof(Material)) as Material;
                     Line.positionCount = 0;
                     Line.startColor = Color.red;
@@ -66,6 +70,17 @@ namespace MATCH
                     FollowObject = Assistances.InteractionSurfaceFollower.Instance.GetInteractionSurface();
 
                     HeightToFollowInteractionSurface = false;
+
+
+                    Line.GetComponent<Renderer>().material = Utilities.Utility.LoadMaterial(Utilities.Materials.Colors.CyanPulse);
+                    if (Utilities.Utility.IsEditorSimulator() || Utilities.Utility.IsEditorGameView())
+                    {
+                        PathLinePulseDistanceToAdd = 0.001f;
+                    }
+                    else
+                    { // Means running in the Hololens: the frame rate being lower, the value is higher, to have a faster color change
+                        PathLinePulseDistanceToAdd = 0.003f;
+                    }
                 }
 
                 public void Start()
@@ -75,6 +90,7 @@ namespace MATCH
                         Utilities.EventHandlerArgs.String arg = (Utilities.EventHandlerArgs.String)e;
                         Threshold = float.Parse(arg.m_text);
                     }, AdminMenu.Panels.Right);*/
+                    PathLineMaterial = Line.GetComponent<Renderer>().material;
                 }
 
                 public void Update()
@@ -86,6 +102,16 @@ namespace MATCH
                         if (dist > Threshold)
                         {
                             ShowLightpath();
+                        }
+
+                        // Move the pulse
+                        for (int i = 1; i < 4; i++)
+                        {
+                            PathLineMaterial.SetFloat(PathLinePulseDistanceProperty + i, PathLineMaterial.GetFloat(PathLinePulseDistanceProperty + i) + PathLinePulseDistanceToAdd);
+                            if (PathLineMaterial.GetFloat(PathLinePulseDistanceProperty + i) >= 0.98f)
+                            {
+                                PathLineMaterial.SetFloat(PathLinePulseDistanceProperty + i, 0.0f);
+                            }
                         }
                     }
 
@@ -254,7 +280,7 @@ namespace MATCH
                 {
                     IsDisplayed = false;
 
-                    Vector3 startPoint = Vector3.forward * (float)1.5;
+                    Vector3 startPoint = Vector3.forward * (float)1.1;
 
                     Vector3 startPointWorld = Camera.main.transform.TransformPoint(startPoint);
 
@@ -275,6 +301,12 @@ namespace MATCH
                         }
 
                         Line.SetPosition(i, corner);
+                    }
+
+                    PathLineMaterial.SetFloat("_PulseLength", 0.006f);
+                    for (int i = 1; i < 4; i++)
+                    {
+                        PathLineMaterial.SetFloat(PathLinePulseDistanceProperty + i, 0.3f * i - 0.3f); // Pulse is initialized at the beginning of the line
                     }
 
                     gameObject.SetActive(true);

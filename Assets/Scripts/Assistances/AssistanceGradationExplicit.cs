@@ -221,6 +221,7 @@ namespace MATCH
                     UpdateConditionWithMatrix(ConditionsIsFocused);
                     InfManager.UnregisterInference(InferenceFocused);
                     InfManager.UnregisterInference(InferenceTimer2Minutes);
+                    RegisterInferenceNoFocusFor15Seconds();
 
                     //InfManager.RegisterInference(infLostFocus);
 
@@ -328,6 +329,7 @@ namespace MATCH
                         }
                         else
                         {
+                            AssistancesGradation.AssistanceCurrent.GetCurrentAssistance().Emphasize(false);
                             Inferences.Timer timer = new Inferences.Timer(InferenceTimer30Seconds, /*10*/ DelayBeforeShowingHelp, delegate (System.Object o, EventArgs e)
                             {
                                 UpdateConditionWithMatrix(ConditionWaitingSince30Seconds);
@@ -351,6 +353,7 @@ namespace MATCH
             {
                 Sequence temp = new Sequence(
                     new NPBehave.Action(() => {
+                        AssistancesGradation.AssistanceCurrent.GetCurrentAssistance().Emphasize(false);
                         AssistancesGradation.AssistanceCurrent.GetCurrentAssistance().ShowHelp(false, Utilities.Utility.GetEventHandlerEmpty(), false);
                         AssistancesGradation.AssistanceCurrent.ShowNextGradation(Utilities.Utility.GetEventHandlerEmpty());
                         //UpdateTextAssistancesDebugWindow("BTGradation - Delta");
@@ -359,6 +362,8 @@ namespace MATCH
                         if (AssistancesGradation.AssistanceCurrent.IsLastGradationLevel() == false)
                         {
                             UpdateCondition(ConditionDisplayedSince2Minutes, false);
+
+                            RegisterInferenceFocus();
                             Inferences.Timer timer = new Inferences.Timer(InferenceTimer2Minutes, DelayBeforeNextAttractiveGradation, delegate (System.Object o, EventArgs e)
                             { 
                                 UpdateConditionWithMatrix(ConditionDisplayedSince2Minutes);
@@ -380,7 +385,7 @@ namespace MATCH
                 Sequence temp = new Sequence(
                     new NPBehave.Action(() => {
                         RegisterInferenceNoFocusFor15Seconds();
-
+                        //InfManager.UnregisterInference(InferenceTimer2Minutes);
                         //UpdateTextAssistancesDebugWindow("BTGradation - Gamma");
                         MATCH.Utilities.Logger.Instance.Log(this.GetId(), MethodBase.GetCurrentMethod().ReflectedType.Name, MethodBase.GetCurrentMethod().Name, "BTGradation - Gamma");
                         AssistancesGradation.AssistanceCurrent.GetCurrentAssistance().Emphasize(true);

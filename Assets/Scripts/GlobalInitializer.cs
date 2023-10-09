@@ -12,6 +12,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.*/
 
+using Microsoft.MixedReality.Toolkit;
 using Microsoft.MixedReality.Toolkit.UI;
 using Microsoft.MixedReality.Toolkit.UI.BoundsControl;
 using Microsoft.MixedReality.Toolkit.Utilities.Solvers;
@@ -33,6 +34,8 @@ namespace MATCH
         public GameObject VirtualRoom;
         public GameObject ObjectRecognition;
         public GameObject ObjectRecognitionInfoPanel;
+        //public GameObject WebSocket;
+        //public GameObject Scenarios;
 
         // Start is called before the first frame update
         void Start()
@@ -90,7 +93,10 @@ namespace MATCH
 #endif
             }
 
+            // Disable teleport system
+            CoreServices.TeleportSystem.Disable();
         }
+
 
     }
 }

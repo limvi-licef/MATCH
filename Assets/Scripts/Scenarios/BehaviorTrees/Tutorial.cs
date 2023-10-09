@@ -178,19 +178,11 @@ namespace MATCH
                     InteractionPen = Assistances.Factory.Instance.CreateInteractionSurface("Tutorial - Pen - Purple", AdminMenu.Panels.Right, new Vector3(0.1f, 0.1f, 0.1f), new Vector3(-0.1f, -0.406f, -0.7f), Utilities.Materials.Colors.PurpleGlowing, false, true, Utilities.Utility.GetEventHandlerEmpty(), true, transform);
                     
                     InteractionSurfaceToClean = Assistances.Factory.Instance.CreateInteractionSurface("Tutorial - Surface to clean - Orange", AdminMenu.Panels.Right, new Vector3(0.1f, 0.1f, 0.1f), new Vector3(0.4f, -0.406f, -0.7f), Utilities.Materials.Colors.OrangeAdjustHSV, false, true, Utilities.Utility.GetEventHandlerEmpty(), true, transform);
-                    
-                    /*InteractionSurfaceToCleanDialog = Assistances.Factory.Instance.CreateInteractionSurface("Tutorial - Surface to clean dialog - Orange", AdminMenu.Panels.Right, new Vector3(0.1f, 0.1f, 0.1f), new Vector3(0.4f, -0.406f, -0.7f), Utilities.Materials.Colors.OrangeGlowing, false, true, Utilities.Utility.GetEventHandlerEmpty(), true, transform);*/
-
                 }
 
                 Sequence AssistanceAlpha()
                 {
-                    /*Assistances.GradationVisual.GradationVisual alpha1 = Assistances.GradationVisual.Factory.Instance.CreateDialogOneButton("Tutorial-Alpha-1", "", "Bienvenue! Voici un tutoriel pour vous familiariser avec cette assistance. Pour commencer, avec un doigt, touchez le bouton \"Commencer !\" ci-dessous, comme si vous touchiez un interrupteur.", "Commencer !", delegate(System.Object o, EventArgs e)
-                    {
-                        UpdateConditionWithMatrix(ConditionBeginningClicked);
-                    }, Assistances.Buttons.Button.ButtonType.ClosingButton, InteractionSurfaceDialogs.transform);*/
-
-                    Assistances.GradationVisual.GradationVisual alpha1 = Assistances.GradationVisual.Factory.Instance.CreateDialog2WithButtons("Tutorial-Alpha-1", "", "Bienvenue! Voici un tutoriel pour vous familiariser avec ce système. Pour commencer, touchez le bouton \"Commencer !\" ci-dessous avec un doigt, comme si vous touchiez un interrupteur.", "Commencer !", delegate (System.Object o, EventArgs e)
+                    Assistances.GradationVisual.GradationVisual alpha1 = Assistances.GradationVisual.Factory.Instance.CreateDialog2WithButtonsNoDecorators("Tutorial-Alpha-1", "", "Bienvenue! Voici un tutoriel pour vous familiariser avec ce système. Pour commencer, touchez le bouton \"Commencer !\" ci-dessous avec un doigt, comme si vous touchiez un interrupteur.", "Commencer !", delegate (System.Object o, EventArgs e)
                     {
                         UpdateConditionWithMatrix(ConditionShowingExclamation);
                     }, Assistances.Buttons.Button.ButtonType.ClosingButton, InteractionSurfaceDialogs.transform);
@@ -223,14 +215,14 @@ namespace MATCH
 
                 Sequence AssistanceBeta()
                 {
-                    Assistances.GradationVisual.GradationVisual beta1 = Assistances.GradationVisual.Factory.Instance.CreateDialog2WithButtons("Tutorial-ExclamationMarkDialog", "", "Vous allez maintenant voir un point d'exclamation. Il apparait pour attirer votre attention sur une action à réaliser. Appuyez sur le bouton \"Suivant\" ci-dessous pour voir un exemple", "Suivant", null, Assistances.Buttons.Button.ButtonType.Yes, InteractionSurfaceDialogs.transform);
-                    Assistances.GradationVisual.GradationVisual beta2 = Assistances.GradationVisual.Factory.Instance.CreateDialog2WithButtons("Tutorial-ExclamationMarkDialog-2", "", "Vous pouvez voir un point d'exclamation sur votre droite. Le point d'exclamation, comme d'autres éléments, peut prendre différentes couleurs. Touchez le bouton \"Suivant\" ci-dessous.", "Suivant", null, Assistances.Buttons.Button.ButtonType.Yes, InteractionSurfaceDialogs.transform);
-                    Assistances.GradationVisual.GradationVisual beta2a = Assistances.GradationVisual.Factory.Instance.CreateDialog2WithButtons("Tutorial-ExclamationMarkDialog-2a", "", "Pour vous donner un exemple, le point d'exclamation va changer de couleur si vous touchez le bouton \"Suivant\" ci-dessous.", "Suivant", null, Assistances.Buttons.Button.ButtonType.Yes, InteractionSurfaceDialogs.transform);
+                    Assistances.GradationVisual.GradationVisual beta1 = Assistances.GradationVisual.Factory.Instance.CreateDialog2WithButtonsNoDecorators("Tutorial-ExclamationMarkDialog", "", "Vous allez maintenant voir un point d'exclamation. Il apparait pour attirer votre attention sur une action à réaliser. Appuyez sur le bouton \"Suivant\" ci-dessous pour voir un exemple", "Suivant", null, Assistances.Buttons.Button.ButtonType.Yes, InteractionSurfaceDialogs.transform);
+                    Assistances.GradationVisual.GradationVisual beta2 = Assistances.GradationVisual.Factory.Instance.CreateDialog2WithButtonsNoDecorators("Tutorial-ExclamationMarkDialog-2", "", "Vous pouvez voir un point d'exclamation sur votre droite. Le point d'exclamation, comme d'autres éléments, peut prendre différentes couleurs. Touchez le bouton \"Suivant\" ci-dessous.", "Suivant", null, Assistances.Buttons.Button.ButtonType.Yes, InteractionSurfaceDialogs.transform);
+                    Assistances.GradationVisual.GradationVisual beta2a = Assistances.GradationVisual.Factory.Instance.CreateDialog2WithButtonsNoDecorators("Tutorial-ExclamationMarkDialog-2a", "", "Pour vous donner un exemple, le point d'exclamation va changer de couleur si vous touchez le bouton \"Suivant\" ci-dessous.", "Suivant", null, Assistances.Buttons.Button.ButtonType.Yes, InteractionSurfaceDialogs.transform);
                     //Assistances.GradationVisual.GradationVisual beta3 = Assistances.GradationVisual.Factory.Instance.CreateDialog2WithButtons("Tutorial-ExclamationMarkDialog-3", "", "Le point d'exclamation est maintenant orange. Si vous ne le regardez toujours pas, il deviendra rouge. Appuyez sur \"Suivant\" pour voir un exemple.", "Suivant", null, Assistances.Buttons.Button.ButtonType.Yes, InteractionSurfaceDialogs.transform);
-                    Assistances.GradationVisual.GradationVisual beta3 = Assistances.GradationVisual.Factory.Instance.CreateDialog2WithButtons("Tutorial-ExclamationMarkDialog-3", "", "Le point d'exclamation est maintenant orange. Il peut prendre d'autres couleurs pour attirer votre attention. Appuyez sur \"Suivant\" pour continuer.", "Suivant", null, Assistances.Buttons.Button.ButtonType.Yes, InteractionSurfaceDialogs.transform);
+                    Assistances.GradationVisual.GradationVisual beta3 = Assistances.GradationVisual.Factory.Instance.CreateDialog2WithButtonsNoDecorators("Tutorial-ExclamationMarkDialog-3", "", "Le point d'exclamation est maintenant orange. Il peut prendre d'autres couleurs pour attirer votre attention. Appuyez sur \"Suivant\" pour continuer.", "Suivant", null, Assistances.Buttons.Button.ButtonType.Yes, InteractionSurfaceDialogs.transform);
                     //Assistances.GradationVisual.GradationVisual beta4 = Assistances.GradationVisual.Factory.Instance.CreateDialog2WithButtons("Tutorial-ExclamationMarkDialog-4", "", "Le point d'exclamation est maintenant rouge.", "Suivant", null, Assistances.Buttons.Button.ButtonType.Yes, InteractionSurfaceDialogs.transform);
-                    Assistances.GradationVisual.GradationVisual beta5 = Assistances.GradationVisual.Factory.Instance.CreateDialog2WithButtons("Tutorial-ExclamationMarkDialog-5", "", "Le point d'exclamation peut également vous proposer plus d'aide si vous ne comprenez pas à quoi il fait référence. Appuyez sur \"Suivant\" pour voir un exemple.", "Suivant", null, Assistances.Buttons.Button.ButtonType.Yes, InteractionSurfaceDialogs.transform);
-                    Assistances.GradationVisual.GradationVisual beta6 = Assistances.GradationVisual.Factory.Instance.CreateDialog2NoButton("Tutorial-ExclamationMarkDialog-6", "", "Vous pouvez voir les boutons d'aide sous le point d'exclamation. Appuyez sur un de ces boutons pour continuer le tutoriel.", InteractionSurfaceDialogs.transform);
+                    Assistances.GradationVisual.GradationVisual beta5 = Assistances.GradationVisual.Factory.Instance.CreateDialog2WithButtonsNoDecorators("Tutorial-ExclamationMarkDialog-5", "", "Le point d'exclamation peut également vous proposer plus d'aide si vous ne comprenez pas à quoi il fait référence. Appuyez sur \"Suivant\" pour voir un exemple.", "Suivant", null, Assistances.Buttons.Button.ButtonType.Yes, InteractionSurfaceDialogs.transform);
+                    Assistances.GradationVisual.GradationVisual beta6 = Assistances.GradationVisual.Factory.Instance.CreateDialog2NoButtonNoDecorators("Tutorial-ExclamationMarkDialog-6", "", "Vous pouvez voir les boutons d'aide sous le point d'exclamation. Appuyez sur un de ces boutons pour continuer le tutoriel.", InteractionSurfaceDialogs.transform);
 
 
 
@@ -291,7 +283,7 @@ namespace MATCH
                         assistanceExclamation.SetMaterial(Utilities.Materials.Colors.WhiteMetallic);
                     };*/
 
-                    Assistances.GradationVisual.GradationVisual fictituousHelpMessage = Assistances.GradationVisual.Factory.Instance.CreateDialog2WithButtons("Tutorial-FictituousHelpMessage-5", "", "Le message d'aide apparaitra ici! Appuyez sur \"Suivant\" pour continuer le tutoriel.", "Suivant", null, Assistances.Buttons.Button.ButtonType.Yes, InteractionExclamationMark.transform);
+                    Assistances.GradationVisual.GradationVisual fictituousHelpMessage = Assistances.GradationVisual.Factory.Instance.CreateDialog2WithButtonsNoDecorators("Tutorial-FictituousHelpMessage-5", "", "Le message d'aide apparaitra ici! Appuyez sur \"Suivant\" pour continuer le tutoriel.", "Suivant", null, Assistances.Buttons.Button.ButtonType.Yes, InteractionExclamationMark.transform);
 
                     fictituousHelpMessage.EventHelpClicked += delegate (System.Object o, EventArgs e)
                     {
@@ -331,10 +323,10 @@ namespace MATCH
 
                 Sequence AssistanceEta()
                 {
-                    Assistances.GradationVisual.GradationVisual eta1 = Assistances.GradationVisual.Factory.Instance.CreateDialog2WithButtons("Tutorial-LineDialog-1", "", "Pour vous indiquer un endroit où continuer à réaliser votre activité, le système peut vous diriger en faisant apparaitre devant vous une ligne pour vous guider.", "Suivant", null, Assistances.Buttons.Button.ButtonType.Yes, /*InteractionSurfaceDialogs.transform*/ InteractionExclamationMark.transform) ;
-                    Assistances.GradationVisual.GradationVisual eta1a = Assistances.GradationVisual.Factory.Instance.CreateDialog2NoButton("Tutorial-LineDialog-1", "", "Voici un exemple de ligne. Suivez-là pour continuer le tutoriel!", /*InteractionSurfaceDialogs.transform*/ InteractionExclamationMark.transform);
-                    Assistances.GradationVisual.GradationVisual eta2 = Assistances.GradationVisual.Factory.Instance.CreateDialog2WithButtons("Tutorial-LineDialog-2", "", "Bravo ! Vous êtes bien arrivé là où la ligne vous guidait.", "Suivant", null, Assistances.Buttons.Button.ButtonType.Yes, InteractionLinePointB.transform);
-                    Assistances.GradationVisual.GradationVisual eta3 = Assistances.GradationVisual.Factory.Instance.CreateDialog2WithButtons("Tutorial-LineDialog-3", "", "Le système peut aussi faire apparaître un texte devant vous, et qui vous suivra dans vos déplacements. Appuyez sur \"Suivant\" pour voir un exemple.", "Suivant", delegate(object o, EventArgs e)
+                    Assistances.GradationVisual.GradationVisual eta1 = Assistances.GradationVisual.Factory.Instance.CreateDialog2WithButtonsNoDecorators("Tutorial-LineDialog-1", "", "Pour vous indiquer un endroit où continuer à réaliser votre activité, le système peut vous diriger en faisant apparaitre devant vous une ligne pour vous guider.", "Suivant", null, Assistances.Buttons.Button.ButtonType.Yes, /*InteractionSurfaceDialogs.transform*/ InteractionExclamationMark.transform) ;
+                    Assistances.GradationVisual.GradationVisual eta1a = Assistances.GradationVisual.Factory.Instance.CreateDialog2NoButtonNoDecorators("Tutorial-LineDialog-1", "", "Voici un exemple de ligne. Suivez-là pour continuer le tutoriel!", /*InteractionSurfaceDialogs.transform*/ InteractionExclamationMark.transform);
+                    Assistances.GradationVisual.GradationVisual eta2 = Assistances.GradationVisual.Factory.Instance.CreateDialog2WithButtonsNoDecorators("Tutorial-LineDialog-2", "", "Bravo ! Vous êtes bien arrivé là où la ligne vous guidait.", "Suivant", null, Assistances.Buttons.Button.ButtonType.Yes, InteractionLinePointB.transform);
+                    Assistances.GradationVisual.GradationVisual eta3 = Assistances.GradationVisual.Factory.Instance.CreateDialog2WithButtonsNoDecorators("Tutorial-LineDialog-3", "", "Le système peut aussi faire apparaître un texte devant vous, et qui vous suivra dans vos déplacements. Appuyez sur \"Suivant\" pour voir un exemple.", "Suivant", delegate(object o, EventArgs e)
                     {
                         UpdateConditionWithMatrix(ConditionFollowingDialog);
                     }, Assistances.Buttons.Button.ButtonType.Yes, InteractionLinePointB.transform);
@@ -360,7 +352,7 @@ namespace MATCH
                     Assistances.Decorators.LinePath decorator4 =
                             (Assistances.Decorators.LinePath)Assistances.Decorators.Factory.Instance
                                 .CreateLinePathWithTexture(eta2IAssistance,
-                                    Utilities.Materials.Colors.CyanAdjustHSV, 0.039f, true);/* = new Assistances.Decorators.LinePath()*/;
+                                    Utilities.Materials.Colors.CyanPulse, 0.039f, true);/* = new Assistances.Decorators.LinePath()*/;
                     //Assistances.Decorators.LinePath decorator5 = new Assistances.Decorators.LinePath();
 
                     eta.Init();
@@ -405,7 +397,7 @@ namespace MATCH
 
                 Sequence AssistanceTheta()
                 {
-                    Assistances.GradationVisual.GradationVisual theta1 = Assistances.GradationVisual.Factory.Instance.CreateDialog2WithButtons("Tutorial-Following-1", "", "Ce texte vous suit! Marchez un peu et tournez la tête pour vous en rendre compte. Quand vous le souhaiterez, appuyez sur le bouton \"Suivant\" pour continuer.", "Suivant", null, Assistances.Buttons.Button.ButtonType.Yes, MATCH.Assistances.InteractionSurfaceFollower.Instance.transform);
+                    Assistances.GradationVisual.GradationVisual theta1 = Assistances.GradationVisual.Factory.Instance.CreateDialog2WithButtonsNoDecorators("Tutorial-Following-1", "", "Ce texte vous suit! Marchez un peu et tournez la tête pour vous en rendre compte. Quand vous le souhaiterez, appuyez sur le bouton \"Suivant\" pour continuer.", "Suivant", null, Assistances.Buttons.Button.ButtonType.Yes, MATCH.Assistances.InteractionSurfaceFollower.Instance.transform);
 
                     Assistances.AssistanceGradationExplicit theta = MATCH.Assistances.Factory.Instance.CreateAssistanceGradationExplicit("Tutorial-Theta");
 
@@ -440,20 +432,14 @@ namespace MATCH
 
                 Sequence AssistanceIota()
                 {
-                    Assistances.GradationVisual.GradationVisual lota0 = Assistances.GradationVisual.Factory.Instance.CreateDialog2WithButtons("Tutorial-LookAround-1", "", "Appuyez sur le bouton \"Suivant\" pour faire apparaitre une flèche qui va vous guider à la suite du tutoriel.", "Suivant", null, Assistances.Buttons.Button.ButtonType.Yes, MATCH.Assistances.InteractionSurfaceFollower.Instance.transform);
+                    Assistances.GradationVisual.GradationVisual lota0 = Assistances.GradationVisual.Factory.Instance.CreateDialog2WithButtonsNoDecorators("Tutorial-LookAround-1", "", "Appuyez sur le bouton \"Suivant\" pour faire apparaitre une flèche qui va vous guider à la suite du tutoriel.", "Suivant", null, Assistances.Buttons.Button.ButtonType.Yes, MATCH.Assistances.InteractionSurfaceFollower.Instance.transform);
 
-                    /*Assistances.GradationVisual.GradationVisual iota1 = Assistances.GradationVisual.Factory.Instance.CreateDialog2WithButtons("Tutorial-LookAround-1", "", "Vous êtes au bon endroit! Le casque que vous portez a une limitation qui fait que vous ne pouvez pas voir des informations qui apparaissent à la périphérie de votre champs de vision. Il faut donc que vous pensiez à tourner la tête pour ne manquer aucune information. Appuyez sur \"Suivant\" pour voir un exemple.", "Suivant", null, Assistances.Buttons.Button.ButtonType.Yes, InteractionLookAround.transform);*/
-                    Assistances.GradationVisual.GradationVisual iota1 = Assistances.GradationVisual.Factory.Instance.CreateDialog2WithButtons("Tutorial-LookAround-1", "", "Vous êtes au bon endroit! Un autre point ... Il faut que vous pensiez à tourner la tête pour ne manquer aucune information. Appuyez sur \"Suivant\" pour voir un exemple.", "Suivant", null, Assistances.Buttons.Button.ButtonType.Yes, InteractionLookAround.transform);
+                    Assistances.GradationVisual.GradationVisual iota1 = Assistances.GradationVisual.Factory.Instance.CreateDialog2WithButtonsNoDecorators("Tutorial-LookAround-1", "", "Vous êtes au bon endroit! Un autre point ... Il faut que vous pensiez à tourner la tête pour ne manquer aucune information. Appuyez sur \"Suivant\" pour voir un exemple.", "Suivant", null, Assistances.Buttons.Button.ButtonType.Yes, InteractionLookAround.transform);
                     Assistances.IAssistance iota1Iassistance = ((Assistances.IAssistance) iota1.GetCurrentAssistance());
                     Assistances.Dialogs.Dialog2 iota1Dialog = ((Assistances.Dialogs.Dialog2)iota1Iassistance.GetRootDecoratedAssistance());
                     iota1Dialog.GetComponent<Billboard>().enabled = false; // We disable the billboard to make sure the person will be at the right position to look at the diamond
 
-
-                    //Assistances.GradationVisual.GradationVisual iota2 = Assistances.GradationVisual.Factory.Instance.CreateDialog2WithButtons("Tutorial-LookAround-2", "", "Pour illustrer cela, un losange rouge est apparu sur votre droite. Vous le verrez si vous tournez votre tête. Une fois que vous l'avez trouvé, appuyez sur le bouton \"Suivant\" pour continuer.", "Suivant", null, Assistances.Buttons.Button.ButtonType.Yes, InteractionLookAround.transform);
-                    Assistances.GradationVisual.GradationVisual iota2 = Assistances.GradationVisual.Factory.Instance.CreateDialog2NoButton("Tutorial-LookAround-2", "", "Pour illustrer cela, un losange rouge est apparu sur votre droite. Vous le verrez si vous tournez votre tête. Une fois que vous l'avez trouvé, regardez-le quelques secondes pour passer à la suite.", InteractionLookAround.transform);
-
-
-                    /*Assistances.Icon Losange = Assistances.Factory.Instance.CreateIcon(true, new Vector3(0, 0, 0), new Vector3(0.5f, 0.5f, 0.5f), true, InteractionLosange.transform, Utilities.Materials.Icon.Diamond, Utilities.Materials.Colors.RedGlowing);*/
+                    Assistances.GradationVisual.GradationVisual iota2 = Assistances.GradationVisual.Factory.Instance.CreateDialog2NoButtonNoDecorators("Tutorial-LookAround-2", "", "Pour illustrer cela, un losange rouge est apparu sur votre droite. Vous le verrez si vous tournez votre tête. Une fois que vous l'avez trouvé, regardez-le quelques secondes pour passer à la suite.", InteractionLookAround.transform);
 
                     Assistances.AssistanceGradationExplicit iota = MATCH.Assistances.Factory.Instance.CreateAssistanceGradationExplicit("Tutorial-Lota");
 
@@ -475,7 +461,7 @@ namespace MATCH
 
                     Assistances.Decorators.LinePath lineDecorator = (Assistances.Decorators.LinePath)Assistances.Decorators.Factory.Instance
                             .CreateLinePathWithTexture(lota1IAssistance,
-                                Utilities.Materials.Colors.CyanAdjustHSV, 0.039f, true);//new Assistances.Decorators.LinePath();
+                                Utilities.Materials.Colors.CyanPulse, 0.039f, true);//new Assistances.Decorators.LinePath();
 
                     iota.Init();
                     MATCH.Inferences.Manager InferenceManager = MATCH.Inferences.Factory.Instance.CreateManager(transform);
@@ -539,7 +525,7 @@ namespace MATCH
 
                 Sequence AssistanceGamma()
                 {
-                    Assistances.GradationVisual.GradationVisual gammaBase = Assistances.GradationVisual.Factory.Instance.CreateDialog2NoButton("Tutorial-Gamma-1", "", "Le casque que vous portez comprend aussi où vous regardez. Regardez de nouveau le losange pendant quelques secondes pour passer à la suite.", /*InteractionSurfaceDialogs.transform*/InteractionLookAround.transform);
+                    Assistances.GradationVisual.GradationVisual gammaBase = Assistances.GradationVisual.Factory.Instance.CreateDialog2NoButtonNoDecorators("Tutorial-Gamma-1", "", "Le casque que vous portez comprend aussi où vous regardez. Regardez de nouveau le losange pendant quelques secondes pour passer à la suite.", /*InteractionSurfaceDialogs.transform*/InteractionLookAround.transform);
 
                     Assistances.AssistanceGradationExplicit gamma = MATCH.Assistances.Factory.Instance.CreateAssistanceGradationExplicit("Tutorial-Gamma");
                     gamma.transform.parent = transform;
@@ -591,12 +577,7 @@ namespace MATCH
                     
                 Sequence AssistanceDelta()
                 {
-                    /*Assistances.GradationVisual.GradationVisual gamma1 = Assistances.GradationVisual.Factory.Instance.CreateDialogOneButton("Tutorial-Gamma-1", "", "Super! Comme vous le voyez, le système comprend ce que vous regardez. Il pourra donc faire certaines actions si vous regardez un objet.\nTouchez le bouton ci-dessous pour continuer.", "Suivant", delegate(System.Object o, EventArgs e)
-                    {
-                        UpdateConditionWithMatrix(ConditionNextClicked);
-                    }, Assistances.Buttons.Button.ButtonType.ClosingButton, InteractionCube.transform);*/
-
-                    Assistances.GradationVisual.GradationVisual delta1 = Assistances.GradationVisual.Factory.Instance.CreateDialog2WithButtons("Tutorial-Delta-1", "", "Le système a compris que vous regardiez le losange! Il pourra donc faire certaines actions si vous regardez un objet.", "Suivant", delegate (System.Object o, EventArgs e)
+                    Assistances.GradationVisual.GradationVisual delta1 = Assistances.GradationVisual.Factory.Instance.CreateDialog2WithButtonsNoDecorators("Tutorial-Delta-1", "", "Le système a compris que vous regardiez le losange! Il pourra donc faire certaines actions si vous regardez un objet.", "Suivant", delegate (System.Object o, EventArgs e)
                     {
                         UpdateConditionWithMatrix(ConditionNextClicked);
                     }, Assistances.Buttons.Button.ButtonType.ClosingButton, InteractionDiamond.transform);
@@ -628,11 +609,7 @@ namespace MATCH
 
                 Sequence AssistanceEpsilon()
                 {
-                    /*Assistances.GradationVisual.GradationVisual delta1 = Assistances.GradationVisual.Factory.Instance.CreateDialogOneButton("Tutorial-Delta-1", "", "Une dernière chose! Il est important que vous regardiez votre main lorsque vous faites une action. Cela est dû à une limite technique du casque que vous portez. Un bouton va apparaître ci-dessous dans quelques secondes. Touchez le pour continuer.", "Suivant", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.Yes, InteractionCube.transform);*/
-
-                    Assistances.GradationVisual.GradationVisual epsilon1 = Assistances.GradationVisual.Factory.Instance.CreateDialog2WithButtons("Tutorial-Epsilon-1", "", "Il est important que vous regardiez votre main lorsque vous faites une action. Cela est dû à une limite technique du casque que vous portez.", "Suivant", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.Yes, InteractionDiamond.transform);
-
-                    /*Assistances.GradationVisual.GradationVisual delta2 = Assistances.GradationVisual.Factory.Instance.CreateDialogNoButton("Tutorial-Delta-1", "", "Pour tester cela, prenez le stylo sur votre droite. Si vous l'avez regardé correctement en le prenant, alors vous verrez un nouveau texte apparaître ici. Sinon, reposez-le au même endroit et recommencez.", InteractionCube.transform);*/
+                    Assistances.GradationVisual.GradationVisual epsilon1 = Assistances.GradationVisual.Factory.Instance.CreateDialog2WithButtonsNoDecorators("Tutorial-Epsilon-1", "", "Il est important que vous regardiez votre main lorsque vous faites une action. Cela est dû à une limite technique du casque que vous portez.", "Suivant", Utilities.Utility.GetEventHandlerEmpty(), Assistances.Buttons.Button.ButtonType.Yes, InteractionDiamond.transform);
 
                     Assistances.GradationVisual.GradationVisual epsilon2 = Assistances.GradationVisual.Factory.Instance.CreateDialog2NoButton("Tutorial-Epsilon-1", "", "Pour tester cela, prenez le stylo sur votre droite. Si vous l'avez regardé correctement en le prenant, alors vous verrez un nouveau message apparaître ici. Sinon, reposez-le au même endroit et recommencez.", InteractionDiamond.transform);
 
@@ -672,7 +649,7 @@ namespace MATCH
                             InteractionSurfaceToClean, 3, 4);
 
 
-                    Assistances.GradationVisual.GradationVisual kappa1 = Assistances.GradationVisual.Factory.Instance.CreateDialog2WithButtons("Tutorial-cleaningSurface-1", "", "Le système a vu que vous avez pris le stylo! Avant de terminer, vous allez découvrir un dernier élément qui peut apparaître.", "Suivant",
+                    Assistances.GradationVisual.GradationVisual kappa1 = Assistances.GradationVisual.Factory.Instance.CreateDialog2WithButtonsNoDecorators("Tutorial-cleaningSurface-1", "", "Le système a vu que vous avez pris le stylo! Avant de terminer, vous allez découvrir un dernier élément qui peut apparaître.", "Suivant",
                         delegate(object sender, EventArgs args)
                         {
                             assistanceSurfaceToClean.Show(Utilities.Utility.GetEventHandlerEmpty(), false);
@@ -743,11 +720,11 @@ namespace MATCH
                         gameObject.SetActive(false);
                     }, Assistances.Buttons.Button.ButtonType.ClosingButton, InteractionCube.transform);*/
 
-                    Assistances.GradationVisual.GradationVisual zeta1 = Assistances.GradationVisual.Factory.Instance.CreateDialog2WithButtons("Tutorial-Zeta-1", "", "Félicitations! Le tutoriel est maintenant terminé. Lorsque vous serez prêt (vous pouvez faire une pause), touchez le bouton ci-dessous pour commencer l'évaluation.", "Commencer l'évaluation", delegate (System.Object o, EventArgs e)
+                    Assistances.GradationVisual.GradationVisual zeta1 = Assistances.GradationVisual.Factory.Instance.CreateDialog2NoButtonNoDecorators("Tutorial-Zeta-1", "", "Félicitations! Le tutoriel est maintenant terminé. Guillaume va venir vous voir pour vous expliquer la suite!"/*, "Commencer l'évaluation", delegate (System.Object o, EventArgs e)
                     {
                         gameObject.transform.parent.Find("DustingTable").gameObject.SetActive(true);
                         gameObject.SetActive(false);
-                    }, Assistances.Buttons.Button.ButtonType.ClosingButton, /*InteractionSurfaceToCleanDialog.transform*/ InteractionSurfaceToClean.transform);
+                    }, Assistances.Buttons.Button.ButtonType.ClosingButton*/, InteractionSurfaceToClean.transform);
 
                     Assistances.AssistanceGradationExplicit zeta = MATCH.Assistances.Factory.Instance.CreateAssistanceGradationExplicit("Tutorial-Zeta");
                     zeta.transform.parent = transform;

@@ -79,6 +79,11 @@ namespace MATCH
                 InteractionComponent.EyeFocusOff += CallbackFocusOff;*/
                 EyeTracker.OnLookAtStart.AddListener(CallbackFocusOn);
                 EyeTracker.OnLookAway.AddListener(CallbackFocusOff);
+                
+                if (EyeTracker.IsLookedAt)
+                {
+                    CallbackFocusOn();
+                }
             }
 
             public override bool Evaluate()
