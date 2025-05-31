@@ -2,7 +2,7 @@
 
 Welcome to the MATCH (Mixed reAliTy Cognitive ortHosis) project!
 
-The code is currently under maintenance and not available publicly. The code is currently undergoing maintenance. It is therefore no longer publicly available while maintenance is in progress. If you would like to access the code, please contact [Guillaume Spalla](mailto:guillaume.spalla@usherbrooke.ca?subject=[GitHub]%20MATCH) so that I can grant you access.
+The code is currently undergoing maintenance. It is not longer publicly available while maintenance is in progress. If you would like to access the code, please contact [Guillaume Spalla](mailto:guillaume.spalla@usherbrooke.ca?subject=[GitHub]%20MATCH) so that I can grant you access.
 
 ## Why this project?
 Mixed reality is an emerging technology aimed at blending virtual content with the real environment. Using a headset, which can be compared to glasses, it allows virtual content to be displayed at any time, anywhere.
